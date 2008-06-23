@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.Property" table="property">
+    	<meta attribute="class-code">
+	private static final long serialVersionUID = -1996477907215294788L;
+    	</meta>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1property" unique="true">
+        	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas" fetch="select">
+	   	    	<meta attribute="use-in-equals">true</meta>
+            	<column name="canvas_id" not-null="true" />
+        	</many-to-one>
+        	<property name="creationSerial" type="int">
+	            <meta attribute="use-in-equals">true</meta>
+	            <column name="creation_serial" not-null="true" />
+    	    </property>
+    	</properties>
+
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.TextProperty" table="textproperty">
+    		<meta attribute="class-code">
+	private static final long serialVersionUID = 2408749022194227955L;
+    		</meta>
+    		<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+	        <property name="textValue" type="string">
+    	        <column name="text_value" length="4096" not-null="true" />
+        	</property>
+    	</joined-subclass>
+
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.RichTextProperty" table="richtextproperty">
+    		<meta attribute="class-code">
+	private static final long serialVersionUID = -4043561259224207426L;
+    		</meta>
+    		<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+	        <property name="richTextValue" type="text">
+    	        <column name="text_value" not-null="true" />
+        	</property>
+    	</joined-subclass>
+
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.NumberProperty" table="numberproperty">
+    		<meta attribute="class-code">
+	private static final long serialVersionUID = 1951406655193239331L;
+    		</meta>
+    		<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+	        <property name="numberValue" type="big_decimal">
+    	        <column name="number_value" precision="30" scale="6" not-null="true" />
+        	</property>
+    	</joined-subclass>
+
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.ListProperty" table="listproperty">
+    		<meta attribute="class-code">
+	private static final long serialVersionUID = 3772272140640145846L;
+    		</meta>
+    		<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+    		<list name="values" table="listvalue">
+    			<key>
+    				<column name="list_property_id" not-null="true"/>
+    			</key>
+    			<list-index>
+    				<column name="index_pos" not-null="true"/>
+    			</list-index>
+    			<element type="string">
+    				<column name="string_representation" length="4096" not-null="true"/>
+    			</element>
+    		</list>
+    	</joined-subclass>
+
+    </class>
+</hibernate-mapping>

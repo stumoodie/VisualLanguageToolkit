@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.BendPoint" table="bendpoint">
+    	<meta attribute="class-code">
+	private static final long serialVersionUID = 6225340614454215601L;
+    	</meta>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1bendpoint" unique="true">
+        	<many-to-one name="owningLink" class="org.pathwayeditor.businessobjects.hibernate.pojos.Link" fetch="select">
+	   	    	<meta attribute="use-in-equals">true</meta>
+            	<column name="link_id" not-null="true" />
+        	</many-to-one>
+        	<property name="indexPos" type="int">
+	   	    	<meta attribute="use-in-equals">true</meta>
+            	<column name="index_pos" not-null="true" />
+        	</property>
+        </properties>
+        <property name="XPosition" type="int">
+            <column name="x_position" not-null="true" />
+        </property>
+        <property name="YPosition" type="int">
+            <column name="y_position" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

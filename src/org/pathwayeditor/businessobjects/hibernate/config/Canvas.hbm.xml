@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas" table="canvas">
+    	<meta attribute="class-code">
+	private static final long serialVersionUID = 807306412269098190L;
+
+	public Canvas(MapDiagram newMap, Canvas other){
+		this.mapDiagram = newMap;
+		this.context = other.context;
+		this.gridX = other.gridX;
+		this.gridY = other.gridY;
+		this.gridEnabled = other.gridEnabled;
+		this.snapToGridEnabled = other.snapToGridEnabled;
+		this.backgroundRed = other.backgroundRed;
+		this.backgroundGreen = other.backgroundGreen;
+		this.backgroundRed = other.backgroundRed;
+		this.canvasWidth = other.canvasWidth;
+		this.canvasHeight = other.canvasHeight;
+		for(RootShape rootShape : this.shapes){
+			this.shapes.add(new RootShape(this, rootShape));
+		}
+		// TODO: Copy Links!
+	}
+    
+	public void changeMapDiagram(MapDiagram newMapDiagram){
+		this.setMapDiagram(mapDiagram);
+	}
+
+    	</meta>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.MapDiagram" fetch="select">
+   	    	<meta attribute="use-in-equals">true</meta>
+            <column name="map_id" not-null="true" unique="true" />
+        </many-to-one>
+        <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.Context" fetch="select" cascade="persist,save-update">
+            <column name="context_id" not-null="true" />
+        </many-to-one>
+        <property name="gridX" type="int">
+            <column name="grid_x" not-null="true" />
+        </property>
+        <property name="gridY" type="int">
+            <column name="grid_y" not-null="true" />
+        </property>
+        <property name="gridEnabled" type="boolean">
+            <column name="grid_enabled" not-null="true" />
+        </property>
+        <property name="snapToGridEnabled" type="boolean">
+            <column name="snap_to_grid_enabled" not-null="true" />
+        </property>
+        <property name="backgroundRed" type="int">
+            <column name="background_red" not-null="true" />
+        </property>
+        <property name="backgroundGreen" type="int">
+            <column name="background_green" not-null="true" />
+        </property>
+        <property name="backgroundBlue" type="int">
+            <column name="background_blue" not-null="true" />
+        </property>
+        <property name="canvasWidth" type="int">
+            <column name="canvas_width" not-null="true" />
+        </property>
+        <property name="canvasHeight" type="int">
+            <column name="canvas_height" not-null="true" />
+        </property>
+        <list name="shapes" inverse="true" table="rootshape" cascade="all,delete-orphan">
+        	<meta attribute="scope-set"></meta>
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <list-index>
+            	<column name="shape_index" not-null="true"/>
+            </list-index>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.RootShape"/>
+        </list>
+        <list name="links" inverse="true" table="rootlink" cascade="all,delete-orphan">
+        	<meta attribute="scope-set"></meta>
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <list-index>
+            	<column name="link_index" not-null="true"/>
+            </list-index>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Link"/>
+        </list>
+        <list name="labels" inverse="true" table="rootlabel" cascade="all,delete-orphan">
+        	<meta attribute="scope-set"></meta>
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <list-index>
+            	<column name="label_index" not-null="true"/>
+            </list-index>
+            <many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Label" column="label_id" />
+        </list>
+    </class>
+</hibernate-mapping>

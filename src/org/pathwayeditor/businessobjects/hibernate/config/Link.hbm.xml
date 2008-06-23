@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.Link"
+		table="link">
+		<meta attribute="class-code">
+	private static final long serialVersionUID = 8124494867402957446L;
+		</meta>
+		<id name="id" type="java.lang.Long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<properties name="xak1drawingobject" unique="true">
+			<many-to-one name="canvas"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas"
+				fetch="select">
+	   	    	<meta attribute="set-scope"></meta>
+				<meta attribute="use-in-equals">true</meta>
+				<column name="canvas_id" not-null="true" />
+			</many-to-one>
+			<property name="link_index" type="int">
+				<meta attribute="use-in-equals">true</meta>
+				<column name="creation_serial" not-null="true" />
+			</property>
+		</properties>
+		<many-to-one name="objectType"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.ObjectType"
+			fetch="select">
+  	    	<meta attribute="use-in-equals">true</meta>
+			<column name="object_type_id" not-null="true" />
+		</many-to-one>
+		<property name="name" type="string">
+			<column name="name" length="128" not-null="true" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="2048" not-null="true" />
+		</property>
+		<property name="detailedDescription" type="string">
+			<column name="detailed_description" not-null="true" />
+		</property>
+		<property name="url" type="string">
+			<column name="url" length="2048" not-null="true" />
+		</property>
+		<map name="properties" table="linkproperty">
+   	    	<meta attribute="use-in-equals">true</meta>
+			<key>
+				<column name="link_id" not-null="true" />
+			</key>
+			<map-key type="string">
+				<column name="name" not-null="true" />
+			</map-key>
+			<many-to-many
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.Property">
+				<column name="property_id" not-null="true" />
+			</many-to-many>
+		</map>
+		<many-to-one name="targetShape"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.Shape"
+			fetch="select">
+   	    	<meta attribute="use-in-equals">true</meta>
+			<column name="tgt_shape_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="sourceShape"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.Shape"
+			fetch="select">
+			<column name="src_shape_id" not-null="true" />
+		</many-to-one>
+		<property name="lineRed" type="int">
+			<column name="line_red" not-null="true" />
+		</property>
+		<property name="lineGreen" type="int">
+			<column name="line_green" not-null="true" />
+		</property>
+		<property name="lineBlue" type="int">
+			<column name="line_blue" not-null="true" />
+		</property>
+		<property name="lineStyle" type="int">
+			<column name="line_style" not-null="true" />
+		</property>
+		<property name="lineWidth" type="int">
+			<column name="line_width" not-null="true" />
+		</property>
+		<property name="routerType" type="short">
+			<column name="router_type" not-null="true" />
+		</property>
+		<list name="bendPoints" inverse="true">
+			<key>
+				<column name="link_id" not-null="true" />
+			</key>
+			<list-index>
+				<column name="index_pos" not-null="true" />
+			</list-index>
+			<one-to-many
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.BendPoint" />
+		</list>
+		<list name="linkTermini" inverse="true">
+			<key>
+				<column name="link_id" not-null="true" />
+			</key>
+			<list-index>
+				<column name="link_term_type" not-null="true" />
+			</list-index>
+			<one-to-many
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.LinkTerminus" />
+		</list>
+	</class>
+</hibernate-mapping>
