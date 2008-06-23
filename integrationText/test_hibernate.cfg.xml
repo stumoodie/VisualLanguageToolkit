@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+        <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+        <!-- property name="hibernate.connection.pool_size">1</property-->
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Context.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Property.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/ObjectType.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/LinkEndDecorator.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Shape.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Link.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Label.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/BendPoint.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Canvas.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/LinkTerminus.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/LinkTerminusDecorator.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/Folder.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/MapDiagram.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/DataStore.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>
