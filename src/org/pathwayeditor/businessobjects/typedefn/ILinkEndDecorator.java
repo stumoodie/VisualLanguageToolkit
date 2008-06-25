@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.ArrowheadStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
 
 /**
  * The definition of a link end decorator. Part of the definition of a link end.

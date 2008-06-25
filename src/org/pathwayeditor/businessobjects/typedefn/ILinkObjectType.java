@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 
 public interface ILinkObjectType extends IObjectType {
 

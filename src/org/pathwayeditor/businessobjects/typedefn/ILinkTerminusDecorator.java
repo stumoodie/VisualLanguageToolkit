@@ -1,7 +1,7 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.IPrimitiveShape;
-import org.pathwayeditor.businessobjects.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 
 /**
  * The link terminus decorator definition. This interface provide the definition of how the terminus of
