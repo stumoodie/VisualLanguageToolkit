@@ -63,15 +63,15 @@ public class FolderTest extends DatabaseTestCase {
 
 		public void testFolderCreation(){
 			this.hibFactory.getCurrentSession().beginTransaction();
-			DataStore dataStore = new DataStore();
-			dataStore.setName("Local");
-			dataStore.setDescription("Local data store");
-			RootFolder rootFolder = new RootFolder();
-			rootFolder.changeDataStore(dataStore);
-			NonRootFolder subFolder = new NonRootFolder();
+			HibRepository hibRepository = new HibRepository();
+			hibRepository.setName("Local");
+			hibRepository.setDescription("Local data store");
+			HibRootFolder hibRootFolder = new HibRootFolder();
+			hibRootFolder.changeDataStore(hibRepository);
+			HibNonRootFolder subFolder = new HibNonRootFolder();
 			subFolder.setName("subFolder");
-			rootFolder.addSubFolder(subFolder);
-			MapDiagram map1 = new MapDiagram();
+			hibRootFolder.addSubFolder(subFolder);
+			HibMapDiagram map1 = new HibMapDiagram();
 			map1.setName("Test1 Map");
 			map1.setDescription("Test1 Map description");
 			map1.changeFolder(subFolder);
@@ -103,7 +103,7 @@ public class FolderTest extends DatabaseTestCase {
 			shape.setObjectType(testOT);
 			shape.changeCanvas(canvas);
 //			this.hibFactory.getCurrentSession().save(context);
-			this.hibFactory.getCurrentSession().save(dataStore);
+			this.hibFactory.getCurrentSession().save(hibRepository);
 			this.hibFactory.getCurrentSession().save(canvas);
 			this.hibFactory.getCurrentSession().getTransaction().commit();
 		}

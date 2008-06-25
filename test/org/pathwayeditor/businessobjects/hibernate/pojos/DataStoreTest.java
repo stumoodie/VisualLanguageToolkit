@@ -20,11 +20,11 @@ public class DataStoreTest {
 	}};
 	
 	
-	private DataStore testInstance = new DataStore();
+	private HibRepository testInstance = new HibRepository();
 
 	@Before
 	public void setUp() throws Exception {
-		this.testInstance = new DataStore();
+		this.testInstance = new HibRepository();
 	}
 
 	@After
@@ -49,8 +49,8 @@ public class DataStoreTest {
 
 	@Test
 	public final void testChangeRootFolder() {
-		final RootFolder mockRootFolder1 = this.mockery.mock(RootFolder.class, "mockRootFolder");
-		final RootFolder mockRootFolder2 = this.mockery.mock(RootFolder.class, "mockRootFolder2");
+		final HibRootFolder mockRootFolder1 = this.mockery.mock(HibRootFolder.class, "mockRootFolder");
+		final HibRootFolder mockRootFolder2 = this.mockery.mock(HibRootFolder.class, "mockRootFolder2");
 		this.mockery.checking(new Expectations(){{
 			atLeast(1).of(mockRootFolder1).setDataStore(testInstance);
 			atLeast(1).of(mockRootFolder1).setDataStore(null);
