@@ -14,7 +14,7 @@ public interface IFolder extends IRepositoryItem {
 
 	int numSubFolders();
 
-	Iterator<IFolder> getSubfolderIterator();
+	Iterator<ISubFolder> getSubfolderIterator();
 	
 	/**
 	 * Can the name be used for a subfolder in this folder. This tests that the name

@@ -13,6 +13,8 @@ public interface IRepository {
 
 	String getName();
 	
+	String getDescription();
+	
 	IRootFolder getRootFolder(); 
 	
 	Iterator<IRepositoryItem> levelOrderIterator();

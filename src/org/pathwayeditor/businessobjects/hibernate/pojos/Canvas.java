@@ -12,7 +12,7 @@ public class Canvas  implements java.io.Serializable {
 
 
      private Long id;
-     private MapDiagram mapDiagram;
+     private HibMapDiagram hibMapDiagram;
      private Context context;
      private int gridX;
      private int gridY;
@@ -31,8 +31,8 @@ public class Canvas  implements java.io.Serializable {
     }
 
 	
-    public Canvas(MapDiagram mapDiagram, Context context, int gridX, int gridY, boolean gridEnabled, boolean snapToGridEnabled, int backgroundRed, int backgroundGreen, int backgroundBlue, int canvasWidth, int canvasHeight) {
-        this.mapDiagram = mapDiagram;
+    public Canvas(HibMapDiagram hibMapDiagram, Context context, int gridX, int gridY, boolean gridEnabled, boolean snapToGridEnabled, int backgroundRed, int backgroundGreen, int backgroundBlue, int canvasWidth, int canvasHeight) {
+        this.hibMapDiagram = hibMapDiagram;
         this.context = context;
         this.gridX = gridX;
         this.gridY = gridY;
@@ -44,8 +44,8 @@ public class Canvas  implements java.io.Serializable {
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
     }
-    public Canvas(MapDiagram mapDiagram, Context context, int gridX, int gridY, boolean gridEnabled, boolean snapToGridEnabled, int backgroundRed, int backgroundGreen, int backgroundBlue, int canvasWidth, int canvasHeight, List<RootShape> shapes, List<Link> links, List<Label> labels) {
-       this.mapDiagram = mapDiagram;
+    public Canvas(HibMapDiagram hibMapDiagram, Context context, int gridX, int gridY, boolean gridEnabled, boolean snapToGridEnabled, int backgroundRed, int backgroundGreen, int backgroundBlue, int canvasWidth, int canvasHeight, List<RootShape> shapes, List<Link> links, List<Label> labels) {
+       this.hibMapDiagram = hibMapDiagram;
        this.context = context;
        this.gridX = gridX;
        this.gridY = gridY;
@@ -68,12 +68,12 @@ public class Canvas  implements java.io.Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public MapDiagram getMapDiagram() {
-        return this.mapDiagram;
+    public HibMapDiagram getMapDiagram() {
+        return this.hibMapDiagram;
     }
     
-    public void setMapDiagram(MapDiagram mapDiagram) {
-        this.mapDiagram = mapDiagram;
+    public void setMapDiagram(HibMapDiagram hibMapDiagram) {
+        this.hibMapDiagram = hibMapDiagram;
     }
     public Context getContext() {
         return this.context;
@@ -202,8 +202,8 @@ public class Canvas  implements java.io.Serializable {
 
 	private static final long serialVersionUID = 807306412269098190L;
 
-	public Canvas(MapDiagram newMap, Canvas other){
-		this.mapDiagram = newMap;
+	public Canvas(HibMapDiagram newMap, Canvas other){
+		this.hibMapDiagram = newMap;
 		this.context = other.context;
 		this.gridX = other.gridX;
 		this.gridY = other.gridY;
@@ -220,7 +220,7 @@ public class Canvas  implements java.io.Serializable {
 		// TODO: Copy Links!
 	}
     
-	public void changeMapDiagram(MapDiagram newMapDiagram){
+	public void changeMapDiagram(HibMapDiagram newMapDiagram){
 		this.setMapDiagram(newMapDiagram);
 	}
 
