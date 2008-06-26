@@ -19,4 +19,5 @@ public interface IRepository {
 	
 	Iterator<IRepositoryItem> levelOrderIterator();
 
+	int getBuildNum();
 }

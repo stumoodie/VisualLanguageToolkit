@@ -18,8 +18,8 @@ import org.pathwayeditor.businessobjects.repository.IRootFolder;
 public class Repository implements IRepository {
 	private final HibRepository hibRepository;
 	
-	public Repository(String name, String description) {
-		this.hibRepository = new HibRepository(name, description, new HibRootFolder());
+	public Repository(String name, String description, int buildNum) {
+		this.hibRepository = new HibRepository(name, description, buildNum, new HibRootFolder());
 	}
 	
 	public Repository(HibRepository hibRepository){
@@ -54,6 +54,14 @@ public class Repository implements IRepository {
 	
 	HibRepository getHibObject(){
 		return this.hibRepository;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getBuildNum()
+	 */
+	public int getBuildNum() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -1,11 +1,11 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.notationservice.IContext;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 
 
-public interface ICanvas extends IRepositoryItem {
+public interface ICanvas {
 
 	IMap getMap();
 
@@ -24,4 +24,8 @@ public interface ICanvas extends IRepositoryItem {
 	RGB getBackgroundColour();
 
 	IModel getModel();
+	
+	IContext getContext();
+
+
 }

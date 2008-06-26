@@ -1,10 +1,7 @@
 package org.pathwayeditor.businessobjects.repository;
 
-import org.pathwayeditor.businessobjects.notationservice.IContext;
 
-public interface IMap {
+public interface IMap extends IRepositoryItem {
 	IFolder getOwner();
-
-	IContext getContext();
 
 }

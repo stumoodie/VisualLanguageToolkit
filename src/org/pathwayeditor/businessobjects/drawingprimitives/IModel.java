@@ -25,8 +25,6 @@ public interface IModel {
 	ILink createLink(ILinkObjectType linkObjectType,
 			IShape srcShape, IShape tgtShape);
 	
-	IShape getOwningShape();
-		
 	IModelState getCurrentState();
 	
 	void restoreToState(IModelState stateToRestore);
@@ -55,6 +53,8 @@ public interface IModel {
 	Iterator<IShape> shapeIterator();
 	
 	int getNumLinks();
+	
+	int getNumLabels();
 	
 	int getNumShapes();
 }

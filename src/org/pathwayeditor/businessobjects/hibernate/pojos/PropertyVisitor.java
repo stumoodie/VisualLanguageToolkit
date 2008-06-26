@@ -19,20 +19,20 @@ class PropertyVisitor {
 		return anInstance;
 	}
 	
-	public TextProperty copyTextProperty(Canvas newCanvas, TextProperty other){
-		return new TextProperty(newCanvas, other); 
+	public HibTextProperty copyTextProperty(HibCanvas newCanvas, HibTextProperty other){
+		return new HibTextProperty(newCanvas, other); 
 	}
 	
-	public RichTextProperty copyRichTextProperty(Canvas newCanvas, RichTextProperty other){
-		return new RichTextProperty(newCanvas, other);
+	public HibRichTextProperty copyRichTextProperty(HibCanvas newCanvas, HibRichTextProperty other){
+		return new HibRichTextProperty(newCanvas, other);
 	}
 	
-	public NumberProperty copyNumberProperty(Canvas newCanvas, NumberProperty other){
-		return new NumberProperty(newCanvas, other);
+	public HibNumberProperty copyNumberProperty(HibCanvas newCanvas, HibNumberProperty other){
+		return new HibNumberProperty(newCanvas, other);
 	}
 	
-	public ListProperty copyListProperty(Canvas newCanvas, ListProperty other){
-		return new ListProperty(newCanvas, other);
+	public HibListProperty copyListProperty(HibCanvas newCanvas, HibListProperty other){
+		return new HibListProperty(newCanvas, other);
 	}
 	
 }

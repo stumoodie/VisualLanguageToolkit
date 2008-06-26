@@ -15,6 +15,7 @@ public class HibRepository implements Serializable {
 	private String description = null;
 	private HibRootFolder hibRootFolder = null;
 	private IRepository businessObject = null;
+	private int buildNum;
 
 	public HibRepository() {
 	}
@@ -25,10 +26,11 @@ public class HibRepository implements Serializable {
 		this.hibRootFolder = new HibRootFolder(this, other.hibRootFolder);
 	}
 
-	public HibRepository(String name, String description,
+	public HibRepository(String name, String description, int buildNum,
 			HibRootFolder hibRootFolder) {
 		this.name = name;
 		this.description = description;
+		this.buildNum = buildNum;
 		this.hibRootFolder = hibRootFolder;
 	}
 
@@ -122,5 +124,13 @@ public class HibRepository implements Serializable {
 			this.businessObject = new Repository(this);
 		}
 		return this.businessObject;
+	}
+	
+	void setBuildNum(int buildNum){
+		this.buildNum = buildNum;
+	}
+	
+	public int getBuildNum(){
+		return this.buildNum;
 	}
 }
