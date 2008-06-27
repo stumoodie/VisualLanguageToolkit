@@ -5,7 +5,7 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNonRootFolder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -17,17 +17,17 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  *
  */
 public class SubFolder implements ISubFolder {
-	private final HibNonRootFolder hibSubFolder;
+	private final HibSubFolder hibSubFolder;
 	
 	public SubFolder(String name, SubFolder parent){
-		this.hibSubFolder = new HibNonRootFolder(parent.hibSubFolder, name);
+		this.hibSubFolder = new HibSubFolder(parent.hibSubFolder, name);
 	}
 	
 	public SubFolder(String name, RootFolder parent){
-		this.hibSubFolder = new HibNonRootFolder(parent.getHibObject(), name);
+		this.hibSubFolder = new HibSubFolder(parent.getHibObject(), name);
 	}
 	
-	public SubFolder(HibNonRootFolder hibSubFolder){
+	public SubFolder(HibSubFolder hibSubFolder){
 		this.hibSubFolder = hibSubFolder;
 	}
 

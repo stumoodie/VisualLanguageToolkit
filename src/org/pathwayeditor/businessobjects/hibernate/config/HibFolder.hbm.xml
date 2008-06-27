@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
 	<class
 		name="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder"
@@ -24,7 +23,7 @@
 				<column name="parent_folder_id" not-null="true" />
 			</key>
 			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNonRootFolder" />
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder" />
 		</set>
 
 		<joined-subclass
@@ -34,16 +33,16 @@
 			<key column="id" />
 			<many-to-one name="dataStore"
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
-				<column name="data_source_id" not-null="true"
+				<column name="repository_id" not-null="true"
 					unique="true" />
 			</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibNonRootFolder"
-			table="NonRootFolder">
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder"
+			table="SubFolder">
 			<key column="id" />
-			<properties name="xak1nonrootfolder" unique="true">
+			<properties name="xak1subfolder" unique="true">
 				<many-to-one name="parentFolder"
 					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
 					<column name="parent_folder_id" not-null="true" />

@@ -4,14 +4,18 @@
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.password">epebo</property>
-        <property name="hibernate.connection.url">jdbc:postgresql:epebo</property>
-        <property name="hibernate.connection.username">epebo</property>
-        <property name="hibernate.default_schema">epebo</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+        <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+        <!-- property name="hibernate.connection.pool_size">1</property-->
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
         
+        <!-- 
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibContext.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibProperty.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibObjectType.hbm.xml" />
@@ -23,6 +27,7 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvas.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminus.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminusDecorator.hbm.xml" />
+        -->
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMapDiagram.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />

@@ -249,4 +249,16 @@ public class HibShape implements Serializable {
 	public HibCanvas getCanvas() {
 		return this.canvas;
 	}
+
+	public void changeCanvas(HibCanvas newCanvas) {
+		HibCanvas oldCanvas = this.canvas ;
+		this.canvas = newCanvas;
+		if (oldCanvas != null) {
+			oldCanvas.getShapes().remove(this);
+		}
+		if (this.canvas != null) {
+			this.canvas.getShapes().add(this);
+		}
+		
+	}
 }

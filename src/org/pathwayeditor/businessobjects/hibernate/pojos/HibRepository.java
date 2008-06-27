@@ -26,12 +26,10 @@ public class HibRepository implements Serializable {
 		this.hibRootFolder = new HibRootFolder(this, other.hibRootFolder);
 	}
 
-	public HibRepository(String name, String description, int buildNum,
-			HibRootFolder hibRootFolder) {
+	public HibRepository(String name, String description, int buildNum ) {
 		this.name = name;
 		this.description = description;
 		this.buildNum = buildNum;
-		this.hibRootFolder = hibRootFolder;
 	}
 
 	public Long getId() {
@@ -126,7 +124,7 @@ public class HibRepository implements Serializable {
 		return this.businessObject;
 	}
 	
-	void setBuildNum(int buildNum){
+	public void setBuildNum(int buildNum){
 		this.buildNum = buildNum;
 	}
 	
