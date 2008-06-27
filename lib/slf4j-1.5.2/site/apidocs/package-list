@@ -1,0 +1,8 @@
+org.apache.commons.logging
+org.apache.commons.logging.impl
+org.apache.log4j
+org.slf4j
+org.slf4j.bridge
+org.slf4j.helpers
+org.slf4j.impl
+org.slf4j.spi
