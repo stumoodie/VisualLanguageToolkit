@@ -67,5 +67,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-jdk14-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-simple-1.5.2.jar"/>
+	<classpathentry kind="lib" path="/CompoundGraph/compoundgraph.jar" sourcepath="/CompoundGraph/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
