@@ -4,7 +4,6 @@
 package org.pathwayeditor.businessobjects.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.notationservice.IContext;
@@ -17,15 +16,21 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 public class Canvas implements ICanvas {
 	private final HibCanvas hibCanvas;
 	private final IContext context;
-	private final IModel model;
+	private final Model model;
 	
-	public Canvas(IMap map, IContext context, IModel model){
+	public Canvas(Map map, IContext context, Model model){
 		this.hibCanvas = new HibCanvas();
 		this.context = context;
 		this.model = model;
 	}
 	
-	public Canvas(HibCanvas canvas, IContext context, IModel model){
+	public Canvas(IContext context, Model model){
+		this.hibCanvas = new HibCanvas();
+		this.context = context;
+		this.model = model;
+	}
+	
+	public Canvas(HibCanvas canvas){
 		this.hibCanvas = canvas;
 		this.context = context;
 		this.model = model;
@@ -55,7 +60,7 @@ public class Canvas implements ICanvas {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getModel()
 	 */
-	public IModel getModel() {
+	public Model getModel() {
 		return this.model;
 	}
 
@@ -121,6 +126,22 @@ public class Canvas implements ICanvas {
 	public void setUrl(String url) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * @return
+	 */
+	int nextCreationSerial() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * @return
+	 */
+	HibCanvas getHibObject() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

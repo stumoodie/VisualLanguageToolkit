@@ -12,7 +12,7 @@ import uk.ed.inf.graph.compound.impl.CompoundNode;
  *
  */
 public class LinkEdgeColourHandler implements IEdgeColourHandler<CompoundNode, CompoundEdge> {
-	private CompoundEdge edge;
+//	private CompoundEdge edge;
 	private Link link;
 	
 	/* (non-Javadoc)

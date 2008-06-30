@@ -14,12 +14,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Connection
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLink;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
 
 import uk.ed.inf.graph.compound.impl.CompoundEdge;
 import uk.ed.inf.graph.compound.impl.CompoundEdgeFactory;
 import uk.ed.inf.graph.compound.impl.CompoundGraph;
+import uk.ed.inf.graph.compound.impl.CompoundNode;
 import uk.ed.inf.graph.compound.impl.SubCompoundGraphFactory;
 
 /**
@@ -27,21 +29,42 @@ import uk.ed.inf.graph.compound.impl.SubCompoundGraphFactory;
  *
  */
 public class Link implements ILink {
-	private HibLink hibLink;
+//	private HibLink hibLink;
 	private CompoundEdge linkEdge;
 	private final ILinkObjectType objectType;
 	
-	public Link(ILinkObjectType objectType, CompoundEdge edge){
+	public Link(Canvas canvas, ILinkObjectType objectType, CompoundEdge edge){
 		this.objectType = objectType;
 		this.linkEdge = edge;
-		this.hibLink = new HibLink();
-		this.linkEdge.getColourHandler().setColour(this);
+		HibObjectType hibObjectType = ObjectTypeMappingFactory.getInstance().createHibLinkObjectType(objectType);
+		HibLink hibLink = new HibLink(canvas.getHibObject(), canvas.nextCreationSerial(), hibObjectType);
+		this.linkEdge.getColourHandler().setColour(hibLink);
 	}
 	
-	public Link(ILinkObjectType objectType, HibLink hibLink){
-		this.objectType = objectType;
-		this.linkEdge = null;
+	public Link(HibLink hibLink){
+		this.objectType = ObjectTypeMappingFactory.getInstance().getLinkObjectType(hibLink.getObjectType());
+		CompoundGraph graph = hibLink.getCanvas().getBusinessObject().getModel().getGraph();
+		CompoundNode outNode = hibLink.getSourceShape().getBusinessObject().getNode();
+		CompoundNode inNode = hibLink.getTargetShape().getBusinessObject().getNode();
+		this.linkEdge = createNewEdge(graph, outNode, inNode);
 		this.linkEdge.getColourHandler().setColour(hibLink);
+	}
+	
+	
+	private static CompoundEdge createNewEdge(CompoundGraph graph, CompoundNode outNode, CompoundNode inNode){
+		CompoundEdgeFactory fact = graph.edgeFactory();
+		fact.setColourHandler(new LinkEdgeColourHandler());
+		fact.setPair(outNode, inNode);
+		CompoundEdge newEdge = fact.createEdge();
+		return newEdge;
+	}
+	
+	public Canvas getCanvas(){
+		return this.getHibLink().getCanvas().getBusinessObject();
+	}
+	
+	public int getCreationSerial(){
+		return this.getHibLink().getLinkIndex();
 	}
 	
 	void setEdge(CompoundEdge edge){
@@ -172,7 +195,7 @@ public class Link implements ILink {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#numBendPoints()
 	 */
 	public int numBendPoints() {
-		return this.hibLink.getBendPoints().size();
+		return this.getHibLink().getBendPoints().size();
 	}
 
 	/* (non-Javadoc)
@@ -251,7 +274,7 @@ public class Link implements ILink {
 		return this.linkEdge;
 	}
 	
-	HibLink getHiblink(){
-		return this.hibLink;
+	HibLink getHibLink(){
+		return (HibLink)this.linkEdge.getColourHandler().getColour();
 	}
 }

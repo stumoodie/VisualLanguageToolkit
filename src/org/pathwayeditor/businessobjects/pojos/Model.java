@@ -185,4 +185,12 @@ public class Model implements IModel {
 		return null;
 	}
 
+	/**
+	 * @return
+	 */
+	CompoundGraph getGraph() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
