@@ -9,6 +9,10 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 public interface ILink extends IZOrderedObject, IAnnotatedObject {
 
+	ICanvas getCanvas();
+	
+	int getCreationSerial();
+	
 	ILinkObjectType getObjectType();
 	
 	ILinkEndDecoration getLinkSourceDecoration();
