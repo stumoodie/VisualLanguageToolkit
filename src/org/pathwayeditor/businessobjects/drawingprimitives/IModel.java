@@ -17,7 +17,7 @@ public interface IModel {
 	IContextAdapterServiceProvider getContextAdapterServiceProvider();
 	
 	
-	IModel createCopy();
+	IModel createCopy(ICanvas newCanvas);
 	
 	boolean canCreateLink(ILinkObjectType linkObjectType,
 				IShape srcShape, IShape tgtShape);

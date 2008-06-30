@@ -32,8 +32,9 @@ public class Canvas implements ICanvas {
 	
 	public Canvas(HibCanvas canvas){
 		this.hibCanvas = canvas;
-		this.context = context;
-		this.model = model;
+		//TODO: Fix this. 
+		this.context = null;//context;
+		this.model = null;//model;
 	}
 	
 	public IContext getContext(){

@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraphBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
@@ -16,8 +17,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
 import org.pathwayeditor.businessobjects.notationservice.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-import uk.ed.inf.graph.compound.impl.CompoundEdge;
-import uk.ed.inf.graph.compound.impl.CompoundEdgeFactory;
 import uk.ed.inf.graph.compound.impl.CompoundGraph;
 import uk.ed.inf.graph.compound.impl.CompoundNode;
 
@@ -27,16 +26,23 @@ import uk.ed.inf.graph.compound.impl.CompoundNode;
  */
 public class Model implements IModel {
 	private final CompoundGraph graph;
+	private final Canvas canvas;
 	
-	public Model(Object hibGraph, ICompoundGraphBuilder compoundGraphBuilder){
+	public Model(Canvas canvas, Object hibGraph, ICompoundGraphBuilder compoundGraphBuilder){
+		this.canvas = canvas;
 		this.graph = new CompoundGraph();
 		compoundGraphBuilder.setCompoundGraph(graph);
 		compoundGraphBuilder.setHibernateGraph(hibGraph);
 		compoundGraphBuilder.buildGraph();
 	}
 	
-	public Model(Model otherModel){
+	public Model(Model otherModel, Canvas newCanvas){
 		this.graph = new CompoundGraph(otherModel.graph);
+		this.canvas = newCanvas;
+	}
+	
+	public Canvas getCanvas(){
+		return this.canvas;
 	}
 	
 	/* (non-Javadoc)
@@ -51,21 +57,24 @@ public class Model implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#createCopy()
 	 */
-	public IModel createCopy() {
-		return new Model(this);
+	public IModel createCopy(ICanvas iNewCanvas) {
+		Canvas newCanvas = (Canvas)iNewCanvas;
+		return new Model(this, newCanvas);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#createLink(org.pathwayeditor.businessobjects.typedefn.ILinkObjectType, org.pathwayeditor.businessobjects.drawingprimitives.IShape, org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public ILink createLink(ILinkObjectType linkObjectType, IShape srcShape, IShape tgtShape) {
-		CompoundNode outNode = getNode(srcShape);
-		CompoundNode inNode = getNode(tgtShape);
-		CompoundEdgeFactory edgeFactory = this.graph.edgeFactory();
-		edgeFactory.setColourHandler(new LinkEdgeColourHandler());
-		edgeFactory.setPair(outNode, inNode);
-		CompoundEdge edge = edgeFactory.createEdge();
-		ILink newLink = new Link(linkObjectType, edge);
+	public ILink createLink(ILinkObjectType linkObjectType, IShape iSrcShape, IShape iTgtShape) {
+		Shape srcShape = (Shape)iSrcShape;
+		Shape tgtShape = (Shape)iTgtShape;
+//		CompoundNode outNode = getNode(srcShape);
+//		CompoundNode inNode = getNode(tgtShape);
+//		CompoundEdgeFactory edgeFactory = this.graph.edgeFactory();
+//		edgeFactory.setColourHandler(new LinkEdgeColourHandler());
+//		edgeFactory.setPair(outNode, inNode);
+//		CompoundEdge edge = edgeFactory.createEdge();
+		ILink newLink = new Link(this.getCanvas(), linkObjectType, srcShape, tgtShape);
 		return newLink;
 	}
 

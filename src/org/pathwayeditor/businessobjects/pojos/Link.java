@@ -33,11 +33,11 @@ public class Link implements ILink {
 	private CompoundEdge linkEdge;
 	private final ILinkObjectType objectType;
 	
-	public Link(Canvas canvas, ILinkObjectType objectType, CompoundEdge edge){
+	public Link(Canvas canvas, ILinkObjectType objectType, Shape outNode, Shape inNode){
 		this.objectType = objectType;
-		this.linkEdge = edge;
 		HibObjectType hibObjectType = ObjectTypeMappingFactory.getInstance().createHibLinkObjectType(objectType);
 		HibLink hibLink = new HibLink(canvas.getHibObject(), canvas.nextCreationSerial(), hibObjectType);
+		this.linkEdge = createNewEdge(getGraph(), outNode.getNode(), inNode.getNode());
 		this.linkEdge.getColourHandler().setColour(hibLink);
 	}
 	
@@ -50,6 +50,10 @@ public class Link implements ILink {
 		this.linkEdge.getColourHandler().setColour(hibLink);
 	}
 	
+	
+	private CompoundGraph getGraph(){
+		return this.getCanvas().getModel().getGraph();
+	}
 	
 	private static CompoundEdge createNewEdge(CompoundGraph graph, CompoundNode outNode, CompoundNode inNode){
 		CompoundEdgeFactory fact = graph.edgeFactory();
