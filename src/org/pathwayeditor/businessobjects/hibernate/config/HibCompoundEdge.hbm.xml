@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge" table="compoundedge">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1compoundedge" unique="true">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
+            	<column name="model_id" not-null="true" />
+        	</many-to-one>
+        	<property name="edgeIndex" type="int" >
+        		<column name="edge_index" not-null="true"/>
+        	</property>
+        </properties>
+        <many-to-one name="owningChildGraph" class="org.pathwayeditor.busiessobjects.hibernate.HibShapeModel">
+        	<column name="owning_child_model_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="outNode" class="org.pathwayeditor.busiessobjects.hibernate.HibCompoundNode">
+        	<column name="out_node_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="inNode" class="org.pathwayeditor.busiessobjects.hibernate.HibCompoundNode">
+        	<column name="in_node_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

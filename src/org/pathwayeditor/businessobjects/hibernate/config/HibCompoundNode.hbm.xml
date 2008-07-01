@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompundNode" table="compoundnode">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1compoundnode" unique="true">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibGraph">
+            	<column name="model_id" not-null="true" />
+        	</many-to-one>
+        	<property name="nodeIndex" type="int" >
+        		<column name="node_index" not-null="true"/>
+        	</property>
+        </properties>
+        <many-to-one name="owningChildModel" class="org.pathwayeditor.busiessobjects.hibernate.HibShapeModel">
+        	<column name="owning_child_model_id" not-null="false"/>
+        </many-to-one>
+        <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
+            <key column="parent_id" not-null="false" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/>
+        </set>
+        <set name="outEdges" inverse="true" table="compoundedge" cascade="all,delete-orphan">
+            <key column="out_node_id" not-null="true" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge"/>
+        </set>
+    </class>
+</hibernate-mapping>
