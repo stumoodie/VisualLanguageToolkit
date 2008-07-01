@@ -3,29 +3,21 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.Property" table="property">
-    	<meta attribute="class-code">
-	private static final long serialVersionUID = -1996477907215294788L;
-    	</meta>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" table="property">
         <id name="id" type="java.lang.Long">
             <column name="id" />
             <generator class="native" />
         </id>
         <properties name="xak1property" unique="true">
-        	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas" fetch="select">
-	   	    	<meta attribute="use-in-equals">true</meta>
+        	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" fetch="select">
             	<column name="canvas_id" not-null="true" />
         	</many-to-one>
         	<property name="creationSerial" type="int">
-	            <meta attribute="use-in-equals">true</meta>
 	            <column name="creation_serial" not-null="true" />
     	    </property>
     	</properties>
 
-    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.TextProperty" table="textproperty">
-    		<meta attribute="class-code">
-	private static final long serialVersionUID = 2408749022194227955L;
-    		</meta>
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty" table="textproperty">
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
@@ -34,10 +26,7 @@
         	</property>
     	</joined-subclass>
 
-    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.RichTextProperty" table="richtextproperty">
-    		<meta attribute="class-code">
-	private static final long serialVersionUID = -4043561259224207426L;
-    		</meta>
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty" table="richtextproperty">
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
@@ -46,10 +35,7 @@
         	</property>
     	</joined-subclass>
 
-    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.NumberProperty" table="numberproperty">
-    		<meta attribute="class-code">
-	private static final long serialVersionUID = 1951406655193239331L;
-    		</meta>
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty" table="numberproperty">
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
@@ -58,10 +44,7 @@
         	</property>
     	</joined-subclass>
 
-    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.ListProperty" table="listproperty">
-    		<meta attribute="class-code">
-	private static final long serialVersionUID = 3772272140640145846L;
-    		</meta>
+    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibListProperty" table="listproperty">
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>

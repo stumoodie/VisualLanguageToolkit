@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeModel" table="shapemodel">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1shapemodel" unique="true">
+        	<many-to-one name="rootNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+            	<column name="id" not-null="false" />
+        	</many-to-one>
+        </properties>
+        <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
+            <key column="owning_shape_model_id" not-null="true" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/>
+        </set>
+        <set name="edges" inverse="true" table="compoundedge" cascade="all,delete-orphan">
+            <key column="owning_shape_model_id" not-null="true" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge"/>
+        </set>
+    </class>
+</hibernate-mapping>

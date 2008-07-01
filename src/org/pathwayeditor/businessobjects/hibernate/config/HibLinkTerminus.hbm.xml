@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.LinkTerminus" table="linkterminus">
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" table="linkterminus">
     	<meta attribute="class-code">
 	private static final long serialVersionUID = -4462637156010353035L;
     	</meta>
@@ -12,7 +12,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1linkterminus" unique="true">
-        	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.Link" fetch="select">
+        	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink">
 	   	    	<meta attribute="use-in-equals">true</meta>
             	<column name="link_id" not-null="true" />
         	</many-to-one>
@@ -24,8 +24,8 @@
         <property name="offset" type="short">
             <column name="offset" not-null="true" />
         </property>
-        <one-to-one name="decorator" class="org.pathwayeditor.businessobjects.hibernate.pojos.LinkTerminusDecorator"/>
-        <one-to-one name="linkenddecorators" class="org.pathwayeditor.businessobjects.hibernate.pojos.LinkEndDecorator" />
+        <one-to-one name="decorator" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminusDecorator"/>
+        <one-to-one name="linkenddecorators" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator" />
        	<map name="properties" table="linkterminusproperty">
            	<key>
                	<column name="link_terminus_id" not-null="true" />
@@ -33,7 +33,7 @@
            	<map-key type="string">
            		<column name="name" not-null="true"/>
            	</map-key>
-           	<many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Property">
+           	<many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty">
            		<column name="property_id" not-null="true"/>
            	</many-to-many>
        	</map>

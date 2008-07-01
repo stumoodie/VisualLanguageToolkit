@@ -3,11 +3,8 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.Link"
+	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink"
 		table="link">
-		<meta attribute="class-code">
-	private static final long serialVersionUID = 8124494867402957446L;
-		</meta>
 		<id name="id" type="java.lang.Long">
 			<column name="id" />
 			<generator class="native" />
@@ -16,19 +13,16 @@
 			<many-to-one name="canvas"
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas"
 				fetch="select">
-	   	    	<meta attribute="set-scope"></meta>
-				<meta attribute="use-in-equals">true</meta>
 				<column name="canvas_id" not-null="true" />
 			</many-to-one>
-			<property name="link_index" type="int">
-				<meta attribute="use-in-equals">true</meta>
+			<property name="ceationSerial" type="int">
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>
-		<many-to-one name="objectType"
-			class="org.pathwayeditor.businessobjects.hibernate.pojos.ObjectType"
-			fetch="select">
-  	    	<meta attribute="use-in-equals">true</meta>
+		<many-to-one name="edge" class="org.pathwayeditor.businessobjects.hibernate.pojos.CompoundEdge">
+			<column name="edge_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">
 			<column name="object_type_id" not-null="true" />
 		</many-to-one>
 		<property name="name" type="string">
@@ -56,17 +50,6 @@
 				<column name="property_id" not-null="true" />
 			</many-to-many>
 		</map>
-		<many-to-one name="targetShape"
-			class="org.pathwayeditor.businessobjects.hibernate.pojos.Shape"
-			fetch="select">
-   	    	<meta attribute="use-in-equals">true</meta>
-			<column name="tgt_shape_id" not-null="true" />
-		</many-to-one>
-		<many-to-one name="sourceShape"
-			class="org.pathwayeditor.businessobjects.hibernate.pojos.Shape"
-			fetch="select">
-			<column name="src_shape_id" not-null="true" />
-		</many-to-one>
 		<property name="lineRed" type="int">
 			<column name="line_red" not-null="true" />
 		</property>
