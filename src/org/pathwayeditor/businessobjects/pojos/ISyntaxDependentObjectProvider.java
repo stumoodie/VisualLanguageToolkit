@@ -7,7 +7,7 @@ package org.pathwayeditor.businessobjects.pojos;
  * @author smoodie
  *
  */
-public interface ISyntaxServiceDependentObjectProvider {
+public interface ISyntaxDependentObjectProvider {
 
 	void setSyntaxMappingFactory(ISyntaxMappingFactory mappingFactory);
 	

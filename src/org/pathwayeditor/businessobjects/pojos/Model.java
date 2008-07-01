@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.contectadapter.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraphBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
@@ -14,7 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraphFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
-import org.pathwayeditor.businessobjects.notationservice.IContextAdapterServiceProvider;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ed.inf.graph.compound.impl.CompoundGraph;
@@ -26,10 +27,15 @@ import uk.ed.inf.graph.compound.impl.CompoundNode;
  */
 public class Model implements IModel {
 	private final CompoundGraph graph;
-	private final Canvas canvas;
+	private final HibModel hibGraph;
 	
-	public Model(Canvas canvas, Object hibGraph, ICompoundGraphBuilder compoundGraphBuilder){
-		this.canvas = canvas;
+	public Model(Canvas canvas){
+		this.hibGraph = new HibModel(canvas.getHibObject());
+		this.graph = new CompoundGraph();
+	}
+	
+	public Model(ICompoundGraphBuilder compoundGraphBuilder, HibModel hibGraph){
+		this.hibGraph = hibGraph;
 		this.graph = new CompoundGraph();
 		compoundGraphBuilder.setCompoundGraph(graph);
 		compoundGraphBuilder.setHibernateGraph(hibGraph);
@@ -38,11 +44,11 @@ public class Model implements IModel {
 	
 	public Model(Model otherModel, Canvas newCanvas){
 		this.graph = new CompoundGraph(otherModel.graph);
-		this.canvas = newCanvas;
+		this.hibGraph = new HibModel(newCanvas.getHibObject());
 	}
 	
 	public Canvas getCanvas(){
-		return this.canvas;
+		return this.hibGraph.getCanvas().getBusinessObject();
 	}
 	
 	/* (non-Javadoc)
@@ -68,23 +74,8 @@ public class Model implements IModel {
 	public ILink createLink(ILinkObjectType linkObjectType, IShape iSrcShape, IShape iTgtShape) {
 		Shape srcShape = (Shape)iSrcShape;
 		Shape tgtShape = (Shape)iTgtShape;
-//		CompoundNode outNode = getNode(srcShape);
-//		CompoundNode inNode = getNode(tgtShape);
-//		CompoundEdgeFactory edgeFactory = this.graph.edgeFactory();
-//		edgeFactory.setColourHandler(new LinkEdgeColourHandler());
-//		edgeFactory.setPair(outNode, inNode);
-//		CompoundEdge edge = edgeFactory.createEdge();
 		ILink newLink = new Link(this.getCanvas(), linkObjectType, srcShape, tgtShape);
 		return newLink;
-	}
-
-	/**
-	 * @param srcShape
-	 * @return
-	 */
-	private CompoundNode getNode(IShape srcShape) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/* (non-Javadoc)

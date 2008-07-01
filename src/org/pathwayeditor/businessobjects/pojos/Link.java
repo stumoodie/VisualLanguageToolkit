@@ -29,20 +29,22 @@ import uk.ed.inf.graph.compound.impl.SubCompoundGraphFactory;
  *
  */
 public class Link implements ILink {
-//	private HibLink hibLink;
 	private CompoundEdge linkEdge;
 	private final ILinkObjectType objectType;
+	private final ISyntaxMappingFactory mappingFactory;
 	
 	public Link(Canvas canvas, ILinkObjectType objectType, Shape outNode, Shape inNode){
+		this.mappingFactory = canvas.getSyntaxMappingFactory();
 		this.objectType = objectType;
-		HibObjectType hibObjectType = ObjectTypeMappingFactory.getInstance().createHibLinkObjectType(objectType);
+		HibObjectType hibObjectType = this.mappingFactory.createHibObjectType(objectType);
 		HibLink hibLink = new HibLink(canvas.getHibObject(), canvas.nextCreationSerial(), hibObjectType);
 		this.linkEdge = createNewEdge(getGraph(), outNode.getNode(), inNode.getNode());
 		this.linkEdge.getColourHandler().setColour(hibLink);
 	}
 	
-	public Link(HibLink hibLink){
-		this.objectType = ObjectTypeMappingFactory.getInstance().getLinkObjectType(hibLink.getObjectType());
+	public Link(ISyntaxMappingFactory syntaxMappingFactory, HibLink hibLink){
+		this.mappingFactory = syntaxMappingFactory;
+		this.objectType = this.mappingFactory.getLinkObjectType(hibLink.getObjectType());
 		CompoundGraph graph = hibLink.getCanvas().getBusinessObject().getModel().getGraph();
 		CompoundNode outNode = hibLink.getSourceShape().getBusinessObject().getNode();
 		CompoundNode inNode = hibLink.getTargetShape().getBusinessObject().getNode();
@@ -68,7 +70,7 @@ public class Link implements ILink {
 	}
 	
 	public int getCreationSerial(){
-		return this.getHibLink().getLinkIndex();
+		return this.getHibLink().getCreationSerial();
 	}
 	
 	void setEdge(CompoundEdge edge){

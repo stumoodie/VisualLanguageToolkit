@@ -5,7 +5,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.notationservice.IContextAdapterServiceProvider;
+import org.pathwayeditor.businessobjects.contectadapter.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 /**

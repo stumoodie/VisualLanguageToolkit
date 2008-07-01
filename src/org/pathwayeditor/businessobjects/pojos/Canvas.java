@@ -3,10 +3,10 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
+import org.pathwayeditor.businessobjects.contectadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.notationservice.IContext;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
@@ -16,25 +16,20 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 public class Canvas implements ICanvas {
 	private final HibCanvas hibCanvas;
 	private final IContext context;
-	private final Model model;
 	
-	public Canvas(Map map, IContext context, Model model){
+	public Canvas(ISyntaxMappingFactory mappingFactory, Map map, IContext context){
 		this.hibCanvas = new HibCanvas();
 		this.context = context;
-		this.model = model;
 	}
 	
-	public Canvas(IContext context, Model model){
+	public Canvas(ISyntaxMappingFactory mappingFactory, IContext context){
 		this.hibCanvas = new HibCanvas();
 		this.context = context;
-		this.model = model;
 	}
 	
-	public Canvas(HibCanvas canvas){
+	public Canvas(ISyntaxMappingFactory mappingFactory, HibCanvas canvas){
 		this.hibCanvas = canvas;
-		//TODO: Fix this. 
-		this.context = null;//context;
-		this.model = null;//model;
+		this.context = mappingFactory.getContext(this.hibCanvas.getContext());
 	}
 	
 	public IContext getContext(){
@@ -62,7 +57,7 @@ public class Canvas implements ICanvas {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getModel()
 	 */
 	public Model getModel() {
-		return this.model;
+		return this.hibCanvas.getModel().getBusinessObject();
 	}
 
 	/* (non-Javadoc)
@@ -141,6 +136,14 @@ public class Canvas implements ICanvas {
 	 * @return
 	 */
 	HibCanvas getHibObject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	ISyntaxMappingFactory getSyntaxMappingFactory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

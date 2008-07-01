@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.notationservice.IContext;
+import org.pathwayeditor.businessobjects.contectadapter.IContext;
 
 /**
  * @author smoodie

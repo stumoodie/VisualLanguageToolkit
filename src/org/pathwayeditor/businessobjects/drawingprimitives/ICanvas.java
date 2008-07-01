@@ -1,7 +1,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.contectadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.notationservice.IContext;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 
