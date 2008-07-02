@@ -29,8 +29,7 @@ public class HibLink implements IBusinessObjectData<Link>,
 	private String description;
 	private String detailedDescription;
 	private String url;
-	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(
-			0);
+	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private HibShape targetShape;
 	private HibShape sourceShape;
 	private int lineRed;
@@ -40,19 +39,19 @@ public class HibLink implements IBusinessObjectData<Link>,
 	private int lineWidth;
 	private short routerType;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
-	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(
-			0);
+	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
 	private Link businessObject;
 	private ISyntaxMappingFactory syntaxMappingFactory;
 
 	public HibLink() {
 	}
 
-	public HibLink(HibCanvas hibCanvas, int link_index,
+	public HibLink(Link businessObject, HibCanvas hibCanvas, int link_index,
 			HibObjectType hibObjectType) {
 		this.hibCanvas = hibCanvas;
 		this.creationSerial = link_index;
 		this.hibObjectType = hibObjectType;
+		this.businessObject = businessObject;
 	}
 
 	public Long getId() {

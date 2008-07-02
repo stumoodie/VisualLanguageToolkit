@@ -9,6 +9,6 @@ package org.pathwayeditor.businessobjects.repository;
  */
 public interface IRootFolder extends IFolder {
 
-	IRepository getDataSource();
+	IRepository getRepository();
 	
 }

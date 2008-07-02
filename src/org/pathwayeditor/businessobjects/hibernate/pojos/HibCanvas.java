@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-// Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,8 +17,8 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	private static final long serialVersionUID = 807306412269098190L;
 
 	private Long id;
-	private HibMapDiagram hibMapDiagram;
-	private HibContext hibContext;
+	private HibMapDiagram mapDiagram;
+	private HibContext context;
 	private int gridX;
 	private int gridY;
 	private boolean gridEnabled;
@@ -33,16 +31,21 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	private Set<HibShape> hibShapes = new HashSet<HibShape>(0);
 	private Set<HibLink> hibLinks = new HashSet<HibLink>(0);
 	private Set<HibLabel> hibLabels = new HashSet<HibLabel>(0);
-	private HibModel hibGraph = null;
-	private Canvas businessObject;
+	private HibModel hibModel = null;
+	private Canvas businessObject = null;
 	private ISyntaxMappingFactory mappingFactory;
 
 	public HibCanvas() {
 	}
 
+	public HibCanvas(HibMapDiagram mapDiagram, HibContext context) {
+		this.mapDiagram = mapDiagram;
+		this.context = context;
+	}
+
 	public HibCanvas(HibMapDiagram newMap, HibCanvas other) {
-		this.hibMapDiagram = newMap;
-		this.hibContext = other.hibContext;
+		this.mapDiagram = newMap;
+		this.context = other.context;
 		this.gridX = other.gridX;
 		this.gridY = other.gridY;
 		this.gridEnabled = other.gridEnabled;
@@ -61,6 +64,14 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 		for(HibLabel hibLabel : other.hibLabels){
 			this.hibLabels.add(hibLabel);
 		}
+		// the model is ignored as it is only created when the hibernate classes are
+		// persisted.
+		this.hibModel = null;
+		this.mappingFactory = other.mappingFactory;
+	}
+
+	public HibCanvas(HibCanvas other) {
+		this(null, other);
 	}
 
 	public Long getId() {
@@ -72,19 +83,19 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	}
 
 	public HibMapDiagram getMapDiagram() {
-		return this.hibMapDiagram;
+		return this.mapDiagram;
 	}
 
 	public void setMapDiagram(HibMapDiagram hibMapDiagram) {
-		this.hibMapDiagram = hibMapDiagram;
+		this.mapDiagram = hibMapDiagram;
 	}
 
 	public HibContext getContext() {
-		return this.hibContext;
+		return this.context;
 	}
 
 	public void setContext(HibContext hibContext) {
-		this.hibContext = hibContext;
+		this.context = hibContext;
 	}
 
 	public int getGridX() {
@@ -184,11 +195,11 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	}
 	
 	public HibModel getModel(){
-		return this.hibGraph;
+		return this.hibModel;
 	}
 	
 	void setModel(HibModel model){
-		this.hibGraph = model;
+		this.hibModel = model;
 	}
 	
 	public void changeModel(HibModel model){

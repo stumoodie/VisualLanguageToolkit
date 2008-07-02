@@ -9,4 +9,6 @@ package org.pathwayeditor.businessobjects.repository;
  */
 public interface ISubFolder extends IFolder {
 
+	IFolder getOwner();
+	
 }

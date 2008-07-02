@@ -2,19 +2,17 @@ package org.pathwayeditor.businessobjects.repository;
 
 import java.util.Iterator;
 
-public interface IFolder extends IRepositoryItem {
-
-	Iterator<IRepositoryItem> levelOrderIterator();
+public interface IFolder {
 
 	Iterator<ISubFolder> levelOrderFolderIterator();
 
-	IFolder getOwner();
-
+	String getName();
+	
 	boolean isRootFolder();
 
 	int numSubFolders();
 
-	Iterator<ISubFolder> getSubfolderIterator();
+	Iterator<? extends ISubFolder> getSubfolderIterator();
 	
 	/**
 	 * Can the name be used for a subfolder in this folder. This tests that the name

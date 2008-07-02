@@ -9,14 +9,13 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
-import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 /**
  * @author smoodie
  *
  */
-public class SubFolder implements ISubFolder {
+public class SubFolder implements ISubFolder, IHibernateFacade<HibSubFolder> {
 	private final HibSubFolder hibSubFolder;
 	
 	public SubFolder(String name, SubFolder parent){
@@ -162,7 +161,7 @@ public class SubFolder implements ISubFolder {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#levelOrderIterator()
 	 */
-	public Iterator<IRepositoryItem> levelOrderIterator() {
+	public Iterator<SubFolder> levelOrderIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -243,6 +242,14 @@ public class SubFolder implements ISubFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getRepository()
 	 */
 	public IRepository getRepository() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.pojos.HibernateFacade#getHibObject()
+	 */
+	public HibSubFolder getHibObject() {
 		// TODO Auto-generated method stub
 		return null;
 	}

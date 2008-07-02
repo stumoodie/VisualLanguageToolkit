@@ -7,7 +7,6 @@ import org.pathwayeditor.businessobjects.contectadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
  * @author smoodie
@@ -16,22 +15,55 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 public class Canvas implements ICanvas {
 	private final HibCanvas hibCanvas;
 	private final IContext context;
+	private static int creationCntr = 0;
+	private ISyntaxMappingFactory mappingFactory;
 	
+	/**
+	 * Constructs a canvas that blongs to a map.
+	 * @param mappingFactory
+	 * @param map
+	 * @param context
+	 */
 	public Canvas(ISyntaxMappingFactory mappingFactory, Map map, IContext context){
-		this.hibCanvas = new HibCanvas();
 		this.context = context;
+		this.hibCanvas = new HibCanvas(map.getHibObject(), mappingFactory.createHibContext(context));
+		this.mappingFactory = mappingFactory;
 	}
 	
+	/**
+	 * Contructs a canvas that is not associated with a map and is therefore transient.
+	 * @param mappingFactory
+	 * @param context
+	 */
 	public Canvas(ISyntaxMappingFactory mappingFactory, IContext context){
 		this.hibCanvas = new HibCanvas();
 		this.context = context;
+		this.mappingFactory = mappingFactory;
 	}
 	
+	/**
+	 * Constructs a canvas from the equivalent hibernate object. 
+	 * @param mappingFactory A mapping factory used to map between hibernate and CA classes. 
+	 * @param canvas the equivalent hibernate canvas class that this can will be a facade for. 
+	 */
 	public Canvas(ISyntaxMappingFactory mappingFactory, HibCanvas canvas){
 		this.hibCanvas = canvas;
 		this.context = mappingFactory.getContext(this.hibCanvas.getContext());
 	}
 	
+	public Canvas(Map newMap, Canvas other){
+		this.hibCanvas = new HibCanvas(newMap.getHibObject(), other.hibCanvas);
+		this.context = other.context;
+	}
+	
+	public Canvas(Canvas other){
+		this.hibCanvas = new HibCanvas(other.hibCanvas);
+		this.context = other.context;
+	}
+	
+	/**
+	 * Get the context used by this canvas. 
+	 */
 	public IContext getContext(){
 		return this.context;
 	}
@@ -48,9 +80,8 @@ public class Canvas implements ICanvas {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMap()
 	 */
-	public IMap getMap() {
-		// TODO Auto-generated method stub
-		return null;
+	public Map getMap() {
+		return this.hibCanvas.getMapDiagram().getBusinessObject();
 	}
 
 	/* (non-Javadoc)
@@ -124,28 +155,21 @@ public class Canvas implements ICanvas {
 
 	}
 
+	ISyntaxMappingFactory getSyntaxMappingFactory(){
+		return this.mappingFactory;
+	}
+	
 	/**
 	 * @return
 	 */
 	int nextCreationSerial() {
-		// TODO Auto-generated method stub
-		return 0;
+		return ++creationCntr;
 	}
 
 	/**
 	 * @return
 	 */
 	HibCanvas getHibObject() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.hibCanvas;
 	}
-
-	/**
-	 * @return
-	 */
-	ISyntaxMappingFactory getSyntaxMappingFactory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

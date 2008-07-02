@@ -37,7 +37,7 @@ public class Link implements ILink {
 		this.mappingFactory = canvas.getSyntaxMappingFactory();
 		this.objectType = objectType;
 		HibObjectType hibObjectType = this.mappingFactory.createHibObjectType(objectType);
-		HibLink hibLink = new HibLink(canvas.getHibObject(), canvas.nextCreationSerial(), hibObjectType);
+		HibLink hibLink = new HibLink(this, canvas.getHibObject(), canvas.nextCreationSerial(), hibObjectType);
 		this.linkEdge = createNewEdge(getGraph(), outNode.getNode(), inNode.getNode());
 		this.linkEdge.getColourHandler().setColour(hibLink);
 	}

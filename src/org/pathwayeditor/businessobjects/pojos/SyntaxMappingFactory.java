@@ -17,7 +17,6 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  *
  */
 public class SyntaxMappingFactory implements ISyntaxMappingFactory {
-	private static SyntaxMappingFactory anInstance = null;
 	
 	SyntaxMappingFactory(){
 		

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraphBuilder;
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Model;
 
@@ -20,13 +21,21 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	private Set<HibCompoundEdge> edges = new HashSet<HibCompoundEdge>(0);
 	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
 	private HibCanvas canvas = null;
+	private Model businessObject;
+	private ICompoundGraphBuilder compoundGraphBuilder;
 	
 	public HibModel(){
 		
 	}
 	
-	public HibModel(HibCanvas canvas){
+	/**
+	 * Constructor to be used by business object facade.
+	 * @param businessObject
+	 * @param canvas
+	 */
+	public HibModel(Model businessObject, HibCanvas canvas){
 		this.canvas = canvas;
+		this.businessObject = businessObject;
 	}
 	
 	@SuppressWarnings("unused")
@@ -112,7 +121,16 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	 * @see org.pathwayeditor.businessobjects.pojos.IBusinessObjectData#getBusinessObject()
 	 */
 	public Model getBusinessObject() {
-		// TODO Auto-generated method stub
+		if(this.businessObject == null){
+			this.businessObject = new Model(this.compoundGraphBuilder, this);
+		}
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.pojos.ISyntaxDependentObjectProvider#setSyntaxMappingFactory(org.pathwayeditor.businessobjects.pojos.ISyntaxMappingFactory)
+	 */
+	public void setCompoundGraphBuilder(ICompoundGraphBuilder compoundGraphBuilder) {
+		this.compoundGraphBuilder = compoundGraphBuilder;
 	}
 }

@@ -9,7 +9,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
-import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
@@ -17,11 +16,11 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  * @author smoodie
  *
  */
-public class RootFolder implements IRootFolder {
+public class RootFolder implements IRootFolder, IHibernateFacade<HibRootFolder> {
 	private final HibRootFolder hibRootFolder;
 	
 	public RootFolder(Repository repository){
-		this.hibRootFolder = new HibRootFolder(repository.getHibObject());
+		this.hibRootFolder = new HibRootFolder(this, repository.getHibObject());
 	}
 	
 	public RootFolder(HibRootFolder hibRootFolder){
@@ -31,8 +30,8 @@ public class RootFolder implements IRootFolder {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRootFolder#getDataSource()
 	 */
-	public IRepository getDataSource() {
-		return this.hibRootFolder.getDataStore().getBusinessObject();
+	public IRepository getRepository() {
+		return this.hibRootFolder.getRepository().getBusinessObject();
 	}
 
 	/* (non-Javadoc)
@@ -141,8 +140,8 @@ public class RootFolder implements IRootFolder {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubfolderIterator()
 	 */
-	public Iterator<ISubFolder> getSubfolderIterator() {
-		return new BusinessObjectSetIterator<ISubFolder>(this.hibRootFolder.getSubFolders());
+	public Iterator<SubFolder> getSubfolderIterator() {
+		return new BusinessObjectSetIterator<SubFolder>(this.hibRootFolder.getSubFolders());
 	}
 
 	/* (non-Javadoc)
@@ -156,14 +155,6 @@ public class RootFolder implements IRootFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#levelOrderFolderIterator()
 	 */
 	public Iterator<ISubFolder> levelOrderFolderIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.repository.IFolder#levelOrderIterator()
-	 */
-	public Iterator<IRepositoryItem> levelOrderIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -240,15 +231,7 @@ public class RootFolder implements IRootFolder {
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getRepository()
-	 */
-	public IRepository getRepository() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	HibRootFolder getHibObject(){
+	public HibRootFolder getHibObject(){
 		return this.hibRootFolder;
 	}
 }

@@ -67,14 +67,14 @@ public class FolderTest extends DatabaseTestCase {
 			hibRepository.setName("Local");
 			hibRepository.setDescription("Local data store");
 			HibRootFolder hibRootFolder = new HibRootFolder();
-			hibRootFolder.changeDataStore(hibRepository);
+			hibRootFolder.changeRepository(hibRepository);
 			HibSubFolder subFolder = new HibSubFolder();
 			subFolder.setName("subFolder");
 			hibRootFolder.addSubFolder(subFolder);
 			HibMapDiagram map1 = new HibMapDiagram();
 			map1.setName("Test1 Map");
 			map1.setDescription("Test1 Map description");
-			map1.changeFolder(subFolder);
+			map1.changeOwner(subFolder);
 //			HibContext context = new HibContext();
 //			context.setName("TestContext");
 //			context.setDescription("Test Context Description");

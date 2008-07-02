@@ -70,10 +70,10 @@ public class HibRepositoryTest {
 		final HibRootFolder mockRootFolder1 = this.mockery.mock(HibRootFolder.class, "mockRootFolder");
 		final HibRootFolder mockRootFolder2 = this.mockery.mock(HibRootFolder.class, "mockRootFolder2");
 		this.mockery.checking(new Expectations(){{
-			atLeast(1).of(mockRootFolder1).setDataStore(testInstance1);
-			atLeast(1).of(mockRootFolder1).setDataStore(null);
-			atLeast(1).of(mockRootFolder2).setDataStore(testInstance1);
-			atLeast(1).of(mockRootFolder2).setDataStore(null);
+			atLeast(1).of(mockRootFolder1).setRepository(testInstance1);
+			atLeast(1).of(mockRootFolder1).setRepository(null);
+			atLeast(1).of(mockRootFolder2).setRepository(testInstance1);
+			atLeast(1).of(mockRootFolder2).setRepository(null);
 		}});
 		this.testInstance1.changeRootFolder(null);
 		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);

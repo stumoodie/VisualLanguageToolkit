@@ -6,8 +6,8 @@ package org.pathwayeditor.businessobjects.pojos;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
+import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IRepository;
-import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 
 /**
@@ -46,7 +46,7 @@ public class Repository implements IRepository {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#levelOrderIterator()
 	 */
-	public Iterator<IRepositoryItem> levelOrderIterator() {
+	public Iterator<IFolder> levelOrderIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

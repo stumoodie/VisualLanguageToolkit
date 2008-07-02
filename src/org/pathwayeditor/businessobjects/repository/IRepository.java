@@ -17,7 +17,7 @@ public interface IRepository {
 	
 	IRootFolder getRootFolder(); 
 	
-	Iterator<IRepositoryItem> levelOrderIterator();
+	Iterator<IFolder> levelOrderIterator();
 
 	int getBuildNum();
 }

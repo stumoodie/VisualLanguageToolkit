@@ -28,12 +28,21 @@ import uk.ed.inf.graph.compound.impl.CompoundNode;
 public class Model implements IModel {
 	private final CompoundGraph graph;
 	private final HibModel hibGraph;
-	
+
+	/**
+	 * Constructs an new Model for a given canvas.
+	 * @param canvas
+	 */
 	public Model(Canvas canvas){
-		this.hibGraph = new HibModel(canvas.getHibObject());
+		this.hibGraph = new HibModel(this, canvas.getHibObject());
 		this.graph = new CompoundGraph();
 	}
 	
+	/**
+	 * Constructs a model from  a hibernate model.
+	 * @param compoundGraphBuilder
+	 * @param hibGraph
+	 */
 	public Model(ICompoundGraphBuilder compoundGraphBuilder, HibModel hibGraph){
 		this.hibGraph = hibGraph;
 		this.graph = new CompoundGraph();
@@ -42,9 +51,14 @@ public class Model implements IModel {
 		compoundGraphBuilder.buildGraph();
 	}
 	
+	/**
+	 * Copy constructor that copies this model to a new canvas that is provided.
+	 * @param otherModel
+	 * @param newCanvas
+	 */
 	public Model(Model otherModel, Canvas newCanvas){
 		this.graph = new CompoundGraph(otherModel.graph);
-		this.hibGraph = new HibModel(newCanvas.getHibObject());
+		this.hibGraph = new HibModel(this, newCanvas.getHibObject());
 	}
 	
 	public Canvas getCanvas(){
