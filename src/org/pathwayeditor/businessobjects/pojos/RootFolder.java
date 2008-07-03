@@ -31,7 +31,7 @@ public class RootFolder implements IRootFolder, IHibernateFacade<HibRootFolder> 
 	 * @see org.pathwayeditor.businessobjects.repository.IRootFolder#getDataSource()
 	 */
 	public IRepository getRepository() {
-		return this.hibRootFolder.getRepository().getBusinessObject();
+		return this.hibRootFolder.getHibRepository().getBusinessObject();
 	}
 
 	/* (non-Javadoc)

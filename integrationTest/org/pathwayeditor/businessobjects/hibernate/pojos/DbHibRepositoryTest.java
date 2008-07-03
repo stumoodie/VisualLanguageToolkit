@@ -9,6 +9,9 @@ import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -19,6 +22,11 @@ import org.hibernate.cfg.Configuration;
 public class DbHibRepositoryTest extends DBTestCase {
 	
 	private SessionFactory hibFactory; 
+	Session session ;
+	
+	private static final String REPOSITORY_NAME = "repo name" ;
+	private static final String REPOSITORY_DESCRIPTION = "repo name" ;
+	private static final int REPOSITORY_VERSION = 2534;
 	
 	public DbHibRepositoryTest(String name){
 		super( name );
@@ -29,45 +37,70 @@ public class DbHibRepositoryTest extends DBTestCase {
 	}
 
 	protected IDataSet getDataSet() throws Exception{
-		return new FlatXmlDataSet(new FileInputStream("dataset.xml"));
+		return new FlatXmlDataSet(new FileInputStream("integrationTest/DBData/RepositoryRefData.xml"));
 	}
 	
-//	 protected IDatabaseConnection getConnection() throws Exception {
-//			Class.forName("org.hsqldb.jdbcDriver");
-//			String url = "jdbc:hsqldb:mem:testDb";
-//			Connection conn = DriverManager.getConnection(url, "sa", "");
-//		    conn.setAutoCommit(true);
-//		    DatabaseConnection connection = new DatabaseConnection(conn);
-//			DatabaseConfig config = connection.getConfig();
-//		    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
-//		            new HsqldbDataTypeFactory());
-//		    return connection;
-//		  }
-
-//		  protected DatabaseOperation getTearDownOperation() {
-//		    //return DatabaseOperation.DELETE_ALL;
-//		    return DatabaseOperation.NONE;
-//		  }
-//		  
-//		  public DatabaseOperation getSetUpOperation() throws Exception {
-//			IDatabaseConnection connection = getConnection();
-//			Connection conn = connection.getConnection();
-//			conn.setAutoCommit(false);
-//			conn.commit();
-//			conn.close();
-//		    return DatabaseOperation.CLEAN_INSERT;
-//		}
-
-
+	public void testLoadRepository () throws Exception 
+	{
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction(); 
+		Query getRepository = session.createQuery( "from HibRepository where id = '100001" ) ;
+		
+		HibRepository loadedRepository = (HibRepository) getRepository.list().get(0) ; 
+		
+		assertEquals ("same name" , REPOSITORY_NAME ,loadedRepository.getName() ) ;
+		assertEquals ("same description" , REPOSITORY_DESCRIPTION ,loadedRepository.getDescription() ) ;
+		assertEquals ("same built" , REPOSITORY_VERSION ,loadedRepository.getBuildNum() ) ;
+		
+		assertTrue ("has rootFolder", loadedRepository.getRootFolder() != null  ) ;
+	}
+	
+	
+	public void testAddSubFolder () throws Exception 
+	{
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction(); 
+		Query getRepository = session.createQuery( "from HibRepository where id = '100001" ) ;
+		
+		HibRepository loadedRepository = (HibRepository) getRepository.list().get(0) ; 
+		
+		HibRootFolder dBRootFolder = loadedRepository.getRootFolder() ;
+		
+		HibRootFolder newRootFolder = new HibRootFolder () ;
+		
+		loadedRepository.changeRootFolder(newRootFolder) ;
+		
+		assertTrue ( "rootFolderChanged" , dBRootFolder != loadedRepository.getRootFolder() ) ;
+		
+		session.saveOrUpdate(loadedRepository) ;
+		
+		session.getTransaction().commit() ;
+		
+		session.close() ;
+		
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction(); 
+		getRepository = session.createQuery( "from HibRepository where id = '100001" ) ;
+		
+	}
+	
+	
 	public void setUp() throws Exception {
+		
+		DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getDataSet());
+		
 		Configuration hibConf = new Configuration();
 		this.hibFactory = hibConf.configure("test_hibernate.cfg.xml").buildSessionFactory();
 	}
 
 	public void tearDown() throws Exception {
+		if (session != null )
+			session.close() ;
+		
 		if(this.hibFactory != null){
 			this.hibFactory.close();
 		}
 		this.hibFactory = null;
+		session = null ;
 	}
 }

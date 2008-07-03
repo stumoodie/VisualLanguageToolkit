@@ -31,7 +31,7 @@
 			table="RootFolder">
 
 			<key column="id" />
-			<many-to-one name="dataStore"
+			<many-to-one name="hibRepository"
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 				<column name="repository_id" not-null="true"
 					unique="true" />

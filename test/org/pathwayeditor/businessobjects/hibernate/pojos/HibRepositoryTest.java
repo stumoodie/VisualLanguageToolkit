@@ -1,5 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -13,6 +14,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * @author ntsorman
+ *
+ */
 @RunWith(JMock.class)
 public class HibRepositoryTest {
 	private Mockery mockery = new JUnit4Mockery() {{
@@ -40,7 +45,17 @@ public class HibRepositoryTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
+	@Test
+	public void testCopyConstructor () throws Exception 
+	{
+		testInstance2 = new HibRepository ( testInstance1 ) ;
+		
+		assertEquals ( "same name" , testInstance1.getName() , testInstance2.getName() ) ;
+		assertEquals ( "same descr" , testInstance1.getDescription() , testInstance2.getDescription() ) ;
+		assertEquals ( "same version number" , testInstance1.getBuildNum() , testInstance2.getBuildNum() ) ;
+	}
+	
 	@Test
 	public final void testHashCode() {
 		assertFalse ( "Hash code not equals." , testInstance1.hashCode() == testInstance2.hashCode() ) ;
@@ -70,10 +85,10 @@ public class HibRepositoryTest {
 		final HibRootFolder mockRootFolder1 = this.mockery.mock(HibRootFolder.class, "mockRootFolder");
 		final HibRootFolder mockRootFolder2 = this.mockery.mock(HibRootFolder.class, "mockRootFolder2");
 		this.mockery.checking(new Expectations(){{
-			atLeast(1).of(mockRootFolder1).setRepository(testInstance1);
-			atLeast(1).of(mockRootFolder1).setRepository(null);
-			atLeast(1).of(mockRootFolder2).setRepository(testInstance1);
-			atLeast(1).of(mockRootFolder2).setRepository(null);
+			atLeast(1).of(mockRootFolder1).setHibRepository(testInstance1);
+			atLeast(1).of(mockRootFolder1).setHibRepository(null);
+			atLeast(1).of(mockRootFolder2).setHibRepository(testInstance1);
+			atLeast(1).of(mockRootFolder2).setHibRepository(null);
 		}});
 		this.testInstance1.changeRootFolder(null);
 		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
