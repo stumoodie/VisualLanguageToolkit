@@ -12,6 +12,8 @@ public class HibMapDiagram  implements IBusinessObjectData<Map>, java.io.Seriali
      private String name = "";
      private String description = "";
      private Map businessObject = null;
+     
+
 
     public HibMapDiagram() {
     }
@@ -26,6 +28,7 @@ public class HibMapDiagram  implements IBusinessObjectData<Map>, java.io.Seriali
     	this.name = other.name;
     	this.description = other.description;
     }
+    
    
     public Long getId() {
         return this.id;
@@ -36,12 +39,14 @@ public class HibMapDiagram  implements IBusinessObjectData<Map>, java.io.Seriali
         this.id = id;
     }
     
-    public HibFolder getFolder() {
+    public HibFolder getOwner() {
         return this.owner;
     }
     
+
     void setOwner(HibFolder hibFolder) {
         this.owner = hibFolder;
+
     }
     
 	public void changeOwner(HibFolder newOwner){
@@ -71,6 +76,27 @@ public class HibMapDiagram  implements IBusinessObjectData<Map>, java.io.Seriali
         this.description = description;
     }
 
+
+   public boolean equals(Object other) {
+         if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof HibMapDiagram) ) return false;
+		 HibMapDiagram castOther = ( HibMapDiagram ) other; 
+         
+		 return ( (this.getOwner()==castOther.getOwner()) || ( this.getOwner()!=null && castOther.getOwner()!=null && this.getOwner().equals(castOther.getOwner()) ) )
+ && ( (this.getName()==castOther.getName()) || ( this.getName()!=null && castOther.getName()!=null && this.getName().equals(castOther.getName()) ) );
+   }
+   
+   public int hashCode() {
+         int result = 17;
+         
+         
+         result = 37 * result + ( getOwner() == null ? 0 : this.getOwner().hashCode() );
+         result = 37 * result + ( getName() == null ? 0 : this.getName().hashCode() );
+         
+         return result;
+   }   
+  
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.pojos.IBusinessObjectData#getBusinessObject()
 	 */

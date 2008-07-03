@@ -20,10 +20,10 @@ public abstract class HibFolder implements Serializable {
 	}
 
 	public HibFolder(HibFolder other) {
-		for (HibMapDiagram diagram : hibMapDiagrams) {
+		for (HibMapDiagram diagram : other.getMapDiagrams()) {
 			this.hibMapDiagrams.add(new HibMapDiagram(this, diagram));
 		}
-		for (HibSubFolder subFolder : subFolders) {
+		for (HibSubFolder subFolder : other.getSubFolders()) {
 			this.subFolders.add(new HibSubFolder(this, subFolder));
 		}
 	}
@@ -91,5 +91,29 @@ public abstract class HibFolder implements Serializable {
 		subFolder.setParentFolder(null);
 	}
 	
+	void addMapDiagram(HibMapDiagram newMapDiagram) {
+		if (newMapDiagram == null)
+			throw new IllegalArgumentException("newMapDiagram cannot be null");
+
+		HibFolder oldParentFolder = newMapDiagram.getOwner();
+		if (oldParentFolder != null) {
+			oldParentFolder.getMapDiagrams().remove(newMapDiagram);
+		}
+		this.hibMapDiagrams.add(newMapDiagram);
+		newMapDiagram.setOwner(this);
+	}
+
+	void removeMapDiagram(HibMapDiagram mapDiagram) {
+		if (mapDiagram == null)
+			throw new IllegalArgumentException("mapDiagram cannot be null");
+		if (mapDiagram.getOwner() != this)
+			throw new IllegalArgumentException(
+					"mapDiagram must belong to this folder");
+
+		this.hibMapDiagrams.remove(mapDiagram);
+		mapDiagram.setOwner(null);
+	}
+	
 	public abstract IFolder getBusinessObject();
+
 }

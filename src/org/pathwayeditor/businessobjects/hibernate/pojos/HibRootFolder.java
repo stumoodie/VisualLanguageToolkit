@@ -45,11 +45,11 @@ public class HibRootFolder extends HibFolder implements IBusinessObjectData<Root
 		this.businessObject = null;
 	}
 
-	public HibRepository getRepository() {
+	public HibRepository getHibRepository() {
 		return this.hibRepository;
 	}
 
-	void setRepository(HibRepository hibRepository) {
+	void setHibRepository(HibRepository hibRepository) {
 		this.hibRepository = hibRepository;
 	}
 
