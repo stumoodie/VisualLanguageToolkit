@@ -14,7 +14,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class FolderTest extends DatabaseTestCase {
+public class DbHibFolderTest extends DatabaseTestCase {
 	private SessionFactory hibFactory; 
 	
 	 protected IDatabaseConnection getConnection() throws Exception {
