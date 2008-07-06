@@ -35,10 +35,20 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	private Canvas businessObject = null;
 	private ISyntaxMappingFactory mappingFactory;
 
+	/**
+	 * Default constructor used by hibernate.
+	 */
 	public HibCanvas() {
 	}
 
-	public HibCanvas(HibMapDiagram mapDiagram, HibContext context) {
+	/**
+	 * Constructor to be used by BO facade. This creates a canvas that is owned by a map.
+	 * @param boCanvas
+	 * @param mapDiagram
+	 * @param context
+	 */
+	public HibCanvas(Canvas boCanvas, HibMapDiagram mapDiagram, HibContext context) {
+		this.businessObject = boCanvas;
 		this.mapDiagram = mapDiagram;
 		this.context = context;
 	}
@@ -250,5 +260,13 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	 */
 	public void setSyntaxMappingFactory(ISyntaxMappingFactory mappingFactory) {
 		this.mappingFactory = mappingFactory;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.pojos.ISyntaxDependentObjectProvider#getSyntaxMappingFactory()
+	 */
+	public ISyntaxMappingFactory getSyntaxMappingFactory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

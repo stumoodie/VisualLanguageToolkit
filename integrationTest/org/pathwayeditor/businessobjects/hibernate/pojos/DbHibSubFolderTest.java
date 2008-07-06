@@ -66,7 +66,7 @@ public class DbHibSubFolderTest extends DBTestCase {
 		aMapDiagram.setName(DIAGRAM_NAME_ONE) ;
 		bMapDiagram.setName(DIAGRAM_NAME_TWO) ;
 		
-		aRepository.changeRootFolder(aRootFolder) ;
+		aRepository.addRootFolder(aRootFolder) ;
 		
 		aRootFolder.addSubFolder(aFolder);
 

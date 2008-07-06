@@ -117,20 +117,28 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.pojos.IBusinessObjectData#getBusinessObject()
+	/**
+	 * Gets the business object facade to this hibernate object. If necessary this is created.
+	 * @return an instance of <code>Model</code> that is backed by an instance of this class.
+	 * @throws IllegalStateException if <code>getCompoundGraphBuilder() == null</code>. 
 	 */
 	public Model getBusinessObject() {
+		if(this.compoundGraphBuilder == null) throw new IllegalStateException("Compound graph builder must be set before this operation can succeed");
 		if(this.businessObject == null){
 			this.businessObject = new Model(this.compoundGraphBuilder, this);
 		}
-		return null;
+		return this.businessObject;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.pojos.ISyntaxDependentObjectProvider#setSyntaxMappingFactory(org.pathwayeditor.businessobjects.pojos.ISyntaxMappingFactory)
+	/**
+	 * Sets the graph builder used to build a 
+	 * @param compoundGraphBuilder
 	 */
 	public void setCompoundGraphBuilder(ICompoundGraphBuilder compoundGraphBuilder) {
 		this.compoundGraphBuilder = compoundGraphBuilder;
+	}
+
+	public ICompoundGraphBuilder getCompoundGraphBuilder() {
+		return this.compoundGraphBuilder;
 	}
 }

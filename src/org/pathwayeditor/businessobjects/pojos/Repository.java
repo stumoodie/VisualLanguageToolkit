@@ -40,7 +40,9 @@ public class Repository implements IRepository {
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getRootFolder()
 	 */
 	public IRootFolder getRootFolder() {
-		return this.hibRepository.getRootFolder().getBusinessObject();
+		//TODO: Fix this
+//		return this.hibRepository.getRootFolder().getBusinessObject();
+		return null;
 	}
 
 	/* (non-Javadoc)

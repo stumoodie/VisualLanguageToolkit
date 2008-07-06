@@ -3,8 +3,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -76,29 +76,30 @@ public class HibRepositoryTest {
 
 	@Test
 	public final void testChangeRootFolderNull() {
-		this.testInstance1.changeRootFolder(null);
-		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
+		fail("fix this");
+//		this.testInstance1.changeRootFolder(null);
+//		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
 	}
 
 	@Test
 	public final void testChangeRootFolder() {
-		final HibRootFolder mockRootFolder1 = this.mockery.mock(HibRootFolder.class, "mockRootFolder");
-		final HibRootFolder mockRootFolder2 = this.mockery.mock(HibRootFolder.class, "mockRootFolder2");
-		this.mockery.checking(new Expectations(){{
-			atLeast(1).of(mockRootFolder1).setHibRepository(testInstance1);
-			atLeast(1).of(mockRootFolder1).setHibRepository(null);
-			atLeast(1).of(mockRootFolder2).setHibRepository(testInstance1);
-			atLeast(1).of(mockRootFolder2).setHibRepository(null);
-		}});
-		this.testInstance1.changeRootFolder(null);
-		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
-		this.testInstance1.changeRootFolder(mockRootFolder1);
-		assertTrue("new folder is null", this.testInstance1.getRootFolder() == mockRootFolder1);
-		this.testInstance1.changeRootFolder(mockRootFolder2);
-		assertTrue("new folder is null", this.testInstance1.getRootFolder() == mockRootFolder2);
-		this.testInstance1.changeRootFolder(null);
-		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
-		this.mockery.assertIsSatisfied();
+		fail("fix this");
+//		final HibRootFolder mockRootFolder1 = this.mockery.mock(HibRootFolder.class, "mockRootFolder");
+//		final HibRootFolder mockRootFolder2 = this.mockery.mock(HibRootFolder.class, "mockRootFolder2");
+//		this.mockery.checking(new Expectations(){{
+//			atLeast(1).of(mockRootFolder1).setRepository(testInstance1);
+//			atLeast(1).of(mockRootFolder2).setRepository(testInstance1);
+//			atLeast(1).of(mockRootFolder2).setRepository(null);
+//		}});
+//		this.testInstance1.changeRootFolder(null);
+//		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
+//		this.testInstance1.changeRootFolder(mockRootFolder1);
+//		assertTrue("new folder is null", this.testInstance1.getRootFolder() == mockRootFolder1);
+//		this.testInstance1.changeRootFolder(mockRootFolder2);
+//		assertTrue("new folder is null", this.testInstance1.getRootFolder() == mockRootFolder2);
+//		this.testInstance1.changeRootFolder(null);
+//		assertTrue("new folder is null", this.testInstance1.getRootFolder() == null);
+//		this.mockery.assertIsSatisfied();
 	}
 
 }

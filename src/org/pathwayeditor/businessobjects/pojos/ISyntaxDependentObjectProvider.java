@@ -11,4 +11,5 @@ public interface ISyntaxDependentObjectProvider {
 
 	void setSyntaxMappingFactory(ISyntaxMappingFactory mappingFactory);
 	
+	ISyntaxMappingFactory getSyntaxMappingFactory();
 }

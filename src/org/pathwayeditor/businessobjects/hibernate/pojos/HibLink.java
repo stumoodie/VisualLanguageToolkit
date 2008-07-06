@@ -258,4 +258,12 @@ public class HibLink implements IBusinessObjectData<Link>,
 		this.syntaxMappingFactory = mappingFactory;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.pojos.ISyntaxDependentObjectProvider#getSyntaxMappingFactory()
+	 */
+	public ISyntaxMappingFactory getSyntaxMappingFactory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

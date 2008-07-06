@@ -26,20 +26,20 @@ public class Canvas implements ICanvas {
 	 */
 	public Canvas(ISyntaxMappingFactory mappingFactory, Map map, IContext context){
 		this.context = context;
-		this.hibCanvas = new HibCanvas(map.getHibObject(), mappingFactory.createHibContext(context));
+		this.hibCanvas = new HibCanvas(this, map.getHibObject(), mappingFactory.createHibContext(context));
 		this.mappingFactory = mappingFactory;
 	}
 	
-	/**
-	 * Contructs a canvas that is not associated with a map and is therefore transient.
-	 * @param mappingFactory
-	 * @param context
-	 */
-	public Canvas(ISyntaxMappingFactory mappingFactory, IContext context){
-		this.hibCanvas = new HibCanvas();
-		this.context = context;
-		this.mappingFactory = mappingFactory;
-	}
+//	/**
+//	 * Contructs a canvas that is not associated with a map and is therefore transient.
+//	 * @param mappingFactory
+//	 * @param context
+//	 */
+//	public Canvas(ISyntaxMappingFactory mappingFactory, IContext context){
+//		this.hibCanvas = new HibCanvas(this, map.getHibObject(), mappingFactory.createHibContext(context));
+//		this.context = context;
+//		this.mappingFactory = mappingFactory;
+//	}
 	
 	/**
 	 * Constructs a canvas from the equivalent hibernate object. 

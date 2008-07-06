@@ -1,6 +1,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Set;
 
@@ -85,7 +86,7 @@ public class HibRootFolderTest {
 		
 		testRootFolder2 = new HibRootFolder ( mockRepository , testRootFolder1 ) ;
 		
-		assertEquals ("RootFolder has the same reposirory", mockRepository ,  testRootFolder2.getHibRepository() ) ;
+		assertEquals ("RootFolder has the same reposirory", mockRepository ,  testRootFolder2.getRepository() ) ;
 		assertEquals ( "one subfolder" , SUBFOLDERS , testRootFolder2.getSubFolders().size() ) ;
 		assertEquals ( "one map diagram" , MAP_DIAGRAMS , testRootFolder2.getMapDiagrams().size() ) ;
 	}
@@ -143,27 +144,28 @@ public class HibRootFolderTest {
 		
 		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
 		
-		assertEquals ( mockRepository , testRootFolder1.getHibRepository() ) ;
+		assertEquals ( mockRepository , testRootFolder1.getRepository() ) ;
 	}
 	
 	@Test 
 	public void testSetNewRepository () throws Exception 
 	{
-		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
-		final HibRepository mockRepository2 = mockery.mock(HibRepository.class , "mockRepository2") ;
-		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
-		
-		mockery.checking( new Expectations () {{
-		}});
-		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
-		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockRepository2).setRootFolder(testRootFolder1);
-			atLeast(1).of(mockRepository).setRootFolder(null);
-		}});
-		
-		
-		testRootFolder1.changeRepository( mockRepository2) ;
-		assertEquals ( mockRepository2 , testRootFolder1.getHibRepository()) ;
+		fail("fix this");
+//		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
+//		final HibRepository mockRepository2 = mockery.mock(HibRepository.class , "mockRepository2") ;
+//		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
+//		
+//		mockery.checking( new Expectations () {{
+//		}});
+//		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
+//		mockery.checking( new Expectations () {{
+//			atLeast(1).of(mockRepository2).setRootFolder(testRootFolder1);
+//			atLeast(1).of(mockRepository).setRootFolder(null);
+//		}});
+//		
+//		
+//		testRootFolder1.changeRepository( mockRepository2) ;
+//		assertEquals ( mockRepository2 , testRootFolder1.getRepository()) ;
 	}
 
 

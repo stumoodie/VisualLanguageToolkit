@@ -13,7 +13,7 @@ import org.pathwayeditor.businessobjects.pojos.RootFolder;
  */
 public class HibRootFolder extends HibFolder implements IBusinessObjectData<RootFolder>, Serializable {
 	private static final long serialVersionUID = 3780104587152506255L;
-	private HibRepository hibRepository = null;
+	private HibRepository repository = null;
 	private RootFolder businessObject = null;
 
 	/**
@@ -31,39 +31,38 @@ public class HibRootFolder extends HibFolder implements IBusinessObjectData<Root
 	 */
 	public HibRootFolder(RootFolder businessObject, HibRepository repository) {
 		super();
-		hibRepository = repository;
+		this.repository = repository;
 		this.businessObject = businessObject;
 	}
 
 	/**
 	 * Copy constructor for hibernate object. Copies to a new repository that is provided.
-	 * @param hibRepository
+	 * @param repository
 	 */
 	public HibRootFolder(HibRepository newRepository, HibRootFolder other) {
 		super(other);
-		this.hibRepository = newRepository;
+		this.repository = newRepository;
 		this.businessObject = null;
 	}
 
-	public HibRepository getHibRepository() {
-		return this.hibRepository;
+	public HibRepository getRepository() {
+		return this.repository;
 	}
 
-	void setHibRepository(HibRepository hibRepository) {
-		this.hibRepository = hibRepository;
+	void setRepository(HibRepository hibRepository) {
+		this.repository = hibRepository;
 	}
 
-	public void changeRepository(HibRepository newRepository) {
-		HibRepository oldDataStore = this.hibRepository;
-		this.hibRepository = newRepository;
-		if (oldDataStore != null) {
-			oldDataStore.setRootFolder(null);
-		}
-		if (this.hibRepository != null) {
-			this.hibRepository.setRootFolder(this);
-		}
-	}
-
+   public void changeRepository(HibRepository newRepository){
+	   HibRepository oldRepository = this.repository;
+	   this.repository = newRepository;
+	   if(oldRepository != null){
+		   oldRepository.getRootFolders().remove(this);
+	   }
+	   if(this.repository != null){
+		   this.repository.getRootFolders().add(this);
+	   }
+   }
 	/**
 	 * @return
 	 */

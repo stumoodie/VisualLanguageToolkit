@@ -17,8 +17,7 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" />
 		</set>
-		<set name="subFolders" inverse="true"
-			cascade="all,delete-orphan">
+		<set name="subFolders" inverse="true" cascade="all,delete-orphan">
 			<key>
 				<column name="parent_folder_id" not-null="true" />
 			</key>
@@ -30,11 +29,11 @@
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
 			table="RootFolder">
 
-			<key column="id" />
-			<many-to-one name="hibRepository"
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
-				<column name="repository_id" not-null="true"
-					unique="true" />
+			<key column="id"/>
+			<many-to-one name="repository"
+					foreign-key="xfk1RootFolderRepository"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+				<column name="repository_id" not-null="true"/>
 			</many-to-one>
 		</joined-subclass>
 
@@ -43,7 +42,7 @@
 			table="SubFolder">
 			<key column="id" />
 			<properties name="xak1subfolder" unique="true">
-				<many-to-one name="parentFolder"
+				<many-to-one name="parentFolder" foreign-key="xfk1SubFolderParentFolder"
 					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
 					<column name="parent_folder_id" not-null="true" />
 				</many-to-one>

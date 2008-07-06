@@ -10,7 +10,7 @@
         </id>
         <properties name="xak1mapdiagram" unique="true">
         	<many-to-one name="owner" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder" fetch="select">
-            	<column name="folder_id" not-null="true" />
+            	<column name="owner_id" not-null="true" />
         	</many-to-one>
         	<property name="name" type="string">
             	<column name="name" length="128" not-null="true" />
