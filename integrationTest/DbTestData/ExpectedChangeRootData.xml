@@ -18,36 +18,12 @@
 				<value>5678</value>
 			</row>
 	</table>
-	<table name="Folder" >
-		<column>id</column>
-			<row>
-				<value>100001</value><!-- rootFolder1  -->
-			</row>
-			<row>
-				<value>100002</value>
-			</row>
-			<row>
-				<value>100003</value>
-			</row>
-			<row>
-				<value>100004</value>
-			</row>
-			<row>
-				<value>100005</value>
-			</row>
-			<row>
-				<value>100006</value><!-- rootFolder2 -->
-			</row>
-	</table>
 	<table name="RootFolder" >
-		<column>id</column>
 		<column>repository_id</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
 			</row>
 			<row>
-				<value>100006</value>
 				<value>100002</value>
 			</row>
 	</table>
@@ -55,44 +31,12 @@
 		<column>id</column>
 		<column>parent_folder_id</column>
 		<column>name</column>
-			<row>
-				<value>100002</value>
-				<value>100001</value>
-				<value>subfolder1</value>
-			</row>
-			<row>
-				<value>100003</value>
-				<value>100001</value>
-				<value>subfolder2</value>
-			</row>
-			<row>
-				<value>100004</value>
-				<value>100003</value>
-				<value>subfolder3</value>
-			</row>
-			<row>
-				<value>100005</value>
-				<value>100003</value>
-				<value>subfolder4</value>
-			</row>
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
 		<column>folder_id</column>
 		<column>name</column>
 		<column>description</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>Diagram name</value>
-				<value>Diagram Description</value>
-			</row>
-			<row>
-				<value>100002</value>
-				<value>100004</value>
-				<value>Diagram name2</value>
-				<value>Diagram Description2</value>
-			</row>
 	</table>
 </dataset>
 
@@ -104,13 +48,13 @@
 |		|									|
 |		RootFolder(100001)					|
 |			|								|
-|		 	> SubFolder1(100002)			|
+|		 	> SubFolder1(100001)			|
 |			|								|
-|		 	> SubFolder2(100003)			|
+|		 	> SubFolder2(100002)			|
 |					|						|
-|					 > SubFolder3(100004)	|
+|					 > SubFolder3(100003)	|
 |					|						|
-|				 	> SubFolder4(100005)	|
+|				 	> SubFolder4(100004)	|
 |											|
 |===========================================|
 |											|

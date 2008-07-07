@@ -74,7 +74,7 @@ public class DbHibFolderTest extends DatabaseTestCase {
 			HibMapDiagram map1 = new HibMapDiagram();
 			map1.setName("Test1 Map");
 			map1.setDescription("Test1 Map description");
-			map1.changeOwner(subFolder);
+			map1.changeFolder(subFolder);
 //			HibContext context = new HibContext();
 //			context.setName("TestContext");
 //			context.setDescription("Test Context Description");

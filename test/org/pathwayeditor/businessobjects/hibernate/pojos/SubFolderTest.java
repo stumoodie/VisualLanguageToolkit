@@ -145,8 +145,8 @@ public class SubFolderTest {
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockMapDiagram).getOwner() ; will(returnValue(mockParentFolder)) ;
-			atLeast(1).of(mockMapDiagram).setOwner(subfolder1) ;
+			atLeast(1).of(mockMapDiagram).getFolder() ; will(returnValue(mockParentFolder)) ;
+			atLeast(1).of(mockMapDiagram).setFolder(subfolder1) ;
 
 			atLeast(1).of(mockParentFolder).getMapDiagrams() ; will(returnValue(mockMapDiagramSet));
 			
@@ -173,9 +173,9 @@ public class SubFolderTest {
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockMapDiagram).getOwner() ; will(returnValue(subfolder1)) ;
-			one(mockMapDiagram).setOwner(subfolder1) ;
-			one(mockMapDiagram).setOwner(null) ;
+			atLeast(1).of(mockMapDiagram).getFolder() ; will(returnValue(subfolder1)) ;
+			one(mockMapDiagram).setFolder(subfolder1) ;
+			one(mockMapDiagram).setFolder(null) ;
 
 		}} ) ;
 		

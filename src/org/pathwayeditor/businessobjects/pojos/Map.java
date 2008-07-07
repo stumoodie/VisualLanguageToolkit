@@ -35,7 +35,7 @@ public class Map implements IMap, IHibernateFacade<HibMapDiagram> {
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getOwner()
 	 */
 	public IFolder getOwner() {
-		return this.hibMap.getOwner().getBusinessObject();
+		return this.hibMap.getFolder().getBusinessObject();
 	}
 
 	/* (non-Javadoc)

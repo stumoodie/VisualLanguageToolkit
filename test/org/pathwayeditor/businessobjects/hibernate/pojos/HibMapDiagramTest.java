@@ -60,7 +60,7 @@ public class HibMapDiagramTest {
 		
 		assertEquals ( "name same with source diagram" , DIAGRAM_NAME2 ,testMapDiagram.getName() ) ;
 		assertEquals ( "descr same with source diagram" , "" ,testMapDiagram.getDescription() ) ;
-		assertEquals ( "folder same with source diagram" , mockFolder ,testMapDiagram.getOwner() ) ;
+		assertEquals ( "folder same with source diagram" , mockFolder ,testMapDiagram.getFolder() ) ;
 	}
 	
 	@Test
@@ -84,10 +84,10 @@ public class HibMapDiagramTest {
 		}});
 		
 		
-		assertEquals ( "folder is mockFolder" , mockFolder , testMapDiagram.getOwner() ) ;
+		assertEquals ( "folder is mockFolder" , mockFolder , testMapDiagram.getFolder() ) ;
 		
-		testMapDiagram.changeOwner(mockFolder2) ;
-		assertEquals ("folder is mockFolder2" , mockFolder2 , testMapDiagram.getOwner() ) ;
+		testMapDiagram.changeFolder(mockFolder2) ;
+		assertEquals ("folder is mockFolder2" , mockFolder2 , testMapDiagram.getFolder() ) ;
 	}
 	
 	@Test

@@ -65,8 +65,8 @@ public class HibRootFolderTest {
 			atLeast(1).of(mockSubFolder).getMapDiagrams(); will(returnValue(mockMapDiagramSet)) ;
 			atLeast(1).of(mockSubFolder).getSubFolders(); will(returnValue(mockSubFolderSet)) ;
 			
-			atLeast(1).of(mockMapDiagram).getOwner(); will(returnValue(null)) ;
-			atLeast(1).of(mockMapDiagram).setOwner(testRootFolder1);
+			atLeast(1).of(mockMapDiagram).getFolder(); will(returnValue(null)) ;
+			atLeast(1).of(mockMapDiagram).setFolder(testRootFolder1);
 						
 
 			one(mockMapDiagramSet).iterator(); will(returnIterator(mockMapDiagram)) ;
