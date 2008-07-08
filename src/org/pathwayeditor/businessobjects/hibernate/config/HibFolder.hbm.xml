@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class
 		name="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder"
-		table="folder">
+		table="folder" abstract="true">
 		<id name="id" type="java.lang.Long">
 			<column name="id" />
 			<generator class="native" />
@@ -28,13 +28,11 @@
 		<joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
 			table="RootFolder">
-
 			<key column="id"/>
-			<many-to-one name="repository"
-					foreign-key="xfk1RootFolderRepository"
-					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
-				<column name="repository_id" not-null="true"/>
-			</many-to-one>
+			
+       		<many-to-one name="repository" cascade="save-update" unique="true">
+       			<column name="repository_id" not-null="true"/>
+       		</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass

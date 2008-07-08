@@ -18,15 +18,8 @@
         <property name="buildNum" type="integer">
         	<column name="build_num" not-null="true" />
         </property>
-		<set name="rootFolders" inverse="true" cascade="all,delete-orphan">
-			<key>
-				<column name="repository_id" not-null="true" />
-			</key>
-			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder" />
-		</set>
-        <!--one-to-one name="rootFolder"
-        	 cascade="persist,delete" constrained="false"
-        	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/-->
+        <one-to-one name="rootFolder"
+        	 cascade="all" property-ref="repository"
+        	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/>
     </class>
 </hibernate-mapping>

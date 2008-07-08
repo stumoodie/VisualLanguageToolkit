@@ -20,6 +20,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -53,11 +54,17 @@ public class DbHibRepositoryTest {
 	
 	@BeforeClass
 	public static void initSchema() throws Exception{
-		dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
-		dbTester.writeHibernateDdl();
+		if(dbTester == null){
+			dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
+		}
+		dbTester.createSchema();
 	}
 
-	
+	@AfterClass
+	public static void dropSchema() throws Exception{
+		dbTester.dropSchema();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		this.hibFactory = dbTester.getHibernateSessionFactory();
@@ -89,7 +96,7 @@ public class DbHibRepositoryTest {
 		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
 		
 		
-		repositoryToWrite.addRootFolder(rootFolderToWrite) ;
+		repositoryToWrite.changeRootFolder(rootFolderToWrite) ;
 		
 //		HibSubFolder subFolderToWrite = new HibSubFolder ( rootFolderToWrite , SUB_FOLDER_NAME);
 //		rootFolderToWrite.addSubFolder(subFolderToWrite) ;
@@ -119,7 +126,7 @@ public class DbHibRepositoryTest {
 		assertEquals ("same description" , REPOSITORY_DESCRIPTION ,loadedRepository.getDescription() ) ;
 		assertEquals ("same built" , REPOSITORY_VERSION ,loadedRepository.getBuildNum() ) ;
 		
-		assertTrue ("has rootFolder", loadedRepository.getRootFolders().isEmpty() == false  ) ;
+		assertTrue ("has rootFolder", loadedRepository.getRootFolder() != null  ) ;
 		session.getTransaction().commit();
 	}
 	
@@ -159,20 +166,17 @@ public class DbHibRepositoryTest {
 			HibRepository loadedRepository = (HibRepository) retrievedRepository
 					.uniqueResult();
 
-			HibRootFolder oldRootFolder = loadedRepository.getRootFolders()
-					.iterator().next();
+			HibRootFolder oldRootFolder = loadedRepository.getRootFolder();
 
 			HibRootFolder newRootFolder = new HibRootFolder();
 
-			loadedRepository.removeRootFolder(oldRootFolder);
-			loadedRepository.addRootFolder(newRootFolder);
+			loadedRepository.changeRootFolder(newRootFolder);
 
-			assertTrue("rootFolderChanged", oldRootFolder != loadedRepository
-					.getRootFolders().iterator().next());
+			assertTrue("rootFolderChanged", oldRootFolder != loadedRepository.getRootFolder());
 			assertTrue("old-subfolder unassigned", oldRootFolder
 					.getRepository() == null);
 
-			// session.delete(oldRootFolder);
+			session.delete(oldRootFolder);
 			session.saveOrUpdate(loadedRepository);
 
 			session.getTransaction().commit();

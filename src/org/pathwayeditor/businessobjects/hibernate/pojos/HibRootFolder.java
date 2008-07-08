@@ -57,12 +57,13 @@ public class HibRootFolder extends HibFolder implements IBusinessObjectData<Root
 	   HibRepository oldRepository = this.repository;
 	   this.repository = newRepository;
 	   if(oldRepository != null){
-		   oldRepository.getRootFolders().remove(this);
+		   oldRepository.setRootFolder(null);
 	   }
 	   if(this.repository != null){
-		   this.repository.getRootFolders().add(this);
+		   this.repository.setRootFolder(this);
 	   }
    }
+
 	/**
 	 * @return
 	 */

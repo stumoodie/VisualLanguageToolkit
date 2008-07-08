@@ -59,9 +59,28 @@ public class HibernateDbTester implements IDatabaseTester {
 	 * Writes the ddl defined by hibernate to the database via the connection specified in the constructor.
 	 * @throws Exception if there was an error obtaining the database connection and writing the ddl 
 	 */
-	public void writeHibernateDdl() {
+	public void createSchema() {
 		try{
 			String[] ddl = hibConfig.generateSchemaCreationScript(new HSQLDialect());
+			Connection conn = this.delegator.getConnection().getConnection();
+			conn.setAutoCommit(false);
+			for(String ddlStatement : ddl){
+				conn.createStatement().execute(ddlStatement);
+			}
+			conn.commit();
+			conn.close();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * Writes the ddl defined by hibernate to the database via the connection specified in the constructor.
+	 * @throws Exception if there was an error obtaining the database connection and writing the ddl 
+	 */
+	public void dropSchema() {
+		try{
+			String[] ddl = hibConfig.generateDropSchemaScript(new HSQLDialect());
 			Connection conn = this.delegator.getConnection().getConnection();
 			conn.setAutoCommit(false);
 			for(String ddlStatement : ddl){

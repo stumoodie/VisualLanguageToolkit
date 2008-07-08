@@ -1,8 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Repository;
@@ -16,7 +14,7 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 	private String name = null;
 	private String description = null;
 //	private HibRootFolder hibRootFolder = null;
-	private Set<HibRootFolder> rootFolders = new HashSet<HibRootFolder>(0);
+	private HibRootFolder rootFolder = null;
 	private Repository businessObject = null;
 	private int buildNum;
 
@@ -34,11 +32,20 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 		this.description = other.description;
 		this.buildNum = other.buildNum ;
 
-		for(HibRootFolder rootFolder : other.rootFolders){
-			this.rootFolders.add(new HibRootFolder(this, rootFolder));
-		}
+		this.rootFolder = new HibRootFolder(this, other.rootFolder);
 	}
 
+   public void changeRootFolder(HibRootFolder newRootFolder){
+	   HibRootFolder oldRootFolder = this.rootFolder;
+	   this.rootFolder = newRootFolder;
+	   if(oldRootFolder != null){
+		   oldRootFolder.setRepository(null);
+	   }
+	   if(this.rootFolder != null){
+		   this.rootFolder.setRepository(this);
+	   }
+   }
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -63,12 +70,12 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 		this.description = description;
 	}
 
-	public Set<HibRootFolder> getRootFolders() {
-		return this.rootFolders;
+	public HibRootFolder getRootFolder() {
+		return this.rootFolder;
 	}
 
-	void setRootFolders(Set<HibRootFolder> hibRootFolders) {
-		this.rootFolders = hibRootFolders;
+	void setRootFolder(HibRootFolder hibRootFolder) {
+		this.rootFolder = hibRootFolder;
 	}
 
 	/**
@@ -113,24 +120,6 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 		return result;
 	}
 
-     void removeRootFolder(HibRootFolder rootFolder){
-    	 if(rootFolder == null) throw new IllegalArgumentException("rootFolder cannot be null");
-    	 if(rootFolder.getRepository() != this) throw new IllegalArgumentException("rootFolder must be a child of this folder");
-    	 
-    	 this.rootFolders.remove(rootFolder);
-    	 rootFolder.setRepository(null);
-     }
-	
-     void addRootFolder(HibRootFolder newRootFolder){
-    	 if(newRootFolder == null) throw new IllegalArgumentException("newRootFolder cannot be null");
-    	 
-    	 HibRepository oldRepository = newRootFolder.getRepository();
-    	 if(oldRepository != null){
-    		 oldRepository.rootFolders.remove(newRootFolder);
-    	 }
-    	 this.rootFolders.add(newRootFolder);
-    	 newRootFolder.setRepository(this);
-     }
 
      public Repository getBusinessObject(){
 		if(this.businessObject == null){
