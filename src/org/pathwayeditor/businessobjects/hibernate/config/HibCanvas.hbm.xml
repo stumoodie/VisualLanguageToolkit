@@ -8,12 +8,12 @@
             <generator class="native" />
         </id>
         <properties name="xak1canvas" unique="true">
-        	<many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.MapDiagram">
+        	<many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram">
             	<column name="map_id" not-null="true" />
         	</many-to-one>
         </properties>
         <one-to-one name="model" property-ref="canvas" />
-        <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.Context" cascade="persist,save-update">
+        <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibContext" cascade="persist,save-update">
             <column name="context_id" not-null="true" />
         </many-to-one>
         <property name="gridX" type="int">
@@ -50,7 +50,7 @@
             <list-index>
             	<column name="shape_index" not-null="true"/>
             </list-index>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.RootShape"/>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShape"/> <!-- Correct?? -->
         </list>
         <list name="links" inverse="true" table="rootlink" cascade="all,delete-orphan">
             <key>
@@ -59,7 +59,7 @@
             <list-index>
             	<column name="link_index" not-null="true"/>
             </list-index>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Link"/>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink"/>
         </list>
         <list name="labels" inverse="true" table="rootlabel" cascade="all,delete-orphan">
             <key>
@@ -68,7 +68,7 @@
             <list-index>
             	<column name="label_index" not-null="true"/>
             </list-index>
-            <many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Label" column="label_id" />
+            <many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" column="label_id" />
         </list>
     </class>
 </hibernate-mapping>

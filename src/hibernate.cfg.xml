@@ -26,5 +26,6 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMapDiagram.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibModel.hbm.xml" />
     </session-factory>
 </hibernate-configuration>

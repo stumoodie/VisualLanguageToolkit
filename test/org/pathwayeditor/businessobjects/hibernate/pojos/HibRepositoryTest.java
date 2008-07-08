@@ -1,6 +1,5 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -45,16 +44,7 @@ public class HibRepositoryTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
-	@Test
-	public void testCopyConstructor () throws Exception 
-	{
-		testInstance2 = new HibRepository ( testInstance1 ) ;
-		
-		assertEquals ( "same name" , testInstance1.getName() , testInstance2.getName() ) ;
-		assertEquals ( "same descr" , testInstance1.getDescription() , testInstance2.getDescription() ) ;
-		assertEquals ( "same version number" , testInstance1.getBuildNum() , testInstance2.getBuildNum() ) ;
-	}
+
 	
 	@Test
 	public final void testHashCode() {

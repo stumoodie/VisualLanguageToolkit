@@ -32,7 +32,7 @@
 		</property>
 
 		<many-to-one name="visualisableProperty"
-			class="org.pathwayeditor.businessobjects.hibernate.pojos.Property"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"
 			fetch="select">
 			<meta attribute="set-scope"></meta>
 			<column name="displayed_property_id" not-null="true" />

@@ -18,27 +18,6 @@
 				<value>5678</value>
 			</row>
 	</table>
-	<table name="Folder" >
-		<column>id</column>
-			<row>
-				<value>100001</value><!-- rootFolder1  -->
-			</row>
-			<row>
-				<value>100002</value>
-			</row>
-			<row>
-				<value>100003</value>
-			</row>
-			<row>
-				<value>100004</value>
-			</row>
-			<row>
-				<value>100005</value>
-			</row>
-			<row>
-				<value>100006</value><!-- rootFolder2 -->
-			</row>
-	</table>
 	<table name="RootFolder" >
 		<column>id</column>
 		<column>repository_id</column>
@@ -52,38 +31,40 @@
 			</row>
 	</table>
 	<table name="SubFolder" >
-		<column>id</column>
-		<column>parent_folder_id</column>
 		<column>name</column>
 			<row>
-				<value>100002</value>
-				<value>100001</value>
 				<value>subfolder1</value>
 			</row>
 			<row>
-				<value>100003</value>
-				<value>100001</value>
 				<value>subfolder2</value>
 			</row>
 			<row>
-				<value>100004</value>
-				<value>100003</value>
 				<value>subfolder3</value>
 			</row>
 			<row>
-				<value>100005</value>
-				<value>100003</value>
+				<value>subfolder4</value>
+			</row>
+			<row>
+				<value>subfolder2</value>
+			</row>
+			<row>
+				<value>subfolder3</value>
+			</row>
+			<row>
 				<value>subfolder4</value>
 			</row>
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
-		<column>folder_id</column>
 		<column>name</column>
 		<column>description</column>
 			<row>
 				<value>100001</value>
-				<value>100005</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+			</row>
+			<row>
+				<value>100002</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
 			</row>
@@ -113,5 +94,12 @@
 |[/]Repository(100002)							|
 |		|										|
 |		RootFolder(100006)						|
+|			|									|
+|			> SubFolder(100006)					|
+|				|								|
+|				> SubFolder(100007)				|
+|				|								|
+|				> SubFolder(100008)				|
+|												|
 \===============================================/
 -->

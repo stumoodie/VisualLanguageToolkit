@@ -18,6 +18,7 @@
         <!-- property name="hibernate.hbm2ddl.auto">auto</property-->
         
         <!-- 
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibModel.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibContext.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibProperty.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibObjectType.hbm.xml" />
@@ -25,7 +26,7 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShape.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLink.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLabel.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibBendPoint.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibBendPoint.hbm.xml" /> 
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvas.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminus.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminusDecorator.hbm.xml" />
@@ -33,5 +34,6 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMapDiagram.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />
+        
     </session-factory>
 </hibernate-configuration>

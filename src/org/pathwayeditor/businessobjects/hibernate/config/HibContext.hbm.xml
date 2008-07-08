@@ -32,7 +32,7 @@
             <key>
                 <column name="context_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.ObjectType" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" />
         </set>
     </class>
 </hibernate-mapping>

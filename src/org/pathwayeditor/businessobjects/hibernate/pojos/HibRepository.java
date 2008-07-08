@@ -27,14 +27,6 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 		this.buildNum = buildNum;
 	}
 
-	public HibRepository(HibRepository other) {
-		this.name = other.name;
-		this.description = other.description;
-		this.buildNum = other.buildNum ;
-
-		this.rootFolder = new HibRootFolder(this, other.rootFolder);
-	}
-
    public void changeRootFolder(HibRootFolder newRootFolder){
 	   HibRootFolder oldRootFolder = this.rootFolder;
 	   this.rootFolder = newRootFolder;

@@ -83,15 +83,9 @@
 		<column>description</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
+				<value>100005</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
-			</row>
-			<row>
-				<value>100001</value>
-				<value>100004</value>
-				<value>Diagram name2</value>
-				<value>Diagram Description2</value>
 			</row>
 	</table>
 </dataset>

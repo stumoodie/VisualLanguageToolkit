@@ -11,7 +11,7 @@
 		</id>
 		<properties name="xak1drawingobject" unique="true">
 			<many-to-one name="canvas"
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.Canvas"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas"
 				fetch="select">
 				<column name="canvas_id" not-null="true" />
 			</many-to-one>
@@ -19,7 +19,7 @@
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>
-		<many-to-one name="edge" class="org.pathwayeditor.businessobjects.hibernate.pojos.CompoundEdge">
+		<many-to-one name="edge" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge">
 			<column name="edge_id" not-null="true" />
 		</many-to-one>
 		<many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">
@@ -46,7 +46,7 @@
 				<column name="name" not-null="true" />
 			</map-key>
 			<many-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.Property">
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty">
 				<column name="property_id" not-null="true" />
 			</many-to-many>
 		</map>
@@ -76,7 +76,7 @@
 				<column name="index_pos" not-null="true" />
 			</list-index>
 			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.BendPoint" />
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint" />
 		</list>
 		<list name="linkTermini" inverse="true">
 			<key>
@@ -86,7 +86,7 @@
 				<column name="link_term_type" not-null="true" />
 			</list-index>
 			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.LinkTerminus" />
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
 		</list>
 	</class>
 </hibernate-mapping>

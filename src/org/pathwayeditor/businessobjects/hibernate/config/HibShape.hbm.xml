@@ -34,7 +34,7 @@
             <column name="height" not-null="true" />
         </property>
 
-        <many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.ObjectType" fetch="select">
+        <many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" fetch="select">
         	<column name="object_type_id" not-null="true" />
          </many-to-one>
        	<property name="name" type="string">
@@ -86,7 +86,7 @@
            	<map-key type="string">
            		<column name="name" not-null="true"/>
            	</map-key>
-           	<many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.Property">
+           	<many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty">
            		<column name="property_id" not-null="true"/>
            	</many-to-many>
        	</map>		

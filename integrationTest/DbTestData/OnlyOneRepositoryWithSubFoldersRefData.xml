@@ -11,12 +11,6 @@
 				<value>repository description</value>
 				<value>2534</value>
 			</row>
-			<row>
-				<value>100002</value>
-				<value>repo name2</value>
-				<value>repository description2</value>
-				<value>5678</value>
-			</row>
 	</table>
 	<table name="Folder" >
 		<column>id</column>
@@ -30,7 +24,10 @@
 				<value>100003</value>
 			</row>
 			<row>
-				<value>100006</value><!-- rootFolder2 -->
+				<value>100004</value>
+			</row>
+			<row>
+				<value>100005</value>
 			</row>
 	</table>
 	<table name="RootFolder" >
@@ -39,10 +36,6 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-			</row>
-			<row>
-				<value>100006</value>
-				<value>100002</value>
 			</row>
 	</table>
 	<table name="SubFolder" >
@@ -59,31 +52,48 @@
 				<value>100001</value>
 				<value>subfolder2</value>
 			</row>
+			<row>
+				<value>100004</value>
+				<value>100003</value>
+				<value>subfolder3</value>
+			</row>
+			<row>
+				<value>100005</value>
+				<value>100003</value>
+				<value>subfolder4</value>
+			</row>
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
 		<column>folder_id</column>
 		<column>name</column>
 		<column>description</column>
+			<row>
+				<value>100001</value>
+				<value>100005</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+			</row>
 	</table>
 </dataset>
 
 <!-- 
 {TREE VIEW}
-/===========================================\
-|											|
-|[/]Repository1(100001)						|
-|		|									|
-|		RootFolder1(100001)					|
-|			|								|
-|		 	> SubFolder1(100002)			|
-|			|								|
-|		 	> SubFolder2(100003)			|
-|											|
-|===========================================|
-|											|
-|[/]Repository2(100002)						|
-|		|									|
-|		RootFolder2(100006)					|
-\===========================================/
+/===============================================\
+|												|
+|[/]Repository1(100001)							|
+|		|										|
+|		RootFolder1(100001)						|
+|			|									|
+|		 	> SubFolder1(100002)				|
+|			|									|
+|		 	> SubFolder2(100003)				|
+|					|							|
+|					 > SubFolder3(100004)		|
+|					|							|
+|				 	> SubFolder4(100005)		|
+|							|					|
+|							>MapDiagram(100001)	|
+|												|
+\===============================================/
 -->

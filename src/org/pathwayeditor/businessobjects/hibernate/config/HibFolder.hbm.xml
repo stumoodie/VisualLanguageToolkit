@@ -30,8 +30,8 @@
 			table="RootFolder">
 			<key column="id"/>
 			
-       		<many-to-one name="repository" cascade="save-update" unique="true">
-       			<column name="repository_id" not-null="true"/>
+       		<many-to-one name="repository"  unique="true">
+       			<column name="repository_id" not-null="false"/>
        		</many-to-one>
 		</joined-subclass>
 

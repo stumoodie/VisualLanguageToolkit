@@ -27,9 +27,6 @@
 				<value>100002</value>
 			</row>
 			<row>
-				<value>100003</value>
-			</row>
-			<row>
 				<value>100006</value><!-- rootFolder2 -->
 			</row>
 	</table>
@@ -54,11 +51,6 @@
 				<value>100001</value>
 				<value>subfolder1</value>
 			</row>
-			<row>
-				<value>100003</value>
-				<value>100001</value>
-				<value>subfolder2</value>
-			</row>
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
@@ -70,20 +62,18 @@
 
 <!-- 
 {TREE VIEW}
-/===========================================\
-|											|
-|[/]Repository1(100001)						|
-|		|									|
-|		RootFolder1(100001)					|
-|			|								|
-|		 	> SubFolder1(100002)			|
-|			|								|
-|		 	> SubFolder2(100003)			|
-|											|
-|===========================================|
-|											|
-|[/]Repository2(100002)						|
-|		|									|
-|		RootFolder2(100006)					|
-\===========================================/
+/===============================================\
+|												|
+|[/]Repository1(100001)							|
+|		|										|
+|		RootFolder1(100001)						|
+|			|									|
+|		 	> SubFolder1(100002)				|
+|												|
+|===============================================|
+|												|
+|[/]Repository2(100002)							|
+|		|										|
+|		RootFolder2(100006)						|
+\===============================================/
 -->

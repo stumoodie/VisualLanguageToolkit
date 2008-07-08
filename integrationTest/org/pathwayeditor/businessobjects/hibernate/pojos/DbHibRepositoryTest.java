@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
@@ -36,9 +35,6 @@ public class DbHibRepositoryTest {
 	private SessionFactory hibFactory; 
 
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static final String REPOSITORY_NAME = "repo name" ;
-	private static final String REPOSITORY_DESCRIPTION = "repository description" ;
-	private static final int REPOSITORY_VERSION = 2534;
 	private static final String ALT_REPOSITORY_NAME = "repo name 3" ;
 	private static final String ALT_REPOSITORY_DESCRIPTION = "repository description 3" ;
 	private static final int ALT_REPOSITORY_VERSION = 25343;
@@ -46,11 +42,11 @@ public class DbHibRepositoryTest {
 	
 //	private static final String SUB_FOLDER_NAME = "sub folder name" ;
 	
-	private static final int EMPTY_TABLE = 0 ;
-	private static final int ONE_ENTRY_TABLE = 3 ;
-	private static final int TWO_ENTRIES_TABLE = 2 ;
-	private static final int FOUR_ENTRY_TABLE = 4 ;
-	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbTestData/ExpectedChangeRootData.xml";;
+	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbTestData/ExpectedChangeRootRefData.xml";
+	private static final String DELETED_REPOSITORY_NO_SUBFOLDERS = "integrationTest/DbTestData/OnlyOneReposirotyNoSubFoldersRefData.xml";
+	private static final String DELETED_REPOSITORY_SUBFOLDERS = "integrationTest/DbTestData/OnlyOneRepositoryWithSubFoldersRefData.xml";
+	private static final String CLONED_REPOSITORY = "integrationTest/DbTestData/ClonedRepositoryRefData.xml";
+	
 	
 	@BeforeClass
 	public static void initSchema() throws Exception{
@@ -59,7 +55,7 @@ public class DbHibRepositoryTest {
 		}
 		dbTester.createSchema();
 	}
-
+	
 	@AfterClass
 	public static void dropSchema() throws Exception{
 		dbTester.dropSchema();
@@ -77,12 +73,14 @@ public class DbHibRepositoryTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		dbTester.onTearDown();
 		if(this.hibFactory != null && !this.hibFactory.isClosed()){
 			this.hibFactory.close();
 		}
 		this.hibFactory = null;
 	}
+
 
 	@Test
 	public void testWriteToDataBase () throws Exception
@@ -109,52 +107,25 @@ public class DbHibRepositoryTest {
 		session.saveOrUpdate(repositoryToWrite);
 		session.delete(repositoryToWrite);
 		session.getTransaction().commit();
-	}
-	
-	@Test
-	public void testLoadRepository () throws Exception 
-	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-		dbTester.onSetup();
-		Session session = hibFactory.getCurrentSession() ;
-		session.beginTransaction(); 
-		Query retrievedRepository = session.createQuery( "from HibRepository where id = '100001'" ) ;
 		
-		HibRepository loadedRepository = (HibRepository) retrievedRepository.uniqueResult(); 
-		
-		assertEquals ("same name" , REPOSITORY_NAME ,loadedRepository.getName() ) ;
-		assertEquals ("same description" , REPOSITORY_DESCRIPTION ,loadedRepository.getDescription() ) ;
-		assertEquals ("same built" , REPOSITORY_VERSION ,loadedRepository.getBuildNum() ) ;
-		
-		assertTrue ("has rootFolder", loadedRepository.getRootFolder() != null  ) ;
-		session.getTransaction().commit();
 	}
 	
 	public void testDatabaseDataIntegrity () throws Exception
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		Session session = hibFactory.getCurrentSession() ;
-		session.beginTransaction(); 
- 		
-		Query retrievedRepositories = session.createQuery( "from HibRepository" ) ;
-		assertEquals ( "no repositories" , EMPTY_TABLE , retrievedRepositories.list().size() ) ;
 		
-		Query retrievedRootFolders = session.createQuery( "from HibRootFolder" ) ;
-		assertEquals ( "no rootFolders" , TWO_ENTRIES_TABLE , retrievedRootFolders.list().size() ) ;
+		IDataSet loadedData = dbTester.getDataSet() ;
+		IDataSet originalData = new XmlDataSet(new FileInputStream(REF_DATA));
 		
-		Query retrievedSubFolders = session.createQuery( "from HibSubFolder" ) ;
-		assertEquals ( "no subFolders" , FOUR_ENTRY_TABLE , retrievedSubFolders.list().size() ) ;
+		Assertion.assertEquals ( originalData , loadedData ) ;  
 		
-		Query retrievedMapDiagrams = session.createQuery( "from HibMapDiagram" ) ;
-		assertEquals ( "no mapDiagrams" , ONE_ENTRY_TABLE , retrievedMapDiagrams.list().size() ) ;
-		
-		session.getTransaction().commit();
 	}
 	
-	@Test
-	public void testChangeRootFolder () throws Exception 
-	{
+
+		@Test
+		public void testChangeRootFolder () throws Exception 
+		{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
 		{
@@ -209,14 +180,28 @@ public class DbHibRepositoryTest {
 		dbTester.onSetup();
 		Session session = hibFactory.getCurrentSession() ;
 		session.beginTransaction(); 
-		Query retrievedRepositories = session.createQuery( "from HibRepository where id = '100001'" ) ;
+		Query retrievedRepositories = session.createQuery( "from HibRepository where id='100001'" ) ;
+//		Query retrievedRootFolder = session.createQuery( "from HibRootFolder where id='100001'" ) ;
 		
 		HibRepository repository = (HibRepository)retrievedRepositories.uniqueResult(); 
+		HibRootFolder rootFolder = repository.getRootFolder() ;
 		
-		session.delete(repository) ;
+		repository.changeRootFolder(null) ;
+//		rootFolder.changeRepository(null) ;
+	
+		session.delete(rootFolder) ;
+//		session.delete(repository) ;
+		
+		
 		
 		session.getTransaction().commit() ;
+		
+		IDataSet currentData = dbTester.getDataSet() ;
+		IDataSet testData = new XmlDataSet(new FileInputStream(DELETED_REPOSITORY_NO_SUBFOLDERS));
+		
+		Assertion.assertEquals (  testData , currentData ) ;
 	}
+
 
 	@Test
 	public void testDeleteRepositoryWithOnlyRootFolders () throws Exception 
@@ -227,9 +212,18 @@ public class DbHibRepositoryTest {
 		session.beginTransaction(); 
 		Query retrievedRepositories = session.createQuery( "from HibRepository where id = '100002'" ) ;
 		HibRepository repository = (HibRepository)retrievedRepositories.uniqueResult() ; 
+		HibRootFolder rootFolder = repository.getRootFolder() ;
+		rootFolder.setRepository(null) ;
 		
 		session.delete(repository) ;
+		session.delete(repository.getRootFolder()) ;
 		
 		session.getTransaction().commit() ;
+
+		IDataSet currentData = dbTester.getDataSet() ;
+		IDataSet testData = new XmlDataSet(new FileInputStream(DELETED_REPOSITORY_SUBFOLDERS));
+		
+		Assertion.assertEquals (  testData , currentData ) ;
 	}
+
 }
