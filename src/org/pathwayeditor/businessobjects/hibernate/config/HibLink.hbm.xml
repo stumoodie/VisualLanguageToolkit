@@ -15,7 +15,7 @@
 				fetch="select">
 				<column name="canvas_id" not-null="true" />
 			</many-to-one>
-			<property name="ceationSerial" type="int">
+			<property name="creationSerial" type="int">
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>

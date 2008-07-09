@@ -16,13 +16,13 @@
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="owningChildGraph" class="org.pathwayeditor.busiessobjects.hibernate.HibShapeModel">
+        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeModel">
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="outNode" class="org.pathwayeditor.busiessobjects.hibernate.HibCompoundNode">
+        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
         	<column name="out_node_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="inNode" class="org.pathwayeditor.busiessobjects.hibernate.HibCompoundNode">
+        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
         	<column name="in_node_id" not-null="true"/>
         </many-to-one>
     </class>

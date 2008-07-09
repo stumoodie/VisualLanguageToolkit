@@ -74,7 +74,7 @@ public class HibLink implements IBusinessObjectData<Link>,
 		return this.creationSerial;
 	}
 
-	public void setLink_index(int link_index) {
+	public void setCreationSerial(int link_index) {
 		this.creationSerial = link_index;
 	}
 

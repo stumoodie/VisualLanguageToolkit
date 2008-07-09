@@ -9,7 +9,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1shapemodel" unique="true">
-        	<many-to-one name="rootNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        	<many-to-one name="rootNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" insert="false" update="false">
             	<column name="id" not-null="false" />
         	</many-to-one>
         </properties>
