@@ -23,6 +23,7 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	private HibCanvas canvas = null;
 	private Model businessObject;
 	private ICompoundGraphBuilder compoundGraphBuilder;
+	private HibCompoundNode rootNode ;
 	
 	public HibModel(){
 		
@@ -51,6 +52,14 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 		this.canvas = canvas;
 	}
 	
+	public HibCompoundNode getRootNode() {
+		return this.rootNode;
+	}
+
+	public void setRootNode(HibCompoundNode rootNode) {
+		this.rootNode = rootNode;
+	}
+
 	public void changeCanvas(HibCanvas newCanvas){
 		this.canvas = newCanvas;
 	}

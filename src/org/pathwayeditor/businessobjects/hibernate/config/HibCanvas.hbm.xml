@@ -22,10 +22,10 @@
         <property name="gridY" type="int">
             <column name="grid_y" not-null="true" />
         </property>
-        <property name="gridEnabled" type="boolean">
+        <property name="gridEnabled" type="true_false">
             <column name="grid_enabled" not-null="true" />
         </property>
-        <property name="snapToGridEnabled" type="boolean">
+        <property name="snapToGridEnabled" type="true_false">
             <column name="snap_to_grid_enabled" not-null="true" />
         </property>
         <property name="backgroundRed" type="int">
@@ -43,32 +43,29 @@
         <property name="canvasHeight" type="int">
             <column name="canvas_height" not-null="true" />
         </property>
-        <list name="shapes" inverse="true" table="rootshape" cascade="all,delete-orphan">
+        <property name="created" type="java.util.Date">
+        	<column name="created" not-null="true"/> 
+        </property>
+        <property name="modified" type="java.util.Date">
+        	<column name="last_modified" not-null="true"/> 
+        </property>
+        <set name="shapes" inverse="true" table="rootshape" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <list-index>
-            	<column name="shape_index" not-null="true"/>
-            </list-index>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShape"/> 
-        </list>
-        <list name="links" inverse="true" table="rootlink" cascade="all,delete-orphan">
+        </set>
+        <set name="links" inverse="true" table="rootlink" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <list-index>
-            	<column name="link_index" not-null="true"/>
-            </list-index>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink"/>
-        </list>
-        <list name="labels" inverse="true" table="rootlabel" cascade="all,delete-orphan">
+        </set>
+        <set name="labels" inverse="true" table="rootlabel" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <list-index>
-            	<column name="label_index" not-null="true"/>
-            </list-index>
             <many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" column="label_id" />
-        </list>
+        </set>
     </class>
 </hibernate-mapping>

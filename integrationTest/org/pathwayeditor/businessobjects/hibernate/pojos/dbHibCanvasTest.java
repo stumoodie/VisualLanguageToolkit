@@ -29,28 +29,26 @@ import org.pathwayeditor.testutils.HibernateDbTester;
  * @author ntsorman
  *
  */
-public class DBHibMapDiagramTest {
+public class dbHibCanvasTest {
 
 	private static HibernateDbTester dbTester = null;
 	private SessionFactory hibFactory; 
 	private Session session ;
-	
-	private static final String REPOSITORY_NAME = "repo name" ;
-	private static final String REPOSITORY_DESCRIPTION = "repo name" ;
-	private static final int REPOSITORY_VERSION = 101010;
-	
-	private static final String MAPDIAGRAM_NAME = "new diagram name" ;
-	private static final String MAPDIAGRAM_DESCR = "new diagram description" ;
-	
-	private static final int ONE_ENTRY_TABLE = 1 ;
-	
 
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static final String EMPTY_REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryEmptyRefData.xml";
-	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
-	private static final String ADDED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/AddedMapDiagramRefData.xml";
-	private static final String DELETED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/DeletedMapDiagramRefData.xml";
-	private static final String CLONED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/ClonedMapDiagramRefData.xml";
+	private static final String REF_DATA = "integrationTest/DbCanvasTestData/CanvasDbRefData.xml";
+	private static final String DELETED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/DeletedMapDiagramRefData.xml";
+	private static final String CHANGED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/ChangedMapDiagramCanvasRefData.xml";
+	private static final String CLONED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/ClonedCanvasRedData.xml";
+	
+	
+	private static final int COLOR_VALUE = 100 ;
+	private static final int GRID_VALUE = 10 ;
+	private static final boolean GRID_ENABLEMENT = true ;
+	private static final int CANVAS_SIZE = 10 ;
+	
+	private static final String CHECK_DATE_STRING = "1970-01-01 00:00:00.0" ;
+	
 	
 	
 	
@@ -85,49 +83,44 @@ public class DBHibMapDiagramTest {
 		}
 		this.hibFactory = null;
 	}
-
+	
 	@Test
-	public void testWriteMapDiagramToDatabase () throws Exception 
+	public void testLoadedCanvas () throws Exception
 	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(EMPTY_REF_DATA)));
+		
+		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
 		
-		HibRepository repositoryToWrite = new HibRepository (REPOSITORY_NAME, REPOSITORY_DESCRIPTION, REPOSITORY_VERSION );
-		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
-		
-		repositoryToWrite.changeRootFolder(rootFolderToWrite) ;
-		
-		
-		HibMapDiagram aMapDiagram = new HibMapDiagram () ;
-		
-		rootFolderToWrite.addMapDiagram(aMapDiagram) ;
-
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
 		
-		session.save(repositoryToWrite) ;
+		Query retreivedCanvas = session.createQuery( "from HibCanvas where id ='100001'" ) ;
+		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100001'" ) ;
 		
-		session.getTransaction().commit() ;
+		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		session = hibFactory.getCurrentSession() ;
-		session.beginTransaction() ;
+		assertEquals ( "MapDiagram id" , parentMapDiagram , dbCanvas.getMapDiagram() ) ;
 		
-		Query retrievedRepository = session.createQuery( "from HibRepository") ;
-		assertEquals ( "one repository" , ONE_ENTRY_TABLE ,retrievedRepository.list().size() ) ;
+		assertEquals ("Grid X" , GRID_VALUE , dbCanvas.getGridX()) ;
+		assertEquals ("Grid Y" , GRID_VALUE , dbCanvas.getGridY()) ;
 		
-		Query retrievedRootFolder = session.createQuery( "from HibRootFolder") ;
-		assertEquals ( "one rootFolder" , ONE_ENTRY_TABLE ,retrievedRootFolder.list().size() ) ;
+		assertEquals ( "Grid enabled" , GRID_ENABLEMENT , dbCanvas.isGridEnabled()) ;
+		assertEquals ( "Snap enabled" , GRID_ENABLEMENT , dbCanvas.isSnapToGridEnabled()) ;
 		
-		Query retrievedSubFolder = session.createQuery( "from HibMapDiagram") ;
-		assertEquals ( "one subFolder" , ONE_ENTRY_TABLE ,retrievedSubFolder.list().size() ) ;
+		assertEquals ("Canvas width" , CANVAS_SIZE , dbCanvas.getCanvasWidth() ) ;
+		assertEquals ("Canvas height" , CANVAS_SIZE , dbCanvas.getCanvasHeight() ) ;
 		
-//		Query retrievedCanvas = session.createQuery( "from HibCanvas") ;
-//		assertEquals ( "one subFolder" , ONE_ENTRY_TABLE ,retrievedSubFolder.list().size() ) ;
+		assertEquals ( "color green" , COLOR_VALUE , dbCanvas.getBackgroundGreen() ) ;
+		assertEquals ( "color red" , COLOR_VALUE , dbCanvas.getBackgroundRed() ) ;
+		assertEquals ( "color blue" , COLOR_VALUE , dbCanvas.getBackgroundBlue() ) ;
 		
+		assertEquals ("created date" , CHECK_DATE_STRING , dbCanvas.getCreated().toString()) ;
+		assertEquals ("modified date" , CHECK_DATE_STRING , dbCanvas.getModified().toString() ) ;
 	}
 	
 	@Test
-	public void testAddNewMapDiagram () throws Exception 
+	public void deleteMapDiagramAndCanvas () throws Exception 
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
@@ -135,54 +128,16 @@ public class DBHibMapDiagramTest {
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
 		
-		Query retreivedFolder = session.createQuery("from HibFolder where id='100005'") ;
+		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100001'" ) ;
+		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
 		
-		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
-		
-		HibMapDiagram towrite = new HibMapDiagram ( parentFolder , MAPDIAGRAM_NAME ) ;
-		towrite.setDescription(MAPDIAGRAM_DESCR) ;
-		
-		parentFolder.addMapDiagram(towrite) ;
-		
-		session.saveOrUpdate(parentFolder) ;
-		session.getTransaction().commit() ;
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				ADDED_MAPDIAGRAM_REF_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
+		Query retreivedCanvas = session.createQuery( "from HibCanvas where id ='100001'" ) ;
+		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		
-	}
-	
-	@Test
-	public void testDeleteMapDiagram () throws Exception
-	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-		dbTester.onSetup();
-		
-		session = hibFactory.getCurrentSession() ;
-		session.beginTransaction() ;
-		
-		Query retreivedMapDiagram = session.createQuery("from HibMapDiagram where id='100001'") ;
-		
-		HibMapDiagram toDelete = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
-		
-		session.delete(toDelete) ;
-		session.getTransaction().commit() ;
+		session.delete(dbCanvas) ;
+		session.delete(parentMapDiagram) ;
+		session.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_MAPDIAGRAM_REF_DATA));
@@ -201,10 +156,11 @@ public class DBHibMapDiagramTest {
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));
 		}
+		
 	}
 	
 	@Test
-	public void testCloneMapDiagram () throws Exception 
+	public void testChangeMapDiagram () throws Exception
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
@@ -212,17 +168,57 @@ public class DBHibMapDiagramTest {
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
 		
-		Query retreivedMapDiagram = session.createQuery("from HibMapDiagram where id='100001'") ;
-		HibMapDiagram toClone = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100002'" ) ;
+		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
 		
-		Query retreivedFolder = session.createQuery("from HibFolder where id='100004'") ;
-		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
+		Query retreivedCanvas = session.createQuery( "from HibCanvas where id ='100001'" ) ;
+		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		HibMapDiagram cloneDiagram = new HibMapDiagram ( parentFolder , toClone ) ;
+		dbCanvas.changeMapDiagram(parentMapDiagram) ;
 		
-		parentFolder.addMapDiagram(cloneDiagram) ;
+		session.saveOrUpdate(dbCanvas) ;
+		session.getTransaction().commit() ;
 		
-		session.saveOrUpdate(parentFolder) ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				CHANGED_MAPDIAGRAM_REF_DATA));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+	}
+	
+	@Test
+	public void testCloneCanvas () throws Exception
+	{
+		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
+		dbTester.onSetup();
+		
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;
+		
+		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100002'" ) ;
+		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		
+		Query retreivedCanvas = session.createQuery( "from HibCanvas where id ='100001'" ) ;
+		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
+		
+		HibCanvas toWrite= new HibCanvas (parentMapDiagram, dbCanvas) ;
+		
+//		toWrite.changeMapDiagram(parentMapDiagram) ; 
+		
+		session.save(toWrite) ;
 		session.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -243,4 +239,7 @@ public class DBHibMapDiagramTest {
 							.getTableMetaData()));
 		}
 	}
+	
+	
+
 }

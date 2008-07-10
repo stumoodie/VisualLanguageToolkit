@@ -42,6 +42,7 @@ public class HibLink implements IBusinessObjectData<Link>,
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
 	private Link businessObject;
 	private ISyntaxMappingFactory syntaxMappingFactory;
+	private HibCompoundEdge edge ;
 
 	public HibLink() {
 	}
@@ -56,6 +57,14 @@ public class HibLink implements IBusinessObjectData<Link>,
 
 	public Long getId() {
 		return this.id;
+	}
+	
+	public HibCompoundEdge getEdge() {
+		return this.edge;
+	}
+
+	public void setEdge(HibCompoundEdge edge) {
+		this.edge = edge;
 	}
 
 	public void setId(Long id) {

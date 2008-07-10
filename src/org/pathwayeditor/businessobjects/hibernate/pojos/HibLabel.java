@@ -15,7 +15,7 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
 
      private Long id;
      private HibCanvas hibCanvas;
-     private int label_index;
+     private int creation_serial;
      private int XPosition;
      private int YPosition;
      private int width;
@@ -26,13 +26,14 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
      private int backgroundGreen;
      private int backgroundBlue;
      private boolean noFillSet;
+     private HibCompoundNode nodeId ;
 
     public HibLabel() {
     }
 
-    public HibLabel(HibCanvas hibCanvas, int label_index, int XPosition, int YPosition, int width, int height, HibProperty visualisableProperty, boolean isDisplayed, int backgroundRed, int backgroundGreen, int backgroundBlue, boolean noFillSet) {
+    public HibLabel(HibCanvas hibCanvas, int creation_serial, int XPosition, int YPosition, int width, int height, HibProperty visualisableProperty, boolean isDisplayed, int backgroundRed, int backgroundGreen, int backgroundBlue, boolean noFillSet) {
        this.hibCanvas = hibCanvas;
-       this.label_index = label_index;
+       this.creation_serial = creation_serial;
        this.XPosition = XPosition;
        this.YPosition = YPosition;
        this.width = width;
@@ -59,18 +60,26 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
     public void setCanvas(HibCanvas hibCanvas) {
         this.hibCanvas = hibCanvas;
     }
-    public int getLabel_index() {
-        return this.label_index;
+    public int getCreation_serial() {
+        return this.creation_serial;
     }
     
-    public void setLabel_index(int label_index) {
-        this.label_index = label_index;
+    public void setCreation_serial(int label_index) {
+        this.creation_serial = label_index;
     }
     public int getXPosition() {
         return this.XPosition;
     }
     
-    public void setXPosition(int XPosition) {
+    public HibCompoundNode getNodeId() {
+		return this.nodeId;
+	}
+
+	public void setNodeId(HibCompoundNode nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public void setXPosition(int XPosition) {
         this.XPosition = XPosition;
     }
     public int getYPosition() {
@@ -145,7 +154,7 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
 		 HibLabel castOther = ( HibLabel ) other; 
          
 		 return ( (this.getCanvas()==castOther.getCanvas()) || ( this.getCanvas()!=null && castOther.getCanvas()!=null && this.getCanvas().equals(castOther.getCanvas()) ) )
- && (this.getLabel_index()==castOther.getLabel_index());
+ && (this.getCreation_serial()==castOther.getCreation_serial());
    }
    
    public int hashCode() {
@@ -153,7 +162,7 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
          
          
          result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
-         result = 37 * result + this.getLabel_index();
+         result = 37 * result + this.getCreation_serial();
          
          
          

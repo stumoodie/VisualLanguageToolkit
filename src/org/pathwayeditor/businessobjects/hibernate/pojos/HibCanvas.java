@@ -1,6 +1,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,6 +35,8 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	private HibModel hibModel = null;
 	private Canvas businessObject = null;
 	private ISyntaxMappingFactory mappingFactory;
+	private Date created = null ;
+	private Date modified = null ;
 
 	/**
 	 * Default constructor used by hibernate.
@@ -62,7 +65,7 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 		this.snapToGridEnabled = other.snapToGridEnabled;
 		this.backgroundRed = other.backgroundRed;
 		this.backgroundGreen = other.backgroundGreen;
-		this.backgroundRed = other.backgroundRed;
+		this.backgroundBlue = other.backgroundBlue;
 		this.canvasWidth = other.canvasWidth;
 		this.canvasHeight = other.canvasHeight;
 		for(HibShape hibShape : other.hibShapes){
@@ -78,6 +81,8 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 		// persisted.
 		this.hibModel = null;
 		this.mappingFactory = other.mappingFactory;
+		this.created = (Date) other.created.clone() ;
+		this.modified= (Date) other.modified.clone() ;
 	}
 
 	public HibCanvas(HibCanvas other) {
@@ -106,6 +111,22 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 
 	public void setContext(HibContext hibContext) {
 		this.context = hibContext;
+	}
+	
+	public Date getCreated() {
+		return this.created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getModified() {
+		return this.modified;
+	}
+
+	public void setModified(Date modified) {
+		this.modified = modified;
 	}
 
 	public int getGridX() {

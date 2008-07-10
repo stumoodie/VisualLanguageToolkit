@@ -38,14 +38,14 @@ public class DbHibRepositoryTest {
 	private static final String ALT_REPOSITORY_NAME = "repo name 3" ;
 	private static final String ALT_REPOSITORY_DESCRIPTION = "repository description 3" ;
 	private static final int ALT_REPOSITORY_VERSION = 25343;
-	private static final String REF_DATA = "integrationTest/DbTestData/RepositoryRefData.xml";
+	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
 	
 //	private static final String SUB_FOLDER_NAME = "sub folder name" ;
 	
-	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbTestData/ExpectedChangeRootRefData.xml";
-	private static final String DELETED_REPOSITORY_NO_SUBFOLDERS = "integrationTest/DbTestData/OnlyOneReposirotyNoSubFoldersRefData.xml";
-	private static final String DELETED_REPOSITORY_SUBFOLDERS = "integrationTest/DbTestData/OnlyOneRepositoryWithSubFoldersRefData.xml";
-	private static final String CLONED_REPOSITORY = "integrationTest/DbTestData/ClonedRepositoryRefData.xml";
+	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbRepositoryTestData/ExpectedChangeRootRefData.xml";
+	private static final String DELETED_REPOSITORY_NO_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneReposirotyNoSubFoldersRefData.xml";
+	private static final String DELETED_REPOSITORY_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneRepositoryWithSubFoldersRefData.xml";
+	private static final String CLONED_REPOSITORY = "integrationTest/DbRepositoryTestData/ClonedRepositoryRefData.xml";
 	
 	
 	@BeforeClass
@@ -151,8 +151,7 @@ public class DbHibRepositoryTest {
 			session.saveOrUpdate(loadedRepository);
 
 			session.getTransaction().commit();
-		}
-		{
+	
 			IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 					CHANGE_ROOT_EXPECTED_RESULTS));
 			String testTables[] = expectedDeltas.getTableNames();

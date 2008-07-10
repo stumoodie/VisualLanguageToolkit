@@ -38,11 +38,11 @@ public class DbHibSubFolderTest {
 	private static final String REPOSITORY_NAME = "new repo name" ;
 	private static final String REPOSITORY_DESCRIPTION = "repository description" ;
 	private static final int REPOSITORY_VERSION = 2534333;
-	private static final String REF_DATA = "integrationTest/DbTestData/RepositoryRefData.xml";
-	private static final String EMPTY_REF_DATA = "integrationTest/DbTestData/RepositoryEmptyRefData.xml";
-	private static final String DELETED_REF_DATA = "integrationTest/DBTestData/RepositoryNoSubFoldersRefData.xml";
-	private static final String DELETED_PARENT_WITH_CHILDREN = "integrationTest/DBTestData/DeletedSubFolderWithChildrenRefData.xml";
-	private static final String CLONED_SUBFOLDER_REF_DATA =  "integrationTest/DBTestData/CloneSubFolderRefData.xml";
+	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
+	private static final String EMPTY_REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryEmptyRefData.xml";
+	private static final String DELETED_REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryNoSubFoldersRefData.xml";
+	private static final String DELETED_PARENT_WITH_CHILDREN = "integrationTest/DbRepositoryTestData/DeletedSubFolderWithChildrenRefData.xml";
+	private static final String CLONED_SUBFOLDER_REF_DATA =  "integrationTest/DbRepositoryTestData/CloneSubFolderRefData.xml";
 	
 	private static final int TWO_ENTRIES_TABLE = 2 ;
 	private static final int THREE_ENTRIES_TABLE = 3 ;
@@ -213,10 +213,24 @@ public class DbHibSubFolderTest {
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
 		
-		IDataSet validationData = new XmlDataSet(new FileInputStream(DELETED_REF_DATA));
-		IDataSet actualData = dbTester.getConnection().createDataSet() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				DELETED_REF_DATA));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		
-		Assertion.assertEquals ( validationData , actualData ) ;
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
 		
 		
 	}
@@ -240,11 +254,24 @@ public class DbHibSubFolderTest {
 		session.delete(dbParentFolder) ;
 		session.getTransaction().commit() ;
 		
-		IDataSet validationData = new XmlDataSet(new FileInputStream(DELETED_PARENT_WITH_CHILDREN));
-		IDataSet actualData = dbTester.getConnection().createDataSet() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				DELETED_PARENT_WITH_CHILDREN));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		
-		Assertion.assertEquals ( validationData , actualData ) ;
-		
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
 	}
 	
 }
