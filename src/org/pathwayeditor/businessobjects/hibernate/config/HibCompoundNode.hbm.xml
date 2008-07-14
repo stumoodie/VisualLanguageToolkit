@@ -17,7 +17,7 @@
         	</property>
         </properties>
         <many-to-one name="owningChildModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeModel">
-        	<column name="owning_child_model_id" not-null="false"/>
+        	<column name="owning_shape_model_id" not-null="false"/>
         </many-to-one>
         <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
             <key column="parent_id" not-null="false" />
