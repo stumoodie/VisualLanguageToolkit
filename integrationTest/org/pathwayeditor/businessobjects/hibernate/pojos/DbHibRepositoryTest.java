@@ -33,6 +33,7 @@ public class DbHibRepositoryTest {
 	
 	private static HibernateDbTester dbTester = null;
 	private SessionFactory hibFactory; 
+	private Session session ;
 
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 	private static final String ALT_REPOSITORY_NAME = "repo name 3" ;
@@ -45,7 +46,7 @@ public class DbHibRepositoryTest {
 	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbRepositoryTestData/ExpectedChangeRootRefData.xml";
 	private static final String DELETED_REPOSITORY_NO_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneReposirotyNoSubFoldersRefData.xml";
 	private static final String DELETED_REPOSITORY_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneRepositoryWithSubFoldersRefData.xml";
-	private static final String CLONED_REPOSITORY = "integrationTest/DbRepositoryTestData/ClonedRepositoryRefData.xml";
+
 	
 	
 	@BeforeClass
@@ -87,7 +88,7 @@ public class DbHibRepositoryTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		Session session = hibFactory.getCurrentSession() ;
+		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction();
 		
 		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION );
@@ -129,7 +130,7 @@ public class DbHibRepositoryTest {
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
 		{
-			Session session = hibFactory.getCurrentSession();
+			session = hibFactory.getCurrentSession();
 			session.beginTransaction();
 			Query retrievedRepository = session
 					.createQuery("from HibRepository where id = '100001'");
@@ -177,28 +178,38 @@ public class DbHibRepositoryTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		Session session = hibFactory.getCurrentSession() ;
-		session.beginTransaction(); 
-		Query retrievedRepositories = session.createQuery( "from HibRepository where id='100001'" ) ;
-//		Query retrievedRootFolder = session.createQuery( "from HibRootFolder where id='100001'" ) ;
 		
-		HibRepository repository = (HibRepository)retrievedRepositories.uniqueResult(); 
-		HibRootFolder rootFolder = repository.getRootFolder() ;
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;		
 		
-		repository.changeRootFolder(null) ;
-//		rootFolder.changeRepository(null) ;
-	
-		session.delete(rootFolder) ;
-//		session.delete(repository) ;
+		Query repositoryGetter = session.createQuery ( "From HibRepository where id='100001'") ;
 		
+		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
+		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
 		
+		session.delete(dbRepository) ;
+		session.delete(dbRootFolder) ;
 		session.getTransaction().commit() ;
 		
-		IDataSet currentData = dbTester.getDataSet() ;
-		IDataSet testData = new XmlDataSet(new FileInputStream(DELETED_REPOSITORY_NO_SUBFOLDERS));
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				DELETED_REPOSITORY_NO_SUBFOLDERS));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		
-		Assertion.assertEquals (  testData , currentData ) ;
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
 	}
 
 
@@ -207,22 +218,38 @@ public class DbHibRepositoryTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		Session session = hibFactory.getCurrentSession() ;
-		session.beginTransaction(); 
-		Query retrievedRepositories = session.createQuery( "from HibRepository where id = '100002'" ) ;
-		HibRepository repository = (HibRepository)retrievedRepositories.uniqueResult() ; 
-		HibRootFolder rootFolder = repository.getRootFolder() ;
-		rootFolder.setRepository(null) ;
 		
-		session.delete(repository) ;
-		session.delete(repository.getRootFolder()) ;
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;		
 		
+		Query repositoryGetter = session.createQuery ( "From HibRepository where id='100002'") ;
+		
+		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
+		
+		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
+		
+		session.delete(dbRepository) ;
+		session.delete(dbRootFolder) ;
 		session.getTransaction().commit() ;
-
-		IDataSet currentData = dbTester.getDataSet() ;
-		IDataSet testData = new XmlDataSet(new FileInputStream(DELETED_REPOSITORY_SUBFOLDERS));
 		
-		Assertion.assertEquals (  testData , currentData ) ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				DELETED_REPOSITORY_SUBFOLDERS));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
 	}
 
 }
