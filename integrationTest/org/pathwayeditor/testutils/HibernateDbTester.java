@@ -6,7 +6,6 @@ package org.pathwayeditor.testutils;
 import java.sql.Connection;
 
 import org.dbunit.IDatabaseTester;
-import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -33,7 +32,7 @@ public class HibernateDbTester implements IDatabaseTester {
 		String connectionUrl = hibConfig.getProperty(HIB_PROP_URL);
 		String userName = hibConfig.getProperty(HIB_PROP_USERNAME);
 		String password = hibConfig.getProperty(HIB_PROP_PASSWORD);
-		this.delegator = new JdbcDatabaseTester(driverClass, connectionUrl, userName, password);
+		this.delegator = new HsqlJdbcDatabaseTester(driverClass, connectionUrl, userName, password);
 	}
 	
 	
