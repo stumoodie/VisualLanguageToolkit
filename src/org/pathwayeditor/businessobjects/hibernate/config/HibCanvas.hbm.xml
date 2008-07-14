@@ -22,10 +22,10 @@
         <property name="gridY" type="int">
             <column name="grid_y" not-null="true" />
         </property>
-        <property name="gridEnabled" type="true_false">
+        <property name="gridEnabled" type="boolean">
             <column name="grid_enabled" not-null="true" />
         </property>
-        <property name="snapToGridEnabled" type="true_false">
+        <property name="snapToGridEnabled" type="boolean">
             <column name="snap_to_grid_enabled" not-null="true" />
         </property>
         <property name="backgroundRed" type="int">

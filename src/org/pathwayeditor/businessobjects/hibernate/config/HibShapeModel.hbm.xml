@@ -10,9 +10,12 @@
         </id>
         <properties name="xak1shapemodel" unique="true">
         	<many-to-one name="rootNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" insert="false" update="false">
-            	<column name="id" not-null="false" />
+            	<column name="root_node_id" not-null="false" />
         	</many-to-one>
         </properties>
+		<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" insert="false" update="false">
+            	<column name="canvas_id" not-null="false" />
+        	</many-to-one>        
         <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
             <key column="owning_shape_model_id" not-null="true" />
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/>

@@ -14,6 +14,7 @@ public class HibShapeModel {
 	private Long id;
 	private HibModel model = null;
 	private HibCompoundNode rootNode = null;
+	private HibCanvas canvas ;
 	private Set<HibCompoundEdge> edges = new HashSet<HibCompoundEdge>(0);
 	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
 	
@@ -43,7 +44,14 @@ public class HibShapeModel {
 		this.model = model;
 	}
 	
-	
+	public HibCanvas getCanvas() {
+		return this.canvas;
+	}
+
+	public void setCanvas(HibCanvas canvas) {
+		this.canvas = canvas;
+	}
+
 	public void changeModel(HibModel model){
 		//TODO: implement this!
 	}

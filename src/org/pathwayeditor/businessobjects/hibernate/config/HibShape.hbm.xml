@@ -18,8 +18,8 @@
         	</property>
         </properties>
         
-    	<many-to-one name="node" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-       		<column name="node_id" not-null="true"/>
+    	<many-to-one name="rootNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+       		<column name="rootNode" not-null="true"/>
        	</many-to-one>
         <property name="XPosition" type="int">
             <column name="x_position" not-null="true" />

@@ -15,9 +15,10 @@ public class HibCompoundNode {
 	private Long id;
 	private HibModel model ;
 	private int nodeIndex ;
-	private HibShapeModel owningChildModel ;
+	private HibShapeModel owningShapeModel ;
 	private Set<HibCompoundNode> nodes ; 
 	private Set<HibCompoundEdge> outEdges ;
+	private Set<HibCompoundEdge> inEdges ;
 	
 	
 	public Long getId() {
@@ -44,12 +45,12 @@ public class HibCompoundNode {
 		this.nodeIndex = nodeIndex;
 	}
 
-	public HibShapeModel getOwningChildModel() {
-		return this.owningChildModel;
+	public HibShapeModel getOwningShapeModel() {
+		return this.owningShapeModel;
 	}
 
-	public void setOwningChildModel(HibShapeModel owningChildModel) {
-		this.owningChildModel = owningChildModel;
+	public void setOwningShapeModel(HibShapeModel owningChildModel) {
+		this.owningShapeModel = owningChildModel;
 	}
 
 	public Set<HibCompoundNode> getNodes() {
@@ -68,6 +69,14 @@ public class HibCompoundNode {
 		this.outEdges = outEdges;
 	}
 
+	public Set<HibCompoundEdge> getInEdges() {
+		return this.inEdges;
+	}
+
+	public void setInEdges(Set<HibCompoundEdge> inEdges) {
+		this.inEdges = inEdges;
+	}
+	
 	
 
 }
