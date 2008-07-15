@@ -290,4 +290,16 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void addShape ( HibShape toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("newSubFolder cannot be null");
+		HibCanvas oldCanvas = toAdd.getCanvas() ;
+		if (oldCanvas != null) {
+			oldCanvas.getShapes().remove(toAdd);
+		}
+		this.hibShapes.add(toAdd);
+		toAdd.setCanvas(this);
+	}
 }

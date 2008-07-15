@@ -16,12 +16,12 @@
         		<column name="node_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="owningShapeModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeModel">
+        <many-to-one name="owningShapeModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeModel" cascade="all">
         	<column name="owning_shape_model_id" not-null="false"/>
         </many-to-one>
         <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
             <key column="parent_id" not-null="false" />
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" />
         </set>
         <set name="outEdges" inverse="true" table="compoundedge" cascade="all,delete-orphan">
             <key column="out_node_id" not-null="true" />

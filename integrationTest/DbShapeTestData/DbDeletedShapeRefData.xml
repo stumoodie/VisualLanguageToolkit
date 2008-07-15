@@ -108,7 +108,7 @@
 				<value>10</value>
 	 			<value>1970-01-01</value>
 				<value>1970-01-01</value>
-			</row>   
+			</row>  
 	</table>
 	<table name="Model">
 		<column>id</column>
@@ -172,29 +172,21 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>123456</value>
-				<value>shapeName</value>
-				<value>100001</value>
-				<value>descr</value>
-				<value>detailed descr</value>
-				<value>http://www.shapeURL.org</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>1</value>
-				<value>1</value>
-				<value>1</value>
-				<value>1</value>
-				<value>50</value>
-				<value>50</value>
-				<value>50</value>
-				<value>50</value>
-			</row>
 	</table>
 </dataset>
+
+<!-- 
+{TREE VIEW}
+/===============================================\
+|												|
+|[/]Repository(100002)							|
+|			|									|
+|		RootFolder(100006)						|
+|				|								|
+|				+ MapDiagram(100001)			|
+|				|		|						|
+|				|		+ Canvas(100001)		|
+|				|								|
+|				+ MapDiagram(100002)			|
+\===============================================/
+-->

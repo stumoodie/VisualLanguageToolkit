@@ -24,7 +24,7 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-			</row>
+			</row>		
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
@@ -42,7 +42,7 @@
 				<value>100001</value>
 				<value>MapDiagram name2</value>
 				<value>MapDiagram descr2</value>
-			</row>
+			</row>	
 	</table>
 	<table name="Context">
 		<column>id</column>
@@ -108,7 +108,7 @@
 				<value>10</value>
 	 			<value>1970-01-01</value>
 				<value>1970-01-01</value>
-			</row>   
+			</row>  
 	</table>
 	<table name="Model">
 		<column>id</column>
@@ -198,3 +198,19 @@
 			</row>
 	</table>
 </dataset>
+
+<!-- 
+{TREE VIEW}
+/===============================================\
+|												|
+|[/]Repository(100002)							|
+|			|									|
+|		RootFolder(100006)						|
+|				|								|
+|				+ MapDiagram(100001)			|
+|				|		|						|
+|				|		+ Canvas(100001)		|
+|				|								|
+|				+ MapDiagram(100002)			|
+\===============================================/
+-->

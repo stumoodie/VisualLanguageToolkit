@@ -12,7 +12,7 @@
             	<column name="map_id" not-null="true" />
         	</many-to-one>
         </properties>
-        <one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel"/>
+        <one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all"/>
         <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibContext" cascade="persist,save-update">
             <column name="context_id" not-null="true" />
         </many-to-one>

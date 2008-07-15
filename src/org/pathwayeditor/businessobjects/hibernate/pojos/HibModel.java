@@ -24,6 +24,7 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	private Model businessObject;
 	private ICompoundGraphBuilder compoundGraphBuilder;
 	private HibCompoundNode rootNode ;
+	private Set<HibShapeModel> shapeModels = new HashSet<HibShapeModel> (0) ;
 	
 	public HibModel(){
 		
@@ -150,4 +151,14 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	public ICompoundGraphBuilder getCompoundGraphBuilder() {
 		return this.compoundGraphBuilder;
 	}
+
+	public Set<HibShapeModel> getShapeModels() {
+		return this.shapeModels;
+	}
+
+	public void setShapeModels(Set<HibShapeModel> shapeModels) {
+		this.shapeModels = shapeModels;
+	}
+	
+	
 }

@@ -38,7 +38,6 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 	private int padding;
 	private short shapeType;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
-	private HibCompoundNode rootNode ;
 
 	public HibShape() {
 	}
@@ -102,13 +101,6 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 		return this.YPosition;
 	}
 	
-	public HibCompoundNode getRootNode() {
-		return this.rootNode;
-	}
-	public void setRootNode(HibCompoundNode node) {
-		this.rootNode = node;
-	}
-
 	public void setYPosition(int YPosition) {
 		this.YPosition = YPosition;
 	}
