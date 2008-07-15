@@ -15,7 +15,7 @@
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>
-		<many-to-one name="nodeId" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+		<many-to-one name="compundNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
 			<column name="node_id" not-null="true" />
 		</many-to-one>
 		<property name="XPosition" type="int">

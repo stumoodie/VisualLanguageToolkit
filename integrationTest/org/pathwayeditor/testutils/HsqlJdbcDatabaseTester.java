@@ -20,7 +20,6 @@ public class HsqlJdbcDatabaseTester extends JdbcDatabaseTester{
 	 */
 	public HsqlJdbcDatabaseTester(String driverClass, String connectionUrl) {
 		super(driverClass, connectionUrl);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

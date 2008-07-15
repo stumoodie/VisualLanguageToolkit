@@ -26,7 +26,7 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
      private int backgroundGreen;
      private int backgroundBlue;
      private boolean noFillSet;
-     private HibCompoundNode nodeId ;
+     private HibCompoundNode compoundNode ;
 
     public HibLabel() {
     }
@@ -71,12 +71,12 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
         return this.XPosition;
     }
     
-    public HibCompoundNode getNodeId() {
-		return this.nodeId;
+    public HibCompoundNode getCompoundNode() {
+		return this.compoundNode;
 	}
 
-	public void setNodeId(HibCompoundNode nodeId) {
-		this.nodeId = nodeId;
+	public void setCompoundNode(HibCompoundNode nodeId) {
+		this.compoundNode = nodeId;
 	}
 
 	public void setXPosition(int XPosition) {
@@ -159,20 +159,8 @@ public class HibLabel  implements IBusinessObjectData<ILabel>, Serializable {
    
    public int hashCode() {
          int result = 17;
-         
-         
          result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
          result = 37 * result + this.getCreation_serial();
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
          return result;
    }   
 

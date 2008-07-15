@@ -58,7 +58,7 @@ public class DBHibMapDiagramTest {
 	@BeforeClass
 	public static void initSchema() throws Exception{
 		dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
-		dbTester.createSchema();
+		dbTester.createSchema();    
 	}
 	
 	@AfterClass
