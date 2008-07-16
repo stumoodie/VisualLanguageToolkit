@@ -66,6 +66,6 @@
                 <column name="canvas_id" not-null="true" />
             </key>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" />
-        </set>
+        </set>      
     </class>
 </hibernate-mapping>

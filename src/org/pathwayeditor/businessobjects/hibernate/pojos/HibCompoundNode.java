@@ -99,6 +99,7 @@ public class HibCompoundNode {
 		this.inEdges = inEdges;
 	}
 
+
 	public void addInEdge(HibCompoundEdge newInEdge) {
 		if (newInEdge == null)
 			throw new IllegalArgumentException("newInEdge cannot be null");

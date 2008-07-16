@@ -4,7 +4,9 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Shape;
@@ -39,6 +41,7 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 	private short shapeType;
 	private HibCompoundNode compoundNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
+	private Set<HibCompoundNode> compoundNodes = new HashSet<HibCompoundNode> (0);
 
 	public HibShape() {
 	}
@@ -257,6 +260,16 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 	public HibCanvas getCanvas() {
 		return this.canvas;
 	}
+	
+	
+
+	public Set<HibCompoundNode> getCompoundNodes() {
+		return this.compoundNodes;
+	}
+
+	public void setCompoundNodes(Set<HibCompoundNode> compoundNodes) {
+		this.compoundNodes = compoundNodes;
+	}
 
 	public void changeCanvas(HibCanvas newCanvas) {
 		HibCanvas oldCanvas = this.canvas ;
@@ -277,6 +290,118 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void addProperty ( String name , HibProperty toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibShape oldShape = toAdd.getShape() ;
+		if (oldShape != null) {
+			oldShape.getProperties().remove(toAdd);
+		}
+		this.hibProperties.put(name ,toAdd);
+		toAdd.setShape(this);
+	}
+	
+	void removeProperty(String toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
+		if  (propertyToRemove == null)
+			throw new IllegalStateException("property cannot be null");
+		if (propertyToRemove.getShape() != this)
+			throw new IllegalArgumentException(
+					"property must belong to this canvas");	
+		
+		this.hibProperties.remove(toRemove) ;
+		propertyToRemove.setShape(null);
+	}
+	
+	public boolean equals (Object other) 
+	{
+        if ( (this == other ) ) return true;
+		 if ( (other == null ) ) return false;
+		 if ( !(other instanceof HibShape) ) return false;
+		 HibShape castOther = ( HibShape ) other; 
+		 
+		
+		 if ( this.canvas ==null || castOther.getCanvas() == null )
+				return false ;
+		 if ( this.canvas != castOther.getCanvas() )
+				return false ;
+		 if ( this.creationSerial != castOther.getCreationSerial() )
+			 return false ;
+		 if ( this.XPosition != castOther.getXPosition())
+			 return false ;
+		 if ( this.YPosition != castOther.getYPosition())
+			 return false ;
+		 if ( this.width != castOther.getWidth())
+			 return false ;
+		 if ( this.height != castOther.getHeight())
+			 return false ;
+		 if ( this.hibObjectType == null || castOther.getObjectType() == null )
+			 return false ;
+		 if ( !this.hibObjectType.equals(castOther.hibObjectType))
+			 return false ;
+		 if ( !this.name.equals(castOther.getName()))
+			 return false ;
+		 if ( !this.description.equals(castOther.getDescription()))
+			 return false ;
+		 if ( !this.detailedDescription.equals(castOther.getDetailedDescription()))
+			 return false ;
+		 if ( !this.url.equals(castOther.getUrl()))
+			 return false ;
+		 if ( this.fillRed != castOther.getFillRed())
+			 return false ;
+		 if ( this.fillBlue != castOther.getFillBlue())
+			 return false ;
+		 if ( this.fillGreen != castOther.getFillGreen())
+			 return false ;
+		 if ( this.lineBlue != castOther.getLineBlue())
+			 return false ;
+		 if ( this.lineRed != castOther.getLineRed())
+			 return false ;
+		 if ( this.lineGreen != castOther.getLineGreen())
+			 return false ;
+		 if ( this.lineStyle != castOther.getLineStyle())
+			 return false ;
+		 if ( this.lineWidth != castOther.getLineWidth())
+			 return true ;
+		 if ( this.padding != castOther.padding)
+			 return true ;
+		 if (this.shapeType != castOther.getShapeType())
+			 return false ;
+		 
+		 return true ;
+	}
+	
+	public int hashCode() {
+        int result = 17;
+    	
+        result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
+        result = 37 * result + this.getCreationSerial();
+        result = 37 * result + this.XPosition ;
+        result = 37 * result + this.YPosition ;
+        result = 37 * result + this.width ;
+        result = 37 * result + this.height ;
+        result = 37 * result + ( getObjectType() == null ? 0 : this.hibObjectType.hashCode() );
+        result = 37 * result + ( getName() == null ? 0 : this.name.hashCode() );
+        result = 37 * result + ( getDescription() == null ? 0 : this.description.hashCode() );
+        result = 37 * result + ( getDetailedDescription() == null ? 0 : this.detailedDescription.hashCode() );
+        result = 37 * result + ( getUrl() == null ? 0 : this.url.hashCode() );
+        result = 37 * result + this.fillBlue ;
+        result = 37 * result + this.fillRed ;
+        result = 37 * result + this.fillGreen ;
+        result = 37 * result + this.lineGreen ;
+        result = 37 * result + this.lineBlue ;
+        result = 37 * result + this.lineRed ;
+        result = 37 * result + this.lineStyle ;
+        result = 37 * result + this.lineWidth ;
+        result = 37 * result + this.padding ;
+        result = 37 * result + this.shapeType ;
+        
+        return result;
+  }   
 
 	public HibCompoundNode getCompoundNode() {
 		return this.compoundNode;

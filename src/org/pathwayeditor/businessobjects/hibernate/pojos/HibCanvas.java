@@ -32,6 +32,7 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	private Set<HibShape> hibShapes = new HashSet<HibShape>(0);
 	private Set<HibLink> hibLinks = new HashSet<HibLink>(0);
 	private Set<HibLabel> hibLabels = new HashSet<HibLabel>(0);
+	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
 	private HibModel hibModel = null;
 	private Canvas businessObject = null;
 	private ISyntaxMappingFactory mappingFactory;
@@ -236,6 +237,14 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	public void changeModel(HibModel model){
 		//TODO: implement this!
 	}
+	
+	public Set<HibProperty> getProperties() {
+		return this.properties;
+	}
+
+	public void setProperties(Set<HibProperty> hibProperties) {
+		this.properties = hibProperties;
+	}
 
 	public boolean equals(Object other) {
 		if ((this == other))
@@ -294,12 +303,92 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	public void addShape ( HibShape toAdd ) 
 	{
 		if (toAdd == null)
-			throw new IllegalArgumentException("newSubFolder cannot be null");
+			throw new IllegalArgumentException("shape cannot be null");
 		HibCanvas oldCanvas = toAdd.getCanvas() ;
 		if (oldCanvas != null) {
 			oldCanvas.getShapes().remove(toAdd);
 		}
 		this.hibShapes.add(toAdd);
 		toAdd.setCanvas(this);
+	}
+	
+	void removeShape(HibShape toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("shape cannot be null");
+		if (toRemove.getCanvas() != this)
+			throw new IllegalArgumentException(
+					"shape must belong to this canvas");
+
+		this.hibShapes.remove(toRemove);
+		toRemove.setCanvas(null);
+	}
+	
+	public void addLabel ( HibLabel toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("label cannot be null");
+		HibCanvas oldCanvas = toAdd.getCanvas() ;
+		if (oldCanvas != null) {
+			oldCanvas.getShapes().remove(toAdd);
+		}
+		this.hibLabels.add(toAdd);
+		toAdd.setCanvas(this);
+	}
+	
+	void removeLabel(HibLabel toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("label cannot be null");
+		if (toRemove.getCanvas() != this)
+			throw new IllegalArgumentException(
+					"label must belong to this canvas");
+
+		this.hibLabels.remove(toRemove);
+		toRemove.setCanvas(null);
+	}
+	
+	public void addLink ( HibLink toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("Link cannot be null");
+		HibCanvas oldCanvas = toAdd.getCanvas() ;
+		if (oldCanvas != null) {
+			oldCanvas.getShapes().remove(toAdd);
+		}
+		this.hibLinks.add(toAdd);
+		toAdd.setCanvas(this);
+	}
+	
+	void removeLink(HibLink toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("Link cannot be null");
+		if (toRemove.getCanvas() != this)
+			throw new IllegalArgumentException(
+					"Link must belong to this canvas");
+
+		this.hibLinks.remove(toRemove);
+		toRemove.setCanvas(null);
+	}
+	
+	public void addProperty ( HibProperty toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibCanvas oldCanvas = toAdd.getCanvas() ;
+		if (oldCanvas != null) {
+			oldCanvas.getShapes().remove(toAdd);
+		}
+		this.properties.add(toAdd);
+		toAdd.setCanvas(this);
+	}
+	
+	void removeProperty(HibProperty toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("property cannot be null");
+		if (toRemove.getCanvas() != this)
+			throw new IllegalArgumentException(
+					"property must belong to this canvas");
+
+		this.properties.remove(toRemove);
+		toRemove.setCanvas(null);
 	}
 }

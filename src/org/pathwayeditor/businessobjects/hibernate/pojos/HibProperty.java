@@ -13,6 +13,7 @@ public abstract class HibProperty  implements Serializable {
      private Long id;
      private HibCanvas hibCanvas;
      private int creationSerial;
+     private HibShape shape ;
 
     public HibProperty() {
     }
@@ -70,10 +71,20 @@ public abstract class HibProperty  implements Serializable {
          result = 37 * result + this.getCreationSerial();
          return result;
    }   
+   
+   
 
   // The following is extra code specified in the hbm.xml files
 
 	private static final long serialVersionUID = -1996477907215294788L;
+
+	public HibShape getShape() {
+		return this.shape;
+	}
+
+	public void setShape(HibShape shape) {
+		this.shape = shape;
+	}
     	
   // end of extra code specified in the hbm.xml files
 
