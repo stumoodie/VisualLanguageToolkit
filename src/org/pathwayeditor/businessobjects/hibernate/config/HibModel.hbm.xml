@@ -11,8 +11,9 @@
         	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
             	<column name="canvas_id" not-null="true" />
         	</many-to-one>
-        <many-to-one name="rootNode" cascade="all" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-            <column name="root_node_id" not-null="false"/>
-        </many-to-one>
+        <one-to-one name="rootNode" 
+    class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" 
+    property-ref="model"/> 
+
     </class>
 </hibernate-mapping>

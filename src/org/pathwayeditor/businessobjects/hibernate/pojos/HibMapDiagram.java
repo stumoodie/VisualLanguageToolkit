@@ -85,10 +85,32 @@ public class HibMapDiagram implements IBusinessObjectData<Map>,
 		String myName = this.getName();
 		String otherName = castOther.getName();
 
-		return ((myFolder == otherFolder) || (myFolder != null
-				&& otherFolder != null && myFolder.equals(otherFolder)))
-				&& ((myName == otherName) || (myName != null
-						&& otherName != null && myName.equals(otherName)));
+		return (foldersSame(otherFolder, myFolder))
+				&& (namesSame(myName, otherName));
+	}
+
+	private boolean namesSame(String myName, String otherName) {
+		return (myName == otherName)
+				|| (myName != null && otherName != null && myName
+						.equals(otherName));
+	}
+
+	private boolean foldersSame(HibFolder otherFolder, HibFolder myFolder) {
+	
+		if (myFolder == otherFolder)
+			return true;
+		if (myFolder == null && otherFolder == null)
+			return true;
+		if (myFolder != null && otherFolder != null) {
+			boolean toRet = false;
+			try {
+				toRet=myFolder.equals(otherFolder);
+				return toRet;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 
 	public int hashCode() {

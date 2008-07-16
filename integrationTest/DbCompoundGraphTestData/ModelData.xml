@@ -97,17 +97,29 @@
 	<table name="Model">
 		<column>id</column>
 		<column>canvas_id</column>
-		<column>root_node_id</column>
 		<row>
 			<value>1</value>
 			<value>100001</value>
-			<value>
-				<null />
-			</value>
 		</row>
 	</table>
-	<table name="CompoundNode"/>
-
+	<table name="CompoundNode">
+	<column>id</column>
+	<column>model_id</column>
+	<column>node_index</column>
+	<row>
+			<value>1</value>
+			<value>1</value>
+			<value>0</value>
+		</row>
+	</table>
+	<table name="CompoundRootNode">
+		<column>id</column>
+		<column>referring_model_id</column>
+		<row>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
 </dataset>
 
 <!-- 

@@ -16,8 +16,30 @@
         		<column name="node_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
-        	<column name="parent_id" not-null="false"/>
+        
+        
+        
+        <joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
+			table="CompoundRootNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+    		<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
+            	<column name="referring_model_id" not-null="true" unique ="true" />
+        	</many-to-one>
+		</joined-subclass>
+        
+        <joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildNode"
+			table="CompoundChildNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
+        	<column name="parent_node_id" not-null="false"/>
         </many-to-one>
+		</joined-subclass>
+		
     </class>
 </hibernate-mapping>

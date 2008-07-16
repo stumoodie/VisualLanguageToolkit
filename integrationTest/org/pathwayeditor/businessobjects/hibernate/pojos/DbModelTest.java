@@ -4,9 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -26,12 +24,10 @@ public class DbModelTest extends PojoTester {
 		return "integrationTest/DbCompoundGraphTestData/ModelData.xml";
 	}
 	
-	@Ignore
 	@Test
 	public void testSetRootNode() throws Exception{
 		doSetup();
 		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();
-		assertNull(graph.getRootNode());
 		HibCompoundNode node = new HibCompoundNode();
 		graph.setRootNode(node);
 		saveAndCommit(graph);

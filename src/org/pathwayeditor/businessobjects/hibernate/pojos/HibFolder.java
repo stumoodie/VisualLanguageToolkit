@@ -115,5 +115,30 @@ public abstract class HibFolder implements Serializable {
 	}
 	
 	public abstract IFolder getBusinessObject();
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj){
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if(!(obj instanceof HibFolder)){
+			return false;
+		}
+		final HibFolder other = (HibFolder) obj;
+		if(id!=null&&other.getId()!=null&&id.equals(other.getId()))     //FIXME - replace with INODE code
+			return true;
+		return false;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return 31 + (id==null?0:id.hashCode());   //FIXME - replace with INODE code
+	}
 
 }

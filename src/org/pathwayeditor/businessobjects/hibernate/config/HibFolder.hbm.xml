@@ -28,8 +28,9 @@
 		<joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
 			table="RootFolder">
-			<key column="id"/>
-			
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
        		<many-to-one name="repository"  unique="true">
        			<column name="repository_id" not-null="false"/>
        		</many-to-one>
@@ -38,7 +39,9 @@
 		<joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder"
 			table="SubFolder">
-			<key column="id" />
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
 			<properties name="xak1subfolder" unique="true">
 				<many-to-one name="parentFolder" foreign-key="xfk1SubFolderParentFolder"
 					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">

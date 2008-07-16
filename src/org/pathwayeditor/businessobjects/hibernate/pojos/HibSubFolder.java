@@ -70,39 +70,39 @@ public class HibSubFolder extends HibFolder implements
 		return this.businessObject;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof HibSubFolder))
-			return false;
-		final HibSubFolder other = (HibSubFolder) obj;
-		if (this.parentFolder != null) {
-			if (other.getParentFolder() == null)
-				return false;
-			else if (!this.parentFolder.equals(other.getParentFolder()))
-				return false;
-		}
-		if(this.name!=null){
-			if(other.getName()==null)
-				return false;
-			else if(!this.name.equals(other.getName()))
-				return false;
-		}
-		return true;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return (name==null?173:name.hashCode())+(parentFolder==null?0:parentFolder.hashCode());
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see java.lang.Object#equals(java.lang.Object)
+//	 */
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (!(obj instanceof HibSubFolder))
+//			return false;
+//		final HibSubFolder other = (HibSubFolder) obj;
+//		if (this.parentFolder != null) {
+//			if (other.getParentFolder() == null)
+//				return false;
+//			else if (!this.parentFolder.equals(other.getParentFolder()))
+//				return false;
+//		}
+//		if(this.name!=null){
+//			if(other.getName()==null)
+//				return false;
+//			else if(!this.name.equals(other.getName()))
+//				return false;
+//		}
+//		return true;
+//	}
+//	/* (non-Javadoc)
+//	 * @see java.lang.Object#hashCode()
+//	 */
+//	@Override
+//	public int hashCode() {
+//		return (name==null?173:name.hashCode())+(parentFolder==null?0:parentFolder.hashCode());
+//	}
 }
