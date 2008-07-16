@@ -8,7 +8,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1canvas" unique="true">
-        	<many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram">
+        	<many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" cascade="all">
             	<column name="map_id" not-null="true" />
         	</many-to-one>
         </properties>
@@ -49,23 +49,23 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <set name="shapes" inverse="true" table="rootshape" cascade="all,delete-orphan">
+        <set name="shapes" inverse="true" table="shape" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShape"/> 
         </set>
-        <set name="links" inverse="true" table="rootlink" cascade="all,delete-orphan">
+        <set name="links" inverse="true" table="link" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink"/>
         </set>
-        <set name="labels" inverse="true" table="rootlabel" cascade="all,delete-orphan">
+        <set name="labels" inverse="true" table="label" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <many-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" column="label_id" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" />
         </set>
     </class>
 </hibernate-mapping>

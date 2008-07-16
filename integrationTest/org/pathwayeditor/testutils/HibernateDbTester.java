@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.testutils;
 
-import java.sql.Connection;
+import java.io.File;
 
 import org.dbunit.IDatabaseTester;
 import org.dbunit.database.IDatabaseConnection;
@@ -11,7 +11,6 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.dialect.HSQLDialect;
 
 /**
  * @author smoodie
@@ -24,6 +23,7 @@ public class HibernateDbTester implements IDatabaseTester {
 	private static final String HIB_PROP_PASSWORD = "hibernate.connection.password";
 	private final IDatabaseTester delegator;
 	private final Configuration hibConfig;
+	private final HqlDbSchema schemaManager;
 	
 	public HibernateDbTester(String xmlConfigFile){
 		Configuration hibConf = new Configuration();
@@ -33,6 +33,13 @@ public class HibernateDbTester implements IDatabaseTester {
 		String userName = hibConfig.getProperty(HIB_PROP_USERNAME);
 		String password = hibConfig.getProperty(HIB_PROP_PASSWORD);
 		this.delegator = new HsqlJdbcDatabaseTester(driverClass, connectionUrl, userName, password);
+		try{
+			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(),
+					new File("schema/EPE Schema Create.ddl"), new File("schema/EPE Schema Drop.ddl"));
+		}
+		catch(Exception e){
+			throw new RuntimeException(e);
+		}
 	}
 	
 	
@@ -60,14 +67,15 @@ public class HibernateDbTester implements IDatabaseTester {
 	 */
 	public void createSchema() {
 		try{
-			String[] ddl = hibConfig.generateSchemaCreationScript(new HSQLDialect());
-			Connection conn = this.delegator.getConnection().getConnection();
-			conn.setAutoCommit(false);
-			for(String ddlStatement : ddl){
-				conn.createStatement().execute(ddlStatement);
-			}
-			conn.commit();
-			conn.close();
+			schemaManager.createSchema();
+//			String[] ddl = hibConfig.generateSchemaCreationScript(new HSQLDialect());
+//			Connection conn = this.delegator.getConnection().getConnection();
+//			conn.setAutoCommit(false);
+//			for(String ddlStatement : ddl){
+//				conn.createStatement().execute(ddlStatement);
+//			}
+//			conn.commit();
+//			conn.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -79,14 +87,15 @@ public class HibernateDbTester implements IDatabaseTester {
 	 */
 	public void dropSchema() {
 		try{
-			String[] ddl = hibConfig.generateDropSchemaScript(new HSQLDialect());
-			Connection conn = this.delegator.getConnection().getConnection();
-			conn.setAutoCommit(false);
-			for(String ddlStatement : ddl){
-				conn.createStatement().execute(ddlStatement);
-			}
-			conn.commit();
-			conn.close();
+			schemaManager.dropSchema();
+//			String[] ddl = hibConfig.generateDropSchemaScript(new HSQLDialect());
+//			Connection conn = this.delegator.getConnection().getConnection();
+//			conn.setAutoCommit(false);
+//			for(String ddlStatement : ddl){
+//				conn.createStatement().execute(ddlStatement);
+//			}
+//			conn.commit();
+//			conn.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -140,5 +149,4 @@ public class HibernateDbTester implements IDatabaseTester {
 	public void setTearDownOperation(DatabaseOperation tearDownOperation) {
 		this.delegator.setTearDownOperation(tearDownOperation);
 	}
-
 }

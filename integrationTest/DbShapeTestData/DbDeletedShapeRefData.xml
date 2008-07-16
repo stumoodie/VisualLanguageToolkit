@@ -131,11 +131,6 @@
 				<value>100001</value>
 				<value>100001</value>
 			</row>
-			<row>
-				<value>100002</value>
-				<value>100002</value>
-				<value>100001</value>
-			</row>
 	</table>
 	<table name="ObjectType">
 		<column>id</column>

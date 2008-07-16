@@ -39,8 +39,8 @@ public class DbHibShapeTest {
 	private static final String REF_DATA = "integrationTest/DbShapeTestData/DbShapeRefData.xml";
 	private static final String CREATED_SHAPE_DATA = "integrationTest/DbShapeTestData/DbCreatedShapeReData.xml";
 	private static final String DELETED_SHAPE_DATA = "integrationTest/DbShapeTestData/DbDeletedShapeRefData.xml";
-	private static final String DELETED_SHAPE_THROUGH_CANVAS = "integrationTest/DbShapeTestData/DbDeletedShapeThroughCanvasRefData.xml";
-	private static final String CHANGED_ROOT_NODE = "integrationTest/DbShapeTestData/DbChangedRootNodeRefData.xml";
+//	private static final String DELETED_SHAPE_THROUGH_CANVAS = "integrationTest/DbShapeTestData/DbDeletedShapeThroughCanvasRefData.xml";
+//	private static final String CHANGED_ROOT_NODE = "integrationTest/DbShapeTestData/DbChangedRootNodeRefData.xml";
 	
 	
 	
@@ -64,6 +64,8 @@ public class DbHibShapeTest {
 	private static final String SHAPE_DESCR_2 = "descr2";
 	private static final String DETAILED_DESCR_2 = "detailed descr2";
 	private static final int NUMERIC_VALUE_TWO = 2;
+	private static final long EXPECTED_NODE_VALUE = 100001L;
+	private static final int NODE_IDX_IDX = 110000;
 	
 	
 	@BeforeClass
@@ -130,6 +132,7 @@ public class DbHibShapeTest {
 		assertEquals ("height" , SIZE_VALUE , dbShape.getHeight()) ;
 		assertEquals ("width" , SIZE_VALUE , dbShape.getWidth()) ;
 		assertEquals ("url" , URL_VALUE , dbShape.getUrl()) ;
+		assertEquals ("node_id" , (Long)EXPECTED_NODE_VALUE , dbShape.getCompoundNode().getId()) ;
 		
 	}
 	
@@ -147,8 +150,12 @@ public class DbHibShapeTest {
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
+
+		HibCompoundNode hibNode = new HibCompoundNode(dbCanvas.getModel(), dbCanvas.getModel().getRootNode(), NODE_IDX_IDX); 
+		
 		
 		HibShape shapeToSave = new HibShape ( dbCanvas , CREATION_SERIAL_2) ;
+		shapeToSave.setCompoundNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
 		shapeToSave.setDescription(SHAPE_DESCR_2) ;
 		shapeToSave.setDetailedDescription(DETAILED_DESCR_2) ;
@@ -171,7 +178,7 @@ public class DbHibShapeTest {
 		shapeToSave.changeCanvas(dbCanvas) ;
 		shapeToSave.setObjectType(objectType) ;
 		
-		session.save(dbCanvas) ;
+		session.save(hibNode);
 		session.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(

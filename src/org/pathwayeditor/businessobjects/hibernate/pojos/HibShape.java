@@ -37,6 +37,7 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 	private int lineWidth;
 	private int padding;
 	private short shapeType;
+	private HibCompoundNode compoundNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 
 	public HibShape() {
@@ -275,5 +276,13 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 	public Shape getBusinessObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public HibCompoundNode getCompoundNode() {
+		return this.compoundNode;
+	}
+	
+	public void setCompoundNode(HibCompoundNode newNode){
+		this.compoundNode = newNode;
 	}
 }

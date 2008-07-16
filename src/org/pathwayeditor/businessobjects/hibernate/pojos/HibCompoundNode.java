@@ -3,24 +3,32 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author smoodie
- *
+ * 
  */
 
 public class HibCompoundNode {
-
 	private Long id;
-	private HibModel model ;
-	private int nodeIndex ;
-	private HibShapeModel owningShapeModel;
-	private Set<HibCompoundNode> nodes; 
-	private Set<HibCompoundEdge> outEdges;
-	private Set<HibCompoundEdge> inEdges;
-	
-	
+	private HibModel model;
+	private int nodeIndex;
+	private HibCompoundNode parentNode;
+	private Set<HibCompoundEdge> outEdges = new HashSet<HibCompoundEdge>();
+	private Set<HibCompoundEdge> inEdges = new HashSet<HibCompoundEdge>();
+
+	public HibCompoundNode() {
+
+	}
+
+	public HibCompoundNode(HibModel model, HibCompoundNode parentNode, int nodeIdx) {
+		this.model = model;
+		this.parentNode = parentNode;
+		this.nodeIndex = nodeIdx;
+	}
+
 	public Long getId() {
 		return this.id;
 	}
@@ -45,41 +53,84 @@ public class HibCompoundNode {
 		this.nodeIndex = nodeIndex;
 	}
 
-	public HibShapeModel getOwningShapeModel() {
-		return this.owningShapeModel;
+	public HibCompoundNode getParentNode() {
+		return this.parentNode;
 	}
 
-	public void setOwningShapeModel(HibShapeModel owningChildModel) {
-		this.owningShapeModel = owningChildModel;
-	}
-
-	public Set<HibCompoundNode> getNodes() {
-		return this.nodes;
-	}
-
-	public void setNodes(Set<HibCompoundNode> nodes) {
-		this.nodes = nodes;
+	public void setParentNode(HibCompoundNode parentNode) {
+		this.parentNode = parentNode;
 	}
 
 	public Set<HibCompoundEdge> getOutEdges() {
 		return this.outEdges;
 	}
 
-	public void setOutEdges(Set<HibCompoundEdge> outEdges) {
+	void setOutEdges(Set<HibCompoundEdge> outEdges) {
 		this.outEdges = outEdges;
 	}
 
-	protected Set<HibCompoundEdge> getInEdges() {
+	public void addOutEdge(HibCompoundEdge newOutEdge) {
+		if (newOutEdge == null)
+			throw new IllegalArgumentException("newOutEdge cannot be null");
+
+		HibCompoundNode oldOutNode = newOutEdge.getOutNode();
+		if (oldOutNode != null) {
+			oldOutNode.getOutEdges().remove(newOutEdge);
+		}
+		this.getOutEdges().add(newOutEdge);
+		newOutEdge.setOutNode(this);
+	}
+
+    public void removeOutEdge(HibCompoundEdge outEdge) {
+		if (outEdge == null)
+			throw new IllegalArgumentException("outEdge cannot be null");
+		if (outEdge.getOutNode() != this)
+			throw new IllegalArgumentException("outEdge must be a child of this folder");
+
+		this.getOutEdges().remove(outEdge);
+		outEdge.setOutNode(null);
+	}
+    
+	public Set<HibCompoundEdge> getInEdges() {
 		return this.inEdges;
 	}
 
-	protected void setInEdges(Set<HibCompoundEdge> inEdges) {
+	void setInEdges(Set<HibCompoundEdge> inEdges) {
 		this.inEdges = inEdges;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+	public void addInEdge(HibCompoundEdge newInEdge) {
+		if (newInEdge == null)
+			throw new IllegalArgumentException("newInEdge cannot be null");
+
+		HibCompoundNode oldInNode = newInEdge.getInNode();
+		if (oldInNode != null) {
+			oldInNode.getInEdges().remove(newInEdge);
+		}
+		this.getInEdges().add(newInEdge);
+		newInEdge.setInNode(this);
+	}
+
+    public void removeInEdge(HibCompoundEdge inEdge) {
+		if (inEdge == null)
+			throw new IllegalArgumentException("inEdge cannot be null");
+		if (inEdge.getInNode() != this)
+			throw new IllegalArgumentException("inEdge must be a child of this folder");
+
+		this.getInEdges().remove(inEdge);
+		inEdge.setInNode(null);
+	}
+    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.getModel() == null) ? 0 : this.getModel().hashCode());
+		result = prime * result + this.getNodeIndex();
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -89,23 +140,14 @@ public class HibCompoundNode {
 		if (!(obj instanceof HibCompoundNode))
 			return false;
 		final HibCompoundNode other = (HibCompoundNode) obj;
-		if(this.nodeIndex!=other.nodeIndex)
+		if (this.getModel() == null) {
+			if (other.getModel() != null)
+				return false;
+		} else if (!this.getModel().equals(other.getModel()))
 			return false;
-		 if (!this.model.equals(other.getModel()))
+		if (this.getNodeIndex() != other.getNodeIndex())
 			return false;
 		return true;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 17;
-		result = prime * result+nodeIndex
-				+ ((this.model == null) ? 0 : this.model.hashCode());
-		return result;
-	}
 
 }
-

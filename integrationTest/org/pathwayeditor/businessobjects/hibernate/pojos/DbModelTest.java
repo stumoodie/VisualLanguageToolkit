@@ -26,7 +26,8 @@ public class DbModelTest extends PojoTester {
 		return "integrationTest/DbCompoundGraphTestData/ModelData.xml";
 	}
 	
-	@Test@Ignore
+	@Ignore
+	@Test
 	public void testSetRootNode() throws Exception{
 		doSetup();
 		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();

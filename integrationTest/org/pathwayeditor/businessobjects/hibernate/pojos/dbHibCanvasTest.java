@@ -128,15 +128,15 @@ public class dbHibCanvasTest {
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
 		
-		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100001'" ) ;
-		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+//		Query retreivedMapDiagram = session.createQuery( "from HibMapDiagram where id ='100001'" ) ;
+//		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
 		
 		Query retreivedCanvas = session.createQuery( "from HibCanvas where id ='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		
-		session.delete(dbCanvas) ;
-		session.delete(parentMapDiagram) ;
+		hibFactory.getCurrentSession().delete(dbCanvas);
+//		session.delete(parentMapDiagram) ;
 		session.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(

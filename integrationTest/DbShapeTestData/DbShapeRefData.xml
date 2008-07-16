@@ -131,11 +131,6 @@
 				<value>100001</value>
 				<value>100001</value>
 			</row>
-			<row>
-				<value>100002</value>
-				<value>100002</value>
-				<value>100001</value>
-			</row>
 	</table>
 	<table name="ObjectType">
 		<column>id</column>
@@ -172,6 +167,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>node_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
@@ -195,6 +191,7 @@
 				<value>50</value>
 				<value>50</value>
 				<value>50</value>
+				<value>100001</value>
 			</row>
 	</table>
 </dataset>

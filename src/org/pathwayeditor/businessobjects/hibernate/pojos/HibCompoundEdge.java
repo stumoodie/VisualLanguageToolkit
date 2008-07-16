@@ -8,15 +8,25 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
  *
  */
 public class HibCompoundEdge {
-
 	private Long id;
 	private HibModel model ;
 	private int edgeIndex ;
-	private HibShapeModel owningChildGraph ;
+	private HibCompoundNode owningNode ;
 	private HibCompoundNode outNode ;
 	private HibCompoundNode inNode ;
+
+	public HibCompoundEdge(){
+		
+	}
 	
 	
+	public HibCompoundEdge(HibModel model, HibCompoundNode owningNode, int edgeIndex, HibCompoundNode outNode, HibCompoundNode inNode){
+		this.model = model;
+		this.edgeIndex = edgeIndex;
+		this.owningNode = owningNode;
+		this.outNode = outNode;
+		this.inNode = inNode;
+	}
 	
 	public Long getId() {
 		return this.id;
@@ -42,12 +52,12 @@ public class HibCompoundEdge {
 		this.edgeIndex = nodeIndex;
 	}
 
-	public HibShapeModel getOwningChildGraph() {
-		return this.owningChildGraph;
+	public HibCompoundNode getOwningNode() {
+		return this.owningNode;
 	}
 
-	public void setOwningChildGraph(HibShapeModel owningChildGraph) {
-		this.owningChildGraph = owningChildGraph;
+	public void setOwningNode(HibCompoundNode owningNode) {
+		this.owningNode = owningNode;
 	}
 
 	public HibCompoundNode getOutNode() {

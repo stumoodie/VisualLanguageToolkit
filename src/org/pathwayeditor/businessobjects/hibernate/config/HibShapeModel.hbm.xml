@@ -20,7 +20,7 @@
             	<column name="graph_id" not-null="false" />
         	</many-to-one>        
         <set name="nodes" inverse="true" table="compoundnode" cascade="all,delete-orphan">
-            <key column="owning_shape_model_id" not-null="true" />
+            <key column="parent_id" not-null="true" />
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/>
         </set>
         <set name="edges" inverse="true" table="compoundedge" cascade="all,delete-orphan">

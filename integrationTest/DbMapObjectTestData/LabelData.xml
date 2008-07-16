@@ -184,7 +184,7 @@
 	</table>
 	<table name="richtextproperty">
 		<column>id</column>
-		<column>text_value</column>
+		<column>rich_text_value</column>
 		<row>
 			<value>4</value>
 			<value>chips</value>

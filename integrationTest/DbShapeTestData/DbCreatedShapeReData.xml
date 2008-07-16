@@ -123,18 +123,15 @@
 			</row>
 	</table>
 	<table name="CompoundNode">
-		<column>id</column>
 		<column>model_id</column>
 		<column>node_index</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-				<value>100001</value>
 			</row>
 			<row>
-				<value>100002</value>
-				<value>100002</value>
 				<value>100001</value>
+				<value>110000</value>
 			</row>
 	</table>
 	<table name="ObjectType">
