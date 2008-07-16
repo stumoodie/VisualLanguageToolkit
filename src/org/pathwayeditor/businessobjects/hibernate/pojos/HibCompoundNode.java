@@ -77,7 +77,35 @@ public class HibCompoundNode {
 		this.inEdges = inEdges;
 	}
 
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof HibCompoundNode))
+			return false;
+		final HibCompoundNode other = (HibCompoundNode) obj;
+		if(this.nodeIndex!=other.nodeIndex)
+			return false;
+		 if (!this.model.equals(other.getModel()))
+			return false;
+		return true;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 17;
+		result = prime * result+nodeIndex
+				+ ((this.model == null) ? 0 : this.model.hashCode());
+		return result;
+	}
 
 }
 

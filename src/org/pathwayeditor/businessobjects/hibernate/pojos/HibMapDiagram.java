@@ -3,7 +3,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Map;
 
-public class HibMapDiagram implements IBusinessObjectData<Map>,	java.io.Serializable {
+public class HibMapDiagram implements IBusinessObjectData<Map>,
+		java.io.Serializable {
 	private static final long serialVersionUID = -7566323206185334088L;
 
 	private Long id;
@@ -79,14 +80,15 @@ public class HibMapDiagram implements IBusinessObjectData<Map>,	java.io.Serializ
 		if (!(other instanceof HibMapDiagram))
 			return false;
 		HibMapDiagram castOther = (HibMapDiagram) other;
+		HibFolder otherFolder = castOther.getFolder();
+		HibFolder myFolder = getFolder();
+		String myName = this.getName();
+		String otherName = castOther.getName();
 
-		return ((this.getFolder() == castOther.getFolder()) || (this
-				.getFolder() != null
-				&& castOther.getFolder() != null && this.getFolder().equals(
-				castOther.getFolder())))
-				&& ((this.getName() == castOther.getName()) || (this.getName() != null
-						&& castOther.getName() != null && this.getName()
-						.equals(castOther.getName())));
+		return ((myFolder == otherFolder) || (myFolder != null
+				&& otherFolder != null && myFolder.equals(otherFolder)))
+				&& ((myName == otherName) || (myName != null
+						&& otherName != null && myName.equals(otherName)));
 	}
 
 	public int hashCode() {

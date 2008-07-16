@@ -130,7 +130,7 @@ public class DbHibRootFolderTest {
 		Query rootFolderGetter = session.createQuery ( "From HibRootFolder where id='100001'") ;
 		
 		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
-		
+		dbRootFolder.changeRepository(null);
 		session.delete(dbRootFolder) ;
 		session.getTransaction().commit() ;
 		

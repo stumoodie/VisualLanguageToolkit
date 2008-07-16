@@ -4,8 +4,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraphBuilder;
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
@@ -18,13 +16,10 @@ import org.pathwayeditor.businessobjects.pojos.Model;
 public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	private static final long serialVersionUID = -6097842004070213053L;
 	private Long id;
-	private Set<HibCompoundEdge> edges = new HashSet<HibCompoundEdge>(0);
-	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
 	private HibCanvas canvas = null;
 	private Model businessObject;
 	private ICompoundGraphBuilder compoundGraphBuilder;
 	private HibCompoundNode rootNode ;
-	private Set<HibShapeModel> shapeModels = new HashSet<HibShapeModel> (0) ;
 	
 	public HibModel(){
 		
@@ -59,6 +54,8 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 
 	public void setRootNode(HibCompoundNode rootNode) {
 		this.rootNode = rootNode;
+		if(rootNode!=null)
+			rootNode.setModel(this);
 	}
 
 	public void changeCanvas(HibCanvas newCanvas){
@@ -69,38 +66,6 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 		return this.canvas;
 	}
 	
-	void setEdges(Set<HibCompoundEdge> edges){
-		this.edges = edges;
-	}
-	
-	public Set<HibCompoundEdge> getEdges(){
-		return this.edges;
-	}
-	
-	public void addEdge(HibCompoundEdge node){
-		//TODO: implement this!
-	}
-
-	public void removeEdge(HibCompoundEdge node){
-		//TODO: implement this!
-	}
-
-	void setNodes(Set<HibCompoundNode> nodes){
-		this.nodes = nodes;
-	}
-	
-	public Set<HibCompoundNode> getNodes(){
-		return this.nodes;
-	}
-	
-	public void addNode(HibCompoundNode node){
-		//TODO: implement this!
-	}
-
-	public void removeNode(HibCompoundNode node){
-		//TODO: implement this!
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -116,13 +81,13 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof HibModel))
 			return false;
 		final HibModel other = (HibModel) obj;
 		if (this.canvas == null) {
-			if (other.canvas != null)
+			if (other.getCanvas() != null)
 				return false;
-		} else if (!this.canvas.equals(other.canvas))
+		} else if (!this.canvas.equals(other.getCanvas()))
 			return false;
 		return true;
 	}
@@ -151,14 +116,4 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	public ICompoundGraphBuilder getCompoundGraphBuilder() {
 		return this.compoundGraphBuilder;
 	}
-
-	public Set<HibShapeModel> getShapeModels() {
-		return this.shapeModels;
-	}
-
-	public void setShapeModels(Set<HibShapeModel> shapeModels) {
-		this.shapeModels = shapeModels;
-	}
-	
-	
 }

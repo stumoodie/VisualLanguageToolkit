@@ -73,5 +73,33 @@ public class HibRootFolder extends HibFolder implements IBusinessObjectData<Root
 		}
 		return this.businessObject;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof HibRootFolder))
+			return false;
+		final HibRootFolder other = (HibRootFolder) obj;
+		if (this.repository != null) {
+			if (other.getRepository() == null)
+				return false;
+			else if (!this.repository.equals(other.getRepository()))
+				return false;
+		}
+		return true;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return 31+ (repository==null?0:repository.hashCode());
+	}
 
 }
