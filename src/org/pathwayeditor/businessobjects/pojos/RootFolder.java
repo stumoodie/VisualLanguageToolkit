@@ -5,7 +5,9 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -38,10 +40,39 @@ public class RootFolder implements IRootFolder, IHibernateFacade<HibRootFolder> 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canMoveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public boolean canMoveSubfolder(ISubFolder subFolder) {
-		// TODO Auto-generated method stub
-		return false;
+		return !isNameInUse(subFolder.getName());
 	}
 
+	private boolean isNameInUse(String name){
+		boolean retVal = isSubFolderNameInUse(name);
+		if(retVal == false){
+			retVal = isMapDiagramNameInUse(name);
+		}
+		return retVal;
+	}
+	
+	private boolean isSubFolderNameInUse(String name){
+		boolean retVal = false;
+		for(HibSubFolder subFolder : this.hibRootFolder.getSubFolders()){
+			if(subFolder.getName().equals(name)){
+				retVal = true;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	private boolean isMapDiagramNameInUse(String name){
+		boolean retVal = false;
+		for(HibMapDiagram map : this.hibRootFolder.getMapDiagrams()){
+			if(map.getName().equals(name)){
+				retVal = true;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canRenameMap(org.pathwayeditor.businessobjects.repository.IMap, java.lang.String)
 	 */
@@ -94,14 +125,13 @@ public class RootFolder implements IRootFolder, IHibernateFacade<HibRootFolder> 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#createCopyOfMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public IMap createCopyOfMap(IMap origMap) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Map(this, (Map)origMap);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#createCopyOfSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
-	public IFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
+	public ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -233,5 +263,13 @@ public class RootFolder implements IRootFolder, IHibernateFacade<HibRootFolder> 
 
 	public HibRootFolder getHibObject(){
 		return this.hibRootFolder;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
+	 */
+	public int getINode() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

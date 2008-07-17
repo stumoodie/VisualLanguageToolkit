@@ -97,7 +97,7 @@ public class SubFolder implements ISubFolder, IHibernateFacade<HibSubFolder> {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#createCopyOfSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
-	public IFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
+	public ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -129,7 +129,7 @@ public class SubFolder implements ISubFolder, IHibernateFacade<HibSubFolder> {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getOwner()
 	 */
-	public IFolder getOwner() {
+	public IFolder getParent() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -252,6 +252,14 @@ public class SubFolder implements ISubFolder, IHibernateFacade<HibSubFolder> {
 	public HibSubFolder getHibObject() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
+	 */
+	public int getINode() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

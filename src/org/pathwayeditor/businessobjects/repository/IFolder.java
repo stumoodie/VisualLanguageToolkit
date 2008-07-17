@@ -2,18 +2,14 @@ package org.pathwayeditor.businessobjects.repository;
 
 import java.util.Iterator;
 
-public interface IFolder {
+public interface IFolder extends IRepositoryItem {
 
-	Iterator<ISubFolder> levelOrderFolderIterator();
-
-	String getName();
-	
-	boolean isRootFolder();
-
+	/**
+	 * Get the number of subfolders held by this folder. 
+	 * @return the number of subfolders
+	 */
 	int numSubFolders();
 
-	Iterator<? extends ISubFolder> getSubfolderIterator();
-	
 	/**
 	 * Can the name be used for a subfolder in this folder. This tests that the name
 	 * follows the naming rules, is not-null and that the name is unique for this folder.  
@@ -51,19 +47,65 @@ public interface IFolder {
 	 */
 	void moveSubfolder(ISubFolder subFolder);
 
+	/**
+	 * Tests if the subfolder is contained in this subfolder.
+	 * @param subFolder the subfolder to test, can be null.
+	 * @return true of the subfolder is contained here, false otherwise.
+	 */
 	boolean containsSubfolder(ISubFolder subFolder);
 
-	IFolder createCopyOfSubfolder(ISubFolder origSubfolder);
 	
+	/**
+	 * Create a copy of <code>origSubfolder</code> in this subfolder. This copies the tree of repository
+	 * items (subfolders and maps) from this point downwards. The new copies will have new inode values.  
+	 * @param origSubfolder the original subfolder to be copied from. 
+	 * @return an instance of the new folder that has been created as a result of the copy in this subfolder. 
+	 */
+	ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder);
+	
+	/**
+	 * Remove the subfolder from here and destroy it and the tree of repository items from this point downwards.
+	 * This operation will removed Maps and their contents too.  
+	 * @param subFolder the subfolder to be deleted. Cannot be null.
+	 * @throws IllegalArgumentException if subFolder is null.
+	 */
 	void removeSubfolder(ISubFolder subFolder);
 	
+	/**
+	 * Can the <code>subFolder</code> in this folder be renamed to <code>newFolderName</code> ? If no other subfolder
+	 * or map is using this name then it can be used. Also <code>newFolderName</code> must be a valid name. The method test
+	 * subfolders in this folder so if this is not the parent of <code>subFolder</code> the test will fail.
+	 * @param subFolder the subfolder, which must belong to this subfolder and cannot be null. 
+	 * @param newFolderName the new name to test.
+	 * @return true if <code>subFolder</code> belongs to this folder and changing its name to <code>newFolderName</code>
+	 *  is likely to succeed. False otherwise.
+	 */
 	boolean canRenameSubfolder(ISubFolder subFolder, String newFolderName);
 	
+	/**
+	 * Rename <code>subFolder</code> (which must belong to this folder) to <code>newFolderName</code>.
+	 * <p>
+	 * Precondition:<p>
+	 * <code>canRenameSubfolder(subFolder, newFolderName) == true</code>.  
+	 * @param subFolder the subfolder to rename which must have this folder as its parent folder.
+	 * @param newFolderName the new name of the subfolder, which cannot be null.
+	 * @throws IllegalArgumentException if <code>subFolder</code> is not a child of this folder.
+	 * @throws IllegalArgumentException if <code>newFolderName</code> is null.
+	 */
 	void renameSubfolder(ISubFolder subFolder, String newFolderName);
 	
+	/**
+	 * the number of maps belonging to this folder.
+	 * @return the number of maps.
+	 */
 	int numMaps();
 
-	Iterator<IMap> getMapIterator();
+	/**
+	 * Provide an iterator that iterates throw the maps belonging to this folder. It cannot be
+	 * null, but can be empty.
+	 * @return
+	 */
+	Iterator<? extends IMap> getMapIterator();
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name

@@ -60,7 +60,7 @@ public class Repository implements IRepository {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getBuildNum()
 	 */
-	public int getBuildNum() {
+	public int getSchemaBuildNum() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

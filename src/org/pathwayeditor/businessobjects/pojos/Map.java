@@ -7,6 +7,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepository;
 
 /**
  * @author smoodie
@@ -25,6 +26,14 @@ public class Map implements IMap, IHibernateFacade<HibMapDiagram> {
 
 	private Map(HibFolder owner, String name){
 		this.hibMap = new HibMapDiagram(owner, name);
+	}
+	
+	public Map(SubFolder owner, Map other){
+		this.hibMap = new HibMapDiagram(owner.getHibObject(), other.getHibObject());
+	}
+	
+	public Map(RootFolder owner, Map other){
+		this.hibMap = new HibMapDiagram(owner.getHibObject(), other.getHibObject());
 	}
 	
 	public Map(HibMapDiagram hibMap){
@@ -54,5 +63,21 @@ public class Map implements IMap, IHibernateFacade<HibMapDiagram> {
 	 */
 	public HibMapDiagram getHibObject() {
 		return this.hibMap;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
+	 */
+	public int getINode() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getRepository()
+	 */
+	public IRepository getRepository() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
