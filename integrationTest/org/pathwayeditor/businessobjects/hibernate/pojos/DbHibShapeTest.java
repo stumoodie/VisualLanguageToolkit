@@ -151,7 +151,7 @@ public class DbHibShapeTest {
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 
-		HibCompoundNode hibNode = new HibCompoundNode(dbCanvas.getModel(), dbCanvas.getModel().getRootNode(), NODE_IDX_IDX); 
+		HibCompoundNode hibNode = new HibCompoundRootNode(dbCanvas.getModel(), dbCanvas.getModel().getRootNode(), NODE_IDX_IDX); 
 		
 		
 		HibShape shapeToSave = new HibShape ( dbCanvas , CREATION_SERIAL_2) ;

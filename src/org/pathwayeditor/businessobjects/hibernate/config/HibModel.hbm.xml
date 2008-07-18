@@ -12,7 +12,7 @@
             	<column name="canvas_id" not-null="true" />
         	</many-to-one>
         <one-to-one name="rootNode" 
-    class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" 
+    class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundRootNode" 
     property-ref="model"/> 
 
     </class>

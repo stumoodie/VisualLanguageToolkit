@@ -19,7 +19,7 @@
 			</row>
 	</table>
 	<table name="RootFolder" >
-		<column>repository_id</column>
+		<column>owning_repository_id</column>
 			<row>
 				<value>100002</value>
 			</row>
@@ -28,12 +28,6 @@
 		<column>id</column>
 		<column>parent_folder_id</column>
 		<column>name</column>
-	</table>
-	<table name="MapDiagram">
-		<column>id</column>
-		<column>folder_id</column>
-		<column>name</column>
-		<column>description</column>
 	</table>
 </dataset>
 

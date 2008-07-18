@@ -19,28 +19,19 @@
 			</row>
 	</table>
 	<table name="RootFolder" >
-		<column>repository_id</column>
+	<column>id</column>
+		<column>owning_repository_id</column>
 			<row>
+				<value>100001</value>
 				<value>100001</value>
 			</row>
 			<row>
+				<value>100008</value>
 				<value>100002</value>
 			</row>
 	</table>
 	<table name="SubFolder" >
 		<column>name</column>
-			<row>
-				<value>subfolder1</value>
-			</row>
-			<row>
-				<value>subfolder2</value>
-			</row>
-			<row>
-				<value>subfolder3</value>
-			</row>
-			<row>
-				<value>subfolder4</value>
-			</row>
 			<row>
 				<value>subfolder1</value>
 			</row>
@@ -60,11 +51,6 @@
 		<column>description</column>
 			<row>
 				<value>100001</value>
-				<value>Diagram name</value>
-				<value>Diagram Description</value>
-			</row>
-			<row>
-				<value>100002</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
 			</row>

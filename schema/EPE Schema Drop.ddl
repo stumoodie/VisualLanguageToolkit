@@ -1,5 +1,5 @@
-alter table RootFolder  drop constraint Relationship63;
-alter table MapDiagram drop constraint Relationship666;
+alter table RootFolder drop constraint Relationship63;
+alter table MapDiagram drop constraint Relationship6;
 alter table RootFolder drop constraint Relationship58;
 alter table SubFolder drop constraint Relationship59;
 alter table SubFolder drop constraint Relationship62;
@@ -38,8 +38,10 @@ alter table Link drop constraint Relationship131;
 alter table CompoundEdge drop constraint Relationship3;
 alter table CompoundRootNode drop constraint Relationship4;
 alter table CompoundChildNode drop constraint Relationship5;
-alter table CompoundChildNode drop constraint Relationship6;
-alter table CompoundRootNode drop constraint FKCompoundRo201502;
+alter table CompoundChildNode drop constraint Relationship8;
+alter table CompoundRootNode drop constraint FKCompoundRo201858;
+alter table Folder drop constraint Relationship10;
+alter table MapDiagram drop constraint FKMapDiagram716936;
 drop table CompoundEdge if exists;
 drop table CompoundNode if exists;
 drop table Model if exists;
@@ -69,3 +71,4 @@ drop table Folder if exists;
 drop table Repository if exists;
 drop table CompoundRootNode if exists;
 drop table CompoundChildNode if exists;
+

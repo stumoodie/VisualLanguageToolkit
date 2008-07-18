@@ -20,31 +20,40 @@
 	</table>
 	<table name="Folder" >
 		<column>id</column>
+		<column>repository_id</column>
 			<row>
 				<value>100001</value><!-- rootFolder1  -->
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100002</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100003</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100004</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100005</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100006</value><!-- rootFolder2 -->
+				<value>100002</value>
 			</row>
 			<row>
 				<value>100007</value>
+				<value>100002</value>
+				
 			</row>
 	</table>
 	<table name="RootFolder" >
 		<column>id</column>
-		<column>repository_id</column>
+		<column>owning_repository_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
@@ -58,6 +67,7 @@
 		<column>id</column>
 		<column>parent_folder_id</column>
 		<column>name</column>
+		
 			<row>
 				<value>100002</value>
 				<value>100001</value>
@@ -89,11 +99,15 @@
 		<column>folder_id</column>
 		<column>name</column>
 		<column>description</column>
+		<column>repository_id</column>
+		<column>inode</column>
 			<row>
 				<value>100001</value>
 				<value>100005</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
+				<value>100001</value>
+				<value>1</value>
 			</row>
 	</table>
 </dataset>

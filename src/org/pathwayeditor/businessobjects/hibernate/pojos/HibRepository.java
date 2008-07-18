@@ -31,10 +31,10 @@ public class HibRepository implements IBusinessObjectData<Repository>, Serializa
 	   HibRootFolder oldRootFolder = this.rootFolder;
 	   this.rootFolder = newRootFolder;
 	   if(oldRootFolder != null){
-		   oldRootFolder.setRepository(null);
+		   oldRootFolder.setOwningRepository(null);
 	   }
 	   if(this.rootFolder != null){
-		   this.rootFolder.setRepository(this);
+		   this.rootFolder.setOwningRepository(this);
 	   }
    }
 	

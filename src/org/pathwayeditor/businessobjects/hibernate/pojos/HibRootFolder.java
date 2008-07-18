@@ -13,7 +13,7 @@ import org.pathwayeditor.businessobjects.pojos.RootFolder;
  */
 public class HibRootFolder extends HibFolder implements IBusinessObjectData<RootFolder>, Serializable {
 	private static final long serialVersionUID = 3780104587152506255L;
-	private HibRepository repository = null;
+	private HibRepository owningRepository = null;
 	private RootFolder businessObject = null;
 
 	/**
@@ -31,36 +31,37 @@ public class HibRootFolder extends HibFolder implements IBusinessObjectData<Root
 	 */
 	public HibRootFolder(RootFolder businessObject, HibRepository repository) {
 		super();
-		this.repository = repository;
+		setOwningRepository(repository);
 		this.businessObject = businessObject;
 	}
 
 	/**
 	 * Copy constructor for hibernate object. Copies to a new repository that is provided.
-	 * @param repository
+	 * @param owningRepository
 	 */
 	public HibRootFolder(HibRepository newRepository, HibRootFolder other) {
 		super(other);
-		this.repository = newRepository;
+		setOwningRepository(newRepository);
 		this.businessObject = null;
 	}
 
-	public HibRepository getRepository() {
-		return this.repository;
+	public HibRepository getOwningRepository() {
+		return this.owningRepository;
 	}
 
-	void setRepository(HibRepository hibRepository) {
-		this.repository = hibRepository;
+	void setOwningRepository(HibRepository hibRepository) {
+		this.owningRepository = hibRepository;
+		setRepository(hibRepository);
 	}
 
    public void changeRepository(HibRepository newRepository){
-	   HibRepository oldRepository = this.repository;
-	   this.repository = newRepository;
+	   HibRepository oldRepository = this.owningRepository;
+	   this.owningRepository = newRepository;
 	   if(oldRepository != null){
 		   oldRepository.setRootFolder(null);
 	   }
-	   if(this.repository != null){
-		   this.repository.setRootFolder(this);
+	   if(this.owningRepository != null){
+		   this.owningRepository.setRootFolder(this);
 	   }
    }
 

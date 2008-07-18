@@ -21,14 +21,39 @@ public class HibSubFolder extends HibFolder implements
 
 	public HibSubFolder(HibFolder parentFolder, String name) {
 		super();
+		setRepository(parentFolder.getRepository());
 		this.parentFolder = parentFolder;
 		this.name = name;
 	}
 
 	public HibSubFolder(HibFolder newParent, HibSubFolder other) {
 		super(other);
+		setRepository(newParent.getRepository());
+		setMapDiagramRepositories();
+		setSubFolderRepositoriesAndMapDiagramRepositories();
 		this.parentFolder = newParent;
 		this.name = other.name;
+	}
+
+	/**
+	 * 
+	 */
+	private void setMapDiagramRepositories() {
+		for(HibMapDiagram mapDiag: getMapDiagrams()){
+			mapDiag.setRepository(getRepository());
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void setSubFolderRepositoriesAndMapDiagramRepositories() {
+		for (HibSubFolder sub: getSubFolders()){
+			sub.setRepository(getRepository());
+			for (HibMapDiagram d: sub.getMapDiagrams())
+				d.setRepository(getRepository());
+			sub.setSubFolderRepositoriesAndMapDiagramRepositories();
+		}
 	}
 
 	public HibFolder getParentFolder() {

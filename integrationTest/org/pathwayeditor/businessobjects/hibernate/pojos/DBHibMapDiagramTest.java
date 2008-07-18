@@ -6,6 +6,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
+import java.util.List;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.CompositeDataSet;
@@ -101,6 +102,7 @@ public class DBHibMapDiagramTest {
 		HibMapDiagram aMapDiagram = new HibMapDiagram () ;
 		
 		rootFolderToWrite.addMapDiagram(aMapDiagram) ;
+		aMapDiagram.setRepository(repositoryToWrite);
 
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
@@ -141,6 +143,7 @@ public class DBHibMapDiagramTest {
 		
 		HibMapDiagram towrite = new HibMapDiagram ( parentFolder , MAPDIAGRAM_NAME ) ;
 		towrite.setDescription(MAPDIAGRAM_DESCR) ;
+		towrite.setRepository(parentFolder.getRepository());
 		
 		parentFolder.addMapDiagram(towrite) ;
 		
@@ -173,34 +176,16 @@ public class DBHibMapDiagramTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
-		
 		Query retreivedMapDiagram = session.createQuery("from HibMapDiagram where id='100001'") ;
-		
 		HibMapDiagram toDelete = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
-		
 		session.delete(toDelete) ;
 		session.getTransaction().commit() ;
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				DELETED_MAPDIAGRAM_REF_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;
+		retreivedMapDiagram = session.createQuery("from HibMapDiagram") ;
+		assertEquals(0,retreivedMapDiagram.list().size());
 	}
 	
 	@Test
@@ -208,23 +193,21 @@ public class DBHibMapDiagramTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
-		
 		Query retreivedMapDiagram = session.createQuery("from HibMapDiagram where id='100001'") ;
+		List <HibMapDiagram> diagrams1 = session.createQuery("from HibMapDiagram").list();
 		HibMapDiagram toClone = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
-		
 		Query retreivedFolder = session.createQuery("from HibFolder where id='100004'") ;
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
-		
 		HibMapDiagram cloneDiagram = new HibMapDiagram ( parentFolder , toClone ) ;
-		
+		cloneDiagram.setRepository(parentFolder.getRepository());
 		parentFolder.addMapDiagram(cloneDiagram) ;
-		
 		session.saveOrUpdate(parentFolder) ;
 		session.getTransaction().commit() ;
-		
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;
+		List <HibMapDiagram> diagrams = session.createQuery("from HibMapDiagram").list();
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_MAPDIAGRAM_REF_DATA));
 		String testTables[] = expectedDeltas.getTableNames();

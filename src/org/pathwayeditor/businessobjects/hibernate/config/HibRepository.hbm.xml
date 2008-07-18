@@ -19,7 +19,7 @@
         	<column name="build_num" not-null="true" />
         </property>
         <one-to-one name="rootFolder"
-        	 cascade="all" property-ref="repository"
+        	 cascade="all" property-ref="owningRepository"
         	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/>
     </class>
 </hibernate-mapping>

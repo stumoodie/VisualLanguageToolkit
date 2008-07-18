@@ -17,33 +17,41 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" />
 		</set>
-		<set name="subFolders" inverse="true" cascade="all,delete-orphan">
+		<many-to-one name="repository" class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+			<column name="repository_id" not-null="true" />
+		</many-to-one>
+		<set name="subFolders" inverse="true"
+			cascade="all,delete-orphan">
 			<key>
 				<column name="parent_folder_id" not-null="true" />
 			</key>
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder" />
 		</set>
-
+		<property name="INode" type="int">
+			<column name="inode" not-null="true" />
+		</property>
+		
 		<joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
 			table="RootFolder">
 			<key>
-    			<column name="id" not-null="true" unique="true"/>
-    		</key>
-       		<many-to-one name="repository"  unique="true">
-       			<column name="repository_id" not-null="false"/>
-       		</many-to-one>
+				<column name="id" not-null="true" unique="true" />
+			</key>
+			<many-to-one name="owningRepository" unique="true" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" >
+				<column name="owning_repository_id" not-null="true" />
+			</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder"
 			table="SubFolder">
 			<key>
-    			<column name="id" not-null="true" unique="true"/>
-    		</key>
+				<column name="id" not-null="true" unique="true" />
+			</key>
 			<properties name="xak1subfolder" unique="true">
-				<many-to-one name="parentFolder" foreign-key="xfk1SubFolderParentFolder"
+				<many-to-one name="parentFolder"
+					foreign-key="xfk1SubFolderParentFolder"
 					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
 					<column name="parent_folder_id" not-null="true" />
 				</many-to-one>

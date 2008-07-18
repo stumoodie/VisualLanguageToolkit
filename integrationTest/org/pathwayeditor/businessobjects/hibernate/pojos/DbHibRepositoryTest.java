@@ -147,7 +147,7 @@ public class DbHibRepositoryTest {
 			
 //			assertTrue("rootFolderChanged", oldRootFolder != loadedRepository.getRootFolder());
 			assertTrue("old-subfolder unassigned", oldRootFolder
-					.getRepository() == null);
+					.getOwningRepository() == null);
 
 			session.delete(oldRootFolder);
 //			session.saveOrUpdate(loadedRepository);

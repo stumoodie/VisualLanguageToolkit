@@ -20,7 +20,7 @@
 	</table>
 	<table name="RootFolder" >
 		<column>id</column>
-		<column>repository_id</column>
+		<column>owning_repository_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>

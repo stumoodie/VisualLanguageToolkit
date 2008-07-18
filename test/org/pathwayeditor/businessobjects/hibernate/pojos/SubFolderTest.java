@@ -32,10 +32,18 @@ public class SubFolderTest {
 	
 	private static final String SUBFOLDER_NAME = "subfolder1" ;
 	private static final String SUBFOLDER_NAME_2 = "subfolder2" ;
+
+	private HibFolder mockParentFolder=
+		mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" );
+
+	
 	
 	
 	@Before
 	public void setUp() throws Exception {
+		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockParentFolder).getRepository() ;  
+		}} ) ;
 	}
 	
 	@After
@@ -46,11 +54,6 @@ public class SubFolderTest {
 	@Test
 	public void testCopyConstructor () throws Exception 
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
-		mockery.checking( new Expectations () {{
-			
-		}} ) ;
-		
 		subfolder2 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME_2 ) ;
 		
 		subfolder3 = new HibSubFolder (mockParentFolder , subfolder2 );
@@ -63,11 +66,6 @@ public class SubFolderTest {
 	public void testAddSubFolder () throws Exception 
 	{
 		
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
-		mockery.checking( new Expectations () {{
-			
-		}} ) ;
-		
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
 		subfolder1.addSubFolder(subfolder2) ;
@@ -79,10 +77,6 @@ public class SubFolderTest {
 	@Test
 	public void removeSubFolder () throws Exception 
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
-		mockery.checking( new Expectations () {{
-			
-		}} ) ;
 		
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
@@ -100,10 +94,6 @@ public class SubFolderTest {
 	@Test
 	public void testGetParentFolder () throws Exception 
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
-		mockery.checking( new Expectations () {{
-			
-		}} ) ;
 		
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
@@ -116,10 +106,6 @@ public class SubFolderTest {
 	@Test
 	public void testChangeParentFolder () throws Exception 
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
-		mockery.checking( new Expectations () {{
-			
-		}} ) ;
 		
 		subfolder1 = new HibSubFolder ( mockParentFolder , SUBFOLDER_NAME ) ;
 		
@@ -136,7 +122,6 @@ public class SubFolderTest {
 	@Test 
 	public void testAddMapDiagram () throws Exception 
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
 		final HibMapDiagram mockMapDiagram = mockery.mock( HibMapDiagram.class , "mockMapDiagram") ; 
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {{
@@ -163,7 +148,6 @@ public class SubFolderTest {
 	@Test
 	public void testRemoveDiagram () throws Exception
 	{
-		final HibFolder mockParentFolder = mockery.mock( HibFolder.class , "mockParentFolder" ) ;
 		final HibMapDiagram mockMapDiagram = mockery.mock( HibMapDiagram.class , "mockMapDiagram") ; 
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 

@@ -4,6 +4,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 
@@ -15,8 +16,18 @@ public abstract class HibFolder implements Serializable {
 	private Long id;
 	private Set<HibMapDiagram> hibMapDiagrams = new HashSet<HibMapDiagram>(0);
 	private Set<HibSubFolder> subFolders = new HashSet<HibSubFolder>(0);
+	private HibRepository repository;
+	private int iNode= makeIntUUID();
 
 	public HibFolder() {
+	}
+
+	/**
+	 * @return a int representation of the first 8 digits in a real UUID
+	 */
+	private int makeIntUUID() { //FIXME - this IS NOT GUARANTEED UNIQUE!!!!!!!!!!!!!
+		Long tempL= UUID.randomUUID().getMostSignificantBits();
+		return tempL.intValue();
 	}
 
 	public HibFolder(HibFolder other) {
@@ -34,6 +45,14 @@ public abstract class HibFolder implements Serializable {
 
 	void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setRepository(HibRepository repository) {
+		this.repository = repository;
+	}
+
+	public HibRepository getRepository() {
+		return repository;
 	}
 
 	public Set<HibMapDiagram> getMapDiagrams() {
@@ -139,6 +158,14 @@ public abstract class HibFolder implements Serializable {
 	@Override
 	public int hashCode() {
 		return 31 + (id==null?0:id.hashCode());   //FIXME - replace with INODE code
+	}
+
+	protected int getINode() {
+		return this.iNode;
+	}
+
+	protected void setINode(int node) {
+		this.iNode = node;
 	}
 
 }

@@ -9,7 +9,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1mapdiagram" unique="true">
-        	<many-to-one name="folder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder" fetch="select">
+        	<many-to-one name="folder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder" >
             	<column name="folder_id" not-null="true" />
         	</many-to-one>
         	<property name="name" type="string">
@@ -19,5 +19,11 @@
         <property name="description" type="string">
             <column name="description" length="2048" not-null="true" />
         </property>
+        <many-to-one name="repository" class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+			<column name="repository_id" not-null="false" />
+		</many-to-one>
+		<property name="iNode" type="int" access="field">
+			<column name="inode" not-null="true" />
+		</property>
     </class>
 </hibernate-mapping>

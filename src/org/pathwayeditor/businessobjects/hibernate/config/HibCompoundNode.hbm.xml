@@ -16,11 +16,9 @@
         		<column name="node_index" not-null="true"/>
         	</property>
         </properties>
-        
-        
-        
+
         <joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundRootNode"
 			table="CompoundRootNode">
 			<key>
     			<column name="id" not-null="true" unique="true"/>

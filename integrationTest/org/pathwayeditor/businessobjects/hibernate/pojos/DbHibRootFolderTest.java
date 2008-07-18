@@ -159,35 +159,23 @@ public class DbHibRootFolderTest {
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
-		
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
-		
-		Query rootFolderGetter = session.createQuery ( "From HibRootFolder where id='100001'") ;
 		Query repositoryGetter = session.createQuery ( "From HibRepository where id='100002'") ;
-		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
-		
 		HibRootFolder oldRootFolder = dbRepository.getRootFolder();
-		
-		oldRootFolder.setRepository(null) ;
-		
-		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
-		
-		HibRootFolder cloneOfRootFolder = new HibRootFolder ( dbRepository , dbRootFolder ) ;
-		
-		dbRepository.changeRootFolder(cloneOfRootFolder) ;
-		
+		HibRootFolder cloneOfRootFolder = new HibRootFolder ( dbRepository , oldRootFolder ) ;
+		dbRepository.setRootFolder(null);
 		session.delete(oldRootFolder) ;
+		session.flush();
+		dbRepository.changeRootFolder(cloneOfRootFolder) ;
 		session.saveOrUpdate(dbRepository) ;
 		session.getTransaction().commit() ;
-		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_ROOTFOLDER_REF_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		
 		for (String t : testTables) {
 			ITable expectedTable = DefaultColumnFilter
 					.includedColumnsTable(expectedChanges.getTable(t),

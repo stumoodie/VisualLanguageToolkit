@@ -20,19 +20,27 @@
 	</table>
 	<table name="Folder" >
 		<column>id</column>
+		<column>repository_id</column>
+		<column>inode</column>
 			<row>
 				<value>100001</value><!-- rootFolder1  -->
+				<value>100001</value>
+				<value>1</value>
 			</row>
 			<row>
 				<value>100002</value>
+				<value>100001</value>
+				<value>2</value>
 			</row>
 			<row>
 				<value>100006</value><!-- rootFolder2 -->
+				<value>100002</value>
+				<value>1</value>
 			</row>
 	</table>
 	<table name="RootFolder" >
 		<column>id</column>
-		<column>repository_id</column>
+		<column>owning_repository_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
@@ -51,12 +59,6 @@
 				<value>100001</value>
 				<value>subfolder1</value>
 			</row>
-	</table>
-	<table name="MapDiagram">
-		<column>id</column>
-		<column>folder_id</column>
-		<column>name</column>
-		<column>description</column>
 	</table>
 </dataset>
 

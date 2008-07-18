@@ -11,7 +11,7 @@ import java.util.Set;
  * 
  */
 
-public class HibCompoundNode {
+public abstract class HibCompoundNode {
 	private Long id;
 	private HibModel model;
 	private int nodeIndex;

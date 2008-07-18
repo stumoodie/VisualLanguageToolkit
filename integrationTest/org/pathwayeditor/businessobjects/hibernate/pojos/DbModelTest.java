@@ -28,7 +28,7 @@ public class DbModelTest extends PojoTester {
 	public void testSetRootNode() throws Exception{
 		doSetup();
 		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();
-		HibCompoundNode node = new HibCompoundNode();
+		HibCompoundNode node = new HibCompoundRootNode();
 		graph.setRootNode(node);
 		saveAndCommit(graph);
 		startNewTransaction();

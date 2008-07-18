@@ -1,5 +1,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import java.util.UUID;
+
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Map;
 
@@ -12,10 +14,20 @@ public class HibMapDiagram implements IBusinessObjectData<Map>,
 	private String name = "";
 	private String description = "";
 	private Map businessObject = null;
+	private HibRepository repository;
+	private int iNode= makeIntUUID();
 
 	public HibMapDiagram() {
 	}
-
+	
+	/**
+	 * @return a int representation of the first 8 digits in a real UUID
+	 */
+	private int makeIntUUID() { //FIXME - this IS NOT GUARANTEED UNIQUE!!!!!!!!!!!!!
+		Long tempL= UUID.randomUUID().getMostSignificantBits();
+		return tempL.intValue();
+	}
+	
 	public HibMapDiagram(HibFolder hibFolder, String name) {
 		this.folder = hibFolder;
 		this.name = name;
@@ -35,6 +47,15 @@ public class HibMapDiagram implements IBusinessObjectData<Map>,
 	private void setId(Long id) {
 		this.id = id;
 	}
+	
+	public void setRepository(HibRepository repository) {
+		this.repository = repository;
+	}
+
+	public HibRepository getRepository() {
+		return repository;
+	}
+
 
 	public HibFolder getFolder() {
 		return this.folder;

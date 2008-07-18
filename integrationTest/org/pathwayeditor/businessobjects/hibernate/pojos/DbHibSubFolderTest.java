@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.CompositeDataSet;
@@ -97,6 +98,8 @@ public class DbHibSubFolderTest {
 		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
 		
 		HibRootFolder aRootFolder = new HibRootFolder () ;
+		aRootFolder.setRepository(aRepository);
+		aRootFolder.setOwningRepository(aRepository);
 		
 		HibSubFolder aFolder = new HibSubFolder (aRootFolder , FOLDER_NAME_ONE) ;
 		HibSubFolder bFolder = new HibSubFolder (aFolder , FOLDER_NAME_TWO) ;
@@ -106,7 +109,9 @@ public class DbHibSubFolderTest {
 		HibMapDiagram bMapDiagram = new HibMapDiagram () ;
 		
 		aMapDiagram.setName(DIAGRAM_NAME_ONE) ;
-		aMapDiagram.setName(DIAGRAM_NAME_TWO) ;
+		bMapDiagram.setName(DIAGRAM_NAME_TWO) ;
+		aMapDiagram.setRepository(aRepository);
+		bMapDiagram.setRepository(aRepository);
 		
 		aRepository.changeRootFolder(aRootFolder) ;
 		
@@ -140,7 +145,7 @@ public class DbHibSubFolderTest {
 	}
 	
 	@Test
-	public void testCloneFolder () throws Exception
+	public void testCloneFolderSubFolderAndMapDiagramsAndMoveAllBetweenRepositories () throws Exception
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
@@ -152,13 +157,13 @@ public class DbHibSubFolderTest {
 		
 		Query retrievedRootFolder = session.createQuery( "From HibRootFolder where id='100006'") ;
 		HibRootFolder dbRootFolder = (HibRootFolder) retrievedRootFolder.uniqueResult() ;
-		
 		HibSubFolder copyOfSubFolder = new HibSubFolder ( dbRootFolder , dbSourceFolder ) ;
+		copyOfSubFolder.setRepository(dbRootFolder.getRepository());
 		dbRootFolder.addSubFolder(copyOfSubFolder) ;
 		
-		session.saveOrUpdate(dbRootFolder) ;
+		session.saveOrUpdate(dbRootFolder);
 		
-		session.getTransaction().commit() ;
+		session.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_SUBFOLDER_REF_DATA));
@@ -212,7 +217,6 @@ public class DbHibSubFolderTest {
 		
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
-		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_REF_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -236,30 +240,26 @@ public class DbHibSubFolderTest {
 	}
 	
 	@Test
-	public void testDeleteParetnFolderAndSubFolders () throws Exception 
+	public void testDeleteParentFolderAndSubFolders () throws Exception 
 	{
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
 		dbTester.onSetup();
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction() ;
-		
 		Query retrievedSubFolder = session.createQuery( "From HibSubFolder where id='100003'") ;
-		
 		HibSubFolder dbParentFolder = (HibSubFolder) retrievedSubFolder.uniqueResult() ;
-		
 		assertEquals ( "Number of subfolders" , TWO_ENTRIES_TABLE , dbParentFolder.getSubFolders().size()) ;
 		assertEquals ( "SubFolder name" , SUBFOLDER_TWO_NAME , dbParentFolder.getName() ) ;
-		assertEquals ( "Number of Subfolders" , TWO_ENTRIES_TABLE , dbParentFolder.getSubFolders().size()) ;
-		
 		session.delete(dbParentFolder) ;
 		session.getTransaction().commit() ;
-		
+		session = hibFactory.getCurrentSession() ;
+		session.beginTransaction() ;
+		List <HibFolder> folders = session.createQuery("from HibFolder f left join fetch f.mapDiagrams").list();
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_PARENT_WITH_CHILDREN));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		
 		for (String t : testTables) {
 			ITable expectedTable = DefaultColumnFilter
 					.includedColumnsTable(expectedChanges.getTable(t),
@@ -273,5 +273,4 @@ public class DbHibSubFolderTest {
 							.getTableMetaData()));
 		}
 	}
-	
 }
