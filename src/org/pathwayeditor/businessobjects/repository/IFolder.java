@@ -116,6 +116,7 @@ public interface IFolder extends IRepositoryItem {
 	 * follows the naming rules, is not-null and that the name is unique for this folder.  
 	 * @param name The name potential map to be tested.
 	 * @return True if creating a map of this name will succeed.
+	 * TODO - NH verify I am assuming that this method does not throw an IllegalArg exception if nameis null or malformed 
 	 */
 	boolean canUseMapName(String name);
 	

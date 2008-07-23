@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Map;
+import org.pathwayeditor.businessobjects.repository.IFolder;
+import org.pathwayeditor.businessobjects.repository.IMap;
 
-public class HibMapDiagram implements IBusinessObjectData<Map>,
+public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 		java.io.Serializable {
 	private static final long serialVersionUID = -7566323206185334088L;
 
@@ -155,5 +157,19 @@ public class HibMapDiagram implements IBusinessObjectData<Map>,
 			this.businessObject = new Map(this);
 		}
 		return this.businessObject;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IMap#getOwner()
+	 */
+	public IFolder getOwner() {
+		return folder;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
+	 */
+	public int getINode() {
+		return iNode;
 	}
 }

@@ -19,6 +19,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	private static final long serialVersionUID = 8668639813872187460L;
 	public static final String ILLEGAL_SUBFOLDERNAME = "Subfolder names must be unique and cannot be null";
 	public static final String ILLEGAL_SUBFOLDER = "Subfolder cannot be added";
+	public static final String NOT_CHILD = "Subfolder not child of this folder";
 	private Long id;
 	private Set<HibMapDiagram> hibMapDiagrams = new HashSet<HibMapDiagram>(0);
 	private Set<HibSubFolder> subFolders = new HashSet<HibSubFolder>(0);
@@ -284,7 +285,10 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public boolean canRenameSubfolder(ISubFolder subFolder, String newFolderName) {
-		// TODO Auto-generated method stub
+		if(subFolder.getParent()!=this)
+			throw new IllegalArgumentException(NOT_CHILD);
+		if(canUseSubfolderName(newFolderName))
+			return true;
 		return false;
 	}
 
@@ -294,8 +298,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canUseMapName(java.lang.String)
 	 */
 	public boolean canUseMapName(String name) {
-		// TODO Auto-generated method stub
-		return false;
+		for(HibMapDiagram d: hibMapDiagrams){
+			if(d.getName().equals(name))
+				return false;
+		}
+		return true;
 	}
 
 
@@ -328,8 +335,12 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
 		if(!canMoveSubfolder(origSubfolder))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
+		Session s = getSession();
+		s.load(this, id);
+		s.load(origSubfolder, ((HibSubFolder)origSubfolder).getId());
 		HibSubFolder copy = new HibSubFolder(this,(HibSubFolder)origSubfolder);
 		addSubFolder(copy);
+		commitSession(s);
 		return copy;
 	}
 
@@ -366,8 +377,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getMapIterator()
 	 */
 	public Iterator<? extends IMap> getMapIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = getSession();
+		s.load(this, id);
+		Iterator<? extends IMap>it =  (Iterator<? extends IMap>) hibMapDiagrams.iterator();
+		s.close();
+		return it;
 	}
 
 	/*
@@ -401,8 +415,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#numMaps()
 	 */
 	public int numMaps() {
-		// TODO Auto-generated method stub
-		return 0;
+		if(hibMapDiagrams==null)
+			return 0;
+		Session s = getSession();
+		s.load(this,id);
+		int nummaps=hibMapDiagrams.size();
+		s.close();
+		return nummaps;
 	}
 
 	/*
@@ -413,7 +432,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public int numSubFolders() {
 		if(subFolders==null)
 			return 0;
-		return getSubFolders().size();
+		Session s = getSession();
+		s.load(this,id);
+		int numsubfolders=getSubFolders().size();
+		s.close();
+		return numsubfolders;
 	}
 
 	/*
@@ -423,14 +446,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	public void removeSubfolder(ISubFolder subFolder) {
 		Session sess = getSession();
-		for(HibSubFolder sub:getSubFolders()){
-			if(subFolder.equals(sub)){
-				removeHibSubFolder(sub);
-			}
-			else{
+		sess.load(this, id);
+		if(subFolders.contains(subFolder))
+			removeHibSubFolder((HibSubFolder) subFolder);
+		else{
+			for(HibSubFolder sub: subFolders)
 				sub.removeSubfolder(subFolder);
-			}
-		}	
+		}
 		HibernateUtil.commitAndCloseSession(sess);
 	}
 
@@ -452,8 +474,14 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public void renameSubfolder(ISubFolder subFolder, String newFolderName) {
-		// TODO Auto-generated method stub
-
+		Session s = getSession();
+		s.load(this, id);
+		if(canRenameSubfolder(subFolder, newFolderName)){
+			((HibSubFolder)subFolder).setName(newFolderName); //this step is necessary as Hibernate does not see the subFolder as = any object in this
+			subFolders.remove((HibSubFolder) subFolder); //folders collection of subfolders - so changes in the name are not propogated.
+			subFolders.add((HibSubFolder) subFolder);
+		}
+		commitSession(s);
 	}
 
 }

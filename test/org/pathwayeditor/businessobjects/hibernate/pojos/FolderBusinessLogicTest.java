@@ -5,14 +5,17 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 /**
@@ -20,6 +23,11 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  *         activity will be tested - see corresponding  tests  in FolderDatabaseTest
  */
 public class FolderBusinessLogicTest {
+
+	/**
+	 * 
+	 */
+	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 
 	static {
 		 HibernateUtil.setStubSessionFactoryAsDefault(); // dont use the  database 
@@ -249,5 +257,124 @@ public class FolderBusinessLogicTest {
 		assertEquals(1, one.getSubFolders().size());
 		assertEquals(0, two.getSubFolders().size());
 	}
-
+	
+	@Test (expected=IllegalArgumentException.class)
+	public void testCanrenameSubFolderFailsWhenSubFolderNotChild(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.canRenameSubfolder(folder2, JIMMY_KRANKIE);
+	}
+	
+	@Test
+	public void testCanRenameSubFolderNameIsIllegal(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
+		try{folder.canRenameSubfolder(folder2,".");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.canRenameSubfolder(folder2,"/");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.canRenameSubfolder(folder2,"\\");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.canRenameSubfolder(folder2,null);fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+	}
+	
+	@Test
+	public void testCanrenameSubFolderWhenSubFolderIsChildNewNameUnused(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testCanrenameSubFolderWhenSubFolderIsChildNewNameUsed(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
+		folder.createSubfolder(JIMMY_KRANKIE);
+		assertFalse(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
+	}
+	
+	@Test (expected=IllegalArgumentException.class)
+	public void testRenameSubFolderFailsWhenSubFolderNotChild(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
+	}
+	
+	@Test
+	public void testRenameSubFolderNameIsIllegal(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		try{folder.renameSubfolder(folder2,".");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.renameSubfolder(folder2,"/");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.renameSubfolder(folder2,"\\");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{folder.renameSubfolder(folder2,null);fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+	}
+	
+	@Test
+	public void testRenameSubFolderWhenSubFolderIsChildNewNameUnused(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
+		assertTrue(folder2.getName().equals(JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testRenameSubFolderWhenSubFolderIsChildNewNameUsed(){
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		folder.addSubFolder(folder2);
+		folder.createSubfolder(JIMMY_KRANKIE);
+		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
+		assertFalse(folder2.getName().equals(JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testNumMaps(){
+		assertEquals(0,childOne.numMaps());
+		childOne.addMapDiagram(new HibMapDiagram());
+		assertEquals(1,childOne.numMaps());
+	}
+	
+	@Test
+	public void testNumSubFolders(){
+		assertEquals(0,childFour.numSubFolders());
+		assertEquals(1,childOne.numSubFolders());
+	}
+	
+	@Test
+	public void testGetMapIteratorCannotBeNull(){
+		assertNotNull(childOne.getMapIterator());
+	}
+	
+	@Test
+	public void testGetMapIteratorIteratesOverMaps(){
+		childOne.addMapDiagram(new HibMapDiagram(childOne,"JIMMY"));
+		childOne.addMapDiagram(new HibMapDiagram(childOne,"KRANKIE"));
+		Iterator <? extends IMap>it = childOne.getMapIterator();
+		assertTrue(it.next().getName().equals("Jimmy")?it.next().getName().equals("KRANKIE"):it.next().getName().equals("JIMMY"));
+	}
+	
+	@Test
+	public void testCanUseMapNameHappyCase(){
+		assertTrue(childOne.canUseMapName(JIMMY_KRANKIE));
+	}
+	
+	@Test@Ignore
+	public void testCanUseMapNameMalformed(){
+		assertTrue(childOne.canUseMapName(JIMMY_KRANKIE));
+		assertFalse(childOne.canUseMapName(null));
+	}
+	
 }
