@@ -34,16 +34,7 @@ public class Repository implements IRepository {
 
 	public String getDescription() {
 		return this.hibRepository.getDescription();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getRootFolder()
-	 */
-	public IRootFolder getRootFolder() {
-		//TODO: Fix this
-//		return this.hibRepository.getRootFolder().getBusinessObject();
-		return null;
-	}
+	}	
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#levelOrderIterator()
@@ -63,6 +54,14 @@ public class Repository implements IRepository {
 	public int getSchemaBuildNum() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getRootFolder()
+	 */
+	public IRootFolder getRootFolder() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

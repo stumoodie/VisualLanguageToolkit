@@ -18,7 +18,7 @@
         <property name="buildNum" type="integer">
         	<column name="build_num" not-null="true" />
         </property>
-        <one-to-one name="rootFolder"
+        <one-to-one name="hibRootFolder"
         	 cascade="all" property-ref="owningRepository"
         	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/>
     </class>

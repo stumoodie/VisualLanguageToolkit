@@ -42,7 +42,6 @@ public class HibernateDbTester implements IDatabaseTester {
 		}
 	}
 	
-	
 	/* (non-Javadoc)
 	 * @see org.dbunit.IDatabaseTester#closeConnection(org.dbunit.database.IDatabaseConnection)
 	 */

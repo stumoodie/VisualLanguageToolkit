@@ -163,9 +163,9 @@ public class DbHibRootFolderTest {
 		session.beginTransaction() ;
 		Query repositoryGetter = session.createQuery ( "From HibRepository where id='100002'") ;
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
-		HibRootFolder oldRootFolder = dbRepository.getRootFolder();
+		HibRootFolder oldRootFolder = dbRepository.getHibRootFolder();
 		HibRootFolder cloneOfRootFolder = new HibRootFolder ( dbRepository , oldRootFolder ) ;
-		dbRepository.setRootFolder(null);
+		dbRepository.setHibRootFolder(null);
 		session.delete(oldRootFolder) ;
 		session.flush();
 		dbRepository.changeRootFolder(cloneOfRootFolder) ;

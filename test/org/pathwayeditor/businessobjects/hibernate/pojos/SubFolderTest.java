@@ -85,7 +85,7 @@ public class SubFolderTest {
 		assertEquals( 1 , subfolder1.getSubFolders().size()) ;
 		assertEquals ( subfolder2.getParentFolder() , subfolder1 ) ;		
 		
-		subfolder1.removeSubFolder(subfolder2) ;
+		subfolder1.removeHibSubFolder(subfolder2) ;
 		
 		assertEquals( 0 , subfolder1.getSubFolders().size()) ;
 		assertEquals ( null , subfolder2.getParentFolder()) ;

@@ -16,7 +16,7 @@ public interface IFolder extends IRepositoryItem {
 	 * @param name The name potential subfolder to be tested.
 	 * @return True if creating a subfolder of this name will succeed.
 	 */
-	boolean canUseSubfolderName(String name);
+	boolean canUseSubfolderName(String name);	
 	
 	/**
 	 * Creates a new subfolder in this folder. Specifically this method creates a new folder
@@ -25,8 +25,16 @@ public interface IFolder extends IRepositoryItem {
 	 * @param name The name of the new subfolder.
 	 * @return The newly created subfolder. Guaranteed to be non-null.
 	 * @throws IllegalArgumentException if <code>canUseSubfolderName(name) == false</code>.
+	 * @throws IllegalArgumentException if name is null.
 	 */
 	ISubFolder createSubfolder(String newSubfolderName);
+	
+	/**
+	 * Tests if the subfolder is contained (anywhere in the tree of children //TODO NH verify ) in this subfolder.
+	 * @param subFolder the subfolder to test, can be null.
+	 * @return true of the subfolder is contained here, false otherwise.
+	 */
+	boolean containsSubfolder(ISubFolder subFolder);
 	
 	/**
 	 * Tests is the new folder can legally be added as a subfolder of this folder.
@@ -40,21 +48,14 @@ public interface IFolder extends IRepositoryItem {
 	boolean canMoveSubfolder(ISubFolder subFolder);
 	
 	/**
-	 * Adds the specified folder as a subfolder of this folder.
+	 * Adds the specified folder as a subfolder of this folder. (Also adds any contents - child folders and maps - //TODO NH verify)
+	 * Also removes this folder from its previous parent.
 	 * @param subFolder The subfolder to be added. It cannot be null.
 	 * @throws IllegalArgumentException if subFolder is null or
-	 * if <code>canAddSubFolder(subFolder)</code> would return false.  
+	 * if <code>canMoveSubFolder(subFolder)</code> would return false.  
 	 */
 	void moveSubfolder(ISubFolder subFolder);
 
-	/**
-	 * Tests if the subfolder is contained in this subfolder.
-	 * @param subFolder the subfolder to test, can be null.
-	 * @return true of the subfolder is contained here, false otherwise.
-	 */
-	boolean containsSubfolder(ISubFolder subFolder);
-
-	
 	/**
 	 * Create a copy of <code>origSubfolder</code> in this subfolder. This copies the tree of repository
 	 * items (subfolders and maps) from this point downwards. The new copies will have new inode values.  
@@ -68,6 +69,9 @@ public interface IFolder extends IRepositoryItem {
 	 * This operation will removed Maps and their contents too.  
 	 * @param subFolder the subfolder to be deleted. Cannot be null.
 	 * @throws IllegalArgumentException if subFolder is null.
+	 *TODO - NH assumptions follow
+	 * @throws IllegalArgumentException if subFolder is not contained in this folder
+	 * will remove the subfolder if it exists ANYWHERE in the child folder tree of this folder, not just in its immediate children
 	 */
 	void removeSubfolder(ISubFolder subFolder);
 	

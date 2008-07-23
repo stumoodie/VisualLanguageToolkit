@@ -60,6 +60,7 @@ public class HibRootFolderTest {
 		}});
 		testRootFolder1 = new HibRootFolder( mockBORootFolder , mockRepository );
 		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockSubFolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubFolder).getParentFolder(); will(returnValue(null)) ;
 			atLeast(1).of(mockSubFolder).setParentFolder(testRootFolder1);
 			atLeast(1).of(mockSubFolder).getMapDiagrams(); will(returnValue(mockMapDiagramSet)) ;
@@ -103,6 +104,7 @@ public class HibRootFolderTest {
 		}});
 		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
 		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
 			atLeast(1).of(mockSubfolder).setParentFolder(testRootFolder1); 
 						
@@ -123,6 +125,7 @@ public class HibRootFolderTest {
 		}});
 		testRootFolder1 = new HibRootFolder(mockBORootFolder , mockRepository );
 		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(testRootFolder1)) ;
 			atLeast(1).of(mockSubfolder).setParentFolder(testRootFolder1); 
 			atLeast(1).of(mockSubfolder).setParentFolder(null);
@@ -132,7 +135,7 @@ public class HibRootFolderTest {
 		testRootFolder1.addSubFolder(mockSubfolder) ;
 		assertEquals ( 1 , testRootFolder1.getSubFolders().size() );
 		
-		testRootFolder1.removeSubFolder(mockSubfolder) ;
+		testRootFolder1.removeHibSubFolder(mockSubfolder) ;
 		assertEquals ( 0 , testRootFolder1.getSubFolders().size() );
 	}
 	

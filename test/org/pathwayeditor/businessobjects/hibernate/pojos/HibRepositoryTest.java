@@ -31,8 +31,8 @@ public class HibRepositoryTest {
 	private static final int VERSION_NUMBER1 = 1 ;
 	private static final int VERSION_NUMBER2 = 2 ;
 	
-	private HibRepository testInstance1 = new HibRepository();
-	private HibRepository testInstance2 = new HibRepository();
+	private HibRepository testInstance1 = new HibRepository("","",0);
+	private HibRepository testInstance2 = new HibRepository("","",0);
 
 	@Before
 	public void setUp() throws Exception {

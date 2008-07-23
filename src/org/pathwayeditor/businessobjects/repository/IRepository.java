@@ -36,7 +36,7 @@ public interface IRepository {
 	IRootFolder getRootFolder(); 
 
 	/**
-	 * The build number of the underlying schema used to store the repository. Required to enable compatibolity checks between the
+	 * The build number of the underlying schema used to store the repository. Required to enable compatibility checks between the
 	 * business objects and the underlying schema.
 	 * @return the schema build number.
 	 */

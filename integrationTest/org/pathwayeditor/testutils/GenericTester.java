@@ -21,7 +21,7 @@ import org.junit.BeforeClass;
  * @author nhanlon
  * 
  */
-public abstract class PojoTester {
+public abstract class GenericTester {
 
 	private static HibernateDbTester dbTester = null;
 	private SessionFactory hibFactory;
@@ -45,6 +45,7 @@ public abstract class PojoTester {
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		startNewTransaction();
+		doSetup();
 	}
 
 	protected void saveAndCommit(Serializable in) {

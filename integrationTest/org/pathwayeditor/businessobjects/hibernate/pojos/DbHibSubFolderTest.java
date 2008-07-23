@@ -209,7 +209,7 @@ public class DbHibSubFolderTest {
 		
 		for (HibSubFolder subFolder : subFoldersList)
 		{
-			dbParentFolder.removeSubFolder(subFolder) ;
+			dbParentFolder.removeHibSubFolder(subFolder) ;
 		}
 		
 		session.saveOrUpdate(dbParentFolder) ;

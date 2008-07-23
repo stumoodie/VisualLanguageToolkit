@@ -138,7 +138,7 @@ public class DbHibRepositoryTest {
 			HibRepository loadedRepository = (HibRepository) retrievedRepository
 					.uniqueResult();
 
-			HibRootFolder oldRootFolder = loadedRepository.getRootFolder();
+			HibRootFolder oldRootFolder = loadedRepository.getHibRootFolder();
 
 			HibRootFolder newRootFolder = new HibRootFolder();
 
@@ -187,7 +187,7 @@ public class DbHibRepositoryTest {
 		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
-		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
+		HibRootFolder dbRootFolder = dbRepository.getHibRootFolder() ;
 		
 		session.delete(dbRepository) ;
 		session.delete(dbRootFolder) ;
@@ -227,7 +227,7 @@ public class DbHibRepositoryTest {
 		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
-		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
+		HibRootFolder dbRootFolder = dbRepository.getHibRootFolder() ;
 		
 		session.delete(dbRepository) ;
 		session.delete(dbRootFolder) ;

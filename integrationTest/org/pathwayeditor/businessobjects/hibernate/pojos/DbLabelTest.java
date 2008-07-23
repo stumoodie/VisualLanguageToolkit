@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
-import org.pathwayeditor.testutils.PojoTester;
+import org.pathwayeditor.testutils.GenericTester;
 
 /**
  * @author nhanlon
  *
  */
-public class DbLabelTest extends PojoTester {
+public class DbLabelTest extends GenericTester {
 	
 	@Test
 	public void testSetTextProperty() throws Exception{
-		doSetup();
+		
 		HibLabel label= (HibLabel) getSession().createQuery ( "From HibLabel label join fetch label.visualisableProperty where label.id = 1").uniqueResult();
 		HibTextProperty property = (HibTextProperty) label.getVisualisableProperty();
 		assertEquals("chips",property.getTextValue());
@@ -34,7 +34,7 @@ public class DbLabelTest extends PojoTester {
 
 	@Test
 	public void testSetRichTextProperty() throws Exception{
-		doSetup();
+		
 		HibLabel label= (HibLabel) getSession().createQuery ( "From HibLabel label join fetch label.visualisableProperty where label.id = 4").uniqueResult();
 		HibRichTextProperty property = (HibRichTextProperty) label.getVisualisableProperty();
 		assertEquals("chips",property.getRichTextValue());
@@ -48,7 +48,7 @@ public class DbLabelTest extends PojoTester {
 	
 	@Test
 	public void testSetNumberProperty() throws Exception{
-		doSetup();
+		
 		HibLabel label= (HibLabel) getSession().createQuery ( "From HibLabel label join fetch label.visualisableProperty where label.id = 2").uniqueResult();
 		HibNumberProperty property = (HibNumberProperty) label.getVisualisableProperty();
 		assertEquals(BigDecimal.ONE,property.getNumberValue());
@@ -62,7 +62,7 @@ public class DbLabelTest extends PojoTester {
 	
 	@Test
 	public void testSetListProperty() throws Exception{
-		doSetup();
+		
 		HibLabel label= (HibLabel) getSession().createQuery ( "From HibLabel label join fetch label.visualisableProperty where label.id = 3").uniqueResult();
 		HibListProperty property = (HibListProperty) label.getVisualisableProperty();
 		assertEquals("first in list",property.getValues().get(0));

@@ -6,13 +6,13 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.pathwayeditor.testutils.PojoTester;
+import org.pathwayeditor.testutils.GenericTester;
 
 /**
  * @author nhanlon Unit tests for HibModel class
  * 
  */
-public class DbModelTest extends PojoTester {
+public class DbModelTest extends GenericTester {
 
 	/*
 	 * (non-Javadoc)
@@ -26,7 +26,6 @@ public class DbModelTest extends PojoTester {
 	
 	@Test
 	public void testSetRootNode() throws Exception{
-		doSetup();
 		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();
 		HibCompoundNode node = new HibCompoundRootNode();
 		graph.setRootNode(node);
