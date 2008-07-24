@@ -121,7 +121,7 @@ public interface IFolder extends IRepositoryItem {
 	boolean canUseMapName(String name);
 	
 	/**
-	 * Creates a new map in this folder. Specifically this method creates a new folder
+	 * Creates a new map in this folder. Specifically this method creates a new map
 	 * which is added to this folder as a map.
 	 * Precondition: <code>canUseMapName(name) == true</code>
 	 * @param name The name of the new map.

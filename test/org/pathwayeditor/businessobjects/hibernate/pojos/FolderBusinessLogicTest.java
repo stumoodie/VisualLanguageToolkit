@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,6 +25,10 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  */
 public class FolderBusinessLogicTest {
 
+	/**
+	 * 
+	 */
+	private static final String FANDABIDOSI = "fandabidosi";
 	/**
 	 * 
 	 */
@@ -371,10 +376,205 @@ public class FolderBusinessLogicTest {
 		assertTrue(childOne.canUseMapName(JIMMY_KRANKIE));
 	}
 	
-	@Test@Ignore
+	@Test
 	public void testCanUseMapNameMalformed(){
 		assertTrue(childOne.canUseMapName(JIMMY_KRANKIE));
 		assertFalse(childOne.canUseMapName(null));
+		assertFalse(childOne.canUseMapName("/"));
+		assertFalse(childOne.canUseMapName("."));
+		assertFalse(childOne.canUseMapName("\\"));
 	}
 	
+	@Test
+	public void testCreateMapHappyCase(){
+		childOne.createMap(JIMMY_KRANKIE);
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testCreateMapMalformed(){
+		childOne.createMap(JIMMY_KRANKIE);
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		try{childOne.createMap(".");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.createMap("/");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.createMap("\\");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.createMap(null);fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+	}
+	
+	@Test
+	public void testCreateMapNameAlreadyInUseThrowsIllegalArgument(){
+		childOne.createMap(JIMMY_KRANKIE);
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		try{childOne.createMap(JIMMY_KRANKIE);fail("should throw illegal arg for map already exists with same name");}
+		catch(IllegalArgumentException e){;}
+	}
+	
+	@Test
+	public void testContainsMapTrue(){
+		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		childOne.addMapDiagram(newMapDiagram);
+		assertTrue(childOne.containsMap(newMapDiagram));
+	}
+	
+	@Test
+	public void testContainsMapFalse(){
+		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		assertFalse(childOne.containsMap(newMapDiagram));
+	}
+	
+	@Test
+	public void testContainsMapNull(){
+		HibMapDiagram newMapDiagram = null;
+		assertFalse(childOne.containsMap(newMapDiagram));
+	}
+	
+	@Test
+	public void createCopyOfMapHappyCaseCopiesName(){
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,JIMMY_KRANKIE);
+		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		childOne.createCopyOfMap(newHibMapDiagram);
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void createCopyOfMapHappyCaseCopiesDescription(){
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,JIMMY_KRANKIE);
+		newHibMapDiagram.setDescription(FANDABIDOSI);
+		childOne.createCopyOfMap(newHibMapDiagram);
+		assertEquals(FANDABIDOSI,getMapInFolderCalled(childOne, JIMMY_KRANKIE).getDescription());
+	}
+	
+	@Test
+	public void createCopyOfMapHappyCaseCopyDoesNotEqualOriginal(){
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		childOne.createCopyOfMap(newHibMapDiagram);
+		assertFalse(newHibMapDiagram.equals(getMapInFolderCalled(childOne, JIMMY_KRANKIE).getDescription()));
+	}
+	
+	@Test @Ignore//FIXME NH find out how on earth I am supposed to do this
+	public void testCreateCopyOfMapHappyCaseCopiesMapCanvas(){
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,JIMMY_KRANKIE);
+		HibCanvas canvas = new HibCanvas();
+		canvas.setGridX(100);
+		canvas.setMapDiagram(newHibMapDiagram);
+		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		childOne.createCopyOfMap(newHibMapDiagram);
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		//TODO - insert code that would check a canvas exists with same properties but NOT equals....
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testCreateCopyOfMapWhenAlreadyExistsThrowsIllegalArg(){
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		childOne.createCopyOfMap(newHibMapDiagram);
+		childOne.createCopyOfMap(newHibMapDiagram);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testCreateCopyOfMapWhenMapIsNullThrowsIllegalArg(){
+		HibMapDiagram newHibMapDiagram = null;
+		childOne.createCopyOfMap(newHibMapDiagram);
+	}
+	
+	@Test
+	public void testMoveMapHappyCaseAddsMapToNewFolder(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		assertFalse(childFour.containsMap(newMap));
+		childFour.moveMap(newMap);
+		assertTrue(childFour.containsMap(newMap));
+		assertTrue(mapExistsCalled(childFour, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testMoveMapHappyCaseRemovesMapFromOldFolder(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		assertTrue(childOne.containsMap(newMap));
+		childFour.moveMap(newMap);
+		assertFalse(childOne.containsMap(newMap));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testMoveMapThrowsIllegalArgIfMapIsNull(){
+		HibMapDiagram newMap = null;
+		childFour.moveMap(newMap);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testMoveMapThrowsIllegalArgIfMapIsAlreadyContained(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		childFour.moveMap(newMap);
+		childFour.moveMap(newMap);
+	}
+	
+	@Test
+	public void testCanRenameMapHappyCase(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
+		assertFalse(childOne.canRenameMap(newMap, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testCanRenameMapFalseWhenMapIsNullOrNameIsNull(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
+		assertFalse(childOne.canRenameMap(null, FANDABIDOSI));
+		assertFalse(childOne.canRenameMap(newMap, null));
+	}
+	
+	@Test@Ignore //TODO NH verify if this is a requirement or not
+	public void testCanRenameMapWhenNoMapsAttachedToParentFolder(){
+		
+	}
+	
+	@Test
+	public void testRenameMapHappyCase(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		assertFalse(mapExistsCalled(childOne, FANDABIDOSI));
+		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
+		childOne.renameMap(newMap, FANDABIDOSI);
+		assertTrue(mapExistsCalled(childOne, FANDABIDOSI));
+		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testRenameMapMalformedName(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		try{childOne.renameMap(newMap,".");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.renameMap(newMap,"/");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.renameMap(newMap,"\\");fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+		try{childOne.renameMap(newMap,null);fail("should throw illegal arg for null or slashdot");}
+		catch(IllegalArgumentException e){;}
+	}
+	
+	private HibMapDiagram getMapInFolderCalled(HibFolder r, String name) {
+		Set<HibMapDiagram> maps = r.getMapDiagrams();
+		for (HibMapDiagram map: maps){
+			if(map.getName().equals(name))
+				return map;
+		}
+		return null;
+	}
+	
+	private boolean mapExistsCalled(HibFolder r, String name) {
+		Set<HibMapDiagram> maps = r.getMapDiagrams();
+		for (HibMapDiagram map: maps){
+			if(map.getName().equals(name))
+				return true;
+		}
+		return false;
+	}
 }

@@ -108,6 +108,7 @@ public class FolderDatabaseTest extends GenericTester{
 		r.createCopyOfSubfolder(sub1);
 		startNewTransaction();
 		assertTrue(subFolderExistsCalled(r, sub1.getName()));
+		assertNotNull(getSession().createQuery("from HibSubFolder s where s.parentFolder =:parent and s.name = :name").setEntity("parent", r).setString("name", sub1.getName()).uniqueResult());
 	}
 	
 	@Test
@@ -169,11 +170,145 @@ public class FolderDatabaseTest extends GenericTester{
 		assertTrue(it.next().getName().equals("Diagram name"));
 	}
 	
-
+	@Test
+	public void testCanUseMapNameHappyCase(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		getSession().close();
+		assertTrue(sub1.canUseMapName(JIMMY_KRANKIE));
+	}
+	
+	@Test
+	public void testCanUseMapNameNotAllowed(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		getSession().close();
+		assertTrue(sub1.canUseMapName(JIMMY_KRANKIE));
+		assertFalse(sub1.canUseMapName("Diagram name"));
+	}
+	
+	@Test
+	public void testRootFolderCreateMapHappyCase(){
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		assertFalse(mapExistsCalled(r, JIMMY_KRANKIE));
+		getSession().close();
+		r.createMap(JIMMY_KRANKIE);
+		startNewTransaction();
+		r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		assertTrue(mapExistsCalled(r, JIMMY_KRANKIE));
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testCreateMapNameAlreadyInUseThrowsIllegalArgument(){
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		assertFalse(mapExistsCalled(r, JIMMY_KRANKIE));
+		getSession().close();
+		r.createMap(JIMMY_KRANKIE);
+		startNewTransaction();
+		r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		assertTrue(mapExistsCalled(r, JIMMY_KRANKIE));
+		r.createMap(JIMMY_KRANKIE);
+	}
+	
+	@Test
+	public void testContainsMapHappyCase(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		getSession().close();
+		assertTrue(sub1.containsMap(map));
+	}
+	
+	@Test
+	public void testContainsMapFalse(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		getSession().close();
+		assertTrue(sub1.containsMap(map));
+		assertFalse(r.containsMap(map));
+	}
+	
+	@Test
+	public void testCreateCopyOfMapHappyCase(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		assertFalse(mapExistsCalled(r, map.getName()));
+		assertEquals(0,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", r).setString("name", map.getName()).list().size());
+		getSession().close();
+		r.createCopyOfMap(map);
+		startNewTransaction();
+		assertTrue(mapExistsCalled(r, map.getName()));
+		assertEquals(1,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", r).setString("name", map.getName()).list().size());
+	}
+	
+	@Test
+	public void testMoveMapHappyCaseAddsMapToNewParent(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		assertFalse(mapExistsCalled(r, map.getName()));
+		assertEquals(0,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", r).setString("name", map.getName()).list().size());
+		getSession().close();
+		r.moveMap(map);
+		startNewTransaction();
+		assertTrue(mapExistsCalled(r, map.getName()));
+		assertEquals(1,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", r).setString("name", map.getName()).list().size());
+	}
+	
+	@Test
+	public void testMoveMapHappyCaseRemovesMapFromOldParent(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		assertFalse(mapExistsCalled(r, map.getName()));
+		assertEquals(1,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", sub1).setString("name", map.getName()).list().size());
+		getSession().close();
+		r.moveMap(map);
+		startNewTransaction();
+		assertEquals(0,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", sub1).setString("name", map.getName()).list().size());
+	}
+	
+	@Test
+	public void testCanRenameMapHappyCase(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		getSession().close();
+		assertTrue(sub1.canRenameMap(map, JIMMY_KRANKIE));
+		assertFalse(sub1.canRenameMap(map, map.getName()));
+	}
+	
+	@Test
+	public void testRenameMapHappyCase(){
+		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
+		assertEquals(0,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", sub1).setString("name", JIMMY_KRANKIE).list().size());
+		getSession().close();
+		sub1.renameMap(map, JIMMY_KRANKIE);
+		startNewTransaction();
+		assertTrue(mapExistsCalled(sub1, JIMMY_KRANKIE));
+		assertEquals(1,getSession().createQuery
+				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", sub1).setString("name", JIMMY_KRANKIE).list().size());
+	}
 	private boolean subFolderExistsCalled(HibRootFolder r, String name) {
 		Set<HibSubFolder> subs = r.getSubFolders();
 		for (HibSubFolder sub: subs){
 			if(sub.getName().equals(name))
+				return true;
+		}
+		return false;
+	}
+	
+	private boolean mapExistsCalled(HibFolder r, String name) {
+		Set<HibMapDiagram> maps = r.getMapDiagrams();
+		for (HibMapDiagram map: maps){
+			if(map.getName().equals(name))
 				return true;
 		}
 		return false;

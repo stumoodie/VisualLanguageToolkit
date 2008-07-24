@@ -51,8 +51,8 @@ public class HibMapDiagramTest {
 	public void testCopyConstructor () 
 	{
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
-		mockery.checking( new Expectations () {{
-		}});
+		mockery.checking( new Expectations () {
+			{atLeast(1).of(mockFolder).getRepository();}});
 		
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
 		
@@ -69,6 +69,8 @@ public class HibMapDiagramTest {
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		final HibFolder mockFolder2 = mockery.mock(HibFolder.class , "mockFolder2") ;
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
+		mockery.checking( new Expectations () {
+			{atLeast(1).of(mockFolder).getRepository();}});
 		mockery.checking( new Expectations () {{
 		
 			testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
@@ -94,6 +96,8 @@ public class HibMapDiagramTest {
 	public void testEquals () throws Exception
 	{	
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
+		mockery.checking( new Expectations () {
+		{atLeast(1).of(mockFolder).getRepository();}});
 		
 		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
@@ -108,8 +112,9 @@ public class HibMapDiagramTest {
 	
 	@Test
 	public final void testHashCode() {
-		
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
+		mockery.checking( new Expectations () {
+			{atLeast(1).of(mockFolder).getRepository();}});
 		
 		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;

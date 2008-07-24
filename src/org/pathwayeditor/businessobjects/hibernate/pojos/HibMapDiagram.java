@@ -33,12 +33,14 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	public HibMapDiagram(HibFolder hibFolder, String name) {
 		this.folder = hibFolder;
 		this.name = name;
+		this.repository=hibFolder.getRepository();
 	}
 
 	public HibMapDiagram(HibFolder newParent, HibMapDiagram other) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
+		this.repository=newParent.getRepository();
 	}
 
 	public Long getId() {
@@ -95,6 +97,7 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 		this.description = description;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if ((this == other))
 			return true;
