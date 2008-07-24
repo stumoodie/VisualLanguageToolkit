@@ -13,8 +13,8 @@ package org.pathwayeditor.businessobjects.repository;
 public interface IMap extends IRepositoryItem {
 	
 	/**
-	 * The folder that owns this map.
-	 * @return an instance of the folder, cannot be null.
+	 * The folder that owns this map. //FIXME - NH Im making the assumption that this method guarantees reciprocity of the relationship
+	 * @return an instance of the folder, cannot be null. //FIXME - NH Im assuming throw an illegal arg if is null then
 	 */
 	IFolder getOwner();
 

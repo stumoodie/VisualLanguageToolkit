@@ -95,7 +95,7 @@ public class DbHibSubFolderTest {
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(EMPTY_REF_DATA)));
 		dbTester.onSetup();
 		
-		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
+		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION,new HibRootFolder()) ;
 		
 		HibRootFolder aRootFolder = new HibRootFolder () ;
 		aRootFolder.setRepository(aRepository);

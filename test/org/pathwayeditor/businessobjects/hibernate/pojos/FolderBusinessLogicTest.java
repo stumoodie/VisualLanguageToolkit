@@ -22,6 +22,8 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
 /**
  * @author nhanlon NH - this is a business logic test so no actual database
  *         activity will be tested - see corresponding  tests  in FolderDatabaseTest
+ *         
+ *         Tests the IFolder interface
  */
 public class FolderBusinessLogicTest {
 

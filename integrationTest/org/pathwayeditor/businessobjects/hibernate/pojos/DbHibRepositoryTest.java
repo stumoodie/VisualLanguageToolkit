@@ -91,7 +91,7 @@ public class DbHibRepositoryTest {
 		session = hibFactory.getCurrentSession() ;
 		session.beginTransaction();
 		
-		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION );
+		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION,new HibRootFolder() );
 		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
 		
 		

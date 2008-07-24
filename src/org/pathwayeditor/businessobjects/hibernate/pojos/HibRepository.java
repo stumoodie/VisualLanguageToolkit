@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.Repository;
-import org.pathwayeditor.businessobjects.pojos.RootFolder;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 
@@ -30,10 +29,15 @@ public class HibRepository implements IBusinessObjectData<IRepository>, Serializ
 		
 	}
 
-	public HibRepository(String name, String description, int buildNum ) {
+	public HibRepository(String name, String description, int buildNum , HibRootFolder root) {
+		if(name==null||name.equals(""))
+				throw new IllegalArgumentException(ILLEGAL_NAME);
 		this.name = name;
+		if(description==null)
+			throw new IllegalArgumentException(ILLEGAL_DESCRIPTION);
 		this.description = description;
 		this.buildNum = buildNum;
+		this.rootFolder=root;
 	}
 
    public void changeRootFolder(HibRootFolder newRootFolder){
@@ -82,7 +86,7 @@ public class HibRepository implements IBusinessObjectData<IRepository>, Serializ
 	public IRootFolder getRootFolder() {
 		if(this.rootFolder==null)
 			throw new IllegalArgumentException(ILLEGAL_ROOTFOLDER);
-		return new RootFolder(this.rootFolder);//FIXME 
+		return rootFolder;
 	}
 
 	void setHibRootFolder(HibRootFolder hibRootFolder) {

@@ -17,30 +17,31 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	private String description = "";
 	private Map businessObject = null;
 	private HibRepository repository;
-	private int iNode= makeIntUUID();
+	private int iNode = makeIntUUID();
 
 	public HibMapDiagram() {
 	}
-	
+
 	/**
 	 * @return a int representation of the first 8 digits in a real UUID
 	 */
-	private int makeIntUUID() { //FIXME - this IS NOT GUARANTEED UNIQUE!!!!!!!!!!!!!
-		Long tempL= UUID.randomUUID().getMostSignificantBits();
+	private int makeIntUUID() { // FIXME - this IS NOT GUARANTEED
+								// UNIQUE!!!!!!!!!!!!!
+		Long tempL = UUID.randomUUID().getMostSignificantBits();
 		return tempL.intValue();
 	}
-	
+
 	public HibMapDiagram(HibFolder hibFolder, String name) {
 		this.folder = hibFolder;
 		this.name = name;
-		this.repository=hibFolder.getRepository();
+		this.repository = hibFolder.getRepository();
 	}
 
 	public HibMapDiagram(HibFolder newParent, HibMapDiagram other) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
-		this.repository=newParent.getRepository();
+		this.repository = newParent.getRepository();
 	}
 
 	public Long getId() {
@@ -51,7 +52,7 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	private void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public void setRepository(HibRepository repository) {
 		this.repository = repository;
 	}
@@ -59,7 +60,6 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	public HibRepository getRepository() {
 		return repository;
 	}
-
 
 	public HibFolder getFolder() {
 		return this.folder;
@@ -122,7 +122,7 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	}
 
 	private boolean foldersSame(HibFolder otherFolder, HibFolder myFolder) {
-	
+
 		if (myFolder == otherFolder)
 			return true;
 		if (myFolder == null && otherFolder == null)
@@ -130,7 +130,7 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 		if (myFolder != null && otherFolder != null) {
 			boolean toRet = false;
 			try {
-				toRet=myFolder.equals(otherFolder);
+				toRet = myFolder.equals(otherFolder);
 				return toRet;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -162,14 +162,20 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 		return this.businessObject;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getOwner()
 	 */
 	public IFolder getOwner() {
+		if (folder == null||!folder.containsMap(this))
+			throw new IllegalArgumentException();
 		return folder;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
 	 */
 	public int getINode() {

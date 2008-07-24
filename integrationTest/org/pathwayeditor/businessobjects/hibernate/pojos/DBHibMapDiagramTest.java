@@ -93,7 +93,7 @@ public class DBHibMapDiagramTest {
 		dbTester.setDataSet(new XmlDataSet(new FileInputStream(EMPTY_REF_DATA)));
 		dbTester.onSetup();
 		
-		HibRepository repositoryToWrite = new HibRepository (REPOSITORY_NAME, REPOSITORY_DESCRIPTION, REPOSITORY_VERSION );
+		HibRepository repositoryToWrite = new HibRepository (REPOSITORY_NAME, REPOSITORY_DESCRIPTION, REPOSITORY_VERSION ,new HibRootFolder());
 		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
 		
 		repositoryToWrite.changeRootFolder(rootFolderToWrite) ;

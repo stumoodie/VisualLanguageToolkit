@@ -6,6 +6,7 @@ package org.pathwayeditor.businessobjects.pojos;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
@@ -18,7 +19,7 @@ public class Repository implements IRepository {
 	private final HibRepository hibRepository;
 	
 	public Repository(String name, String description, int buildNum) {
-		this.hibRepository = new HibRepository(name, description, buildNum);
+		this.hibRepository = new HibRepository(name, description, buildNum,new HibRootFolder());
 	}
 	
 	public Repository(HibRepository hibRepository){

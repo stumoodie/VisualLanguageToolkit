@@ -31,14 +31,13 @@ public class HibRepositoryTest {
 	private static final int VERSION_NUMBER1 = 1 ;
 	private static final int VERSION_NUMBER2 = 2 ;
 	
-	private HibRepository testInstance1 = new HibRepository("","",0);
-	private HibRepository testInstance2 = new HibRepository("","",0);
+	private HibRepository testInstance1 = new HibRepository("a","",0,new HibRootFolder());
+	private HibRepository testInstance2 = new HibRepository("a","",0,new HibRootFolder());
 
 	@Before
 	public void setUp() throws Exception {
-		this.testInstance1 = new HibRepository(REPOSITORY_NAME1 , REPOSITORY_DESCRIPTION1, VERSION_NUMBER1);
-		this.testInstance2 = new HibRepository(REPOSITORY_NAME2 , REPOSITORY_DESCRIPTION2 , VERSION_NUMBER2);
-		
+		this.testInstance1 = new HibRepository(REPOSITORY_NAME1 , REPOSITORY_DESCRIPTION1, VERSION_NUMBER1,new HibRootFolder());
+		this.testInstance2 = new HibRepository(REPOSITORY_NAME2 , REPOSITORY_DESCRIPTION2 , VERSION_NUMBER2,new HibRootFolder());
 	}
 
 	@After

@@ -23,10 +23,6 @@ import org.pathwayeditor.testutils.GenericTester;
  */
 public class FolderDatabaseTest extends GenericTester{
 
-
-	/**
-	 * 
-	 */
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 
 
