@@ -37,7 +37,7 @@
 		<property name="url" type="string">
 			<column name="url" length="2048" not-null="true" />
 		</property>
-		<map name="properties" table="linkproperty">
+		<map name="properties" table="linkproperty" cascade="all,delete-orphan">
    	    	<meta attribute="use-in-equals">true</meta>
 			<key>
 				<column name="link_id" not-null="true" />
@@ -78,15 +78,12 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint" />
 		</list>
-		<list name="linkTermini" inverse="true">
+		<set name="linkTermini" inverse="true" cascade="all,delete-orphan">
 			<key>
 				<column name="link_id" not-null="true" />
 			</key>
-			<list-index>
-				<column name="link_term_type" not-null="true" />
-			</list-index>
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
-		</list>
+		</set>
 	</class>
 </hibernate-mapping>

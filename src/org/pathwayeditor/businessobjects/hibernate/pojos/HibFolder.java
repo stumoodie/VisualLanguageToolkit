@@ -117,8 +117,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 
 		HibFolder oldParentFolder = newSubFolder.getParentFolder();
 		if (oldParentFolder != null) {
-//			oldParentFolder.subFolders.remove(newSubFolder);
-			oldParentFolder.removeHibSubFolder(newSubFolder);
+			oldParentFolder.subFolders.remove(newSubFolder);
+//			oldParentFolder.removeHibSubFolder(newSubFolder);  FIX ME 
 		}
 		this.subFolders.add(newSubFolder);
 		newSubFolder.setParentFolder(this);

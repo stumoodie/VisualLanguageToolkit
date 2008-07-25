@@ -116,6 +116,79 @@ public class HibLinkTerminus  implements java.io.Serializable {
 	private static final long serialVersionUID = -4462637156010353035L;
     	
   // end of extra code specified in the hbm.xml files
+	
+	public void addLinkTerminusProperty ( String name , HibProperty toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibLinkTerminus oldLinkTerminus = toAdd.getLinkTerminus() ;
+		if (oldLinkTerminus != null) {
+			oldLinkTerminus.getProperties().remove(toAdd);
+		}
+		this.hibProperties.put(name ,toAdd);
+		toAdd.setLinkTerminus(this);
+	}
+	
+	void removeLinTerminusProperty(String toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
+		if  (propertyToRemove == null)
+			throw new IllegalStateException("property cannot be null");
+		if (propertyToRemove.getLinkTerminus() != this)
+			throw new IllegalArgumentException(
+					"property must belong to this canvas");	
+		
+		this.hibProperties.remove(toRemove) ;
+		propertyToRemove.setLinkTerminus(null);
+	}
+	
+//	public void changeLinkEndDecorator ( HibLinkEndDecorator newLinkEndDecorator)
+//	{
+//		   HibLinkEndDecorator oldDecorator = this.linkenddecorators ;
+//		   this.linkenddecorators = newLinkEndDecorator;
+//		   if(oldDecorator != null){
+//			   oldDecorator.setLinkTerminus(null);
+//		   }
+//		   if(this.linkenddecorators != null){
+//			   this.linkenddecorators.setLinkTerminus(this) ;
+//		   }
+//	}
+//	
+//	public void changeLinkTerminusDecorator ( HibLinkTerminusDecorator newLinkTerminusDecorator)
+//	{
+//		   HibLinkTerminusDecorator oldDecorator = this.decorator ;
+//		   this.decorator = newLinkTerminusDecorator;
+//		   if(oldDecorator != null){
+//			   oldDecorator.setLinkTerminus(null);
+//		   }
+//		   if(this.linkenddecorators != null){
+//			   this.linkenddecorators.setLinkTerminus(this) ;
+//		   }
+//	}
+	
+	public void addProperty ( String name , HibProperty toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibLinkTerminus oldLinkTerminus = toAdd.getLinkTerminus() ;
+		if (oldLinkTerminus != null) {
+			oldLinkTerminus.getProperties().remove(toAdd);
+		}
+		this.hibProperties.put(name ,toAdd);
+		toAdd.setLinkTerminus(this);
+	}
+	
+	void removeProperty(String toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
+		if  (propertyToRemove == null)
+			throw new IllegalStateException("property cannot be null");
+		
+		this.hibProperties.remove(toRemove) ;
+		propertyToRemove.setLinkTerminus(null);
+	}
 
 }
 

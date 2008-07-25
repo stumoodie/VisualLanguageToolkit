@@ -14,6 +14,8 @@ public abstract class HibProperty  implements Serializable {
      private HibCanvas hibCanvas;
      private int creationSerial;
      private HibShape shape ;
+     private HibLinkTerminus linkTerminus ;
+     private HibLink hibLink ;
 
     public HibProperty() {
     }
@@ -85,8 +87,27 @@ public abstract class HibProperty  implements Serializable {
 	public void setShape(HibShape shape) {
 		this.shape = shape;
 	}
+
+	public HibLinkTerminus getLinkTerminus() {
+		return this.linkTerminus;
+	}
+
+	public void setLinkTerminus(HibLinkTerminus linkTerminus) {
+		this.linkTerminus = linkTerminus;
+	}
+
+	public HibLink getHibLink() {
+		return this.hibLink;
+	}
+
+	public void setHibLink(HibLink hibLink) {
+		this.hibLink = hibLink;
+	}
     	
   // end of extra code specified in the hbm.xml files
+	
+	
+	
 
 }
 

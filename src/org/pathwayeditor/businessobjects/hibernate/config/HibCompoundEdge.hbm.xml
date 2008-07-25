@@ -16,14 +16,8 @@
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="owningNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="owning_child_model_id" not-null="true"/>
-        </many-to-one>
         <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="out_node_id" not-null="true"/>
-        </many-to-one>
-        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="in_node_id" not-null="true"/>
+        	<column name="owning_node_id" not-null="true"/>
         </many-to-one>
     </class>
 </hibernate-mapping>

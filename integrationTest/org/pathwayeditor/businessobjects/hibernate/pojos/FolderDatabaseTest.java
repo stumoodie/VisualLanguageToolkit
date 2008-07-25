@@ -311,11 +311,8 @@ public class FolderDatabaseTest extends GenericTester{
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.testutils.PojoTester#getDbUnitDataFilePath()
-	 */
 	@Override
 	protected String getDbUnitDataFilePath() {
-		return "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
+		return "integrationTest/DbSourceData/DbSourceRepositoryRefData.xml";
 	}
 }

@@ -19,14 +19,11 @@
 			</row>
 	</table>
 	<table name="RootFolder" >
-		<column>id</column>
 		<column>owning_repository_id</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
 			</row>
 			<row>
-				<value>100006</value>
 				<value>100002</value>
 			</row>
 	</table>
@@ -55,16 +52,13 @@
 			</row>
 	</table>
 	<table name="MapDiagram">
-		<column>id</column>
 		<column>name</column>
 		<column>description</column>
 			<row>
-				<value>100001</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
 			</row>
 			<row>
-				<value>100002</value>
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
 			</row>

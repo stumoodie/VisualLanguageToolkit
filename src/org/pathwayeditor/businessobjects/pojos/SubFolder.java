@@ -261,5 +261,13 @@ public class SubFolder implements ISubFolder, IHibernateFacade<HibSubFolder> {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
+	 */
+	public Iterator<? extends ISubFolder> getSubFolderIterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

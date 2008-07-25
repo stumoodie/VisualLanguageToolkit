@@ -21,7 +21,7 @@ public class MapDatabaseTest extends GenericTester{
 	 */
 	@Override
 	protected String getDbUnitDataFilePath() {
-		return "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
+		return "integrationTest/DbSourceData/DbSourceRepositoryRefData.xml";
 	}
 	
 	@Test

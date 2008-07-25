@@ -14,35 +14,21 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.pathwayeditor.testutils.HibernateDbTester;
+import org.pathwayeditor.testutils.PojoTester;
 
 /**
  * @author ntsorman
  *
  */
-public class DbHibShapeTest {
+public class DbHibShapeTest extends PojoTester{
 	
-	private static HibernateDbTester dbTester = null;
-	private SessionFactory hibFactory; 
-	private Session session ;
 
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static final String REF_DATA = "integrationTest/DbShapeTestData/DbShapeRefData.xml";
 	private static final String CREATED_SHAPE_DATA = "integrationTest/DbShapeTestData/DbCreatedShapeReData.xml";
 	private static final String DELETED_SHAPE_DATA = "integrationTest/DbShapeTestData/DbDeletedShapeRefData.xml";
-//	private static final String DELETED_SHAPE_THROUGH_CANVAS = "integrationTest/DbShapeTestData/DbDeletedShapeThroughCanvasRefData.xml";
-//	private static final String CHANGED_ROOT_NODE = "integrationTest/DbShapeTestData/DbChangedRootNodeRefData.xml";
-	
-	
+	private static final String DELETED_SHAPE_THROUGH_CANVAS = "integrationTest/DbShapeTestData/DbDeletedShapeRefData.xml";
 	
 	
 	private static final int CREATION_SERIAL = 123456 ;
@@ -64,51 +50,16 @@ public class DbHibShapeTest {
 	private static final String SHAPE_DESCR_2 = "descr2";
 	private static final String DETAILED_DESCR_2 = "detailed descr2";
 	private static final int NUMERIC_VALUE_TWO = 2;
-	private static final long EXPECTED_NODE_VALUE = 100001L;
+	private static final long EXPECTED_NODE_VALUE = 100002L;
 	private static final int NODE_IDX_IDX = 110000;
 	
-	
-	@BeforeClass
-	public static void initSchema() throws Exception{
-		dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
-		dbTester.createSchema();
-	}
-	
-	@AfterClass
-	public static void dropSchema() throws Exception{
-		dbTester.dropSchema() ;
-	}
-
-	
-	@Before
-	public void setUp() throws Exception {
-		this.hibFactory = dbTester.getHibernateSessionFactory();
-		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
-		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-		dbTester.onTearDown();
-		if(this.hibFactory != null && !this.hibFactory.isClosed()){
-			this.hibFactory.close();
-		}
-		this.hibFactory = null;
-	}
 	
 	@Test
 	public void testLoadedShape () throws Exception
 	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-		dbTester.onSetup();
+		doSetup () ;
 		
-		session = hibFactory.getCurrentSession() ;
-		session.beginTransaction() ;
-		
-		Query retreivedShape = session.createQuery("from HibShape where id='100001'") ;
+		Query retreivedShape = getSession().createQuery("from HibShape where id='100001'") ;
 		
 		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
 		
@@ -139,21 +90,16 @@ public class DbHibShapeTest {
 	@Test
 	public void testAddShape () throws Exception 
 	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-		dbTester.onSetup();
+		doSetup () ;
 		
-		session = hibFactory.getCurrentSession() ;
-		session.beginTransaction() ;
-		
-		Query retreivedCanvas = session.createQuery("from HibCanvas where id='100001'") ;
-		Query retreivedObjectType = session.createQuery("from HibObjectType where id ='100001'");
+		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'") ;
+		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id ='100001'");
+		Query retreivedCompoundNode = getSession().createQuery("from HibCompoundNode where id='100001'") ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
+		HibCompoundRootNode hibNode = (HibCompoundRootNode) retreivedCompoundNode.uniqueResult() ;
 
-		HibCompoundNode hibNode = new HibCompoundRootNode(dbCanvas.getModel(), dbCanvas.getModel().getRootNode(), NODE_IDX_IDX); 
-		
-		
 		HibShape shapeToSave = new HibShape ( dbCanvas , CREATION_SERIAL_2) ;
 		shapeToSave.setCompoundNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
@@ -178,13 +124,13 @@ public class DbHibShapeTest {
 		shapeToSave.changeCanvas(dbCanvas) ;
 		shapeToSave.setObjectType(objectType) ;
 		
-		session.save(hibNode);
-		session.getTransaction().commit() ;
+		getSession().save(hibNode);
+		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CREATED_SHAPE_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet actualChanges = getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		
 		for (String t : testTables) {
@@ -205,22 +151,18 @@ public class DbHibShapeTest {
 	@Test
 	public void testDeleteShape () throws Exception 
 	{
-		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-		dbTester.onSetup();
+		doSetup () ;
 		
-		session = hibFactory.getCurrentSession() ;
-		session.beginTransaction() ;
-		
-		Query retreivedShape = session.createQuery("from HibShape where id='100001'") ;
+		Query retreivedShape = getSession().createQuery("from HibShape where id='100001'") ;
 		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
 		
-		session.delete(dbShape) ;
-		session.getTransaction().commit() ;
+		getSession().delete(dbShape) ;
+		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_SHAPE_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
+		IDataSet actualChanges = getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		
 		for (String t : testTables) {
@@ -236,40 +178,49 @@ public class DbHibShapeTest {
 							.getTableMetaData()));
 		}
 	}
-	
-//	@Test
-//	public void testDeleteCanvasWithShape () throws Exception 
-//	{
-//		dbTester.setDataSet(new XmlDataSet(new FileInputStream(REF_DATA)));
-//		dbTester.onSetup();
-//		
-//		session = hibFactory.getCurrentSession() ;
-//		session.beginTransaction() ;
-//		
-//		Query retreivedCanvas = session.createQuery("From HibCanvas where id='100001'" ) ;
-//		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-//		
-//		session.delete(dbCanvas) ;
-//		session.getTransaction().commit() ;
-//		
-//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-//				DELETED_SHAPE_THROUGH_CANVAS));
-//		String testTables[] = expectedDeltas.getTableNames();
-//		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-//		
-//		for (String t : testTables) {
-//			ITable expectedTable = DefaultColumnFilter
-//					.includedColumnsTable(expectedChanges.getTable(t),
-//							expectedDeltas.getTable(t).getTableMetaData()
-//									.getColumns());
-//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-//					actualChanges.getTable(t), expectedDeltas.getTable(t)
-//							.getTableMetaData().getColumns());
-//			Assertion.assertEquals(new SortedTable(expectedTable),
-//					new SortedTable(actualTable, expectedTable
-//							.getTableMetaData()));
-//		}
-//	}
 
+
+	@Ignore
+	@Test
+	public void testDeleteCanvasWithShape () throws Exception 
+	{
+		doSetup () ;
+		Query retreivedCanvas = getSession().createQuery("From HibCanvas where id='100001'" ) ;
+		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
+		
+		Query retreivedChildNode = getSession().createQuery("From HibChildNode where id='100002'" ) ;
+		HibChildNode dbChildNode = (HibChildNode) retreivedChildNode.uniqueResult() ;
+		
+		
+		dbChildNode.setModel(null) ;
+		dbCanvas.setMapDiagram(null);
+		getSession().delete(dbCanvas) ;
+//		getSession().delete(dbRootNode) ;
+		getSession().getTransaction().commit() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+				DELETED_SHAPE_THROUGH_CANVAS));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+ 
+	@Override
+	protected String getDbUnitDataFilePath() {
+		return "integrationTest/DbSourceData/DbSourceDataRefData.xml";
+
+	}
 }

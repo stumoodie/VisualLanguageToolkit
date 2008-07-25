@@ -129,10 +129,26 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-				<value>100001</value>
+				<value>1</value>
 			</row>
 			<row>
 				<value>100002</value>
+				<value>100001</value>
+				<value>2</value>
+			</row>
+	</table>
+	<table name="CompoundRootNode">
+		<column>id</column>
+		<column>referring_model_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="CompoundChildNode">
+		<column>id</column>
+		<column>parent_node_id</column>
+			<row>
 				<value>100002</value>
 				<value>100001</value>
 			</row>

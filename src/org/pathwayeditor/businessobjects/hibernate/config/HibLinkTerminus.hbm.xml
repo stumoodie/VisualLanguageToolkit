@@ -18,15 +18,15 @@
         	</many-to-one>
         	<property name="linkEndType" type="int">
 	   	    	<meta attribute="use-in-equals">true</meta>
-            	<column name="link_end_type" not-null="true" />
+            	<column name="link_term_type" not-null="true" />
         	</property>
         </properties>
         <property name="offset" type="short">
-            <column name="offset" not-null="true" />
+            <column name="offset_val" not-null="true" />
         </property>
-        <one-to-one name="decorator" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminusDecorator"/>
-        <one-to-one name="linkenddecorators" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator" />
-       	<map name="properties" table="linkterminusproperty">
+        <one-to-one name="decorator" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminusDecorator" cascade="save-update,delete"/>
+        <one-to-one name="linkenddecorators" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator" cascade="save-update,delete"/>
+       	<map name="properties" table="linkterminusproperty" cascade="all,delete-orphan">
            	<key>
                	<column name="link_terminus_id" not-null="true" />
            	</key>

@@ -309,10 +309,6 @@ public class HibShape implements IBusinessObjectData<Shape>, Serializable {
 		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
 		if  (propertyToRemove == null)
 			throw new IllegalStateException("property cannot be null");
-		if (propertyToRemove.getShape() != this)
-			throw new IllegalArgumentException(
-					"property must belong to this canvas");	
-		
 		this.hibProperties.remove(toRemove) ;
 		propertyToRemove.setShape(null);
 	}

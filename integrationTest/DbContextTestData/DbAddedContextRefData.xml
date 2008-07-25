@@ -1,0 +1,26 @@
+<dataset>
+	<table name="Context">
+		<column>global_id</column>
+		<column>name</column>
+		<column>description_</column>
+		<column>major_version</column>
+		<column>minor_version_</column>
+		<column>patch_version</column>
+			<row>
+				<value>global id</value>
+				<value>context name</value>
+				<value>context descr</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+			</row>
+			<row>
+				<value>context id</value>
+				<value>new context name</value>
+				<value>context description</value>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+			</row>
+	</table>
+</dataset>

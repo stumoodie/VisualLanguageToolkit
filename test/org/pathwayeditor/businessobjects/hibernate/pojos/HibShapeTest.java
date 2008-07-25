@@ -83,7 +83,6 @@ public class HibShapeTest {
 			one(mockProperty).getShape() ; will(returnValue(null)) ;
 			one(mockProperty).setShape(shape) ;
 			
-			one(mockProperty).getShape() ; will(returnValue(shape)) ;
 			one(mockProperty).setShape(null) ;
 			
 		}});

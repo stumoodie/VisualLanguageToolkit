@@ -34,7 +34,7 @@
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
+    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
         	<column name="parent_node_id" not-null="false"/>
         </many-to-one>
 		</joined-subclass>

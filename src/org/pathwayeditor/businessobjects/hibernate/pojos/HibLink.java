@@ -5,8 +5,10 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
 import org.pathwayeditor.businessobjects.pojos.ISyntaxDependentObjectProvider;
@@ -39,10 +41,11 @@ public class HibLink implements IBusinessObjectData<Link>,
 	private int lineWidth;
 	private short routerType;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
-	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
+	private Set<HibLinkTerminus> linkTermini = new HashSet<HibLinkTerminus>(0);
 	private Link businessObject;
 	private ISyntaxMappingFactory syntaxMappingFactory;
 	private HibCompoundEdge edge ;
+	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
 
 	public HibLink() {
 	}
@@ -159,6 +162,10 @@ public class HibLink implements IBusinessObjectData<Link>,
 		this.lineRed = lineRed;
 	}
 
+	public Map<String, HibProperty> getHibLinkProperties() {
+		return this.hibProperties;
+	}
+
 	public int getLineGreen() {
 		return this.lineGreen;
 	}
@@ -207,11 +214,11 @@ public class HibLink implements IBusinessObjectData<Link>,
 		this.hibBendPoints = hibBendPoints;
 	}
 
-	public List<HibLinkTerminus> getLinkTermini() {
+	public Set<HibLinkTerminus> getLinkTermini() {
 		return this.linkTermini;
 	}
 
-	public void setLinkTermini(List<HibLinkTerminus> linkTermini) {
+	public void setLinkTermini(Set<HibLinkTerminus> linkTermini) {
 		this.linkTermini = linkTermini;
 	}
 
@@ -274,5 +281,78 @@ public class HibLink implements IBusinessObjectData<Link>,
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public void addLinkProperty ( String name , HibProperty toAdd ) 
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibLink oldLink = toAdd.getHibLink() ;
+		if (oldLink != null) {
+			oldLink.getProperties().remove(toAdd);
+		}
+		this.hibLinkProperties.put(name ,toAdd);
+		toAdd.setHibLink(this);
+	}
+	
+	void removeLinkProperty(String toRemove) {
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
+		if  (propertyToRemove == null)
+			throw new IllegalStateException("property cannot be null");
+		
+		this.hibProperties.remove(toRemove) ;
+		propertyToRemove.setHibLink(null);
+	}
+	
+	void addBendPoint ( HibBendPoint toAdd)
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibLink oldLink = toAdd.getOwningLink() ;
+		if (oldLink != null) {
+			oldLink.getProperties().remove(toAdd);
+		}
+		this.hibBendPoints.add(toAdd);
+		toAdd.setOwningLink(this);		
+	}
+	
+	void removeBendPoints ( HibBendPoint toRemove)
+	{
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		HibBendPoint bendpointToRemove = hibBendPoints.get(hibBendPoints.indexOf(toRemove)) ;
+		if  (bendpointToRemove == null)
+			throw new IllegalStateException("property cannot be null");
+		if (bendpointToRemove.getOwningLink() != this)
+			throw new IllegalArgumentException(
+					"property must belong to this canvas");	
+		
+		this.hibProperties.remove(toRemove) ;
+		bendpointToRemove.setOwningLink(null);		
+	}
+	
+	void addLinkTermini ( HibLinkTerminus toAdd)
+	{
+		if (toAdd == null)
+			throw new IllegalArgumentException("property cannot be null");
+		HibLink oldLink = toAdd.getLink() ;
+		if (oldLink != null) {
+			oldLink.getProperties().remove(toAdd);
+		}
+		this.linkTermini.add(toAdd);
+		toAdd.setLink(this);		
+	}
+	
+	void removeLinkTermini ( HibLinkTerminus toRemove)
+	{
+		if (toRemove == null)
+			throw new IllegalArgumentException("id cannot be null");
+		if (toRemove.getLink() != this)
+			throw new IllegalArgumentException(
+					"property must belong to this canvas");	
+		
+		this.linkTermini.remove(toRemove) ;
+		toRemove.setLink(null);		
+	}
 }
