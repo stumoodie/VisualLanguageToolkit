@@ -117,7 +117,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 
 		HibFolder oldParentFolder = newSubFolder.getParentFolder();
 		if (oldParentFolder != null) {
-			oldParentFolder.subFolders.remove(newSubFolder);
+//			oldParentFolder.subFolders.remove(newSubFolder);
+			oldParentFolder.removeHibSubFolder(newSubFolder);
 		}
 		this.subFolders.add(newSubFolder);
 		newSubFolder.setParentFolder(this);
@@ -414,6 +415,16 @@ public abstract class HibFolder implements Serializable, IFolder {
 		Session s = getSession();
 		s.load(this, id);
 		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMapDiagrams
+				.iterator();
+		s.close();
+		return it;
+	}
+
+	
+	public Iterator<? extends ISubFolder> getSubFolderIterator() {
+		Session s = getSession();
+		s.load(this, id);
+		Iterator<? extends ISubFolder> it = (Iterator<? extends ISubFolder>) subFolders
 				.iterator();
 		s.close();
 		return it;
