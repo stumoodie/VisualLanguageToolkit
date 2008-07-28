@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -20,15 +21,19 @@ public class RepositoryBusinessLogicTest {
 	private static final String FANDABIDOSI = "fandabidosi";
 	@Test
 	public void testPublicConstructorEnsureNameNeverNullOrEmptyString(){
-		try{HibRepository rep = new HibRepository("",FANDABIDOSI,1, new HibRootFolder());fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
-		try{HibRepository rep = new HibRepository(null,FANDABIDOSI,1,new HibRootFolder());fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
-	}
-	@Test
-	public void testPublicConstructorEnsureDescriptionNeverNullButEmptyStringAllowed(){
-		try{HibRepository rep = new HibRepository(JIMMY_KRANKIE,null,1,new HibRootFolder());fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
-		HibRepository rep = new HibRepository(JIMMY_KRANKIE,"",1,new HibRootFolder());
+		try{@SuppressWarnings("unused")
+		HibRepository rep = new HibRepository("",FANDABIDOSI,1);fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
+		try{@SuppressWarnings("unused")
+		HibRepository rep = new HibRepository(null,FANDABIDOSI,1);fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
 	}
 	
+	@Test
+	public void testPublicConstructorEnsureDescriptionNeverNullButEmptyStringAllowed(){
+		try{@SuppressWarnings("unused")
+		HibRepository rep = new HibRepository(JIMMY_KRANKIE,null,1);fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
+		@SuppressWarnings("unused")
+		HibRepository rep = new HibRepository(JIMMY_KRANKIE,"",1);
+	}
 	
 	@Test
 	public void testGetNameHappyCase(){
@@ -51,6 +56,12 @@ public class RepositoryBusinessLogicTest {
 		rep.setHibRootFolder(root);
 		root.setRepository(rep);
 		assertEquals(root,rep.getRootFolder());
+	}
+	
+	@Test
+	public void testNewRepositoryHasARootFolder(){
+		HibRepository rep = new HibRepository();
+		assertNotNull(rep.getRootFolder());
 	}
 	
 	@Test

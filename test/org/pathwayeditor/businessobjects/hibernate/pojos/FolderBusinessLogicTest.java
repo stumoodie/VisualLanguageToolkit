@@ -13,7 +13,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -367,10 +366,10 @@ public class FolderBusinessLogicTest {
 	
 	@Test
 	public void testGetMapIteratorIteratesOverMaps(){
-		childOne.addMapDiagram(new HibMapDiagram(childOne,"JIMMY"));
-		childOne.addMapDiagram(new HibMapDiagram(childOne,"KRANKIE"));
+		new HibMapDiagram(childOne,"JIMMY");
+		new HibMapDiagram(childOne,"KRANKIE");
 		Iterator <? extends IMap>it = childOne.getMapIterator();
-		assertTrue(it.next().getName().equals("Jimmy")?it.next().getName().equals("KRANKIE"):it.next().getName().equals("JIMMY"));
+		assertTrue(it.next().getName().equals("JIMMY")?it.next().getName().equals("KRANKIE"):it.next().getName().equals("JIMMY"));
 	}
 	
 	@Test
@@ -418,13 +417,12 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testContainsMapTrue(){
 		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
-		childOne.addMapDiagram(newMapDiagram);
 		assertTrue(childOne.containsMap(newMapDiagram));
 	}
 	
 	@Test
 	public void testContainsMapFalse(){
-		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		HibMapDiagram newMapDiagram = new HibMapDiagram();
 		assertFalse(childOne.containsMap(newMapDiagram));
 	}
 	
@@ -452,21 +450,26 @@ public class FolderBusinessLogicTest {
 	
 	@Test
 	public void createCopyOfMapHappyCaseCopyDoesNotEqualOriginal(){
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		HibMapDiagram newHibMapDiagram = new HibMapDiagram();
 		childOne.createCopyOfMap(newHibMapDiagram);
-		assertFalse(newHibMapDiagram.equals(getMapInFolderCalled(childOne, JIMMY_KRANKIE).getDescription()));
+		assertFalse(newHibMapDiagram.equals(getMapInFolderCalled(childOne, JIMMY_KRANKIE)));
 	}
 	
-	@Test @Ignore//FIXME NH find out how on earth I am supposed to do this
+	@Test //TODO - NH not a real test as it subs the target test class!!!!!!!!!!
 	public void testCreateCopyOfMapHappyCaseCopiesMapCanvas(){
+		 class CanvasCopyCalled {
+			public boolean called=false;
+		}
+		 final CanvasCopyCalled c= new CanvasCopyCalled();
+		childOne = new HibSubFolder(){
+			@Override
+			void copyCanvasOf(IMap origMap) {
+				c.called=true;
+			}
+		};
 		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,JIMMY_KRANKIE);
-		HibCanvas canvas = new HibCanvas();
-		canvas.setGridX(100);
-		canvas.setMapDiagram(newHibMapDiagram);
-		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
 		childOne.createCopyOfMap(newHibMapDiagram);
-		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
-		//TODO - insert code that would check a canvas exists with same properties but NOT equals....
+		assertTrue(c.called);
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
@@ -532,10 +535,6 @@ public class FolderBusinessLogicTest {
 		assertFalse(childOne.canRenameMap(newMap, null));
 	}
 	
-	@Test@Ignore //TODO NH verify if this is a requirement or not
-	public void testCanRenameMapWhenNoMapsAttachedToParentFolder(){
-		
-	}
 	
 	@Test
 	public void testRenameMapHappyCase(){

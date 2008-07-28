@@ -2,12 +2,10 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.UUID;
 
-import org.pathwayeditor.businessobjects.pojos.IBusinessObjectData;
-import org.pathwayeditor.businessobjects.pojos.Map;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
-public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
+public class HibMapDiagram  implements  IMap,
 		java.io.Serializable {
 	private static final long serialVersionUID = -7566323206185334088L;
 
@@ -15,11 +13,10 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	private HibFolder folder;
 	private String name = "";
 	private String description = "";
-	private Map businessObject = null;
 	private HibRepository repository;
 	private int iNode = makeIntUUID();
 
-	public HibMapDiagram() {
+	HibMapDiagram() {
 	}
 
 	/**
@@ -34,6 +31,7 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 	public HibMapDiagram(HibFolder hibFolder, String name) {
 		this.folder = hibFolder;
 		this.name = name;
+		hibFolder.addMapDiagram(this);
 		this.repository = hibFolder.getRepository();
 	}
 
@@ -67,7 +65,6 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 
 	void setFolder(HibFolder hibFolder) {
 		this.folder = hibFolder;
-
 	}
 
 	public void changeFolder(HibFolder newFolder) {
@@ -149,19 +146,6 @@ public class HibMapDiagram implements IBusinessObjectData<Map>, IMap,
 
 		return result;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.pojos.IBusinessObjectData#getBusinessObject()
-	 */
-	public Map getBusinessObject() {
-		if (this.businessObject == null) {
-			this.businessObject = new Map(this);
-		}
-		return this.businessObject;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

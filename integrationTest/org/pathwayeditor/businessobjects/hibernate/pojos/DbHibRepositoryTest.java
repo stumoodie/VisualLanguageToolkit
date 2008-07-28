@@ -44,7 +44,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	{
 		doSetup () ;
 		
-		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION,new HibRootFolder() );
+		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION);
 		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
 		
 		

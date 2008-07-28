@@ -21,7 +21,7 @@ import org.pathwayeditor.testutils.GenericTester;
  * @author nhanlon
  * Tests that the business logic operations tested by FolderBusinessLogicTest result in database changes
  */
-public class FolderDatabaseTest extends GenericTester{
+public class FolderBusinessLogicDatabaseTest extends GenericTester{
 
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 
@@ -311,6 +311,9 @@ public class FolderDatabaseTest extends GenericTester{
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.testutils.PojoTester#getDbUnitDataFilePath()
+	 */
 	@Override
 	protected String getDbUnitDataFilePath() {
 		return "integrationTest/DbSourceData/DbSourceRepositoryRefData.xml";

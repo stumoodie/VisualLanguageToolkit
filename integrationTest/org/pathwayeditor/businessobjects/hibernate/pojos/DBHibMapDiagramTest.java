@@ -26,16 +26,9 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DBHibMapDiagramTest  extends PojoTester{
 
-	private static final String REPOSITORY_NAME = "repo name" ;
-	private static final String REPOSITORY_DESCRIPTION = "repo name" ;
-	private static final int REPOSITORY_VERSION = 101010;
 	
 	private static final String MAPDIAGRAM_NAME = "new diagram name" ;
 	private static final String MAPDIAGRAM_DESCR = "new diagram description" ;
-	
-	private static final int ONE_ENTRY_TABLE = 1 ;
-	
-
 	private static final String ADDED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/AddedMapDiagramRefData.xml";
 	private static final String CLONED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/ClonedMapDiagramRefData.xml";
 	

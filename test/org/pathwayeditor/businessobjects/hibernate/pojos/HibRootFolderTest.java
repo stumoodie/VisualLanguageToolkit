@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.pojos.RootFolder;
 
 /**
  * @author ntsorman
@@ -54,11 +53,13 @@ public class HibRootFolderTest {
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram" ) ;
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ;
 		final Set<HibSubFolder> mockSubFolderSet = mockery.mock( Set.class , "mockSubFolderSet") ;
-		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
+		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 				
 		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockBORootFolder).getMapDiagrams();
+			atLeast(1).of(mockBORootFolder).getSubFolders();
 		}});
-		testRootFolder1 = new HibRootFolder( mockBORootFolder , mockRepository );
+		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockSubFolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubFolder).getParentFolder(); will(returnValue(null)) ;
@@ -99,19 +100,14 @@ public class HibRootFolderTest {
 	 	
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
-		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
-		mockery.checking( new Expectations () {{
-		}});
-		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
+	   HibRootFolder mockBORootFolder = new HibRootFolder();
+		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
 			atLeast(1).of(mockSubfolder).setParentFolder(testRootFolder1); 
-						
 		}} ) ;
-		
 		testRootFolder1.addSubFolder(mockSubfolder) ;
-		
 		assertEquals ( 1 , testRootFolder1.getSubFolders().size() );
 	}
 	
@@ -120,10 +116,12 @@ public class HibRootFolderTest {
 	{
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
-		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
+		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockBORootFolder).getMapDiagrams();
+			atLeast(1).of(mockBORootFolder).getSubFolders();
 		}});
-		testRootFolder1 = new HibRootFolder(mockBORootFolder , mockRepository );
+		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(testRootFolder1)) ;
@@ -143,9 +141,12 @@ public class HibRootFolderTest {
 	public void testGetRepositoryFromRootFolder () throws Exception
 	{
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
-		final RootFolder mockBORootFolder = mockery.mock(RootFolder.class , "mockBORootFolder") ;
-		
-		testRootFolder1 = new HibRootFolder( mockBORootFolder ,mockRepository );
+		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
+		mockery.checking( new Expectations () {{
+			atLeast(1).of(mockBORootFolder).getMapDiagrams();
+			atLeast(1).of(mockBORootFolder).getSubFolders();
+		}});
+		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );
 		
 		assertEquals ( mockRepository , testRootFolder1.getOwningRepository() ) ;
 	}

@@ -50,7 +50,7 @@ public class DbHibSubFolderTest extends PojoTester{
 	{	
 		doSetup () ;
 		
-		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION,new HibRootFolder()) ;
+		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
 		
 		HibRootFolder aRootFolder = new HibRootFolder () ;
 		aRootFolder.setRepository(aRepository);

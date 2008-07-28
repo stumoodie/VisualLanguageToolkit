@@ -22,14 +22,15 @@ public class HibRepository implements IBusinessObjectData<IRepository>, Serializ
 	private String name = null;
 	private String description = null;
 	private HibRootFolder rootFolder = null;
+	@SuppressWarnings("unused")
 	private Repository businessObject = null;
 	private int buildNum;
      
 	HibRepository(){
-		
+		this.rootFolder=new HibRootFolder();
 	}
 
-	public HibRepository(String name, String description, int buildNum , HibRootFolder root) {
+	public HibRepository(String name, String description, int buildNum ) {
 		if(name==null||name.equals(""))
 				throw new IllegalArgumentException(ILLEGAL_NAME);
 		this.name = name;
@@ -37,7 +38,7 @@ public class HibRepository implements IBusinessObjectData<IRepository>, Serializ
 			throw new IllegalArgumentException(ILLEGAL_DESCRIPTION);
 		this.description = description;
 		this.buildNum = buildNum;
-		this.rootFolder=root;
+		this.rootFolder=new HibRootFolder();
 	}
 
    public void changeRootFolder(HibRootFolder newRootFolder){

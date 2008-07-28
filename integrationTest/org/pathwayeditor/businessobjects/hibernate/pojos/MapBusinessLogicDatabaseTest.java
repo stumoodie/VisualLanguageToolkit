@@ -12,7 +12,7 @@ import org.pathwayeditor.testutils.GenericTester;
  * @author nhanlon
  *
  */
-public class MapDatabaseTest extends GenericTester{
+public class MapBusinessLogicDatabaseTest extends GenericTester{
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 	
 	

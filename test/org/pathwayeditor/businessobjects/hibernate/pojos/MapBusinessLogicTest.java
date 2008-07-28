@@ -30,15 +30,14 @@ public class MapBusinessLogicTest {
 	}
 	
 	@Test
-	public void getOwnerHappyCase(){
+	public void testNewMapDiagramSetsFolderReciprocally(){
 		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
-		childOne.addMapDiagram(newMapDiagram);
 		assertTrue(newMapDiagram.getOwner().equals(childOne));
 	}
-	@Test(expected=IllegalArgumentException.class)
-	public void getOwnerIsReciprocalTest(){
+	@Test
+	public void getOwnerHappyCase(){
 		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
-		newMapDiagram.getOwner();
+		assertTrue(newMapDiagram.getOwner().equals(childOne));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -46,6 +45,8 @@ public class MapBusinessLogicTest {
 		HibMapDiagram newMapDiagram = new HibMapDiagram();
 		newMapDiagram.getOwner();
 	}
+	
+	
 	
 }
 

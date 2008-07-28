@@ -139,13 +139,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	void addMapDiagram(HibMapDiagram newMapDiagram) {
 		if (newMapDiagram == null)
 			throw new IllegalArgumentException("newMapDiagram cannot be null");
-
+		
 		HibFolder oldParentFolder = newMapDiagram.getFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.getMapDiagrams().remove(newMapDiagram);
 		}
-		this.hibMapDiagrams.add(newMapDiagram);
-		newMapDiagram.setFolder(this);
+ 		this.hibMapDiagrams.add(newMapDiagram);
+ 		newMapDiagram.setFolder(this);
 	}
 
 	void removeMapDiagram(HibMapDiagram mapDiagram) {
@@ -190,8 +190,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	@Override
 	public int hashCode() {
-		return 31 + (id == null ? 0 : id.hashCode()); // FIXME - replace with
-		// INODE code
+		return 31 +iNode;
 	}
 
 	public int getINode() {
@@ -353,8 +352,17 @@ public abstract class HibFolder implements Serializable, IFolder {
 		s.load(this, id);
 		HibMapDiagram map = new HibMapDiagram(this, (HibMapDiagram) origMap);
 		hibMapDiagrams.add(map);
+		copyCanvasOf(origMap);
 		commitSession(s);
 		return map;
+	}
+
+	/**
+	 * @param origMap
+	 * makes a copy of the original maps canvas, points it to the copy map  and then saves it to the database
+	 */
+	 void copyCanvasOf(IMap origMap) {
+		//TODO implement - NH
 	}
 
 	/*
@@ -415,16 +423,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 		Session s = getSession();
 		s.load(this, id);
 		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMapDiagrams
-				.iterator();
-		s.close();
-		return it;
-	}
-
-	
-	public Iterator<? extends ISubFolder> getSubFolderIterator() {
-		Session s = getSession();
-		s.load(this, id);
-		Iterator<? extends ISubFolder> it = (Iterator<? extends ISubFolder>) subFolders
 				.iterator();
 		s.close();
 		return it;

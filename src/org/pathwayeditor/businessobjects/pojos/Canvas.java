@@ -7,6 +7,8 @@ import org.pathwayeditor.businessobjects.contectadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram;
+import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
  * @author smoodie
@@ -24,9 +26,9 @@ public class Canvas implements ICanvas {
 	 * @param map
 	 * @param context
 	 */
-	public Canvas(ISyntaxMappingFactory mappingFactory, Map map, IContext context){
+	public Canvas(ISyntaxMappingFactory mappingFactory, HibMapDiagram map, IContext context){
 		this.context = context;
-		this.hibCanvas = new HibCanvas(this, map.getHibObject(), mappingFactory.createHibContext(context));
+		this.hibCanvas = new HibCanvas(this, map, mappingFactory.createHibContext(context));
 		this.mappingFactory = mappingFactory;
 	}
 	
@@ -51,8 +53,8 @@ public class Canvas implements ICanvas {
 		this.context = mappingFactory.getContext(this.hibCanvas.getContext());
 	}
 	
-	public Canvas(Map newMap, Canvas other){
-		this.hibCanvas = new HibCanvas(newMap.getHibObject(), other.hibCanvas);
+	public Canvas(HibMapDiagram newMap, Canvas other){
+		this.hibCanvas = new HibCanvas(newMap, other.hibCanvas);
 		this.context = other.context;
 	}
 	
@@ -80,8 +82,8 @@ public class Canvas implements ICanvas {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMap()
 	 */
-	public Map getMap() {
-		return this.hibCanvas.getMapDiagram().getBusinessObject();
+	public IMap getMap() {
+		return this.hibCanvas.getMapDiagram();
 	}
 
 	/* (non-Javadoc)

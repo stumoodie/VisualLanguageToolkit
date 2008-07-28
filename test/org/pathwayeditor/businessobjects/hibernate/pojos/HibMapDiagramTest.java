@@ -52,12 +52,11 @@ public class HibMapDiagramTest {
 	{
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
-			{atLeast(1).of(mockFolder).getRepository();}});
-		
+			{atLeast(1).of(mockFolder).getRepository();}
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}	
+		});
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
-		
 		testMapDiagram = new HibMapDiagram ( mockFolder , testMapDiagram2 ) ;
-		
 		assertEquals ( "name same with source diagram" , DIAGRAM_NAME2 ,testMapDiagram.getName() ) ;
 		assertEquals ( "descr same with source diagram" , "" ,testMapDiagram.getDescription() ) ;
 		assertEquals ( "folder same with source diagram" , mockFolder ,testMapDiagram.getFolder() ) ;
@@ -70,7 +69,10 @@ public class HibMapDiagramTest {
 		final HibFolder mockFolder2 = mockery.mock(HibFolder.class , "mockFolder2") ;
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {
-			{atLeast(1).of(mockFolder).getRepository();}});
+			{atLeast(1).of(mockFolder).getRepository();}
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}		
+		});
+		
 		mockery.checking( new Expectations () {{
 		
 			testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
@@ -97,7 +99,9 @@ public class HibMapDiagramTest {
 	{	
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
-		{atLeast(1).of(mockFolder).getRepository();}});
+		{atLeast(1).of(mockFolder).getRepository();}
+		{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}	
+		});
 		
 		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
@@ -114,7 +118,9 @@ public class HibMapDiagramTest {
 	public final void testHashCode() {
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
-			{atLeast(1).of(mockFolder).getRepository();}});
+			{atLeast(1).of(mockFolder).getRepository();}
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}		
+		});
 		
 		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
 		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
