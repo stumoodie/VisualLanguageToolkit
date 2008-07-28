@@ -1,7 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
@@ -87,14 +86,6 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	 */
 	public IFolder getParent() {
 		return getParentFolder();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
-	 */
-	public Iterator<? extends ISubFolder> getSubFolderIterator() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 //	/*

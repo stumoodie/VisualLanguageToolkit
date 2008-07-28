@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.testutils.GenericTester;
 
 
@@ -291,6 +292,14 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester{
 		assertTrue(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		assertEquals(1,getSession().createQuery
 				("from HibMapDiagram m where m.folder =:parent and m.name = :name").setEntity("parent", sub1).setString("name", JIMMY_KRANKIE).list().size());
+	}
+	
+	@Test
+	public void testSubFolderIterator(){
+		HibRootFolder r =  (HibRootFolder) getSession().createQuery("from HibRootFolder r where r.id = '100001'").uniqueResult();
+		getSession().close();
+		Iterator <? extends ISubFolder>it = r.getSubFolderIterator();
+		assertTrue(it.next().getName().equals("subfolder1")?it.next().getName().equals("subfolder2"):it.next().getName().equals("subfolder1"));
 	}
 	private boolean subFolderExistsCalled(HibRootFolder r, String name) {
 		Set<HibSubFolder> subs = r.getSubFolders();

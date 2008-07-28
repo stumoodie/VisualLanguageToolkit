@@ -555,5 +555,15 @@ public abstract class HibFolder implements Serializable, IFolder {
 		}
 		commitSession(s);
 	}
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
+	 */
+	public Iterator<? extends ISubFolder> getSubFolderIterator() {
+		Session s = getSession();
+		s.load(this,id);
+		Iterator<HibSubFolder> it  = subFolders.iterator();
+		s.close();
+		return it;
+	}
 
 }

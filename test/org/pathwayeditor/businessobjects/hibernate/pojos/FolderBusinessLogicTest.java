@@ -561,6 +561,19 @@ public class FolderBusinessLogicTest {
 		catch(IllegalArgumentException e){;}
 	}
 	
+	@Test
+	public void testGetSubFolderIteratorWhenSubFoldersDoNotExistGivesEmptyIterator(){
+		Iterator <? extends ISubFolder> it = childFour.getSubFolderIterator();
+		assertNotNull(it);
+		assertFalse(it.hasNext());
+	}
+	
+	@Test
+	public void testGetSubFolderIteratorIteratesOverFolders(){
+		Iterator <? extends ISubFolder> it = childOne.getSubFolderIterator();
+		assertEquals(childTwo,it.next());
+	}
+	
 	private HibMapDiagram getMapInFolderCalled(HibFolder r, String name) {
 		Set<HibMapDiagram> maps = r.getMapDiagrams();
 		for (HibMapDiagram map: maps){

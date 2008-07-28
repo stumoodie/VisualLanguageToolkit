@@ -1,10 +1,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
-import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 // Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
 
@@ -51,13 +49,5 @@ public class HibRootFolder extends HibFolder implements  Serializable ,IRootFold
 		   this.owningRepository.setHibRootFolder(this);
 	   }
    }
-
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
- */
-public Iterator<? extends ISubFolder> getSubFolderIterator() {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

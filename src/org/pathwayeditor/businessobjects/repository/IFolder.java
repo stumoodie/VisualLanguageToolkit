@@ -112,11 +112,11 @@ public interface IFolder extends IRepositoryItem {
 	Iterator<? extends IMap> getMapIterator();
 	
 	/**
-	 * Provide an iterator that iterates throw the immediate children of this folder. It cannot be
+	 * Provide an iterator that iterates through the immediate children of this folder. It cannot be
 	 * null, but can be empty.
 	 * @return
 	 */
-	Iterator<? extends ISubFolder> getSubFolderIterator();
+	Iterator< ? extends ISubFolder> getSubFolderIterator();
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name
