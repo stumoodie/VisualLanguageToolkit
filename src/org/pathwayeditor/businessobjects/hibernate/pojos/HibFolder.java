@@ -118,7 +118,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 		HibFolder oldParentFolder = newSubFolder.getParentFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.subFolders.remove(newSubFolder);
-//			oldParentFolder.removeHibSubFolder(newSubFolder);  FIX ME 
+			// oldParentFolder.removeHibSubFolder(newSubFolder); FIX ME
 		}
 		this.subFolders.add(newSubFolder);
 		newSubFolder.setParentFolder(this);
@@ -139,13 +139,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	void addMapDiagram(HibMapDiagram newMapDiagram) {
 		if (newMapDiagram == null)
 			throw new IllegalArgumentException("newMapDiagram cannot be null");
-		
+
 		HibFolder oldParentFolder = newMapDiagram.getFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.getMapDiagrams().remove(newMapDiagram);
 		}
- 		this.hibMapDiagrams.add(newMapDiagram);
- 		newMapDiagram.setFolder(this);
+		this.hibMapDiagrams.add(newMapDiagram);
+		newMapDiagram.setFolder(this);
 	}
 
 	void removeMapDiagram(HibMapDiagram mapDiagram) {
@@ -190,7 +190,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	@Override
 	public int hashCode() {
-		return 31 +iNode;
+		return 31 + iNode;
 	}
 
 	public int getINode() {
@@ -359,10 +359,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 
 	/**
 	 * @param origMap
-	 * makes a copy of the original maps canvas, points it to the copy map  and then saves it to the database
+	 *            makes a copy of the original maps canvas, points it to the
+	 *            copy map and then saves it to the database
 	 */
-	 void copyCanvasOf(IMap origMap) {
-		//TODO implement - NH
+	void copyCanvasOf(IMap origMap) {
+		// TODO implement - NH
 	}
 
 	/*
@@ -515,15 +516,19 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	public void renameMap(IMap map, String newMapName) {
 		Session s = getSession();
-		s.load(this,id);
+		s.load(this, id);
 		if (canUseMapName(newMapName)) {
-			HibMapDiagram m = (HibMapDiagram) map;// map needs to be explicitly removed from its owning collection and added back after name change
-			hibMapDiagrams.remove(m); //order is important - rename of map changes equals!
+			HibMapDiagram m = (HibMapDiagram) map;// map needs to be
+													// explicitly removed from
+													// its owning collection and
+													// added back after name
+													// change
+			hibMapDiagrams.remove(m); // order is important - rename of map
+										// changes equals!
 			m.setName(newMapName);
 			hibMapDiagrams.add(m);
 			commitSession(s);
-		}
-		else 
+		} else
 			throw new IllegalArgumentException();
 	}
 
@@ -534,34 +539,37 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public void renameSubfolder(ISubFolder subFolder, String newFolderName) {
+		if (!canRenameSubfolder(subFolder, newFolderName))
+			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		Session s = getSession();
 		s.load(this, id);
-		if (canRenameSubfolder(subFolder, newFolderName)) {
-			((HibSubFolder) subFolder).setName(newFolderName); // this step is
-			// necessary as
-			// Hibernate
-			// does not see
-			// the subFolder
-			// as = any
-			// object in
-			// this
-			subFolders.remove((HibSubFolder) subFolder); // folders
-			// collection of
-			// subfolders - so
-			// changes in the
-			// name are not
-			// propogated.
-			subFolders.add((HibSubFolder) subFolder);
-		}
+		((HibSubFolder) subFolder).setName(newFolderName); // this step is
+		// necessary as
+		// Hibernate
+		// does not see
+		// the subFolder
+		// as = any
+		// object in
+		// this
+		subFolders.remove((HibSubFolder) subFolder); // folders
+		// collection of
+		// subfolders - so
+		// changes in the
+		// name are not
+		// propogated.
+		subFolders.add((HibSubFolder) subFolder);
 		commitSession(s);
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
 	 */
 	public Iterator<? extends ISubFolder> getSubFolderIterator() {
 		Session s = getSession();
-		s.load(this,id);
-		Iterator<HibSubFolder> it  = subFolders.iterator();
+		s.load(this, id);
+		Iterator<HibSubFolder> it = subFolders.iterator();
 		s.close();
 		return it;
 	}

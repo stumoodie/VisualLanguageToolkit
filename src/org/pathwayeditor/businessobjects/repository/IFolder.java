@@ -95,6 +95,7 @@ public interface IFolder extends IRepositoryItem {
 	 * @param newFolderName the new name of the subfolder, which cannot be null.
 	 * @throws IllegalArgumentException if <code>subFolder</code> is not a child of this folder.
 	 * @throws IllegalArgumentException if <code>newFolderName</code> is null.
+	 * @throws IllegalArgumentException if <code>canRename</code> returns false. //TODO - verify NH
 	 */
 	void renameSubfolder(ISubFolder subFolder, String newFolderName);
 	

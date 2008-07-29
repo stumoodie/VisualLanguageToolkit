@@ -336,7 +336,7 @@ public class FolderBusinessLogicTest {
 		assertTrue(folder2.getName().equals(JIMMY_KRANKIE));
 	}
 	
-	@Test
+	@Test (expected=IllegalArgumentException.class)
 	public void testRenameSubFolderWhenSubFolderIsChildNewNameUsed(){
 		HibSubFolder folder = new HibSubFolder();
 		HibSubFolder folder2 = new HibSubFolder();
