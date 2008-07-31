@@ -539,10 +539,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public void renameSubfolder(ISubFolder subFolder, String newFolderName) {
-		if (!canRenameSubfolder(subFolder, newFolderName))
-			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		Session s = getSession();
 		s.load(this, id);
+		if (!canRenameSubfolder(subFolder, newFolderName))
+			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
+		
 		((HibSubFolder) subFolder).setName(newFolderName); // this step is
 		// necessary as
 		// Hibernate
