@@ -294,8 +294,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public boolean canRenameSubfolder(ISubFolder subFolder, String newFolderName) {
-		if (subFolder.getParent() != this)
+		Session s = getSession();
+		s.load(subFolder,((HibSubFolder)subFolder).getId());
+		if (!subFolder.getParent().equals( this)){
+			s.close();
 			throw new IllegalArgumentException(NOT_CHILD);
+		}
+		s.close();
 		if (canUseSubfolderName(newFolderName))
 			return true;
 		return false;
