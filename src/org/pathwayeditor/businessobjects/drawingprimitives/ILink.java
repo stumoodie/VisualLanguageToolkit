@@ -7,7 +7,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILink extends IZOrderedObject, IAnnotatedObject {
+public interface ILink extends IZOrderedObject, IAnnotatedObject, ICanvasObject {
 
 	ICanvas getCanvas();
 	
@@ -41,6 +41,7 @@ public interface ILink extends IZOrderedObject, IAnnotatedObject {
 	ILinkEndDecoration getLinkTargetDecoration();
 
 	ConnectionRouter getRouter();
+	
 	void setRouter(ConnectionRouter router);
 	
 	/**

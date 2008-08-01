@@ -52,6 +52,12 @@ public interface IModel {
 	 */
 	Iterator<IShape> shapeIterator();
 	
+	/**
+	 * Iterators over all the shapes in the model.
+	 * @return
+	 */
+	Iterator<ILabel> labelIterator();
+	
 	int getNumLinks();
 	
 	int getNumLabels();
