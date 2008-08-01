@@ -98,10 +98,10 @@ public class HibModel implements IBusinessObjectData<Model>, Serializable {
 	 * @throws IllegalStateException if <code>getCompoundGraphBuilder() == null</code>. 
 	 */
 	public Model getBusinessObject() {
-		if(this.compoundGraphBuilder == null) throw new IllegalStateException("Compound graph builder must be set before this operation can succeed");
-		if(this.businessObject == null){
-			this.businessObject = new Model(this.compoundGraphBuilder, this);
-		}
+//		if(this.compoundGraphBuilder == null) throw new IllegalStateException("Compound graph builder must be set before this operation can succeed");
+//		if(this.businessObject == null){
+//			this.businessObject = new Model(this.compoundGraphBuilder, this);
+//		}
 		return this.businessObject;
 	}
 

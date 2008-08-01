@@ -279,9 +279,9 @@ public class HibCanvas implements IBusinessObjectData<Canvas>, ISyntaxDependentO
 	 * @see org.pathwayeditor.businessobjects.pojos.IBusinessObjectData#getBusinessObject()
 	 */
 	public Canvas getBusinessObject() {
-		if(this.businessObject == null){
-			this.businessObject = new Canvas(this.mappingFactory, this);
-		}
+//		if(this.businessObject == null){
+//			this.businessObject = new Canvas(this.mappingFactory, this);
+//		}
 		return this.businessObject;
 	}
 
