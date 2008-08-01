@@ -6,6 +6,7 @@ package org.pathwayeditor.businessobjects.pojos;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
@@ -399,5 +400,21 @@ public class Shape implements IShape {
 	
 	CompoundNode getNode(){
 		return this.node;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCanvas()
+	 */
+	public ICanvas getCanvas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCreationSerial()
+	 */
+	public int getCreationSerial() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -17,6 +17,7 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 public class Canvas implements ICanvas {
 	private final HibCanvas hibCanvas;
 	private final IContext context;
+	private Model model;
 	private static int creationCntr = 0;
 	private ISyntaxMappingFactory mappingFactory;
 	
@@ -48,14 +49,16 @@ public class Canvas implements ICanvas {
 	 * @param mappingFactory A mapping factory used to map between hibernate and CA classes. 
 	 * @param canvas the equivalent hibernate canvas class that this can will be a facade for. 
 	 */
-	public Canvas(ISyntaxMappingFactory mappingFactory, HibCanvas canvas){
+	public Canvas(IContext context, Model model, HibCanvas canvas){
 		this.hibCanvas = canvas;
-		this.context = mappingFactory.getContext(this.hibCanvas.getContext());
+		this.context = context;
+		this.model = model;
 	}
 	
 	public Canvas(HibMapDiagram newMap, Canvas other){
 		this.hibCanvas = new HibCanvas(newMap, other.hibCanvas);
 		this.context = other.context;
+		this.model = new Model(this);
 	}
 	
 	public Canvas(Canvas other){

@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.contectadapter.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraphBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
@@ -15,7 +14,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraphFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ed.inf.graph.compound.impl.CompoundGraph;
@@ -27,29 +25,36 @@ import uk.ed.inf.graph.compound.impl.CompoundNode;
  */
 public class Model implements IModel {
 	private final CompoundGraph graph;
-	private final HibModel hibGraph;
+//	private final HibModel hibGraph;
+	private final Canvas canvas;
 
 	/**
 	 * Constructs an new Model for a given canvas.
 	 * @param canvas
 	 */
 	public Model(Canvas canvas){
-		this.hibGraph = new HibModel(this, canvas.getHibObject());
+//		this.hibGraph = new HibModel(this, canvas.getHibObject());
 		this.graph = new CompoundGraph();
+		this.canvas = canvas;
 	}
 	
-	/**
-	 * Constructs a model from  a hibernate model.
-	 * @param compoundGraphBuilder
-	 * @param hibGraph
-	 */
-	public Model(ICompoundGraphBuilder compoundGraphBuilder, HibModel hibGraph){
-		this.hibGraph = hibGraph;
-		this.graph = new CompoundGraph();
-		compoundGraphBuilder.setCompoundGraph(graph);
-		compoundGraphBuilder.setHibernateGraph(hibGraph);
-		compoundGraphBuilder.buildGraph();
+	public Model(Canvas canvas, CompoundGraph compoundGraph){
+		this.canvas = canvas;
+		this.graph = compoundGraph;
 	}
+	
+//	/**
+//	 * Constructs a model from  a hibernate model.
+//	 * @param compoundGraphBuilder
+//	 * @param hibGraph
+//	 */
+//	public Model(ICompoundGraphBuilder compoundGraphBuilder, HibModel hibGraph){
+////		this.hibGraph = hibGraph;
+//		this.graph = new CompoundGraph();
+//		compoundGraphBuilder.setCompoundGraph(graph);
+//		compoundGraphBuilder.setHibernateGraph(hibGraph);
+//		compoundGraphBuilder.buildGraph();
+//	}
 	
 	/**
 	 * Copy constructor that copies this model to a new canvas that is provided.
@@ -58,11 +63,13 @@ public class Model implements IModel {
 	 */
 	public Model(Model otherModel, Canvas newCanvas){
 		this.graph = new CompoundGraph(otherModel.graph);
-		this.hibGraph = new HibModel(this, newCanvas.getHibObject());
+		this.canvas = newCanvas;
+//		this.hibGraph = new HibModel(this, newCanvas.getHibObject());
 	}
 	
 	public Canvas getCanvas(){
-		return this.hibGraph.getCanvas().getBusinessObject();
+//		return this.hibGraph.getCanvas().getBusinessObject();
+		return this.canvas;
 	}
 	
 	/* (non-Javadoc)
@@ -145,13 +152,6 @@ public class Model implements IModel {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getOwningShape()
-	 */
-	public IShape getOwningShape() {
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getRootObject()
 	 */
 	public IRootObject getRootObject() {
@@ -203,6 +203,13 @@ public class Model implements IModel {
 	 * @return
 	 */
 	CompoundGraph getGraph() {
+		return this.graph;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#labelIterator()
+	 */
+	public Iterator<ILabel> labelIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

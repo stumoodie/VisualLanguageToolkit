@@ -5,87 +5,66 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibShape;
+
+import uk.ed.inf.graph.compound.impl.CompoundNode;
 
 /**
  * @author smoodie
  *
  */
 public class RootObject implements IRootObject {
+	private final CompoundNode rootNode;
+	private final ShapeModel shapeModel;
+	private final Canvas canvas;
+	private final int creationSerial;
+	
+	public RootObject(Canvas canvas, CompoundNode rootNode, int creationSerial){
+		this.rootNode = rootNode;
+		this.creationSerial = creationSerial;
+		this.canvas = canvas;
+		this.shapeModel = new ShapeModel(this.rootNode.getChildCigraph());
+	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#childShapeIterator()
 	 */
 	public Iterator<IShape> childShapeIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new NodeIterator<IShape, HibShape>(this.rootNode.childIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getNumChildren()
 	 */
-	public int getNumChildren() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getNumShapes() {
+		return this.rootNode.getChildCigraph().getNumNodes();
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getNumInLinks()
-	 */
-	public int getNumInLinks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getNumLinks()
-	 */
-	public int getNumLinks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getNumOutLinks()
-	 */
-	public int getNumOutLinks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getShapeModel()
 	 */
 	public IShapeModel getShapeModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.shapeModel;
 	}
+
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#inLinkIterator()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCanvas()
 	 */
-	public Iterator<ILink> inLinkIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public ICanvas getCanvas() {
+		return this.canvas;
 	}
+
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#linkIterator()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCreationSerial()
 	 */
-	public Iterator<ILink> linkIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getCreationSerial() {
+		return this.creationSerial;
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#outLinkIterator()
-	 */
-	public Iterator<ILink> outLinkIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
