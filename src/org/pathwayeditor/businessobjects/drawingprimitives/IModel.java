@@ -25,10 +25,6 @@ public interface IModel {
 	ILink createLink(ILinkObjectType linkObjectType,
 			IShape srcShape, IShape tgtShape);
 	
-	IModelState getCurrentState();
-	
-	void restoreToState(IModelState stateToRestore);
-	
 	/**
 	 * Creates a new submodel factory that can be used to create a submodel of
 	 * this one.
