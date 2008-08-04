@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.pojos.Canvas;
 
 /**
  * @author ntsorman
@@ -49,9 +48,8 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class) ;
 		final HibContext mockContext = mockery.mock(HibContext.class) ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class) ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
 		canvas.changeMapDiagram(mockMapDiagram) ;
 		
@@ -63,11 +61,10 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
 		final HibShape mockShape = mockery.mock(HibShape.class , "mockShape" ) ;
 		final HibShape mockShape2 = mockery.mock(HibShape.class, "mockShape2") ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
 		mockery.checking( new Expectations () {{
 			one(mockShape).getCanvas() ; will(returnValue(null));
@@ -98,11 +95,10 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
 		final HibLabel mockLabel = mockery.mock(HibLabel.class , "mockLabel") ;
 		final HibLabel mockLabel2 = mockery.mock(HibLabel.class , "mockLabel2") ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
 		mockery.checking( new Expectations () {{
 			one(mockLabel).getCanvas() ; will(returnValue(null));
@@ -132,11 +128,10 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
 		final HibLink mockLink = mockery.mock(HibLink.class , "mockLink") ;
 		final HibLink mockLink2 = mockery.mock(HibLink.class , "mockLink2") ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
 		mockery.checking( new Expectations () {{
 			one(mockLink).getCanvas() ; will(returnValue(null));
@@ -166,11 +161,10 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
 		final HibProperty mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
 		final HibProperty mockProperty2 = mockery.mock(HibProperty.class , "mockProperty2") ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
 		mockery.checking( new Expectations () {{
 			one(mockProperty).getCanvas() ; will(returnValue(null));
@@ -201,11 +195,9 @@ public class HibCanvasTest {
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
-		final Canvas mockBoCanvas2 = mockery.mock(Canvas.class , "mockBoCanvas2" ) ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
-		canvas2 = new HibCanvas ( mockBoCanvas2 , mockMapDiagram2 , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
+		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
 		
 		assertTrue ( canvas.equals(canvas)) ;
 		assertFalse ( canvas.equals(null)) ;
@@ -222,11 +214,9 @@ public class HibCanvasTest {
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final Canvas mockBoCanvas = mockery.mock(Canvas.class , "mockBoCanvas" ) ;
-		final Canvas mockBoCanvas2 = mockery.mock(Canvas.class , "mockBoCanvas2" ) ;
 		
-		canvas = new HibCanvas ( mockBoCanvas , mockMapDiagram , mockContext ) ;
-		canvas2 = new HibCanvas ( mockBoCanvas2 , mockMapDiagram2 , mockContext ) ;
+		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
+		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
 		
 		assertEquals ( "same object" , canvas.hashCode() , canvas.hashCode()) ;
 		assertFalse ( "other object" , canvas.hashCode() == canvas2.hashCode()) ;
