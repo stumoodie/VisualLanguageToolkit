@@ -4,7 +4,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition;
 
 public interface ILinkEndDecoration {
 
-	ILinkTerminus getLinkTerminus();
+//	ILinkTerminus getLinkTerminus();
 	ILinkEndDefinition getLinkEndDefinition();
 	ILinkEnd getLinkEnd();
 	

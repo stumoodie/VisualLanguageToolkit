@@ -269,7 +269,7 @@ public class HibLink implements Serializable {
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("property cannot be null");
-		HibLink oldLink = toAdd.getOwningLink() ;
+		HibLink oldLink = (HibLink) toAdd.getOwningLink() ;
 		if (oldLink != null) {
 			oldLink.getProperties().remove(toAdd);
 		}
