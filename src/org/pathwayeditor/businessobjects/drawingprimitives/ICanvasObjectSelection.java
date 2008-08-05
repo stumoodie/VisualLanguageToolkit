@@ -3,20 +3,18 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-
-
-
 /**
  * @author smoodie
  *
  */
-public interface ISelectionSubgraphFactory {
+public interface ICanvasObjectSelection {
 
-	IModel getModel();
-	
+	/** 
+	 * Add a shape to the selection 
+	 * @param selectedShape
+	 */
 	void addShape(IShape selectedShape);
-	
+
 	void addLink(ILink selectedLink);
 	
-	ISelectionSubgraph createSelectionSubgraph();
 }

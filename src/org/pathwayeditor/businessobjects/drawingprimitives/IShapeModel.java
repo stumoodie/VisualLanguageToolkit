@@ -42,13 +42,13 @@ public interface IShapeModel extends IZOrdering {
 	 * @param destination
 	 * @return
 	 */
-	boolean canMoveHere(ISelectionSubgraph selection);
+	boolean canMoveHere(ICanvasObjectSelection canvasObjectSelection);
 	
 	/**
 	 * Copy this submodel to the submodel provided.
 	 * @param destination
 	 */
-	void moveHere(ISelectionSubgraph selection); 
+	void moveHere(ICanvasObjectSelection canvasObjectSelection); 
 	
 	/**
 	 * Is the submodel a valid destination? This requires that the sub-model is
@@ -57,13 +57,13 @@ public interface IShapeModel extends IZOrdering {
 	 * @param destination
 	 * @return
 	 */
-	boolean canCopyHere(ISelectionSubgraph selection);
+	boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection);
 	
 	/**
 	 * Copy this submodel to the submodel provided.
 	 * @param destination
 	 */
-	void copyHere(ISelectionSubgraph selection); 
+	void copyHere(ICanvasObjectSelection canvasObjectSelection); 
 	
 	/**
 	 * Number of shapes.

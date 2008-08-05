@@ -16,23 +16,19 @@ public interface IModel {
 	
 	IContextAdapterServiceProvider getContextAdapterServiceProvider();
 	
-	
 	IModel createCopy(ICanvas newCanvas);
 	
 	boolean canCreateLink(ILinkObjectType linkObjectType,
-				IShape srcShape, IShape tgtShape);
+							IShape srcShape, IShape tgtShape);
 	
 	ILink createLink(ILinkObjectType linkObjectType,
 			IShape srcShape, IShape tgtShape);
 	
-	/**
-	 * Creates a new submodel factory that can be used to create a submodel of
-	 * this one.
-	 * @return
-	 */
-	ISelectionSubgraphFactory selectionSubgraphFactory();
+	IModelState getCurrentState();
 	
-	void removedSubgraph(ISelectionSubgraphFactory subgraph);
+	void restoreToState(IModelState stateToRestore);
+	
+	void removeSubgraph(ICanvasObjectSelection selection);
 	
 	IRootObject getRootObject();
 	

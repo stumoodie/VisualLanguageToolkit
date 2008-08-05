@@ -15,7 +15,7 @@ public interface IShape extends  IZOrderedObject, IAnnotatedObject , ICanvasObje
 
 	IShapeObjectType getObjectType();
 	
-	IShape getParent();
+	ICanvasObject getParent();
 
 	String getName();
 	void setName(String name);

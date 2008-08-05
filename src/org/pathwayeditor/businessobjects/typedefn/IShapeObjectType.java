@@ -3,7 +3,7 @@ package org.pathwayeditor.businessobjects.typedefn;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 
-public interface IShapeObjectType extends IObjectType {
+public interface IShapeObjectType extends INodeObjectType {
 
 	IPrimitiveShape getShapeType();
 

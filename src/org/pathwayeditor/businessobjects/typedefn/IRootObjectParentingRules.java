@@ -1,18 +1,25 @@
+/**
+ * 
+ */
 package org.pathwayeditor.businessobjects.typedefn;
 
-public interface IObjectTypeParentingRules {
+/**
+ * @author smoodie
+ *
+ */
+public interface IRootObjectParentingRules extends IObjectTypeParentingRules {
 
 	/**
 	 * Get object type that the rules belong to.
 	 * @return an valid instance that is guaranteed to be non-null.
 	 */
-	IObjectType getObjectType();
+	IRootObjectType getObjectType();
 	
 	/**
 	 * Tests if a shape type is a valid child of the owning object type. 
-	 * @param possibleChild non-null instance of enumerated type.
+	 * @param possibleChild non-null instance of the shape type.
 	 * @return true if valid, false otherwise.
 	 * @throws IllegalArgumentException if possibleChild is null.
 	 */
-	boolean isValidChild(IObjectType possibleChild);
+	boolean isValidChildByCode(IRootObjectType possibleChild);
 }

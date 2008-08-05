@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-public interface IShapeParentingRules {
+public interface IShapeParentingRules extends IObjectTypeParentingRules {
 
 	/**
 	 * Get object type that the rules belong to.

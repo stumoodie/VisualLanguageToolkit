@@ -1,7 +1,8 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
 
-public interface IRootObjectType extends IObjectType {
+public interface IRootObjectType extends INodeObjectType {
 
-	IObjectTypeParentingRules getParentingRules();
+	IRootObjectParentingRules getParentingRules();
+
 }
