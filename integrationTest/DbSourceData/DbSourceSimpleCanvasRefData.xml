@@ -1,0 +1,297 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="Repository">
+		<column>id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>build_num</column>
+		<row>
+			<value>100001</value>
+			<value>repo name</value>
+			<value>repository description</value>
+			<value>2534</value>
+		</row>
+	</table>
+	<table name="Folder" >
+		<column>id</column>
+		<column>repository_id</column>
+		<column>inode</column>
+			<row>
+				<value>100001</value><!-- rootFolder1  -->
+				<value>100001</value>
+				<value>1</value>
+			</row>
+	</table>
+	<table name="RootFolder" >
+		<column>id</column>
+		<column>owning_repository_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="MapDiagram">
+		<column>id</column>
+		<column>folder_id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>repository_id</column>
+		<column>inode</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+				<value>100001</value>
+				<value>1</value>
+			</row>
+	</table>
+		<table name="Context">
+		<column>id</column>
+		<column>global_id</column>
+		<column>name</column>
+		<column>description_</column>
+		<column>major_version</column>
+		<column>minor_version_</column>
+		<column>patch_version</column>
+			<row>
+				<value>100001</value>
+				<value>global id</value>
+				<value>context name</value>
+				<value>context descr</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+			</row>
+	</table>
+		<table name="Canvas">
+		<column>id</column>
+		<column>map_id</column>
+		<column>context_id</column>
+		<column>grid_x</column>
+		<column>grid_y</column>
+		<column>grid_enabled</column>
+		<column>snap_to_grid_enabled</column> 
+		<column>background_red</column>
+		<column>background_green</column>
+		<column>background_blue</column>
+		<column>canvas_width</column>
+		<column>canvas_height</column>
+		<column>created</column>
+		<column>last_modified</column> 
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>100001</value>
+				<value>10</value>
+				<value>10</value>
+				<value>true</value>
+				<value>true</value> 
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>10</value>
+				<value>10</value>
+	 			<value>1970-01-01</value>
+				<value>1970-01-01</value>
+			</row>  
+	</table>
+	<table name="Model">
+		<column>id</column>
+		<column>canvas_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="ObjectType">
+		<column>id</column>
+		<column>context_id</column>
+		<column>name</column>
+		<column>description</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>objectName</value>
+				<value>objectDescr</value>
+			</row>
+	</table>
+	<table name="CompoundNode">
+		<column>id</column>
+		<column>model_id</column>
+		<column>node_index</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>1</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100001</value>
+				<value>2</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+				<value>3</value>
+			</row>
+	</table>
+	<table name="CompoundRootNode">
+		<column>id</column>
+		<column>referring_model_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="CompoundChildNode">
+		<column>id</column>
+		<column>parent_node_id</column>
+			<row>
+				<value>100002</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="Shape">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>name</column>
+		<column>object_type_id</column>
+		<column>description</column>
+		<column>detailed_description</column>
+		<column>url</column>
+		<column>fill_red</column>
+		<column>fill_green</column>
+		<column>fill_blue</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>padding</column>
+		<column>shape_type</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
+		<column>node_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>123456</value>
+				<value>shapeName</value>
+				<value>100001</value>
+				<value>descr</value>
+				<value>detailed descr</value>
+				<value>http://www.shapeURL.org</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>1</value>
+				<value>1</value>
+				<value>1</value>
+				<value>1</value>
+				<value>50</value>
+				<value>50</value>
+				<value>50</value>
+				<value>50</value>
+				<value>100002</value>
+			</row>
+	</table>
+	<table name="CompoundEdge">
+		<column>id</column>
+		<column>model_id</column>
+		<column>edge_index</column>
+		<column>owning_node_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>100001</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="Link">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>object_type_id</column>
+		<column>name</column>
+		<column>detailed_description</column>
+		<column>description</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>router_type</column>
+		<column>url</column>
+		<column>edge_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>34567</value>
+				<value>100001</value>
+				<value>link_name</value>
+				<value>link_detailed_descr</value>
+				<value>link_descr</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>1</value>
+				<value>10</value>
+				<value>1</value>
+				<value>http://www.HibLink.org</value>
+				<value>100001</value>
+			</row>
+	</table>
+		<table name="property">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>123456</value>
+			</row>
+	</table>
+	<table name="label">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>node_id</column>
+		<column>displayed_property_id</column>
+		<column>is_displayed</column>
+		<column>background_red</column>
+		<column>background_green</column>
+		<column>background_blue</column>
+		<column>no_fill_set</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
+		<row>
+			<value>100001</value>
+			<value>100001</value>
+			<value>1</value>
+			<value>100003</value>
+			<value>100001</value>
+			<value>true</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>true</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+	</table>
+</dataset>
