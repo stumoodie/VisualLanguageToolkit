@@ -8,8 +8,8 @@ public interface INumberAnnotationProperty extends IAnnotationProperty {
 
 	INumberPropertyDefinition getDefinition();
 	
-	BigDecimal getValue();
+	BigDecimal getNumberValue();
 	
-	void setValue(BigDecimal newValue);
+	void setNumberValue(BigDecimal newValue);
 	
 }

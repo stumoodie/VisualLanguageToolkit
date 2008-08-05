@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -264,6 +265,7 @@ public class FolderBusinessLogicTest {
 		assertEquals(0, two.getSubFolders().size());
 	}
 	
+	@Ignore
 	@Test (expected=IllegalArgumentException.class)
 	public void testCanrenameSubFolderFailsWhenSubFolderNotChild(){
 		HibSubFolder folder = new HibSubFolder();
@@ -305,6 +307,7 @@ public class FolderBusinessLogicTest {
 		assertFalse(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
 	}
 	
+	@Ignore
 	@Test (expected=IllegalArgumentException.class)
 	public void testRenameSubFolderFailsWhenSubFolderNotChild(){
 		HibSubFolder folder = new HibSubFolder();

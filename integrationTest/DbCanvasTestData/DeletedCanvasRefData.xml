@@ -70,24 +70,6 @@
 				<value>4</value>
 			</row>
 	</table>
-	<table name="Context">
-		<column>id</column>
-		<column>global_id</column>
-		<column>name</column>
-		<column>description_</column>
-		<column>major_version</column>
-		<column>minor_version_</column>
-		<column>patch_version</column>
-			<row>
-				<value>100001</value>
-				<value>global id</value>
-				<value>context name</value>
-				<value>context descr</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-			</row>
-	</table>
 	<table name="Canvas">
 		<column>id</column>
 		<column>map_id</column>
@@ -136,16 +118,13 @@
 				<value>1970-01-01</value>
 			</row>  
 	</table>
-	<table name="ObjectType">
-		<column>id</column>
-		<column>context_id</column>
-		<column>name</column>
-		<column>description</column>
+		<table name="Model">
+		<column>canvas_id</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
-				<value>objectName</value>
-				<value>objectDescr</value>
+			</row>
+			<row>
+				<value>100002</value>
 			</row>
 	</table>
 	<table name="Shape">

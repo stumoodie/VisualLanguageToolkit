@@ -12,7 +12,7 @@ public interface IPlainTextAnnotationProperty extends IAnnotationProperty {
 
 	IPlainTextPropertyDefinition getDefinition();
 	
-	String getValue();
+	String getTextValue();
 	
-	void setValue(String textValue);
+	void setTextValue(String textValue);
 }

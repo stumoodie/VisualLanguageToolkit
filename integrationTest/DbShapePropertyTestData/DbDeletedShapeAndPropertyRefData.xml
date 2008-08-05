@@ -30,36 +30,6 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="Context">
-		<column>id</column>
-		<column>global_id</column>
-		<column>name</column>
-		<column>description_</column>
-		<column>major_version</column>
-		<column>minor_version_</column>
-		<column>patch_version</column>
-			<row>
-				<value>100001</value>
-				<value>global id</value>
-				<value>context name</value>
-				<value>context descr</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-			</row>
-	</table>
-	<table name="ObjectType">
-		<column>id</column>
-		<column>context_id</column>
-		<column>name</column>
-		<column>description</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>objectName</value>
-				<value>objectDescr</value>
-			</row>
-	</table>
 	<table name="property">
 		<column>canvas_id</column>
 		<column>creation_serial</column>

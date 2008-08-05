@@ -6,7 +6,7 @@ public interface IHtmlAnnotationProperty extends IAnnotationProperty {
 
 	IHtmlPropertyDefinition getDefinition();
 	
-	String getValue();
-	void setValue(String newText);
+	String getRichTextValue();
+	void setRichTextValue(String newText);
 	
 }

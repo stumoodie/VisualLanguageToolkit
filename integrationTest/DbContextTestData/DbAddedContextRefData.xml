@@ -15,6 +15,14 @@
 				<value>100</value>
 			</row>
 			<row>
+				<value>global id2</value>
+				<value>context name2</value>
+				<value>context descr2</value>
+				<value>102</value>
+				<value>102</value>
+				<value>102</value>
+			</row>
+			<row>
 				<value>context id</value>
 				<value>new context name</value>
 				<value>context description</value>
