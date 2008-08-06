@@ -122,7 +122,7 @@
 			<value>0</value>
 		</row>
 	</table>
-	<table name="CompoundRootNode">
+	<table name="RootObjectNode">
 		<column>id</column>
 		<column>referring_model_id</column>
 		<row>

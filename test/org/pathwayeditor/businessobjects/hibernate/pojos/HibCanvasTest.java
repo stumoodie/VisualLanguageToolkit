@@ -61,8 +61,8 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibShape mockShape = mockery.mock(HibShape.class , "mockShape" ) ;
-		final HibShape mockShape2 = mockery.mock(HibShape.class, "mockShape2") ;
+		final HibShapeAttribute mockShape = mockery.mock(HibShapeAttribute.class , "mockShape" ) ;
+		final HibShapeAttribute mockShape2 = mockery.mock(HibShapeAttribute.class, "mockShape2") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
@@ -95,8 +95,8 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibLabel mockLabel = mockery.mock(HibLabel.class , "mockLabel") ;
-		final HibLabel mockLabel2 = mockery.mock(HibLabel.class , "mockLabel2") ;
+		final HibLabelAttribute mockLabel = mockery.mock(HibLabelAttribute.class , "mockLabel") ;
+		final HibLabelAttribute mockLabel2 = mockery.mock(HibLabelAttribute.class , "mockLabel2") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		
@@ -128,8 +128,8 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibLink mockLink = mockery.mock(HibLink.class , "mockLink") ;
-		final HibLink mockLink2 = mockery.mock(HibLink.class , "mockLink2") ;
+		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
+		final HibLinkAttribute mockLink2 = mockery.mock(HibLinkAttribute.class , "mockLink2") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		

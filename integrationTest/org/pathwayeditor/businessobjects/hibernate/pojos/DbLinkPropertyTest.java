@@ -64,8 +64,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	{
 		doSetup () ;
 		
-		Query retreivedHibLink = getSession().createQuery("from HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedHibLink.uniqueResult() ;
+		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
 		HibNumberProperty numberProperty = new HibNumberProperty ( ) ;
 		numberProperty.setNumberValue(NUMBER_VALUE_TEN) ;
@@ -103,8 +103,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewTextProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedHibLink.uniqueResult() ;
+		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
 		HibTextProperty textProperty = new HibTextProperty ( ) ;
 		textProperty.setTextValue(TEXT_PROPERTY_VALUE) ;
@@ -142,8 +142,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewRichTextProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedHibLink.uniqueResult() ;
+		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
 		HibRichTextProperty richTextProperty = new HibRichTextProperty ( ) ;
 		richTextProperty.setRichTextValue(TEXT_PROPERTY_VALUE) ;
@@ -181,8 +181,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewListProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedHibLink.uniqueResult() ;
+		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
 		HibListProperty numberProperty = new HibListProperty ( ) ;
 		
@@ -226,8 +226,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void removePropertyFromLink () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedLink = getSession().createQuery( "From HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		Query retreivedLink = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		dbLink.removeLinkProperty("linkpropertyname") ;
 		
@@ -259,8 +259,8 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testDeletePropertyWithLink () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedLink = getSession().createQuery( "From HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		Query retreivedLink = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		getSession().delete(dbLink) ;
 		getSession().getTransaction().commit() ;

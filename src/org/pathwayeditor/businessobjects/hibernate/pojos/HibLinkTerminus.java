@@ -14,7 +14,7 @@ public class HibLinkTerminus  implements ILinkTerminus , java.io.Serializable {
 
 
      private Long id;
-     private HibLink hibLink;
+     private HibLinkAttribute hibLinkAttribute;
      private int linkEndType;
      private short offset;
      private HibLinkTerminusDecorator decorator;
@@ -25,13 +25,13 @@ public class HibLinkTerminus  implements ILinkTerminus , java.io.Serializable {
     }
 
 	
-    public HibLinkTerminus(HibLink hibLink, int linkEndType, short offset) {
-        this.hibLink = hibLink;
+    public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, int linkEndType, short offset) {
+        this.hibLinkAttribute = hibLinkAttribute;
         this.linkEndType = linkEndType;
         this.offset = offset;
     }
-    public HibLinkTerminus(HibLink hibLink, int linkEndType, short offset, HibLinkTerminusDecorator decorator, HibLinkEndDecorator linkenddecorators, Map<String,HibProperty> hibProperties) {
-       this.hibLink = hibLink;
+    public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, int linkEndType, short offset, HibLinkTerminusDecorator decorator, HibLinkEndDecorator linkenddecorators, Map<String,HibProperty> hibProperties) {
+       this.hibLinkAttribute = hibLinkAttribute;
        this.linkEndType = linkEndType;
        this.offset = offset;
        this.decorator = decorator;
@@ -46,12 +46,12 @@ public class HibLinkTerminus  implements ILinkTerminus , java.io.Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public HibLink getLink() {
-        return this.hibLink;
+    public HibLinkAttribute getLink() {
+        return this.hibLinkAttribute;
     }
     
-    public void setLink(HibLink hibLink) {
-        this.hibLink = hibLink;
+    public void setLink(HibLinkAttribute hibLinkAttribute) {
+        this.hibLinkAttribute = hibLinkAttribute;
     }
     public int getLinkEndType() {
         return this.linkEndType;

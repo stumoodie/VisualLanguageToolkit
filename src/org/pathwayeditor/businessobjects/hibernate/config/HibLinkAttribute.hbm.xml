@@ -19,7 +19,7 @@
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>
-		<many-to-one name="edge" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge" cascade="all">
+		<many-to-one name="edge" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" cascade="none">
 			<column name="edge_id" not-null="true" />
 		</many-to-one>
 		<many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">

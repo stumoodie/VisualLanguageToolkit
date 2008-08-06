@@ -130,7 +130,7 @@
 				<value>1970-01-01</value>
 			</row> 
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

@@ -136,7 +136,7 @@
 				<value>3</value>
 			</row>
 	</table>
-	<table name="CompoundRootNode">
+	<table name="RootObjectNode">
 		<column>id</column>
 		<column>referring_model_id</column>
 			<row>
@@ -144,19 +144,15 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="CompoundChildNode">
+	<table name="ShapeNode">
 		<column>id</column>
 		<column>parent_node_id</column>
 			<row>
 				<value>100002</value>
 				<value>100001</value>
 			</row>
-			<row>
-				<value>100003</value>
-				<value>100001</value>
-			</row>
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -206,7 +202,7 @@
 				<value>100002</value>
 			</row>
 	</table>
-	<table name="CompoundEdge">
+	<table name="LinkEdge">
 		<column>id</column>
 		<column>model_id</column>
 		<column>edge_index</column>
@@ -218,7 +214,7 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="Link">
+	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -262,7 +258,15 @@
 				<value>123456</value>
 			</row>
 	</table>
-	<table name="label">
+	<table name="LabelNode">
+		<column>id</column>
+		<column>parent_node_id</column>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="LabelAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

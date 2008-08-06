@@ -27,7 +27,7 @@ public class DbModelTest extends GenericTester {
 	@Test
 	public void testSetRootNode() throws Exception{
 		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();
-		HibCompoundNode node = new HibCompoundRootNode();
+		HibRootObjectNode node = new HibRootObjectNode();
 		graph.setRootNode(node);
 		saveAndCommit(graph);
 		graph= (HibModel) getSession().createQuery ( "From HibModel graph ").uniqueResult();

@@ -101,15 +101,15 @@
 		<column>model_id</column>
 		<column>node_index</column>
 	</table>
-	<table name="CompoundRootNode">
+	<table name="RootObjectNode">
 		<column>id</column>
 		<column>referring_model_id</column>
 	</table>
-	<table name="CompoundChildNode">
+	<table name="ShapeNode">
 		<column>id</column>
 		<column>parent_node_id</column>
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -134,13 +134,13 @@
 		<column>height</column>
 		<column>node_id</column>
 	</table>
-	<table name="CompoundEdge">
+	<table name="LinkEdge">
 		<column>id</column>
 		<column>model_id</column>
 		<column>edge_index</column>
 		<column>owning_node_id</column>
 	</table>
-	<table name="Link">
+	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

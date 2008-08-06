@@ -8,7 +8,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1bendpoint" unique="true">
-        	<many-to-one name="owningLink" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink" fetch="select">
+        	<many-to-one name="owningLink" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" fetch="select">
             	<column name="link_id" not-null="true" />
         	</many-to-one>
         	<property name="indexPos" type="int">

@@ -12,7 +12,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1linkterminus" unique="true">
-        	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink">
+        	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
 	   	    	<meta attribute="use-in-equals">true</meta>
             	<column name="link_id" not-null="true" />
         	</many-to-one>

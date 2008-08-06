@@ -140,6 +140,11 @@
 				<value>1</value>
 			</row>
 			<row>
+				<value>100002</value>
+				<value>100001</value>
+				<value>2</value>
+			</row>
+			<row>
 				<value>100003</value>
 				<value>100001</value>
 				<value>3</value>
@@ -153,21 +158,40 @@
 				<value>100005</value>
 				<value>100002</value>
 				<value>5</value>
-			</row>	
+			</row>
+			<row>
+				<value>100006</value>
+				<value>100002</value>
+				<value>6</value>
+			</row>
+			<row>
+				<value>100007</value>
+				<value>100002</value>
+				<value>7</value>
+			</row>
+			<row>
+				<value>100008</value>
+				<value>100002</value>
+				<value>8</value>
+			</row>
 	</table>
-	<table name="CompoundChildNode">
+	<table name="ShapeNode">
 		<column>id</column>
 		<column>parent_node_id</column>
 			<row>
+				<value>100002</value>
+				<value>100001</value>
+			</row>
+			<row>
 				<value>100003</value>
 				<value>100001</value>
-			</row>	
+			</row>
 			<row>
 				<value>100005</value>
 				<value>100004</value>
-			</row>		
+			</row>			
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

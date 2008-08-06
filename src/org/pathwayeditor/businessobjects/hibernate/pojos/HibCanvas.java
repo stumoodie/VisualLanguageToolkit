@@ -23,9 +23,9 @@ public class HibCanvas implements Serializable {
 	private int backgroundBlue;
 	private int canvasWidth;
 	private int canvasHeight;
-	private Set<HibShape> hibShapes = new HashSet<HibShape>(0);
-	private Set<HibLink> hibLinks = new HashSet<HibLink>(0);
-	private Set<HibLabel> hibLabels = new HashSet<HibLabel>(0);
+	private Set<HibShapeAttribute> hibShapeAttributes = new HashSet<HibShapeAttribute>(0);
+	private Set<HibLinkAttribute> hibLinkAttributes = new HashSet<HibLinkAttribute>(0);
+	private Set<HibLabelAttribute> hibLabelAttributes = new HashSet<HibLabelAttribute>(0);
 	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
 	private Date created = null ;
 	private Date modified = null ;
@@ -58,14 +58,14 @@ public class HibCanvas implements Serializable {
 		this.backgroundBlue = other.backgroundBlue;
 		this.canvasWidth = other.canvasWidth;
 		this.canvasHeight = other.canvasHeight;
-		for(HibShape hibShape : other.hibShapes){
-			this.hibShapes.add(hibShape);
+		for(HibShapeAttribute hibShapeAttribute : other.hibShapeAttributes){
+			this.hibShapeAttributes.add(hibShapeAttribute);
 		}
-		for(HibLink hibLink : other.hibLinks){
-			this.hibLinks.add(hibLink);
+		for(HibLinkAttribute hibLinkAttribute : other.hibLinkAttributes){
+			this.hibLinkAttributes.add(hibLinkAttribute);
 		}
-		for(HibLabel hibLabel : other.hibLabels){
-			this.hibLabels.add(hibLabel);
+		for(HibLabelAttribute hibLabelAttribute : other.hibLabelAttributes){
+			this.hibLabelAttributes.add(hibLabelAttribute);
 		}
 		this.created = new Date();
 		this.modified= new Date();
@@ -187,28 +187,28 @@ public class HibCanvas implements Serializable {
 		this.canvasHeight = canvasHeight;
 	}
 
-	public Set<HibShape> getShapes() {
-		return this.hibShapes;
+	public Set<HibShapeAttribute> getShapes() {
+		return this.hibShapeAttributes;
 	}
 
-	void setShapes(Set<HibShape> shapes) {
-		this.hibShapes = shapes;
+	void setShapes(Set<HibShapeAttribute> shapes) {
+		this.hibShapeAttributes = shapes;
 	}
 
-	public Set<HibLink> getLinks() {
-		return this.hibLinks;
+	public Set<HibLinkAttribute> getLinks() {
+		return this.hibLinkAttributes;
 	}
 
-	void setLinks(Set<HibLink> hibLinks) {
-		this.hibLinks = hibLinks;
+	void setLinks(Set<HibLinkAttribute> hibLinkAttributes) {
+		this.hibLinkAttributes = hibLinkAttributes;
 	}
 
-	public Set<HibLabel> getLabels() {
-		return this.hibLabels;
+	public Set<HibLabelAttribute> getLabels() {
+		return this.hibLabelAttributes;
 	}
 
-	void setLabels(Set<HibLabel> hibLabels) {
-		this.hibLabels = hibLabels;
+	void setLabels(Set<HibLabelAttribute> hibLabelAttributes) {
+		this.hibLabelAttributes = hibLabelAttributes;
 	}
 	
 	public Set<HibProperty> getProperties() {
@@ -248,7 +248,7 @@ public class HibCanvas implements Serializable {
 		this.setMapDiagram(newMapDiagram);
 	}
 
-	public void addShape ( HibShape toAdd ) 
+	public void addShape ( HibShapeAttribute toAdd ) 
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("shape cannot be null");
@@ -256,22 +256,22 @@ public class HibCanvas implements Serializable {
 		if (oldCanvas != null) {
 			oldCanvas.getShapes().remove(toAdd);
 		}
-		this.hibShapes.add(toAdd);
+		this.hibShapeAttributes.add(toAdd);
 		toAdd.setCanvas(this);
 	}
 	
-	void removeShape(HibShape toRemove) {
+	void removeShape(HibShapeAttribute toRemove) {
 		if (toRemove == null)
 			throw new IllegalArgumentException("shape cannot be null");
 		if (toRemove.getCanvas() != this)
 			throw new IllegalArgumentException(
 					"shape must belong to this canvas");
 
-		this.hibShapes.remove(toRemove);
+		this.hibShapeAttributes.remove(toRemove);
 		toRemove.setCanvas(null);
 	}
 	
-	public void addLabel ( HibLabel toAdd ) 
+	public void addLabel ( HibLabelAttribute toAdd ) 
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("label cannot be null");
@@ -279,22 +279,22 @@ public class HibCanvas implements Serializable {
 		if (oldCanvas != null) {
 			oldCanvas.getShapes().remove(toAdd);
 		}
-		this.hibLabels.add(toAdd);
+		this.hibLabelAttributes.add(toAdd);
 		toAdd.setCanvas(this);
 	}
 	
-	void removeLabel(HibLabel toRemove) {
+	void removeLabel(HibLabelAttribute toRemove) {
 		if (toRemove == null)
 			throw new IllegalArgumentException("label cannot be null");
 		if (toRemove.getCanvas() != this)
 			throw new IllegalArgumentException(
 					"label must belong to this canvas");
 
-		this.hibLabels.remove(toRemove);
+		this.hibLabelAttributes.remove(toRemove);
 		toRemove.setCanvas(null);
 	}
 	
-	public void addLink ( HibLink toAdd ) 
+	public void addLink ( HibLinkAttribute toAdd ) 
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("Link cannot be null");
@@ -302,18 +302,18 @@ public class HibCanvas implements Serializable {
 		if (oldCanvas != null) {
 			oldCanvas.getShapes().remove(toAdd);
 		}
-		this.hibLinks.add(toAdd);
+		this.hibLinkAttributes.add(toAdd);
 		toAdd.setCanvas(this);
 	}
 	
-	void removeLink(HibLink toRemove) {
+	void removeLink(HibLinkAttribute toRemove) {
 		if (toRemove == null)
 			throw new IllegalArgumentException("Link cannot be null");
 		if (toRemove.getCanvas() != this)
 			throw new IllegalArgumentException(
 					"Link must belong to this canvas");
 
-		this.hibLinks.remove(toRemove);
+		this.hibLinkAttributes.remove(toRemove);
 		toRemove.setCanvas(null);
 	}
 	

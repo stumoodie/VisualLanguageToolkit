@@ -58,7 +58,7 @@
 				<value>6</value>
 			</row>				
 	</table>
-		<table name="Shape">
+		<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -81,7 +81,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>node_id</column>
+		<column>shape_node_id</column>
 	</table>
 	<table name="shapeProperty">
 		<column>name</column>

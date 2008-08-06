@@ -54,7 +54,7 @@
 				<value>5</value>
 			</row>			
 	</table>
-	<table name="Link">
+	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

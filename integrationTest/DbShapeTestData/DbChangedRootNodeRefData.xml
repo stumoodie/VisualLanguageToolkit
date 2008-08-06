@@ -119,7 +119,7 @@
 				<value>2</value>
 			</row>
 	</table>
-	<table name="CompoundRootNode">
+	<table name="RootObjectNode">
 		<column>id</column>
 		<column>referring_model_id</column>
 			<row>
@@ -127,7 +127,7 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="CompoundChildNode">
+	<table name="ShapeNode">
 		<column>id</column>
 		<column>parent_node_id</column>
 			<row>
@@ -135,7 +135,7 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>

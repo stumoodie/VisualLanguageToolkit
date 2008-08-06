@@ -7,7 +7,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
  * @author smoodie
  *
  */
-public class HibCompoundEdge {
+public class HibLinkEdge {
 	private Long id;
 	private HibModel model ;
 	private int edgeIndex ;
@@ -15,12 +15,12 @@ public class HibCompoundEdge {
 	private HibCompoundNode outNode ;
 	private HibCompoundNode inNode ;
 
-	public HibCompoundEdge(){
+	public HibLinkEdge(){
 		
 	}
 	
 	
-	public HibCompoundEdge(HibModel model, HibCompoundNode owningNode, int edgeIndex, HibCompoundNode outNode, HibCompoundNode inNode){
+	public HibLinkEdge(HibModel model, HibCompoundNode owningNode, int edgeIndex, HibCompoundNode outNode, HibCompoundNode inNode){
 		this.model = model;
 		this.edgeIndex = edgeIndex;
 		this.owningNode = owningNode;

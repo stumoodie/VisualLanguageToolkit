@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" table="compoundnode">
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" table="compoundnode" abstract="true">
         <id name="id" type="java.lang.Long">
             <column name="id" />
             <generator class="native" />
@@ -18,8 +18,8 @@
         </properties>
 
         <joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundRootNode"
-			table="CompoundRootNode">
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootObjectNode"
+			table="RootObjectNode">
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
@@ -29,8 +29,19 @@
 		</joined-subclass>
         
         <joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildNode"
-			table="CompoundChildNode">
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode"
+			table="ShapeNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        	<column name="parent_node_id" not-null="false"/>
+        </many-to-one>
+		</joined-subclass>
+		
+        <joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode"
+			table="LabelNode">
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>

@@ -19,9 +19,9 @@ public abstract class HibProperty  implements Serializable {
      private Long id;
      private HibCanvas hibCanvas;
      private int creationSerial;
-     private HibShape shape ;
+     private HibShapeAttribute shape ;
      private HibLinkTerminus linkTerminus ;
-     private HibLink hibLink ;
+     private HibLinkAttribute hibLinkAttribute ;
 
     public HibProperty() {
     }
@@ -84,11 +84,11 @@ public abstract class HibProperty  implements Serializable {
 
 	private static final long serialVersionUID = -1996477907215294788L;
 
-	public HibShape getShape() {
+	public HibShapeAttribute getShape() {
 		return this.shape;
 	}
 
-	public void setShape(HibShape shape) {
+	public void setShape(HibShapeAttribute shape) {
 		this.shape = shape;
 	}
 
@@ -100,12 +100,12 @@ public abstract class HibProperty  implements Serializable {
 		this.linkTerminus = linkTerminus;
 	}
 
-	public HibLink getHibLink() {
-		return this.hibLink;
+	public HibLinkAttribute getHibLink() {
+		return this.hibLinkAttribute;
 	}
 
-	public void setHibLink(HibLink hibLink) {
-		this.hibLink = hibLink;
+	public void setHibLink(HibLinkAttribute hibLinkAttribute) {
+		this.hibLinkAttribute = hibLinkAttribute;
 	}
     	
   // end of extra code specified in the hbm.xml files

@@ -37,8 +37,8 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		Query retreivedLink = getSession().createQuery("from HibLink where id='100001'" );
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'" );
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		Query retreivedLinkEndDecorator = getSession().createQuery("from HibLinkEndDecorator where id ='100001'" );
 		HibLinkEndDecorator dbLinkEndDecorator = (HibLinkEndDecorator) retreivedLinkEndDecorator.uniqueResult() ;
@@ -60,8 +60,8 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		doSetup();
 
 		
-		Query retreivedLink = getSession().createQuery("from HibLink where id='100001'" );
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'" );
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		HibLinkTerminus newLinkTerminus = new HibLinkTerminus ();
 		newLinkTerminus.setOffset((short) 5  );

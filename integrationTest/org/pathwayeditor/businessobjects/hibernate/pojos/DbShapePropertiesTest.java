@@ -65,8 +65,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	{
 		doSetup() ;
 		
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibTextProperty textProperty = new HibTextProperty ( ) ;
 		textProperty.setTextValue(TEXT_PROPERTY_VALUE) ;
@@ -104,8 +104,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	{
 		doSetup() ;
 		
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibRichTextProperty textProperty = new HibRichTextProperty ( ) ;
 		textProperty.setRichTextValue(RICH_TEXT_PROPERTY_VALUE) ;
@@ -143,8 +143,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	{
 		doSetup() ;
 		
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibNumberProperty textProperty = new HibNumberProperty ( ) ;
 		textProperty.setNumberValue(NUMBER_VALUE_TEN) ;
@@ -181,8 +181,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testAddNewListProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibListProperty numberProperty = new HibListProperty ( ) ;
 		
@@ -226,8 +226,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void removePropertyFromShape () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		dbShape.removeProperty("ShapePropertyName") ;
 		
@@ -258,8 +258,8 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testDeletePropertyWithShape () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		getSession().delete(dbShape) ;
 		getSession().getTransaction().commit() ;

@@ -220,8 +220,23 @@
 				<value>100002</value>
 				<value>5</value>
 			</row>
+			<row>
+				<value>100006</value>
+				<value>100002</value>
+				<value>6</value>
+			</row>
+			<row>
+				<value>100007</value>
+				<value>100002</value>
+				<value>7</value>
+			</row>
+			<row>
+				<value>100008</value>
+				<value>100002</value>
+				<value>8</value>
+			</row>
 	</table>
-	<table name="CompoundRootNode">
+	<table name="RootObjectNode">
 		<column>id</column>
 		<column>referring_model_id</column>
 			<row>
@@ -233,7 +248,7 @@
 				<value>100002</value>
 			</row>
 	</table>
-	<table name="CompoundChildNode">
+	<table name="ShapeNode">
 		<column>id</column>
 		<column>parent_node_id</column>
 			<row>
@@ -246,6 +261,26 @@
 			</row>
 			<row>
 				<value>100005</value>
+				<value>100004</value>
+			</row>			
+	</table>
+	<table name="LabelNode">
+		<column>id</column>
+		<column>parent_node_id</column>
+			<row>
+				<value>100005</value>
+				<value>100004</value>
+			</row>			
+			<row>
+				<value>100006</value>
+				<value>100004</value>
+			</row>			
+			<row>
+				<value>100007</value>
+				<value>100004</value>
+			</row>			
+			<row>
+				<value>100008</value>
 				<value>100004</value>
 			</row>			
 	</table>
@@ -346,7 +381,7 @@
 				<value>chips</value>
 			</row>
 	</table>
-	<table name="Shape">
+	<table name="ShapeAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -369,7 +404,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>node_id</column>
+		<column>shape_node_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
@@ -406,19 +441,23 @@
 				<value>ShapePropertyName</value>
 			</row>
 	</table>
-	<table name="CompoundEdge">
+	<table name="LinkEdge">
 		<column>id</column>
 		<column>model_id</column>
 		<column>edge_index</column>
 		<column>owning_node_id</column>
+		<column>out_node_id</column>
+		<column>in_node_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
+				<value>100001</value>
+				<value>100002</value>
 			</row>
 	</table>
-	<table name="Link">
+	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -528,11 +567,11 @@
 				<value>linkpropertyname</value>
 			</row>
 	</table>
-		<table name="label">
+		<table name="LabelAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
-		<column>node_id</column>
+		<column>label_node_id</column>
 		<column>displayed_property_id</column>
 		<column>is_displayed</column>
 		<column>background_red</column>
@@ -563,7 +602,7 @@
 			<value>100002</value>
 			<value>100001</value>
 			<value>2</value>
-			<value>100005</value>
+			<value>100006</value>
 			<value>100003</value>
 			<value>true</value>
 			<value>100</value>
@@ -579,7 +618,7 @@
 			<value>100003</value>
 			<value>100001</value>
 			<value>3</value>
-			<value>100005</value>
+			<value>100007</value>
 			<value>100004</value>
 			<value>true</value>
 			<value>100</value>
@@ -595,7 +634,7 @@
 			<value>100004</value>
 			<value>100001</value>
 			<value>4</value>
-			<value>100005</value>
+			<value>100008</value>
 			<value>100005</value>
 			<value>true</value>
 			<value>100</value>

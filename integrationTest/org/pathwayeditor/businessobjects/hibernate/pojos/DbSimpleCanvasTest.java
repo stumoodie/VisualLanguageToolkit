@@ -37,11 +37,11 @@ public class DbSimpleCanvasTest extends PojoTester{
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 
-		List<HibLink> links = new ArrayList<HibLink> ( dbCanvas.getLinks()) ;
+		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getLinks()) ;
 		
 		for ( int a = 0 ; a < links.size() ; a++ )
 		{
-			HibLink tempLink = (HibLink) links.get(a) ;
+			HibLinkAttribute tempLink = (HibLinkAttribute) links.get(a) ;
 			
 			dbCanvas.removeLink(tempLink) ;
 			
@@ -49,22 +49,22 @@ public class DbSimpleCanvasTest extends PojoTester{
 		}
 		
 		
-		List<HibShape> shapes = new ArrayList<HibShape> ( dbCanvas.getShapes()) ;
+		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> ( dbCanvas.getShapes()) ;
 		
 		for ( int a = 0 ; a < shapes.size() ; a++ )
 		{
-			HibShape tempShape = (HibShape) shapes.get(a) ;
+			HibShapeAttribute tempShape = (HibShapeAttribute) shapes.get(a) ;
 			
 			dbCanvas.removeShape(tempShape) ;
 			
 			getSession().delete(tempShape) ;
 		}
 		
-		List<HibLabel> labels = new ArrayList<HibLabel> ( dbCanvas.getLabels()) ;
+		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> ( dbCanvas.getLabels()) ;
 		
 		for ( int a = 0 ; a < labels.size() ; a++ )
 		{
-			HibLabel tempLabel = (HibLabel) labels.get(a) ;
+			HibLabelAttribute tempLabel = (HibLabelAttribute) labels.get(a) ;
 			
 			dbCanvas.removeLabel(tempLabel) ;
 			

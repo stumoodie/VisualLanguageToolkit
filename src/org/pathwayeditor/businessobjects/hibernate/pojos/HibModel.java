@@ -13,7 +13,7 @@ public class HibModel implements Serializable {
 	private static final long serialVersionUID = -6097842004070213053L;
 	private Long id;
 	private HibCanvas canvas = null;
-	private HibCompoundNode rootNode ;
+	private HibRootObjectNode rootNode ;
 	
 	public HibModel(){
 		
@@ -41,11 +41,11 @@ public class HibModel implements Serializable {
 		this.canvas = canvas;
 	}
 	
-	public HibCompoundNode getRootNode() {
+	public HibRootObjectNode getRootNode() {
 		return this.rootNode;
 	}
 
-	public void setRootNode(HibCompoundNode rootNode) {
+	public void setRootNode(HibRootObjectNode rootNode) {
 		this.rootNode = rootNode;
 		if(rootNode!=null)
 			rootNode.setModel(this);

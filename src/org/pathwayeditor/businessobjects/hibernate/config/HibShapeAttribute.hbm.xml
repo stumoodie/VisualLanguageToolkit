@@ -17,8 +17,8 @@
         		<column name="creation_serial" not-null="true" />
         	</property>
         </properties>
-      	<many-to-one name="compoundNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
-       		<column name="node_id" not-null="true"/>
+      	<many-to-one name="shapeNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode" cascade="none">
+       		<column name="shape_node_id" not-null="true"/>
        	</many-to-one>
         <property name="XPosition" type="int">
             <column name="x_position" not-null="true" />

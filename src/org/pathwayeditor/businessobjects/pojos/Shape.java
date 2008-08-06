@@ -18,7 +18,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibShape;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -31,25 +31,25 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
 public class Shape extends CommonCanvasObject implements IShape {
 	private IShapeObjectType objectType;
 	private ShapeModel shapeModel;
-	private final HibShape hibShape;
+	private final HibShapeAttribute hibShapeAttribute;
 	
 
 	public Shape(IShapeObjectType objectType, CommonCanvasObject parent, int nodeIndex){
 		super(parent, nodeIndex);
 		this.objectType = objectType;
-		this.hibShape = new HibShape();
+		this.hibShapeAttribute = new HibShapeAttribute();
 	}
 	
-	public Shape(IShapeObjectType objectType, HibShape hibShape, CommonCanvasObject parent, int nodeIndex){
+	public Shape(IShapeObjectType objectType, HibShapeAttribute hibShapeAttribute, CommonCanvasObject parent, int nodeIndex){
 		super(parent, nodeIndex);
 		this.objectType = objectType;
-		this.hibShape = hibShape;
+		this.hibShapeAttribute = hibShapeAttribute;
 	}
 	
 	public Shape(CommonCanvasObject parent, int nodeIndex, Shape otherShape){
 		super(parent, nodeIndex);
 		this.objectType = otherShape.objectType;
-		this.hibShape = new HibShape(otherShape.hibShape);
+		this.hibShapeAttribute = new HibShapeAttribute(otherShape.hibShapeAttribute);
 	}
 	
 	/* (non-Javadoc)
@@ -423,7 +423,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 		this.shapeModel = new ShapeModel((CommonCanvasObject)rootNode);
 	}
 
-	HibShape getHibShape() {
-		return this.hibShape;
+	HibShapeAttribute getHibShape() {
+		return this.hibShapeAttribute;
 	}
 }

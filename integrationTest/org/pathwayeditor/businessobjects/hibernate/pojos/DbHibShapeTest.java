@@ -53,7 +53,7 @@ public class DbHibShapeTest extends PojoTester{
 	private static final String DETAILED_DESCR_2 = "detailed descr2";
 	private static final int NUMERIC_VALUE_TWO = 2;
 	private static final long EXPECTED_NODE_VALUE = 100002L;
-	private static final int NODE_IDX_IDX = 110000;
+//	private static final int NODE_IDX_IDX = 110000;
 	
 	
 	@Test
@@ -61,9 +61,9 @@ public class DbHibShapeTest extends PojoTester{
 	{
 		doSetup () ;
 		
-		Query retreivedShape = getSession().createQuery("from HibShape where id='100001'") ;
+		Query retreivedShape = getSession().createQuery("from HibShapeAttribute where id='100001'") ;
 		
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		assertEquals ("created serial" , CREATION_SERIAL , dbShape.getCreationSerial() ) ;
 		assertEquals ("name" , SHAPE_NAME , dbShape.getName() ) ;
@@ -85,7 +85,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("height" , SIZE_VALUE , dbShape.getHeight()) ;
 		assertEquals ("width" , SIZE_VALUE , dbShape.getWidth()) ;
 		assertEquals ("url" , URL_VALUE , dbShape.getUrl()) ;
-		assertEquals ("node_id" , (Long)EXPECTED_NODE_VALUE , dbShape.getCompoundNode().getId()) ;
+		assertEquals ("node_id" , (Long)EXPECTED_NODE_VALUE , dbShape.getShapeNode().getId()) ;
 		
 	}
 	
@@ -96,14 +96,14 @@ public class DbHibShapeTest extends PojoTester{
 		
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'") ;
 		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id ='100001'");
-		Query retreivedCompoundNode = getSession().createQuery("from HibCompoundNode where id='100001'") ;
+		Query retreivedCompoundNode = getSession().createQuery("from HibCompoundNode where id='100002'") ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
-		HibCompoundRootNode hibNode = (HibCompoundRootNode) retreivedCompoundNode.uniqueResult() ;
+		HibShapeNode hibNode = (HibShapeNode) retreivedCompoundNode.uniqueResult() ;
 
-		HibShape shapeToSave = new HibShape ( dbCanvas , CREATION_SERIAL_2) ;
-		shapeToSave.setCompoundNode(hibNode);
+		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL_2) ;
+		shapeToSave.setShapeNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
 		shapeToSave.setDescription(SHAPE_DESCR_2) ;
 		shapeToSave.setDetailedDescription(DETAILED_DESCR_2) ;
@@ -155,8 +155,8 @@ public class DbHibShapeTest extends PojoTester{
 	{
 		doSetup () ;
 		
-		Query retreivedShape = getSession().createQuery("from HibShape where id='100001'") ;
-		HibShape dbShape = (HibShape) retreivedShape.uniqueResult() ;
+		Query retreivedShape = getSession().createQuery("from HibShapeAttribute where id='100001'") ;
+		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		getSession().delete(dbShape) ;
 		getSession().getTransaction().commit() ;
@@ -190,33 +190,33 @@ public class DbHibShapeTest extends PojoTester{
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		
-		List links = new ArrayList (dbCanvas.getLinks()) ;
+		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> (dbCanvas.getLinks()) ;
 		
 		for ( int a = 0 ; a < links.size() ; a++ )
 		{
-			HibLink tempLink = (HibLink) links.get(a) ;
+			HibLinkAttribute tempLink = (HibLinkAttribute) links.get(a) ;
 			
 			dbCanvas.removeLink(tempLink) ;
 			
 			getSession().delete(tempLink) ;
 		}
 		
-		List labels = new ArrayList (dbCanvas.getLabels()) ;
+		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> (dbCanvas.getLabels()) ;
 		
 		for ( int a = 0 ; a < labels.size() ; a++ )
 		{
-			HibLabel tempLabel = (HibLabel) labels.get(a) ;
+			HibLabelAttribute tempLabel = (HibLabelAttribute) labels.get(a) ;
 			
 			dbCanvas.removeLabel(tempLabel) ;
 			
 			getSession().delete(tempLabel) ;
 		}
 		
-		List shapes = new ArrayList (dbCanvas.getShapes()) ;
+		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> (dbCanvas.getShapes()) ;
 		
 		for ( int a = 0 ; a < shapes.size() ; a++ )
 		{
-			HibShape tempShape = (HibShape) shapes.get(a) ;
+			HibShapeAttribute tempShape = (HibShapeAttribute) shapes.get(a) ;
 			
 			dbCanvas.removeShape(tempShape) ;
 			

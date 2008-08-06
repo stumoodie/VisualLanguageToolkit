@@ -14,7 +14,7 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
 
 	 private Location location ;
      private Long id;
-     private HibLink owningLink;
+     private HibLinkAttribute owningLink;
      private int indexPos;
      private int XPosition;
      private int YPosition;
@@ -22,7 +22,7 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
     public HibBendPoint() {
     }
 
-    public HibBendPoint(HibLink owningLink, int indexPos, int XPosition, int YPosition) {
+    public HibBendPoint(HibLinkAttribute owningLink, int indexPos, int XPosition, int YPosition) {
        this.owningLink = owningLink;
        this.indexPos = indexPos;
        this.XPosition = XPosition;
@@ -36,11 +36,11 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public HibLink getOwningLink() {
+    public HibLinkAttribute getOwningLink() {
         return this.owningLink;
     }
     
-    public void setOwningLink(HibLink owningLink) {
+    public void setOwningLink(HibLinkAttribute owningLink) {
         this.owningLink = owningLink;
     }
     public int getIndexPos() {

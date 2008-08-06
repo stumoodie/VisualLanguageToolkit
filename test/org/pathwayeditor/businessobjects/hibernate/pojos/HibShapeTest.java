@@ -42,8 +42,8 @@ public class HibShapeTest {
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 	
-	private HibShape shape;
-	private HibShape shape2;
+	private HibShapeAttribute shape;
+	private HibShapeAttribute shape2;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -58,8 +58,8 @@ public class HibShapeTest {
 	public void testChangeShapeCanvas () throws Exception
 	{
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		final Set<HibShape> mockShapeSet = mockery.mock( Set.class , "mockShapeSet") ;
-		shape = new HibShape () ;
+		final Set<HibShapeAttribute> mockShapeSet = mockery.mock( Set.class , "mockShapeSet") ;
+		shape = new HibShapeAttribute () ;
 		
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockCanvas).getShapes() ; will(returnValue(mockShapeSet)) ;
@@ -77,7 +77,7 @@ public class HibShapeTest {
 	{
 		final HibProperty mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
 		
-		shape = new HibShape () ;
+		shape = new HibShapeAttribute () ;
 		
 		mockery.checking( new Expectations () {{
 			one(mockProperty).getShape() ; will(returnValue(null)) ;
@@ -99,9 +99,9 @@ public class HibShapeTest {
 	@Test
 	public void testEquals () throws Exception 
 	{
-		shape = new HibShape ();
+		shape = new HibShapeAttribute ();
 		this.populateShapeData(shape, 1) ;
-		shape2 = new HibShape () ;
+		shape2 = new HibShapeAttribute () ;
 		this.populateShapeData(shape2, 2) ;
 		
 		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
@@ -125,9 +125,9 @@ public class HibShapeTest {
 	@Test
 	public void testHashCode () throws Exception  
 	{
-		shape = new HibShape ();
+		shape = new HibShapeAttribute ();
 		this.populateShapeData(shape, 1) ;
-		shape2 = new HibShape () ;
+		shape2 = new HibShapeAttribute () ;
 		this.populateShapeData(shape2, 2) ;
 		
 		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
@@ -146,7 +146,7 @@ public class HibShapeTest {
 		assertEquals ( shape.hashCode() , shape2.hashCode()) ;
 	}
 	
-	private void populateShapeData ( HibShape aShape , int a )
+	private void populateShapeData ( HibShapeAttribute aShape , int a )
 	{
 		aShape.setName(SHAPE_NAME + a ) ;
 		aShape.setDescription(SHAPE_DESCR + a) ;

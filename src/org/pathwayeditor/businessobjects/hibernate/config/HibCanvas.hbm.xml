@@ -53,19 +53,19 @@
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShape"/> 
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
         </set>
         <set name="links" inverse="true" table="link" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink"/>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
         </set>
         <set name="labels" inverse="true" table="label" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" />
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" />
         </set>      
     </class>
 </hibernate-mapping>

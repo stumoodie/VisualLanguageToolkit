@@ -16,7 +16,6 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -26,8 +25,6 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DbHibLinkTest extends PojoTester{
 	
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static final String REF_DATA = "integrationTest/DbLinkTestData/DbLinkRefData.xml";
 	private static final String DELETED_LINK_DATA = "integrationTest/DbLinkTestData/DbDeletedLinkRefData.xml";
 	private static final String CREATED_LINK_DATA = "integrationTest/DbLinkTestData/DbCreatedLinkRefData.xml";
 	private static final String CHANGED_CANVAS_DATA = "integrationTest/DbLinkTestData/DbChangedCanvasRefData.xml";
@@ -56,9 +53,9 @@ public class DbHibLinkTest extends PojoTester{
 	{
 		doSetup();
 		
-		Query retreivedLink = getSession().createQuery("from HibLink where id='100001'") ;
+		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		assertEquals ( "creation_serial" , LINK_CREATION_SERIAL , dbLink.getCreationSerial() ) ;
 		assertEquals ( "link name" , LINK_NAME , dbLink.getName() ) ;
@@ -74,14 +71,14 @@ public class DbHibLinkTest extends PojoTester{
 		
 	}
 	
-	@Test@Ignore
+	@Test
 	public void testDeleteLink () throws Exception
 	{
 		doSetup();
 		
-		Query retreivedLink = getSession().createQuery("from HibLink where id='100001'") ;
+		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		getSession().delete(dbLink) ;
 		getSession().getTransaction().commit() ;
@@ -103,6 +100,8 @@ public class DbHibLinkTest extends PojoTester{
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));
 		}
+		
+		
 	}
 	
 	@Test
@@ -110,15 +109,15 @@ public class DbHibLinkTest extends PojoTester{
 	{
 		doSetup(); 
 		
-		Query retreivedCompoundEdge = getSession().createQuery("from HibCompoundEdge where id='100001'" ) ;
+		Query retreivedCompoundEdge = getSession().createQuery("from HibLinkEdge where id='100001'" ) ;
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'" ) ;
 		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id='100001'" ) ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-		HibCompoundEdge dbCompoundEdge = (HibCompoundEdge) retreivedCompoundEdge.uniqueResult() ;
+		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
 		HibObjectType dbObjectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 		
-		HibLink linkToWrite = new HibLink () ;
+		HibLinkAttribute linkToWrite = new HibLinkAttribute () ;
 		
 		linkToWrite.setCreationSerial(LINK_CREATION_SERIAL_2) ;
 		linkToWrite.setName(LINK_NAME_2) ;
@@ -164,8 +163,8 @@ public class DbHibLinkTest extends PojoTester{
 	{
 		doSetup() ;
 		
-		Query retreivedLink = getSession().createQuery("from HibLink where id='100001'") ;
-		HibLink dbLink = (HibLink) retreivedLink.uniqueResult() ;
+		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100002'" ) ;
 		HibCanvas dbCanvas2 = (HibCanvas) retreivedCanvas.uniqueResult() ;

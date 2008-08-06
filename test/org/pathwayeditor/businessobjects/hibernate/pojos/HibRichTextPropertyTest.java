@@ -89,7 +89,7 @@ public class HibRichTextPropertyTest {
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
 		final HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
 		
-		final HibShape mockShape = mockery.mock(HibShape.class , "mockShape") ;
+		final HibShapeAttribute mockShape = mockery.mock(HibShapeAttribute.class , "mockShape") ;
 		
 		mockery.checking( new Expectations () {
 			{atLeast(1).of(mockShape).addProperty("TextProperty", richTextProperty);}

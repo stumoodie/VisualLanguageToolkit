@@ -16,8 +16,8 @@ public abstract class HibCompoundNode {
 	private HibModel model;
 	private int nodeIndex;
 	private HibCompoundNode parentNode;
-	private Set<HibCompoundEdge> outEdges = new HashSet<HibCompoundEdge>();
-	private Set<HibCompoundEdge> inEdges = new HashSet<HibCompoundEdge>();
+	private Set<HibLinkEdge> outEdges = new HashSet<HibLinkEdge>();
+	private Set<HibLinkEdge> inEdges = new HashSet<HibLinkEdge>();
 
 	public HibCompoundNode() {
 
@@ -61,15 +61,15 @@ public abstract class HibCompoundNode {
 		this.parentNode = parentNode;
 	}
 
-	public Set<HibCompoundEdge> getOutEdges() {
+	public Set<HibLinkEdge> getOutEdges() {
 		return this.outEdges;
 	}
 
-	void setOutEdges(Set<HibCompoundEdge> outEdges) {
+	void setOutEdges(Set<HibLinkEdge> outEdges) {
 		this.outEdges = outEdges;
 	}
 
-	public void addOutEdge(HibCompoundEdge newOutEdge) {
+	public void addOutEdge(HibLinkEdge newOutEdge) {
 		if (newOutEdge == null)
 			throw new IllegalArgumentException("newOutEdge cannot be null");
 
@@ -81,7 +81,7 @@ public abstract class HibCompoundNode {
 		newOutEdge.setOutNode(this);
 	}
 
-    public void removeOutEdge(HibCompoundEdge outEdge) {
+    public void removeOutEdge(HibLinkEdge outEdge) {
 		if (outEdge == null)
 			throw new IllegalArgumentException("outEdge cannot be null");
 		if (outEdge.getOutNode() != this)
@@ -91,16 +91,16 @@ public abstract class HibCompoundNode {
 		outEdge.setOutNode(null);
 	}
     
-	public Set<HibCompoundEdge> getInEdges() {
+	public Set<HibLinkEdge> getInEdges() {
 		return this.inEdges;
 	}
 
-	void setInEdges(Set<HibCompoundEdge> inEdges) {
+	void setInEdges(Set<HibLinkEdge> inEdges) {
 		this.inEdges = inEdges;
 	}
 
 
-	public void addInEdge(HibCompoundEdge newInEdge) {
+	public void addInEdge(HibLinkEdge newInEdge) {
 		if (newInEdge == null)
 			throw new IllegalArgumentException("newInEdge cannot be null");
 
@@ -112,7 +112,7 @@ public abstract class HibCompoundNode {
 		newInEdge.setInNode(this);
 	}
 
-    public void removeInEdge(HibCompoundEdge inEdge) {
+    public void removeInEdge(HibLinkEdge inEdge) {
 		if (inEdge == null)
 			throw new IllegalArgumentException("inEdge cannot be null");
 		if (inEdge.getInNode() != this)

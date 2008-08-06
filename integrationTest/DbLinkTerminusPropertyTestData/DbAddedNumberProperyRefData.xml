@@ -75,7 +75,7 @@
 			<value>10</value>
 		</row>
 	</table>
-	<table name="CompoundEdge">
+	<table name="LinkEdge">
 		<column>id</column>
 		<column>model_id</column>
 		<column>edge_index</column>
@@ -87,7 +87,7 @@
 				<value>100001</value>
 			</row>
 	</table>
-	<table name="Link">
+	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
