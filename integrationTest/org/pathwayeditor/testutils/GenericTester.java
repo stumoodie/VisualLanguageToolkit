@@ -11,11 +11,11 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 
 /**
  * @author nhanlon
@@ -24,7 +24,6 @@ import org.junit.BeforeClass;
 public abstract class GenericTester {
 
 	private static HibernateDbTester dbTester = null;
-	private SessionFactory hibFactory;
 	private Session session;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 
@@ -41,22 +40,15 @@ public abstract class GenericTester {
 
 	@Before
 	public void setUp() throws Exception {
-		this.hibFactory = dbTester.getHibernateSessionFactory();
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
-		startNewTransaction();
 		doSetup();
 	}
 
 	protected void saveAndCommit(Serializable in) {
 		getSession().saveOrUpdate(in);
-		getSession().getTransaction().commit();
 	}
-
-	protected void startNewTransaction() {
-		setSession(getHibFactory().openSession());
-		getSession().beginTransaction();
-	}
+	
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 			Exception {
@@ -71,26 +63,14 @@ public abstract class GenericTester {
 	@After
 	public void tearDown() throws Exception {
 		dbTester.onTearDown();
-		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
-			this.hibFactory.close();
-		}
-		this.hibFactory = null;
 	}
 
 	protected HibernateDbTester getDbTester() {
 		return this.dbTester;
 	}
 
-	protected SessionFactory getHibFactory() {
-		return this.hibFactory;
-	}
-
 	protected Session getSession() {
-		return this.session;
-	}
-
-	protected void setSession(Session sess) {
-		this.session = sess;
+		return HibernateUtil.getSession();
 	}
 
 	/**

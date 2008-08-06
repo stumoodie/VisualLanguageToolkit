@@ -30,7 +30,6 @@ public class DbModelTest extends GenericTester {
 		HibCompoundNode node = new HibCompoundRootNode();
 		graph.setRootNode(node);
 		saveAndCommit(graph);
-		startNewTransaction();
 		graph= (HibModel) getSession().createQuery ( "From HibModel graph ").uniqueResult();
 		assertEquals(node,graph.getRootNode());
 	}

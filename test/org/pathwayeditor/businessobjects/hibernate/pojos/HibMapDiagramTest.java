@@ -111,7 +111,7 @@ public class HibMapDiagramTest {
 		assertFalse ( "Not equals with other" , testMapDiagram.equals(testMapDiagram2)) ;
 		
 		testMapDiagram2.setName(DIAGRAM_NAME1) ;
-		assertTrue ("equals with other changed name" , testMapDiagram.equals(testMapDiagram2)) ;
+		assertFalse ("Not equals with other same name" , testMapDiagram.equals(testMapDiagram2)) ;
 	}
 	
 	@Test
@@ -128,6 +128,6 @@ public class HibMapDiagramTest {
 		
 		assertFalse ( "Hash code not equals." , testMapDiagram.hashCode() == testMapDiagram2.hashCode() ) ;
 		testMapDiagram2.setName(DIAGRAM_NAME1) ;
-		assertTrue ( "Hash code equals." , testMapDiagram.hashCode() == testMapDiagram2.hashCode() ) ;
+		assertFalse ( "Hash code STILL not equals." , testMapDiagram.hashCode() == testMapDiagram2.hashCode() ) ;
 	}
 }

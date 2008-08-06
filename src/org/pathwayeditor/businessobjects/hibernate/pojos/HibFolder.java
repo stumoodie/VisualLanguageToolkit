@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
-import org.hibernate.Session;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
@@ -29,20 +27,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 	private int iNode = makeIntUUID();
 
 	public HibFolder() {
-	}
-
-	private Session getSession() {
-		Session sess = HibernateUtil.getSessionFactory().openSession();
-		sess.beginTransaction();
-		return sess;
-	}
-
-	/**
-	 * @param sess
-	 */
-	private void commitSession(Session sess) {
-		sess.saveOrUpdate(this);
-		HibernateUtil.commitAndCloseSession(sess);
 	}
 
 	/**
@@ -102,23 +86,20 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-
 		buffer.append(getClass().getName()).append("@").append(
 				Integer.toHexString(hashCode())).append(" [");
 		buffer.append("id").append("='").append(getId()).append("' ");
 		buffer.append("]");
-
 		return buffer.toString();
 	}
 
 	void addSubFolder(HibSubFolder newSubFolder) {
 		if (newSubFolder == null)
 			throw new IllegalArgumentException("newSubFolder cannot be null");
-
 		HibFolder oldParentFolder = newSubFolder.getParentFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.subFolders.remove(newSubFolder);
-			// oldParentFolder.removeHibSubFolder(newSubFolder); FIX ME
+			// oldParentFolder.removeHibSubFolder(newSubFolder); //FIX ME
 		}
 		this.subFolders.add(newSubFolder);
 		newSubFolder.setParentFolder(this);
@@ -128,10 +109,9 @@ public abstract class HibFolder implements Serializable, IFolder {
 	void removeHibSubFolder(HibSubFolder subFolder) {
 		if (subFolder == null)
 			throw new IllegalArgumentException("subFolder cannot be null");
-		if (subFolder.getParentFolder() != this)
+		if (!subFolder.getParentFolder().equals(this))
 			throw new IllegalArgumentException(
 					"subFolder must be a child of this folder");
-
 		this.subFolders.remove(subFolder);
 		subFolder.setParentFolder(null);
 	}
@@ -139,7 +119,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 	void addMapDiagram(HibMapDiagram newMapDiagram) {
 		if (newMapDiagram == null)
 			throw new IllegalArgumentException("newMapDiagram cannot be null");
-
 		HibFolder oldParentFolder = newMapDiagram.getFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.getMapDiagrams().remove(newMapDiagram);
@@ -154,7 +133,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 		if (mapDiagram.getFolder() != this)
 			throw new IllegalArgumentException(
 					"mapDiagram must belong to this folder");
-
 		this.hibMapDiagrams.remove(mapDiagram);
 		mapDiagram.setFolder(null);
 	}
@@ -212,13 +190,9 @@ public abstract class HibFolder implements Serializable, IFolder {
 		boolean folderCanBeMoved = false;
 		if (subFolder == null)
 			return folderCanBeMoved;
-		Session sess = getSession();
-		sess.load(this, id);
-		sess.load(subFolder, ((HibSubFolder) subFolder).getId());
 		if (!testeeChildOf(this, subFolder)
 				&& canUseSubfolderName(subFolder.getName()))
 			folderCanBeMoved = true;
-		sess.close();
 		return folderCanBeMoved;
 	}
 
@@ -248,10 +222,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#containsSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public boolean containsSubfolder(ISubFolder subFolder) {
-		Session s = getSession();
-		s.load(this, id);
 		boolean contains = testeeChildOf(subFolder, this);
-		s.close();
 		return contains;
 	}
 
@@ -265,15 +236,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		boolean canUseName = true;
 		Set<String> subnames = new HashSet<String>();
-		Session s = getSession();
-		s.load(this, id);
 		for (HibSubFolder f : getSubFolders()) {
 			if (f.getName().equals(name)) {
 				canUseName = false;
 				break;
 			}
 		}
-		s.close();
+		;
 		return canUseName;
 	}
 
@@ -294,13 +263,9 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public boolean canRenameSubfolder(ISubFolder subFolder, String newFolderName) {
-		Session s = getSession();
-		s.load(subFolder,((HibSubFolder)subFolder).getId());
-		if (!subFolder.getParent().equals( this)){
-			s.close();
+		if (subFolder.getParent()==null||!subFolder.getParent().equals( this)){
 			throw new IllegalArgumentException(NOT_CHILD);
 		}
-		s.close();
 		if (canUseSubfolderName(newFolderName))
 			return true;
 		return false;
@@ -314,14 +279,11 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public boolean canUseMapName(String name) {
 		if (nameMalFormed(name))
 			return false;
-		Session s = getSession();
-		s.load(this, id);
 		boolean canuse = true;
 		for (HibMapDiagram d : hibMapDiagrams) {
 			if (d.getName().equals(name))
 				canuse = false;
 		}
-		s.close();
 		return canuse;
 	}
 
@@ -336,10 +298,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#containsMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public boolean containsMap(IMap newMap) {
-		Session s = getSession();
-		s.load(this, id);
 		boolean iscontained = hibMapDiagrams.contains(newMap);
-		s.close();
 		return iscontained;
 	}
 
@@ -353,12 +312,9 @@ public abstract class HibFolder implements Serializable, IFolder {
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		if (this.containsMap(origMap))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
-		Session s = getSession();
-		s.load(this, id);
 		HibMapDiagram map = new HibMapDiagram(this, (HibMapDiagram) origMap);
 		hibMapDiagrams.add(map);
 		copyCanvasOf(origMap);
-		commitSession(s);
 		return map;
 	}
 
@@ -379,12 +335,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder) {
 		if (!canMoveSubfolder(origSubfolder))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
-		Session s = getSession();
-		s.load(this, id);
-		s.load(origSubfolder, ((HibSubFolder) origSubfolder).getId());
 		HibSubFolder copy = new HibSubFolder(this, (HibSubFolder) origSubfolder);
 		addSubFolder(copy);
-		commitSession(s);
 		return copy;
 	}
 
@@ -396,11 +348,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public IMap createMap(String newMapName) {
 		if (!canUseMapName(newMapName))
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
-		Session s = getSession();
-		s.load(this, id);
 		HibMapDiagram map = new HibMapDiagram(this, newMapName);
 		hibMapDiagrams.add(map);
-		commitSession(s);
 		return map;
 	}
 
@@ -410,13 +359,10 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#createSubfolder(java.lang.String)
 	 */
 	public ISubFolder createSubfolder(String newSubfolderName) {
-		Session sess = getSession();
-		sess.load(this, id);
 		if (!canUseSubfolderName(newSubfolderName))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		HibSubFolder folder = new HibSubFolder(this, newSubfolderName);
 		subFolders.add(folder);
-		commitSession(sess);
 		return folder;
 	}
 
@@ -426,11 +372,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getMapIterator()
 	 */
 	public Iterator<? extends IMap> getMapIterator() {
-		Session s = getSession();
-		s.load(this, id);
 		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMapDiagrams
 				.iterator();
-		s.close();
 		return it;
 	}
 
@@ -444,11 +387,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		if (this.containsMap(newMap))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
-		Session s = getSession();
-		s.load(this, id);
 		HibMapDiagram m = (HibMapDiagram) newMap;
 		m.changeFolder(this);
-		commitSession(s);
 	}
 
 	/*
@@ -457,13 +397,9 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#moveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public void moveSubfolder(ISubFolder subFolder) {
-		Session sess = getSession();
-		sess.load(this, id);
-		sess.load(subFolder, ((HibSubFolder) subFolder).getId());
 		if (!canMoveSubfolder(subFolder))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
 		addSubFolder((HibSubFolder) subFolder);
-		commitSession(sess);
 	}
 
 	/*
@@ -474,10 +410,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public int numMaps() {
 		if (hibMapDiagrams == null)
 			return 0;
-		Session s = getSession();
-		s.load(this, id);
 		int nummaps = hibMapDiagrams.size();
-		s.close();
 		return nummaps;
 	}
 
@@ -489,10 +422,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public int numSubFolders() {
 		if (subFolders == null)
 			return 0;
-		Session s = getSession();
-		s.load(this, id);
 		int numsubfolders = getSubFolders().size();
-		s.close();
 		return numsubfolders;
 	}
 
@@ -502,15 +432,12 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#removeSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public void removeSubfolder(ISubFolder subFolder) {
-		Session sess = getSession();
-		sess.load(this, id);
 		if (subFolders.contains(subFolder))
 			removeHibSubFolder((HibSubFolder) subFolder);
 		else {
 			for (HibSubFolder sub : subFolders)
 				sub.removeSubfolder(subFolder);
 		}
-		HibernateUtil.commitAndCloseSession(sess);
 	}
 
 	/*
@@ -520,8 +447,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public void renameMap(IMap map, String newMapName) {
-		Session s = getSession();
-		s.load(this, id);
 		if (canUseMapName(newMapName)) {
 			HibMapDiagram m = (HibMapDiagram) map;// map needs to be
 													// explicitly removed from
@@ -532,7 +457,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 										// changes equals!
 			m.setName(newMapName);
 			hibMapDiagrams.add(m);
-			commitSession(s);
 		} else
 			throw new IllegalArgumentException();
 	}
@@ -544,11 +468,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public void renameSubfolder(ISubFolder subFolder, String newFolderName) {
-		Session s = getSession();
-		s.load(this, id);
 		if (!canRenameSubfolder(subFolder, newFolderName))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
-		
 		((HibSubFolder) subFolder).setName(newFolderName); // this step is
 		// necessary as
 		// Hibernate
@@ -564,7 +485,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 		// name are not
 		// propogated.
 		subFolders.add((HibSubFolder) subFolder);
-		commitSession(s);
 	}
 
 	/*
@@ -573,10 +493,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
 	 */
 	public Iterator<? extends ISubFolder> getSubFolderIterator() {
-		Session s = getSession();
-		s.load(this, id);
 		Iterator<HibSubFolder> it = subFolders.iterator();
-		s.close();
 		return it;
 	}
 

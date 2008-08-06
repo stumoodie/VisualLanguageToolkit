@@ -103,47 +103,12 @@ public class HibMapDiagram  implements  IMap,
 		if (!(other instanceof HibMapDiagram))
 			return false;
 		HibMapDiagram castOther = (HibMapDiagram) other;
-		HibFolder otherFolder = castOther.getFolder();
-		HibFolder myFolder = getFolder();
-		String myName = this.getName();
-		String otherName = castOther.getName();
-
-		return (foldersSame(otherFolder, myFolder))
-				&& (namesSame(myName, otherName));
+		return castOther.iNode==iNode;
 	}
-
-	private boolean namesSame(String myName, String otherName) {
-		return (myName == otherName)
-				|| (myName != null && otherName != null && myName
-						.equals(otherName));
-	}
-
-	private boolean foldersSame(HibFolder otherFolder, HibFolder myFolder) {
-
-		if (myFolder == otherFolder)
-			return true;
-		if (myFolder == null && otherFolder == null)
-			return true;
-		if (myFolder != null && otherFolder != null) {
-			boolean toRet = false;
-			try {
-				toRet = myFolder.equals(otherFolder);
-				return toRet;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
-
+	
 	public int hashCode() {
 		int result = 17;
-
-		result = 37 * result
-				+ (getFolder() == null ? 0 : this.getFolder().hashCode());
-		result = 37 * result
-				+ (getName() == null ? 0 : this.getName().hashCode());
-
+		result = 37 * result+iNode;
 		return result;
 	}
 	/*

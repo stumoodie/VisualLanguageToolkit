@@ -12,12 +12,14 @@ import org.pathwayeditor.testutils.StubSessionFactory;
  * 
  */
 public class HibernateUtil {
-
+	private static final ThreadLocal threadSession = new ThreadLocal();
+	private static final ThreadLocal threadTransaction = new ThreadLocal();
 	private static HibernateDbTester dataSource = new HibernateDbTester(
 			"test_hibernate.cfg.xml");
 	private static SessionFactory defaultSessionFactory;
 	private static SessionFactory testSessionFactory;
 	private static boolean created;
+	private static Session session;
 
 	// ///////////// THIS IS THE FIX FOR LEOPARD CLASSLOADER BUG PLEASE DONT
 	// REMOVE///////////
@@ -25,6 +27,9 @@ public class HibernateUtil {
 		if (System.getProperty("os.name").indexOf("Mac") != -1)
 			Thread.currentThread().setContextClassLoader(
 					ClassLoader.getSystemClassLoader());
+	}
+	static {
+		defaultSessionFactory = dataSource.getHibernateSessionFactory();
 	}
 
 	/**
@@ -55,7 +60,6 @@ public class HibernateUtil {
 		defaultSessionFactory = dataSource.getHibernateSessionFactory();
 	}
 
-
 	/**
 	 * For running Unit tests; after the run is over all sessionfactories appear
 	 * to revert to null so this set method should be 'safe'.
@@ -66,25 +70,22 @@ public class HibernateUtil {
 	public static void setStubSessionFactoryAsDefault() {
 		defaultSessionFactory = new StubSessionFactory();
 	}
-
-	public static void commitAndCloseSession(Session session) {
-		try {
-			if (session.isOpen())
-				session.getTransaction().commit();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (session.isOpen())
-				session.close();
-		}
+	
+	public static void commit(Session session) {
+		session.getTransaction().commit();
+	}
+	public static void commit() {
+		session.getTransaction().commit();
 	}
 
-	public static void commitSession(Session session) {
-		try {
-			session.getTransaction().commit();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	/**
+	 * @return
+	 */
+	public static Session getSession() {
+		session = defaultSessionFactory.getCurrentSession();
+		session.beginTransaction();
+		return session;
 	}
+
 
 }

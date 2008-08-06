@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabel" table="label">
+		<id name="id" type="java.lang.Long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<properties name="xak1label" unique="true">
+			<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
+				<column name="canvas_id" not-null="true" />
+			</many-to-one>
+			<property name="creation_serial" type="int">
+				<column name="creation_serial" not-null="true" />
+			</property>
+		</properties>
+		<many-to-one name="compoundNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+			<column name="node_id" not-null="true" />
+		</many-to-one>
+		<property name="XPosition" type="int">
+			<column name="x_position" not-null="true" />
+		</property>
+		<property name="YPosition" type="int">
+			<column name="y_position" not-null="true" />
+		</property>
+		<property name="width" type="int">
+			<column name="width" not-null="true" />
+		</property>
+		<property name="height" type="int">
+			<column name="height" not-null="true" />
+		</property>
+
+		<many-to-one name="visualisableProperty"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"
+			fetch="select">
+			<meta attribute="set-scope"></meta>
+			<column name="displayed_property_id" not-null="true" />
+		</many-to-one>
+		
+		<property name="isDisplayed" type="boolean">
+			<column name="is_displayed" not-null="true" />
+		</property>
+		<property name="backgroundRed" type="int">
+			<column name="background_red" not-null="true" />
+		</property>
+		<property name="backgroundGreen" type="int">
+			<column name="background_green" not-null="true" />
+		</property>
+		<property name="backgroundBlue" type="int">
+			<column name="background_blue" not-null="true" />
+		</property>
+		<property name="noFillSet" type="boolean">
+			<column name="no_fill_set" not-null="true" />
+		</property>
+
+	</class>
+</hibernate-mapping>

@@ -16,6 +16,7 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -73,7 +74,7 @@ public class DbHibLinkTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Test@Ignore
 	public void testDeleteLink () throws Exception
 	{
 		doSetup();
@@ -102,8 +103,6 @@ public class DbHibLinkTest extends PojoTester{
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));
 		}
-		
-		
 	}
 	
 	@Test
