@@ -25,13 +25,17 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	}
 
 	public HibSubFolder(HibFolder newParent, HibSubFolder other) {
-		super(other);
+		this(newParent,other,false);
+	}
+	public HibSubFolder(HibFolder newParent, HibSubFolder other,boolean isCompleteCopy) {
+		super(other,isCompleteCopy);
 		setRepository(newParent.getRepository());
 		setMapDiagramRepositories();
 		setSubFolderRepositoriesAndMapDiagramRepositories();
 		this.parentFolder = newParent;
 		this.name = other.name;
 	}
+	
 
 	/**
 	 * 
@@ -88,6 +92,15 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 		return getParentFolder();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder#getPath()
+	 */
+	@Override
+	public String getPath() {
+		String path=parentFolder.getPath()+"/"+name;
+		path=path.replaceAll("//","/");
+		return path;
+	}
 //	/*
 //	 * (non-Javadoc)
 //	 * 

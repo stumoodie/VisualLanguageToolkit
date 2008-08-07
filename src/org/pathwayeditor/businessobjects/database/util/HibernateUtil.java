@@ -75,7 +75,9 @@ public class HibernateUtil {
 		session.getTransaction().commit();
 	}
 	public static void commit() {
-		session.getTransaction().commit();
+		session = defaultSessionFactory.getCurrentSession();
+		if(session.getTransaction()!=null&&session.getTransaction().isActive())
+			session.getTransaction().commit();
 	}
 
 	/**

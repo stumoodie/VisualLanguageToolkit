@@ -1,5 +1,7 @@
 package org.pathwayeditor.businessobjects.repository;
 
+import java.util.List;
+
 
 /**
  * The repository that holds all the folders and maps (including the map diagrams) used in EPE. It is essentially
@@ -17,6 +19,29 @@ package org.pathwayeditor.businessobjects.repository;
  */
 public interface IRepository {
 
+	
+	/**
+	 * @param name of desired folders
+	 * @return a list of all subfolders of this folder (anywhere in its subfolder tree) having the given name, returns an empty list if no folders are matching
+	 * @throws IllegalArgument Exception if the name is null or empty String
+	 */
+	List <ISubFolder> getFoldersByName(String name);
+	
+	/**
+	 * @param path the path through the folder tree to this folder
+	 * @return the requested folder, 
+	 * @throws illegal argument exception if the folder is not found
+	 * @throws IllegalArgument Exception if the path is null or empty String
+	 */
+	IFolder getFolderByPath(String path);
+	
+	
+	/**
+	 * @param path a path to look for in the subfolder tree of this folder 
+	 * @return true if the path exists, false if it does not
+	 * @throws IllegalArgument Exception if the path is null or empty String
+	 */
+	boolean pathExists(String path);
 	/**
 	 * The name of the repository. Must be unique within an EPE application.
 	 * @return The name cannot be null, NOR can it be an empty string.

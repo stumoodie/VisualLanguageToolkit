@@ -15,14 +15,16 @@ public interface IBusinessObjectFactory {
 
 	/**
 	 * Gets the repository by name that contains all the folders,
-	 * and maps. It will load it from persistent storage if necessary.  
+	 * and maps. It will load it from persistent storage if necessary. 
+	 * The repository is attached to a database transaction 
 	 * @return the repository
 	 * @Param name the name of the repository which is guaranteed unique
 	 */
 	IRepository getRepository(String name);
 	
+	
 	/**
-	 * Synchronises the repository with persistent storage. 
+	 * Synchronises the repository with persistent storage,committing its associated database transaction. 
 	 * @param repository
 	 */
 	void synchroniseRepository(IRepository repository);

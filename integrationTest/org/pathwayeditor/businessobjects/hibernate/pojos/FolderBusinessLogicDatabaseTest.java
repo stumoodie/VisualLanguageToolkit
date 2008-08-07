@@ -14,13 +14,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Session;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
 import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
+import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
@@ -35,14 +34,22 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 	private IRepository rep;
-	private IBusinessObjectFactory bo;
+	private IBusinessObjectFactory bo =BusinessObjectFactory.getInstance();
 
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-		bo = BusinessObjectFactory.getInstance();
-		rep = bo.getRepository("repo name");
+		rep = ((BusinessObjectFactory) bo).getFreshRepository("repo name");
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.testutils.GenericTester#tearDown()
+	 */
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+		HibernateUtil.commit();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,20 +69,11 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMoveSubFolderRemovesSubFolderFromOldParent() {
-		List test = getSession()
-				.createQuery(
-						"from HibSubFolder sub where sub.id = '100005' and sub.parentFolder.id='100003'")
-				.list();
-		assertEquals(1, test.size());
 		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r left join fetch r.subFolders where r.id = '100005'")
-				.uniqueResult();
-		HibernateUtil.commit();
-		r.moveSubfolder(sub);
+		IFolder sub = rep.getFolderByPath("/subfolder2/subfolder4"); 
+		r.moveSubfolder((ISubFolder) sub);
 		bo.synchroniseRepository(rep);
-		test = getSession()
+		List test = getSession()
 				.createQuery(
 						"from HibSubFolder sub where sub.id = '100005' and sub.parentFolder.id='100003'")
 				.list();
@@ -85,22 +83,19 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMoveSubFolderAddsSubFolderToNewParent() {
+//		List test = getSession()
+//				.createQuery(
+//						"from HibSubFolder sub where sub.name = 'subfolder4' and sub.parentFolder.id='100001'")
+//				.list();
+//		assertEquals(0, test.size());
+		IRootFolder r = rep.getRootFolder();
+		IFolder sub = rep.getFolderByPath("/subfolder2/subfolder4");
+		r.moveSubfolder((ISubFolder) sub);
+		bo.synchroniseRepository(rep);
+		assertTrue(subFolderExistsCalled( (HibRootFolder) r, "subfolder4"));
 		List test = getSession()
 				.createQuery(
-						"from HibSubFolder sub where sub.id = '100005' and sub.parentFolder.id='100001'")
-				.list();
-		assertEquals(0, test.size());
-		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r left join fetch r.subFolders where r.id = '100005'")
-				.uniqueResult();
-		HibernateUtil.commit();
-		r.moveSubfolder(sub);
-		bo.synchroniseRepository(rep);
-		test = getSession()
-				.createQuery(
-						"from HibSubFolder sub where sub.id = '100005' and sub.parentFolder.id='100001'")
+						"from HibSubFolder sub where sub.name = 'subfolder4' and sub.parentFolder.id='100001'")
 				.list();
 		assertEquals(1, test.size());
 	}
@@ -146,13 +141,10 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void copySubFolderMakesFolderWithSameNameTest() {
+		//rep = bo.getRepository("repo name");
 		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub1 = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r left join fetch r.subFolders left join fetch r.mapDiagrams where r.id = '100005'")
-				.uniqueResult();
+		ISubFolder sub1 = (ISubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		assertFalse(subFolderExistsCalled((HibRootFolder) r, sub1.getName()));
-		HibernateUtil.commit();
 		r.createCopyOfSubfolder(sub1);
 		bo.synchroniseRepository(rep);
 		assertTrue(subFolderExistsCalled((HibRootFolder) r, sub1.getName()));
@@ -166,11 +158,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void removeSubFolderTest() {
 		HibRootFolder r = (HibRootFolder) rep.getRootFolder();
-		HibSubFolder sub1 = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r join fetch r.parentFolder  where r.id = '100002'")
-				.uniqueResult();
-		HibernateUtil.commit();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder1");
 		assertTrue(r.getSubFolders().contains(sub1));
 		r.removeSubfolder(sub1);
 		bo.synchroniseRepository(rep);
@@ -182,8 +170,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void canRenameSubFolderTest() {
 		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100002'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder1");
 		assertFalse(subFolderExistsCalled((HibRootFolder) r, JIMMY_KRANKIE));
 		assertTrue(r.canRenameSubfolder(sub1, JIMMY_KRANKIE));
 	}
@@ -191,12 +178,8 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void renameSubFolderTest() {
 		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub1 = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r join fetch r.parentFolder where r.id = '100002'")
-				.uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder1");
 		assertFalse(subFolderExistsCalled((HibRootFolder) r, JIMMY_KRANKIE));
-		HibernateUtil.commit();
 		r.renameSubfolder(sub1, JIMMY_KRANKIE);
 		bo.synchroniseRepository(rep);
 		assertTrue(subFolderExistsCalled((HibRootFolder) r, JIMMY_KRANKIE));
@@ -205,10 +188,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testNumMaps() {
 		IRootFolder r = rep.getRootFolder();
-		HibSubFolder sub1 = (HibSubFolder) getSession()
-				.createQuery(
-						"from HibSubFolder r join fetch r.mapDiagrams where r.id = '100005'")
-				.uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		assertEquals(0, r.numMaps());
 		assertEquals(1, sub1.numMaps());
 	}
@@ -227,23 +207,20 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testGetMapIteratorIteratesOverMaps() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		Iterator<? extends IMap> it = sub1.getMapIterator();
 		assertTrue(it.next().getName().equals("Diagram name"));
 	}
 
 	@Test
 	public void testCanUseMapNameHappyCase() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		assertTrue(sub1.canUseMapName(JIMMY_KRANKIE));
 	}
 
 	@Test
 	public void testCanUseMapNameNotAllowed() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		assertTrue(sub1.canUseMapName(JIMMY_KRANKIE));
 		assertFalse(sub1.canUseMapName("Diagram name"));
 	}
@@ -257,18 +234,12 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		r = (HibRootFolder) getSession().createQuery(
 				"from HibRootFolder r where r.id = '100001'").uniqueResult();
 		assertTrue(mapExistsCalled((HibFolder) r, JIMMY_KRANKIE));
+		HibernateUtil.commit();
 	}
 
-	@Test(expected = IllegalArgumentException.class)@Ignore
+	@Test(expected = IllegalArgumentException.class)
 	public void testCreateMapNameAlreadyInUseThrowsIllegalArgument()
 			throws SQLException {
-		// Connection c =
-		// DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb", "sa",
-		// "");
-		// Statement s = c.createStatement();
-		// ResultSet rs = s.executeQuery("select distinct name from
-		// HibSubFolder");
-		// while (rs.)
 		IRootFolder r = rep.getRootFolder();
 		assertFalse(mapExistsCalled((HibFolder) r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
@@ -281,16 +252,14 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testContainsMapHappyCase() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.containsMap(map));
 	}
 
 	@Test
 	public void testContainsMapFalse() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.containsMap(map));
@@ -299,8 +268,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testCreateCopyOfMapHappyCase() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled((HibFolder) r, map.getName()));
@@ -311,7 +279,6 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 								"from HibMapDiagram m where m.folder =:parent and m.name = :name")
 						.setEntity("parent", r)
 						.setString("name", map.getName()).list().size());
-		HibernateUtil.commit();
 		r.createCopyOfMap(map);
 		bo.synchroniseRepository(rep);
 		assertTrue(mapExistsCalled((HibFolder) r, map.getName()));
@@ -326,70 +293,34 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testMoveMapHappyCaseAddsMapToNewParent() {
-		rep=bo.getRepository("repo name");
-		ISubFolder sub = null;
-		ISubFolder sub2=null;
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
-		IMap map = null;
-		for (Iterator<? extends ISubFolder> i = r.getSubFolderIterator(); i
-				.hasNext();) {
-			sub = i.next();
-			if (((HibSubFolder) sub).getId().equals(100003L)) {
-				sub2 = sub.getSubFolderIterator().next();
-				if (((HibSubFolder) sub).getId().equals(100005L)) {
-					map = sub2.getMapIterator().next();
-				} else {
-					sub2 = sub.getSubFolderIterator().next();
-					map = sub2.getMapIterator().next();
-				}
-			}
-		}
+		IMap map = sub1.getMapIterator().next();
 		assertFalse(mapExistsCalled((HibFolder) r, map.getName()));
+		assertTrue(mapExistsCalled(sub1, map.getName()));
+		r.moveMap(map);
+		bo.synchroniseRepository(rep);
+		assertTrue(mapExistsCalled((HibFolder) r, map.getName()));
+		assertFalse(mapExistsCalled(sub1, map.getName()));
 		assertEquals(
-				0,
+				1,
 				getSession()
 						.createQuery(
 								"from HibMapDiagram m where m.folder =:parent and m.name = :name")
 						.setEntity("parent", r)
 						.setString("name", map.getName()).list().size());
 		assertEquals(
-				1,
-				getSession()
-						.createQuery(
-								"from HibMapDiagram m where m.folder =:parent and m.name = :name")
-						.setEntity("parent", sub2)
-						.setString("name", map.getName()).list().size());
-		r.moveMap(map);
-		// bo.synchroniseRepository(rep);
-		Session s = HibernateUtil.getSession();
-		try {
-			s.merge(rep);
-			s.getTransaction().commit();
-		} catch (Exception e) {
-			s.close();
-			throw new RuntimeException(e);
-		}
-		assertTrue(mapExistsCalled((HibFolder) r, map.getName()));
-//		assertEquals(
-//				1,
-//				getSession()
-//						.createQuery(
-//								"from HibMapDiagram m where m.folder =:parent and m.name = :name")
-//						.setEntity("parent", r)
-//						.setString("name", map.getName()).list().size());
-		assertEquals(
 				0,
 				getSession()
 						.createQuery(
 								"from HibMapDiagram m where m.folder =:parent and m.name = :name")
-						.setEntity("parent", sub)
+						.setEntity("parent", sub1)
 						.setString("name", map.getName()).list().size());
 	}
 
 	@Test
 	public void testMoveMapHappyCaseRemovesMapFromOldParent() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled((HibFolder) r, map.getName()));
@@ -401,7 +332,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 						.setEntity("parent", sub1).setString("name",
 								map.getName()).list().size());
 		r.moveMap(map);
-		HibernateUtil.commit();
+		bo.synchroniseRepository(rep);
 		assertEquals(
 				0,
 				getSession()
@@ -413,8 +344,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testCanRenameMapHappyCase() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.canRenameMap(map, JIMMY_KRANKIE));
 		assertFalse(sub1.canRenameMap(map, map.getName()));
@@ -422,8 +352,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@Test
 	public void testRenameMapHappyCase() {
-		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery(
-				"from HibSubFolder r where r.id = '100005'").uniqueResult();
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		assertEquals(
@@ -434,7 +363,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 						.setEntity("parent", sub1).setString("name",
 								JIMMY_KRANKIE).list().size());
 		sub1.renameMap(map, JIMMY_KRANKIE);
-		HibernateUtil.commit();
+		bo.synchroniseRepository(rep);
 		assertTrue(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		assertEquals(
 				1,

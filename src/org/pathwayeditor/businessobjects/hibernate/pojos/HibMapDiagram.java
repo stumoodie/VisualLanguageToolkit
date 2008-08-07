@@ -36,19 +36,30 @@ public class HibMapDiagram  implements  IMap,
 	}
 
 	public HibMapDiagram(HibFolder newParent, HibMapDiagram other) {
+		this(newParent,other,false);
+	}
+
+	public HibMapDiagram(HibFolder newParent, HibMapDiagram other, boolean isCompleteCopy) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
 		this.repository = newParent.getRepository();
+		if(isCompleteCopy)
+			this.iNode=other.iNode;
 	}
-
+	
 	public Long getId() {
 		return this.id;
 	}
 
 	@SuppressWarnings("unused")
-	private void setId(Long id) {
+	private void setId(Long id) { 
 		this.id = id;
+	}
+	
+	// NH - we need this for moveSubFolder and moveMapDiagram to work - see the wiki
+	protected void nullId(){
+		this.id=null;
 	}
 
 	public void setRepository(HibRepository repository) {
@@ -69,10 +80,10 @@ public class HibMapDiagram  implements  IMap,
 
 	public void changeFolder(HibFolder newFolder) {
 		HibFolder oldOwner = this.folder;
-		this.folder = newFolder;
 		if (oldOwner != null) {
-			oldOwner.getMapDiagrams().remove(this);
+			oldOwner.removeMapDiagram(this);
 		}
+		this.folder = newFolder;
 		if (this.folder != null) {
 			this.folder.getMapDiagrams().add(this);
 		}
@@ -130,4 +141,11 @@ public class HibMapDiagram  implements  IMap,
 	public int getINode() {
 		return iNode;
 	}
+
+	/**
+	 * @param m
+	 */
+	protected void copyINode(HibMapDiagram m) {
+		this.iNode=m.iNode;
+		}
 }

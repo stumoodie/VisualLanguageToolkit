@@ -46,6 +46,16 @@ public abstract class HibFolder implements Serializable, IFolder {
 			this.subFolders.add(new HibSubFolder(this, subFolder));
 		}
 	}
+	public HibFolder(HibFolder other,boolean isCompleteCopy) {
+		if(isCompleteCopy)
+			this.iNode=other.iNode;
+		for (HibMapDiagram diagram : other.getMapDiagrams()) {
+			this.hibMapDiagrams.add(new HibMapDiagram(this, diagram,isCompleteCopy));
+		}
+		for (HibSubFolder subFolder : other.getSubFolders()) {
+			this.subFolders.add(new HibSubFolder(this, subFolder,isCompleteCopy));
+		}
+	}
 
 	public Long getId() {
 		return this.id;
@@ -130,7 +140,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	void removeMapDiagram(HibMapDiagram mapDiagram) {
 		if (mapDiagram == null)
 			throw new IllegalArgumentException("mapDiagram cannot be null");
-		if (mapDiagram.getFolder() != this)
+		if (!mapDiagram.getFolder().equals(this))
 			throw new IllegalArgumentException(
 					"mapDiagram must belong to this folder");
 		this.hibMapDiagrams.remove(mapDiagram);
@@ -237,7 +247,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 		boolean canUseName = true;
 		Set<String> subnames = new HashSet<String>();
 		for (HibSubFolder f : getSubFolders()) {
-			if (f.getName().equals(name)) {
+			if (f.getName().equalsIgnoreCase(name)) {
 				canUseName = false;
 				break;
 			}
@@ -263,7 +273,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 *      java.lang.String)
 	 */
 	public boolean canRenameSubfolder(ISubFolder subFolder, String newFolderName) {
-		if (subFolder.getParent()==null||!subFolder.getParent().equals( this)){
+		if (subFolder.getParent() == null
+				|| !subFolder.getParent().equals(this)) {
 			throw new IllegalArgumentException(NOT_CHILD);
 		}
 		if (canUseSubfolderName(newFolderName))
@@ -281,7 +292,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 			return false;
 		boolean canuse = true;
 		for (HibMapDiagram d : hibMapDiagrams) {
-			if (d.getName().equals(name))
+			if (d.getName().equalsIgnoreCase(name))
 				canuse = false;
 		}
 		return canuse;
@@ -382,13 +393,16 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#moveMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public void moveMap(IMap newMap) {
+	public IMap moveMap(IMap newMap) {
 		if (newMap == null)
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		if (this.containsMap(newMap))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
 		HibMapDiagram m = (HibMapDiagram) newMap;
 		m.changeFolder(this);
+		HibMapDiagram copy = new HibMapDiagram(this,m, true);
+		copy.changeFolder(this);
+		return copy;
 	}
 
 	/*
@@ -396,10 +410,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#moveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
-	public void moveSubfolder(ISubFolder subFolder) {
+	public ISubFolder moveSubfolder(ISubFolder subFolder) {
 		if (!canMoveSubfolder(subFolder))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
-		addSubFolder((HibSubFolder) subFolder);
+		HibFolder copy = new HibSubFolder(this, (HibSubFolder) subFolder, true);
+		addSubFolder((HibSubFolder) copy);
+		subFolder.getParent().removeSubfolder(subFolder);
+		return (ISubFolder) copy;
 	}
 
 	/*
@@ -449,12 +466,12 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public void renameMap(IMap map, String newMapName) {
 		if (canUseMapName(newMapName)) {
 			HibMapDiagram m = (HibMapDiagram) map;// map needs to be
-													// explicitly removed from
-													// its owning collection and
-													// added back after name
-													// change
+			// explicitly removed from
+			// its owning collection and
+			// added back after name
+			// change
 			hibMapDiagrams.remove(m); // order is important - rename of map
-										// changes equals!
+			// changes equals!
 			m.setName(newMapName);
 			hibMapDiagrams.add(m);
 		} else
@@ -495,6 +512,15 @@ public abstract class HibFolder implements Serializable, IFolder {
 	public Iterator<? extends ISubFolder> getSubFolderIterator() {
 		Iterator<HibSubFolder> it = subFolders.iterator();
 		return it;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getPath()
+	 */
+	public String getPath() {
+		return "";
 	}
 
 }

@@ -3,7 +3,12 @@ package org.pathwayeditor.businessobjects.repository;
 import java.util.Iterator;
 
 public interface IFolder extends IRepositoryItem {
-
+	/**
+	 * @return the path to this folder in the folder tree, starting from the root folder which has the path '/'; calling this provides a string which can be
+	 *  used by HibRepository's getFolderByPath() method  to return the given folder. Paths are NOT case sensitive.
+	 */
+	String getPath();
+	
 	/**
 	 * Get the number of subfolders held by this folder. 
 	 * @return the number of subfolders
@@ -12,7 +17,7 @@ public interface IFolder extends IRepositoryItem {
 
 	/**
 	 * Can the name be used for a subfolder in this folder. This tests that the name
-	 * follows the naming rules, is not-null and that the name is unique for this folder.  
+	 * follows the naming rules, is not-null and that the name is unique for this folder (NOT case sensitive).  
 	 * @param name The name potential subfolder to be tested.
 	 * @return True if creating a subfolder of this name will succeed.
 	 */
@@ -48,13 +53,18 @@ public interface IFolder extends IRepositoryItem {
 	boolean canMoveSubfolder(ISubFolder subFolder);
 	
 	/**
-	 * Adds the specified folder as a subfolder of this folder. (Also adds any contents - child folders and maps - //TODO NH verify)
+	 * Adds a copy of the specified subfolder to this parent and orphans the original subfolder.
+	 * copy.equals(original) returns true.
+	 *  (Also adds any contents - child folders and maps.
 	 * Also removes this folder from its previous parent.
-	 * @param subFolder The subfolder to be added. It cannot be null.
+	 * More specifically, a copy of the original folder and its contents is added to the new parent. The copy will return true for equals()
+	 * to the original.
+	 * @param subFolder The subfolder to be copied and its copy added. It cannot be null.
+	 * @return the copy subfolder of the original.
 	 * @throws IllegalArgumentException if subFolder is null or
 	 * if <code>canMoveSubFolder(subFolder)</code> would return false.  
 	 */
-	void moveSubfolder(ISubFolder subFolder);
+	ISubFolder moveSubfolder(ISubFolder subFolder);
 
 	/**
 	 * Create a copy of <code>origSubfolder</code> in this subfolder. This copies the tree of repository
@@ -121,7 +131,7 @@ public interface IFolder extends IRepositoryItem {
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name
-	 * follows the naming rules, is not-null and that the name is unique for this folder.  
+	 * follows the naming rules, is not-null and that the name is unique for this folder (NOT case sensitive). 
 	 * @param name The name potential map to be tested.
 	 * @return True if creating a map of this name will succeed.
 	 * TODO - NH verify I am assuming that this method does not throw an IllegalArg exception if nameis null or malformed 
@@ -150,13 +160,15 @@ public interface IFolder extends IRepositoryItem {
 	IMap createCopyOfMap(IMap origMap);
 	
 	/**
-	 * Adds the map to the folder and removes it from it's original location.
+	 * Adds a copy of the map to the new folder and orphans the original map.
+	 * copy.equals(original) returns true.
 	 *  Requires that the folder does not already contain the map. 
 	 * @param newMap The new map to add. Cannot be null.
+	 * @return the copy of the original map 
 	 * @throws IllegalArgumentException if <code>containsMap(newMap) == true</code> or if
 	 * <code>newMap</code> is null.
 	 */
-	void moveMap(IMap newMap);
+	IMap moveMap(IMap newMap);
 
 	/**
 	 * Tests if the map is contained by this folder.

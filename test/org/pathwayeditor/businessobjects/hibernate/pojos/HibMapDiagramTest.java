@@ -70,26 +70,17 @@ public class HibMapDiagramTest {
 		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {
 			{atLeast(1).of(mockFolder).getRepository();}
+			{atLeast(1).of(mockFolder).removeMapDiagram(with(any(HibMapDiagram.class)));}
 			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}		
 		});
-		
 		mockery.checking( new Expectations () {{
-		
 			testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
-			
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockFolder).getMapDiagrams() ; will(returnValue(mockMapDiagramSet));
-			
 			atLeast(1).of(mockFolder2).getMapDiagrams() ; will(returnValue(mockMapDiagramSet));
-			
-			atLeast(1).of(mockMapDiagramSet).remove(testMapDiagram); will(returnValue(true));
 			atLeast(1).of(mockMapDiagramSet).add(testMapDiagram); will(returnValue(true));
 		}});
 		}});
-		
-		
 		assertEquals ( "folder is mockFolder" , mockFolder , testMapDiagram.getFolder() ) ;
-		
 		testMapDiagram.changeFolder(mockFolder2) ;
 		assertEquals ("folder is mockFolder2" , mockFolder2 , testMapDiagram.getFolder() ) ;
 	}
