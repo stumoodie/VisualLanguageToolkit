@@ -9,9 +9,11 @@ import java.util.Iterator;
  * @author smoodie
  *
  */
-public interface IRootObject extends ICanvasObject {
+public interface IRootObjectNode {
 	
-	IShapeModel getShapeModel();
+	IModel getModel();
+	
+	IChildModel getShapeModel();
 	
 	int getNumShapes();
 	
@@ -19,5 +21,5 @@ public interface IRootObject extends ICanvasObject {
 	 * Provides and iterator for all the children of this shape.
 	 * @return An new iterator to the collection of child shapes. 
 	 */
-	Iterator<IShape> childShapeIterator();
+	Iterator<IShapeAttribute> childShapeIterator();
 }

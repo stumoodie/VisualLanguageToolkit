@@ -3,9 +3,9 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundGraph;
 import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraph;
@@ -23,7 +23,7 @@ public class SelectionSubgraph extends ArchetypalSubCompoundGraphFactory impleme
 		super(new SelectionSubgraphBuilder(model));
 	}
 	
-	public void addShape(IShape selectedShape){
+	public void addShape(IShapeAttribute selectedShape){
 		Shape shape = (Shape)selectedShape;
 		this.addNode(shape);
 	}
@@ -31,7 +31,7 @@ public class SelectionSubgraph extends ArchetypalSubCompoundGraphFactory impleme
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraph#addLink(org.pathwayeditor.businessobjects.drawingprimitives.ILink)
 	 */
-	public void addLink(ILink selectedLink) {
+	public void addLink(ILinkAttribute selectedLink) {
 		Link link = (Link)selectedLink;
 		this.addEdge(link);
 	}

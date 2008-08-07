@@ -19,10 +19,10 @@ public interface IModel {
 	IModel createCopy(ICanvas newCanvas);
 	
 	boolean canCreateLink(ILinkObjectType linkObjectType,
-							IShape srcShape, IShape tgtShape);
+							IShapeAttribute srcShape, IShapeAttribute tgtShape);
 	
-	ILink createLink(ILinkObjectType linkObjectType,
-			IShape srcShape, IShape tgtShape);
+	ILinkAttribute createLink(ILinkObjectType linkObjectType,
+			IShapeAttribute srcShape, IShapeAttribute tgtShape);
 	
 	IModelState getCurrentState();
 	
@@ -30,25 +30,25 @@ public interface IModel {
 	
 	void removeSubgraph(ICanvasObjectSelection selection);
 	
-	IRootObject getRootObject();
+	IRootObjectNode getRootObject();
 	
 	/**
 	 * Iterates over the link edges that are in the model.
 	 * @return
 	 */
-	Iterator<ILink> linkIterator();
+	Iterator<ILinkAttribute> linkIterator();
 
 	/**
 	 * Iterators over all the shapes in the model.
 	 * @return
 	 */
-	Iterator<IShape> shapeIterator();
+	Iterator<IShapeAttribute> shapeIterator();
 	
 	/**
 	 * Iterators over all the shapes in the model.
 	 * @return
 	 */
-	Iterator<ILabel> labelIterator();
+	Iterator<ILabelAttribute> labelIterator();
 	
 	int getNumLinks();
 	

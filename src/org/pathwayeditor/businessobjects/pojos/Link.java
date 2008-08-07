@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecoration;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
@@ -23,7 +23,7 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundEdge;
  * @author smoodie
  *
  */
-public class Link extends ArchetypalCompoundEdge implements ILink {
+public class Link extends ArchetypalCompoundEdge implements ILinkAttribute {
 	private ILinkObjectType linkObjectType;
 	
 	public Link(ILinkObjectType linkObjectType, ShapeModel owningSubgraph, int index, Shape outNode, Shape inNode){
@@ -55,7 +55,7 @@ public class Link extends ArchetypalCompoundEdge implements ILink {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#canChangeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public boolean canChangeSource(IShape newShape) {
+	public boolean canChangeSource(IShapeAttribute newShape) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -63,7 +63,7 @@ public class Link extends ArchetypalCompoundEdge implements ILink {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#canChangeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public boolean canChangeTarget(IShape newShape) {
+	public boolean canChangeTarget(IShapeAttribute newShape) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -71,7 +71,7 @@ public class Link extends ArchetypalCompoundEdge implements ILink {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#changeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public void changeSource(IShape newShape) {
+	public void changeSource(IShapeAttribute newShape) {
 		// TODO Auto-generated method stub
 
 	}
@@ -79,7 +79,7 @@ public class Link extends ArchetypalCompoundEdge implements ILink {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#changeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public void changeTarget(IShape newShape) {
+	public void changeTarget(IShapeAttribute newShape) {
 		// TODO Auto-generated method stub
 
 	}
@@ -142,14 +142,14 @@ public class Link extends ArchetypalCompoundEdge implements ILink {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getSourceShape()
 	 */
-	public IShape getSourceShape() {
+	public IShapeAttribute getSourceShape() {
 		return (Shape)super.getConnectedNodes().getOutNode();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getTargetShape()
 	 */
-	public IShape getTargetShape() {
+	public IShapeAttribute getTargetShape() {
 		return (Shape)super.getConnectedNodes().getInNode();
 	}
 

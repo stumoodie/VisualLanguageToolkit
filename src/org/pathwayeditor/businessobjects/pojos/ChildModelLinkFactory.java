@@ -21,7 +21,7 @@ public class ChildModelLinkFactory extends ArchetypalChildCompoundEdgeFactory {
 	/**
 	 * @param parentNode
 	 */
-	public ChildModelLinkFactory(CommonCanvasObject parentNode) {
+	public ChildModelLinkFactory(CommonModelNode parentNode) {
 		super(parentNode);
 	}
 

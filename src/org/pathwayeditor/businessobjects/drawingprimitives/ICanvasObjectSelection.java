@@ -13,8 +13,8 @@ public interface ICanvasObjectSelection {
 	 * Add a shape to the selection 
 	 * @param selectedShape
 	 */
-	void addShape(IShape selectedShape);
+	void addShape(IShapeAttribute selectedShape);
 
-	void addLink(ILink selectedLink);
+	void addLink(ILinkAttribute selectedLink);
 	
 }

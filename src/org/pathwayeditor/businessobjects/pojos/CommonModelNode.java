@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
@@ -12,13 +11,13 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
  * @author smoodie
  *
  */
-public abstract class CommonCanvasObject extends ArchetypalCompoundNode implements ICanvasObject {
+public abstract class CommonModelNode extends ArchetypalCompoundNode {
 
 	/**
 	 * @param superGraph
 	 * @param index
 	 */
-	public CommonCanvasObject(Model superGraph, int index) {
+	public CommonModelNode(Model superGraph, int index) {
 		super(superGraph, index);
 	}
 
@@ -26,9 +25,13 @@ public abstract class CommonCanvasObject extends ArchetypalCompoundNode implemen
 	 * @param parent
 	 * @param index
 	 */
-	public CommonCanvasObject(CommonCanvasObject parent, int index) {
+	public CommonModelNode(CommonModelNode parent, int index) {
 		super(parent, index);
 	}
 	
 	public abstract INodeObjectType getObjectType();
+	
+	public Model getModel(){
+		return (Model)super.getGraph();
+	}
 }

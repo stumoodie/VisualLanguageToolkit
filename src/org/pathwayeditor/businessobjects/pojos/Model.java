@@ -8,12 +8,12 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.contectadapter.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootObject;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ed.inf.graph.basic.IBasicSubgraphFactory;
@@ -46,7 +46,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#canCreateLink(org.pathwayeditor.businessobjects.typedefn.ILinkObjectType, org.pathwayeditor.businessobjects.drawingprimitives.IShape, org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public boolean canCreateLink(ILinkObjectType linkObjectType, IShape srcShape, IShape tgtShape) {
+	public boolean canCreateLink(ILinkObjectType linkObjectType, IShapeAttribute srcShape, IShapeAttribute tgtShape) {
 		return linkObjectType.getLinkConnectionRules().isValidTarget(srcShape.getObjectType(), tgtShape.getObjectType());
 	}
 
@@ -61,7 +61,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#createLink(org.pathwayeditor.businessobjects.typedefn.ILinkObjectType, org.pathwayeditor.businessobjects.drawingprimitives.IShape, org.pathwayeditor.businessobjects.drawingprimitives.IShape)
 	 */
-	public ILink createLink(ILinkObjectType linkObjectType, IShape srcShape, IShape tgtShape) {
+	public ILinkAttribute createLink(ILinkObjectType linkObjectType, IShapeAttribute srcShape, IShapeAttribute tgtShape) {
 		ModelLinkFactory fact = this.edgeFactory();
 		fact.setObjectType(linkObjectType);
 		fact.setPair((Shape)srcShape, (Shape)tgtShape);
@@ -103,14 +103,14 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getRootObject()
 	 */
-	public IRootObject getRootObject() {
+	public IRootObjectNode getRootObject() {
 		return (RootObject)this.getRootNode();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#labelIterator()
 	 */
-	public Iterator<ILabel> labelIterator() {
+	public Iterator<ILabelAttribute> labelIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,7 +118,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#linkIterator()
 	 */
-	public Iterator<ILink> linkIterator() {
+	public Iterator<ILinkAttribute> linkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -135,7 +135,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#shapeIterator()
 	 */
-	public Iterator<IShape> shapeIterator() {
+	public Iterator<IShapeAttribute> shapeIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

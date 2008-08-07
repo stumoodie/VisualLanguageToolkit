@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 
@@ -36,7 +36,7 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public ILink getOwningLink() {
+    public ILinkAttribute getOwningLink() {
         return this.owningLink;
     }
     

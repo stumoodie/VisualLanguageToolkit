@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -28,25 +28,25 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
  * @author smoodie
  *
  */
-public class Shape extends CommonCanvasObject implements IShape {
+public class Shape extends CommonModelNode implements IShapeAttribute {
 	private IShapeObjectType objectType;
 	private ShapeModel shapeModel;
 	private final HibShapeAttribute hibShapeAttribute;
 	
 
-	public Shape(IShapeObjectType objectType, CommonCanvasObject parent, int nodeIndex){
+	public Shape(IShapeObjectType objectType, CommonModelNode parent, int nodeIndex){
 		super(parent, nodeIndex);
 		this.objectType = objectType;
 		this.hibShapeAttribute = new HibShapeAttribute();
 	}
 	
-	public Shape(IShapeObjectType objectType, HibShapeAttribute hibShapeAttribute, CommonCanvasObject parent, int nodeIndex){
+	public Shape(IShapeObjectType objectType, HibShapeAttribute hibShapeAttribute, CommonModelNode parent, int nodeIndex){
 		super(parent, nodeIndex);
 		this.objectType = objectType;
 		this.hibShapeAttribute = hibShapeAttribute;
 	}
 	
-	public Shape(CommonCanvasObject parent, int nodeIndex, Shape otherShape){
+	public Shape(CommonModelNode parent, int nodeIndex, Shape otherShape){
 		super(parent, nodeIndex);
 		this.objectType = otherShape.objectType;
 		this.hibShapeAttribute = new HibShapeAttribute(otherShape.hibShapeAttribute);
@@ -63,13 +63,13 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#childShapeIterator()
 	 */
-	public Iterator<IShape> childShapeIterator() {
+	public Iterator<IShapeAttribute> childShapeIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public CommonCanvasObject getParent(){
-		return (CommonCanvasObject)this.getChildCigraph().getRootNode();
+	public CommonModelNode getParent(){
+		return (CommonModelNode)this.getChildCigraph().getRootNode();
 	}
 
 	/* (non-Javadoc)
@@ -202,7 +202,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getShapeModel()
 	 */
-	public IShapeModel getShapeModel() {
+	public IChildModel getShapeModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -234,7 +234,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#inLinkIterator()
 	 */
-	public Iterator<ILink> inLinkIterator() {
+	public Iterator<ILinkAttribute> inLinkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -242,7 +242,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#labelIterator()
 	 */
-	public Iterator<ILabel> labelIterator() {
+	public Iterator<ILabelAttribute> labelIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -250,7 +250,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#linkIterator()
 	 */
-	public Iterator<ILink> linkIterator() {
+	public Iterator<ILinkAttribute> linkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -258,7 +258,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#outLinkIterator()
 	 */
-	public Iterator<ILink> outLinkIterator() {
+	public Iterator<ILinkAttribute> outLinkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -420,7 +420,7 @@ public class Shape extends CommonCanvasObject implements IShape {
 	 */
 	@Override
 	protected void createChildCompoundGraph(ArchetypalCompoundNode rootNode) {
-		this.shapeModel = new ShapeModel((CommonCanvasObject)rootNode);
+		this.shapeModel = new ShapeModel((CommonModelNode)rootNode);
 	}
 
 	HibShapeAttribute getHibShape() {

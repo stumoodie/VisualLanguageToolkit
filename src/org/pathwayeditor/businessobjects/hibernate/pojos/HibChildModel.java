@@ -1,51 +1,45 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.pojos;
+package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-
-import uk.ed.inf.graph.compound.archetypal.ArchetypalChildCompoundGraph;
 
 /**
  * @author smoodie
  *
  */
-public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildModel {
-	private final ShapeFactory shapeFactory;
-	private final ChildModelLinkFactory childLinkFactory;
-	
-	public ShapeModel(CommonModelNode root){
-		super(root, new CopyBuilder());
-		this.shapeFactory = new ShapeFactory(root);
-		this.childLinkFactory = new ChildModelLinkFactory(root);
-	}
+public class HibChildModel implements Serializable, IChildModel {
+	private static final long serialVersionUID = 553931921988021541L;
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#canCopyHere(org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraph)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#canCopyHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection) {
-		
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#canCreateShape(org.pathwayeditor.businessobjects.typedefn.IShapeObjectType)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#canCreateShape(org.pathwayeditor.businessobjects.typedefn.IShapeObjectType)
 	 */
 	public boolean canCreateShape(IShapeObjectType newShapeType) {
-		return this.getRootNode().getObjectType().getParentingRules().isValidChild(newShapeType);
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#canMoveHere(org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraph)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#canMoveHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public boolean canMoveHere(ICanvasObjectSelection canvasObjectSelection) {
 		// TODO Auto-generated method stub
@@ -53,15 +47,15 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#copyHere(org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraph)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#copyHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public void copyHere(ICanvasObjectSelection canvasObjectSelection) {
-		SelectionSubgraph selection = (SelectionSubgraph)canvasObjectSelection;
-		super.copyHere(selection.createSubgraph());
+		// TODO Auto-generated method stub
+
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#createShape(org.pathwayeditor.businessobjects.typedefn.IShapeObjectType)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#createShape(org.pathwayeditor.businessobjects.typedefn.IShapeObjectType)
 	 */
 	public IShapeAttribute createShape(IShapeObjectType shapeType) {
 		// TODO Auto-generated method stub
@@ -69,14 +63,15 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#getModel()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#getModel()
 	 */
-	public Model getModel() {
-		return (Model)super.getSuperGraph();
+	public IModel getModel() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#getNumLabels()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#getNumLabels()
 	 */
 	public int getNumLabels() {
 		// TODO Auto-generated method stub
@@ -84,7 +79,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#getNumLinks()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#getNumLinks()
 	 */
 	public int getNumLinks() {
 		// TODO Auto-generated method stub
@@ -92,7 +87,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#getNumShapes()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#getNumShapes()
 	 */
 	public int getNumShapes() {
 		// TODO Auto-generated method stub
@@ -100,7 +95,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#labelIterator()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#labelIterator()
 	 */
 	public Iterator<ILabelAttribute> labelIterator() {
 		// TODO Auto-generated method stub
@@ -108,7 +103,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#linkIterator()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#linkIterator()
 	 */
 	public Iterator<ILinkAttribute> linkIterator() {
 		// TODO Auto-generated method stub
@@ -116,7 +111,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#moveHere(org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraph)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#moveHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public void moveHere(ICanvasObjectSelection canvasObjectSelection) {
 		// TODO Auto-generated method stub
@@ -124,7 +119,7 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel#shapeIterator()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IChildModel#shapeIterator()
 	 */
 	public Iterator<IShapeAttribute> shapeIterator() {
 		// TODO Auto-generated method stub
@@ -171,22 +166,4 @@ public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildMo
 
 	}
 
-	/* (non-Javadoc)
-	 * @see uk.ed.inf.graph.compound.IModifiableChildCompoundGraph#edgeFactory()
-	 */
-	public ChildModelLinkFactory edgeFactory() {
-		return this.childLinkFactory;
-	}
-
-	/* (non-Javadoc)
-	 * @see uk.ed.inf.graph.compound.IModifiableChildCompoundGraph#nodeFactory()
-	 */
-	public ShapeFactory nodeFactory() {
-		return this.shapeFactory;
-	}
-	
-	@Override
-	public CommonModelNode getRootNode(){
-		return (CommonModelNode)super.getRootNode();
-	}
 }

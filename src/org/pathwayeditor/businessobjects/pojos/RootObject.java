@@ -6,9 +6,9 @@ package org.pathwayeditor.businessobjects.pojos;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootObject;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
@@ -17,7 +17,7 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
  * @author smoodie
  *
  */
-public class RootObject extends CommonCanvasObject implements IRootObject {
+public class RootObject extends CommonModelNode implements IRootObjectNode {
 	private ShapeModel shapeModel;
 	
 	/**
@@ -48,7 +48,7 @@ public class RootObject extends CommonCanvasObject implements IRootObject {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#childShapeIterator()
 	 */
-	public Iterator<IShape> childShapeIterator() {
+	public Iterator<IShapeAttribute> childShapeIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -64,7 +64,7 @@ public class RootObject extends CommonCanvasObject implements IRootObject {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getShapeModel()
 	 */
-	public IShapeModel getShapeModel() {
+	public IChildModel getShapeModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -98,6 +98,14 @@ public class RootObject extends CommonCanvasObject implements IRootObject {
 	 */
 	@Override
 	public INodeObjectType getObjectType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode#getModel()
+	 */
+	public Model getModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -4,7 +4,9 @@
 package org.pathwayeditor.businessobjects.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
@@ -18,7 +20,7 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
  * @author smoodie
  *
  */
-public class Label extends CommonCanvasObject implements ILabel {
+public class Label extends CommonModelNode implements ILabelNode {
 
 	public Label(Model superGraph, int index){
 		super(superGraph, index);
@@ -119,6 +121,22 @@ public class Label extends CommonCanvasObject implements ILabel {
 	 */
 	@Override
 	public INodeObjectType getObjectType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getAttribute()
+	 */
+	public ILabelAttribute getAttribute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getOwningShape()
+	 */
+	public IShapeNode getOwningShape() {
 		// TODO Auto-generated method stub
 		return null;
 	}

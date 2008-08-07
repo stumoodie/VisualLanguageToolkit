@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import java.util.Iterator;
-
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
@@ -11,12 +9,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShape extends  IZOrderedObject, IAnnotatedObject , ICanvasObject {
+public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , ICanvasObject {
 
 	IShapeObjectType getObjectType();
 	
-	ICanvasObject getParent();
-
 	String getName();
 	void setName(String name);
 	
@@ -63,42 +59,4 @@ public interface IShape extends  IZOrderedObject, IAnnotatedObject , ICanvasObje
 	 * @throws IllegalArgumentException if <code>hasProperty(propertyName) == false</code>.
 	 */
 	IAnnotationProperty getProperty(String propertyName);
-	
-	IShapeModel getShapeModel();
-	
-	int getNumLinks();
-	/**
-	 * Provides and iterator for all the links associated with this shape.
-	 * @return An new iterator to the collection of links. 
-	 */
-	Iterator<ILink> linkIterator();
-
-	int getNumOutLinks();
-	
-	/**
-	 * Provides and iterator for all the links where this shape is a source.
-	 * @return An new iterator to the collection of links. 
-	 */
-	Iterator<ILink> outLinkIterator();
-
-	int getNumInLinks();
-	
-	/**
-	 * Provides and iterator for all the links where this shape is a target.
-	 * @return An new iterator to the collection of links. 
-	 */
-	Iterator<ILink> inLinkIterator();
-
-	int getNumChildren();
-	
-	/**
-	 * Provides and iterator for all the children of this shape.
-	 * @return An new iterator to the collection of child shapes. 
-	 */
-	Iterator<IShape> childShapeIterator();
-	
-	int getNumLabels();
-	
-	Iterator<ILabel> labelIterator();
-	
 }

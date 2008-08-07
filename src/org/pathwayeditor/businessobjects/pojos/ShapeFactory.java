@@ -18,7 +18,7 @@ public class ShapeFactory extends ArchetypalCompoundNodeFactory {
 	/**
 	 * @param parent
 	 */
-	public ShapeFactory(CommonCanvasObject parent) {
+	public ShapeFactory(CommonModelNode parent) {
 		super(parent);
 	}
 
@@ -31,7 +31,7 @@ public class ShapeFactory extends ArchetypalCompoundNodeFactory {
 	 */
 	@Override
 	protected ArchetypalCompoundNode newNode(ArchetypalCompoundNode parent,	int nodeIndex) {
-		return new Shape(this.objectType, (CommonCanvasObject)parent, nodeIndex);
+		return new Shape(this.objectType, (CommonModelNode)parent, nodeIndex);
 	}
 
 	/**

@@ -52,7 +52,7 @@ public class DbHibShapeTest extends PojoTester{
 	private static final String SHAPE_DESCR_2 = "descr2";
 	private static final String DETAILED_DESCR_2 = "detailed descr2";
 	private static final int NUMERIC_VALUE_TWO = 2;
-	private static final long EXPECTED_NODE_VALUE = 100002L;
+	private static final int EXPECTED_NODE_VALUE = 2;
 //	private static final int NODE_IDX_IDX = 110000;
 	
 	
@@ -84,7 +84,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("height" , SIZE_VALUE , dbShape.getHeight()) ;
 		assertEquals ("width" , SIZE_VALUE , dbShape.getWidth()) ;
 		assertEquals ("url" , URL_VALUE , dbShape.getUrl()) ;
-		assertEquals ("node_id" , (Long)EXPECTED_NODE_VALUE , dbShape.getShapeNode().getId()) ;
+		assertEquals ("node_id" , EXPECTED_NODE_VALUE , dbShape.getShapeNode().getNodeIndex()) ;
 		
 	}
 	

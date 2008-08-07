@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * @author smoodie
  *
  */
-public interface IShapeModel extends IZOrdering {
+public interface IChildModel extends IZOrdering {
 	/**
 	 * Get model that this is a subset of.
 	 * @return
@@ -33,7 +33,7 @@ public interface IShapeModel extends IZOrdering {
 	 * @return The new shape that is a child of this shape.
 	 * @throws IllegalArgumentException if <code>canCreateChildShape(shapeType) == false</code>.
 	 */
-	IShape createShape(IShapeObjectType shapeType);
+	IShapeAttribute createShape(IShapeObjectType shapeType);
 	
 	/**
 	 * Is the submodel a valid destination? This requires that the sub-model is
@@ -89,17 +89,17 @@ public interface IShapeModel extends IZOrdering {
 	 * traversal will proceed down the tree until all nodes are traversed.
 	 * @return
 	 */
-	Iterator<IShape> shapeIterator();
+	Iterator<IShapeAttribute> shapeIterator();
 	
 	/**
 	 * Traverses over the list of links in this sub-model.
 	 * @return
 	 */
-	Iterator<ILink> linkIterator();
+	Iterator<ILinkAttribute> linkIterator();
 
 	/**
 	 * Traverses over the list of links in this sub-model.
 	 * @return
 	 */
-	Iterator<ILabel> labelIterator();
+	Iterator<ILabelAttribute> labelIterator();
 }
