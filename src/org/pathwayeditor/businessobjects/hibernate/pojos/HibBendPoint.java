@@ -2,6 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 
@@ -12,7 +13,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
  */
 public class HibBendPoint  implements IBendPoint,  Serializable {
 
-	 private Location location ;
      private Long id;
      private HibLinkAttribute owningLink;
      private int indexPos;
@@ -36,7 +36,7 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public HibLinkAttribute getOwningLink() {
+    public ILink getOwningLink() {
         return this.owningLink;
     }
     
@@ -72,7 +72,9 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
 		 if ( !(other instanceof HibBendPoint) ) return false;
 		 HibBendPoint castOther = ( HibBendPoint ) other; 
          
-		 return ( (this.getOwningLink()==castOther.getOwningLink()) || ( this.getOwningLink()!=null && castOther.getOwningLink()!=null && this.getOwningLink().equals(castOther.getOwningLink()) ) )
+		 return ( (this.getOwningLink()==castOther.getOwningLink()) || 
+				 ( this.getOwningLink()!=null && castOther.getOwningLink()!=null && 
+						 this.getOwningLink().equals(castOther.getOwningLink()) ) )
  && (this.getIndexPos()==castOther.getIndexPos());
    }
    
@@ -95,8 +97,7 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#getLocation()
 	 */
 	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return location;
+		return new Location ( XPosition , YPosition );
 	}
     	
 

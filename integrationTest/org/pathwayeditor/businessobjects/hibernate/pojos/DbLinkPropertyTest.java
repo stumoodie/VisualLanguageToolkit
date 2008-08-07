@@ -67,10 +67,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
-		HibNumberProperty numberProperty = new HibNumberProperty ( ) ;
-		numberProperty.setNumberValue(NUMBER_VALUE_TEN) ;
-		numberProperty.setCreationSerial(CREATION_SERIAL);
-		numberProperty.setCanvas(dbLink.getCanvas()) ;
+		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , NUMBER_VALUE_TEN ) ;
 		
 		dbLink.addLinkProperty("NUMBER_PROPERTY_NAME" , numberProperty ) ;
 		
@@ -106,10 +103,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
-		HibTextProperty textProperty = new HibTextProperty ( ) ;
-		textProperty.setTextValue(TEXT_PROPERTY_VALUE) ;
-		textProperty.setCreationSerial(CREATION_SERIAL);
-		textProperty.setCanvas(dbLink.getCanvas()) ;
+		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
 		
 		dbLink.addLinkProperty("TEXT_PROPERTY_NAME" , textProperty ) ;
 		
@@ -145,10 +139,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( ) ;
-		richTextProperty.setRichTextValue(TEXT_PROPERTY_VALUE) ;
-		richTextProperty.setCreationSerial(CREATION_SERIAL);
-		richTextProperty.setCanvas(dbLink.getCanvas()) ;
+		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
 		
 		dbLink.addLinkProperty("RICH_TEXT_PROPERTY_NAME" , richTextProperty ) ;
 		
@@ -184,20 +175,19 @@ public class DbLinkPropertyTest extends PojoTester {
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		
-		HibListProperty numberProperty = new HibListProperty ( ) ;
-		
 		List <String> valuesToEnter = new ArrayList<String> (2) ; 
 		valuesToEnter.add(VALUE_TO_ENTER_1);
 		valuesToEnter.add(VALUE_TO_ENTER_2);
 		
+		HibListProperty listProperty = new HibListProperty ((HibCanvas)dbLink.getCanvas() , CREATION_SERIAL ,valuesToEnter ) ;
 		
-		numberProperty.setValues(valuesToEnter) ;
-		numberProperty.setCreationSerial(CREATION_SERIAL);
-		numberProperty.setCanvas(dbLink.getCanvas()) ;
+//		listProperty.setValues(valuesToEnter) ;
+//		listProperty.setCreationSerial(CREATION_SERIAL);
+//		numberProperty.setCanvas() ;
 		
-		dbLink.addLinkProperty("LIST_PROPERTY_NAME" , numberProperty ) ;
+		dbLink.addLinkProperty("LIST_PROPERTY_NAME" , listProperty ) ;
 		
-		getSession().save(numberProperty) ;
+		getSession().save(listProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
 		getSession().getTransaction().commit() ;
 		

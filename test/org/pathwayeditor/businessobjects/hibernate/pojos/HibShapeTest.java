@@ -110,8 +110,8 @@ public class HibShapeTest {
 		shape.setCanvas(mockCanvas) ;
 		shape2.setCanvas(mockCanvas) ;
 		
-		shape.setObjectType(mockObjectType) ;
-		shape2.setObjectType(mockObjectType) ;
+		shape.setHibObjectType(mockObjectType) ;
+		shape2.setHibObjectType(mockObjectType) ;
 		
 		assertTrue ( shape.equals(shape)) ;
 		assertFalse ( shape.equals(null)) ;
@@ -136,8 +136,8 @@ public class HibShapeTest {
 		shape.setCanvas(mockCanvas) ;
 		shape2.setCanvas(mockCanvas) ;
 		
-		shape.setObjectType(mockObjectType) ;
-		shape2.setObjectType(mockObjectType) ;
+		shape.setHibObjectType(mockObjectType) ;
+		shape2.setHibObjectType(mockObjectType) ;
 		
 		assertEquals ( shape.hashCode() , shape.hashCode() ) ;
 		assertFalse ( shape.hashCode() == shape2.hashCode() ) ;
@@ -159,7 +159,7 @@ public class HibShapeTest {
 		aShape.setLineRed(COLOR_VALUE + a) ;
 		aShape.setLineGreen(COLOR_VALUE + a) ;
 		aShape.setLineWidth(NUMERIC_VALUE_ONE + a) ;
-		aShape.setLineStyle(NUMERIC_VALUE_ONE + a) ;
+		aShape.setHibLineStyle(NUMERIC_VALUE_ONE + a) ;
 		aShape.setPadding(NUMERIC_VALUE_ONE + a) ;
 		aShape.setShapeType((short)(NUMERIC_VALUE_ONE + a)) ;
 		aShape.setXPosition(POSITION_VALUE + a) ;

@@ -24,11 +24,12 @@ public class HibLinkEndDecorator  implements ILinkEndDecoration ,Serializable {
     public HibLinkEndDecorator() {
     }
 
-    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, short decoratorType, int width, int height) {
+    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, short decoratorType, int width, int height , int gap) {
        this.hibLinkTerminus = hibLinkTerminus;
        this.decoratorType = decoratorType;
        this.width = width;
        this.height = height;
+       this.gap = gap ;
     }
    
     public Long getId() {
@@ -80,10 +81,7 @@ public class HibLinkEndDecorator  implements ILinkEndDecoration ,Serializable {
    public int hashCode() {
          int result = 17;
          
-         
          result = 37 * result + ( getLinkTerminus() == null ? 0 : this.getLinkTerminus().hashCode() );
-         
-         
          
          return result;
    }   

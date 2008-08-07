@@ -33,7 +33,7 @@
             <column name="height" not-null="true" />
         </property>
 
-        <many-to-one name="objectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" fetch="select">
+        <many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" fetch="select">
         	<column name="object_type_id" not-null="true" />
          </many-to-one>
        	<property name="name" type="string">
@@ -66,7 +66,7 @@
        	<property name="lineBlue" type="int">
            	<column name="line_blue" not-null="true" />
        	</property>
-       	<property name="lineStyle" type="int">
+       	<property name="hibLineStyle" type="int">
            	<column name="line_style" not-null="true" />
        	</property>
        	<property name="lineWidth" type="int">

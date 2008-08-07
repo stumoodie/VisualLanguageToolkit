@@ -1,8 +1,10 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILink;
+
 
 public interface IBendPoint {
-//	ILink getOwningLink();
+	ILink getOwningLink();
 	
 	Location getLocation();
 }

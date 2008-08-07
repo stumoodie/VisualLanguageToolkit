@@ -75,9 +75,8 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("line red" , COLOR_VALUE , dbShape.getLineRed()) ;
 		assertEquals ("line blue" , COLOR_VALUE , dbShape.getLineBlue()) ;
 		assertEquals ("line green" , COLOR_VALUE , dbShape.getLineGreen()) ;
-		assertEquals ("line style" , NUMERIC_VALUE_ONE , dbShape.getLineStyle()) ;
 		assertEquals ("line width" , NUMERIC_VALUE_ONE , dbShape.getLineWidth()) ;
-		assertEquals ("line style" , NUMERIC_VALUE_ONE , dbShape.getLineStyle()) ;
+		assertEquals ("line style" , NUMERIC_VALUE_ONE , dbShape.getHibLineStyle()) ;
 		assertEquals ("padding" , NUMERIC_VALUE_ONE , dbShape.getPadding()) ;
 		assertEquals ("shape type" , NUMERIC_VALUE_ONE , dbShape.getShapeType()) ;
 		assertEquals ("x position" , POSITION_VALUE , dbShape.getXPosition()) ;
@@ -114,7 +113,7 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setLineRed(COLOR_VALUE_2) ;
 		shapeToSave.setLineGreen(COLOR_VALUE_2) ;
 		shapeToSave.setLineWidth(NUMERIC_VALUE_TWO) ;
-		shapeToSave.setLineStyle(NUMERIC_VALUE_TWO) ;
+		shapeToSave.setHibLineStyle(NUMERIC_VALUE_TWO) ;
 		shapeToSave.setPadding(NUMERIC_VALUE_TWO) ;
 		shapeToSave.setShapeType((short)NUMERIC_VALUE_TWO) ;
 		shapeToSave.setXPosition(POSITION_VALUE_2) ;
@@ -124,7 +123,7 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setUrl(URL_VALUE_2) ;
 		
 		shapeToSave.changeCanvas(dbCanvas) ;
-		shapeToSave.setObjectType(objectType) ;
+		shapeToSave.setHibObjectType(objectType) ;
 		
 		getSession().save(hibNode);
 		getSession().getTransaction().commit() ;

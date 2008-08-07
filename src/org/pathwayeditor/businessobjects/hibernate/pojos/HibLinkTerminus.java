@@ -119,32 +119,6 @@ public class HibLinkTerminus  implements ILinkTerminus , java.io.Serializable {
     	
   // end of extra code specified in the hbm.xml files
 	
-	public void addLinkTerminusProperty ( String name , HibProperty toAdd ) 
-	{
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		HibLinkTerminus oldLinkTerminus = toAdd.getLinkTerminus() ;
-		if (oldLinkTerminus != null) {
-			oldLinkTerminus.getProperties().remove(toAdd);
-		}
-		this.hibProperties.put(name ,toAdd);
-		toAdd.setLinkTerminus(this);
-	}
-	
-	void removeLinTerminusProperty(String toRemove) {
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
-		if  (propertyToRemove == null)
-			throw new IllegalStateException("property cannot be null");
-		if (propertyToRemove.getLinkTerminus() != this)
-			throw new IllegalArgumentException(
-					"property must belong to this canvas");	
-		
-		this.hibProperties.remove(toRemove) ;
-		propertyToRemove.setLinkTerminus(null);
-	}
-	
 //	public void changeLinkEndDecorator ( HibLinkEndDecorator newLinkEndDecorator)
 //	{
 //		   HibLinkEndDecorator oldDecorator = this.linkenddecorators ;
