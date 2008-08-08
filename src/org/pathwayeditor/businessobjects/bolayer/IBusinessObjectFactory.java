@@ -14,13 +14,13 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
 public interface IBusinessObjectFactory {
 
 	/**
-	 * Gets the repository by name that contains all the folders,
+	 * Gets the repository for this instance that contains all the folders,
 	 * and maps. It will load it from persistent storage if necessary. 
-	 * The repository is attached to a database transaction 
+	 * The repository is attached to a database transaction. 
 	 * @return the repository
 	 * @Param name the name of the repository which is guaranteed unique
 	 */
-	IRepository getRepository(String name);
+	IRepository getRepository();
 	
 	
 	/**

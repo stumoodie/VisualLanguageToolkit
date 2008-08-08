@@ -24,14 +24,14 @@ import org.junit.BeforeClass;
  */
 public abstract class PojoTester {
 
-	private static HibernateDbTester dbTester = null;
+	private static HibernateDataSource dbTester = null;
 	private SessionFactory hibFactory;
 	private Session session;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
+		dbTester = new HibernateDataSource(HIB_CONFIG_FILE);
 		dbTester.createSchema();
 	}
 
@@ -77,7 +77,7 @@ public abstract class PojoTester {
 		this.hibFactory = null;
 	}
 
-	protected HibernateDbTester getDbTester() {
+	protected HibernateDataSource getDbTester() {
 		return this.dbTester;
 	}
 

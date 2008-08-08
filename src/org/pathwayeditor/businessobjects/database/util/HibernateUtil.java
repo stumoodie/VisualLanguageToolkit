@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.database.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.pathwayeditor.testutils.HibernateDbTester;
+import org.pathwayeditor.testutils.HibernateDataSource;
 import org.pathwayeditor.testutils.StubSessionFactory;
 
 /**
@@ -12,13 +12,9 @@ import org.pathwayeditor.testutils.StubSessionFactory;
  * 
  */
 public class HibernateUtil {
-	private static final ThreadLocal threadSession = new ThreadLocal();
-	private static final ThreadLocal threadTransaction = new ThreadLocal();
-	private static HibernateDbTester dataSource = new HibernateDbTester(
+	private static HibernateDataSource dataSource = new HibernateDataSource(
 			"test_hibernate.cfg.xml");
 	private static SessionFactory defaultSessionFactory;
-	private static SessionFactory testSessionFactory;
-	private static boolean created;
 	private static Session session;
 
 	// ///////////// THIS IS THE FIX FOR LEOPARD CLASSLOADER BUG PLEASE DONT
@@ -87,6 +83,13 @@ public class HibernateUtil {
 		session = defaultSessionFactory.getCurrentSession();
 		session.beginTransaction();
 		return session;
+	}
+
+	/**
+	 * @param conn
+	 */
+	public static void setConnectionInfo(IConnectionInfo conn) {
+		dataSource.setConnectionInfo(conn);
 	}
 
 

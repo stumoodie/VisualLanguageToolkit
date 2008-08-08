@@ -23,13 +23,13 @@ import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
  */
 public abstract class GenericTester {
 
-	private static HibernateDbTester dbTester = null;
+	private static HibernateDataSource dbTester = null;
 	private Session session;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateDbTester(HIB_CONFIG_FILE);
+		dbTester = new HibernateDataSource(HIB_CONFIG_FILE);
 		dbTester.createSchema();
 	}
 
@@ -65,7 +65,7 @@ public abstract class GenericTester {
 		dbTester.onTearDown();
 	}
 
-	protected HibernateDbTester getDbTester() {
+	protected HibernateDataSource getDbTester() {
 		return this.dbTester;
 	}
 

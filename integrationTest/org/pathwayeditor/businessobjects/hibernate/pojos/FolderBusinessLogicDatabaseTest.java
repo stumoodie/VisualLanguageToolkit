@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
 import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
+import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -34,9 +35,9 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 	private IRepository rep;
-	private IBusinessObjectFactory bo =BusinessObjectFactory.getInstance();
+	private IBusinessObjectFactory bo =new BusinessObjectFactory(new ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb","repo name","org.hsqldb.jdbcDriver"));
 
-	@Before
+	@Before	
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -83,11 +84,6 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testMoveSubFolderAddsSubFolderToNewParent() {
-//		List test = getSession()
-//				.createQuery(
-//						"from HibSubFolder sub where sub.name = 'subfolder4' and sub.parentFolder.id='100001'")
-//				.list();
-//		assertEquals(0, test.size());
 		IRootFolder r = rep.getRootFolder();
 		IFolder sub = rep.getFolderByPath("/subfolder2/subfolder4");
 		r.moveSubfolder((ISubFolder) sub);

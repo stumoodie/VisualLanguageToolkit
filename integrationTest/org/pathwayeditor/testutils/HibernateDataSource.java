@@ -11,12 +11,13 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 
 /**
  * @author smoodie
  *
  */
-public class HibernateDbTester implements IDatabaseTester {
+public class HibernateDataSource implements IDatabaseTester {
 	private static final String HIB_PROP_DRIVER_CLASS = "hibernate.connection.driver_class";
 	private static final String HIB_PROP_URL = "hibernate.connection.url";
 	private static final String HIB_PROP_USERNAME = "hibernate.connection.username";
@@ -25,7 +26,7 @@ public class HibernateDbTester implements IDatabaseTester {
 	private final Configuration hibConfig;
 	private final HqlDbSchema schemaManager;
 	
-	public HibernateDbTester(String xmlConfigFile){
+	public HibernateDataSource(String xmlConfigFile){
 		Configuration hibConf = new Configuration();
 		this.hibConfig = hibConf.configure(xmlConfigFile);
 		String driverClass = hibConfig.getProperty(HIB_PROP_DRIVER_CLASS);
@@ -147,5 +148,15 @@ public class HibernateDbTester implements IDatabaseTester {
 	 */
 	public void setTearDownOperation(DatabaseOperation tearDownOperation) {
 		this.delegator.setTearDownOperation(tearDownOperation);
+	}
+
+	/**
+	 * @param conn
+	 */
+	public void setConnectionInfo(IConnectionInfo conn) {
+		hibConfig.setProperty(HIB_PROP_DRIVER_CLASS,conn.getDriverName());
+		hibConfig.setProperty(HIB_PROP_URL,conn.getUrl());
+		hibConfig.setProperty(HIB_PROP_USERNAME,conn.getUserName());
+		hibConfig.setProperty(HIB_PROP_PASSWORD, conn.getPassword());
 	}
 }

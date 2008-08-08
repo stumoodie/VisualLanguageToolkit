@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.hibernate.LockMode;
 import org.hibernate.Session;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
+import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
@@ -21,18 +22,12 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  * 
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
-	private static BusinessObjectFactory anInstance;
 	private HibRepository rep;
+	private IConnectionInfo conn;
 
-	public static IBusinessObjectFactory getInstance() {
-		if (anInstance == null) {
-			anInstance = new BusinessObjectFactory();
-		}
-		return anInstance;
-	}
-
-	private BusinessObjectFactory() {
-
+	public  BusinessObjectFactory(IConnectionInfo conn) {
+		this.conn=conn;
+		HibernateUtil.setConnectionInfo(conn);
 	}
 
 	/*
@@ -40,12 +35,12 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#getRepository()
 	 */
-	public synchronized IRepository getRepository(String name) {
+	public synchronized IRepository getRepository() {
 		if (rep == null) {
 			Session s = HibernateUtil.getSession();
 			rep = (HibRepository) s.createQuery(
 					"from HibRepository r  where r.name = :name").setString(
-					"name", name).uniqueResult();
+					"name", conn.getRepositoryName()).uniqueResult();
 			HibRootFolder root = rep.getHibRootFolder();
 			loadSubFoldersAndMaps(root);
 			HibernateUtil.commit();
@@ -57,7 +52,7 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 
 	public synchronized IRepository getFreshRepository(String name) {
 		rep = null;
-		return getRepository(name);
+		return getRepository();
 	}
 
 	/**
