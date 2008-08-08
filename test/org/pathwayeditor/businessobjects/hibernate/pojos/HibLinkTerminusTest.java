@@ -113,4 +113,6 @@ public class HibLinkTerminusTest {
 		assertEquals ( "no properties" , 0 , linkTerminus.getProperties().size()) ;
 
 	}
+	
+
 }

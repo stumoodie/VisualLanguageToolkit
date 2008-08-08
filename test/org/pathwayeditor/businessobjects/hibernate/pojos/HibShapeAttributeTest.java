@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  *
  */
 @RunWith(JMock.class)
-public class HibShapeTest {
+public class HibShapeAttributeTest {
 	
 	private static final int CREATION_SERIAL = 123456 ;
 	private static final String SHAPE_NAME = "shapeName" ;

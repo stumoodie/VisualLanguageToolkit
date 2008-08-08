@@ -86,7 +86,8 @@ public class HibLinkEdge implements ILinkEdge {
 		this.inNode = inNode;
 	}
 
-
+	// TODO tests from here on
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#canChangeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */

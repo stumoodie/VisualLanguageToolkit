@@ -399,7 +399,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
         
         return result;
   }   
-
+	
+//	TODO tests from here on
+	
 	public HibShapeNode getShapeNode() {
 		return this.shapeNode;
 	}
@@ -412,24 +414,21 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getFillColour()
 	 */
 	public RGB getFillColour() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RGB ( this.fillRed , this.fillGreen , this.fillBlue );
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLineColour()
 	 */
 	public RGB getLineColour() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RGB ( this.lineRed , this.lineGreen , this.lineBlue );
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLocation()
 	 */
 	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Location( this.XPosition , this.YPosition);
 	}
 
 	/* (non-Javadoc)
@@ -460,32 +459,32 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getSize()
 	 */
 	public Size getSize() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Size ( this.width , this.height);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#hasProperty(java.lang.String)
 	 */
 	public boolean hasProperty(String propertyName) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.hibProperties.containsKey(propertyName);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setFillColour(RGB fillColour) {
-		// TODO Auto-generated method stub
-		
+		this.fillBlue = fillColour.getBlue() ;
+		this.fillRed = fillColour.getRed() ;
+		this.fillGreen = fillColour.getGreen() ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setLineColour(RGB lineColour) {
-		// TODO Auto-generated method stub
-		
+		this.lineBlue = lineColour.getBlue() ;
+		this.lineRed = lineColour.getRed() ;
+		this.lineGreen = lineColour.getGreen() ;
 	}
 
 	/* (non-Javadoc)
@@ -500,8 +499,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
 	public void setLocation(Location newLocation) {
-		// TODO Auto-generated method stub
-		
+		this.XPosition = newLocation.getX() ;
+		this.YPosition = newLocation.getY() ;
 	}
 
 	/* (non-Javadoc)
@@ -516,8 +515,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
 	 */
 	public void setSize(Size size) {
-		// TODO Auto-generated method stub
-		
+		this.width = size.getWidth() ;
+		this.height = size.getHeight() ;
 	}
 
 	/* (non-Javadoc)

@@ -7,4 +7,6 @@ public interface IBendPoint {
 	ILinkAttribute getOwningLink();
 	
 	Location getLocation();
+	
+	void setLocation ( Location location ) ;
 }

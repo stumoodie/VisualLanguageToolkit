@@ -15,9 +15,9 @@ public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanv
 	
 	ILinkObjectType getObjectType();
 	
-	ILinkEndDecoration getLinkSourceDecoration();
+	ILinkEndDecorator getLinkSourceDecoration();
 
-	ILinkEndDecoration getLinkTargetDecoration();
+	ILinkEndDecorator getLinkTargetDecoration();
 
 	ConnectionRouter getRouter();
 	

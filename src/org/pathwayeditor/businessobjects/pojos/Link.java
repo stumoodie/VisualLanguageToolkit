@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecoration;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
@@ -111,7 +111,7 @@ public class Link extends ArchetypalCompoundEdge implements ILinkAttribute {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getLinkSourceDecoration()
 	 */
-	public ILinkEndDecoration getLinkSourceDecoration() {
+	public ILinkEndDecorator getLinkSourceDecoration() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,7 +119,7 @@ public class Link extends ArchetypalCompoundEdge implements ILinkAttribute {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getLinkTargetDecoration()
 	 */
-	public ILinkEndDecoration getLinkTargetDecoration() {
+	public ILinkEndDecorator getLinkTargetDecoration() {
 		// TODO Auto-generated method stub
 		return null;
 	}

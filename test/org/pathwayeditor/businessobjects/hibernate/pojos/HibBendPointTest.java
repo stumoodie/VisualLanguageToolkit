@@ -81,4 +81,6 @@ public class HibBendPointTest {
 		
 		assertEquals ("hashCode" , bendPoint.hashCode() , bendPoint.hashCode() ) ;
 	}
+	
+
 }

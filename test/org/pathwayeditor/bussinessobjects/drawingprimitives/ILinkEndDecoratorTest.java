@@ -1,9 +1,10 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.hibernate.pojos;
+package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -13,13 +14,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
+
 
 /**
  * @author ntsorman
  *
  */
 @RunWith(JMock.class)
-public class LinkEndDecoratorTest {
+public class ILinkEndDecoratorTest {
 	
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);
@@ -38,18 +44,15 @@ public class LinkEndDecoratorTest {
 	public void tearDown() throws Exception {
 	}
 	
-	@Test 
-	public void testCreateLinkEndDecorator () throws Exception
+	@Test
+	public void testGet () throws Exception
 	{
 		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
 		
-		HibLinkEndDecorator linkEndDecorator = new HibLinkEndDecorator ( mockLinkTerminus, 
+		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
 				DECORATOR_TYPE, WIDTH, HEIGHT ) ;
 		
-		assertEquals ("link terminus" , mockLinkTerminus , linkEndDecorator.getLinkTerminus() ) ;
-		assertEquals ("decorator type" , DECORATOR_TYPE , linkEndDecorator.getDecoratorType()) ;
-		assertEquals ("width" , WIDTH , linkEndDecorator.getWidth()) ;
-		assertEquals ("height" , HEIGHT , linkEndDecorator.getHeight()) ;
-		
+		assertEquals ( "get LinkTerminus" , mockLinkTerminus , linkEndDecorator.getLinkTerminus() ) ;
+		assertTrue  ("instance of ILinkTerminus" , linkEndDecorator.getLinkTerminus() instanceof ILinkTerminus) ;
 	}
 }

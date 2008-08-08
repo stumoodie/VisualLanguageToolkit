@@ -13,7 +13,7 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecoration;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
@@ -317,7 +317,9 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.linkTermini.remove(toRemove) ;
 		toRemove.setLink(null);		
 	}
-
+	
+//	TODO test from here on
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#addBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
 	 */
@@ -342,16 +344,21 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	/* (non-Javadoc)
+
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#containsBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
 	 */
 	public boolean containsBendPoint(IBendPoint bendPoint) {
+		if ( bendPoint == null )
+			throw new IllegalArgumentException () ;
+		if ( bendPoint.getOwningLink() != this )
+			throw new IllegalArgumentException () ;
 		return this.hibBendPoints.contains((HibBendPoint) bendPoint ) ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getLinkSourceDecoration()
 	 */
-	public ILinkEndDecoration getLinkSourceDecoration() {
+	public ILinkEndDecorator getLinkSourceDecoration() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -359,7 +366,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getLinkTargetDecoration()
 	 */
-	public ILinkEndDecoration getLinkTargetDecoration() {
+	public ILinkEndDecorator getLinkTargetDecoration() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -376,16 +383,21 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#numBendPoints()
 	 */
 	public int numBendPoints() {
-		// TODO Auto-generated method stub
-		return 0;
+		return hibBendPoints.size();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#removeBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
 	 */
 	public void removeBendPoint(IBendPoint bendPoint) {
-		// TODO Auto-generated method stub
+		if ( bendPoint == null )
+			throw new IllegalArgumentException () ;
+		if ( bendPoint.getOwningLink() != this )
+			throw new IllegalArgumentException () ;
+		if ( !containsBendPoint(bendPoint))
+			throw new IllegalArgumentException () ;
 		
+		this.hibBendPoints.remove(bendPoint);
 	}
 
 	/* (non-Javadoc)

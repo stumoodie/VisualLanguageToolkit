@@ -99,6 +99,14 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
 	public Location getLocation() {
 		return new Location ( XPosition , YPosition );
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
+	 */
+	public void setLocation(Location location) {
+		this.XPosition = location.getX() ;
+		this.YPosition = location.getY() ;
+	}
     	
 
 }
