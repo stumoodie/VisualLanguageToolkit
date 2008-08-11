@@ -46,7 +46,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		Query retreivedLinkTerminusDecorator = getSession().createQuery( "from HibLinkTerminusDecorator where id='100001'") ;
 		HibLinkTerminusDecorator dbLinkTerminusDecorator = (HibLinkTerminusDecorator) retreivedLinkTerminusDecorator.uniqueResult() ;
 		
-		assertEquals ("link term type " , NUMERIC_VALUE_ONE , dbLinkTerminus.getLinkEndType()) ;
+		assertEquals ("link term type " , NUMERIC_VALUE_ONE , dbLinkTerminus.getHibLinkEndType()) ;
 		assertEquals ("link term offset" , NUMERIC_VALUE_TEN , dbLinkTerminus.getOffset()) ;
 		assertEquals ("parent link", dbLink.hashCode(), dbLinkTerminus.getLink().hashCode()) ;
 		assertEquals ("link end Decorator" , dbLinkEndDecorator.hashCode() , dbLinkTerminus.getDecorator().hashCode() ) ;
@@ -65,7 +65,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		
 		HibLinkTerminus newLinkTerminus = new HibLinkTerminus ();
 		newLinkTerminus.setOffset((short) 5  );
-		newLinkTerminus.setLinkEndType(2) ;
+		newLinkTerminus.setHibLinkEndType(2) ;
 		
 		dbLink.addLinkTermini(newLinkTerminus) ;
 		

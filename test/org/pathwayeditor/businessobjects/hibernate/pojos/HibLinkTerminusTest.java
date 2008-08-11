@@ -53,7 +53,7 @@ public class HibLinkTerminusTest {
 												mockTerminusDecorator, mockEndDecorator, 
 												properties) ;
 		
-		assertEquals ("link end type" , LINK_END_TYPE , linkTerminus.getLinkEndType()) ;
+		assertEquals ("link end type" , LINK_END_TYPE , linkTerminus.getHibLinkEndType()) ;
 		assertEquals ("offset" , OFFSET , linkTerminus.getOffset()) ;
 		assertEquals ( "terminus decorator" , mockTerminusDecorator , linkTerminus.getDecorator()) ;
 		assertEquals( "end decorator" , mockEndDecorator , linkTerminus.getLinkenddecorators()) ;

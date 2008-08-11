@@ -1,6 +1,11 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
 // Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
@@ -23,7 +28,7 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
      private int lineGreen;
      private int lineBlue;
      private int lineWidth;
-     private int lineStyle;
+     private int hibLineStyle;
      private int width;
      private int height;
 
@@ -40,7 +45,7 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
        this.lineGreen = lineGreen;
        this.lineBlue = lineBlue;
        this.lineWidth = lineWidth;
-       this.lineStyle = lineStyle;
+       this.hibLineStyle = lineStyle;
        this.width = width;
        this.height = height;
     }
@@ -115,12 +120,12 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
     public void setLineWidth(int lineWidth) {
         this.lineWidth = lineWidth;
     }
-    public int getLineStyle() {
-        return this.lineStyle;
+    public int getHibLineStyle() {
+        return this.hibLineStyle;
     }
     
-    public void setLineStyle(int lineStyle) {
-        this.lineStyle = lineStyle;
+    public void setHibLineStyle(int lineStyle) {
+        this.hibLineStyle = lineStyle;
     }
     public int getWidth() {
         return this.width;
@@ -154,7 +159,109 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
          result = 37 * result + ( getLinkTerminus() == null ? 0 : this.getLinkTerminus().hashCode() );
          
          return result;
-   }   
+   }
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getFillColor()
+ */
+public RGB getFillColor() {
+	return new RGB ( this.fillRed , this.fillGreen , this.fillBlue);
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getLineColor()
+ */
+public RGB getLineColor() {
+	return new RGB ( this.lineRed , this.lineBlue , this.lineBlue ) ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getObjectType()
+ */
+public IShapeObjectType getObjectType() {
+	// TODO Auto-generated method stub
+	return null;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getOwningLinkTerminus()
+ */
+public ILinkTerminus getOwningLinkTerminus() {
+	return this.hibLinkTerminus;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getSize()
+ */
+public Size getSize() {
+	return new Size ( this.height , this.width);
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setFillColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+ */
+public void setFillColor(RGB newColor) {
+	if ( newColor == null )
+		throw new IllegalArgumentException () ;
+	
+	this.fillRed = newColor.getRed() ;
+	this.fillGreen = newColor.getGreen() ;
+	this.fillBlue = newColor.getBlue() ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setLineColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+ */
+public void setLineColor(RGB newColor) {
+	if ( newColor == null )
+		throw new IllegalArgumentException () ;
+	
+	this.lineRed = newColor.getRed() ;
+	this.lineGreen = newColor.getGreen() ;
+	this.lineBlue = newColor.getBlue() ;	
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+ */
+public void setSize(Size newSize) {
+	if ( newSize == null )
+		throw new IllegalArgumentException () ;
+
+	this.height = newSize.getHeight() ;
+	this.width = newSize.getWidth() ;
+	
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getLineSize()
+ */
+public int getLineSize() {
+	return this.lineWidth;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setLineSize()
+ */
+public void setLineSize(int newLineSize) {
+	this.lineWidth = newLineSize ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
+ */
+public void setLineStyle(LineStyle lineStyle) {
+	// TODO Auto-generated method stub
+	
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getLineStyle()
+ */
+public LineStyle getLineStyle() {
+	// TODO Auto-generated method stub
+	return null;
+}   
 
 
 }

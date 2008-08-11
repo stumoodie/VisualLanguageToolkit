@@ -84,4 +84,19 @@ public class ILinkTerminusTest {
 		
 		assertEquals ( "new Gap " , GAP , linkTerminus.getGap() ) ;
  	}
+	
+	@Test
+	public void testGetOwningLink () throws Exception
+	{
+		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
+		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
+		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
+		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+			
+		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
+												mockTerminusDecorator, mockEndDecorator, 
+												properties) ;
+		
+		assertEquals ( "owning Link" , mockHibLink , linkTerminus.getOwningLink() ) ;
+	}
 }

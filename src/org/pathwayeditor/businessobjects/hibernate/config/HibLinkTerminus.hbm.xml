@@ -16,7 +16,7 @@
 	   	    	<meta attribute="use-in-equals">true</meta>
             	<column name="link_id" not-null="true" />
         	</many-to-one>
-        	<property name="linkEndType" type="int">
+        	<property name="hibLinkEndType" type="int">
 	   	    	<meta attribute="use-in-equals">true</meta>
             	<column name="link_term_type" not-null="true" />
         	</property>
