@@ -247,6 +247,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setLineWidth(int lineWidth) {
+		if ( lineWidth < 0 )
+			throw new IllegalArgumentException () ;
+		
 		this.lineWidth = lineWidth;
 	}
 
@@ -473,6 +476,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setFillColour(RGB fillColour) {
+		if ( fillColour == null )
+			throw new IllegalArgumentException () ;
+		
 		this.fillBlue = fillColour.getBlue() ;
 		this.fillRed = fillColour.getRed() ;
 		this.fillGreen = fillColour.getGreen() ;
@@ -482,6 +488,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setLineColour(RGB lineColour) {
+		if ( lineColour == null )
+			throw new IllegalArgumentException () ;
+		
 		this.lineBlue = lineColour.getBlue() ;
 		this.lineRed = lineColour.getRed() ;
 		this.lineGreen = lineColour.getGreen() ;
@@ -499,6 +508,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
 	public void setLocation(Location newLocation) {
+		if ( newLocation == null )
+			throw new IllegalArgumentException () ;
+		
 		this.XPosition = newLocation.getX() ;
 		this.YPosition = newLocation.getY() ;
 	}
@@ -515,6 +527,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
 	 */
 	public void setSize(Size size) {
+		if ( size == null )
+			throw new IllegalArgumentException () ;
+		
 		this.width = size.getWidth() ;
 		this.height = size.getHeight() ;
 	}

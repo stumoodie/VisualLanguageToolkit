@@ -2,11 +2,11 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
-
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
-import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition;
 
 
 /**
@@ -108,8 +108,25 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator#getSize()
+	 */
+	public Size getSize() {
+		return new Size ( this.height, this.width);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+	 */
+	public void setSize(Size size) {
+		if ( size == null )
+			throw new IllegalArgumentException () ;
+		
+		this.height = size.getHeight() ;
+		this.width = size.getWidth() ;
+	}
     	
-  // end of extra code specified in the hbm.xml files
 
 }
 

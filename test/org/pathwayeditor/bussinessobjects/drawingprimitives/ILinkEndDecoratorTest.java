@@ -17,6 +17,7 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
 
@@ -32,8 +33,8 @@ public class ILinkEndDecoratorTest {
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 	
-	private static final int WIDTH = 100 ;
-	private static final int HEIGHT = 100 ;
+	private static final int SIZE_VALUE = 100 ;
+	private static final int NEW_SIZE_VALUE = 150 ;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,14 +46,40 @@ public class ILinkEndDecoratorTest {
 	}
 	
 	@Test
-	public void testGet () throws Exception
+	public void testGetLinkTerminus () throws Exception
 	{
 		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
 		
 		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
-				ArrowheadStyle.DIAMOND, WIDTH, HEIGHT ) ;
+				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
 		
 		assertEquals ( "get LinkTerminus" , mockLinkTerminus , linkEndDecorator.getLinkTerminus() ) ;
 		assertTrue  ("instance of ILinkTerminus" , linkEndDecorator.getLinkTerminus() instanceof ILinkTerminus) ;
 	}
+	
+	@Test
+	public void testSetSize () throws Exception 
+	{
+		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
+		
+		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
+				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
+		linkEndDecorator.setSize( new Size ( NEW_SIZE_VALUE ,NEW_SIZE_VALUE )) ;
+		
+		assertEquals ( "new Size" , new Size (NEW_SIZE_VALUE , NEW_SIZE_VALUE ) , linkEndDecorator.getSize() ) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetSizeToNull () throws Exception 
+	{
+		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
+		
+		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
+				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
+		linkEndDecorator.setSize( null) ;
+		
+		assertEquals ( "new Size" , new Size (SIZE_VALUE , SIZE_VALUE ) , linkEndDecorator.getSize() ) ;
+	
+	}
+	
 }

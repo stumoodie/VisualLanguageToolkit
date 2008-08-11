@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
@@ -32,4 +34,10 @@ public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanv
 	boolean containsBendPoint(IBendPoint bendPoint);
 	
 	void removeBendPoint(IBendPoint bendPoint);
+	
+	RGB getLineColor () ;
+	void setLineColor ( RGB newColor ) ;
+	
+	LineStyle getLineStyle () ;
+	
 }

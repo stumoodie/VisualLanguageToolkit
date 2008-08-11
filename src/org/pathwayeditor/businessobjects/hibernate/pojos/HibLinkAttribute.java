@@ -18,6 +18,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
@@ -319,7 +320,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		toRemove.setLink(null);		
 	}
 	
-//	TODO test from here on
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#addBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
@@ -462,5 +462,24 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	public Set<IAnnotationProperty> propertyIterator() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLineColor()
+	 */
+	public RGB getLineColor() {
+		return new RGB (this.lineRed , this.lineGreen , this.lineBlue );
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setLineColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 */
+	public void setLineColor(RGB newColor) {
+		if ( newColor == null)
+			throw new IllegalArgumentException () ;
+			
+		this.lineBlue = newColor.getBlue() ;
+		this.lineRed = newColor.getRed() ;
+		this.lineGreen = newColor.getGreen() ;
 	}
 }

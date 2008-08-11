@@ -171,6 +171,15 @@ public class IShapeAttributeTest {
 		assertEquals ( "changed YPosition" , NEW_POSITION_VALUE , ((HibShapeAttribute)shapeAttribute).getYPosition() ) ;
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeLocationToNull () throws Exception
+	{
+		shapeAttribute.setLocation(null) ;
+		
+		assertEquals ( "changed XPosition" , POSITION_VALUE , ((HibShapeAttribute)shapeAttribute).getXPosition() ) ;
+		assertEquals ( "changed YPosition" , POSITION_VALUE , ((HibShapeAttribute)shapeAttribute).getYPosition() ) ;
+	}
+	
 	@Test
 	public void testGetSize () throws Exception
 	{
@@ -185,6 +194,15 @@ public class IShapeAttributeTest {
 		
 		assertEquals ( "changed Height" , NEW_SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getHeight() ) ;
 		assertEquals ( "changed Width" , NEW_SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getWidth() ) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeSizeToNull () throws Exception
+	{
+		shapeAttribute.setSize(null) ;
+		
+		assertEquals ( "changed Height" , SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getHeight() ) ;
+		assertEquals ( "changed Width" , SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getWidth() ) ;
 	}
 	
 	@Ignore
@@ -215,8 +233,19 @@ public class IShapeAttributeTest {
 		RGB newColor = new RGB (NEW_COLOR_VALUE , NEW_COLOR_VALUE , NEW_COLOR_VALUE) ;
 		shapeAttribute.setFillColour(newColor) ;
 		
-		assertEquals ( "correct changed Color" , new RGB(NEW_COLOR_VALUE,NEW_COLOR_VALUE,NEW_COLOR_VALUE) ,
-						shapeAttribute.getFillColour()) ;
+		assertEquals ( "red" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillRed() ) ;
+		assertEquals ( "blue" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillBlue() ) ;
+		assertEquals ( "green" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillGreen() ) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeFillColorToNull () throws Exception 
+	{
+		shapeAttribute.setFillColour(null) ;
+		
+		assertEquals ( "red" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillRed() ) ;
+		assertEquals ( "blue" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillBlue() ) ;
+		assertEquals ( "green" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getFillGreen() ) ;
 	}
 	
 	@Test
@@ -232,6 +261,13 @@ public class IShapeAttributeTest {
 		assertEquals ( "correct changed lineWidth" , NUMERIC_VALUE_ZERO , shapeAttribute.getLineWidth()) ;
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetFalseLineWidth () throws Exception
+	{
+		shapeAttribute.setLineWidth(-10);
+		assertEquals ( "correct changed lineWidth" , NUMERIC_VALUE_ZERO , shapeAttribute.getLineWidth()) ;
+	}
+	
 	@Test
 	public void testGetLineColor () throws Exception 
 	{
@@ -244,8 +280,19 @@ public class IShapeAttributeTest {
 		RGB newColor = new RGB (NEW_COLOR_VALUE , NEW_COLOR_VALUE , NEW_COLOR_VALUE) ;
 		shapeAttribute.setFillColour(newColor) ;
 		
-		assertEquals ( "correct changed LineColor" , new RGB(NEW_COLOR_VALUE,NEW_COLOR_VALUE,NEW_COLOR_VALUE) ,
-						shapeAttribute.getLineColour()) ;
+		assertEquals ( "red" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineRed() ) ;
+		assertEquals ( "blue" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineBlue() ) ;
+		assertEquals ( "green" , NEW_COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineGreen() ) ;
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeLineColorToNull () throws Exception 
+	{
+		shapeAttribute.setFillColour(null) ;
+		
+		assertEquals ( "red" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineRed() ) ;
+		assertEquals ( "blue" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineBlue() ) ;
+		assertEquals ( "green" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineGreen() ) ;
 	}
 	
 	@Ignore
