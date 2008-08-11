@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
 
 /**
  * @author ntsorman
@@ -25,7 +26,7 @@ public class LinkEndDecoratorTest {
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 	
-	private static final short DECORATOR_TYPE = 1 ;
+	private static final ArrowheadStyle DECORATOR_TYPE =ArrowheadStyle.DIAMOND ;
 	private static final int WIDTH = 100 ;
 	private static final int HEIGHT = 100 ;
 	

@@ -19,6 +19,7 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -42,7 +43,7 @@ public class DbHibShapeTest extends PojoTester{
 	private static final String SHAPE_DESCR = "descr";
 	private static final String DETAILED_DESCR = "detailed descr";
 	private static final int NUMERIC_VALUE_ONE = 1;
-	
+	private static final LineStyle SOLID = LineStyle.SOLID;
 	private static final int CREATION_SERIAL_2 = 654321 ;
 	private static final String SHAPE_NAME_2 = "shapeName2" ;
 	private static final int COLOR_VALUE_2 = 102 ;
@@ -76,7 +77,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("line blue" , COLOR_VALUE , dbShape.getLineBlue()) ;
 		assertEquals ("line green" , COLOR_VALUE , dbShape.getLineGreen()) ;
 		assertEquals ("line width" , NUMERIC_VALUE_ONE , dbShape.getLineWidth()) ;
-		assertEquals ("line style" , NUMERIC_VALUE_ONE , dbShape.getHibLineStyle()) ;
+		assertEquals ("line style" , SOLID , dbShape.getHibLineStyle()) ;
 		assertEquals ("padding" , NUMERIC_VALUE_ONE , dbShape.getPadding()) ;
 		assertEquals ("shape type" , NUMERIC_VALUE_ONE , dbShape.getShapeType()) ;
 		assertEquals ("x position" , POSITION_VALUE , dbShape.getXPosition()) ;
@@ -113,7 +114,7 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setLineRed(COLOR_VALUE_2) ;
 		shapeToSave.setLineGreen(COLOR_VALUE_2) ;
 		shapeToSave.setLineWidth(NUMERIC_VALUE_TWO) ;
-		shapeToSave.setHibLineStyle(NUMERIC_VALUE_TWO) ;
+		shapeToSave.setHibLineStyle(LineStyle.DASHED) ;
 		shapeToSave.setPadding(NUMERIC_VALUE_TWO) ;
 		shapeToSave.setShapeType((short)NUMERIC_VALUE_TWO) ;
 		shapeToSave.setXPosition(POSITION_VALUE_2) ;

@@ -17,6 +17,8 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -56,7 +58,6 @@ public class DbHibLinkTest extends PojoTester{
 		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
-		
 		assertEquals ( "creation_serial" , LINK_CREATION_SERIAL , dbLink.getCreationSerial() ) ;
 		assertEquals ( "link name" , LINK_NAME , dbLink.getName() ) ;
 		assertEquals ( "link descr" , LINK_DESCR , dbLink.getDescription() ) ;
@@ -64,9 +65,9 @@ public class DbHibLinkTest extends PojoTester{
 		assertEquals ("link colour red", LINK_COLOUR_VALUE , dbLink.getLineRed()) ;
 		assertEquals ("link colour blue", LINK_COLOUR_VALUE , dbLink.getLineBlue()) ;
 		assertEquals ("link colour green", LINK_COLOUR_VALUE , dbLink.getLineGreen()) ;
-		assertEquals ( "link line style" , NUMERIC_VALUE_ONE , dbLink.getLineStyle()) ;
+		assertEquals ( "link line style" , LineStyle.SOLID , dbLink.getLineStyle()) ;
 		assertEquals ("link line width" , LINK_LINE_WIDTH, dbLink.getLineWidth()) ;
-		assertEquals ("router type" , NUMERIC_VALUE_ONE , dbLink.getRouterType()) ;
+		assertEquals ("router type" ,ConnectionRouter.SHORTEST_PATH , dbLink.getRouterType()) ;
 		assertEquals ("url" , LINK_URL , dbLink.getUrl() ) ;
 		
 	}
@@ -126,9 +127,9 @@ public class DbHibLinkTest extends PojoTester{
 		linkToWrite.setLineRed(LINK_COLOUR_VALUE_2) ;
 		linkToWrite.setLineBlue(LINK_COLOUR_VALUE_2) ;
 		linkToWrite.setLineGreen(LINK_COLOUR_VALUE_2) ;
-		linkToWrite.setLineStyle(NUMERIC_VALUE_TWO) ;
+		linkToWrite.setLineStyle(LineStyle.DASHED) ;
 		linkToWrite.setLineWidth(LINK_LINE_WIDTH_2) ;
-		linkToWrite.setRouterType((short)NUMERIC_VALUE_TWO) ;
+		linkToWrite.setRouterType(ConnectionRouter.FAN) ;
 		linkToWrite.setUrl(LINK_URL_2) ;
 		
 		linkToWrite.setCanvas(dbCanvas) ;

@@ -25,7 +25,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
  *
  */
 @RunWith(JMock.class)
-public class HibShapeAttributeTest {
+public class HibShapeTest {
 	
 	private static final int CREATION_SERIAL = 123456 ;
 	private static final String SHAPE_NAME = "shapeName" ;

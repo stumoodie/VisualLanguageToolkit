@@ -17,6 +17,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
@@ -39,9 +40,9 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private int lineRed;
 	private int lineGreen;
 	private int lineBlue;
-	private int lineStyle;
+	private LineStyle lineStyle;
 	private int lineWidth;
-	private short routerType;
+	private ConnectionRouter routerType;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
 	private Set<HibLinkTerminus> linkTermini = new HashSet<HibLinkTerminus>(0);
 	private HibLinkEdge edge ;
@@ -173,11 +174,11 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.lineBlue = lineBlue;
 	}
 
-	public int getLineStyle() {
+	public LineStyle getLineStyle() {
 		return this.lineStyle;
 	}
 
-	public void setLineStyle(int lineStyle) {
+	public void setLineStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
 	}
 
@@ -189,11 +190,11 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.lineWidth = lineWidth;
 	}
 
-	public short getRouterType() {
+	public ConnectionRouter getRouterType() {
 		return this.routerType;
 	}
 
-	public void setRouterType(short routerType) {
+	public void setRouterType(ConnectionRouter routerType) {
 		this.routerType = routerType;
 	}
 
@@ -344,7 +345,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	/* (non-Javadoc)
-
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#containsBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
 	 */
 	public boolean containsBendPoint(IBendPoint bendPoint) {

@@ -2,10 +2,11 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
+
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition;
-
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
 
 
 /**
@@ -16,18 +17,20 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
 	
      private Long id;
      private HibLinkTerminus hibLinkTerminus;
-     private short decoratorType;
+     private ArrowheadStyle decoratorType;
      private int width;
      private int height;
+     private int gap ;
 
     public HibLinkEndDecorator() {
     }
 
-    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, short decoratorType, int width, int height ) {
+    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, ArrowheadStyle decoratorType, int width, int height ) {
        this.hibLinkTerminus = hibLinkTerminus;
        this.decoratorType = decoratorType;
        this.width = width;
        this.height = height;
+       this.gap = gap ;
     }
    
     public Long getId() {
@@ -49,11 +52,11 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
     public void setHibLinkTerminus(HibLinkTerminus hibLinkTerminus) {
         this.hibLinkTerminus = hibLinkTerminus;
     }
-    public short getDecoratorType() {
+    public ArrowheadStyle getDecoratorType() {
         return this.decoratorType;
     }
     
-    public void setDecoratorType(short decoratorType) {
+    public void setDecoratorType(ArrowheadStyle decoratorType) {
         this.decoratorType = decoratorType;
     }
     public int getWidth() {

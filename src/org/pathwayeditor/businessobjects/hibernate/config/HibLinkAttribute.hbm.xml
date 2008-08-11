@@ -59,13 +59,13 @@
 		<property name="lineBlue" type="int">
 			<column name="line_blue" not-null="true" />
 		</property>
-		<property name="lineStyle" type="int">
+		<property name="lineStyle" type="LineStyleType">
 			<column name="line_style" not-null="true" />
 		</property>
 		<property name="lineWidth" type="int">
 			<column name="line_width" not-null="true" />
 		</property>
-		<property name="routerType" type="short">
+		<property name="routerType" type="ConnectionRouterType">
 			<column name="router_type" not-null="true" />
 		</property>
 		<list name="bendPoints" inverse="true">

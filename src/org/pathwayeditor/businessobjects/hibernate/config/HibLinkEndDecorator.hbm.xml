@@ -11,7 +11,7 @@
         <many-to-one name="hibLinkTerminus" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus">
             <column name="link_terminus_id" not-null="true" unique="true" />
         </many-to-one>
-        <property name="decoratorType" type="short">
+        <property name="decoratorType" type="ArrowHeadStyleType">
             <column name="decorator_type" not-null="true" />
         </property>
         <property name="width" type="int">

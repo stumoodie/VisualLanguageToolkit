@@ -43,7 +43,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private int lineRed;
 	private int lineGreen;
 	private int lineBlue;
-	private int hibLineStyle;
+	private LineStyle hibLineStyle;
 	private int lineWidth;
 	private int padding;
 	private short shapeType;
@@ -234,11 +234,11 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return LineStyle.DASH_DOT;
 	}
 	
-	public int getHibLineStyle () {
+	public LineStyle getHibLineStyle () {
 		return this.hibLineStyle ;
 	}
 	
-	public void setHibLineStyle(int lineStyle) {
+	public void setHibLineStyle(LineStyle lineStyle) {
 		this.hibLineStyle = lineStyle;
 	}
 
@@ -392,7 +392,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
         result = 37 * result + this.lineGreen ;
         result = 37 * result + this.lineBlue ;
         result = 37 * result + this.lineRed ;
-        result = 37 * result + this.hibLineStyle ;
+        result = 37 * result + this.hibLineStyle.getCode() ;
         result = 37 * result + this.lineWidth ;
         result = 37 * result + this.padding ;
         result = 37 * result + this.shapeType ;
