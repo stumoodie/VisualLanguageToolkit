@@ -36,7 +36,10 @@ public class HibTextProperty extends HibProperty implements Serializable , IPlai
     }
     
     public void setTextValue(String textValue) {
-        this.textValue = textValue;
+        if ( textValue == null)
+        	throw new IllegalArgumentException ( "Text value cannot be null.") ;
+    	
+    	this.textValue = textValue;
     }
 
     @Override

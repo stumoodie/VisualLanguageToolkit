@@ -35,6 +35,8 @@ public class HibNumberProperty extends HibProperty implements Serializable , INu
     }
     
     public void setNumberValue(BigDecimal numberValue) {
+    	if ( numberValue == null)
+    		throw new IllegalArgumentException ("Number value should not be null.") ; 
         this.numberValue = numberValue;
     }
 

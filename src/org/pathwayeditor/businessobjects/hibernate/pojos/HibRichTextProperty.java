@@ -35,6 +35,8 @@ public class HibRichTextProperty extends HibProperty implements Serializable , I
     }
     
     public void setRichTextValue(String richTextValue) {
+    	if ( richTextValue == null)
+    		throw new IllegalArgumentException ( "richText value should not be null." ) ;
         this.richTextValue = richTextValue;
     }
 

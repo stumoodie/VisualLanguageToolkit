@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
@@ -167,24 +168,21 @@ public class HibLabelAttribute  implements Serializable, ILabelAttribute {
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLocation()
  */
 public Location getLocation() {
-	// TODO Auto-generated method stub
-	return null;
+	return new Location ( this.XPosition , this.YPosition );
 }
 
 /* (non-Javadoc)
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getProperty()
  */
 public IAnnotationProperty getProperty() {
-	// TODO Auto-generated method stub
-	return null;
+	return this.visualisableProperty ;
 }
 
 /* (non-Javadoc)
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getSize()
  */
 public Size getSize() {
-	// TODO Auto-generated method stub
-	return null;
+	return new Size ( this.height , this.width);
 }
 
 /* (non-Javadoc)
@@ -223,8 +221,77 @@ public IZOrderedObject getPreviousObject() {
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCreationSerial()
  */
 public int getCreationSerial() {
-	// TODO Auto-generated method stub
-	return 0;
+	return this.creation_serial;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getBackgroundColor()
+ */
+public RGB getBackgroundColor() {
+	return new RGB ( this.backgroundRed , this.backgroundGreen , this.backgroundRed);
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#isDisplayed()
+ */
+public boolean isDisplayed() {
+	return this.isDisplayed;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#isFillSet()
+ */
+public boolean isFillSet() {
+	return this.noFillSet;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setBackgroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+ */
+public void setBackgroundColor(RGB color) {
+	if ( color == null )
+		throw new IllegalArgumentException ("Color cannot be null.") ;
+	
+	this.backgroundBlue = color.getBlue() ;
+	this.backgroundGreen = color.getGreen() ;
+	this.backgroundRed = color.getRed() ;
+	
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setDisplayed(boolean)
+ */
+public void setDisplayed(boolean displayed) {
+	this.isDisplayed = displayed ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setFillSet(boolean)
+ */
+public void setFillSet(boolean fillSet) {
+	this.noFillSet = fillSet ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
+ */
+public void setLocation(Location location) {
+	if ( location == null )
+		throw new IllegalArgumentException ( "location cannot be null.") ;
+	
+	this.XPosition = location.getX() ; 
+	this.YPosition = location.getY() ; 
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+ */
+public void setSize(Size size) {
+	if ( size == null )
+		throw new IllegalArgumentException ("size cannot be null.") ;
+	
+	this.height = size.getHeight() ;
+	this.width = size.getWidth() ;
 }   
 
 }
