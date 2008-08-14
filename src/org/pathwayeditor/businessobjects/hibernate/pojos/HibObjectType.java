@@ -14,6 +14,8 @@ public class HibObjectType  implements Serializable {
      private HibContext hibContext;
      private String name;
      private String description;
+ 	private static final long serialVersionUID = -1860135213188225684L;
+
 
     public HibObjectType() {
     }
@@ -74,9 +76,7 @@ public class HibObjectType  implements Serializable {
          return result;
    }   
 
-  // The following is extra code specified in the hbm.xml files
 
-	private static final long serialVersionUID = -1860135213188225684L;
     	
    public void changeContext(HibContext newContext){
 	   HibContext oldContext = this.hibContext;
@@ -88,7 +88,6 @@ public class HibObjectType  implements Serializable {
 		   this.hibContext.getObjectTypes().add(this);
 	   }
    }
-  // end of extra code specified in the hbm.xml files
 
 }
 

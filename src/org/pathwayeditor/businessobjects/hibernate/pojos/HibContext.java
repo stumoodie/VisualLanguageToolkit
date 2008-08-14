@@ -147,15 +147,13 @@ public class HibContext  implements IContext , Serializable {
     	 this.hibObjectTypes.remove(hibObjectType);
     	 hibObjectType.setContext(null);
      }
-  // end of extra code specified in the hbm.xml files
 
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contectadapter.IContext#getDisplayName()
 	 */
 	public String getDisplayName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.name;
 	}
 
 
@@ -163,8 +161,7 @@ public class HibContext  implements IContext , Serializable {
 	 * @see org.pathwayeditor.businessobjects.contectadapter.IContext#getVersionString()
 	 */
 	public String getVersionString() {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(majorVersion + "." + minorVersion + "." + patchVersion);
 	}
 
 }

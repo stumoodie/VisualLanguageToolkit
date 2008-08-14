@@ -2,8 +2,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 
@@ -15,10 +13,6 @@ public abstract class HibProperty  implements IAnnotationProperty , Serializable
 	
 	private static final long serialVersionUID = -1996477907215294788L;
 	
-	 private Size size ;
-	 private Location location;
-	 private boolean displayed ;
-
      private Long id;
      private HibCanvas hibCanvas;
      private int creationSerial;

@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.contectadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
@@ -50,6 +50,25 @@ public class HibCanvas implements ICanvas , Serializable {
 	public HibCanvas(HibMapDiagram mapDiagram, HibContext context) {
 		this.mapDiagram = mapDiagram;
 		this.context = context;
+	}
+	
+	public HibCanvas ( HibMapDiagram mapDiagram , HibContext context, int gridX , int gridY , boolean gridEnabled , 
+						boolean snapToGridEnabled , int backgroundRed , int backgroundGreen , int backgroundBlue ,
+						int canvasWidth , int canvasHeight) 
+	{
+		this.mapDiagram = mapDiagram;
+		this.context = context;
+		this.gridX = gridX;
+		this.gridY = gridY;
+		this.gridEnabled = gridEnabled;
+		this.snapToGridEnabled = snapToGridEnabled;
+		this.backgroundRed = backgroundRed;
+		this.backgroundGreen = backgroundGreen;
+		this.backgroundBlue = backgroundBlue;
+		this.canvasWidth = canvasWidth;
+		this.canvasHeight = canvasHeight;
+		this.created = new Date();
+		this.modified= new Date();
 	}
 
 	public HibCanvas(HibMapDiagram newMap, HibCanvas other) {
@@ -350,87 +369,83 @@ public class HibCanvas implements ICanvas , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getBackgroundColour()
 	 */
 	public RGB getBackgroundColour() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RGB ( this.backgroundRed , this.backgroundGreen , this.backgroundBlue);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMap()
 	 */
 	public IMap getMap() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getModel()
-	 */
-	public IModel getModel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getUrl()
-	 */
-	public String getUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.mapDiagram ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#gridHeight()
 	 */
 	public int gridHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.gridY;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#gridWidth()
 	 */
 	public int gridWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.gridX;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#isSnapToGridOn()
 	 */
 	public boolean isSnapToGridOn() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.gridEnabled;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setBackgroundColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setBackgroundColour(RGB backgroundColour) {
-		// TODO Auto-generated method stub
-		
+		if ( backgroundColour == null)
+			throw new IllegalArgumentException ( "BackgroundColor cannot be null") ;
+			this.backgroundBlue = backgroundColour.getBlue() ;
+			this.backgroundRed = backgroundColour.getRed() ;
+			this.backgroundGreen = backgroundColour.getGreen() ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setGrid(int, int)
 	 */
 	public void setGrid(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		if ( width < 0 || height < 0)
+			throw new IllegalArgumentException ( "Width or height cannot be less than 0." ) ;
+			
+		this.gridX = width ;
+		this.gridY = height ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setSnapToGrid(boolean)
 	 */
 	public void setSnapToGrid(boolean snapToGridStatus) {
-		// TODO Auto-generated method stub
-		
+		this.gridEnabled = snapToGridStatus ;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setUrl(java.lang.String)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMapSize()
 	 */
-	public void setUrl(String url) {
-		// TODO Auto-generated method stub
+	public Size getMapSize() {
+		return new Size ( this.canvasHeight , this.canvasWidth );
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setMapSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+	 */
+	public void setMapSize(Size size) {
+		if (size == null)
+			throw new IllegalArgumentException () ;
+		
+		this.canvasHeight = size.getHeight() ;
+		this.canvasWidth = size.getWidth() ; 
 		
 	}
+
 }

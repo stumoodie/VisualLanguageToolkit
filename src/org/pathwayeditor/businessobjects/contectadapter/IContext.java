@@ -8,6 +8,8 @@ public interface IContext {
 
 	String getName();
 	
+	String getDescription () ;
+	
 	String getVersionString();
 	
 	int getMajorVersion();
