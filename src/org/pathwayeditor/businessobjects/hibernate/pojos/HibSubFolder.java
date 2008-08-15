@@ -72,6 +72,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 
 	public void setName(String name) {
 		this.name = name;
+		
 	}
 
 	public void changeParentFolder(HibFolder newParentFolder) {

@@ -27,7 +27,7 @@ public interface IBusinessObjectFactory {
 	 * Synchronises the repository with persistent storage,committing its associated database transaction. 
 	 * @param repository
 	 */
-	void synchroniseRepository(IRepository repository);
+	void synchroniseRepository();
 	
 	/**
 	 * Get the canvas associated with the given map

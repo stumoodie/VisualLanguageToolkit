@@ -1,12 +1,14 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.UUID;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 public class HibMapDiagram  implements  IMap,
-		java.io.Serializable {
+		java.io.Serializable, IPropertyChangeSupport {
 	private static final long serialVersionUID = -7566323206185334088L;
 
 	private Long id;
@@ -15,8 +17,9 @@ public class HibMapDiagram  implements  IMap,
 	private String description = "";
 	private HibRepository repository;
 	private int iNode = makeIntUUID();
-
+	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
 	HibMapDiagram() {
+		listenerManager = new PropertyChangeSupport(this);
 	}
 
 	/**
@@ -33,6 +36,7 @@ public class HibMapDiagram  implements  IMap,
 		this.name = name;
 		hibFolder.addMapDiagram(this);
 		this.repository = hibFolder.getRepository();
+		listenerManager = new PropertyChangeSupport(this);
 	}
 
 	public HibMapDiagram(HibFolder newParent, HibMapDiagram other) {
@@ -46,6 +50,19 @@ public class HibMapDiagram  implements  IMap,
 		this.repository = newParent.getRepository();
 		if(isCompleteCopy)
 			this.iNode=other.iNode;
+		listenerManager = new PropertyChangeSupport(this);
+	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener listener){
+		listenerManager.addPropertyChangeListener(listener);
+	}
+	
+	public void firePropertyChange(String property,Object oldValue,Object newValue){
+		listenerManager.firePropertyChange(property, oldValue, newValue);
+	}
+	
+	public void removePropertyChangeListener(PropertyChangeListener listener){
+		listenerManager.removePropertyChangeListener(listener);
 	}
 	
 	public Long getId() {

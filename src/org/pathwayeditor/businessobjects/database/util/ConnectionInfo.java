@@ -5,15 +5,18 @@ package org.pathwayeditor.businessobjects.database.util;
 
 /**
  * @author nhanlon
- *
+ * The default settings for ConnectionInfo are for the Hsql Database
  */
 public class ConnectionInfo implements IConnectionInfo{
+	private String userName="sa";
+	private String password="";
+	private String url="jdbc:hsqldb:mem:testDb";
+	private String repositoryName="repo name";
+	private String driverName="org.hsqldb.jdbcDriver";
 	
-	private String userName;
-	private String password;
-	private String url;
-	private String repositoryName;
-	private String driverName;
+	public ConnectionInfo(){
+		
+	}
 
 	public ConnectionInfo(String userName, String password, String url, String repositoryName, String driverName){
 		this.userName=userName;

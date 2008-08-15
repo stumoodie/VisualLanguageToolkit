@@ -2,7 +2,9 @@ package org.pathwayeditor.businessobjects.repository;
 
 import java.util.Iterator;
 
-public interface IFolder extends IRepositoryItem {
+import org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyChangeSupport;
+
+public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	/**
 	 * @return the path to this folder in the folder tree, starting from the root folder which has the path '/'; calling this provides a string which can be
 	 *  used by HibRepository's getFolderByPath() method  to return the given folder. Paths are NOT case sensitive.
@@ -70,7 +72,8 @@ public interface IFolder extends IRepositoryItem {
 	 * Create a copy of <code>origSubfolder</code> in this subfolder. This copies the tree of repository
 	 * items (subfolders and maps) from this point downwards. The new copies will have new inode values.  
 	 * @param origSubfolder the original subfolder to be copied from. 
-	 * @return an instance of the new folder that has been created as a result of the copy in this subfolder. 
+	 * @return an instance of the new folder that has been created as a result of the copy in this subfolder.
+	 * @throws an IllegalArgumentException if the canUseSubFolderName() returns false for original folder 
 	 */
 	ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder);
 	

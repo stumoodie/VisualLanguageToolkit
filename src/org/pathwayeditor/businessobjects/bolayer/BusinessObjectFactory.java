@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.hibernate.LockMode;
 import org.hibernate.Session;
+import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -23,10 +24,13 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
 	private HibRepository rep;
-	private IConnectionInfo conn;
+	private IConnectionInfo conn = new ConnectionInfo();;
 
 	public  BusinessObjectFactory(IConnectionInfo conn) {
 		this.conn=conn;
+		HibernateUtil.setConnectionInfo(conn);
+	}
+	public  BusinessObjectFactory() {
 		HibernateUtil.setConnectionInfo(conn);
 	}
 
@@ -102,7 +106,7 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
-	public synchronized void synchroniseRepository(IRepository repository) {
+	public synchronized void synchroniseRepository() {
 		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
 		try {
 			s.saveOrUpdate(rep);
