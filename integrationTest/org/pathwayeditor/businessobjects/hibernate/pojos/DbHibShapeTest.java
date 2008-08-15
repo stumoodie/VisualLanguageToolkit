@@ -77,7 +77,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("line blue" , COLOR_VALUE , dbShape.getLineBlue()) ;
 		assertEquals ("line green" , COLOR_VALUE , dbShape.getLineGreen()) ;
 		assertEquals ("line width" , NUMERIC_VALUE_ONE , dbShape.getLineWidth()) ;
-		assertEquals ("line style" , SOLID , dbShape.getHibLineStyle()) ;
+		assertEquals ("line style" , SOLID , dbShape.getLineStyle()) ;
 		assertEquals ("padding" , NUMERIC_VALUE_ONE , dbShape.getPadding()) ;
 		assertEquals ("shape type" , NUMERIC_VALUE_ONE , dbShape.getShapeType()) ;
 		assertEquals ("x position" , POSITION_VALUE , dbShape.getXPosition()) ;

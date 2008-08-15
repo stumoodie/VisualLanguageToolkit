@@ -20,7 +20,6 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
      private ArrowheadStyle decoratorType;
      private int width;
      private int height;
-     private int gap ;
 
     public HibLinkEndDecorator() {
     }
@@ -30,7 +29,6 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
        this.decoratorType = decoratorType;
        this.width = width;
        this.height = height;
-       this.gap = gap ;
     }
    
     public Long getId() {
@@ -57,6 +55,8 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
     }
     
     public void setDecoratorType(ArrowheadStyle decoratorType) {
+    	if ( decoratorType == null )
+    		throw new IllegalArgumentException ("Decoratot type cannot be null.") ;
         this.decoratorType = decoratorType;
     }
     public int getWidth() {

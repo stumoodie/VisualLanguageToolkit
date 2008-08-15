@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
@@ -51,6 +52,8 @@ public class IShapeAttributeTest {
 	private static final int NUMERIC_VALUE_ONE = 1;
 	private static final int NUMERIC_VALUE_ZERO = 0;
 	private static final String PROPERTY_ID = "property_id" ;
+	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
+	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
 	
 	private IShapeAttribute shapeAttribute ;
 	private HibProperty mockProperty ;
@@ -75,6 +78,7 @@ public class IShapeAttributeTest {
 		tempShapeAttribute.setLineBlue(COLOR_VALUE) ;
 		tempShapeAttribute.setLineRed(COLOR_VALUE) ;
 		tempShapeAttribute.setLineGreen(COLOR_VALUE) ;
+		tempShapeAttribute.setLineStyle(LINE_STYLE) ;
 		
 		
 		
@@ -291,20 +295,26 @@ public class IShapeAttributeTest {
 		assertEquals ( "green" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineGreen() ) ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testGetLineStyle () throws Exception
 	{
-		// TODO
-		shapeAttribute.getLineStyle() ;
+		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , shapeAttribute.getLineStyle() );
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testSetLineStyle () throws Exception
 	{
-		// TODO
-		shapeAttribute.setLineStyle(null) ;
+		shapeAttribute.setLineStyle(OTHER_LINE_STYLE) ;
+		assertEquals ( "lineStyle" , LineStyle.DASH_DOT_DOT , shapeAttribute.getLineStyle() );
 	}	
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetLineStyleToNull () throws Exception
+	{
+		shapeAttribute.setLineStyle(null) ;
+		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , shapeAttribute.getLineStyle() );
+	}	
+		
 	@Test
 	public void testHasProperty () throws Exception 
 	{

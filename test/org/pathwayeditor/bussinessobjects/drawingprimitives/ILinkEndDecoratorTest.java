@@ -36,9 +36,16 @@ public class ILinkEndDecoratorTest {
 	private static final int SIZE_VALUE = 100 ;
 	private static final int NEW_SIZE_VALUE = 150 ;
 	
+	private static final ArrowheadStyle OTHER_STYLE = ArrowheadStyle.ARROW ;
+	
+	private ILinkEndDecorator linkEndDecorator ;
+	private HibLinkTerminus mockLinkTerminus ;
+	
 	@Before
 	public void setUp() throws Exception {
-
+		mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
+		linkEndDecorator  = new HibLinkEndDecorator (  mockLinkTerminus, 
+				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
 	}
 
 	@After
@@ -48,11 +55,6 @@ public class ILinkEndDecoratorTest {
 	@Test
 	public void testGetLinkTerminus () throws Exception
 	{
-		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
-		
-		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
-				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
-		
 		assertEquals ( "get LinkTerminus" , mockLinkTerminus , linkEndDecorator.getLinkTerminus() ) ;
 		assertTrue  ("instance of ILinkTerminus" , linkEndDecorator.getLinkTerminus() instanceof ILinkTerminus) ;
 	}
@@ -60,26 +62,35 @@ public class ILinkEndDecoratorTest {
 	@Test
 	public void testSetSize () throws Exception 
 	{
-		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
-		
-		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
-				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
 		linkEndDecorator.setSize( new Size ( NEW_SIZE_VALUE ,NEW_SIZE_VALUE )) ;
-		
 		assertEquals ( "new Size" , new Size (NEW_SIZE_VALUE , NEW_SIZE_VALUE ) , linkEndDecorator.getSize() ) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetSizeToNull () throws Exception 
 	{
-		final HibLinkTerminus mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
-		
-		ILinkEndDecorator linkEndDecorator = new HibLinkEndDecorator (  mockLinkTerminus, 
-				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
 		linkEndDecorator.setSize( null) ;
-		
 		assertEquals ( "new Size" , new Size (SIZE_VALUE , SIZE_VALUE ) , linkEndDecorator.getSize() ) ;
 	
 	}
 	
+	@Test
+	public void testGetArrowheadStyle () throws Exception
+	{
+		assertEquals ( "arrowhead style" , ArrowheadStyle.DIAMOND, linkEndDecorator.getDecoratorType()) ;
+	}
+	
+	@Test
+	public void testSetArrowheadStyle () throws Exception
+	{
+		linkEndDecorator.setDecoratorType(OTHER_STYLE) ;
+		assertEquals ( "arrowhead style" , ArrowheadStyle.ARROW, linkEndDecorator.getDecoratorType()) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetArrowheadStyleToNull () throws Exception
+	{
+		linkEndDecorator.setDecoratorType(null) ;
+		assertEquals ( "arrowhead style" , ArrowheadStyle.DIAMOND, linkEndDecorator.getDecoratorType()) ;
+	}	
 }

@@ -43,7 +43,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private int lineRed;
 	private int lineGreen;
 	private int lineBlue;
-	private LineStyle hibLineStyle;
+	private LineStyle lineStyle;
 	private int lineWidth;
 	private int padding;
 	private short shapeType;
@@ -74,7 +74,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineRed = other.lineRed;
 		this.lineGreen = other.lineGreen;
 		this.lineBlue = other.lineBlue;
-		this.hibLineStyle = other.hibLineStyle;
+		this.lineStyle = other.lineStyle;
 		this.lineWidth = other.lineWidth;
 		this.padding = other.padding;
 
@@ -228,18 +228,13 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setLineBlue(int lineBlue) {
 		this.lineBlue = lineBlue;
 	}
-
-	public LineStyle getLineStyle() {
-		// FIXME
-		throw new UnsupportedOperationException () ;
-	}
 	
-	public LineStyle getHibLineStyle () {
-		return this.hibLineStyle ;
+	public LineStyle getLineStyle () {
+		return this.lineStyle ;
 	}
 	
 	public void setHibLineStyle(LineStyle lineStyle) {
-		this.hibLineStyle = lineStyle;
+		this.lineStyle = lineStyle;
 	}
 
 	public int getLineWidth() {
@@ -395,7 +390,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
         result = 37 * result + this.lineGreen ;
         result = 37 * result + this.lineBlue ;
         result = 37 * result + this.lineRed ;
-        result = 37 * result + this.hibLineStyle.getCode() ;
+        result = 37 * result + this.lineStyle.getCode() ;
         result = 37 * result + this.lineWidth ;
         result = 37 * result + this.padding ;
         result = 37 * result + this.shapeType ;
@@ -499,8 +494,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
 	 */
 	public void setLineStyle(LineStyle lineStyle) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		if ( lineStyle == null )
+			throw new IllegalArgumentException ( "Line style cannot be null") ;
+		this.lineStyle = lineStyle ;
 	}
 
 	/* (non-Javadoc)
@@ -581,4 +577,5 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException () ;
 	}
+
 }

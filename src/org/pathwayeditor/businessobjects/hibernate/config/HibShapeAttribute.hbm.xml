@@ -66,7 +66,7 @@
        	<property name="lineBlue" type="int">
            	<column name="line_blue" not-null="true" />
        	</property>
-       	<property name="hibLineStyle" type="LineStyleType">
+       	<property name="lineStyle" type="LineStyleType">
            	<column name="line_style" not-null="true" />
        	</property>
        	<property name="lineWidth" type="int">
