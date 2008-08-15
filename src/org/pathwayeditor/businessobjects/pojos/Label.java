@@ -30,7 +30,7 @@ public class Label extends CommonModelNode implements ILabelNode {
 	 * @see uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode#getChildCigraph()
 	 */
 	@Override
-	public ArchetypalChildCompoundGraph getChildCigraph() {
+	public ArchetypalChildCompoundGraph getChildCompoundGraph() {
 		// TODO Auto-generated method stub
 		return null;
 	}

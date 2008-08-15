@@ -16,12 +16,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-import uk.ed.inf.graph.basic.IBasicSubgraphFactory;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundEdge;
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundGraph;
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraph;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraphFactory;
+import uk.ed.inf.graph.compound.base.BaseSubCompoundGraph;
+import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
 
 /**
  * @author smoodie
@@ -127,8 +125,8 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#removedSubgraph(org.pathwayeditor.businessobjects.drawingprimitives.ISelectionSubgraphFactory)
 	 */
 	public void removeSubgraph(ICanvasObjectSelection iSubgraph) {
-		ArchetypalSubCompoundGraphFactory fact = (ArchetypalSubCompoundGraphFactory)iSubgraph;  
-		ArchetypalSubCompoundGraph subgraph = fact.createInducedSubgraph(); 
+		BaseSubCompoundGraphFactory fact = (BaseSubCompoundGraphFactory)iSubgraph;  
+		BaseSubCompoundGraph subgraph = fact.createInducedSubgraph(); 
 		this.removeSubgraph(subgraph);
 	}
 
@@ -157,7 +155,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see uk.ed.inf.graph.basic.IModifiableGraph#subgraphFactory()
 	 */
-	public IBasicSubgraphFactory<ArchetypalCompoundNode, ArchetypalCompoundEdge> subgraphFactory() {
+	public BaseSubCompoundGraphFactory subgraphFactory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

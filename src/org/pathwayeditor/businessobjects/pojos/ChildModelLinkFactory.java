@@ -5,16 +5,16 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-import uk.ed.inf.graph.compound.archetypal.ArchetypalChildCompoundEdgeFactory;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalChildCompoundGraph;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundEdge;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
+import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
+import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
+import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 
 /**
  * @author smoodie
  *
  */
-public class ChildModelLinkFactory extends ArchetypalChildCompoundEdgeFactory {
+public class ChildModelLinkFactory extends BaseChildCompoundEdgeFactory {
 	private ILinkObjectType linkObjectType;
 
 
@@ -34,9 +34,9 @@ public class ChildModelLinkFactory extends ArchetypalChildCompoundEdgeFactory {
 	 * @see uk.ed.inf.graph.compound.impl.ArchetypalChildCompoundEdgeFactory#newEdge(uk.ed.inf.graph.compound.impl.ArchetypalChildCompoundGraph, int, uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode, uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode)
 	 */
 	@Override
-	protected ArchetypalCompoundEdge newEdge(
-			ArchetypalChildCompoundGraph owningChildGraph, int edgeIndex,
-			ArchetypalCompoundNode outNode, ArchetypalCompoundNode inNode) {
+	protected BaseCompoundEdge newEdge(
+			BaseChildCompoundGraph owningChildGraph, int edgeIndex,
+			BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		return new Link(linkObjectType, (ShapeModel)owningChildGraph, edgeIndex, (Shape)outNode, (Shape)inNode);
 	}
 

@@ -56,7 +56,7 @@ public class Shape extends CommonModelNode implements IShapeAttribute {
 	 * @see uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode#getChildCigraph()
 	 */
 	@Override
-	public ShapeModel getChildCigraph() {
+	public ShapeModel getChildCompoundGraph() {
 		return this.shapeModel;
 	}
 
@@ -69,7 +69,7 @@ public class Shape extends CommonModelNode implements IShapeAttribute {
 	}
 	
 	public CommonModelNode getParent(){
-		return (CommonModelNode)this.getChildCigraph().getRootNode();
+		return (CommonModelNode)this.getChildCompoundGraph().getRootNode();
 	}
 
 	/* (non-Javadoc)

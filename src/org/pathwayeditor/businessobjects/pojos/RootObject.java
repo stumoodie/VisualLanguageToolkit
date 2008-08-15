@@ -41,7 +41,7 @@ public class RootObject extends CommonModelNode implements IRootObjectNode {
 	 * @see uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode#getChildCigraph()
 	 */
 	@Override
-	public ShapeModel getChildCigraph() {
+	public ShapeModel getChildCompoundGraph() {
 		return this.shapeModel;
 	}
 

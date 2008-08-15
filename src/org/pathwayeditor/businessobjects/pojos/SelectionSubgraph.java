@@ -3,21 +3,21 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundGraph;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraph;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraphBuilder;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalSubCompoundGraphFactory;
+import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
+import uk.ed.inf.graph.compound.base.BaseSubCompoundGraph;
+import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphBuilder;
+import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
 import uk.ed.inf.graph.compound.impl.SubCompoundGraph;
 
 /**
  * @author smoodie
  *
  */
-public class SelectionSubgraph extends ArchetypalSubCompoundGraphFactory implements ICanvasObjectSelection {
+public class SelectionSubgraph extends BaseSubCompoundGraphFactory implements ICanvasObjectSelection {
 	
 	public SelectionSubgraph(Model model){
 		super(new SelectionSubgraphBuilder(model));
@@ -36,7 +36,7 @@ public class SelectionSubgraph extends ArchetypalSubCompoundGraphFactory impleme
 		this.addEdge(link);
 	}
 	
-	private static class SelectionSubgraphBuilder extends ArchetypalSubCompoundGraphBuilder {
+	private static class SelectionSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 		private SubCompoundGraph subgraph;
 		
 		public SelectionSubgraphBuilder(Model model){
@@ -44,18 +44,18 @@ public class SelectionSubgraph extends ArchetypalSubCompoundGraphFactory impleme
 		}
 		
 		/* (non-Javadoc)
-		 * @see uk.ed.inf.graph.compound.impl.ArchetypalSubCompoundGraphBuilder#getSubgraph()
+		 * @see uk.ed.inf.graph.compound.impl.BaseSubCompoundGraphBuilder#getSubgraph()
 		 */
 		@Override
-		public ArchetypalSubCompoundGraph getSubgraph() {
+		public BaseSubCompoundGraph getSubgraph() {
 			return this.subgraph;
 		}
 
 		/* (non-Javadoc)
-		 * @see uk.ed.inf.graph.compound.impl.ArchetypalSubCompoundGraphBuilder#newSubgraph(uk.ed.inf.graph.compound.impl.ArchetypalCompoundGraph)
+		 * @see uk.ed.inf.graph.compound.impl.BaseSubCompoundGraphBuilder#newSubgraph(uk.ed.inf.graph.compound.impl.BaseCompoundGraph)
 		 */
 		@Override
-		protected void newSubgraph(ArchetypalCompoundGraph compoundGraph) {
+		protected void newSubgraph(BaseCompoundGraph compoundGraph) {
 			this.subgraph = new SubCompoundGraph(compoundGraph);
 		}
 		

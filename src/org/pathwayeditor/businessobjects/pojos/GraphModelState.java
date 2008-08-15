@@ -7,18 +7,18 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
 
 import uk.ed.inf.bitstring.IBitString;
 import uk.ed.inf.graph.basic.IBasicGraph;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundEdge;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
+import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.state.IGraphState;
 
 /**
  * @author smoodie
  *
  */
-public class GraphModelState implements IModelState, IGraphState<ArchetypalCompoundNode, ArchetypalCompoundEdge> {
-	private final IGraphState<ArchetypalCompoundNode, ArchetypalCompoundEdge> state;
+public class GraphModelState implements IModelState, IGraphState<BaseCompoundNode, BaseCompoundEdge> {
+	private final IGraphState<BaseCompoundNode, BaseCompoundEdge> state;
 
-	public GraphModelState(IGraphState<ArchetypalCompoundNode, ArchetypalCompoundEdge> state){
+	public GraphModelState(IGraphState<BaseCompoundNode, BaseCompoundEdge> state){
 		this.state = state;
 	}
 	
@@ -26,7 +26,7 @@ public class GraphModelState implements IModelState, IGraphState<ArchetypalCompo
 		return this.state.getEdgeStates();
 	}
 
-	public IBasicGraph<ArchetypalCompoundNode, ArchetypalCompoundEdge> getGraph() {
+	public IBasicGraph<BaseCompoundNode, BaseCompoundEdge> getGraph() {
 		return this.state.getGraph();
 	}
 

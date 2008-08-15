@@ -6,13 +6,14 @@ package org.pathwayeditor.businessobjects.pojos;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNode;
-import uk.ed.inf.graph.compound.archetypal.ArchetypalCompoundNodeFactory;
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
+import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
 
 /**
  * @author smoodie
  *
  */
-public class ShapeFactory extends ArchetypalCompoundNodeFactory {
+public class ShapeFactory extends BaseCompoundNodeFactory {
 	private IShapeObjectType objectType;
 	
 	/**
@@ -30,7 +31,7 @@ public class ShapeFactory extends ArchetypalCompoundNodeFactory {
 	 * @see uk.ed.inf.graph.compound.impl.ArchetypalCompoundNodeFactory#newNode(uk.ed.inf.graph.compound.impl.ArchetypalCompoundNode, int)
 	 */
 	@Override
-	protected ArchetypalCompoundNode newNode(ArchetypalCompoundNode parent,	int nodeIndex) {
+	protected ArchetypalCompoundNode newNode(BaseCompoundNode parent,	int nodeIndex) {
 		return new Shape(this.objectType, (CommonModelNode)parent, nodeIndex);
 	}
 
