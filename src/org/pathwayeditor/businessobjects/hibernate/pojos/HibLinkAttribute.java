@@ -448,6 +448,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
+		// TODO test this.
 		return this.hibLinkProperties.get(propDefn.getName());
 	}
 
@@ -462,7 +463,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
 	public Set<IAnnotationProperty> propertyIterator() {
-		return new HashSet (this.hibLinkProperties.values() ) ;
+		return new HashSet<IAnnotationProperty> (this.hibLinkProperties.values() ) ;
 	}
 
 	/* (non-Javadoc)

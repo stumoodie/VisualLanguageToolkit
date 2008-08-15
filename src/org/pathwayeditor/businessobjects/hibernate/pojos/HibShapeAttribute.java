@@ -4,6 +4,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -440,8 +441,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getProperty(java.lang.String)
 	 */
 	public IAnnotationProperty getProperty(String propertyName) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		return this.hibProperties.get(propertyName) ;
 	}
 
 	/* (non-Javadoc)
@@ -566,16 +566,15 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO test this.
+		return this.hibProperties.get(propDefn.getName());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
 	public Set<IAnnotationProperty> propertyIterator() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		return new HashSet<IAnnotationProperty> ( this.hibProperties.values() ) ;
 	}
 
 }

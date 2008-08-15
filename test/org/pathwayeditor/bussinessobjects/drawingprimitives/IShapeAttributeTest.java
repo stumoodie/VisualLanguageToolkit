@@ -4,6 +4,9 @@
 package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Set;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -19,6 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
@@ -322,11 +326,10 @@ public class IShapeAttributeTest {
 		shapeAttribute.hasProperty("a property") ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testGetProperty () throws Exception 
 	{
-		// TODO
-		shapeAttribute.getProperty("a property") ;
+		assertEquals ( "get property" ,mockProperty , shapeAttribute.getProperty(PROPERTY_ID ) ) ;
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
@@ -347,5 +350,13 @@ public class IShapeAttributeTest {
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetPreviousObject() {
 		shapeAttribute.getPreviousObject() ;
+	}
+	
+	@Test
+	public void testGetPropertyIterator () throws Exception 
+	{
+		Set<IAnnotationProperty> properties = shapeAttribute.propertyIterator() ;
+		assertTrue ( "containsProperty" , properties.contains(mockProperty)) ;
+		assertEquals ( "number of properties" , NUMERIC_VALUE_ONE , properties.size() );
 	}
 }
