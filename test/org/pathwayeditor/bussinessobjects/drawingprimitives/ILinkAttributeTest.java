@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -23,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -65,6 +67,7 @@ public class ILinkAttributeTest {
 	private HibCanvas mockCanvas ;
 	private IBendPoint mockBendPoint1 ;
 	private IBendPoint mockBendPoint2 ;
+	private HibTextProperty textProperty ;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -85,6 +88,10 @@ public class ILinkAttributeTest {
 		linkAttribute.addBendPoint(mockBendPoint2) ;
 		
 		linkAttribute.setUrl(URL) ;
+		
+		textProperty = new HibTextProperty () ;
+		
+		linkAttribute.addLinkProperty(PROPERTY_NAME, textProperty) ;
 
 	}
 
@@ -212,7 +219,7 @@ public class ILinkAttributeTest {
 		linkAttribute.getPreviousObject() ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testPropertyIterator() {
 		linkAttribute.propertyIterator() ;
 	}
@@ -220,10 +227,6 @@ public class ILinkAttributeTest {
 	@Test
 	public void testAddProperty () throws Exception
 	{
-		HibTextProperty textProperty = new HibTextProperty () ;
-		
-		linkAttribute.addLinkProperty(PROPERTY_NAME, textProperty) ;
-		
 		assertEquals ( "get property" , textProperty , linkAttribute.getProperty(PROPERTY_NAME)) ;
 	}
 	
@@ -240,5 +243,13 @@ public class ILinkAttributeTest {
 		linkAttribute.setLineStyle(LINE_STYLE) ;
 		linkAttribute.setLineStyle(null) ;
 		assertEquals ("line style" , LineStyle.DASH_DOT , linkAttribute.getLineStyle() ) ;
+	}
+	
+	@Test
+	public void testGetPropertyIterator () throws Exception 
+	{
+		Set <IAnnotationProperty> properties = linkAttribute.propertyIterator() ;
+		assertEquals ( "property iterator contains one" , NUMERIC_VALUE_1 , properties.size() );
+		assertTrue ( "property iterator contains property" ,  properties.contains(textProperty)) ;
 	}
 }	

@@ -69,7 +69,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , NUMBER_VALUE_TEN ) ;
 		
-		dbLink.addLinkProperty("NUMBER_PROPERTY_NAME" , numberProperty ) ;
+		dbLink.addLinkProperty(NUMBER_PROPERTY_NAME , numberProperty ) ;
 		
 		getSession().save(numberProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
@@ -105,7 +105,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
 		
-		dbLink.addLinkProperty("TEXT_PROPERTY_NAME" , textProperty ) ;
+		dbLink.addLinkProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
 		getSession().save(textProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
@@ -141,7 +141,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
 		
-		dbLink.addLinkProperty("RICH_TEXT_PROPERTY_NAME" , richTextProperty ) ;
+		dbLink.addLinkProperty(RICH_TEXT_PROPERTY_NAME , richTextProperty ) ;
 		
 		getSession().save(richTextProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
@@ -185,7 +185,7 @@ public class DbLinkPropertyTest extends PojoTester {
 //		listProperty.setCreationSerial(CREATION_SERIAL);
 //		numberProperty.setCanvas() ;
 		
-		dbLink.addLinkProperty("LIST_PROPERTY_NAME" , listProperty ) ;
+		dbLink.addLinkProperty(LIST_PROPERTY_NAME , listProperty ) ;
 		
 		getSession().save(listProperty) ;
 		getSession().saveOrUpdate(dbLink) ;

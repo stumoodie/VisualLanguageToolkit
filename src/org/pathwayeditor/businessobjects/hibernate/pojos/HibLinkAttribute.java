@@ -37,7 +37,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private String description;
 	private String detailedDescription;
 	private String url;
-	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private int lineRed;
 	private int lineGreen;
 	private int lineBlue;
@@ -141,12 +140,12 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.url = url;
 	}
 
-	public Map<String, HibProperty> getProperties() {
-		return this.hibProperties;
+	public Map<String, HibProperty> getLinkProperties() {
+		return this.hibLinkProperties;
 	}
 
-	public void setProperties(Map<String, HibProperty> hibProperties) {
-		this.hibProperties = hibProperties;
+	public void setLinkProperties(Map<String, HibProperty> hibProperties) {
+		this.hibLinkProperties = hibProperties;
 	}
 
 	public int getLineRed() {
@@ -158,7 +157,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public Map<String, HibProperty> getHibLinkProperties() {
-		return this.hibProperties;
+		return this.hibLinkProperties;
 	}
 
 	public int getLineGreen() {
@@ -256,7 +255,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 			throw new IllegalArgumentException("property cannot be null");
 		HibLinkAttribute oldLink = toAdd.getHibLink() ;
 		if (oldLink != null) {
-			oldLink.getProperties().remove(toAdd);
+			oldLink.getLinkProperties().remove(toAdd);
 		}
 		this.hibLinkProperties.put(name ,toAdd);
 		toAdd.setHibLink(this);
@@ -265,11 +264,11 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	void removeLinkProperty(String toRemove) {
 		if (toRemove == null)
 			throw new IllegalArgumentException("id cannot be null");
-		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
+		HibProperty propertyToRemove = hibLinkProperties.get(toRemove) ;
 		if  (propertyToRemove == null)
 			throw new IllegalStateException("property cannot be null");
 		
-		this.hibProperties.remove(toRemove) ;
+		this.hibLinkProperties.remove(toRemove) ;
 		propertyToRemove.setHibLink(null);
 	}
 	
@@ -279,7 +278,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 			throw new IllegalArgumentException("property cannot be null");
 		HibLinkAttribute oldLink = (HibLinkAttribute) toAdd.getOwningLink() ;
 		if (oldLink != null) {
-			oldLink.getProperties().remove(toAdd);
+			oldLink.getLinkProperties().remove(toAdd);
 		}
 		this.hibBendPoints.add(toAdd);
 		toAdd.setOwningLink(this);		
@@ -296,7 +295,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 			throw new IllegalArgumentException(
 					"property must belong to this canvas");	
 		
-		this.hibProperties.remove(toRemove) ;
+		this.hibLinkProperties.remove(toRemove) ;
 		bendpointToRemove.setOwningLink(null);		
 	}
 	
@@ -306,7 +305,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 			throw new IllegalArgumentException("property cannot be null");
 		HibLinkAttribute oldLink = toAdd.getLink() ;
 		if (oldLink != null) {
-			oldLink.getProperties().remove(toAdd);
+			oldLink.getLinkProperties().remove(toAdd);
 		}
 		this.linkTermini.add(toAdd);
 		toAdd.setLink(this);		
@@ -449,8 +448,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.hibLinkProperties.get(propDefn.getName());
 	}
 
 	/* (non-Javadoc)
@@ -464,8 +462,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
 	public Set<IAnnotationProperty> propertyIterator() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		return new HashSet (this.hibLinkProperties.values() ) ;
 	}
 
 	/* (non-Javadoc)

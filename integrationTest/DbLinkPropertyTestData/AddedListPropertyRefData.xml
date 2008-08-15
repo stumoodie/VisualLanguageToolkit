@@ -190,12 +190,14 @@
 	</table>
 	<table name="linkProperty">
 		<column>link_id</column>
-		<column>property_id</column>
 		<column>name</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
 				<value>linkpropertyname</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>listProperty</value>
 			</row>
 	</table>
 </dataset>
