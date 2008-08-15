@@ -62,7 +62,7 @@ public class HibNumberProperty extends HibProperty implements Serializable , INu
 	 */
 	public IAnnotatedObject getOwningObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)

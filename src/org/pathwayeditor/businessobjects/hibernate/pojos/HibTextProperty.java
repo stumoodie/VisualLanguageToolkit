@@ -60,7 +60,7 @@ public class HibTextProperty extends HibProperty implements Serializable , IPlai
 	 */
 	public IAnnotatedObject getOwningObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)

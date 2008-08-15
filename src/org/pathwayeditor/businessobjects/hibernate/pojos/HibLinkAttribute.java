@@ -92,7 +92,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 
 	public ILinkObjectType getObjectType() {
 		// TODO
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 	
 	public HibObjectType getHibObjectType () {
@@ -136,6 +136,8 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public void setUrl(String url) {
+		if ( url == null )
+			throw new IllegalArgumentException ( "Url cannot be null.") ;
 		this.url = url;
 	}
 
@@ -180,6 +182,8 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public void setLineStyle(LineStyle lineStyle) {
+		if ( lineStyle == null )
+			throw new IllegalArgumentException ( "Line style cannot be null." ) ;
 		this.lineStyle = lineStyle;
 	}
 
@@ -360,7 +364,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public ILinkEndDecorator getLinkSourceDecoration() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -368,15 +372,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public ILinkEndDecorator getLinkTargetDecoration() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getRouter()
 	 */
 	public ConnectionRouter getRouter() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.routerType ;
 	}
 
 	/* (non-Javadoc)
@@ -404,7 +407,9 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#setRouter(org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter)
 	 */
 	public void setRouter(ConnectionRouter router) {
-		// TODO Auto-generated method stub
+		if ( router == null)
+			throw new IllegalArgumentException ( "Router cannot be null.") ;
+		this.routerType = router ;
 		
 	}
 
@@ -413,7 +418,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public IZOrderedObject getFirstObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -421,7 +426,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public IZOrderedObject getLastObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -429,7 +434,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public IZOrderedObject getNextObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -437,7 +442,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public IZOrderedObject getPreviousObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -452,8 +457,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
 	 */
 	public IAnnotationProperty getProperty(String propName) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.hibLinkProperties.get(propName);
 	}
 
 	/* (non-Javadoc)
@@ -461,7 +465,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 */
 	public Set<IAnnotationProperty> propertyIterator() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -481,5 +485,12 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.lineBlue = newColor.getBlue() ;
 		this.lineRed = newColor.getRed() ;
 		this.lineGreen = newColor.getGreen() ;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#addLinkProperty(java.lang.String, org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
+	 */
+	public void addLinkProperty(String name, IAnnotationProperty toAdd) {
+		this.addLinkProperty(name, (HibProperty)toAdd) ;
 	}
 }

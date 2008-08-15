@@ -68,7 +68,7 @@ public class HibRichTextProperty extends HibProperty implements Serializable , I
 	 */
 	public IAnnotatedObject getOwningObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)

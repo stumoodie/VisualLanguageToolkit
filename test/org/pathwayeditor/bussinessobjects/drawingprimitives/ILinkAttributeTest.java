@@ -6,7 +6,6 @@ package org.pathwayeditor.bussinessobjects.drawingprimitives;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,15 +17,17 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
 /**
  * @author ntsorman
@@ -52,6 +53,14 @@ public class ILinkAttributeTest {
 	private static final int NUMERIC_VALUE_2 = 2 ;
 	private static final int NUMERIC_VALUE_1 = 1 ;
 	
+	private static final String URL = "url" ;
+	private static final String NEW_URL = "newurl" ;
+	
+	private static final String PROPERTY_NAME = "property" ;
+	
+	private static final ConnectionRouter ROUTER_TYPE = ConnectionRouter.SHORTEST_PATH ;
+	private static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;
+	
 	private ILinkAttribute linkAttribute ;
 	private HibCanvas mockCanvas ;
 	private IBendPoint mockBendPoint1 ;
@@ -61,14 +70,6 @@ public class ILinkAttributeTest {
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
 		HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
-//		mockBendPoint1 = mockery.mock(IBendPoint.class , "mockBendpoint1") ;
-//		mockBendPoint2 = mockery.mock(IBendPoint.class , "mockBendpoint2") ;
-//		
-//		mockery.checking( new Expectations () {{
-//			one(mockBendPoint1).getOwningLink() ; will(returnValue(null)) ;
-//		}});
-		
-
 		
 		
 		HibLinkAttribute tempLinkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	mockObjectType ) ;
@@ -83,6 +84,7 @@ public class ILinkAttributeTest {
 		linkAttribute.addBendPoint(mockBendPoint1) ;
 		linkAttribute.addBendPoint(mockBendPoint2) ;
 		
+		linkAttribute.setUrl(URL) ;
 
 	}
 
@@ -102,44 +104,33 @@ public class ILinkAttributeTest {
 		assertEquals ( "correct creationSerial" , CREATION_SERIAL , linkAttribute.getCreationSerial()) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetObjectType () throws Exception
 	{
 		// TODO
-		fail () ;
+		linkAttribute.getObjectType() ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetLinkSourceDecoration() throws Exception
 	{
 		// TODO
-		fail () ;
+		linkAttribute.getLinkSourceDecoration() ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetLinkTargetDecoration() throws Exception
 	{
 		// TODO
-		fail () ;
+		linkAttribute.getLinkTargetDecoration() ;
 	}
 	
-	@Ignore
-	@Test
-	public void testGetRouter() throws Exception
-	{
-		// TODO
-		fail () ;
-	}
-	
-	@Ignore
 	@Test
 	public void testSetRouter() throws Exception
 	{
-		// TODO
-		fail () ;
+		assertEquals ( "null router" , null , linkAttribute.getRouter() ) ;
+		linkAttribute.setRouter(ROUTER_TYPE) ;
+		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouter() );
 	}
 	
 	@Test
@@ -185,5 +176,69 @@ public class ILinkAttributeTest {
 		linkAttribute.removeBendPoint(mockBendPoint1) ;
 		assertEquals ( "one bendpoints" , NUMERIC_VALUE_1 , linkAttribute.numBendPoints()) ;
 		assertFalse ( "contains bendpoint1" , linkAttribute.containsBendPoint(mockBendPoint1)) ;
+	}
+	
+	@Test
+	public void testSetUrl () throws Exception 
+	{
+		linkAttribute.setUrl(NEW_URL) ;
+		assertEquals ( "url" , NEW_URL , linkAttribute.getUrl()) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetUrlToNull() throws Exception 
+	{
+		linkAttribute.setUrl(null) ;
+		assertEquals ( "url" , URL , linkAttribute.getUrl()) ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetFirstObject() {
+		linkAttribute.getFirstObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetLastObject() {
+		linkAttribute.getLastObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetNextObject() {
+		linkAttribute.getNextObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetPreviousObject() {
+		linkAttribute.getPreviousObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testPropertyIterator() {
+		linkAttribute.propertyIterator() ;
+	}
+	
+	@Test
+	public void testAddProperty () throws Exception
+	{
+		HibTextProperty textProperty = new HibTextProperty () ;
+		
+		linkAttribute.addLinkProperty(PROPERTY_NAME, textProperty) ;
+		
+		assertEquals ( "get property" , textProperty , linkAttribute.getProperty(PROPERTY_NAME)) ;
+	}
+	
+	@Test
+	public void testGetLineStyle() throws Exception 
+	{
+		linkAttribute.setLineStyle(LINE_STYLE) ;
+		assertEquals ("line style" , LineStyle.DASH_DOT , linkAttribute.getLineStyle() ) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetLineStyleToNull() throws Exception 
+	{
+		linkAttribute.setLineStyle(LINE_STYLE) ;
+		linkAttribute.setLineStyle(null) ;
+		assertEquals ("line style" , LineStyle.DASH_DOT , linkAttribute.getLineStyle() ) ;
 	}
 }	

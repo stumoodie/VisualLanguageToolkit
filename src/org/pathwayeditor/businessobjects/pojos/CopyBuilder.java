@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
+
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;

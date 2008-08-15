@@ -12,7 +12,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
@@ -70,8 +69,8 @@ public class IPlainTextAnnotationPropertyTest {
 		assertEquals ( "text value" , TEXT_VALUE , textProperty.getTextValue() ) ;
 	}
 	
-	@Ignore
-	@Test
+
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetOwningObject () throws Exception 
 	{
 		// TODO

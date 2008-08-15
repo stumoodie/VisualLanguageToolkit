@@ -13,7 +13,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -68,11 +67,9 @@ public class INumberAnnotationPropertyTest {
 		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getNumberValue() ) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetOwningObject () throws Exception 
 	{
-		// TODO
 		numberProperty.getOwningObject() ;
 	}
 }

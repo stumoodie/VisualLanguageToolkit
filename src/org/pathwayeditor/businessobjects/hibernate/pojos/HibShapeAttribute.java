@@ -138,7 +138,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 
 	public IShapeObjectType getObjectType() {
 		// TODO
-		return null;
+		return null ;
 	}
 	
 	public HibObjectType getHibObjectType () {
@@ -231,7 +231,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 
 	public LineStyle getLineStyle() {
 		// FIXME
-		return LineStyle.DASH_DOT;
+		throw new UnsupportedOperationException () ;
 	}
 	
 	public LineStyle getHibLineStyle () {
@@ -403,7 +403,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
         return result;
   }   
 	
-//	TODO tests from here on
 	
 	public HibShapeNode getShapeNode() {
 		return this.shapeNode;
@@ -439,7 +438,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IPrimitiveShape getPrimitiveShape() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -447,7 +446,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IAnnotationProperty getProperty(String propertyName) {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -455,7 +454,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IChildModel getShapeModel() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -501,7 +500,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setLineStyle(LineStyle lineStyle) {
 		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -520,6 +519,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setPrimitiveShape(IPrimitiveShape primitiveShape) {
 		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException () ;
 		
 	}
 
@@ -539,7 +539,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IZOrderedObject getFirstObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -547,7 +547,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IZOrderedObject getLastObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -555,7 +555,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IZOrderedObject getNextObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -563,7 +563,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public IZOrderedObject getPreviousObject() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 
 	/* (non-Javadoc)
@@ -579,6 +579,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public Set<IAnnotationProperty> propertyIterator() {
 		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException () ;
 	}
 }

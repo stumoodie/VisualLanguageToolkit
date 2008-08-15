@@ -5,14 +5,12 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,9 +31,13 @@ public class HibRichTextPropertyTest {
 	private static final String NEW_PROPERTY_VALUE 	= "New property value" ;
 	private static final int 	NEW_CREATION_SERIAL = 54321 ;
 	
+	private HibCanvas mockCanvas ;
+	private HibRichTextProperty richTextProperty ;
+	
 	@Before
 	public void setUp() throws Exception {
-
+		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
+		richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
 	}
 
 	@After
@@ -46,8 +48,7 @@ public class HibRichTextPropertyTest {
 	@Test
 	public void testCreateRichTextProperty () throws Exception 
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
+		
 		
 		assertEquals ( "check value" , PROPERTY_VALUE , richTextProperty.getRichTextValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , richTextProperty.getCreationSerial() ) ;
@@ -57,7 +58,6 @@ public class HibRichTextPropertyTest {
 	@Test
 	public void testAlterPropertyValues () throws Exception 
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
 		final HibCanvas newMockCanvas = mockery.mock(HibCanvas.class , "newMockCanvas") ;
 		
 		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
@@ -74,30 +74,14 @@ public class HibRichTextPropertyTest {
 	@Test
 	public void testCopyNumberProperty () throws Exception 
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
-		
 		HibRichTextProperty copyOfTextProperty = richTextProperty.copy(mockCanvas) ;
 		
 		assertEquals ( "copy of" , richTextProperty , copyOfTextProperty ) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetOwner () throws Exception
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		final HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
-		
-		final HibShapeAttribute mockShape = mockery.mock(HibShapeAttribute.class , "mockShape") ;
-		
-		mockery.checking( new Expectations () {
-			{atLeast(1).of(mockShape).addProperty("TextProperty", richTextProperty);}
-		});
-		
-		mockShape.addProperty("TextProperty", richTextProperty) ;
-		
-		assertEquals ( "get Owner" , mockShape , richTextProperty.getOwningObject()) ;
-		
+		richTextProperty.getOwningObject() ;
 	}
 }

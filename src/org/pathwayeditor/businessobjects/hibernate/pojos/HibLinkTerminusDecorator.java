@@ -252,7 +252,7 @@ public void setLineSize(int newLineSize) {
  */
 public void setLineStyle(LineStyle lineStyle) {
 	// TODO Auto-generated method stub
-	
+	throw new UnsupportedOperationException () ;
 }
 
 /* (non-Javadoc)

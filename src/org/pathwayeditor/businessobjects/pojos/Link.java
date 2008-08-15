@@ -259,4 +259,36 @@ public class Link extends ArchetypalCompoundEdge implements ILinkAttribute {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getUrl()
+	 */
+	public String getUrl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setUrl(java.lang.String)
+	 */
+	public void setUrl(String url) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#addLinkProperty(java.lang.String, org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
+	 */
+	public void addLinkProperty(String name, IAnnotationProperty toAdd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
+	 */
+	public void setLineStyle(LineStyle style) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

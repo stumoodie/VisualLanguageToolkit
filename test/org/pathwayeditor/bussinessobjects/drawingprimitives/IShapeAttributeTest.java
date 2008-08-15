@@ -4,7 +4,6 @@
 package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -13,7 +12,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
@@ -205,20 +203,18 @@ public class IShapeAttributeTest {
 		assertEquals ( "changed Width" , SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getWidth() ) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testSetPrimitiveShape () throws Exception
 	{
 		// TODO 
-		fail() ;
+		shapeAttribute.setPrimitiveShape(null) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetPrimitiveShape () throws Exception
 	{
 		// TODO 
-		fail() ;
+		shapeAttribute.getPrimitiveShape() ;
 	}
 	
 	@Test
@@ -295,35 +291,51 @@ public class IShapeAttributeTest {
 		assertEquals ( "green" , COLOR_VALUE , ((HibShapeAttribute)shapeAttribute).getLineGreen() ) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetLineStyle () throws Exception
 	{
 		// TODO
-		fail() ;
+		shapeAttribute.getLineStyle() ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testSetLineStyle () throws Exception
 	{
 		// TODO
-		fail() ;
+		shapeAttribute.setLineStyle(null) ;
 	}	
 	
-	@Ignore
 	@Test
 	public void testHasProperty () throws Exception 
 	{
 		// TODO
-		fail();
+		shapeAttribute.hasProperty("a property") ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetProperty () throws Exception 
 	{
 		// TODO
-		fail () ;
+		shapeAttribute.getProperty("a property") ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetFirstObject() {
+		shapeAttribute.getFirstObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetLastObject() {
+		shapeAttribute.getLastObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetNextObject() {
+		shapeAttribute.getNextObject() ;
+	}
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testGetPreviousObject() {
+		shapeAttribute.getPreviousObject() ;
 	}
 }

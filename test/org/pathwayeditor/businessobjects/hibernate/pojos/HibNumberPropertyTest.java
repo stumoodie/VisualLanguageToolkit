@@ -7,14 +7,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,10 +33,13 @@ public class HibNumberPropertyTest {
 	private static final BigDecimal NEW_PROPERTY_VALUE 	= new BigDecimal ( 20000000 ) ;
 	private static final int 		NEW_CREATION_SERIAL = 54321 ;
 	
+	private HibNumberProperty numberProperty ;
+	private HibCanvas mockCanvas ;
 	
 	@Before
 	public void setUp() throws Exception {
-
+		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
+		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
 	}
 
 	@After
@@ -48,8 +49,7 @@ public class HibNumberPropertyTest {
 	@Test
 	public void testCreateNumberPropery () throws Exception
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		HibNumberProperty numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
+
 		
 		assertEquals ( "check value" , PROPERTY_VALUE , numberProperty.getNumberValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , numberProperty.getCreationSerial() ) ;
@@ -77,30 +77,15 @@ public class HibNumberPropertyTest {
 	@Test
 	public void testCopyNumberProperty () throws Exception 
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		HibNumberProperty numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
 		
 		HibNumberProperty copyOfNumberProperty = numberProperty.copy(mockCanvas) ;
 		
 		assertEquals ( "copy of" , numberProperty , copyOfNumberProperty ) ;
 	}
 	
-	@Ignore
-	@Test
+	@Test(expected=UnsupportedOperationException.class)
 	public void testGetOwner () throws Exception
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		final HibNumberProperty numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
-		
-		final HibShapeAttribute mockShape = mockery.mock(HibShapeAttribute.class , "mockShape") ;
-		
-		mockery.checking( new Expectations () {
-			{atLeast(1).of(mockShape).addProperty("NumberProperty", numberProperty);}
-		});
-		
-		mockShape.addProperty("NumberProperty", numberProperty) ;
-		
-		assertEquals ( "get Owner" , mockShape , numberProperty.getOwningObject()) ;
-		
+		numberProperty.getOwningObject() ;
 	}
 }
