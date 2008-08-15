@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
@@ -38,7 +39,7 @@ public class ILinkTerminusDecoratorTest {
 	private static final int SIZE_VALUE = 50 ;
 	private static final short SHAPE_TYPE = 1 ;
 	private static final int LINE_WIDTH = 2 ;
-	private static final int LINE_STYLE = 3 ;
+	private static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;
 	
 	private static final int NEW_FILL_COLOR_VALUE = 150 ;
 	private static final int NEW_LINE_COLOR_VALUE = 250 ;
@@ -94,9 +95,16 @@ public class ILinkTerminusDecoratorTest {
 		assertEquals ( "width" , NEW_SIZE_VALUE ,((HibLinkTerminusDecorator)linkTerminusDecorator).getWidth() );
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testChangeLineStyle () throws Exception 
 	{
+		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , linkTerminusDecorator.getLineStyle()) ;
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeLineStyleToNull () throws Exception 
+	{
 		linkTerminusDecorator.setLineStyle(null) ;
+		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , linkTerminusDecorator.getLineStyle()) ;
 	}
 }

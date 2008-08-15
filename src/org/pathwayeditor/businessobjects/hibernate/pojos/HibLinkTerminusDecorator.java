@@ -28,14 +28,14 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
      private int lineGreen;
      private int lineBlue;
      private int lineWidth;
-     private int hibLineStyle;
+     private LineStyle lineStyle;
      private int width;
      private int height;
 
     public HibLinkTerminusDecorator() {
     }
 
-    public HibLinkTerminusDecorator(HibLinkTerminus hibLinkTerminus, short shapeType, int fillRed, int fillGreen, int fillBlue, int lineRed, int lineGreen, int lineBlue, int lineWidth, int lineStyle, int width, int height) {
+    public HibLinkTerminusDecorator(HibLinkTerminus hibLinkTerminus, short shapeType, int fillRed, int fillGreen, int fillBlue, int lineRed, int lineGreen, int lineBlue, int lineWidth, LineStyle lineStyle, int width, int height) {
        this.hibLinkTerminus = hibLinkTerminus;
        this.shapeType = shapeType;
        this.fillRed = fillRed;
@@ -45,7 +45,7 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
        this.lineGreen = lineGreen;
        this.lineBlue = lineBlue;
        this.lineWidth = lineWidth;
-       this.hibLineStyle = lineStyle;
+       this.lineStyle = lineStyle;
        this.width = width;
        this.height = height;
     }
@@ -120,13 +120,7 @@ public class HibLinkTerminusDecorator  implements ILinkTerminusDecorator , java.
     public void setLineWidth(int lineWidth) {
         this.lineWidth = lineWidth;
     }
-    public int getHibLineStyle() {
-        return this.hibLineStyle;
-    }
     
-    public void setHibLineStyle(int lineStyle) {
-        this.hibLineStyle = lineStyle;
-    }
     public int getWidth() {
         return this.width;
     }
@@ -251,16 +245,16 @@ public void setLineSize(int newLineSize) {
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
  */
 public void setLineStyle(LineStyle lineStyle) {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException () ;
+	if ( lineStyle == null )
+		throw new IllegalArgumentException ("Line style cannot be null." ) ;
+	this.lineStyle = lineStyle ;
 }
 
 /* (non-Javadoc)
  * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminusDecorator#getLineStyle()
  */
 public LineStyle getLineStyle() {
-	// TODO Auto-generated method stub
-	return null;
+	return lineStyle;
 }   
 
 

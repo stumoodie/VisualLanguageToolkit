@@ -35,9 +35,9 @@
         <property name="lineWidth" type="int">
             <column name="line_width" not-null="true" />
         </property>
-        <property name="hibLineStyle" type="int">
-            <column name="line_style" not-null="true" />
-        </property>
+		<property name="lineStyle" type="LineStyleType">
+			<column name="line_style" not-null="true" />
+		</property>
         <property name="width" type="int">
             <column name="width" not-null="true" />
         </property>
