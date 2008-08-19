@@ -10,7 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanvasObject {
+public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanvasAttribute {
 
 	ICanvas getCanvas();
 	

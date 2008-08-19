@@ -9,7 +9,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , ICanvasObject {
+public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , ICanvasAttribute {
 
 	IShapeObjectType getObjectType();
 	

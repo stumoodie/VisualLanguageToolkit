@@ -85,7 +85,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("height" , SIZE_VALUE , dbShape.getHeight()) ;
 		assertEquals ("width" , SIZE_VALUE , dbShape.getWidth()) ;
 		assertEquals ("url" , URL_VALUE , dbShape.getUrl()) ;
-		assertEquals ("node_id" , EXPECTED_NODE_VALUE , dbShape.getShapeNode().getNodeIndex()) ;
+		assertEquals ("node_id" , EXPECTED_NODE_VALUE , dbShape.getShapeNode().getIndex()) ;
 		
 	}
 	

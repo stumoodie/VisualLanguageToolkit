@@ -5,7 +5,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
-public interface ILabelAttribute extends IZOrderedObject, ICanvasObject {
+public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 
 	Location getLocation();
 	void setLocation ( Location location) ;

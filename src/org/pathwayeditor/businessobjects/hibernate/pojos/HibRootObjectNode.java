@@ -5,7 +5,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 
@@ -20,14 +19,15 @@ public class HibRootObjectNode extends HibCompoundNode implements IRootObjectNod
 	 * @param rootNode
 	 * @param nodeIdxIdx
 	 */
-	public HibRootObjectNode(HibModel model, HibCompoundNode rootNode, int nodeIdxIdx) {
-		super(model,rootNode,nodeIdxIdx);
+	public HibRootObjectNode(HibCompoundGraph model, int nodeIdxIdx) {
+		super(model, nodeIdxIdx);
 	}
 
 	/**
 	 * 
 	 */
 	public HibRootObjectNode() {
+		super();
 	}
 
 	/* (non-Javadoc)
@@ -49,7 +49,7 @@ public class HibRootObjectNode extends HibCompoundNode implements IRootObjectNod
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode#getShapeModel()
 	 */
-	public IChildModel getShapeModel() {
+	public HibChildCompoundGraph getChildCompoundGraph() {
 		// TODO Auto-generated method stub
 		return null;
 	}

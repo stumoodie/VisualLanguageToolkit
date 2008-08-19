@@ -6,7 +6,7 @@ package org.pathwayeditor.businessobjects.pojos;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -64,7 +64,7 @@ public class RootObject extends CommonModelNode implements IRootObjectNode {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootObject#getShapeModel()
 	 */
-	public IChildModel getShapeModel() {
+	public IChildCompoundGraph getChildCompoundGraph() {
 		// TODO Auto-generated method stub
 		return null;
 	}

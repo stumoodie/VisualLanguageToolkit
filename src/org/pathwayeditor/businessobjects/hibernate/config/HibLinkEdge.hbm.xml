@@ -9,15 +9,15 @@
             <generator class="native" />
         </id>
         <properties name="xak1compoundedge" unique="true">
-        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
-            	<column name="model_id" not-null="true" />
+        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+            	<column name="graph_id" not-null="true" />
         	</many-to-one>
         	<property name="edgeIndex" type="int" >
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="owningNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="owning_node_id" not-null="true"/>
+        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCOmpoundGraph">
+        	<column name="owning_child_graph_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
         	<column name="out_node_id" not-null="true"/>

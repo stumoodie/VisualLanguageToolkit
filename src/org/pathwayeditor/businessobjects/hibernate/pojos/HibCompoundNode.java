@@ -1,135 +1,168 @@
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import java.util.HashSet;
-import java.util.Set;
+import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
+import uk.ed.inf.graph.util.IDirectedEdgeSet;
+import uk.ed.inf.graph.util.INodeSet;
+import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
+import uk.ed.inf.graph.util.impl.NodeSet;
 
-/**
- * @author smoodie
- * 
- */
 
-public abstract class HibCompoundNode {
-	private Long id;
-	private HibModel model;
-	private int nodeIndex;
-	private HibCompoundNode parentNode;
-	private Set<HibLinkEdge> outEdges = new HashSet<HibLinkEdge>();
-	private Set<HibLinkEdge> inEdges = new HashSet<HibLinkEdge>();
-
-	public HibCompoundNode() {
-
+public class HibCompoundNode extends BaseCompoundNode {
+	private Long id = null;
+	private HibCompoundGraph graph = null;
+	private int index;
+	private HibChildCompoundGraph childCompoundGraph = null;
+	private HibCompoundNode parentNode = null;
+	private INodeSet<BaseCompoundNode, BaseCompoundEdge> children = new NodeSet<BaseCompoundNode, BaseCompoundEdge>();
+	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
+	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
+	
+	HibCompoundNode() {
+		super();
+		createInEdgeSet(this.inEdges);
+		createOutEdgeSet(this.outEdges);
+	}
+	
+	public HibCompoundNode(HibCompoundNode parentNode, int nodeIndex) {
+		this(parentNode.getGraph(), parentNode, nodeIndex);
 	}
 
-	public HibCompoundNode(HibModel model, HibCompoundNode parentNode, int nodeIdx) {
-		this.model = model;
+	
+	public HibCompoundNode(HibCompoundGraph graph, int nodeIndex) {
+		this(graph, null, nodeIndex);
+	}
+		
+	private HibCompoundNode(HibCompoundGraph graph, HibCompoundNode parentNode, int nodeIndex) {
+		this.graph = graph;
+		this.index = nodeIndex;
 		this.parentNode = parentNode;
-		this.nodeIndex = nodeIdx;
+		this.childCompoundGraph = new HibChildCompoundGraph(this);
+		super.createInEdgeSet(this.inEdges);
+		super.createOutEdgeSet(this.outEdges);
 	}
-
-	public Long getId() {
-		return this.id;
+	
+	void setOwningChildGraph(HibChildCompoundGraph childCompoundGraph){
+		this.childCompoundGraph = childCompoundGraph;
 	}
-
+	
+	HibChildCompoundGraph getOwningChildGraph(){
+		return this.childCompoundGraph;
+	}
+	
 	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
+	private void setId(Long value) {
+		this.id = value;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	void setIndex(int value) {
+		this.index = value;
+	}
+	
+	@Override
+	public int getIndex() {
+		return index;
+	}
+	
+	void setGraph(HibCompoundGraph value) {
+		this.graph = value;
+	}
+	
+	public HibCompoundGraph getGraph() {
+		return graph;
+	}
+	
+	void setChildCompoundGraph(HibChildCompoundGraph value) {
+		this.childCompoundGraph = value;
+	}
+	
+	void setChildren(INodeSet<BaseCompoundNode, BaseCompoundEdge> value) {
+		this.children = value;
+		if(this.childCompoundGraph != null){
+			this.childCompoundGraph.setRootNode(this);
+		}
 	}
 
-	public HibModel getModel() {
-		return this.model;
+	INodeSet<BaseCompoundNode, BaseCompoundEdge> getChildren() {
+		return this.children;
 	}
 
-	public void setModel(HibModel model) {
-		this.model = model;
+	void setOutEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edgeSet) {
+		this.outEdges = edgeSet;
+		this.createOutEdgeSet(this.outEdges);
 	}
-
-	public int getNodeIndex() {
-		return this.nodeIndex;
-	}
-
-	public void setNodeIndex(int nodeIndex) {
-		this.nodeIndex = nodeIndex;
-	}
-
-	public HibCompoundNode getParentNode() {
-		return this.parentNode;
-	}
-
-	public void setParentNode(HibCompoundNode parentNode) {
-		this.parentNode = parentNode;
-	}
-
-	public Set<HibLinkEdge> getOutEdges() {
+	
+	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getOutEdges() {
 		return this.outEdges;
 	}
+	
+//    void addOutEdge(HibCompoundEdge newOutEdge) {
+//		if (newOutEdge == null)
+//			throw new IllegalArgumentException("newOutEdge cannot be null");
+//
+//		HibCompoundNode oldOutNode = newOutEdge.getInNode();
+//		if (oldOutNode != null) {
+//			oldOutNode.inEdges.remove(newOutEdge);
+//		}
+//		this.inEdges.add(newOutEdge);
+//		newOutEdge.setInNode(this);
+//	}
 
-	void setOutEdges(Set<HibLinkEdge> outEdges) {
-		this.outEdges = outEdges;
+	void setInEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edgeSet) {
+		this.inEdges = edgeSet;
+		this.createInEdgeSet(this.inEdges);
 	}
-
-	public void addOutEdge(HibLinkEdge newOutEdge) {
-		if (newOutEdge == null)
-			throw new IllegalArgumentException("newOutEdge cannot be null");
-
-		HibCompoundNode oldOutNode = newOutEdge.getOutNode();
-		if (oldOutNode != null) {
-			oldOutNode.getOutEdges().remove(newOutEdge);
-		}
-		this.getOutEdges().add(newOutEdge);
-		newOutEdge.setOutNode(this);
-	}
-
-    public void removeOutEdge(HibLinkEdge outEdge) {
-		if (outEdge == null)
-			throw new IllegalArgumentException("outEdge cannot be null");
-		if (outEdge.getOutNode() != this)
-			throw new IllegalArgumentException("outEdge must be a child of this folder");
-
-		this.getOutEdges().remove(outEdge);
-		outEdge.setOutNode(null);
-	}
-    
-	public Set<HibLinkEdge> getInEdges() {
+	
+	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getInEdges() {
 		return this.inEdges;
 	}
+	
+//    void addInEdge(HibCompoundEdge newInEdge) {
+//		if (newInEdge == null)
+//			throw new IllegalArgumentException("newInEdge cannot be null");
+//
+//		HibCompoundNode oldInNode = newInEdge.getInNode();
+//		if (oldInNode != null) {
+//			oldInNode.inEdges.remove(newInEdge);
+//		}
+//		this.inEdges.add(newInEdge);
+//		newInEdge.setInNode(this);
+//	}
 
-	void setInEdges(Set<HibLinkEdge> inEdges) {
-		this.inEdges = inEdges;
+	void setParent(HibCompoundNode parentNode) {
+		this.parentNode = parentNode;
 	}
 
+//	public Set<HibCompoundNode> getChildren() {
+//		return children;
+//	}
+//
+//	void setChildren(Set<HibCompoundNode> children) {
+//		this.children = children;
+//	}
+	
+//	void addChild(HibCompoundNode newChild) {
+//		if (newChild == null)
+//			throw new IllegalArgumentException("newChild cannot be null");
+//
+//		HibCompoundNode oldParentNode = newChild.getParent();
+//		if (oldParentNode != null) {
+//			oldParentNode.children.remove(newChild);
+//		}
+//		this.children.add(newChild);
+//		newChild.setParent(this);
+//	}
 
-	public void addInEdge(HibLinkEdge newInEdge) {
-		if (newInEdge == null)
-			throw new IllegalArgumentException("newInEdge cannot be null");
-
-		HibCompoundNode oldInNode = newInEdge.getInNode();
-		if (oldInNode != null) {
-			oldInNode.getInEdges().remove(newInEdge);
-		}
-		this.getInEdges().add(newInEdge);
-		newInEdge.setInNode(this);
-	}
-
-    public void removeInEdge(HibLinkEdge inEdge) {
-		if (inEdge == null)
-			throw new IllegalArgumentException("inEdge cannot be null");
-		if (inEdge.getInNode() != this)
-			throw new IllegalArgumentException("inEdge must be a child of this folder");
-
-		this.getInEdges().remove(inEdge);
-		inEdge.setInNode(null);
-	}
-    
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((this.getModel() == null) ? 0 : this.getModel().hashCode());
-		result = prime * result + this.getNodeIndex();
+		result = prime * result + ((graph == null) ? 0 : graph.hashCode());
+		result = prime * result + index;
 		return result;
 	}
 
@@ -142,14 +175,28 @@ public abstract class HibCompoundNode {
 		if (!(obj instanceof HibCompoundNode))
 			return false;
 		final HibCompoundNode other = (HibCompoundNode) obj;
-		if (this.getModel() == null) {
-			if (other.getModel() != null)
+		if (graph == null) {
+			if (other.graph != null)
 				return false;
-		} else if (!this.getModel().equals(other.getModel()))
+		} else if (!graph.equals(other.graph))
 			return false;
-		if (this.getNodeIndex() != other.getNodeIndex())
+		if (getIndex() != other.getIndex())
 			return false;
 		return true;
 	}
 
+	@Override
+	public HibChildCompoundGraph getChildCompoundGraph() {
+		return this.childCompoundGraph;
+	}
+
+	@Override
+	public HibCompoundNode getParent() {
+		return this.parentNode;
+	}
+
+	@Override
+	public HibCompoundNode getRoot(){
+		return (HibCompoundNode)super.getRoot();
+	}	
 }

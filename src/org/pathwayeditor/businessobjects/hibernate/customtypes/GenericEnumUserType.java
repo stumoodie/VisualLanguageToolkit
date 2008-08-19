@@ -59,7 +59,8 @@ public class GenericEnumUserType implements UserType, ParameterizedType {
         }
     }
 
-    public Class returnedClass() {
+    @SuppressWarnings("unchecked")
+	public Class returnedClass() {
         return enumClass;
     }
 

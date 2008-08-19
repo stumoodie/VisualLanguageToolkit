@@ -10,7 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -202,7 +202,7 @@ public class Shape extends CommonModelNode implements IShapeAttribute {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getShapeModel()
 	 */
-	public IChildModel getShapeModel() {
+	public IChildCompoundGraph getShapeModel() {
 		// TODO Auto-generated method stub
 		return null;
 	}

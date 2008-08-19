@@ -5,13 +5,13 @@ package org.pathwayeditor.businessobjects.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.contectadapter.IContextAdapterServiceProvider;
+import org.pathwayeditor.businessobjects.contextadapter.IContextAdapterServiceProvider;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootObjectNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -25,7 +25,7 @@ import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
  * @author smoodie
  *
  */
-public class Model extends ArchetypalCompoundGraph implements IModel {
+public class Model extends ArchetypalCompoundGraph implements ICompoundGraph {
 	private RootObject rootNode;
 	private ModelLinkFactory modelLinkFactory; 
 	private ShapeFactory shapeFactory; 
@@ -51,7 +51,7 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#createCopy(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
-	public IModel createCopy(ICanvas newCanvas) {
+	public ICompoundGraph createCopy(ICanvas newCanvas) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -160,11 +160,11 @@ public class Model extends ArchetypalCompoundGraph implements IModel {
 		return null;
 	}
 
-	public GraphModelState getCurrentState(){
-		return new GraphModelState(super.getCurrentState());
+	public GraphModelState getMomento(){
+		return new GraphModelState(super.getMomento());
 	}
 	
-	public void restoreToState(IModelState state){
+	public void restoreToState(IGraphMomento state){
 		GraphModelState modelState = (GraphModelState)state;
 		super.restoreState(modelState);
 	}

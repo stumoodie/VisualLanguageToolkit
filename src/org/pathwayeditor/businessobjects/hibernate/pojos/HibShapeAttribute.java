@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
@@ -447,7 +447,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getShapeModel()
 	 */
-	public IChildModel getShapeModel() {
+	public IChildCompoundGraph getShapeModel() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException () ;
 	}

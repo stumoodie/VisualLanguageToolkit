@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.pathwayeditor.testutils.GenericTester;
 
 /**
- * @author nhanlon Unit tests for HibModel class
+ * @author nhanlon Unit tests for HibCompoundGraph class
  * 
  */
 public class DbModelTest extends GenericTester {
@@ -26,11 +26,11 @@ public class DbModelTest extends GenericTester {
 	
 	@Test
 	public void testSetRootNode() throws Exception{
-		HibModel graph= (HibModel) getSession().createQuery ( "From HibModel graph").uniqueResult();
+		HibCompoundGraph graph= (HibCompoundGraph) getSession().createQuery ( "From HibCompoundGraph graph").uniqueResult();
 		HibRootObjectNode node = new HibRootObjectNode();
 		graph.setRootNode(node);
 		saveAndCommit(graph);
-		graph= (HibModel) getSession().createQuery ( "From HibModel graph ").uniqueResult();
+		graph= (HibCompoundGraph) getSession().createQuery ( "From HibCompoundGraph graph ").uniqueResult();
 		assertEquals(node,graph.getRootNode());
 	}
 

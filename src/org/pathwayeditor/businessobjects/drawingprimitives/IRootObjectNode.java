@@ -11,9 +11,11 @@ import java.util.Iterator;
  */
 public interface IRootObjectNode {
 	
-	IModel getModel();
+	ICompoundGraph getGraph();
 	
-	IChildModel getShapeModel();
+	int getIndex();
+	
+	IChildCompoundGraph getChildCompoundGraph();
 	
 	int getNumShapes();
 	

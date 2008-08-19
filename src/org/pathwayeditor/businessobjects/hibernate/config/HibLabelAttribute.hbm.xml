@@ -8,12 +8,9 @@
 			<generator class="native" />
 		</id>
 		<properties name="xak1label" unique="true">
-			<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
-				<column name="canvas_id" not-null="true" />
+			<many-to-one name="visualisedProperty" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty">
+				<column name="displayed_property_id" not-null="true" />
 			</many-to-one>
-			<property name="creation_serial" type="int">
-				<column name="creation_serial" not-null="true" />
-			</property>
 		</properties>
 		<many-to-one name="labelNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode">
 			<column name="label_node_id" not-null="true" />
@@ -30,14 +27,6 @@
 		<property name="height" type="int">
 			<column name="height" not-null="true" />
 		</property>
-
-		<many-to-one name="visualisableProperty"
-			class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"
-			fetch="select">
-			<meta attribute="set-scope"></meta>
-			<column name="displayed_property_id" not-null="true" />
-		</many-to-one>
-		
 		<property name="isDisplayed" type="boolean">
 			<column name="is_displayed" not-null="true" />
 		</property>
@@ -53,6 +42,5 @@
 		<property name="noFillSet" type="boolean">
 			<column name="no_fill_set" not-null="true" />
 		</property>
-
 	</class>
 </hibernate-mapping>

@@ -23,8 +23,9 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibProperty.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibObjectType.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkEndDecorator.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShapeAttribute.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkAttribute.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvasAttribute.hbm.xml" />
+        <!-- mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShapeAttribute.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkAttribute.hbm.xml" / -->
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLabelAttribute.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibBendPoint.hbm.xml" /> 
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvas.hbm.xml" />

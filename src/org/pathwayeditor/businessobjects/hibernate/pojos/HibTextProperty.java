@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IPlainTextPropertyDefinition;
 
 
@@ -75,6 +76,30 @@ public class HibTextProperty extends HibProperty implements Serializable , IPlai
 	 */
 	public Object getValue() {
 		return textValue;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#getProperty()
+	 */
+	public IVisualisableAnnotationProperty getProperty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#isDisplayed()
+	 */
+	public boolean isDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#setDisplayed(boolean)
+	 */
+	public void setDisplayed(boolean displayed) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

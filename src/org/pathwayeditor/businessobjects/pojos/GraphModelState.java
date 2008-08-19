@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IModelState;
+import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 
 import uk.ed.inf.bitstring.IBitString;
 import uk.ed.inf.graph.basic.IBasicGraph;
@@ -15,7 +15,7 @@ import uk.ed.inf.graph.state.IGraphState;
  * @author smoodie
  *
  */
-public class GraphModelState implements IModelState, IGraphState<BaseCompoundNode, BaseCompoundEdge> {
+public class GraphModelState implements IGraphMomento, IGraphState<BaseCompoundNode, BaseCompoundEdge> {
 	private final IGraphState<BaseCompoundNode, BaseCompoundEdge> state;
 
 	public GraphModelState(IGraphState<BaseCompoundNode, BaseCompoundEdge> state){

@@ -2,11 +2,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-public interface IShapeNode {
+public interface IShapeNode extends IZOrderedObject {
 
-	IModel getModel();
+	ICompoundGraph getGraph();
 	
-	IChildModel getChildModel();
+	int getIndex();
+	
+	IChildCompoundGraph getChildModel();
 	
 	int getNumLinks();
 	/**
@@ -45,4 +47,6 @@ public interface IShapeNode {
 	
 	Iterator<ILabelAttribute> labelIterator();
 	
+	
+	IShapeAttribute getAttribute();
 }

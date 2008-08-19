@@ -8,7 +8,7 @@ import org.pathwayeditor.businessobjects.typedefn.IPlainTextPropertyDefinition;
  * @author smoodie
  *
  */
-public interface IPlainTextAnnotationProperty extends IAnnotationProperty {
+public interface IPlainTextAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
 
 	IPlainTextPropertyDefinition getDefinition();
 	

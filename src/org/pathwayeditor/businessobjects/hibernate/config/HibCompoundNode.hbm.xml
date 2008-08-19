@@ -9,13 +9,32 @@
             <generator class="native" />
         </id>
         <properties name="xak1compoundnode" unique="true">
-        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
-            	<column name="model_id" not-null="true" />
+        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+            	<column name="graph_id" not-null="true" />
         	</many-to-one>
         	<property name="nodeIndex" type="int" >
         		<column name="node_index" not-null="true"/>
         	</property>
         </properties>
+
+		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+	       	<column name="parent_node_id" not-null="false"/>
+        </many-to-one>
+
+		<set name="children" inverse="true" cascade="all,delete-orphan" collection-type="org.pathwayeditor.businessobjects.hibernate.pojos.NodeSetType">
+			<key column="parent_node_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" />
+		</set>
+
+		<set name="outEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.pojos.EdgeSetType">
+			<key column="out_node_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLink" />
+		</set>
+
+		<set name="inEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.pojos.EdgeSetType">
+			<key column="in_node_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundEdge" />
+		</set>
 
         <joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootObjectNode"
@@ -23,9 +42,6 @@
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
-            	<column name="referring_model_id" not-null="true" unique ="true" />
-        	</many-to-one>
 		</joined-subclass>
         
         <joined-subclass
@@ -34,21 +50,18 @@
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="parent_node_id" not-null="false"/>
-        </many-to-one>
+			<many-to-one name="shapeAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute">
+		       	<column name="shape_attribute_id" not-null="true"/>
+        	</many-to-one>
 		</joined-subclass>
 		
-        <joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode"
-			table="LabelNode">
+        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode" table="LabelNode">
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
-        	<column name="parent_node_id" not-null="false"/>
-        </many-to-one>
+			<many-to-one name="labelAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute">
+		       	<column name="label_attribute_id" not-null="true"/>
+        	</many-to-one>
 		</joined-subclass>
-		
     </class>
 </hibernate-mapping>

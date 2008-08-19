@@ -1,12 +1,11 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 
-public interface ILinkEdge extends IZOrderedObject, IAnnotatedObject, ICanvasObject {
+public interface ILinkEdge extends IZOrderedObject {
 
-	IModel getModel();
+	ICompoundGraph getGraph();
 	
-	int getLinkEdgeIndex();
+	int getIndex();
 	
 	/**
 	 * Gets the source shape of this link.
@@ -49,4 +48,8 @@ public interface ILinkEdge extends IZOrderedObject, IAnnotatedObject, ICanvasObj
 	 * @throws IllegalArgumentException if <code>canChangeTarget(newShape) == false</code>
 	 */
 	void changeTarget(IShapeNode newShape);
+	
+	ILinkAttribute getAttribute();
+	
+	IChildCompoundGraph getOwningChildGraph();
 }

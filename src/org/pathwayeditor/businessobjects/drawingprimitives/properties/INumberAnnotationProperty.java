@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import org.pathwayeditor.businessobjects.typedefn.INumberPropertyDefinition;
 
-public interface INumberAnnotationProperty extends IAnnotationProperty {
+public interface INumberAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
 
 	INumberPropertyDefinition getDefinition();
 	

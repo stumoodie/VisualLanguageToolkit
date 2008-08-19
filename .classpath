@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="org/pathwayeditor/businessobjects/pojos/Label.java|org/pathwayeditor/businessobjects/pojos/Link.java|org/pathwayeditor/businessobjects/pojos/Model.java|org/pathwayeditor/businessobjects/pojos/ModelLinkFactory.java|org/pathwayeditor/businessobjects/pojos/RootObject.java|org/pathwayeditor/businessobjects/pojos/SelectionSubgraph.java|org/pathwayeditor/businessobjects/pojos/Shape.java|org/pathwayeditor/businessobjects/pojos/ShapeFactory.java|org/pathwayeditor/businessobjects/pojos/ShapeModel.java|org/pathwayeditor/businessobjects/pojos/ChildModelLinkFactory.java|org/pathwayeditor/businessobjects/pojos/CommonModelNode.java|org/pathwayeditor/businessobjects/pojos/CopyBuilder.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="integrationTest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>

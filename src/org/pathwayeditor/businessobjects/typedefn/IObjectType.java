@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.contectadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.IContext;
 
 /**
  * @author smoodie

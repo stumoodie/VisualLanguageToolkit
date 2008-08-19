@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IHtmlPropertyDefinition;
 
 
@@ -83,6 +84,30 @@ public class HibRichTextProperty extends HibProperty implements Serializable , I
 	 */
 	public Object getValue() {
 		return this.richTextValue;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#getProperty()
+	 */
+	public IVisualisableAnnotationProperty getProperty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#isDisplayed()
+	 */
+	public boolean isDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty#setDisplayed(boolean)
+	 */
+	public void setDisplayed(boolean displayed) {
+		// TODO Auto-generated method stub
+		
 	}
     		
   // end of extra code specified in the hbm.xml files

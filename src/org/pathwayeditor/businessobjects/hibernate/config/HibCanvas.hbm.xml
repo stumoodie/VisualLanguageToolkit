@@ -8,14 +8,20 @@
             <generator class="native" />
         </id>
         <properties name="xak1canvas" unique="true">
-        	<many-to-one name="mapDiagram" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" cascade="all">
-            	<column name="map_id" not-null="true" />
+        	<many-to-one name="repository" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" cascade="none">
+            	<column name="repository_id" not-null="true" />
         	</many-to-one>
+        	<property name="mapINode">
+        		<column name="map_inode" not-null="true"/>
+        	</property>
         </properties>
-        <!-- one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all"/-->
+
+        <one-to-one name="graph" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph" cascade="all"/>
+
         <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibContext">
             <column name="context_id" not-null="true" />
         </many-to-one>
+
         <property name="gridX" type="int">
             <column name="grid_x" not-null="true" />
         </property>
@@ -49,23 +55,11 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <set name="shapes" inverse="true" table="shape" cascade="all,delete-orphan">
+        <set name="canvasAttributes" inverse="true" table="canvasAttribute" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute"/> 
         </set>
-        <set name="links" inverse="true" table="link" cascade="all,delete-orphan">
-            <key>
-                <column name="canvas_id" not-null="true" />
-            </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
-        </set>
-        <set name="labels" inverse="true" table="label" cascade="all,delete-orphan">
-            <key>
-                <column name="canvas_id" not-null="true" />
-            </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" />
-        </set>      
     </class>
 </hibernate-mapping>

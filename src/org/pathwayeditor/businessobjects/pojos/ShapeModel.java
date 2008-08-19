@@ -9,7 +9,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelectio
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -19,7 +19,7 @@ import uk.ed.inf.graph.compound.archetypal.ArchetypalChildCompoundGraph;
  * @author smoodie
  *
  */
-public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildModel {
+public class ShapeModel extends ArchetypalChildCompoundGraph implements IChildCompoundGraph {
 	private final ShapeFactory shapeFactory;
 	private final ChildModelLinkFactory childLinkFactory;
 	
