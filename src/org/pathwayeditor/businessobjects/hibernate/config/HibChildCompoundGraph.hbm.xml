@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="uk.ac.ed.inf.csb.hibgraph.pojos.HibChildCompoundGraph" table="ChildCompoundGraph">
+		<id name="id" column="id" type="java.lang.Long">
+			<generator class="native">
+			</generator>
+		</id>
+		<many-to-one name="rootNode" column="root_node_id" class="uk.ac.ed.inf.csb.hibgraph.pojos.HibCompoundNode" cascade="all" not-null="true" >
+		</many-to-one>
+		
+		<set name="edges" inverse="true" cascade="all,delete-orphan" collection-type="uk.ac.ed.inf.csb.hibgraph.pojos.EdgeSetType">
+			<key column="owning_child_graph_id"/>
+			<one-to-many class="uk.ac.ed.inf.csb.hibgraph.pojos.HibLink" />
+		</set>
+	</class>
+</hibernate-mapping>
