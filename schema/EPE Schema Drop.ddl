@@ -27,7 +27,7 @@ alter table RootObjectNode drop constraint Relationship4;
 alter table ShapeNode drop constraint Relationship5;
 alter table Folder drop constraint Relationship2;
 alter table MapDiagram drop constraint FKMapDiagram716936;
-alter table LabelNode drop constraint Relationship143;
+alter table LabelNode drop constraint Relationship243;
 alter table LinkTerminus drop constraint Relationship144;
 alter table LinkEdge drop constraint Relationship120;
 alter table LinkEdge drop constraint Relationship121;
