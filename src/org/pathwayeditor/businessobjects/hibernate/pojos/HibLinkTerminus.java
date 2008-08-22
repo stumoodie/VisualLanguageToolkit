@@ -16,7 +16,7 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
 
 
      private Long id;
-     private HibLinkAttribute hibLinkAttribute;
+     private HibLinkAttribute link;
      private int hibLinkEndType;
      private short offset;
      private HibLinkTerminusDecorator decorator;
@@ -29,12 +29,12 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
 
 	
     public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, int linkEndType, short offset) {
-        this.hibLinkAttribute = hibLinkAttribute;
+        this.link = hibLinkAttribute;
         this.hibLinkEndType = linkEndType;
         this.offset = offset;
     }
     public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, int linkEndType, short offset, HibLinkTerminusDecorator decorator, HibLinkEndDecorator linkenddecorators, Map<String,HibProperty> hibProperties) {
-       this.hibLinkAttribute = hibLinkAttribute;
+       this.link = hibLinkAttribute;
        this.hibLinkEndType = linkEndType;
        this.offset = offset;
        this.decorator = decorator;
@@ -50,11 +50,11 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
         this.id = id;
     }
     public HibLinkAttribute getLink() {
-        return this.hibLinkAttribute;
+        return this.link;
     }
     
     public void setLink(HibLinkAttribute hibLinkAttribute) {
-        this.hibLinkAttribute = hibLinkAttribute;
+        this.link = hibLinkAttribute;
     }
     public int getHibLinkEndType() {
         return this.hibLinkEndType;
@@ -124,12 +124,7 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("property cannot be null");
-		HibLinkTerminus oldLinkTerminus = toAdd.getLinkTerminus() ;
-		if (oldLinkTerminus != null) {
-			oldLinkTerminus.getProperties().remove(toAdd);
-		}
 		this.hibProperties.put(name ,toAdd);
-		toAdd.setLinkTerminus(this);
 	}
 	
 	void removeProperty(String toRemove) {
@@ -140,7 +135,6 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
 			throw new IllegalStateException("property cannot be null");
 		
 		this.hibProperties.remove(toRemove) ;
-		propertyToRemove.setLinkTerminus(null);
 	}
 
 
@@ -168,7 +162,7 @@ public class HibLinkTerminus  implements ILinkTerminus, java.io.Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#getOwningLink()
 	 */
 	public ILinkAttribute getOwningLink() {
-		return this.hibLinkAttribute;
+		return this.link;
 	}
 
 

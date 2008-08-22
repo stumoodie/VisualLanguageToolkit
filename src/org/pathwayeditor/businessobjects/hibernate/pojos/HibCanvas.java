@@ -35,6 +35,9 @@ public class HibCanvas implements ICanvas , Serializable {
 	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
 	private Date created = null ;
 	private Date modified = null ;
+	private int mapINode;
+	private HibRepository repository ;
+	private HibCompoundGraph graph ;
 
 	/**
 	 * Default constructor used by hibernate.
@@ -83,6 +86,8 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.backgroundBlue = other.backgroundBlue;
 		this.canvasWidth = other.canvasWidth;
 		this.canvasHeight = other.canvasHeight;
+		this.repository = other.repository ;
+		
 		for(HibShapeAttribute hibShapeAttribute : other.hibShapeAttributes){
 			this.hibShapeAttributes.add(hibShapeAttribute);
 		}
@@ -94,6 +99,8 @@ public class HibCanvas implements ICanvas , Serializable {
 		}
 		this.created = new Date();
 		this.modified= new Date();
+		
+		
 	}
 
 	public HibCanvas(HibCanvas other) {
@@ -212,27 +219,27 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.canvasHeight = canvasHeight;
 	}
 
-	public Set<HibShapeAttribute> getShapes() {
+	public Set<HibShapeAttribute> getHibShapeAttributes() {
 		return this.hibShapeAttributes;
 	}
 
-	void setShapes(Set<HibShapeAttribute> shapes) {
+	void setHibShapeAttributes(Set<HibShapeAttribute> shapes) {
 		this.hibShapeAttributes = shapes;
 	}
 
-	public Set<HibLinkAttribute> getLinks() {
+	public Set<HibLinkAttribute> getHibLinkAttributes() {
 		return this.hibLinkAttributes;
 	}
 
-	void setLinks(Set<HibLinkAttribute> hibLinkAttributes) {
+	void setHibLinkAttributes(Set<HibLinkAttribute> hibLinkAttributes) {
 		this.hibLinkAttributes = hibLinkAttributes;
 	}
 
-	public Set<HibLabelAttribute> getLabels() {
+	public Set<HibLabelAttribute> getHibLabelAttributes() {
 		return this.hibLabelAttributes;
 	}
 
-	void setLabels(Set<HibLabelAttribute> hibLabelAttributes) {
+	void setHibLabelAttributes(Set<HibLabelAttribute> hibLabelAttributes) {
 		this.hibLabelAttributes = hibLabelAttributes;
 	}
 	
@@ -279,7 +286,7 @@ public class HibCanvas implements ICanvas , Serializable {
 			throw new IllegalArgumentException("shape cannot be null");
 		HibCanvas oldCanvas = toAdd.getCanvas() ;
 		if (oldCanvas != null) {
-			oldCanvas.getShapes().remove(toAdd);
+			oldCanvas.getHibShapeAttributes().remove(toAdd);
 		}
 		this.hibShapeAttributes.add(toAdd);
 		toAdd.setCanvas(this);
@@ -302,7 +309,7 @@ public class HibCanvas implements ICanvas , Serializable {
 			throw new IllegalArgumentException("label cannot be null");
 		HibCanvas oldCanvas = toAdd.getCanvas() ;
 		if (oldCanvas != null) {
-			oldCanvas.getShapes().remove(toAdd);
+			oldCanvas.getHibShapeAttributes().remove(toAdd);
 		}
 		this.hibLabelAttributes.add(toAdd);
 		toAdd.setCanvas(this);
@@ -325,7 +332,7 @@ public class HibCanvas implements ICanvas , Serializable {
 			throw new IllegalArgumentException("Link cannot be null");
 		HibCanvas oldCanvas = (HibCanvas) toAdd.getCanvas() ;
 		if (oldCanvas != null) {
-			oldCanvas.getShapes().remove(toAdd);
+			oldCanvas.getHibShapeAttributes().remove(toAdd);
 		}
 		this.hibLinkAttributes.add(toAdd);
 		toAdd.setCanvas(this);
@@ -348,7 +355,7 @@ public class HibCanvas implements ICanvas , Serializable {
 			throw new IllegalArgumentException("property cannot be null");
 		HibCanvas oldCanvas = toAdd.getCanvas() ;
 		if (oldCanvas != null) {
-			oldCanvas.getShapes().remove(toAdd);
+			oldCanvas.getHibShapeAttributes().remove(toAdd);
 		}
 		this.properties.add(toAdd);
 		toAdd.setCanvas(this);
@@ -447,5 +454,33 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.canvasWidth = size.getWidth() ; 
 		
 	}
+
+	public int getMapINode() {
+		return this.mapINode;
+	}
+
+	public void setMapINode(int mapINode) {
+		this.mapINode = mapINode;
+	}
+
+	public HibRepository getRepository() {
+		return this.repository;
+	}
+
+	public void setRepository(HibRepository repository) {
+		this.repository = repository;
+	}
+
+	public HibCompoundGraph getGraph() {
+		return this.graph;
+	}
+
+	public void setGraph(HibCompoundGraph graph) {
+		this.graph = graph;
+	}
+	
+	
+	
+	
 
 }

@@ -82,12 +82,12 @@ public class HibCanvasTest {
 		canvas.addShape(mockShape) ;
 		canvas.addShape(mockShape2) ;
 		
-		assertEquals ( "shapes in canvas" , NUMERIC_VALUE_TWO , canvas.getShapes().size() ) ;
+		assertEquals ( "shapes in canvas" , NUMERIC_VALUE_TWO , canvas.getHibShapeAttributes().size() ) ;
 		
 		canvas.removeShape(mockShape) ;
 		canvas.removeShape(mockShape2) ;
 		
-		assertEquals ( "no shapes in canvas" , NUMERIC_VALUE_ZERO , canvas.getShapes().size() ) ;
+		assertEquals ( "no shapes in canvas" , NUMERIC_VALUE_ZERO , canvas.getHibShapeAttributes().size() ) ;
 	}
 	
 	@Test
@@ -115,12 +115,12 @@ public class HibCanvasTest {
 		canvas.addLabel(mockLabel) ;
 		canvas.addLabel(mockLabel2) ;
 		
-		assertEquals ( "labels in Canvas" , NUMERIC_VALUE_TWO , canvas.getLabels().size()) ;
+		assertEquals ( "labels in Canvas" , NUMERIC_VALUE_TWO , canvas.getHibLabelAttributes().size()) ;
 		
 		canvas.removeLabel(mockLabel) ;
 		canvas.removeLabel(mockLabel2) ;
 		
-		assertEquals ( "no labels in Canvas" , NUMERIC_VALUE_ZERO , canvas.getLabels().size()) ;
+		assertEquals ( "no labels in Canvas" , NUMERIC_VALUE_ZERO , canvas.getHibLabelAttributes().size()) ;
 	}
 	
 	@Test
@@ -148,12 +148,12 @@ public class HibCanvasTest {
 		canvas.addLink(mockLink) ;
 		canvas.addLink(mockLink2) ;
 		
-		assertEquals ( "links in Canvas" , NUMERIC_VALUE_TWO , canvas.getLinks().size()) ;
+		assertEquals ( "links in Canvas" , NUMERIC_VALUE_TWO , canvas.getHibLinkAttributes().size()) ;
 		
 		canvas.removeLink(mockLink) ;
 		canvas.removeLink(mockLink2) ;
 		
-		assertEquals ( "no links in Canvas" , NUMERIC_VALUE_ZERO , canvas.getLinks().size()) ;
+		assertEquals ( "no links in Canvas" , NUMERIC_VALUE_ZERO , canvas.getHibLinkAttributes().size()) ;
 	}
 	
 	@Test

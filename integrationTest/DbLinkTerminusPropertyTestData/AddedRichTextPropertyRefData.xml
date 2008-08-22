@@ -1,35 +1,5 @@
 <!DOCTYPE dataset SYSTEM "dataset.dtd" >
 <dataset>
-	<table name="Repository">
-		<column>id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>build_num</column>
-		<row>
-			<value>100001</value>
-			<value>repo name</value>
-			<value>repository description</value>
-			<value>2534</value>
-		</row>
-	</table>
-	<table name="Folder" >
-		<column>id</column>
-		<column>repository_id</column>
-		<column>inode</column>
-			<row>
-				<value>100001</value><!-- rootFolder1  -->
-				<value>100001</value>
-				<value>1</value>
-			</row>
-	</table>
-	<table name="RootFolder" >
-		<column>id</column>
-		<column>owning_repository_id</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-			</row>
-	</table>
 	<table name="property">
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -82,45 +52,17 @@
 		<column>id</column>
 		<column>model_id</column>
 		<column>edge_index</column>
-		<column>owning_node_id</column>
+		<column>owning_child_model_id</column>
+		<column>out_node_id</column>
+		<column>in_node_id</column>
+		<column>link_attribute_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
-			</row>
-	</table>
-	<table name="LinkAttribute">
-		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
-		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
-		<column>line_red</column>
-		<column>line_green</column>
-		<column>line_blue</column>
-		<column>line_style</column>
-		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
-		<column>edge_id</column>
-			<row>
 				<value>100001</value>
-				<value>100001</value>
-				<value>34567</value>
-				<value>100001</value>
-				<value>link_name</value>
-				<value>link_detailed_descr</value>
-				<value>link_descr</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>1</value>
-				<value>10</value>
-				<value>1</value>
-				<value>http://www.HibLink.org</value>
+				<value>100002</value>
 				<value>100001</value>
 			</row>
 	</table>
@@ -128,7 +70,7 @@
 		<column>id</column>
 		<column>link_term_type</column>
 		<column>offset_val</column>
-		<column>link_id</column>
+		<column>LinkAttributeid</column>
 			<row>
 				<value>100001</value>
 				<value>1</value>

@@ -6,6 +6,7 @@ package org.pathwayeditor.testutils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.sql.Connection;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
@@ -77,5 +78,17 @@ public abstract class GenericTester {
 	 * @return path to xml file containing setup data for DBUnit
 	 */
 	protected abstract String getDbUnitDataFilePath();
+	
+	protected void enableConstraints() throws Exception {
+		Connection conn = dbTester.getConnection().getConnection();
+		conn.createStatement().executeQuery("SET referential_integrity TRUE");
+		conn.commit();
+	}
+	
+	protected void disbleConstraints() throws Exception {
+		Connection conn = dbTester.getConnection().getConnection();
+		conn.createStatement().executeQuery("SET referential_integrity FALSE");
+		conn.commit();
+	}
 
 }

@@ -16,9 +16,6 @@ public abstract class HibProperty  implements IAnnotationProperty , Serializable
      private Long id;
      private HibCanvas hibCanvas;
      private int creationSerial;
-     private HibShapeAttribute shape ;
-     private HibLinkTerminus linkTerminus ;
-     private HibLinkAttribute hibLinkAttribute ;
 
     public HibProperty() {
     }
@@ -77,29 +74,6 @@ public abstract class HibProperty  implements IAnnotationProperty , Serializable
          return result;
    }   
    
-	public HibShapeAttribute getShape() {
-		return this.shape;
-	}
-
-	public void setShape(HibShapeAttribute shape) {
-		this.shape = shape;
-	}
-
-	public HibLinkTerminus getLinkTerminus() {
-		return this.linkTerminus;
-	}
-
-	public void setLinkTerminus(HibLinkTerminus linkTerminus) {
-		this.linkTerminus = linkTerminus;
-	}
-
-	public HibLinkAttribute getHibLink() {
-		return this.hibLinkAttribute;
-	}
-
-	public void setHibLink(HibLinkAttribute hibLinkAttribute) {
-		this.hibLinkAttribute = hibLinkAttribute;
-	}
     	
 }
 

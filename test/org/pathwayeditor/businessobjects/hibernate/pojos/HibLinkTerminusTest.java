@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -75,11 +74,6 @@ public class HibLinkTerminusTest {
 		
 		final HibTextProperty mockTextProperty = mockery.mock(HibTextProperty.class , "mockTextProperty") ;
 		
-		mockery.checking( new Expectations () {{
-			one(mockTextProperty).getLinkTerminus() ; will(returnValue(null));
-			one(mockTextProperty).setLinkTerminus(linkTerminus) ;
-		}});
-		
 		linkTerminus.addProperty("property", mockTextProperty) ;
 		
 		assertEquals ( "property in" , 1 , linkTerminus.getProperties().size()) ;
@@ -99,12 +93,6 @@ public class HibLinkTerminusTest {
 												properties) ;
 		
 		final HibTextProperty mockTextProperty = mockery.mock(HibTextProperty.class , "mockTextProperty") ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockTextProperty).getLinkTerminus() ; will(returnValue(null));
-			one(mockTextProperty).setLinkTerminus(linkTerminus) ;
-			one(mockTextProperty).setLinkTerminus(null) ;
-		}});
 		
 		linkTerminus.addProperty("property", mockTextProperty) ;
 		

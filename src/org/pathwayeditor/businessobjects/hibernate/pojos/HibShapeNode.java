@@ -18,6 +18,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
  */
 public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	
+	private HibShapeAttribute shapeAttribute ;
+	
 	HibShapeNode(){
 		super();
 	}
@@ -162,4 +164,13 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return null;
 	}
 
+	public HibShapeAttribute getShapeAttribute() {
+		return this.shapeAttribute;
+	}
+
+	public void setShapeAttribute(HibShapeAttribute shapeAttribute) {
+		this.shapeAttribute = shapeAttribute;
+	}
+	
+	
 }

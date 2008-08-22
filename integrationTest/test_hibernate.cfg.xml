@@ -18,21 +18,23 @@
         <!-- property name="hibernate.hbm2ddl.auto">auto</property-->
 
 	<mapping resource="org/pathwayeditor/businessobjects/hibernate/config/customtypedefs.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibModel.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCompoundGraph.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibContext.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibProperty.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibObjectType.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkEndDecorator.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvasAttribute.hbm.xml" />
-        <!-- mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShapeAttribute.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkAttribute.hbm.xml" / -->
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShapeAttribute.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkAttribute.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLabelAttribute.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibBendPoint.hbm.xml" /> 
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCanvas.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminus.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminusDecorator.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCompoundNode.hbm.xml" />
+        
+        
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkEdge.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibChildCompoundGraph.hbm.xml" />
         
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMapDiagram.hbm.xml" />

@@ -118,6 +118,7 @@ public class DbHibRootFolderTest  extends PojoTester {
 		dbRepository.changeRootFolder(cloneOfRootFolder) ;
 		getSession().saveOrUpdate(dbRepository) ;
 		getSession().getTransaction().commit() ;
+		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_ROOTFOLDER_REF_DATA));
 		String testTables[] = expectedDeltas.getTableNames();

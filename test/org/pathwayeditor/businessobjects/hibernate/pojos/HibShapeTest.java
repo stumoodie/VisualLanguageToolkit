@@ -63,7 +63,7 @@ public class HibShapeTest {
 		shape = new HibShapeAttribute () ;
 		
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockCanvas).getShapes() ; will(returnValue(mockShapeSet)) ;
+			atLeast(1).of(mockCanvas).getHibShapeAttributes() ; will(returnValue(mockShapeSet)) ;
 			
 			one(mockShapeSet).add(shape);
 			
@@ -79,14 +79,6 @@ public class HibShapeTest {
 		final HibProperty mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
 		
 		shape = new HibShapeAttribute () ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockProperty).getShape() ; will(returnValue(null)) ;
-			one(mockProperty).setShape(shape) ;
-			
-			one(mockProperty).setShape(null) ;
-			
-		}});
 		
 		shape.addProperty( PROPERTY_ID , mockProperty) ;
 		assertEquals ("one property" , NUMERIC_VALUE_ONE , shape.getProperties().size() ) ;

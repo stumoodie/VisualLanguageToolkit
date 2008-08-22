@@ -8,7 +8,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -87,11 +86,6 @@ public class IShapeAttributeTest {
 		
 		
 		mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockProperty).getShape() ; will(returnValue(null)) ;
-			one(mockProperty).setShape(tempShapeAttribute) ;
-		}});
 		
 		tempShapeAttribute.addProperty(PROPERTY_ID , mockProperty) ;
 		

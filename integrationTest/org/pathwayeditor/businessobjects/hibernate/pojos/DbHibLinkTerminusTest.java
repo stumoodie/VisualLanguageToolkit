@@ -57,6 +57,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	@Test 
 	public void testCreateLinkTerminus () throws Exception
 	{
+		
 		doSetup();
 
 		

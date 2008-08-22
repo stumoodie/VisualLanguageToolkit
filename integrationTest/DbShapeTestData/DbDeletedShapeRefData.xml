@@ -1,193 +1,52 @@
 <!DOCTYPE dataset SYSTEM "dataset.dtd" >
 <dataset>
-	<table name="Repository" >
-		<column>id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>build_num</column>
-			<row>
-				<value>100001</value>
-				<value>repo name</value>
-				<value>repository description</value>
-				<value>2534</value>
-			</row>
-	</table>
-	<table name="Folder" >
-		<column>id</column>
-			<row>
-				<value>100001</value><!-- rootFolder1  -->
-			</row>
-	</table>
-	<table name="RootFolder" >
-		<column>id</column>
-		<column>owning_repository_id</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-			</row>
-	</table>
-	<table name="MapDiagram">
-		<column>id</column>
-		<column>folder_id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>repository_id</column>
-		<column>inode</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>Diagram name</value>
-				<value>Diagram Description</value>
-				<value>100001</value>
-				<value>1</value>
-			</row>
-			<row>
-				<value>100002</value>
-				<value>100001</value>
-				<value>Diagram name2</value>
-				<value>Diagram Description2</value>
-				<value>100001</value>
-				<value>2</value>
-			</row>
-			<row>
-				<value>100003</value>
-				<value>100001</value>
-				<value>Diagram name3</value>
-				<value>Diagram Description3</value>
-				<value>100001</value>
-				<value>3</value>
-			</row>
-			<row>
-				<value>100004</value>
-				<value>100001</value>
-				<value>Diagram name4</value>
-				<value>Diagram Description4</value>
-				<value>100001</value>
-				<value>4</value>
-			</row>
-	</table>
-	<table name="Canvas">
-		<column>id</column>
-		<column>map_id</column>
-		<column>context_id</column>
-		<column>grid_x</column>
-		<column>grid_y</column>
-		<column>grid_enabled</column>
-		<column>snap_to_grid_enabled</column> 
-		<column>background_red</column>
-		<column>background_green</column>
-		<column>background_blue</column>
-		<column>canvas_width</column>
-		<column>canvas_height</column>
-		<column>created</column>
-		<column>last_modified</column> 
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>100001</value>
-				<value>10</value>
-				<value>10</value>
-				<value>true</value>
-				<value>true</value> 
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
-				<value>10</value>
-				<value>10</value>
-	 			<value>1970-01-01</value>
-				<value>1970-01-01</value>
-			</row>  
-			<row>
-				<value>100002</value>
-				<value>100002</value>
-				<value>100001</value>
-				<value>15</value>
-				<value>15</value>
-				<value>true</value>
-				<value>true</value> 
-				<value>105</value>
-				<value>105</value>
-				<value>105</value>
-				<value>15</value>
-				<value>15</value>
-	 			<value>1970-01-01</value>
-				<value>1970-01-01</value>
-			</row>
-			<row>
-				<value>100003</value>
-				<value>100003</value>
-				<value>100001</value>
-				<value>16</value>
-				<value>16</value>
-				<value>true</value>
-				<value>true</value> 
-				<value>106</value>
-				<value>106</value>
-				<value>106</value>
-				<value>16</value>
-				<value>16</value>
-	 			<value>1970-01-01</value>
-				<value>1970-01-01</value>
-			</row>  
-	</table>
 	<table name="CompoundNode">
 		<column>id</column>
 		<column>model_id</column>
 		<column>node_index</column>
+		<column>parent_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>1</value>
-			</row>
-			<row>
-				<value>100002</value>
 				<value>100001</value>
-				<value>2</value>
 			</row>
 			<row>
 				<value>100003</value>
 				<value>100001</value>
 				<value>3</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100004</value>
 				<value>100002</value>
 				<value>4</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100005</value>
 				<value>100002</value>
 				<value>5</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100006</value>
 				<value>100002</value>
 				<value>6</value>
+				<value>100001</value>
 			</row>
 			<row>
 				<value>100007</value>
 				<value>100002</value>
 				<value>7</value>
-			</row>
-			<row>
-				<value>100008</value>
-				<value>100002</value>
-				<value>8</value>
+				<value>100001</value>
 			</row>
 	</table>
 	<table name="ShapeNode">
 		<column>id</column>
-		<column>parent_node_id</column>
-			<row>
-				<value>100002</value>
-				<value>100001</value>
-			</row>
+		<column>shape_attribute_id</column>
 			<row>
 				<value>100003</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<value>100005</value>
 				<value>100004</value>
 			</row>			
 	</table>

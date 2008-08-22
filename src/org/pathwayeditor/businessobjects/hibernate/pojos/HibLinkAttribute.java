@@ -144,7 +144,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		return this.hibLinkProperties;
 	}
 
-	public void setLinkProperties(Map<String, HibProperty> hibProperties) {
+	public void setHibLinkProperties(Map<String, HibProperty> hibProperties) {
 		this.hibLinkProperties = hibProperties;
 	}
 
@@ -253,12 +253,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("property cannot be null");
-		HibLinkAttribute oldLink = toAdd.getHibLink() ;
-		if (oldLink != null) {
-			oldLink.getLinkProperties().remove(toAdd);
-		}
 		this.hibLinkProperties.put(name ,toAdd);
-		toAdd.setHibLink(this);
 	}
 	
 	void removeLinkProperty(String toRemove) {
@@ -269,7 +264,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 			throw new IllegalStateException("property cannot be null");
 		
 		this.hibLinkProperties.remove(toRemove) ;
-		propertyToRemove.setHibLink(null);
 	}
 	
 	void addBendPoint ( HibBendPoint toAdd)

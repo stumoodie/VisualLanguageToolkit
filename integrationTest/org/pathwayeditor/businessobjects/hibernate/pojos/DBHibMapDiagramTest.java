@@ -102,6 +102,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction() ;
 		List <HibMapDiagram> diagrams = session.createQuery("from HibMapDiagram").list();
+		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_MAPDIAGRAM_REF_DATA));
 		String testTables[] = expectedDeltas.getTableNames();

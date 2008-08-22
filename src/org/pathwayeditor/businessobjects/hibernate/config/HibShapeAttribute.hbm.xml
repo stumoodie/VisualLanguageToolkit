@@ -17,9 +17,6 @@
         		<column name="creation_serial" not-null="true" />
         	</property>
         </properties>
-      	<many-to-one name="shapeNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode" cascade="none">
-       		<column name="shape_node_id" not-null="true"/>
-       	</many-to-one>
         <property name="XPosition" type="int">
             <column name="x_position" not-null="true" />
         </property>
@@ -78,9 +75,9 @@
        	<property name="shapeType" type="short">
            	<column name="shape_type" not-null="true" />
        	</property>
-       	<map name="properties" table="shapeproperty" cascade="all,delete-orphan">
+       	<map name="properties" table="ShapeAttributeProperty" cascade="all,delete-orphan">
            	<key>
-               	<column name="shape_id" not-null="true" />
+               	<column name="shape_attribute_id" not-null="true" />
            	</key>
            	<map-key type="string">
            		<column name="name" not-null="true"/>

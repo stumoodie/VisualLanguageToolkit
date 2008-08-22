@@ -198,5 +198,15 @@ public class HibCompoundNode extends BaseCompoundNode {
 	@Override
 	public HibCompoundNode getRoot(){
 		return (HibCompoundNode)super.getRoot();
+	}
+
+	public HibCompoundNode getParentNode() {
+		return this.parentNode;
+	}
+
+	public void setParentNode(HibCompoundNode parentNode) {
+		this.parentNode = parentNode;
 	}	
+	
+	
 }

@@ -37,7 +37,7 @@ public class DbSimpleCanvasTest extends PojoTester{
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 
-		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getLinks()) ;
+		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getHibLinkAttributes()) ;
 		
 		for ( int a = 0 ; a < links.size() ; a++ )
 		{
@@ -49,7 +49,7 @@ public class DbSimpleCanvasTest extends PojoTester{
 		}
 		
 		
-		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> ( dbCanvas.getShapes()) ;
+		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> ( dbCanvas.getHibShapeAttributes()) ;
 		
 		for ( int a = 0 ; a < shapes.size() ; a++ )
 		{
@@ -60,7 +60,7 @@ public class DbSimpleCanvasTest extends PojoTester{
 			getSession().delete(tempShape) ;
 		}
 		
-		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> ( dbCanvas.getLabels()) ;
+		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> ( dbCanvas.getHibLabelAttributes()) ;
 		
 		for ( int a = 0 ; a < labels.size() ; a++ )
 		{

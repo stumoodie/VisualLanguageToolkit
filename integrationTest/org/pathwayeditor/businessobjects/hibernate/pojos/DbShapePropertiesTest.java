@@ -156,7 +156,7 @@ public class DbShapePropertiesTest extends PojoTester {
 		getSession().save(textProperty) ;
 		getSession().saveOrUpdate(dbShape) ;
 		getSession().getTransaction().commit() ;
-		
+//		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_NUMBER_PROPERTY_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -258,10 +258,10 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testDeletePropertyWithShape () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
-		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
+		Query retreivedShapeNode = getSession().createQuery( "From HibShapeNode where id='100002'") ;
+		HibShapeNode dbShapeNode = (HibShapeNode) retreivedShapeNode.uniqueResult() ;
 		
-		getSession().delete(dbShape) ;
+		getSession().delete(dbShapeNode) ;
 		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(

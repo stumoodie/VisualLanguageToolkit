@@ -14,7 +14,7 @@
         <properties name="xak1linkterminus" unique="true">
         	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
 	   	    	<meta attribute="use-in-equals">true</meta>
-            	<column name="link_id" not-null="true" />
+            	<column name="linkAttributeId" not-null="true" />
         	</many-to-one>
         	<property name="hibLinkEndType" type="int">
 	   	    	<meta attribute="use-in-equals">true</meta>

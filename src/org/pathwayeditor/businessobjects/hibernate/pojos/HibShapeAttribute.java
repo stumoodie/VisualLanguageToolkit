@@ -283,10 +283,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		HibCanvas oldCanvas = this.canvas ;
 		this.canvas = newCanvas;
 		if (oldCanvas != null) {
-			oldCanvas.getShapes().remove(this);
+			oldCanvas.getHibShapeAttributes().remove(this);
 		}
 		if (this.canvas != null) {
-			this.canvas.getShapes().add(this);
+			this.canvas.getHibShapeAttributes().add(this);
 		}
 		
 	}
@@ -295,12 +295,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	{
 		if (toAdd == null)
 			throw new IllegalArgumentException("property cannot be null");
-		HibShapeAttribute oldShape = toAdd.getShape() ;
-		if (oldShape != null) {
-			oldShape.getProperties().remove(toAdd);
-		}
 		this.hibProperties.put(name ,toAdd);
-		toAdd.setShape(this);
 	}
 	
 	void removeProperty(String toRemove) {
@@ -310,7 +305,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		if  (propertyToRemove == null)
 			throw new IllegalStateException("property cannot be null");
 		this.hibProperties.remove(toRemove) ;
-		propertyToRemove.setShape(null);
 	}
 	
 	public boolean equals (Object other) 
@@ -359,8 +353,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 			 return false ;
 		 if ( this.lineGreen != castOther.getLineGreen())
 			 return false ;
-//		 if ( this.lineStyle != castOther.getLineStyle())
-//			 return false ;
+		 if ( this.lineStyle != castOther.getLineStyle())
+			 return false ;
 		 if ( this.lineWidth != castOther.getLineWidth())
 			 return true ;
 		 if ( this.padding != castOther.padding)

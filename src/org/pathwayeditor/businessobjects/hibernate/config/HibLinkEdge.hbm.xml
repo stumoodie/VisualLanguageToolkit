@@ -10,14 +10,14 @@
         </id>
         <properties name="xak1compoundedge" unique="true">
         	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
-            	<column name="graph_id" not-null="true" />
+            	<column name="model_id" not-null="true" />
         	</many-to-one>
-        	<property name="edgeIndex" type="int" >
+        	<property name="index" type="int" >
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCOmpoundGraph">
-        	<column name="owning_child_graph_id" not-null="true"/>
+        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph">
+        	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
         	<column name="out_node_id" not-null="true"/>

@@ -40,6 +40,7 @@ public class HibCompoundGraph extends BaseCompoundGraph implements ICompoundGrap
 //	private int lastEdgeIndex = 0;
 	private IndexCounter nodeCntr = new IndexCounter();
 	private IndexCounter edgeCntr = new IndexCounter();
+	private HibCanvas canvas ;
 	
 	HibCompoundGraph() {
 		super(new HibCompoundGraphCopyBuilder());
@@ -91,6 +92,18 @@ public class HibCompoundGraph extends BaseCompoundGraph implements ICompoundGrap
 	
 	void setRootNode(HibCompoundNode value) {
 		this.rootNode = value;
+	}
+	
+	void changeRootNode (HibCompoundNode value )
+	{
+		HibCompoundNode oldRootNode = this.rootNode ;
+		this.rootNode = value;
+		if (oldRootNode != null) {
+			oldRootNode.setGraph(null);
+		}
+		if (this.rootNode != null) {
+			this.rootNode.setGraph(this);
+		}
 	}
 	
 	public HibCompoundNode getRootNode() {
@@ -288,4 +301,14 @@ public class HibCompoundGraph extends BaseCompoundGraph implements ICompoundGrap
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public HibCanvas getCanvas() {
+		return this.canvas;
+	}
+
+	public void setCanvas(HibCanvas canvas) {
+		this.canvas = canvas;
+	}
+	
+	
 }

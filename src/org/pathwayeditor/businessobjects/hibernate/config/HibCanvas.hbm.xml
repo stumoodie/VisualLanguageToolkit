@@ -11,7 +11,7 @@
         	<many-to-one name="repository" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" cascade="none">
             	<column name="repository_id" not-null="true" />
         	</many-to-one>
-        	<property name="mapINode">
+        	<property name="mapINode" type="int">
         		<column name="map_inode" not-null="true"/>
         	</property>
         </properties>
@@ -55,11 +55,17 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <set name="canvasAttributes" inverse="true" table="canvasAttribute" cascade="all,delete-orphan">
+        <set name="hibShapeAttributes" inverse="true" table="shape" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute"/> 
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
         </set>
+        <set name="hibLinkAttributes" inverse="true" table="link" cascade="all,delete-orphan">
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
+        </set>     
     </class>
 </hibernate-mapping>

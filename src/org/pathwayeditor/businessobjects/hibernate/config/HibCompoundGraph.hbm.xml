@@ -12,16 +12,16 @@
             <column name="canvas_id" not-null="true" />
         </many-to-one>
 
-		<many-to-one name="rootNode" column="root_node_id" class="uk.ac.ed.inf.csb.hibgraph.pojos.HibRootObjectNode"
+		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootObjectNode"
 			 cascade="all" not-null="true">
-		</many-to-one>
+		</many-to-one> 
 		
 		<property name="lastNodeIndex" type="int">
-			<column name="last_node_idx" not-null="true"/>
+			<column name="last_node_index" not-null="true"/>
 		</property>
 		
 		<property name="lastEdgeIndex" type="int">
-			<column name="last_edge_idx" not-null="true"/>
+			<column name="last_edge_index" not-null="true"/>
 		</property>
 		
 	</class>

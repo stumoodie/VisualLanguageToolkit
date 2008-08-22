@@ -1,35 +1,5 @@
 
 <dataset>
-	<table name="Repository">
-		<column>id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>build_num</column>
-		<row>
-			<value>100001</value>
-			<value>repo name</value>
-			<value>repository description</value>
-			<value>2534</value>
-		</row>
-	</table>
-	<table name="Folder" >
-		<column>id</column>
-		<column>repository_id</column>
-		<column>inode</column>
-			<row>
-				<value>100001</value><!-- rootFolder1  -->
-				<value>100001</value>
-				<value>1</value>
-			</row>
-	</table>
-	<table name="RootFolder" >
-		<column>id</column>
-		<column>owning_repository_id</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-			</row>
-	</table>
 	<table name="property">
 		<column>canvas_id</column>
 		<column>creation_serial</column>
@@ -86,7 +56,7 @@
 			<value>value2</value>
 		</row>
 	</table>
-	<table name="shapeProperty">
+	<table name="shapeAttributeProperty">
 		<column>name</column>
 			<row>
 				<value>ShapePropertyName</value>

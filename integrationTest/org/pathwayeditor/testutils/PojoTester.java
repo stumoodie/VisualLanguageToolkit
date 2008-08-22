@@ -6,6 +6,7 @@ package org.pathwayeditor.testutils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.sql.Connection;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
@@ -59,10 +60,12 @@ public abstract class PojoTester {
 	}
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
-			Exception {
+	Exception {
+		disbleConstraints() ;
 		getDbTester().setDataSet(
 				new XmlDataSet(new FileInputStream(getDbUnitDataFilePath())));
 		getDbTester().onSetup();
+		enableConstraints() ;
 	}
 
 	/**
@@ -70,7 +73,9 @@ public abstract class PojoTester {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		disbleConstraints() ;
 		dbTester.onTearDown();
+		enableConstraints() ;
 		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
 			this.hibFactory.close();
 		}
@@ -101,6 +106,18 @@ public abstract class PojoTester {
 	protected IDatabaseConnection getConnection ()  throws Exception
 	{
 		return dbTester.getConnection() ;
+	}
+	
+	protected void enableConstraints() throws Exception {
+		Connection conn = dbTester.getConnection().getConnection();
+		conn.createStatement().executeQuery("SET referential_integrity TRUE");
+		conn.commit();
+	}
+	
+	protected void disbleConstraints() throws Exception {
+		Connection conn = dbTester.getConnection().getConnection();
+		conn.createStatement().executeQuery("SET referential_integrity FALSE");
+		conn.commit();
 	}
 
 }

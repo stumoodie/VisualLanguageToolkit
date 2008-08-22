@@ -18,6 +18,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -245,6 +246,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 	}
 	
+	@Ignore 
 	@Test
 	public void testDeletePropertyWithLink () throws Exception 
 	{

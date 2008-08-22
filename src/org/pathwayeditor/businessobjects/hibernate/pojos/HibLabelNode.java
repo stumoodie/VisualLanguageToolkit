@@ -13,7 +13,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
  *
  */
 public class HibLabelNode extends HibCompoundNode implements ILabelNode {
-
+	
+	private HibLabelAttribute labelAttribute ;
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getAttribute()
 	 */
@@ -70,4 +72,13 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		return null;
 	}
 
+	public HibLabelAttribute getLabelAttribute() {
+		return this.labelAttribute;
+	}
+
+	public void setLabelAttribute(HibLabelAttribute labelAttribute) {
+		this.labelAttribute = labelAttribute;
+	}
+	
+	
 }
