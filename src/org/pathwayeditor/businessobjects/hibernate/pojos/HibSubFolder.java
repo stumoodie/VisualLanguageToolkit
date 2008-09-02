@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  */
 public class HibSubFolder extends HibFolder implements ISubFolder, Serializable {
 	private static final long serialVersionUID = -7826318326217020101L;
+	public static final String FOLDER_RENAME_EVENT = "FOLDER_RENAME_EVENT";
 	private HibFolder parentFolder;
 	private String name="";
 
@@ -71,8 +72,9 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	}
 
 	public void setName(String name) {
+		String oldname=this.name;
 		this.name = name;
-		
+		firePropertyChange(FOLDER_RENAME_EVENT, oldname, name);
 	}
 
 	public void changeParentFolder(HibFolder newParentFolder) {

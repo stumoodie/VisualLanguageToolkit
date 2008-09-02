@@ -21,7 +21,7 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
 /**
  * @author nhanlon NH - this is a business logic test so no actual database
  *         activity will be tested - see corresponding tests in
- *         FolderDatabaseTest
+ *         FolderBusinessLogicDatabaseTest
  * 
  * Tests the IFolder interface
  */
@@ -294,6 +294,39 @@ public class FolderBusinessLogicTest {
 		assertEquals(1, folder.getSubFolders().size());
 		assertEquals(1, one.getSubFolders().size());
 		assertEquals(0, two.getSubFolders().size());
+	}
+
+	@Test
+	public void testRemoveMapHappyCase() {
+		HibSubFolder folder = new HibSubFolder();
+		HibMapDiagram m = new HibMapDiagram();
+		folder.addMapDiagram(m);
+		assertEquals(1,folder.numMaps());
+		folder.removeMap(m);
+		assertEquals(0,folder.numMaps());
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void testRemoveMapThrowsIllegalArgWhenMapIsNull() {
+		HibSubFolder folder = new HibSubFolder();
+		folder.removeMap(null);
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void testRemoveMapThrowsIllegalArgWhenMapFolderNull() {
+		HibSubFolder folder = new HibSubFolder();
+		HibMapDiagram m = new HibMapDiagram();
+		folder.removeMap(m);
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testRemoveMapThrowsIllegalArgWhenMapNotChild() {
+		HibSubFolder folder = new HibSubFolder();
+		HibSubFolder folder2 = new HibSubFolder();
+		HibMapDiagram m = new HibMapDiagram();
+		folder2.addMapDiagram(m);
+		assertEquals(1,folder2.numMaps());
+		folder.removeMap(m);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -694,12 +727,12 @@ public class FolderBusinessLogicTest {
 		String path = childFour.getPath();
 		assertEquals("/one/two/three/four", path);
 	}
+
 	@Test
 	public void testGetPathRootFolderHappyCase() {
 		String path = root.getPath();
 		assertEquals("/", path);
 	}
-	
 
 	private HibMapDiagram getMapInFolderCalled(HibFolder r, String name) {
 		Set<HibMapDiagram> maps = r.getMapDiagrams();

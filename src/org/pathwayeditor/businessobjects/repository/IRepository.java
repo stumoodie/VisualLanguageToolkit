@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * The repository that holds all the folders and maps (including the map diagrams) used in EPE. It is essentially
- * a storage location and would usually correspond to a physical storage location. In is envisaged that in the future
+ * a storage location and would usually correspond to a physical storage location. It is envisaged that in the future
  * EPE may have multiple repositories corresponding to other physical locations (for example on central servers) of pathway
  * maps. At present one would expect only one repository to be present per schema, but there may be reasons to store multiple repositories
  *  in a schema (at least temporarily) that we haven't thought of yet.

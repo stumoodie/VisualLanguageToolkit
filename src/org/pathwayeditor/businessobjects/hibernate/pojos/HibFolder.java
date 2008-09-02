@@ -155,7 +155,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	void removeMapDiagram(HibMapDiagram mapDiagram) {
 		if (mapDiagram == null)
 			throw new IllegalArgumentException("mapDiagram cannot be null");
-		if (!mapDiagram.getFolder().equals(this))
+		if (mapDiagram.getFolder()==null||!mapDiagram.getFolder().equals(this))
 			throw new IllegalArgumentException(
 					"mapDiagram must belong to this folder");
 		this.hibMapDiagrams.remove(mapDiagram);
@@ -470,6 +470,10 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			for (HibSubFolder sub : subFolders)
 				sub.removeSubfolder(subFolder);
 		}
+	}
+	
+	public void removeMap(IMap map){
+		removeMapDiagram((HibMapDiagram) map);
 	}
 
 	/*

@@ -79,7 +79,7 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	
 	/**
 	 * Remove the subfolder from here and destroy it and the tree of repository items from this point downwards.
-	 * This operation will removed Maps and their contents too.  
+	 * This operation will remove Maps and their contents too.  
 	 * @param subFolder the subfolder to be deleted. Cannot be null.
 	 * @throws IllegalArgumentException if subFolder is null.
 	 *TODO - NH assumptions follow
@@ -87,6 +87,14 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * will remove the subfolder if it exists ANYWHERE in the child folder tree of this folder, not just in its immediate children
 	 */
 	void removeSubfolder(ISubFolder subFolder);
+	
+	/**
+	 * Remove a map in this folder, deleting it
+	 * @param map to be removed
+	 * @throws IllegalArgumentException if map is null.
+	 * @throws IllegalArgumentException if map is not in this folder
+	 */
+	void removeMap(IMap map);
 	
 	/**
 	 * Can the <code>subFolder</code> in this folder be renamed to <code>newFolderName</code> ? If no other subfolder

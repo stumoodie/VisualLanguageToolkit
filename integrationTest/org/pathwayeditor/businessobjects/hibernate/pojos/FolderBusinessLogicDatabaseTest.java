@@ -162,7 +162,19 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertNull(getSession().createQuery(
 				"from HibSubFolder r where r.id = '100002'").uniqueResult());
 	}
-
+	
+	@Test
+	public void removeMapTest(){
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
+		IMap map = (IMap) getSession().createQuery("from HibMapDiagram m where m.id = '100001'").uniqueResult();
+		assertEquals(1,sub1.numMaps());
+		sub1.removeMap(map);
+		assertEquals(0,sub1.numMaps());
+		bo.synchroniseRepository();
+		assertNull(getSession().createQuery(
+		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
+	}
+	
 	@Test
 	public void canRenameSubFolderTest() {
 		IRootFolder r = rep.getRootFolder();
