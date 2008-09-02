@@ -276,9 +276,6 @@ public class HibCanvas implements ICanvas , Serializable {
 		return result;
 	}
 
-	public void changeMapDiagram(HibMapDiagram newMapDiagram) {
-		this.setMapDiagram(newMapDiagram);
-	}
 
 	public void addShape ( HibShapeAttribute toAdd ) 
 	{

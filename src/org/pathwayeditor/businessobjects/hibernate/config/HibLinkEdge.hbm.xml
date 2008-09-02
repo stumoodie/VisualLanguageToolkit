@@ -16,6 +16,9 @@
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
+        <many-to-one name="linkAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="all">
+		       	<column name="link_attribute_id" not-null="true"/>
+        </many-to-one>
         <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph">
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>

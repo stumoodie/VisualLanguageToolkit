@@ -12,6 +12,7 @@ public class HibLinkEdge extends BaseCompoundEdge {
 	private HibCompoundNode outNode;
 	private HibCompoundNode inNode;
 	private HibChildCompoundGraph owningChildGraph;
+	private HibLinkAttribute linkAttribute ;
 	
 	HibLinkEdge() {
 		super();
@@ -76,6 +77,14 @@ public class HibLinkEdge extends BaseCompoundEdge {
 	
 	public HibChildCompoundGraph getOwningChildGraph() {
 		return owningChildGraph;
+	}
+	
+	public HibLinkAttribute getLinkAttribute() {
+		return this.linkAttribute;
+	}
+
+	public void setLinkAttribute(HibLinkAttribute linkAttribute) {
+		this.linkAttribute = linkAttribute;
 	}
 
 	@Override

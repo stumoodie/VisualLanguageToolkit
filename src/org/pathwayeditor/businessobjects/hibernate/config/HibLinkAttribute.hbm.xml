@@ -65,7 +65,7 @@
 		<property name="routerType" type="ConnectionRouterType">
 			<column name="router_type" not-null="true" />
 		</property>
-		<list name="bendPoints" inverse="true">
+		<list name="bendPoints" inverse="true" cascade="all">
 			<key>
 				<column name="link_attribute_id" not-null="true" />
 			</key>

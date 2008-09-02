@@ -67,9 +67,4 @@ public class INumberAnnotationPropertyTest {
 		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getNumberValue() ) ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetOwningObject () throws Exception 
-	{
-		numberProperty.getOwningObject() ;
-	}
 }

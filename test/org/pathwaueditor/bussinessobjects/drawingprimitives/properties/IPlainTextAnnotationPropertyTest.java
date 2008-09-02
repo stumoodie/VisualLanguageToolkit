@@ -70,10 +70,4 @@ public class IPlainTextAnnotationPropertyTest {
 	}
 	
 
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetOwningObject () throws Exception 
-	{
-		// TODO
-		textProperty.getOwningObject() ;
-	}
 }

@@ -11,7 +11,6 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -66,11 +65,4 @@ public class IHtmlAnnotationPropertyTest {
 		assertEquals ( "text value" , TEXT_VALUE , htmlProperty.getRichTextValue() ) ;
 	}
 	
-	@Ignore
-	@Test
-	public void testGetOwningObject () throws Exception 
-	{
-		// TODO
-		htmlProperty.getOwningObject() ;
-	}
 }

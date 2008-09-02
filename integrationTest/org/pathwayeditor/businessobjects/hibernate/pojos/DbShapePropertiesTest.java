@@ -264,6 +264,29 @@ public class DbShapePropertiesTest extends PojoTester {
 		getSession().delete(dbShapeNode) ;
 		getSession().getTransaction().commit() ;
 		
+		Query retreivedProperty = getSession().createQuery( "From HibProperty where id='100001'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100002'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100003'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100004'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100005'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100006'") ;
+			System.out.println (retreivedProperty.list().size()) ;
+		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100007'") ;
+		System.out.println (retreivedProperty.list().size()) ;
+		
+		System.out.println ("linkterminus") ;
+		 retreivedProperty = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+			System.out.println (retreivedProperty.list().size()) ;
+			
+			System.out.println ("linkAttribute") ;
+			 retreivedProperty = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
+				System.out.println (retreivedProperty.list().size()) ;
+		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_SHAPE_AND_PROPERTY_DATA));
 		String testTables[] = expectedDeltas.getTableNames();

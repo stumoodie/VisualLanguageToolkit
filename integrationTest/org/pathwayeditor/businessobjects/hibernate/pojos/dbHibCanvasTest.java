@@ -15,7 +15,6 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -75,7 +74,6 @@ public class dbHibCanvasTest extends  PojoTester {
 		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100003'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		dbCanvas.changeMapDiagram(null);
 		getSession().delete(dbCanvas) ;
 		getSession().getTransaction().commit() ;
 		
@@ -96,84 +94,6 @@ public class dbHibCanvasTest extends  PojoTester {
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));
 		}
-	}
-	
-	@Ignore
-	@Test
-	public void testDeleteEmptyCanvasThroughMapDiagram () throws Exception 
-	{
-		doSetup();
-		
-//		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100003'" ) ;
-//		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
-		
-		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100003'" ) ;
-		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-		
-		HibMapDiagram parentMapDiagram = dbCanvas.getMapDiagram() ;
-		
-		dbCanvas.changeMapDiagram(null);
-		
-		getSession().delete(dbCanvas) ;
-		getSession().delete(parentMapDiagram) ;
-		getSession().getTransaction().commit() ;
-		
-//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-//				DELETED_EMPTY_MAPDIAGRAM_REF_DATA));
-//		String testTables[] = expectedDeltas.getTableNames();
-//		IDataSet actualChanges = getConnection().createDataSet(testTables);
-//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-//		for (String t : testTables) {
-//			ITable expectedTable = DefaultColumnFilter
-//					.includedColumnsTable(expectedChanges.getTable(t),
-//							expectedDeltas.getTable(t).getTableMetaData()
-//									.getColumns());
-//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-//					actualChanges.getTable(t), expectedDeltas.getTable(t)
-//							.getTableMetaData().getColumns());
-//			Assertion.assertEquals(new SortedTable(expectedTable),
-//					new SortedTable(actualTable, expectedTable
-//							.getTableMetaData()));
-//		}
-	}
-	
-	@Ignore
-	@Test
-	public void testChangeMapDiagram () throws Exception
-	{
-		// TODO this is no longer valid !! ?? !! 
-		
-		doSetup();
-		
-		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100004'" ) ;
-		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
-		
-		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
-		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-		
-		dbCanvas.changeMapDiagram(parentMapDiagram) ;
-		
-		getSession().saveOrUpdate(dbCanvas) ;
-		getSession().getTransaction().commit() ;
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				CHANGED_MAPDIAGRAM_REF_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
-		
 	}
 	
 	@Test

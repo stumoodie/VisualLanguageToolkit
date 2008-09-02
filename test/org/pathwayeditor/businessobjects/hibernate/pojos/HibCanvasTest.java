@@ -42,19 +42,7 @@ public class HibCanvasTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
-	@Test
-	public void addCanvasToMapDiagramTest () throws Exception 
-	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class) ;
-		final HibContext mockContext = mockery.mock(HibContext.class) ;
-		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		
-		canvas.changeMapDiagram(mockMapDiagram) ;
-		
-		assertEquals ( "map Diagram" , mockMapDiagram , canvas.getMapDiagram()) ;
-	}
+
 	
 	@Test
 	public void testAddAndRemoveShapeToCanvas () throws Exception
@@ -203,9 +191,6 @@ public class HibCanvasTest {
 		assertFalse ( canvas.equals(null)) ;
 		assertFalse ( canvas.equals(canvas2)) ;
 		assertFalse (canvas.equals(ANOTHER_OBJECT)) ;
-		
-		canvas2.changeMapDiagram(mockMapDiagram) ;
-		assertTrue (canvas.equals(canvas2)) ;
 	}
 	
 	@Test

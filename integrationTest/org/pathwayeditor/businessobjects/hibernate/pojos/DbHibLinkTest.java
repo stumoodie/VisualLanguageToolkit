@@ -16,7 +16,6 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -73,17 +72,16 @@ public class DbHibLinkTest extends PojoTester{
 		
 	}
 	
-	@Ignore
 	@Test
 	public void testDeleteLink () throws Exception
 	{
 		doSetup();
 		
-		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Query retreivedLink = getSession().createQuery("from HibLinkEdge where id='100001'") ;
 		
-		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
+		HibLinkEdge dbLinEdge = (HibLinkEdge) retreivedLink.uniqueResult() ;
 		
-		getSession().delete(dbLink) ;
+		getSession().delete(dbLinEdge) ;
 		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(

@@ -1,0 +1,9 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="bendpoint">
+		<column>link_attribute_id</column>
+		<column>index_pos</column>
+		<column>x_position</column>
+		<column>y_position</column>
+	</table>
+</dataset>

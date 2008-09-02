@@ -8,7 +8,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  *
  */
 public interface ICanvasAttribute {
-
+	
 	ICanvas getCanvas();
 	
 	int getCreationSerial();

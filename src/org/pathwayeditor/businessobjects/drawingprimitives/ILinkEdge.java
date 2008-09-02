@@ -2,9 +2,17 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 
 public interface ILinkEdge extends IZOrderedObject {
-
+	
+	/**
+	 * Gets the graph this Label Node is assosiated with.
+	 * @return the related graph.
+	 */
 	ICompoundGraph getGraph();
 	
+	/**
+	 * Gets the index number that Label has on the graph.
+	 * @return the number of links.
+	 */
 	int getIndex();
 	
 	/**
@@ -49,7 +57,13 @@ public interface ILinkEdge extends IZOrderedObject {
 	 */
 	void changeTarget(IShapeNode newShape);
 	
+	/**
+	 * Gets the {@link ILinkAttribute} relates to this LinkEdge. 
+	 * @return the ILinkAttribute. Cannot be null.
+	 */
 	ILinkAttribute getAttribute();
+	
+	
 	
 	IChildCompoundGraph getOwningChildGraph();
 }
