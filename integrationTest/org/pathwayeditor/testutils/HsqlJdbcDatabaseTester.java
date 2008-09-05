@@ -7,6 +7,7 @@ import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory;
+import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 
 /**
  * @author nhanlon
@@ -31,6 +32,9 @@ public class HsqlJdbcDatabaseTester extends JdbcDatabaseTester{
 	public HsqlJdbcDatabaseTester(String driverClass, String connectionUrl,
 			String userName, String password) {
 		super(driverClass,connectionUrl,userName,password);
+	}
+	public HsqlJdbcDatabaseTester(HibernateDataSource builder) {
+		super(builder.getDriverClass(),builder.getConnectionUrl(),builder.getUserName(),builder.getPassword());
 	}
 	
 	/* (non-Javadoc)

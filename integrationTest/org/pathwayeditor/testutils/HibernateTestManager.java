@@ -10,30 +10,27 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
+import org.pathwayeditor.businessobjects.database.util.HqlDbSchema;
 import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 
 /**
  * @author smoodie
+ *  Creates and drops the database; also manages a hibernate session factory.
  *
  */
-public class HibernateDataSource implements IDatabaseTester {
-	private static final String HIB_PROP_DRIVER_CLASS = "hibernate.connection.driver_class";
-	private static final String HIB_PROP_URL = "hibernate.connection.url";
-	private static final String HIB_PROP_USERNAME = "hibernate.connection.username";
-	private static final String HIB_PROP_PASSWORD = "hibernate.connection.password";
+public class HibernateTestManager implements IDatabaseTester {
 	private final IDatabaseTester delegator;
-	private final Configuration hibConfig;
 	private final HqlDbSchema schemaManager;
+	private HibernateDataSource hibBuilder;
 	
-	public HibernateDataSource(String xmlConfigFile){
-		Configuration hibConf = new Configuration();
-		this.hibConfig = hibConf.configure(xmlConfigFile);
-		String driverClass = hibConfig.getProperty(HIB_PROP_DRIVER_CLASS);
-		String connectionUrl = hibConfig.getProperty(HIB_PROP_URL);
-		String userName = hibConfig.getProperty(HIB_PROP_USERNAME);
-		String password = hibConfig.getProperty(HIB_PROP_PASSWORD);
-		this.delegator = new HsqlJdbcDatabaseTester(driverClass, connectionUrl, userName, password);
+	public HibernateTestManager(String xmlConfigFile) {
+		this(new HibernateDataSource(xmlConfigFile));
+	}
+	
+	public HibernateTestManager(HibernateDataSource manager) {
+		this.hibBuilder=manager;
+		this.delegator = new HsqlJdbcDatabaseTester(hibBuilder);
 		try{
 			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(),
 					new File("schema/EPE Schema Create.ddl"), new File("schema/EPE Schema Drop.ddl"));
@@ -58,7 +55,7 @@ public class HibernateDataSource implements IDatabaseTester {
 	}
 
 	public SessionFactory getHibernateSessionFactory(){
-		return this.hibConfig.buildSessionFactory();
+		return hibBuilder.getSessionFactory();
 	}
 	
 	/**
@@ -68,14 +65,6 @@ public class HibernateDataSource implements IDatabaseTester {
 	public void createSchema() {
 		try{
 			schemaManager.createSchema();
-//			String[] ddl = hibConfig.generateSchemaCreationScript(new HSQLDialect());
-//			Connection conn = this.delegator.getConnection().getConnection();
-//			conn.setAutoCommit(false);
-//			for(String ddlStatement : ddl){
-//				conn.createStatement().execute(ddlStatement);
-//			}
-//			conn.commit();
-//			conn.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -88,14 +77,6 @@ public class HibernateDataSource implements IDatabaseTester {
 	public void dropSchema() {
 		try{
 			schemaManager.dropSchema();
-//			String[] ddl = hibConfig.generateDropSchemaScript(new HSQLDialect());
-//			Connection conn = this.delegator.getConnection().getConnection();
-//			conn.setAutoCommit(false);
-//			for(String ddlStatement : ddl){
-//				conn.createStatement().execute(ddlStatement);
-//			}
-//			conn.commit();
-//			conn.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -154,9 +135,6 @@ public class HibernateDataSource implements IDatabaseTester {
 	 * @param conn
 	 */
 	public void setConnectionInfo(IConnectionInfo conn) {
-		hibConfig.setProperty(HIB_PROP_DRIVER_CLASS,conn.getDriverName());
-		hibConfig.setProperty(HIB_PROP_URL,conn.getUrl());
-		hibConfig.setProperty(HIB_PROP_USERNAME,conn.getUserName());
-		hibConfig.setProperty(HIB_PROP_PASSWORD, conn.getPassword());
+		hibBuilder.setConnectionInfo(conn);
 	}
 }

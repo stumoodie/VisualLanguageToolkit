@@ -18,6 +18,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 
 /**
  * @author nhanlon
@@ -25,15 +26,16 @@ import org.junit.BeforeClass;
  */
 public abstract class PojoTester {
 
-	private static HibernateDataSource dbTester = null;
+	private static HibernateTestManager dbTester = null;
 	private SessionFactory hibFactory;
 	private Session session;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateDataSource(HIB_CONFIG_FILE);
+		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
 		dbTester.createSchema();
+		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
 	}
 
 	@AfterClass
@@ -82,7 +84,7 @@ public abstract class PojoTester {
 		this.hibFactory = null;
 	}
 
-	protected HibernateDataSource getDbTester() {
+	protected HibernateTestManager getDbTester() {
 		return this.dbTester;
 	}
 

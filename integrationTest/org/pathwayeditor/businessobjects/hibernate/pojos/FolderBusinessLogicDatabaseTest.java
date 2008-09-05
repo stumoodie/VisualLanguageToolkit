@@ -17,8 +17,6 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
-import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
-import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -35,7 +33,6 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 	private IRepository rep;
-	private IBusinessObjectFactory bo =new BusinessObjectFactory(new ConnectionInfo());
 
 	@Before	
 	@Override

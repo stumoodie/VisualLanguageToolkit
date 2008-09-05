@@ -2,7 +2,6 @@ package org.pathwayeditor.businessobjects.database.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.pathwayeditor.testutils.HibernateDataSource;
 import org.pathwayeditor.testutils.StubSessionFactory;
 
 /**
@@ -13,7 +12,7 @@ import org.pathwayeditor.testutils.StubSessionFactory;
  */
 public class HibernateUtil {
 	private static HibernateDataSource dataSource = new HibernateDataSource(
-			"test_hibernate.cfg.xml");
+			"hibernate.cfg.xml");
 	private static SessionFactory defaultSessionFactory;
 	private static Session session;
 
@@ -25,7 +24,7 @@ public class HibernateUtil {
 					ClassLoader.getSystemClassLoader());
 	}
 	static {
-		defaultSessionFactory = dataSource.getHibernateSessionFactory();
+		defaultSessionFactory = dataSource.getSessionFactory();
 	}
 
 	/**
@@ -35,44 +34,28 @@ public class HibernateUtil {
 	 */
 	public static SessionFactory getSessionFactory() {
 		if (defaultSessionFactory == null) {
-			defaultSessionFactory = dataSource.getHibernateSessionFactory();
+			defaultSessionFactory = dataSource.getSessionFactory();
 		}
 		return defaultSessionFactory;
 	}
-
-	/**
-	 * A static method to get the test Session factory singleton; also creates a
-	 * new database if sessionFactory is instantiated by this method call.
-	 */
-	// public static SessionFactory getTestSessionFactory() {
-	// if (testSessionFactory == null)
-	// testSessionFactory = dataSource.getTestSessionfactory();
-	// return testSessionFactory;
-	// }
-	/**
-	 * 
-	 */
-	public static void setSessionFactoryAsDefault() {
-		defaultSessionFactory = dataSource.getHibernateSessionFactory();
+	
+	public static void setTestSessionFactoryAsDefault(String testFileName) {
+		dataSource = new HibernateDataSource(testFileName);
+		defaultSessionFactory = dataSource.getSessionFactory();
 	}
 
-	/**
-	 * For running Unit tests; after the run is over all sessionfactories appear
-	 * to revert to null so this set method should be 'safe'.
-	 */
-	// public static void setTestSessionFactoryAsDefault() {
-	// defaultSessionFactory = getTestSessionFactory();
-	// }
 	public static void setStubSessionFactoryAsDefault() {
 		defaultSessionFactory = new StubSessionFactory();
 	}
-	
+
 	public static void commit(Session session) {
 		session.getTransaction().commit();
 	}
+
 	public static void commit() {
 		session = defaultSessionFactory.getCurrentSession();
-		if(session.getTransaction()!=null&&session.getTransaction().isActive())
+		if (session.getTransaction() != null
+				&& session.getTransaction().isActive())
 			session.getTransaction().commit();
 	}
 
@@ -90,7 +73,7 @@ public class HibernateUtil {
 	 */
 	public static void setConnectionInfo(IConnectionInfo conn) {
 		dataSource.setConnectionInfo(conn);
+		defaultSessionFactory = dataSource.getSessionFactory();
 	}
-
 
 }

@@ -10,8 +10,8 @@ package org.pathwayeditor.businessobjects.database.util;
 public class ConnectionInfo implements IConnectionInfo{
 	private String userName="sa";
 	private String password="";
-	private String url="jdbc:hsqldb:mem:testDb";
-	private String repositoryName="repo name";
+	private String url=MakeNewDatabaseDropOld.CONNECTION_URL;
+	private String repositoryName;
 	private String driverName="org.hsqldb.jdbcDriver";
 	
 	public ConnectionInfo(){
@@ -49,7 +49,7 @@ public class ConnectionInfo implements IConnectionInfo{
 	 * @see org.pathwayeditor.businessobjects.database.util.IConnectionInfo#getRepositoryName()
 	 */
 	public String getRepositoryName() {
-		return repositoryName;
+		return REPOSITORY_DEFAULT_NAME;
 	}
 	public String getDriverName() {
 		return this.driverName;

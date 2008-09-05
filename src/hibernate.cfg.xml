@@ -6,8 +6,8 @@
     <session-factory>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
         <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
-        <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/testdb</property-->
+        <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property>
+        <!--  <property name="hibernate.connection.url">jdbc:hsqldb:mem:dev</property>-->
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>
         <property name="hibernate.connection.pool_size">1</property>
@@ -17,6 +17,7 @@
         <property name="hibernate.jdbc.batch_size">0</property>
         <!-- property name="hibernate.hbm2ddl.auto">auto</property-->
 
+	<mapping resource="org/pathwayeditor/businessobjects/hibernate/config/customtypedefs.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCompoundGraph.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibContext.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibProperty.hbm.xml" />
@@ -30,13 +31,15 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminus.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkTerminusDecorator.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibCompoundNode.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibChildCompoundGraph.hbm.xml" />
-        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRootObjectNode.hbm.xml" />
         
-        <!-- mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibShapeModel.hbm.xml" /-->
+        
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibLinkEdge.hbm.xml" />
+        <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibChildCompoundGraph.hbm.xml" />
+        
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMapDiagram.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />
+
         
     </session-factory>
 </hibernate-configuration>

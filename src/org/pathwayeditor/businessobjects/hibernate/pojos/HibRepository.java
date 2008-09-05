@@ -43,6 +43,7 @@ public class HibRepository implements Serializable, IRepository {
 		this.description = description;
 		this.buildNum = buildNum;
 		this.rootFolder=new HibRootFolder();
+		rootFolder.setOwningRepository(this);
 	}
 
    public void changeRootFolder(HibRootFolder newRootFolder){

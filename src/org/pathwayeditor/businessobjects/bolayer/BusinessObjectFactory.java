@@ -24,13 +24,14 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
 	private HibRepository rep;
-	private IConnectionInfo conn = new ConnectionInfo();;
+	private IConnectionInfo conn = new ConnectionInfo();
 
-	public  BusinessObjectFactory(IConnectionInfo conn) {
-		this.conn=conn;
+	public BusinessObjectFactory(IConnectionInfo conn) {
+		this.conn = conn;
 		HibernateUtil.setConnectionInfo(conn);
 	}
-	public  BusinessObjectFactory() {
+
+	public BusinessObjectFactory() {
 		HibernateUtil.setConnectionInfo(conn);
 	}
 
@@ -45,12 +46,26 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 			rep = (HibRepository) s.createQuery(
 					"from HibRepository r  where r.name = :name").setString(
 					"name", conn.getRepositoryName()).uniqueResult();
+			if (rep == null)
+				rep = makeAndSavedefaultRepository();
 			HibRootFolder root = rep.getHibRootFolder();
 			loadSubFoldersAndMaps(root);
 			HibernateUtil.commit();
 		}
 		Session s = HibernateUtil.getSession();
 		s.lock(rep, LockMode.NONE);
+		return rep;
+	}
+
+	/**
+	 * @return
+	 */
+	private HibRepository makeAndSavedefaultRepository() {
+		rep = new HibRepository(IConnectionInfo.REPOSITORY_DEFAULT_NAME,
+				"default empty", 0);
+		Session s = HibernateUtil.getSession();
+		s.save(rep);
+		HibernateUtil.commit(s);
 		return rep;
 	}
 
