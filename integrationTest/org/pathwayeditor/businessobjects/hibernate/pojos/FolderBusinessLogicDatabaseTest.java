@@ -161,9 +161,42 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 	
 	@Test
-	public void removeMapTest(){
+	public void removeMapWhenMapFromDatabaseQueryTest(){
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IMap map = (IMap) getSession().createQuery("from HibMapDiagram m where m.id = '100001'").uniqueResult();
+		assertEquals(1,sub1.numMaps());
+		sub1.removeMap(map);
+		assertEquals(0,sub1.numMaps());
+		bo.synchroniseRepository();
+		assertNull(getSession().createQuery(
+		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
+	}
+	
+	@Test
+	public void removeMapWhenMapFromFolderLookupTest(){
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
+		IMap map=null;
+		for (IMap search:sub1.getMapDiagrams()){
+			if(search.getName().equals("Diagram name"))
+				map=search;
+		}
+		assertEquals(1,sub1.numMaps());
+		sub1.removeMap(map);
+		assertEquals(0,sub1.numMaps());
+		bo.synchroniseRepository();
+		assertNull(getSession().createQuery(
+		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
+	}
+	
+	@Test
+	public void removeMapWhenMapBoSynchroniseCalledTwiceTest(){
+		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
+		IMap map=null;
+		for (IMap search:sub1.getMapDiagrams()){
+			if(search.getName().equals("Diagram name"))
+				map=search;
+		}
+		bo.synchroniseRepository();
 		assertEquals(1,sub1.numMaps());
 		sub1.removeMap(map);
 		assertEquals(0,sub1.numMaps());
@@ -214,7 +247,8 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testGetMapIteratorIteratesOverMaps() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		Iterator<? extends IMap> it = sub1.getMapIterator();
-		assertTrue(it.next().getName().equals("Diagram name"));
+		String name = it.next().getName();
+		assertTrue(name.equals("Diagram name")||name.equals("Diagram name2"));
 	}
 
 	@Test

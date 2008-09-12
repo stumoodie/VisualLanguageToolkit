@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
 	private HibRepository rep;
-	private IConnectionInfo conn = new ConnectionInfo();
+	private IConnectionInfo conn = new ConnectionInfo();//uses default parameters
 
 	public BusinessObjectFactory(IConnectionInfo conn) {
 		this.conn = conn;
@@ -122,11 +122,13 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
 	public synchronized void synchroniseRepository() {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session s = HibernateUtil.getSession();
 		try {
 			s.saveOrUpdate(rep);
 			HibernateUtil.commit();
-		} catch (Exception e) {
+			s = HibernateUtil.getSession();
+			s.lock(rep, LockMode.NONE);// this step ensures that the repository stays locked to the current session regardless of multiple calls tp synchronise
+		} catch (Exception e) {					// without this step, the 'commit' step unlocks the repository from the session.
 			if (s != null)
 				s.close();
 			throw new RuntimeException(e);

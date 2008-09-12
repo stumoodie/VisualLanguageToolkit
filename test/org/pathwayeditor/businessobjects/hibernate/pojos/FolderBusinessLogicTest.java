@@ -132,12 +132,6 @@ public class FolderBusinessLogicTest {
 			;
 		}
 		try {
-			folder.canUseSubfolderName("/");
-			fail("should throw illegal arg for null or slashdot");
-		} catch (IllegalArgumentException e) {
-			;
-		}
-		try {
 			folder.canUseSubfolderName("\\");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
@@ -349,12 +343,6 @@ public class FolderBusinessLogicTest {
 			;
 		}
 		try {
-			folder.canRenameSubfolder(folder2, "/");
-			fail("should throw illegal arg for null or slashdot");
-		} catch (IllegalArgumentException e) {
-			;
-		}
-		try {
 			folder.canRenameSubfolder(folder2, "\\");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
@@ -400,12 +388,6 @@ public class FolderBusinessLogicTest {
 		folder.addSubFolder(folder2);
 		try {
 			folder.renameSubfolder(folder2, ".");
-			fail("should throw illegal arg for null or slashdot");
-		} catch (IllegalArgumentException e) {
-			;
-		}
-		try {
-			folder.renameSubfolder(folder2, "/");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;
@@ -487,7 +469,6 @@ public class FolderBusinessLogicTest {
 	public void testCanUseMapNameMalformed() {
 		assertTrue(childOne.canUseMapName(JIMMY_KRANKIE));
 		assertFalse(childOne.canUseMapName(null));
-		assertFalse(childOne.canUseMapName("/"));
 		assertFalse(childOne.canUseMapName("."));
 		assertFalse(childOne.canUseMapName("\\"));
 	}
@@ -504,12 +485,6 @@ public class FolderBusinessLogicTest {
 		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
 		try {
 			childOne.createMap(".");
-			fail("should throw illegal arg for null or slashdot");
-		} catch (IllegalArgumentException e) {
-			;
-		}
-		try {
-			childOne.createMap("/");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;
@@ -650,6 +625,14 @@ public class FolderBusinessLogicTest {
 		childFour.moveMap(newMap);
 		childFour.moveMap(newMap);
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testMoveMapThrowsIllegalArgWhenMapWithSameNameExists(){
+		childOne.createMap(JIMMY_KRANKIE);
+		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		childFour.createMap(JIMMY_KRANKIE);
+		childFour.moveMap(newMap);
+	}
 
 	@Test
 	public void testCanRenameMapHappyCase() {
@@ -685,12 +668,6 @@ public class FolderBusinessLogicTest {
 		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
 		try {
 			childOne.renameMap(newMap, ".");
-			fail("should throw illegal arg for null or slashdot");
-		} catch (IllegalArgumentException e) {
-			;
-		}
-		try {
-			childOne.renameMap(newMap, "/");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;

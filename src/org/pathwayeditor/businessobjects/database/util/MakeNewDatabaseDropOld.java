@@ -27,7 +27,7 @@ public class MakeNewDatabaseDropOld {
 				"schema/EPE Schema Create.ddl"), new File(
 				"schema/EPE Schema Drop.ddl"));
 		try {
-			//schemaManager.dropSchema();
+			schemaManager.dropSchema();
 			schemaManager.createSchema();
 		} catch (Exception e) {
 			e.printStackTrace();

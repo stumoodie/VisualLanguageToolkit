@@ -314,7 +314,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	}
 
 	private boolean nameMalFormed(String name) {
-		return name == null || name.indexOf("/") != -1
+		return name == null 
 				|| name.indexOf(".") != -1 || name.indexOf("\\") != -1;
 	}
 
@@ -412,6 +412,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		if (newMap == null)
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		if (this.containsMap(newMap))
+			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
+		if(!canUseMapName(newMap.getName()))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
 		HibMapDiagram m = (HibMapDiagram) newMap;
 		m.changeFolder(this);
