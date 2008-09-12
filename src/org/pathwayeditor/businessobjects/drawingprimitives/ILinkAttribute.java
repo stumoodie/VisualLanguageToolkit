@@ -24,7 +24,10 @@ public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanv
 	 */	
 	int getCreationSerial();
 	
-	
+	/**
+	 * Gets the Object type related to this Link.
+	 * @return the object type.
+	 */
 	ILinkObjectType getObjectType();
 	
 	

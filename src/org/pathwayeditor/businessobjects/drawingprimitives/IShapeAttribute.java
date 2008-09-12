@@ -10,7 +10,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , ICanvasAttribute {
-
+	
+	/**
+	 * Gets the object type that is related with this shape.
+	 * @return the object type. Cannot be null.
+	 */
 	IShapeObjectType getObjectType();
 	
 	/**
@@ -18,6 +22,12 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the name. Cannot be null.
 	 */
 	String getName();
+	
+	/**
+	 * Sets the new name for this Shape.
+	 * @param name the new name. Cannot be null
+	 * @throws IllegalArgumentException if name is null.
+	 */
 	void setName(String name);
 	
 	/**
@@ -25,8 +35,19 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the description. Cannot be null.
 	 */
 	String getDescription();
+	
+	/**
+	 * Sets the new description for this Shape.
+	 * @param name the new description. Cannot be null
+	 * @throws IllegalArgumentException if description is null.
+	 */
 	void setDescription(String description);
 	
+	/**
+	 * Sets the new detailed description for this Shape.
+	 * @param detailedDescription the new detailed description. Cannot be null
+	 * @throws IllegalArgumentException if detailed description is null.
+	 */
 	void setDetailedDescription(String detailedDescription);
 	
 	/**
@@ -35,6 +56,11 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 */
 	String getDetailedDescription();
 	
+	/**
+	 * Sets the new URL for this Shape.
+	 * @param url the new URL. Cannot be null
+	 * @throws IllegalArgumentException if URL is null.
+	 */
 	void setUrl(String url);
 	
 	/**
@@ -42,7 +68,12 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the URL. Cannot be null.
 	 */
 	String getUrl();
-	
+
+	/**
+	 * Sets the new location for this Shape.
+	 * @param newLocation the new location. Cannot be null
+	 * @throws IllegalArgumentException if location is null.
+	 */
 	void setLocation(Location newLocation);
 	
 	/**
@@ -51,6 +82,11 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 */
 	Location getLocation();
 	
+	/**
+	 * Sets the new size for this Shape.
+	 * @param url the new size. Cannot be null
+	 * @throws IllegalArgumentException if URL is null.
+	 */
 	void setSize(Size size);
 	
 	/**
@@ -59,7 +95,14 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 */
 	Size getSize();
 	
+	/**
+	 * Sets the primitive shape for this Shape.
+	 * @param primitiveShape the new primitive shape. Cannot be null
+	 * @throws IllegalArgumentException if primitiveShape is null.
+	 */
 	void setPrimitiveShape(IPrimitiveShape primitiveShape);
+	
+	
 	IPrimitiveShape getPrimitiveShape();
 	
 	/**
@@ -67,6 +110,12 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the background color. Cannot be null.
 	 */	
 	RGB getFillColour();
+
+	/**
+	 * Sets the fill color for this Shape.
+	 * @param fillColour the new fill color. Cannot be null
+	 * @throws IllegalArgumentException if fillColour is null.
+	 */
 	void setFillColour(RGB fillColour);
 	
 	/**
@@ -74,6 +123,12 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the line width. Cannot be less than zero.
 	 */
 	int getLineWidth();
+	
+	/**
+	 * Sets the line width for this Shape.
+	 * @param lineWidth the new fill color. Cannot be null
+	 * @throws IllegalArgumentException if lineWidth is less than zero.
+	 */
 	void setLineWidth(int lineWidth);
 
 	/**
@@ -81,10 +136,25 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @return the background color. Cannot be null.
 	 */
 	RGB getLineColour();
+	
+	/**
+	 * Sets the line color for this Shape.
+	 * @param lineColour the new line color. Cannot be null
+	 * @throws IllegalArgumentException if lineColour is null.
+	 */
 	void setLineColour(RGB lineColour);
 	
-	
+	/**
+	 * Returns the line style of this shape. 
+	 * @return the line style. Cannot be null.
+	 */
 	LineStyle getLineStyle();
+	
+	/**
+	 * Sets the line style for this Shape.
+	 * @param lineStyle the new line style. Cannot be null
+	 * @throws IllegalArgumentException if lineStyle is null.
+	 */
 	void setLineStyle(LineStyle lineStyle);
 	
 	/**

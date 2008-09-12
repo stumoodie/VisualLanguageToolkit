@@ -9,11 +9,13 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 
 import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
@@ -22,6 +24,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
  * @author ntsorman
  *
  */
+@RunWith(JMock.class)
 public class INumberAnnotationPropertyTest {
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);

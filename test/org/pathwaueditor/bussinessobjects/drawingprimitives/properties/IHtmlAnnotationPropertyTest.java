@@ -7,11 +7,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty;
@@ -20,6 +22,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty;
  * @author ntsorman
  *
  */
+@RunWith(JMock.class)
 public class IHtmlAnnotationPropertyTest {
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);
