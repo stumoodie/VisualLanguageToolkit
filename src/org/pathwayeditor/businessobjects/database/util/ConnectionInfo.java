@@ -49,7 +49,7 @@ public class ConnectionInfo implements IConnectionInfo{
 	 * @see org.pathwayeditor.businessobjects.database.util.IConnectionInfo#getRepositoryName()
 	 */
 	public String getRepositoryName() {
-		return REPOSITORY_DEFAULT_NAME;
+		return repositoryName;
 	}
 	public String getDriverName() {
 		return this.driverName;

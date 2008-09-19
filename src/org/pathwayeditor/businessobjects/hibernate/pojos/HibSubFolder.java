@@ -13,6 +13,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	public static final String FOLDER_RENAME_EVENT = "FOLDER_RENAME_EVENT";
 	private HibFolder parentFolder;
 	private String name="";
+	private String description="";
 
 	public HibSubFolder() {
 		super();
@@ -139,4 +140,12 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 //	public int hashCode() {
 //		return (name==null?173:name.hashCode())+(parentFolder==null?0:parentFolder.hashCode());
 //	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

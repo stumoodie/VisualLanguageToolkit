@@ -23,4 +23,8 @@ public interface IMap extends IRepositoryItem {
 	 * @return the map name, which must be a valid and cannot be null or an empty string.
 	 */
 	String getName();
+	
+	String getDescription();
+	
+	void setDescription(String description);
 }

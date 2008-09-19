@@ -24,4 +24,8 @@ public interface ISubFolder extends IFolder {
 	 */
 	IFolder getParent();
 	
+	void setDescription(String description);
+	
+	String getDescription();
+	
 }

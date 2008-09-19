@@ -42,10 +42,13 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 */
 	public synchronized IRepository getRepository() {
 		if (rep == null) {
+			String repositoryName =  conn.getRepositoryName();
+			if(repositoryName==null)
+				repositoryName=IConnectionInfo.REPOSITORY_DEFAULT_NAME;
 			Session s = HibernateUtil.getSession();
 			rep = (HibRepository) s.createQuery(
 					"from HibRepository r  where r.name = :name").setString(
-					"name", conn.getRepositoryName()).uniqueResult();
+					"name",repositoryName).uniqueResult();
 			if (rep == null)
 				rep = makeAndSavedefaultRepository();
 			HibRootFolder root = rep.getHibRootFolder();
@@ -62,7 +65,7 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 */
 	private HibRepository makeAndSavedefaultRepository() {
 		rep = new HibRepository(IConnectionInfo.REPOSITORY_DEFAULT_NAME,
-				"default empty", 0);
+				"local", 0);
 		Session s = HibernateUtil.getSession();
 		s.save(rep);
 		HibernateUtil.commit(s);

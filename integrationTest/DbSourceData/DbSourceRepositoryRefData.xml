@@ -69,25 +69,30 @@
 		<column>id</column>
 		<column>parent_folder_id</column>
 		<column>name</column>
+		<column>description</column>
 			<row>
 				<value>100002</value>
 				<value>100001</value>
 				<value>subfolder1</value>
+				<value>plums</value>
 			</row>
 			<row>
 				<value>100003</value>
 				<value>100001</value>
 				<value>subfolder2</value>
+				<value>plums</value>
 			</row>
 			<row>
 				<value>100004</value>
 				<value>100003</value>
 				<value>subfolder3</value>
+				<value>plums</value>
 			</row>
 			<row>
 				<value>100005</value>
 				<value>100003</value>
 				<value>subfolder4</value>
+				<value>plums</value>
 			</row>
 	</table>
 	<table name="MapDiagram">
