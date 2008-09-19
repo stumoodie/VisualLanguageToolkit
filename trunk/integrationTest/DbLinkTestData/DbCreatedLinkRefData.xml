@@ -1,0 +1,51 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="LinkAttribute">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>object_type_id</column>
+		<column>name</column>
+		<column>detailed_description</column>
+		<column>description</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>router_type</column>
+		<column>url</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>34567</value>
+				<value>100001</value>
+				<value>link_name</value>
+				<value>link_detailed_descr</value>
+				<value>link_descr</value>
+				<value>100</value>
+				<value>100</value>
+				<value>100</value>
+				<value>1</value>
+				<value>10</value>
+				<value>1</value>
+				<value>http://www.HibLink.org</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100001</value>
+				<value>76543</value>
+				<value>100001</value>
+				<value>link_name2</value>
+				<value>link_detailed_descr2</value>
+				<value>link_descr2</value>
+				<value>102</value>
+				<value>102</value>
+				<value>102</value>
+				<value>2</value>
+				<value>12</value>
+				<value>2</value>
+				<value>http://www.HibLink2.org</value>
+			</row>
+	</table>
+</dataset>

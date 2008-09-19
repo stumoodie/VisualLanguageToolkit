@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<typedef name="ArrowHeadStyleType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle</param>
+	<param name="identifierMethod">toInt</param>
+	<param name="valueOfMethod">fromInt</param>
+</typedef>
+<typedef name="ConnectionRouterType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter</param>
+	<param name="identifierMethod">toInt</param>
+	<param name="valueOfMethod">fromInt</param>
+</typedef>
+<typedef name="LineStyleType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle</param>
+	<param name="identifierMethod">toInt</param>
+	<param name="valueOfMethod">fromInt</param>
+</typedef>
+</hibernate-mapping>

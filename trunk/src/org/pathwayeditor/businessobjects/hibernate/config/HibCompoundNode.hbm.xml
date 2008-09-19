@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" table="compoundnode" abstract="true">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1compoundnode" unique="true">
+        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+            	<column name="model_id" not-null="true" />
+        	</many-to-one>
+        	<property name="index" type="int" >
+        		<column name="node_index" not-null="true"/>
+        	</property>
+        </properties>
+
+		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+	       	<column name="parent_id" not-null="false"/>
+        </many-to-one>
+
+		<set name="inEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
+			<key column="in_node_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
+		</set>
+
+        <joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootObjectNode"
+			table="RootObjectNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+		</joined-subclass>
+        
+        <joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode"
+			table="ShapeNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+			<many-to-one name="shapeAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute" cascade="all">
+		       	<column name="shape_attribute_id" not-null="true"/>
+        	</many-to-one>
+		</joined-subclass>
+		
+        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode" table="LabelNode">
+			<key>
+    			<column name="id" not-null="true" unique="true"/>
+    		</key>
+			<many-to-one name="labelAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute">
+		       	<column name="label_attribute_id" not-null="true"/>
+        	</many-to-one>
+		</joined-subclass>
+    </class>
+</hibernate-mapping>

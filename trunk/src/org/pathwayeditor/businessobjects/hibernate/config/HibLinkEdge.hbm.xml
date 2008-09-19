@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" table="LinkEdge">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1compoundedge" unique="true">
+        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+            	<column name="model_id" not-null="true" />
+        	</many-to-one>
+        	<property name="index" type="int" >
+        		<column name="edge_index" not-null="true"/>
+        	</property>
+        </properties>
+        <many-to-one name="linkAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="all">
+		       	<column name="link_attribute_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph">
+        	<column name="owning_child_model_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        	<column name="out_node_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        	<column name="in_node_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

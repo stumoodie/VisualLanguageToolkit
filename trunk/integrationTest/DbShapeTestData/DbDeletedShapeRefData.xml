@@ -1,0 +1,93 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="CompoundNode">
+		<column>id</column>
+		<column>model_id</column>
+		<column>node_index</column>
+		<column>parent_id</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>1</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+				<value>3</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100004</value>
+				<value>100002</value>
+				<value>4</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100005</value>
+				<value>100002</value>
+				<value>5</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100006</value>
+				<value>100002</value>
+				<value>6</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100007</value>
+				<value>100002</value>
+				<value>7</value>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="ShapeNode">
+		<column>id</column>
+		<column>shape_attribute_id</column>
+			<row>
+				<value>100003</value>
+				<value>100004</value>
+			</row>			
+	</table>
+	<table name="ShapeAttribute">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>name</column>
+		<column>object_type_id</column>
+		<column>description</column>
+		<column>detailed_description</column>
+		<column>url</column>
+		<column>fill_red</column>
+		<column>fill_green</column>
+		<column>fill_blue</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>padding</column>
+		<column>shape_type</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
+	</table>
+</dataset>
+
+<!-- 
+{TREE VIEW}
+/===============================================\
+|												|
+|[/]Repository(100002)							|
+|			|									|
+|		RootFolder(100006)						|
+|				|								|
+|				+ MapDiagram(100001)			|
+|				|		|						|
+|				|		+ Canvas(100001)		|
+|				|								|
+|				+ MapDiagram(100002)			|
+\===============================================/
+-->

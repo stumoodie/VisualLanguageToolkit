@@ -1,0 +1,60 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="property">
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+			<row>
+				<value>100001</value>
+				<value>123456</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>1</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>2</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>3</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>4</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>5</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>6</value>
+			</row>
+			<row>
+				<value>100001</value>
+				<value>7</value>
+			</row>						
+	</table>
+	<table name="richtextproperty">
+		<column>rich_text_value</column>
+		<row>
+			<value>richtextvalue</value>
+		</row>
+		<row>
+			<value>chips</value>
+		</row>
+		<row>
+			<value>richtextvalue</value>
+		</row>
+	</table>
+	<table name="shapeAttributeProperty">
+		<column>name</column>
+			<row>
+				<value>ShapePropertyName</value>
+			</row>
+			<row>
+				<value>richTextProperty</value>
+			</row>
+	</table>
+</dataset>

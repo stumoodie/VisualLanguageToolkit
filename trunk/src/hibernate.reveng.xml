@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+	<table-filter match-name=".*"></table-filter>
+	<table name="drawingprimitive"></table>
+	<table name="numberproperty"></table>
+	<table name="rootshape"></table>
+	<table name="rootlabel"></table>
+	<table name="rootlink"></table>
+	<table name="textproperty"></table>
+	<table name="link"></table>
+	<table name="datastore"></table>
+	<table name="context"></table>
+	<table name="listproperty"></table>
+	<table name="listvalue"></table>
+	<table name="linkterminus"></table>
+	<table name="richtextproperty"></table>
+	<table name="label"></table>
+	<table name="drawingprimitiveproperty"></table>
+	<table name="linkterminusdecorator"></table>
+	<table name="linkterminusproperty"></table>
+	<table name="bendpoint"></table>
+	<table name="nonrootfolder"></table>
+	<table name="property"></table>
+	<table name="linkenddecorator"></table>
+	<table name="objecttype"></table>
+	<table name="folder"></table>
+	<table name="canvas"></table>
+	<table name="mapdiagram"></table>
+	<table name="drawingobject"></table>
+	<table name="shape"></table>
+	<table name="rootfolder"></table>
+</hibernate-reverse-engineering>

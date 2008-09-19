@@ -1,0 +1,53 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="MapDiagram">
+		<column>id</column>
+		<column>folder_id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>repository_id</column>
+			<row>
+				<value>100001</value>
+				<value>100005</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+				<value>100001</value>
+				<value>1</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100005</value>
+				<value>new diagram name</value>
+				<value>new diagram description</value>
+				<value>100001</value>
+			</row>
+	</table>
+</dataset>
+
+<!-- 
+{TREE VIEW}
+/===================================================\
+|													|
+|[/]Repository(100001)								|
+|		|											|
+|		RootFolder(100001)							|
+|			|										|
+|		 	> SubFolder1(100002)					|
+|			|										|
+|		 	> SubFolder2(100003)					|
+|					|								|
+|					> SubFolder3(100004)			|
+|					|								|
+|				 	> SubFolder4(100005)			|
+|							|						|
+|							+ MapDiagram(100001)	|
+|							|						|
+|							+ MapDiagram(100002)	|
+|													|
+|===================================================|
+|													|
+|[/]Repository(100002)								|
+|		|											|
+|		RootFolder(100006)							|
+\===================================================/
+-->

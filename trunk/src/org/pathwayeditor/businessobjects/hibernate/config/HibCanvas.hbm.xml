@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" table="canvas">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <properties name="xak1canvas" unique="true">
+        	<many-to-one name="repository" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" cascade="none">
+            	<column name="repository_id" not-null="true" />
+        	</many-to-one>
+        	<property name="mapINode" type="int">
+        		<column name="map_inode" not-null="true"/>
+        	</property>
+        </properties>
+
+        <one-to-one name="graph" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph" cascade="all"/>
+
+        <many-to-one name="context" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibContext">
+            <column name="context_id" not-null="true" />
+        </many-to-one>
+
+        <property name="gridX" type="int">
+            <column name="grid_x" not-null="true" />
+        </property>
+        <property name="gridY" type="int">
+            <column name="grid_y" not-null="true" />
+        </property>
+        <property name="gridEnabled" type="boolean">
+            <column name="grid_enabled" not-null="true" />
+        </property>
+        <property name="snapToGridEnabled" type="boolean">
+            <column name="snap_to_grid_enabled" not-null="true" />
+        </property>
+        <property name="backgroundRed" type="int">
+            <column name="background_red" not-null="true" />
+        </property>
+        <property name="backgroundGreen" type="int">
+            <column name="background_green" not-null="true" />
+        </property>
+        <property name="backgroundBlue" type="int">
+            <column name="background_blue" not-null="true" />
+        </property>
+        <property name="canvasWidth" type="int">
+            <column name="canvas_width" not-null="true" />
+        </property>
+        <property name="canvasHeight" type="int">
+            <column name="canvas_height" not-null="true" />
+        </property>
+        <property name="created" type="java.util.Date">
+        	<column name="created" not-null="true"/> 
+        </property>
+        <property name="modified" type="java.util.Date">
+        	<column name="last_modified" not-null="true"/> 
+        </property>
+        <set name="hibShapeAttributes" inverse="true" table="shape" cascade="all,delete-orphan">
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
+        </set>
+        <set name="hibLinkAttributes" inverse="true" table="link" cascade="all,delete-orphan">
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
+        </set>     
+    </class>
+</hibernate-mapping>
