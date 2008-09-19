@@ -6,23 +6,17 @@ package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
  *
  */
 public enum LineStyle {
-	SOLID(1, "Solid"), DASHED(2, "Dashed"), DASH_DOT(3, "Dash dot"), DASH_DOT_DOT(4, "Dash dot dot"), DOT(5, "Dot");
-	
-	public final static int MAX_LINE_WIDTH = 20;
-	public final static int MIN_LINE_WIDTH = 0;
+	SOLID(1), DASHED(2), DASH_DOT(3), DASH_DOT_DOT(4), DOT(5);
 	
 	private int code;
-	private String name ;
  
 	public int getCode() {
 		return code;
 	}
 	
 	
-	private LineStyle(int code, String name) {
+	private LineStyle(int code) {
 		this.code = code;
-		this.name = name;
-		
 	}
 	
 
@@ -53,20 +47,4 @@ public enum LineStyle {
 			throw new IllegalArgumentException();
 		}
 	}
-	
-	public static String [] getString () 
-	{
-		String [] stringArray = new String [values().length];
-		
-		LineStyle [] temp = values() ;
-		
-		for ( int a = 0 ; a < values().length ; a++ )
-		{
-			stringArray[a] = new String ( temp[a].name );
-		}
-		
-		return stringArray ;
-	}
-
-
 }

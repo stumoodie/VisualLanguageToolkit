@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.contextadapter;
 
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 
 /**
  * Encapsulates information about a single rule validation problem.
@@ -18,7 +18,7 @@ public interface IValidationReportItem {
 	 * Can return null if no single identifiable map object is responsible for the validation problem.
 	 * @return An {@link IMapObject}, or null.
 	 */
-	ICompoundGraph getMapObject();
+	ICanvasAttribute getMapObject();
 	
 	
 	/**

@@ -23,6 +23,18 @@ public final class RGB {
 		return blue;
 	}
 	
+	public RGB newRed(int newRed){
+		return new RGB(newRed, this.green, this.blue);
+	}
+	
+	public RGB newGreen(int newGreen){
+		return new RGB(this.red, newGreen, this.blue);
+	}
+	
+	public RGB newBlue(int newBlue){
+		return new RGB(this.blue, this.green, newBlue);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

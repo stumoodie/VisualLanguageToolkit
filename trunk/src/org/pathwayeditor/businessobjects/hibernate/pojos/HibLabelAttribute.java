@@ -8,6 +8,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 
 public class HibLabelAttribute  implements Serializable, ILabelAttribute {
@@ -27,25 +30,26 @@ public class HibLabelAttribute  implements Serializable, ILabelAttribute {
      private int backgroundBlue;
      private boolean noFillSet;
      private HibLabelNode labelNode ;
+     private INodeObjectType objectType;
 
     public HibLabelAttribute() {
     }
 
-    public HibLabelAttribute(HibCanvas hibCanvas, int creation_serial, int XPosition, int YPosition, int width, int height, HibProperty visualisableProperty, boolean isDisplayed, int backgroundRed, int backgroundGreen, int backgroundBlue, boolean noFillSet) {
+    public HibLabelAttribute(HibCanvas hibCanvas, HibProperty property, IDefaultLabelAttributes labelDefaults) {
        this.hibCanvas = hibCanvas;
-       this.creation_serial = creation_serial;
-       this.XPosition = XPosition;
-       this.YPosition = YPosition;
-       this.width = width;
-       this.height = height;
-       this.visualisableProperty = visualisableProperty;
-       this.isDisplayed = isDisplayed;
-       this.backgroundRed = backgroundRed;
-       this.backgroundGreen = backgroundGreen;
-       this.backgroundBlue = backgroundBlue;
-       this.noFillSet = noFillSet;
+       this.creation_serial = hibCanvas.getAttributeSerialCounter().nextIndex();
+       this.visualisableProperty = property;
+       this.objectType = new LabelObjectType(hibCanvas.getContext());
+       populateDefaults(labelDefaults);
     }
-   
+
+    private void populateDefaults(IDefaultLabelAttributes labelDefaults){
+    	this.XPosition = 0;
+    	this.YPosition = 0;
+    	this.setSize(labelDefaults.getSize());
+    	this.setBackgroundColor(labelDefaults.getFillColour());
+    }
+    
     public Long getId() {
         return this.id;
     }
@@ -59,6 +63,7 @@ public class HibLabelAttribute  implements Serializable, ILabelAttribute {
     
     public void setCanvas(HibCanvas hibCanvas) {
         this.hibCanvas = hibCanvas;
+        this.objectType = new LabelObjectType(this.hibCanvas.getContext());
     }
     public int getCreation_serial() {
         return this.creation_serial;
@@ -292,6 +297,21 @@ public void setSize(Size size) {
 	
 	this.height = size.getHeight() ;
 	this.width = size.getWidth() ;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getObjectType()
+ */
+public INodeObjectType getObjectType() {
+	return this.objectType;
+}
+
+/* (non-Javadoc)
+ * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+ */
+public boolean hasProperty(IPropertyDefinition property) {
+	// TODO Auto-generated method stub
+	return false;
 }   
 
 }

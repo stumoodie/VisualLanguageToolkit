@@ -3,22 +3,25 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
-public class HibLinkEdge extends BaseCompoundEdge {
+public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private Long id;
-	private HibCompoundGraph graph;
+	private HibModel graph;
 	private int index;
-	private HibCompoundNode outNode;
-	private HibCompoundNode inNode;
-	private HibChildCompoundGraph owningChildGraph;
-	private HibLinkAttribute linkAttribute ;
+	private HibShapeNode outNode;
+	private HibShapeNode inNode;
+	private HibSubModel owningChildGraph;
+	private HibLinkAttribute attribute ;
 	
 	HibLinkEdge() {
 		super();
 	}
 	
-	public HibLinkEdge(HibChildCompoundGraph child, int edgeIndex, HibCompoundNode outNode, HibCompoundNode inNode) {
+	public HibLinkEdge(HibSubModel child, int edgeIndex, HibShapeNode outNode, HibShapeNode inNode) {
 		super();
 		this.graph = child.getSuperGraph();
 		this.owningChildGraph = child;
@@ -47,44 +50,44 @@ public class HibLinkEdge extends BaseCompoundEdge {
 		return index;
 	}
 	
-	void setGraph(HibCompoundGraph value) {
+	void setGraph(HibModel value) {
 		this.graph = value;
 	}
 	
-	public HibCompoundGraph getGraph() {
+	public HibModel getGraph() {
 		return graph;
 	}
 	
-	void setOutNode(HibCompoundNode value) {
-		this.outNode = value;
+	void setOutNode(IShapeNode value) {
+		this.outNode = (HibShapeNode)value;
 	}
 	
-	public HibCompoundNode getOutNode() {
+	public HibShapeNode getOutNode() {
 		return outNode;
 	}
 	
-	void setInNode(HibCompoundNode value) {
-		this.inNode = value;
+	void setInNode(IShapeNode value) {
+		this.inNode = (HibShapeNode)value;
 	}
 	
-	public HibCompoundNode getInNode() {
+	public HibShapeNode getInNode() {
 		return inNode;
 	}
 	
-	void setOwningChildGraph(HibChildCompoundGraph value) {
+	void setOwningChildGraph(HibSubModel value) {
 		this.owningChildGraph = value;
 	}
 	
-	public HibChildCompoundGraph getOwningChildGraph() {
+	public HibSubModel getOwningChildGraph() {
 		return owningChildGraph;
 	}
 	
-	public HibLinkAttribute getLinkAttribute() {
-		return this.linkAttribute;
+	public HibLinkAttribute getAttribute() {
+		return this.attribute;
 	}
 
-	public void setLinkAttribute(HibLinkAttribute linkAttribute) {
-		this.linkAttribute = linkAttribute;
+	public void setAttribute(HibLinkAttribute linkAttribute) {
+		this.attribute = linkAttribute;
 	}
 
 	@Override
@@ -105,14 +108,74 @@ public class HibLinkEdge extends BaseCompoundEdge {
 		if (!(obj instanceof HibLinkEdge))
 			return false;
 		final HibLinkEdge other = (HibLinkEdge) obj;
-		if (index != other.index)
+		if (this.getIndex() != other.getIndex())
 			return false;
-		if (graph == null) {
-			if (other.graph != null)
+		if (this.getGraph() == null) {
+			if (other.getGraph() != null)
 				return false;
-		} else if (!graph.equals(other.graph))
+		} else if (!this.getGraph().equals(other.getGraph()))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#canChangeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
+	 */
+	public boolean canChangeSource(IShapeNode newShape) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#canChangeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
+	 */
+	public boolean canChangeTarget(IShapeNode newShape) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#changeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
+	 */
+	public void changeSource(IShapeNode newShape) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#changeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
+	 */
+	public void changeTarget(IShapeNode newShape) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getOwningSubCanvas()
+	 */
+	public HibSubModel getOwningSubCanvas() {
+		return this.getOwningChildGraph();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getSourceShape()
+	 */
+	public HibShapeNode getSourceShape() {
+		return this.getOutNode();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getTargetShape()
+	 */
+	public HibShapeNode getTargetShape() {
+		return this.getInNode();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getCanvas()
+	 */
+	public HibModel getModel() {
+		return this.graph;
 	}
 
 

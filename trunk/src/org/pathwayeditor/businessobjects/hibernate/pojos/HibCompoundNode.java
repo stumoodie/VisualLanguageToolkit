@@ -1,5 +1,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.util.IDirectedEdgeSet;
@@ -8,45 +11,36 @@ import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
 import uk.ed.inf.graph.util.impl.NodeSet;
 
 
-public class HibCompoundNode extends BaseCompoundNode {
+public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawingNode {
 	private Long id = null;
-	private HibCompoundGraph graph = null;
+	private HibModel graph = null;
 	private int index;
-	private HibChildCompoundGraph childCompoundGraph = null;
+	private HibSubModel childCompoundGraph = null;
 	private HibCompoundNode parentNode = null;
 	private INodeSet<BaseCompoundNode, BaseCompoundEdge> children = new NodeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	
-	HibCompoundNode() {
+	protected HibCompoundNode() {
 		super();
 		createInEdgeSet(this.inEdges);
 		createOutEdgeSet(this.outEdges);
 	}
 	
-	public HibCompoundNode(HibCompoundNode parentNode, int nodeIndex) {
-		this(parentNode.getGraph(), parentNode, nodeIndex);
-	}
-
-	
-	public HibCompoundNode(HibCompoundGraph graph, int nodeIndex) {
-		this(graph, null, nodeIndex);
-	}
-		
-	private HibCompoundNode(HibCompoundGraph graph, HibCompoundNode parentNode, int nodeIndex) {
+	protected HibCompoundNode(HibModel graph, HibCompoundNode parentNode, int nodeIndex) {
 		this.graph = graph;
 		this.index = nodeIndex;
 		this.parentNode = parentNode;
-		this.childCompoundGraph = new HibChildCompoundGraph(this);
+		this.childCompoundGraph = new HibSubModel(this);
 		super.createInEdgeSet(this.inEdges);
 		super.createOutEdgeSet(this.outEdges);
 	}
 	
-	void setOwningChildGraph(HibChildCompoundGraph childCompoundGraph){
+	void setOwningChildGraph(HibSubModel childCompoundGraph){
 		this.childCompoundGraph = childCompoundGraph;
 	}
 	
-	HibChildCompoundGraph getOwningChildGraph(){
+	HibSubModel getOwningChildGraph(){
 		return this.childCompoundGraph;
 	}
 	
@@ -68,15 +62,15 @@ public class HibCompoundNode extends BaseCompoundNode {
 		return index;
 	}
 	
-	void setGraph(HibCompoundGraph value) {
+	void setGraph(HibModel value) {
 		this.graph = value;
 	}
 	
-	public HibCompoundGraph getGraph() {
+	public HibModel getGraph() {
 		return graph;
 	}
 	
-	void setChildCompoundGraph(HibChildCompoundGraph value) {
+	void setChildCompoundGraph(HibSubModel value) {
 		this.childCompoundGraph = value;
 	}
 	
@@ -100,18 +94,6 @@ public class HibCompoundNode extends BaseCompoundNode {
 		return this.outEdges;
 	}
 	
-//    void addOutEdge(HibCompoundEdge newOutEdge) {
-//		if (newOutEdge == null)
-//			throw new IllegalArgumentException("newOutEdge cannot be null");
-//
-//		HibCompoundNode oldOutNode = newOutEdge.getInNode();
-//		if (oldOutNode != null) {
-//			oldOutNode.inEdges.remove(newOutEdge);
-//		}
-//		this.inEdges.add(newOutEdge);
-//		newOutEdge.setInNode(this);
-//	}
-
 	void setInEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edgeSet) {
 		this.inEdges = edgeSet;
 		this.createInEdgeSet(this.inEdges);
@@ -121,41 +103,10 @@ public class HibCompoundNode extends BaseCompoundNode {
 		return this.inEdges;
 	}
 	
-//    void addInEdge(HibCompoundEdge newInEdge) {
-//		if (newInEdge == null)
-//			throw new IllegalArgumentException("newInEdge cannot be null");
-//
-//		HibCompoundNode oldInNode = newInEdge.getInNode();
-//		if (oldInNode != null) {
-//			oldInNode.inEdges.remove(newInEdge);
-//		}
-//		this.inEdges.add(newInEdge);
-//		newInEdge.setInNode(this);
-//	}
-
 	void setParent(HibCompoundNode parentNode) {
 		this.parentNode = parentNode;
 	}
 
-//	public Set<HibCompoundNode> getChildren() {
-//		return children;
-//	}
-//
-//	void setChildren(Set<HibCompoundNode> children) {
-//		this.children = children;
-//	}
-	
-//	void addChild(HibCompoundNode newChild) {
-//		if (newChild == null)
-//			throw new IllegalArgumentException("newChild cannot be null");
-//
-//		HibCompoundNode oldParentNode = newChild.getParent();
-//		if (oldParentNode != null) {
-//			oldParentNode.children.remove(newChild);
-//		}
-//		this.children.add(newChild);
-//		newChild.setParent(this);
-//	}
 
 	@Override
 	public int hashCode() {
@@ -186,8 +137,22 @@ public class HibCompoundNode extends BaseCompoundNode {
 	}
 
 	@Override
-	public HibChildCompoundGraph getChildCompoundGraph() {
+	public HibSubModel getChildCompoundGraph() {
 		return this.childCompoundGraph;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getCanvas()
+	 */
+	public HibModel getModel() {
+		return this.getGraph();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getSubCanvas()
+	 */
+	public ISubModel getSubCanvas() {
+		return this.getChildCompoundGraph();
 	}
 
 	@Override
@@ -196,8 +161,8 @@ public class HibCompoundNode extends BaseCompoundNode {
 	}
 
 	@Override
-	public HibCompoundNode getRoot(){
-		return (HibCompoundNode)super.getRoot();
+	public HibRootNode getRoot(){
+		return (HibRootNode)super.getRoot();
 	}
 
 	public HibCompoundNode getParentNode() {
@@ -207,6 +172,5 @@ public class HibCompoundNode extends BaseCompoundNode {
 	public void setParentNode(HibCompoundNode parentNode) {
 		this.parentNode = parentNode;
 	}	
-	
 	
 }

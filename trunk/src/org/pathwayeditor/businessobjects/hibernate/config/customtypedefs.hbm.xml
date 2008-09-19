@@ -17,4 +17,14 @@
 	<param name="identifierMethod">toInt</param>
 	<param name="valueOfMethod">fromInt</param>
 </typedef>
+<typedef name="LinkTermType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType</param>
+	<param name="identifierMethod">toInt</param>
+	<param name="valueOfMethod">fromInt</param>
+</typedef>
+<typedef name="PrimitiveShapeType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType</param>
+	<param name="identifierMethod">toInt</param>
+	<param name="valueOfMethod">fromInt</param>
+</typedef>
 </hibernate-mapping>

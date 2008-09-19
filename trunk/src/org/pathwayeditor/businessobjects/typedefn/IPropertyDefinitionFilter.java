@@ -3,6 +3,8 @@ package org.pathwayeditor.businessobjects.typedefn;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+
 /**
  * Provides methods that filter out properties based on different criteria.
  * Useful for clients of object types, to enable them to get the appropriate

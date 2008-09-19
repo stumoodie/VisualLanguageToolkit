@@ -6,9 +6,19 @@ import org.pathwayeditor.businessobjects.contextadapter.IContext;
  * @author smoodie
  *
  */
-public interface IObjectType {
+public interface IObjectType extends Comparable<IObjectType> {
 
-	IContext getContext();
+	IContext getDefiningContext();
 	
-	String getTypeName();
+	String getName();
+
+	/**
+	 * Description of the object type
+	 * @return
+	 */
+	String getDescription();
+
+	boolean equals(Object other);
+	
+	int hashCode();
 }

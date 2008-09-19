@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 
 /**
  * @author ntsorman
@@ -28,7 +29,7 @@ public class HibLinkTerminusTest {
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 	
-	private static final int LINK_END_TYPE = 1 ;
+	private static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
 	private static final short OFFSET = 1 ;
 	
 	@Before
@@ -44,18 +45,12 @@ public class HibLinkTerminusTest {
 	public void testCreateLinkTerminus () throws Exception 
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
 		Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE) ;
 		
-		assertEquals ("link end type" , LINK_END_TYPE , linkTerminus.getHibLinkEndType()) ;
+		assertEquals ("link end type" , LINK_END_TYPE , linkTerminus.getLinkTermType()) ;
 		assertEquals ("offset" , OFFSET , linkTerminus.getOffset()) ;
-		assertEquals ( "terminus decorator" , mockTerminusDecorator , linkTerminus.getDecorator()) ;
-		assertEquals( "end decorator" , mockEndDecorator , linkTerminus.getLinkenddecorators()) ;
 		assertEquals( "properties" , properties , linkTerminus.getProperties()) ;
 		
 	}
@@ -64,13 +59,9 @@ public class HibLinkTerminusTest {
 	public void testAddProperty () throws Exception
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
-		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+//		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		final HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		final HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE) ;
 		
 		final HibTextProperty mockTextProperty = mockery.mock(HibTextProperty.class , "mockTextProperty") ;
 		
@@ -84,13 +75,9 @@ public class HibLinkTerminusTest {
 	public void testRemoveProperty () throws Exception
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
-		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+//		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		final HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		final HibLinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE) ;
 		
 		final HibTextProperty mockTextProperty = mockery.mock(HibTextProperty.class , "mockTextProperty") ;
 		

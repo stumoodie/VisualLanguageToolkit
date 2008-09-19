@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
-
 public interface IAnnotationProperty {
 	
 	/**

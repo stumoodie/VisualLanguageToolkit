@@ -4,20 +4,20 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
@@ -51,15 +51,19 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 
-	public HibShapeAttribute() {
+	HibShapeAttribute() {
 	}
 
-	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial){
+	public HibShapeAttribute(HibCanvas hibCanvas, IShapeObjectType shapeObjectType){
 		this.canvas = hibCanvas;
-		this.creationSerial = creationSerial;
+		this.creationSerial = hibCanvas.getAttributeSerialCounter().nextIndex();
+		this.populateDefaults(shapeObjectType.getDefaultAttributes());
+		
 	}
 	
 	public HibShapeAttribute(HibShapeAttribute other) {
+		this.canvas = other.canvas;
+		this.creationSerial = this.canvas.getAttributeSerialCounter().nextIndex();
 		this.XPosition = other.XPosition;
 		this.YPosition = other.YPosition;
 		this.width = other.width;
@@ -82,6 +86,23 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		for (String propertyName : other.hibProperties.keySet()) {
 			HibProperty otherProp = other.hibProperties.get(propertyName);
 			this.hibProperties.put(propertyName, otherProp.copy(getCanvas()));
+		}
+	}
+	
+	
+	private void populateDefaults(IDefaultShapeAttributes shapeDefaults){
+		this.description = shapeDefaults.getDescription();
+		this.detailedDescription = shapeDefaults.getDetailedDescription();
+		this.setFillColour(shapeDefaults.getFillColour());
+		this.setSize(shapeDefaults.getSize());
+		this.setLineColour(shapeDefaults.getLineColour());
+		this.lineStyle = shapeDefaults.getLineStyle();
+		this.lineWidth = shapeDefaults.getLineWidth();
+		this.name = shapeDefaults.getName();
+		this.url = shapeDefaults.getURL();
+		Iterator<IPropertyDefinition> propIter = shapeDefaults.getPropertiesFilter().getAllPropertiesIterator();
+		while(propIter.hasNext()){
+			// TODO: 
 		}
 	}
 
@@ -279,17 +300,17 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	
 	
 
-	public void changeCanvas(HibCanvas newCanvas) {
-		HibCanvas oldCanvas = this.canvas ;
-		this.canvas = newCanvas;
-		if (oldCanvas != null) {
-			oldCanvas.getHibShapeAttributes().remove(this);
-		}
-		if (this.canvas != null) {
-			this.canvas.getHibShapeAttributes().add(this);
-		}
-		
-	}
+//	public void changeCanvas(HibCanvas newCanvas) {
+//		HibCanvas oldCanvas = this.canvas ;
+//		this.canvas = newCanvas;
+//		if (oldCanvas != null) {
+//			oldCanvas.getHibShapeAttributes().remove(this);
+//		}
+//		if (this.canvas != null) {
+//			this.canvas.getHibShapeAttributes().add(this);
+//		}
+//		
+//	}
 
 	public void addProperty ( String name , HibProperty toAdd ) 
 	{
@@ -426,7 +447,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getPrimitiveShape()
 	 */
-	public IPrimitiveShape getPrimitiveShape() {
+	public PrimitiveShapeType getPrimitiveShape() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException () ;
 	}
@@ -441,7 +462,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getShapeModel()
 	 */
-	public IChildCompoundGraph getShapeModel() {
+	public ISubModel getShapeModel() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException () ;
 	}
@@ -507,7 +528,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setPrimitiveShape(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape)
 	 */
-	public void setPrimitiveShape(IPrimitiveShape primitiveShape) {
+	public void setPrimitiveShape(PrimitiveShapeType primitiveShape) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException () ;
 		
@@ -567,8 +588,17 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
-	public Set<IAnnotationProperty> propertyIterator() {
-		return new HashSet<IAnnotationProperty> ( this.hibProperties.values() ) ;
+	public Iterator<IAnnotationProperty> propertyIterator() {
+		//return this.hibProperties.iterator();
+		//TODO:
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean hasProperty(IPropertyDefinition property) {
+		return false;
 	}
 
 }

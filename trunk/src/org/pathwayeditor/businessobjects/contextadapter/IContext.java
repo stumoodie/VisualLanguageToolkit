@@ -1,8 +1,6 @@
 package org.pathwayeditor.businessobjects.contextadapter;
 
-public interface IContext {
-	
-	String getGlobalId();
+public interface IContext extends Comparable<IContext> {
 	
 	String getDisplayName();
 
@@ -17,4 +15,13 @@ public interface IContext {
 	int getMinorVersion();
 	
 	int getPatchVersion();
+	
+	boolean equals(Object other);
+	
+	int hashCode();
+
+	/**
+	 * @return
+	 */
+	String getGlobalId();
 }

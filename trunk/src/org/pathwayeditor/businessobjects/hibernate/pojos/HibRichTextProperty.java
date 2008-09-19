@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisualisableAnnotationProperty;
-import org.pathwayeditor.businessobjects.typedefn.IHtmlPropertyDefinition;
 
 
 

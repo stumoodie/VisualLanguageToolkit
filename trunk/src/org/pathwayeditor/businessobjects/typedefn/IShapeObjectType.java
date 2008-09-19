@@ -1,53 +1,24 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import java.util.EnumSet;
+
 
 public interface IShapeObjectType extends INodeObjectType {
-
-	IPrimitiveShape getShapeType();
-
-	String getDescription();
-
-	String getDetailedDescription();
-
-	String getName();
-
-	String getURL();
-
-	int getSizeWidth();
-
-	int getSizeHeight();
-
-	LineStyle getLineStyle();
-
-	int getLineColourRed();
-
-	int getLineColourGreen();
-
-	int getLineColourBlue();
-
-	int getFillTransparency();
-
-	int getFillColourRed();
-
-	int getFillColourGreen();
-
-	int getFillColourBlue();
-
-	void addProperty(IPropertyDefinition createTextProperty);
-
-	int getLineWidth();
-
-	IPropertyDefinitionFilter getPropertiesFilter();
-
+	public static enum EditableShapeAttributes { 
+		LINE_COLOUR, LINE_STYLE, LINE_WIDTH, FILL_COLOUR, SHAPE_SIZE, SHAPE_TYPE
+	}; 
+	
+	/**
+	 * Get the parenting rules of the shape
+	 */
 	IShapeParentingRules getParentingRules();
 
-	boolean isLineColourEditable();
+	IDefaultShapeAttributes getDefaultAttributes();
+	
+	/**
+	 * Is the line colour editable
+	 * @return
+	 */
+	EnumSet<EditableShapeAttributes> getEditableAttributes();
 
-	boolean isLineStyleEditable();
-	
-	boolean isLineWidthEditable();
-	
-	boolean isFillEditable();
 }

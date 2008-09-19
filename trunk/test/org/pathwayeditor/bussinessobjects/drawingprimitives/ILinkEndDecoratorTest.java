@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
@@ -36,7 +36,7 @@ public class ILinkEndDecoratorTest {
 	private static final int SIZE_VALUE = 100 ;
 	private static final int NEW_SIZE_VALUE = 150 ;
 	
-	private static final ArrowheadStyle OTHER_STYLE = ArrowheadStyle.ARROW ;
+	private static final LinkEndDecoratorShape OTHER_STYLE = LinkEndDecoratorShape.ARROW ;
 	
 	private ILinkEndDecorator linkEndDecorator ;
 	private HibLinkTerminus mockLinkTerminus ;
@@ -45,7 +45,7 @@ public class ILinkEndDecoratorTest {
 	public void setUp() throws Exception {
 		mockLinkTerminus = mockery.mock(HibLinkTerminus.class , "mockLinkTerminus" ) ;
 		linkEndDecorator  = new HibLinkEndDecorator (  mockLinkTerminus, 
-				ArrowheadStyle.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
+				LinkEndDecoratorShape.DIAMOND, SIZE_VALUE, SIZE_VALUE ) ;
 	}
 
 	@After
@@ -77,20 +77,20 @@ public class ILinkEndDecoratorTest {
 	@Test
 	public void testGetArrowheadStyle () throws Exception
 	{
-		assertEquals ( "arrowhead style" , ArrowheadStyle.DIAMOND, linkEndDecorator.getDecoratorType()) ;
+		assertEquals ( "arrowhead style" , LinkEndDecoratorShape.DIAMOND, linkEndDecorator.getDecoratorType()) ;
 	}
 	
 	@Test
 	public void testSetArrowheadStyle () throws Exception
 	{
 		linkEndDecorator.setDecoratorType(OTHER_STYLE) ;
-		assertEquals ( "arrowhead style" , ArrowheadStyle.ARROW, linkEndDecorator.getDecoratorType()) ;
+		assertEquals ( "arrowhead style" , LinkEndDecoratorShape.ARROW, linkEndDecorator.getDecoratorType()) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetArrowheadStyleToNull () throws Exception
 	{
 		linkEndDecorator.setDecoratorType(null) ;
-		assertEquals ( "arrowhead style" , ArrowheadStyle.DIAMOND, linkEndDecorator.getDecoratorType()) ;
+		assertEquals ( "arrowhead style" , LinkEndDecoratorShape.DIAMOND, linkEndDecorator.getDecoratorType()) ;
 	}	
 }

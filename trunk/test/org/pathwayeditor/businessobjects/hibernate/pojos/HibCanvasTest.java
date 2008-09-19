@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -16,6 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.contextadapter.IContext;
 
 /**
  * @author ntsorman
@@ -30,8 +30,8 @@ public class HibCanvasTest {
 	
 	private HibCanvas canvas ;
 	private HibCanvas canvas2 ;
-	private final static int NUMERIC_VALUE_TWO = 2;
-	private final static int NUMERIC_VALUE_ZERO = 0;
+//	private final static int NUMERIC_VALUE_TWO = 2;
+//	private final static int NUMERIC_VALUE_ZERO = 0;
 	private final static String ANOTHER_OBJECT = "another object" ;
 	
 	@Before
@@ -45,144 +45,11 @@ public class HibCanvasTest {
 
 	
 	@Test
-	public void testAddAndRemoveShapeToCanvas () throws Exception
-	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibShapeAttribute mockShape = mockery.mock(HibShapeAttribute.class , "mockShape" ) ;
-		final HibShapeAttribute mockShape2 = mockery.mock(HibShapeAttribute.class, "mockShape2") ;
-		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockShape).getCanvas() ; will(returnValue(null));
-			one(mockShape).getCanvas() ; will(returnValue(canvas));
-			one(mockShape).setCanvas(canvas) ;
-			one(mockShape).setCanvas(null) ;
-			
-			one(mockShape2).getCanvas() ; will(returnValue(null));
-			one(mockShape2).getCanvas() ; will(returnValue(canvas));
-			one(mockShape2).setCanvas(canvas) ;
-			one(mockShape2).setCanvas(null) ;
-		}});
-		
-		
-		canvas.addShape(mockShape) ;
-		canvas.addShape(mockShape2) ;
-		
-		assertEquals ( "shapes in canvas" , NUMERIC_VALUE_TWO , canvas.getHibShapeAttributes().size() ) ;
-		
-		canvas.removeShape(mockShape) ;
-		canvas.removeShape(mockShape2) ;
-		
-		assertEquals ( "no shapes in canvas" , NUMERIC_VALUE_ZERO , canvas.getHibShapeAttributes().size() ) ;
-	}
-	
-	@Test
-	public void testAddLabelToCanvas () throws Exception
-	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibLabelAttribute mockLabel = mockery.mock(HibLabelAttribute.class , "mockLabel") ;
-		final HibLabelAttribute mockLabel2 = mockery.mock(HibLabelAttribute.class , "mockLabel2") ;
-		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockLabel).getCanvas() ; will(returnValue(null));
-			one(mockLabel).getCanvas() ; will(returnValue(canvas));
-			one(mockLabel).setCanvas(canvas) ;
-			one(mockLabel).setCanvas(null) ;
-			
-			one(mockLabel2).getCanvas() ; will(returnValue(null));
-			one(mockLabel2).getCanvas() ; will(returnValue(canvas));
-			one(mockLabel2).setCanvas(canvas) ;
-			one(mockLabel2).setCanvas(null) ;
-		}});
-		
-		canvas.addLabel(mockLabel) ;
-		canvas.addLabel(mockLabel2) ;
-		
-		assertEquals ( "labels in Canvas" , NUMERIC_VALUE_TWO , canvas.getHibLabelAttributes().size()) ;
-		
-		canvas.removeLabel(mockLabel) ;
-		canvas.removeLabel(mockLabel2) ;
-		
-		assertEquals ( "no labels in Canvas" , NUMERIC_VALUE_ZERO , canvas.getHibLabelAttributes().size()) ;
-	}
-	
-	@Test
-	public void testAddLinksToCanvas () throws Exception
-	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
-		final HibLinkAttribute mockLink2 = mockery.mock(HibLinkAttribute.class , "mockLink2") ;
-		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockLink).getCanvas() ; will(returnValue(null));
-			one(mockLink).getCanvas() ; will(returnValue(canvas));
-			one(mockLink).setCanvas(canvas) ;
-			one(mockLink).setCanvas(null) ;
-			
-			one(mockLink2).getCanvas() ; will(returnValue(null));
-			one(mockLink2).getCanvas() ; will(returnValue(canvas));
-			one(mockLink2).setCanvas(canvas) ;
-			one(mockLink2).setCanvas(null) ;
-		}});
-		
-		canvas.addLink(mockLink) ;
-		canvas.addLink(mockLink2) ;
-		
-		assertEquals ( "links in Canvas" , NUMERIC_VALUE_TWO , canvas.getHibLinkAttributes().size()) ;
-		
-		canvas.removeLink(mockLink) ;
-		canvas.removeLink(mockLink2) ;
-		
-		assertEquals ( "no links in Canvas" , NUMERIC_VALUE_ZERO , canvas.getHibLinkAttributes().size()) ;
-	}
-	
-	@Test
-	public void testAddPropertiesToCanvas () throws Exception
-	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
-		final HibProperty mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
-		final HibProperty mockProperty2 = mockery.mock(HibProperty.class , "mockProperty2") ;
-		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		
-		mockery.checking( new Expectations () {{
-			one(mockProperty).getCanvas() ; will(returnValue(null));
-			one(mockProperty).getCanvas() ; will(returnValue(canvas));
-			one(mockProperty).setCanvas(canvas) ;
-			one(mockProperty).setCanvas(null) ;
-			
-			one(mockProperty2).getCanvas() ; will(returnValue(null));
-			one(mockProperty2).getCanvas() ; will(returnValue(canvas));
-			one(mockProperty2).setCanvas(canvas) ;
-			one(mockProperty2).setCanvas(null) ;
-		}});
-		
-		canvas.addProperty(mockProperty) ;
-		canvas.addProperty(mockProperty2) ;
-		
-		assertEquals ( "Properties in Canvas" , NUMERIC_VALUE_TWO , canvas.getProperties().size()) ;
-		
-		canvas.removeProperty(mockProperty) ;
-		canvas.removeProperty(mockProperty2) ;
-		
-		assertEquals ( "no properties in Canvas" , NUMERIC_VALUE_ZERO , canvas.getProperties().size()) ;
-	}
-	
-	@Test
 	public void testEquals () throws Exception 
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
+		final IContext mockContext = mockery.mock(IContext.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
@@ -198,7 +65,7 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
-		final HibContext mockContext = mockery.mock(HibContext.class , "mockContext") ;
+		final IContext mockContext = mockery.mock(IContext.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;

@@ -7,9 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Set;
-
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -53,24 +50,6 @@ public class HibShapeAttributeTest {
 
 	@After
 	public void tearDown() throws Exception {
-	}
-	
-	@Test
-	public void testChangeShapeCanvas () throws Exception
-	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		final Set<HibShapeAttribute> mockShapeSet = mockery.mock( Set.class , "mockShapeSet") ;
-		shape = new HibShapeAttribute () ;
-		
-		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockCanvas).getHibShapeAttributes() ; will(returnValue(mockShapeSet)) ;
-			
-			one(mockShapeSet).add(shape);
-			
-		}});
-				
-		shape.changeCanvas(mockCanvas) ;
-		assertEquals ( "correct Canvas" , mockCanvas , shape.getCanvas()) ;
 	}
 	
 	@Test

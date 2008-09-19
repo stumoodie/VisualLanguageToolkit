@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecorator;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition;
+import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 
 
 /**
@@ -17,14 +17,14 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
 	
      private Long id;
      private HibLinkTerminus hibLinkTerminus;
-     private ArrowheadStyle decoratorType;
+     private LinkEndDecoratorShape decoratorType;
      private int width;
      private int height;
 
     public HibLinkEndDecorator() {
     }
 
-    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, ArrowheadStyle decoratorType, int width, int height ) {
+    public HibLinkEndDecorator(HibLinkTerminus hibLinkTerminus, LinkEndDecoratorShape decoratorType, int width, int height ) {
        this.hibLinkTerminus = hibLinkTerminus;
        this.decoratorType = decoratorType;
        this.width = width;
@@ -50,11 +50,11 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
     public void setHibLinkTerminus(HibLinkTerminus hibLinkTerminus) {
         this.hibLinkTerminus = hibLinkTerminus;
     }
-    public ArrowheadStyle getDecoratorType() {
+    public LinkEndDecoratorShape getDecoratorType() {
         return this.decoratorType;
     }
     
-    public void setDecoratorType(ArrowheadStyle decoratorType) {
+    public void setDecoratorType(LinkEndDecoratorShape decoratorType) {
     	if ( decoratorType == null )
     		throw new IllegalArgumentException ("Decoratot type cannot be null.") ;
         this.decoratorType = decoratorType;
@@ -104,7 +104,7 @@ public class HibLinkEndDecorator  implements ILinkEndDecorator ,Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEndDecoration#getLinkEndDefinition()
 	 */
-	public ILinkEndDefinition getLinkEndDefinition() {
+	public ILinkTerminusDefaults getLinkEndDefinition() {
 		// TODO Auto-generated method stub
 		return null;
 	}

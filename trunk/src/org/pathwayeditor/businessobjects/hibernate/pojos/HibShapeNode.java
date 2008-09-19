@@ -5,41 +5,43 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
  * @author nhanlon
  *
  */
 public class HibShapeNode extends HibCompoundNode implements IShapeNode {
-	
 	private HibShapeAttribute shapeAttribute ;
 	
 	HibShapeNode(){
 		super();
 	}
 	
-	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex){
-		super(parentNode, nodeIndex);
+	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, IShapeObjectType objectType){
+		super(parentNode.getGraph(), parentNode, nodeIndex);
+		HibCanvas hibCanvas = this.getModel().getCanvas(); 
+		this.shapeAttribute = new HibShapeAttribute(hibCanvas, objectType);
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#childShapeIterator()
 	 */
 	public Iterator<IShapeNode> childShapeIterator() {
-		// TODO Auto-generated method stub
+		//TODO:
 		return null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getChildModel()
 	 */
-	public IChildCompoundGraph getChildModel() {
+	public ISubModel getSubCanvas() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -85,14 +87,6 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getParentShape()
-	 */
-	public IShapeNode getParentShape() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#labelIterator()
 	 */
 	public Iterator<ILabelAttribute> labelIterator() {
@@ -111,7 +105,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#sourceLinkIterator()
 	 */
-	public Iterator<ILinkAttribute> sourceLinkIterator() {
+	public Iterator<ILinkEdge> sourceLinkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,7 +113,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#targetLinkIterator()
 	 */
-	public Iterator<ILinkAttribute> targetLinkIterator() {
+	public Iterator<ILinkEdge> targetLinkIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -127,9 +121,17 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getAttribute()
 	 */
-	public IShapeAttribute getAttribute() {
+	public HibShapeAttribute getAttribute() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public HibShapeAttribute getShapeAttribute() {
+		return this.shapeAttribute;
+	}
+
+	public void setShapeAttribute(HibShapeAttribute shapeAttribute) {
+		this.shapeAttribute = shapeAttribute;
 	}
 
 	/* (non-Javadoc)
@@ -164,13 +166,10 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return null;
 	}
 
-	public HibShapeAttribute getShapeAttribute() {
-		return this.shapeAttribute;
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
+	 */
+	public IShapeObjectType getObjectType() {
+		return this.shapeAttribute.getObjectType();
 	}
-
-	public void setShapeAttribute(HibShapeAttribute shapeAttribute) {
-		this.shapeAttribute = shapeAttribute;
-	}
-	
-	
 }

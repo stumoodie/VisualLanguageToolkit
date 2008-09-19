@@ -27,7 +27,7 @@
 		</set>
 
         <joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootObjectNode"
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
 			table="RootObjectNode">
 			<key>
     			<column name="id" not-null="true" unique="true"/>

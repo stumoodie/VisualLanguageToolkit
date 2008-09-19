@@ -122,14 +122,14 @@ public class ILinkAttributeTest {
 	public void testGetLinkSourceDecoration() throws Exception
 	{
 		// TODO
-		linkAttribute.getLinkSourceDecoration() ;
+		linkAttribute.getSourceLinkTerminus() ;
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetLinkTargetDecoration() throws Exception
 	{
 		// TODO
-		linkAttribute.getLinkTargetDecoration() ;
+		linkAttribute.getTargetLinkTerminus() ;
 	}
 	
 	@Test

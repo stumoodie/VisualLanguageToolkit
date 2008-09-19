@@ -4,28 +4,49 @@
 <!-- Generated 04-May-2008 01:27:28 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" table="linkterminus">
-    	<meta attribute="class-code">
-	private static final long serialVersionUID = -4462637156010353035L;
-    	</meta>
         <id name="id" type="java.lang.Long">
             <column name="id" />
             <generator class="native" />
         </id>
         <properties name="xak1linkterminus" unique="true">
         	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
-	   	    	<meta attribute="use-in-equals">true</meta>
             	<column name="linkAttributeId" not-null="true" />
         	</many-to-one>
-        	<property name="hibLinkEndType" type="int">
-	   	    	<meta attribute="use-in-equals">true</meta>
+        	<property name="linkTermType" type="LinkTermType">
             	<column name="link_term_type" not-null="true" />
         	</property>
         </properties>
         <property name="offset" type="short">
             <column name="offset_val" not-null="true" />
         </property>
-        <one-to-one name="decorator" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminusDecorator" cascade="save-update,delete"/>
-        <one-to-one name="linkenddecorators" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator" cascade="save-update,delete"/>
+        <property name="endDecoratorType" type="ArrowHeadStyleType">
+            <column name="end_dec_type" not-null="true" />
+        </property>
+        <property name="endDecWidth" type="int">
+            <column name="end_dec_width" not-null="true" />
+        </property>
+        <property name="endDecHeight" type="int">
+            <column name="end_dec_height" not-null="true" />
+        </property>
+        <property name="terminusDecoratorType" type="PrimitiveShapeType">
+            <column name="term_dec_type" not-null="true" />
+        </property>
+        <property name="termDecRed" type="int">
+            <column name="term_dec_red" not-null="true" />
+        </property>
+        <property name="termDecGreen" type="int">
+            <column name="term_dec_green" not-null="true" />
+        </property>
+        <property name="termDecBlue" type="int">
+            <column name="term_dec_blue" not-null="true" />
+        </property>
+        <property name="termDecEidth" type="int">
+            <column name="term_dec_width" not-null="true" />
+        </property>
+        <property name="termDecHeight" type="int">
+            <column name="term_dec_height" not-null="true" />
+        </property>
+
        	<map name="properties" table="linkterminusproperty" cascade="all,delete-orphan">
            	<key>
                	<column name="link_terminus_id" not-null="true" />

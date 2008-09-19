@@ -1,31 +1,45 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.ILinkEndDefinition.LinkEndType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
 public interface ILinkTerminus {
 
-	/**
-	 * Gets the gap between the Link terminus and the targert.
-	 * @return the gap.
-	 */
-	short getGap();
-	
-	/**
-	 * Sets the gap between the terminus and the target.
-	 * @param newGap the gap. Cannot be less than zero.
-	 */
-	void setGap(short newGap);
-	
-	/**
-	 * Returns the link that linkterminus is connected to.
-	 * @return the link. Cannot be null.
-	 */
 	ILinkAttribute getOwningLink() ;
 	
-	/**
-	 * Gets the type of this Link Terminus.
-	 * @return the end type. Cannot be null.
-	 */
-	LinkEndType getLinkEndType () ;
+	LinkTermType getLinkTermType () ;
+	
+	ILinkTerminusDefinition getDefinition();
+	
+	short getGap();
+	
+	void setGap(short newGap);
+	
+	RGB getTerminusColor () ;
+	void setTerminusColor ( RGB newColor ) ;
+	
+	Size getTerminusSize () ;
+	void setTerminusSize ( Size newSize) ;
+	
+	PrimitiveShapeType getTerminusDecoratorType();
+	void setTerminusDecoratorType(PrimitiveShapeType shapeObjectType);
+	
+	Size getEndSize () ;
+	void setEndSize ( Size size ) ;
+	
+	LinkEndDecoratorShape getEndDecoratorType () ;
 
+	void setEndDecoratorType ( LinkEndDecoratorShape linkEndDecoratorShape  );
+
+	/**
+	 * Identity based on the owningLink and the link end type.
+	 * @param other
+	 * @return
+	 */
+	boolean equals(Object other);
+	
 }

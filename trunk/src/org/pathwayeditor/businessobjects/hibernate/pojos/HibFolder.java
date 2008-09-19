@@ -260,7 +260,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		if (nameMalFormed(name))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		boolean canUseName = true;
-		Set<String> subnames = new HashSet<String>();
+//		Set<String> subnames = new HashSet<String>();
 		for (HibSubFolder f : getSubFolders()) {
 			if (f.getName().equalsIgnoreCase(name)) {
 				canUseName = false;
