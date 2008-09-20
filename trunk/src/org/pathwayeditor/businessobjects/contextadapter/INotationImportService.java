@@ -6,18 +6,7 @@ import java.util.List;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
-public interface IContextAdapterImportService {
-
-	IContext getContext();
-	
-	/**
-	 * Get Service provider which was be used to instantiate this service. 
-	 * This method could be used to get access to other services, which are registered for
-	 * that context. 
-	 * @return An non-null service provider which this service is registered with
-	 */
-	IContextAdapterServiceProvider getServiceProvider();
-
+public interface INotationImportService extends INotationService {
 	String getDisplayName();
 	
 	String getCode();

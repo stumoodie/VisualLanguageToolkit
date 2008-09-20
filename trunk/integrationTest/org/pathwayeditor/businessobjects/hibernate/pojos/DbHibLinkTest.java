@@ -37,7 +37,7 @@ public class DbHibLinkTest extends PojoTester{
 	private static final String LINK_DESCR = "link_descr" ;
 	private static final String LINK_DETAILED_DESCR = "link_detailed_descr" ;
 	private static final int LINK_COLOUR_VALUE = 100 ;
-	private static final int NUMERIC_VALUE_ONE = 1 ;
+//	private static final int NUMERIC_VALUE_ONE = 1 ;
 	private static final int LINK_LINE_WIDTH = 10 ;
 	private static final String LINK_URL = "http://www.HibLink.org" ;
 	
@@ -46,7 +46,7 @@ public class DbHibLinkTest extends PojoTester{
 	private static final String LINK_DESCR_2 = "link_descr2" ;
 	private static final String LINK_DETAILED_DESCR_2 = "link_detailed_descr2" ;
 	private static final int LINK_COLOUR_VALUE_2 = 102 ;
-	private static final int NUMERIC_VALUE_TWO = 2 ;
+//	private static final int NUMERIC_VALUE_TWO = 2 ;
 	private static final int LINK_LINE_WIDTH_2 = 12 ;
 	private static final String LINK_URL_2 = "http://www.HibLink2.org" ;
 	
@@ -164,14 +164,13 @@ public class DbHibLinkTest extends PojoTester{
 	{
 		doSetup() ;
 		
+		startNewTransaction();
 		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
-		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100002'" ) ;
-		HibCanvas dbCanvas2 = (HibCanvas) retreivedCanvas.uniqueResult() ;
-		
-		dbCanvas2.addLink(dbLink) ;
-		
+//		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100002'" ) ;
+//		HibCanvas dbCanvas2 = (HibCanvas) retreivedCanvas.uniqueResult() ;
+				
 		getSession().saveOrUpdate(dbLink) ;
 		getSession().getTransaction().commit() ;
 		

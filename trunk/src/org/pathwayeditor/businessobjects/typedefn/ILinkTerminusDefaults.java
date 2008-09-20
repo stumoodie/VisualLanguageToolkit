@@ -20,7 +20,7 @@ public interface ILinkTerminusDefaults {
 	 * Get the offset value. The default is zero.
 	 * @return
 	 */
-	int getOffset();
+	short getOffset();
 	
 	/**
 	 * Get the property filter to access the properties.
@@ -57,8 +57,6 @@ public interface ILinkTerminusDefaults {
 	 * @return a non-negative integer value.
 	 */
 	Size getEndSize();
-
-	RGB getEndColour();
 
 	IDefaultLabelAttributes getDefaultLabelAttributes();
 	

@@ -31,4 +31,12 @@ public interface IPropertyDefinition {
 	boolean isEditable();
 	
 	IDefaultLabelAttributes getLabelDefaults();
+	
+	IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder);
+
+	/**
+	 * @param propertyBuilder
+	 * @return
+	 */
+	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder);
 }

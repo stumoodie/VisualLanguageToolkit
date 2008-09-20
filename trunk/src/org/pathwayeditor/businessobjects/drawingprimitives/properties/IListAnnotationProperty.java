@@ -1,25 +1,35 @@
+/**
+ * 
+ */
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.List;
 
-public interface INumberAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
+/**
+ * @author smoodie
+ *
+ */
+public interface IListAnnotationProperty {
 	
 	/**
 	 * Get the definition associated with this NumberProperty.
 	 * @return The property definition instance. Cannot be null.
 	 */
-	INumberPropertyDefinition getDefinition();
+	IListPropertyDefinition getDefinition();
 	
 	/**
 	 * Get the numerical value associated with this property.
 	 * @return The property definition instance. Cannot be null.
 	 */
-	BigDecimal getValue();
+	List<String> getValue();
 	
 	
 	/**
 	 * Get the numerical value associated with this property.
 	 */
-	void setNumberValue(BigDecimal newValue);
+	void addValue(String newValue);
+	
+	Iterator<String> getValueIterator();
 	
 }

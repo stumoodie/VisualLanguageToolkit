@@ -3,11 +3,12 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepository;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -17,53 +18,55 @@ import uk.ed.inf.graph.util.IndexCounter;
 public class HibCanvas implements ICanvas , Serializable {
 	private static final long serialVersionUID = 807306412269098190L;
 
+	private static final int DEFAULT_CANVAS_WIDTH = 200;
+	private static final int DEFAULT_CANVAS_HEIGHT = 300;
+	private static final int DEFAULT_BGD_GREEN = 255;
+	private static final int DEFAULT_BGD_BLUE = 255;
+	private static final int DEFAULT_BGD_RED = 255;
+	private static final int DEFAULT_GRID_HEIGHT = 20;
+	private static final int DEFAULT_GRID_WIDTH = 20;
+
 	private Long id;
-	private HibMapDiagram mapDiagram;
-	private HibContext hibContext;
-	private IContext context;
-	private Size gridSize;
+	private IMap map;
+	private HibNotation hibNotation;
+	private INotationSubsystem notation;
+	private Size gridSize = new Size(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
 	private boolean gridEnabled;
 	private boolean snapToGridEnabled;
-	private RGB backgroundColour;
-	private Size canvasSize;
-	private Date created = null ;
-	private Date modified = null ;
+	private RGB backgroundColour = new RGB(DEFAULT_BGD_RED, DEFAULT_BGD_GREEN, DEFAULT_BGD_BLUE);
+	private Size canvasSize = new Size(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+	private Date created = new Date();
+	private Date modified = new Date();
 	private int mapINode;
-	private HibRepository repository ;
+	private IRepository repository ;
 	private HibModel graph ;
 	private IndexCounter creationSerialCounter;
 
 	/**
 	 * Default constructor used by hibernate.
 	 */
-	public HibCanvas() {
+	HibCanvas() {
 	}
 
-	/**
-	 * Constructor to be used by BO facade. This creates a canvas that is owned by a map.
-	 * @param mapDiagram
-	 * @param context
-	 */
-	public HibCanvas(HibMapDiagram mapDiagram, IContext context) {
-		this.mapDiagram = mapDiagram;
-		this.context = context;
-		this.hibContext = null; //FIXME: sort out CA hib mappings
+	public HibCanvas(IMap map, INotationSubsystem notationSubsystem, HibNotation hibNotation) {
+		this.map = map;
+		this.notation = notationSubsystem;
+		this.hibNotation = hibNotation;
 	}
 	
-	public HibCanvas(HibMapDiagram newMap, HibCanvas other) {
-		this.mapDiagram = newMap;
-		this.hibContext = other.hibContext;
+	public HibCanvas(IMap newMap, HibCanvas other) {
+		this.repository = newMap.getRepository();
+		this.mapINode = newMap.getINode();
+		this.map = newMap;
+		this.hibNotation = other.hibNotation;
 		this.gridSize = other.getGridSize();
 		this.gridEnabled = other.gridEnabled;
 		this.snapToGridEnabled = other.snapToGridEnabled;
 		this.backgroundColour = other.getBackgroundColour();
 		this.canvasSize = other.getCanvasSize();
-		this.repository = other.repository ;
 		this.graph = new HibModel(this, other.getGraph());
-		this.created = new Date();
-		this.modified= new Date();
-		
-		
+		this.notation = other.notation;
+		this.creationSerialCounter = new IndexCounter();
 	}
 
 	public Long getId() {
@@ -75,20 +78,20 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.id = id;
 	}
 
-	public HibMapDiagram getMapDiagram() {
-		return this.mapDiagram;
+	public IMap getMapDiagram() {
+		return this.map;
 	}
 
-	public void setMapDiagram(HibMapDiagram hibMapDiagram) {
-		this.mapDiagram = hibMapDiagram;
+	public void setMapDiagram(IMap hibMapDiagram) {
+		this.map = hibMapDiagram;
 	}
 
-	public IContext getContext() {
-		return this.context;
+	public INotationSubsystem getNotationSubsystem() {
+		return this.notation;
 	}
 
-	public void setContext(HibContext hibContext) {
-		this.hibContext = hibContext;
+	public void setContext(HibNotation hibNotation) {
+		this.hibNotation = hibNotation;
 	}
 	
 	public Date getCreated() {
@@ -275,11 +278,11 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.mapINode = mapINode;
 	}
 
-	public HibRepository getRepository() {
+	public IRepository getRepository() {
 		return this.repository;
 	}
 
-	public void setRepository(HibRepository repository) {
+	public void setRepository(IRepository repository) {
 		this.repository = repository;
 	}
 

@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.contextadapter;
 
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 
 /**
  * Encapsulates information about a single rule validation problem.
@@ -14,11 +14,11 @@ public interface IValidationReportItem {
 	enum Severity{ERROR, WARNING};
 	
 	/**
-	 * Gets the map object that causes the validation error or warning.
+	 * Gets the object that causes the validation error or warning.
 	 * Can return null if no single identifiable map object is responsible for the validation problem.
-	 * @return An {@link IMapObject}, or null.
+	 * @return the object causing the validation error, or null if there is none or more than one.
 	 */
-	ICanvasAttribute getMapObject();
+	IDrawingElement getInvalidObject();
 	
 	
 	/**

@@ -4,9 +4,7 @@
 package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Set;
+import static org.junit.Assert.fail;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -21,10 +19,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
  * @author ntsorman
@@ -64,7 +62,8 @@ public class IShapeAttributeTest {
 	@Before
 	public void setUp() throws Exception {
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		final HibShapeAttribute tempShapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL) ;
+		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
+		final HibShapeAttribute tempShapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType) ;
 		
 		tempShapeAttribute.setName(SHAPE_NAME) ;
 		tempShapeAttribute.setFillBlue(COLOR_VALUE) ;
@@ -313,19 +312,6 @@ public class IShapeAttributeTest {
 		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , shapeAttribute.getLineStyle() );
 	}	
 		
-	@Test
-	public void testHasProperty () throws Exception 
-	{
-		// TODO
-		shapeAttribute.hasProperty("a property") ;
-	}
-	
-	@Test
-	public void testGetProperty () throws Exception 
-	{
-		assertEquals ( "get property" ,mockProperty , shapeAttribute.getProperty(PROPERTY_ID ) ) ;
-	}
-	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetFirstObject() {
 		shapeAttribute.getFirstObject() ;
@@ -349,8 +335,9 @@ public class IShapeAttributeTest {
 	@Test
 	public void testGetPropertyIterator () throws Exception 
 	{
-		Set<IAnnotationProperty> properties = shapeAttribute.propertyIterator() ;
-		assertTrue ( "containsProperty" , properties.contains(mockProperty)) ;
-		assertEquals ( "number of properties" , NUMERIC_VALUE_ONE , properties.size() );
+		fail("Implement this properly");
+//		Iterator<IAnnotationProperty> properties = shapeAttribute.propertyIterator() ;
+//		assertTrue ( "containsProperty" , properties.contains(mockProperty)) ;
+//		assertEquals ( "number of properties" , NUMERIC_VALUE_ONE , properties.size() );
 	}
 }

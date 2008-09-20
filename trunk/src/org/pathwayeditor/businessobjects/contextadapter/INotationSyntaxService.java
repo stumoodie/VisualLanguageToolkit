@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.contextadapter;
 
-import java.util.Set;
+import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -24,35 +24,19 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * @author smoodie
  *
  */
-public interface IContextAdapterSyntaxService {
+public interface INotationSyntaxService extends INotationService {
 
 	/**
-	 * The context (or notation) that this service defines the syntax of.
-	 * @return A context instance which will not be null.
+	 * Returns an iterator of shape object types defined by this syntax service.
+	 * @return An iterator of shape object types cannot be null.
 	 */
-	IContext getContext();
-	
-	/**
-	 * Get Service provider which was be used to instantiate this service. 
-	 * This method could be used to get access to other services, which are registered for
-	 * that context. 
-	 * @return An non-null service provider which this service is registered with
-	 */
-	IContextAdapterServiceProvider getServiceProvider();
+	Iterator<IShapeObjectType> shapeTypeIterator();
 
 	/**
-	 * Returns a set of shape object types defined by this syntax service. The set should be a copy and can be
-	 * freely modified and manipulated.
-	 * @return A set of shape types or an empty set if there are none.
+	 * Returns an iterator of link object types defined by this syntax service.
+	 * @return An iterator of link object types cannot be null.
 	 */
-	Set<IShapeObjectType> getShapeTypes();
-
-	/**
-	 * Returns a set of link object types defined by this syntax service. The set should be a copy and can be
-	 * freely modified and manipulated.
-	 * @return A set of link object types or an empty set if there are none.
-	 */
-	Set<ILinkObjectType> getLinkTypes();
+	Iterator<ILinkObjectType> linkTypeIterator();
 
 	/**
 	 * Returns an object type defining the map attribute defaults and syntax rules for shapes that can be

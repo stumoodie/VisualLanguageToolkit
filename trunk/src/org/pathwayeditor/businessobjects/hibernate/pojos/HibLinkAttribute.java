@@ -5,22 +5,25 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
-import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 /**
@@ -30,46 +33,68 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private static final long serialVersionUID = 8124494867402957446L;
 
 	private Long id;
-	private HibCanvas hibCanvas;
+	private ICanvas hibCanvas;
 	private int creationSerial;
 	private HibObjectType hibObjectType;
+	private ILinkObjectType objectType;
 	private String name;
 	private String description;
 	private String detailedDescription;
 	private String url;
-	private int lineRed;
-	private int lineGreen;
-	private int lineBlue;
+	private RGB lineColour;
 	private LineStyle lineStyle;
 	private int lineWidth;
 	private ConnectionRouter routerType;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
-	private Set<HibLinkTerminus> linkTermini = new HashSet<HibLinkTerminus>(0);
-	private HibLinkEdge edge ;
+	private HibLinkTerminus sourceTerminus;
+	private HibLinkTerminus targetTerminus;
+	private ILinkEdge edge ;
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
+	private IPropertyBuilder propertyBuilder;
 
-	public HibLinkAttribute() {
+	HibLinkAttribute() {
 	}
 
-	public HibLinkAttribute(HibCanvas hibCanvas, int link_index,	HibObjectType hibObjectType) {
+	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, ILinkEdge linkEdge, ILinkObjectType objectType,
+								HibObjectType hibObjectType) {
 		this.hibCanvas = hibCanvas;
+		this.propertyBuilder = new PropertyBuilder(hibCanvas);
 		this.creationSerial = link_index;
+		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
+		this.edge = linkEdge;
+		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
+		this.targetTerminus = new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
+		addDefaults(objectType.getDefaultLinkAttributes());
+	}
+
+	/**
+	 * @param defaultLinkAttributes
+	 */
+	private void addDefaults(IDefaultLinkAttributes defaultLinkAttributes) {
+		this.lineColour = defaultLinkAttributes.getLineColour();
+		this.lineStyle = defaultLinkAttributes.getLineStyle();
+		this.lineWidth = defaultLinkAttributes.getLineWidth();
+		this.name = defaultLinkAttributes.getName();
+		this.description = defaultLinkAttributes.getDescription();
+		this.detailedDescription = defaultLinkAttributes.getDetailedDescription();
+		this.url = defaultLinkAttributes.getUrl();
+		this.routerType = defaultLinkAttributes.getRouter();
+		for(IPropertyDefinition propDefn : defaultLinkAttributes.getPropertyDefinitionFilter().getAllProperties()){
+			this.hibLinkProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
+		}
 	}
 
 	public Long getId() {
 		return this.id;
 	}
 	
-	public HibLinkEdge getEdge() {
-		return this.edge;
-	}
-
 	public void setEdge(HibLinkEdge edge) {
 		this.edge = edge;
 	}
 
-	public void setId(Long id) {
+	@SuppressWarnings("unused")
+	private void setId(Long id) {
 		this.id = id;
 	}
 
@@ -78,6 +103,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public void setCanvas(HibCanvas hibCanvas) {
+		this.propertyBuilder = new PropertyBuilder(hibCanvas);
 		this.hibCanvas = hibCanvas;
 	}
 
@@ -90,8 +116,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public ILinkObjectType getObjectType() {
-		// TODO
-		throw new UnsupportedOperationException () ;
+		return this.objectType;
 	}
 	
 	public HibObjectType getHibObjectType () {
@@ -102,8 +127,8 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.hibObjectType = hibObjectType ;
 	}
 
-	public void setObjectType(HibObjectType hibObjectType) {
-		this.hibObjectType = hibObjectType;
+	public void setObjectType(ILinkObjectType objectType) {
+		this.objectType = objectType;
 	}
 
 	public String getName() {
@@ -135,8 +160,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public void setUrl(String url) {
-		if ( url == null )
-			throw new IllegalArgumentException ( "Url cannot be null.") ;
 		this.url = url;
 	}
 
@@ -149,31 +172,31 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	public int getLineRed() {
-		return this.lineRed;
+		return this.lineColour.getRed();
 	}
 
 	public void setLineRed(int lineRed) {
-		this.lineRed = lineRed;
+		this.lineColour = this.lineColour.newRed(lineRed);
 	}
 
-	public Map<String, HibProperty> getHibLinkProperties() {
+	public Map<String, ? extends IAnnotationProperty> getHibLinkProperties() {
 		return this.hibLinkProperties;
 	}
 
 	public int getLineGreen() {
-		return this.lineGreen;
+		return this.lineColour.getGreen();
 	}
 
 	public void setLineGreen(int lineGreen) {
-		this.lineGreen = lineGreen;
+		this.lineColour = this.lineColour.newGreen(lineGreen);
 	}
 
 	public int getLineBlue() {
-		return this.lineBlue;
+		return this.lineColour.getBlue();
 	}
 
 	public void setLineBlue(int lineBlue) {
-		this.lineBlue = lineBlue;
+		this.lineColour = this.lineColour.newBlue(lineBlue);
 	}
 
 	public LineStyle getLineStyle() {
@@ -202,24 +225,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.routerType = routerType;
 	}
 
-	public List<HibBendPoint> getBendPoints() {
+	List<HibBendPoint> getBendPoints() {
 		return this.hibBendPoints;
 	}
 
-	public void setBendPoints(List<HibBendPoint> hibBendPoints) {
+	void setBendPoints(List<HibBendPoint> hibBendPoints) {
 		this.hibBendPoints = hibBendPoints;
 	}
 
-	public Set<HibLinkTerminus> getLinkTermini() {
-		return this.linkTermini;
-	}
-
-	public void setLinkTermini(Set<HibLinkTerminus> linkTermini) {
-		this.linkTermini = linkTermini;
-	}
-
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -249,74 +262,22 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		return true;
 	}
 
-	public void addLinkProperty ( String name , HibProperty toAdd ) 
-	{
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		this.hibLinkProperties.put(name ,toAdd);
-	}
-	
-	void removeLinkProperty(String toRemove) {
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		HibProperty propertyToRemove = hibLinkProperties.get(toRemove) ;
-		if  (propertyToRemove == null)
-			throw new IllegalStateException("property cannot be null");
-		
-		this.hibLinkProperties.remove(toRemove) ;
-	}
-	
-	void addBendPoint ( HibBendPoint toAdd)
-	{
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		HibLinkAttribute oldLink = (HibLinkAttribute) toAdd.getOwningLink() ;
-		if (oldLink != null) {
-			oldLink.getLinkProperties().remove(toAdd);
-		}
-		this.hibBendPoints.add(toAdd);
-		toAdd.setOwningLink(this);		
-	}
-	
-	void removeBendPoints ( HibBendPoint toRemove)
-	{
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		HibBendPoint bendpointToRemove = hibBendPoints.get(hibBendPoints.indexOf(toRemove)) ;
-		if  (bendpointToRemove == null)
-			throw new IllegalStateException("property cannot be null");
-		if (bendpointToRemove.getOwningLink() != this)
-			throw new IllegalArgumentException(
-					"property must belong to this canvas");	
-		
-		this.hibLinkProperties.remove(toRemove) ;
-		bendpointToRemove.setOwningLink(null);		
-	}
-	
-	void addLinkTermini ( HibLinkTerminus toAdd)
-	{
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		HibLinkAttribute oldLink = toAdd.getLink() ;
-		if (oldLink != null) {
-			oldLink.getLinkProperties().remove(toAdd);
-		}
-		this.linkTermini.add(toAdd);
-		toAdd.setLink(this);		
-	}
-	
-	void removeLinkTermini ( HibLinkTerminus toRemove)
-	{
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		if (toRemove.getLink() != this)
-			throw new IllegalArgumentException(
-					"property must belong to this canvas");	
-		
-		this.linkTermini.remove(toRemove) ;
-		toRemove.setLink(null);		
-	}
-	
+//	void addLinkProperty ( String name , HibProperty toAdd ) 
+//	{
+//		if (toAdd == null)
+//			throw new IllegalArgumentException("property cannot be null");
+//		this.hibLinkProperties.put(name ,toAdd);
+//	}
+//	
+//	void removeLinkProperty(String toRemove) {
+//		if (toRemove == null)
+//			throw new IllegalArgumentException("id cannot be null");
+//		HibProperty propertyToRemove = hibLinkProperties.get(toRemove) ;
+//		if  (propertyToRemove == null)
+//			throw new IllegalStateException("property cannot be null");
+//		
+//		this.hibLinkProperties.remove(toRemove) ;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#addBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
@@ -330,7 +291,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		}
 		this.hibBendPoints.add((HibBendPoint) newBendPoint);
 		((HibBendPoint)newBendPoint).setOwningLink(this);
-		
 	}
 
 	/* (non-Javadoc)
@@ -391,42 +351,9 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getFirstObject()
-	 */
-	public IZOrderedObject getFirstObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getLastObject()
-	 */
-	public IZOrderedObject getLastObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getNextObject()
-	 */
-	public IZOrderedObject getNextObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getPreviousObject()
-	 */
-	public IZOrderedObject getPreviousObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		// TODO test this.
 		return this.hibLinkProperties.get(propDefn.getName());
 	}
 
@@ -441,15 +368,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
 	public Iterator<IAnnotationProperty> propertyIterator() {
-		//TODO:
-		return null;
+		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibLinkProperties.values().iterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLineColor()
 	 */
 	public RGB getLineColor() {
-		return new RGB (this.lineRed , this.lineGreen , this.lineBlue );
+		return this.lineColour;
 	}
 
 	/* (non-Javadoc)
@@ -459,9 +385,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		if ( newColor == null)
 			throw new IllegalArgumentException () ;
 			
-		this.lineBlue = newColor.getBlue() ;
-		this.lineRed = newColor.getRed() ;
-		this.lineGreen = newColor.getGreen() ;
+		this.lineColour = newColor;
 	}
 
 	/* (non-Javadoc)
@@ -474,31 +398,28 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkEdge()
 	 */
-	public HibLinkEdge getLinkEdge() {
-		return this.getEdge();
+	public ILinkEdge getLinkEdge() {
+		return this.edge;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.hibLinkProperties.containsKey(property.getName());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
 	 */
 	public ILinkTerminus getSourceLinkTerminus() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.sourceTerminus;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
 	 */
 	public ILinkTerminus getTargetLinkTerminus() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.targetTerminus;
 	}
 }

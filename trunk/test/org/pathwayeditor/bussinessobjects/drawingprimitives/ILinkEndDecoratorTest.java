@@ -38,7 +38,7 @@ public class ILinkEndDecoratorTest {
 	
 	private static final LinkEndDecoratorShape OTHER_STYLE = LinkEndDecoratorShape.ARROW ;
 	
-	private ILinkEndDecorator linkEndDecorator ;
+//	private ILinkEndDecorator linkEndDecorator ;
 	private HibLinkTerminus mockLinkTerminus ;
 	
 	@Before

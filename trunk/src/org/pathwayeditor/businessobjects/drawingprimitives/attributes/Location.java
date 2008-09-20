@@ -44,4 +44,22 @@ public final class Location {
 			return false;
 		return true;
 	}
+
+	/**
+	 * Creates a new Location with a new x set and the y position of this location
+	 * @param position
+	 * @return
+	 */
+	public Location newX(int x) {
+		return new Location(x, this.y);
+	}
+
+	/**
+	 * Creates a new Location with a new x set and the y position of this location
+	 * @param position
+	 * @return
+	 */
+	public Location newY(int y) {
+		return new Location(this.x, y);
+	}
 }

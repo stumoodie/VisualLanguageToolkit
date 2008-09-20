@@ -24,10 +24,11 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		super();
 	}
 	
-	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, IShapeObjectType objectType){
+	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, IShapeObjectType objectType,	HibObjectType hibObjectType){
 		super(parentNode.getGraph(), parentNode, nodeIndex);
 		HibCanvas hibCanvas = this.getModel().getCanvas(); 
-		this.shapeAttribute = new HibShapeAttribute(hibCanvas, objectType);
+		int nextCreationSerial = hibCanvas.getAttributeSerialCounter().nextIndex();
+		this.shapeAttribute = new HibShapeAttribute(hibCanvas, nextCreationSerial, objectType, hibObjectType);
 	}
 	
 	/* (non-Javadoc)

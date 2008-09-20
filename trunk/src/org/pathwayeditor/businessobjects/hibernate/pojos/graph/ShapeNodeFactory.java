@@ -4,8 +4,10 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -18,6 +20,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
  *
  */
 public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeNodeFactory {
+	private final IHibNotationFactory hibNotationFactory;
 	private final HibCompoundNode parent;
 	private IShapeObjectType shapeObjectType;
 	
@@ -26,6 +29,7 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 */
 	public ShapeNodeFactory(HibCompoundNode parent) {
 		super();
+		this.hibNotationFactory = parent.getModel().getHibNotationFactory();
 		this.parent = parent;
 		this.shapeObjectType = null;
 	}
@@ -35,7 +39,8 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 */
 	@Override
 	protected BaseCompoundNode newNode(BaseCompoundNode parent, int nodeIndex) {
-		return new HibShapeNode((HibCompoundNode)parent, nodeIndex, shapeObjectType);
+		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(shapeObjectType);
+		return new HibShapeNode((HibCompoundNode)parent, nodeIndex, shapeObjectType, hibObjectType);
 	}
 
 	/* (non-Javadoc)

@@ -5,9 +5,6 @@ package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -17,11 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEndDecorator;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminusDecorator;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 
 /**
  * @author ntsorman
@@ -33,7 +28,7 @@ public class ILinkTerminusTest {
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
-	private static final int LINK_END_TYPE = 1 ;
+	private static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
 	private static final short OFFSET = 1 ;
 	private static final short GAP = 5 ;
 	private static final short FALSE_GAP = -5 ;
@@ -51,13 +46,11 @@ public class ILinkTerminusTest {
 	public void testGetGap () throws Exception 
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
-		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+//		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
+//		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
+//		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE) ;
 		
 		assertEquals ( "get gap" , OFFSET , linkTerminus.getGap()) ;
 	}
@@ -68,13 +61,11 @@ public class ILinkTerminusTest {
 	public void testSetGap () throws Exception 
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
-		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+//		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
+//		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
+//		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		final ILinkTerminus linkTerminus = new HibLinkTerminus(mockHibLink, LINK_END_TYPE);
 		
 		linkTerminus.setGap(GAP) ; 
 		
@@ -89,13 +80,11 @@ public class ILinkTerminusTest {
 	public void testGetOwningLink () throws Exception
 	{
 		final HibLinkAttribute mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
-		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
-		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
-		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
+//		final HibLinkTerminusDecorator mockTerminusDecorator = mockery.mock(HibLinkTerminusDecorator.class , "mockTerminusDecorator") ;
+//		final HibLinkEndDecorator mockEndDecorator = mockery.mock(HibLinkEndDecorator.class , "mockEndDecorator") ;
+//		final Map<String,HibProperty> properties = new HashMap <String,HibProperty> (0) ;
 			
-		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, OFFSET, 
-												mockTerminusDecorator, mockEndDecorator, 
-												properties) ;
+		final ILinkTerminus linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE);
 		
 		assertEquals ( "owning Link" , mockHibLink , linkTerminus.getOwningLink() ) ;
 	}

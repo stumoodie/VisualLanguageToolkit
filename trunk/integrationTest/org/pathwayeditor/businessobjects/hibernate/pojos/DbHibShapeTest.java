@@ -6,8 +6,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.CompositeDataSet;
@@ -17,15 +15,22 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
  * @author ntsorman
  *
  */
+@RunWith(JMock.class)
 public class DbHibShapeTest extends PojoTester{
 	
 
@@ -44,7 +49,7 @@ public class DbHibShapeTest extends PojoTester{
 	private static final String DETAILED_DESCR = "detailed descr";
 	private static final int NUMERIC_VALUE_ONE = 1;
 	private static final LineStyle SOLID = LineStyle.SOLID;
-	private static final int CREATION_SERIAL_2 = 654321 ;
+//	private static final int CREATION_SERIAL_2 = 654321 ;
 	private static final String SHAPE_NAME_2 = "shapeName2" ;
 	private static final int COLOR_VALUE_2 = 102 ;
 	private static final int SIZE_VALUE_2 = 52 ;
@@ -53,9 +58,10 @@ public class DbHibShapeTest extends PojoTester{
 	private static final String SHAPE_DESCR_2 = "descr2";
 	private static final String DETAILED_DESCR_2 = "detailed descr2";
 	private static final int NUMERIC_VALUE_TWO = 2;
-	private static final int EXPECTED_NODE_VALUE = 2;
+//	private static final int EXPECTED_NODE_VALUE = 2;
 //	private static final int NODE_IDX_IDX = 110000;
 	
+	private final Mockery mockery = new JUnit4Mockery();
 	
 	@Test
 	public void testLoadedShape () throws Exception
@@ -91,6 +97,12 @@ public class DbHibShapeTest extends PojoTester{
 	@Test
 	public void testAddShape () throws Exception 
 	{
+		final IShapeObjectType mockShapeObjectType = this.mockery.mock(IShapeObjectType.class, "mockShapeObjectType");
+		
+		this.mockery.checking(new Expectations(){{
+			
+		}});
+		
 		doSetup () ;
 		
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'") ;
@@ -101,7 +113,7 @@ public class DbHibShapeTest extends PojoTester{
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 		HibShapeNode hibNode = (HibShapeNode) retreivedCompoundNode.uniqueResult() ;
 
-		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL_2) ;
+		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL, mockShapeObjectType) ;
 		shapeToSave.setShapeNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
 		shapeToSave.setDescription(SHAPE_DESCR_2) ;
@@ -122,7 +134,6 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setWidth(SIZE_VALUE_2) ;
 		shapeToSave.setUrl(URL_VALUE_2) ;
 		
-		shapeToSave.changeCanvas(dbCanvas) ;
 		shapeToSave.setHibObjectType(objectType) ;
 		
 		getSession().save(hibNode);
@@ -146,7 +157,7 @@ public class DbHibShapeTest extends PojoTester{
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));
 		}
-		
+		this.mockery.assertIsSatisfied();
 	}
 	
 	@Test
@@ -188,42 +199,7 @@ public class DbHibShapeTest extends PojoTester{
 		Query retreivedCanvas = getSession().createQuery("From HibCanvas where id='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		
-		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> (dbCanvas.getHibLinkAttributes()) ;
-		
-		for ( int a = 0 ; a < links.size() ; a++ )
-		{
-			HibLinkAttribute tempLink = (HibLinkAttribute) links.get(a) ;
-			
-			dbCanvas.removeLink(tempLink) ;
-			
-			getSession().delete(tempLink) ;
-		}
-		
-		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> (dbCanvas.getHibLabelAttributes()) ;
-		
-		for ( int a = 0 ; a < labels.size() ; a++ )
-		{
-			HibLabelAttribute tempLabel = (HibLabelAttribute) labels.get(a) ;
-			
-			dbCanvas.removeLabel(tempLabel) ;
-			
-			getSession().delete(tempLabel) ;
-		}
-		
-		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> (dbCanvas.getHibShapeAttributes()) ;
-		
-		for ( int a = 0 ; a < shapes.size() ; a++ )
-		{
-			HibShapeAttribute tempShape = (HibShapeAttribute) shapes.get(a) ;
-			
-			dbCanvas.removeShape(tempShape) ;
-			
-			getSession().delete(tempShape) ;
-		}
-		
 		getSession().delete(dbCanvas) ;
-		getSession().flush();
 		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(

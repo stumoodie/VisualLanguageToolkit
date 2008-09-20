@@ -4,8 +4,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.CompositeDataSet;
@@ -32,50 +30,16 @@ public class DbSimpleCanvasTest extends PojoTester{
 	public void testDeleteSimpleCanvasAndShape () throws Exception
 	{
 		doSetup () ;
-		
+
+		startNewTransaction();
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id = '100001'"  ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 
-		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getHibLinkAttributes()) ;
-		
-		for ( int a = 0 ; a < links.size() ; a++ )
-		{
-			HibLinkAttribute tempLink = (HibLinkAttribute) links.get(a) ;
-			
-			dbCanvas.removeLink(tempLink) ;
-			
-			getSession().delete(tempLink) ;
-		}
-		
-		
-		List<HibShapeAttribute> shapes = new ArrayList<HibShapeAttribute> ( dbCanvas.getHibShapeAttributes()) ;
-		
-		for ( int a = 0 ; a < shapes.size() ; a++ )
-		{
-			HibShapeAttribute tempShape = (HibShapeAttribute) shapes.get(a) ;
-			
-			dbCanvas.removeShape(tempShape) ;
-			
-			getSession().delete(tempShape) ;
-		}
-		
-		List<HibLabelAttribute> labels = new ArrayList<HibLabelAttribute> ( dbCanvas.getHibLabelAttributes()) ;
-		
-		for ( int a = 0 ; a < labels.size() ; a++ )
-		{
-			HibLabelAttribute tempLabel = (HibLabelAttribute) labels.get(a) ;
-			
-			dbCanvas.removeLabel(tempLabel) ;
-			
-			getSession().delete(tempLabel) ;
-		}
-		
-		dbCanvas.setMapDiagram(null) ;
+//		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getHibLinkAttributes()) ;
 		
 		getSession().delete(dbCanvas) ;
 		getSession().getTransaction().commit() ;
-	
 	
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_CANVAS_DATA));

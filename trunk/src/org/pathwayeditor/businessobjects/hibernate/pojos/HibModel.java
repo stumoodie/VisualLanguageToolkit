@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CanvasLinkEdgeFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.GraphModelState;
@@ -34,24 +35,23 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private HibRootNode rootNode;
 	private IndexCounter nodeCntr = new IndexCounter();
 	private IndexCounter edgeCntr = new IndexCounter();
-	private HibCanvas canvas ;
+	private HibCanvas canvas;
+	private IHibNotationFactory hibNotationFactory;
 	
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());
 	}
 	
-	public HibModel(HibCanvas newCanvas, IRootObjectType rootObjectType) {
+	public HibModel(HibCanvas newCanvas, IRootObjectType rootObjectType, IHibNotationFactory hibNotationFactory) {
 		this();
 		this.rootNode = new HibRootNode(this, nodeCntr.getLastIndex(), rootObjectType);
 		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 		this.canvas = newCanvas;
+		this.hibNotationFactory = hibNotationFactory;
 	}
 	
 	public HibModel(HibCanvas newCanvas, HibModel otherModel){
 		super(new CompoundGraphCopyBuilder(), otherModel);
-		IRootObjectType otherRootObjectType = otherModel.getRootNode().getObjectType();
-		this.rootNode = new HibRootNode(this, nodeCntr.getLastIndex(), otherRootObjectType);
-		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 		this.canvas = newCanvas;
 	}
 	
@@ -91,7 +91,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 
 	@Override
 	public CanvasLinkEdgeFactory edgeFactory() {
-		return new CanvasLinkEdgeFactory(this);
+		return new CanvasLinkEdgeFactory(this, this.hibNotationFactory);
 	}
 
 	@Override
@@ -162,9 +162,10 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#createCopyOfRootNode(int, uk.ed.inf.graph.compound.base.BaseCompoundNode)
 	 */
 	@Override
-	protected void createCopyOfRootNode(int newIndexValue,
-			BaseCompoundNode otherRootNode) {
-		// do nothing as it is already created.
+	protected void createCopyOfRootNode(int newIndexValue, BaseCompoundNode otherRootNode) {
+		HibRootNode otherHibRootNode = (HibRootNode)otherRootNode;
+		this.rootNode = new HibRootNode(this, newIndexValue, otherHibRootNode.getObjectType());
+		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 	}
 
 	/* (non-Javadoc)
@@ -187,7 +188,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#linkEdgeFactory()
 	 */
 	public ILinkEdgeFactory linkEdgeFactory() {
-		return new CanvasLinkEdgeFactory(this);
+		return new CanvasLinkEdgeFactory(this, this.hibNotationFactory);
 	}
 
 	/* (non-Javadoc)
@@ -209,5 +210,19 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 */
 	public Iterator<ILinkEdge> linkEdgeIterator() {
 		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.edgeIterator());
+	}
+
+	/**
+	 * @return the hibNotationFactory
+	 */
+	public IHibNotationFactory getHibNotationFactory() {
+		return this.hibNotationFactory;
+	}
+
+	/**
+	 * @param hibNotationFactory the hibNotationFactory to set
+	 */
+	public void setHibNotationFactory(IHibNotationFactory hibNotationFactory) {
+		this.hibNotationFactory = hibNotationFactory;
 	}
 }

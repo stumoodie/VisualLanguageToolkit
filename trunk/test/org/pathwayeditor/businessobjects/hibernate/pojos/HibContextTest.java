@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibContext;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 
 /**
  * @author ntsorman
@@ -23,7 +23,7 @@ public class HibContextTest {
 //		 setImposteriser(ClassImposteriser.INSTANCE);
 //	}};
 	
-	private HibContext context ;
+	private HibNotation context ;
 	
 	private static final String GLOBAL_ID = "globalId" ;
 	private static final String CONTEXT_NAME = "name" ;
@@ -37,7 +37,7 @@ public class HibContextTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		context = new HibContext (GLOBAL_ID, CONTEXT_NAME, MAJOR_VERSION,MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
+		context = new HibNotation (GLOBAL_ID, CONTEXT_NAME, MAJOR_VERSION,MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
 	}
 
 	@After

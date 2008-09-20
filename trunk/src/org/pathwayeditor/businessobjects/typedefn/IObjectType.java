@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
 
 /**
  * @author smoodie
@@ -8,7 +8,7 @@ import org.pathwayeditor.businessobjects.contextadapter.IContext;
  */
 public interface IObjectType extends Comparable<IObjectType> {
 
-	IContext getDefiningContext();
+	INotationSyntaxService getDefiningContext();
 	
 	String getName();
 

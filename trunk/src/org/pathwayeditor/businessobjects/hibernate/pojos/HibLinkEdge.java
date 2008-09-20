@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
@@ -15,16 +16,20 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private HibShapeNode outNode;
 	private HibShapeNode inNode;
 	private HibSubModel owningChildGraph;
-	private HibLinkAttribute attribute ;
+	private HibLinkAttribute attribute;
 	
 	HibLinkEdge() {
 		super();
 	}
 	
-	public HibLinkEdge(HibSubModel child, int edgeIndex, HibShapeNode outNode, HibShapeNode inNode) {
+	public HibLinkEdge(HibSubModel child, int edgeIndex, HibShapeNode outNode, HibShapeNode inNode,
+						ILinkObjectType objectType, HibObjectType hibObjectType) {
 		super();
 		this.graph = child.getSuperGraph();
 		this.owningChildGraph = child;
+		HibCanvas hibCanvas = this.graph.getCanvas();
+		this.attribute = new HibLinkAttribute(hibCanvas, hibCanvas.getAttributeSerialCounter().nextIndex(),
+											this, objectType, hibObjectType);
 		this.index = edgeIndex;
 		this.outNode = outNode;
 		this.inNode = inNode;

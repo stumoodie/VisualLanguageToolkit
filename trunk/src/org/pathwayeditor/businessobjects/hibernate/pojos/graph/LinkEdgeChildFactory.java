@@ -5,8 +5,10 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -26,6 +28,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	private HibShapeNode outNode;
 	private HibShapeNode inNode;
 	private ILinkObjectType objectType;
+	private IHibNotationFactory hibNotationFactory;
 	
 	/**
 	 * @param parentNode
@@ -33,6 +36,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	public LinkEdgeChildFactory(HibSubModel subCanvas) {
 		super();
 		this.subCanvas = subCanvas;
+		this.hibNotationFactory = subCanvas.getModel().getHibNotationFactory();
 		this.objectType = null;
 	}
 
@@ -42,8 +46,9 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	@Override
 	protected BaseCompoundEdge newEdge(BaseChildCompoundGraph owningChildGraph,
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
+		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
 		return new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex,
-					(HibShapeNode)outNode, (HibShapeNode)inNode);
+					(HibShapeNode)outNode, (HibShapeNode)inNode, this.objectType, hibObjectType);
 	}
 
 	/* (non-Javadoc)

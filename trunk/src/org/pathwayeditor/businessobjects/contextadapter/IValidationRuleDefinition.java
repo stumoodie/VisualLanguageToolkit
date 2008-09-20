@@ -7,21 +7,17 @@ package org.pathwayeditor.businessobjects.contextadapter;
  *
  */
 public interface IValidationRuleDefinition {
-	 /** <em>Mandatory</em> means the rule must be run in a validation step in order to build a domain object model.
-	 *  Mandatory rules always generate validation errors on failure.<p>
-	 *  <em>Optional</em> rules can be enabled or disabled by clients; if enabled they will still generate validation errors on failure.
-	 *  Rules of type <em>Guideline</em> are optional and generate validation warnings or  error as configured by a client.
+	 /** <em>Mandatory</em> means the rule must be satisfied and it will always generate validation errors on failure.<p>
+	 *  <em>Optional</em> is a rule can be ignored, set to a warning or raised as an error.
 	 */
 	public enum RuleLevel {
-          OPTIONAL, MANDATORY, GUIDELINE
+          OPTIONAL, MANDATORY
+	}
+	public enum RuleEnforcement {
+		ERROR, WARNING, IGNORE
 	}
 
-
-	/**
-	 * Returns the context to which this rule applies
-	 * @An {@link IContext} object. Must not return null
-	 */
-	IContext getContext();
+	INotationValidationService getValidationService();
 	/**
 	 * 
 	 * @return A unique numerical identifier for this validation rule
@@ -49,14 +45,31 @@ public interface IValidationRuleDefinition {
 	String getDetailedDescription();
 	
 	/**
-	 * Returns a string representing the category of the rule.<br>
+	 * Returns a string representing the category of the rule. The category is defined by the rule and does
+	 * not comply with a controlled vocabulary. It is essentially a way of categorising the type of rule, such as
+	 * "Syntactic", "Semantic" etc.   
 	 * @return A <code>String</code>.
 	 */
 	String getRuleCategory();
 
 	
 	/**
-	 * Provides information as to whether the rule is <em>mandatory</em>, <em>optional</em> or a <em>guideline.</em><p>
+	 * Tests if the given ruleEnforcement is valid and appropriate for the current
+	 * rule level. Ensures MANDATORY rules can only be set as an ERROR. 
+	 * @param ruleEnforcement the enforcement to be tested.
+	 * @return
+	 */
+	boolean isValidEnforcement(RuleEnforcement ruleEnforecement);
+	
+	/**
+	 * Gets the default enforcement level for this rule.
+	 * @return the default enforcement level, which must comply with the
+	 *  postcondition: <code>isValidEnforcement(getDefaultEnforcementLevel())</code>.
+	 */
+	RuleEnforcement getDefaultEnforcementLevel(); 
+	
+	/**
+	 * Gets the level of this rule. 
 	 * 
 	 * @return A {@link RuleLevel} enum.
 	 */

@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -17,6 +15,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -29,63 +30,57 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private HibCanvas canvas;
 	private Long id;
 	private int creationSerial;
-	private int XPosition;
-	private int YPosition;
-	private int width;
-	private int height;
+	private Location position;
+	private Size size;
 	private HibObjectType hibObjectType;
+	private IShapeObjectType shapeObjectType;
 	private String name;
 	private String description;
 	private String detailedDescription;
-	private String url;
-	private int fillRed;
-	private int fillGreen;
-	private int fillBlue;
-	private int lineRed;
-	private int lineGreen;
-	private int lineBlue;
+	private String url = null;
+	private RGB fillColour;
+	private RGB lineColour;
 	private LineStyle lineStyle;
 	private int lineWidth;
 	private int padding;
-	private short shapeType;
+	private PrimitiveShapeType shapeType;
 	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
+	private IPropertyBuilder propertyBuilder;
 
 	HibShapeAttribute() {
 	}
 
-	public HibShapeAttribute(HibCanvas hibCanvas, IShapeObjectType shapeObjectType){
+	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
 		this.canvas = hibCanvas;
-		this.creationSerial = hibCanvas.getAttributeSerialCounter().nextIndex();
+		this.creationSerial = creationSerial;
+		this.hibObjectType = hibObjectType;
+		this.shapeObjectType = shapeObjectType;
+		this.propertyBuilder = new PropertyBuilder(hibCanvas);
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 		
 	}
 	
-	public HibShapeAttribute(HibShapeAttribute other) {
-		this.canvas = other.canvas;
-		this.creationSerial = this.canvas.getAttributeSerialCounter().nextIndex();
-		this.XPosition = other.XPosition;
-		this.YPosition = other.YPosition;
-		this.width = other.width;
-		this.height = other.height;
+	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
+		this.canvas = newCanvas;
+		this.creationSerial = newCreationSerial;
+		this.position = other.position;
+		this.size = other.size;
 		this.hibObjectType = other.hibObjectType;
 		this.name = other.name;
 		this.description = other.description;
 		this.detailedDescription = other.detailedDescription;
 		this.url = other.url;
-		this.fillRed = other.fillRed;
-		this.fillGreen = other.fillGreen;
-		this.fillBlue = other.fillBlue;
-		this.lineRed = other.lineRed;
-		this.lineGreen = other.lineGreen;
-		this.lineBlue = other.lineBlue;
+		this.fillColour = other.fillColour;
+		this.lineColour = other.lineColour;
 		this.lineStyle = other.lineStyle;
 		this.lineWidth = other.lineWidth;
 		this.padding = other.padding;
+		this.shapeObjectType = other.shapeObjectType;
 
-		for (String propertyName : other.hibProperties.keySet()) {
-			HibProperty otherProp = other.hibProperties.get(propertyName);
-			this.hibProperties.put(propertyName, otherProp.copy(getCanvas()));
+		for (HibProperty property : other.hibProperties.values()) {
+			IPropertyDefinition defn = property.getDefinition(); 
+			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder));
 		}
 	}
 	
@@ -100,9 +95,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineWidth = shapeDefaults.getLineWidth();
 		this.name = shapeDefaults.getName();
 		this.url = shapeDefaults.getURL();
-		Iterator<IPropertyDefinition> propIter = shapeDefaults.getPropertiesFilter().getAllPropertiesIterator();
-		while(propIter.hasNext()){
-			// TODO: 
+		for(IPropertyDefinition propDefn : shapeDefaults.getPropertiesFilter().getAllProperties()){
+			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
 		}
 	}
 
@@ -110,7 +104,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.id;
 	}
 
-	void setId(Long id) {
+	@SuppressWarnings("unused")
+	private void setId(Long id) {
 		this.id = id;
 	}
 
@@ -123,23 +118,23 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 	
 	public int getXPosition() {
-		return this.XPosition;
+		return this.position.getX();
 	}
 
 	public void setXPosition(int XPosition) {
-		this.XPosition = XPosition;
+		this.position = this.position.newX(XPosition);
 	}
 
 	public int getYPosition() {
-		return this.YPosition;
+		return this.position.getY();
 	}
 	
 	public void setYPosition(int YPosition) {
-		this.YPosition = YPosition;
+		this.position = this.position.newY(YPosition);
 	}
 
 	public int getWidth() {
-		return this.width;
+		return this.size.getWidth();
 	}
 	
 	public void setCanvas(HibCanvas canvas) {
@@ -147,20 +142,19 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 	
 	public void setWidth(int width) {
-		this.width = width;
+		this.size = this.size.newWidth(width);
 	}
 
 	public int getHeight() {
-		return this.height;
+		return this.size.getHeight();
 	}
 
 	public void setHeight(int height) {
-		this.height = height;
+		this.size = this.size.newHeight(height);
 	}
 
 	public IShapeObjectType getObjectType() {
-		// TODO
-		return null ;
+		return this.shapeObjectType;
 	}
 	
 	public HibObjectType getHibObjectType () {
@@ -204,51 +198,51 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public int getFillRed() {
-		return this.fillRed;
+		return this.fillColour.getRed();
 	}
 
 	public void setFillRed(int fillRed) {
-		this.fillRed = fillRed;
+		this.fillColour = this.fillColour.newRed(fillRed);
 	}
 
 	public int getFillGreen() {
-		return this.fillGreen;
+		return this.fillColour.getGreen();
 	}
 
 	public void setFillGreen(int fillGreen) {
-		this.fillGreen = fillGreen;
+		this.fillColour = this.fillColour.newGreen(fillGreen);
 	}
 
 	public int getFillBlue() {
-		return this.fillBlue;
+		return this.fillColour.getBlue();
 	}
 
 	public void setFillBlue(int fillBlue) {
-		this.fillBlue = fillBlue;
+		this.fillColour = fillColour.newBlue(fillBlue);
 	}
 
 	public int getLineRed() {
-		return this.lineRed;
+		return this.lineColour.getRed();
 	}
 
 	public void setLineRed(int lineRed) {
-		this.lineRed = lineRed;
+		this.lineColour = this.lineColour.newRed(lineRed);
 	}
 
 	public int getLineGreen() {
-		return this.lineGreen;
+		return this.lineColour.getGreen();
 	}
 
 	public void setLineGreen(int lineGreen) {
-		this.lineGreen = lineGreen;
+		this.lineColour = this.lineColour.newGreen(lineGreen);
 	}
 
 	public int getLineBlue() {
-		return this.lineBlue;
+		return this.lineColour.getBlue();
 	}
 
 	public void setLineBlue(int lineBlue) {
-		this.lineBlue = lineBlue;
+		this.lineColour = this.lineColour.newBlue(lineBlue);
 	}
 	
 	public LineStyle getLineStyle () {
@@ -278,11 +272,11 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.padding = padding;
 	}
 
-	public short getShapeType() {
+	public PrimitiveShapeType getShapeType() {
 		return this.shapeType;
 	}
 
-	public void setShapeType(short shapeType) {
+	public void setShapeType(PrimitiveShapeType shapeType) {
 		this.shapeType = shapeType;
 	}
 
@@ -342,46 +336,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 				return false ;
 		 if ( this.creationSerial != castOther.getCreationSerial() )
 			 return false ;
-		 if ( this.XPosition != castOther.getXPosition())
-			 return false ;
-		 if ( this.YPosition != castOther.getYPosition())
-			 return false ;
-		 if ( this.width != castOther.getWidth())
-			 return false ;
-		 if ( this.height != castOther.getHeight())
-			 return false ;
-		 if ( this.hibObjectType == null || castOther.getHibObjectType() == null )
-			 return false ;
-		 if ( !this.hibObjectType.equals(castOther.hibObjectType))
-			 return false ;
-		 if ( !this.name.equals(castOther.getName()))
-			 return false ;
-		 if ( !this.description.equals(castOther.getDescription()))
-			 return false ;
-		 if ( !this.detailedDescription.equals(castOther.getDetailedDescription()))
-			 return false ;
-		 if ( !this.url.equals(castOther.getUrl()))
-			 return false ;
-		 if ( this.fillRed != castOther.getFillRed())
-			 return false ;
-		 if ( this.fillBlue != castOther.getFillBlue())
-			 return false ;
-		 if ( this.fillGreen != castOther.getFillGreen())
-			 return false ;
-		 if ( this.lineBlue != castOther.getLineBlue())
-			 return false ;
-		 if ( this.lineRed != castOther.getLineRed())
-			 return false ;
-		 if ( this.lineGreen != castOther.getLineGreen())
-			 return false ;
-		 if ( this.lineStyle != castOther.getLineStyle())
-			 return false ;
-		 if ( this.lineWidth != castOther.getLineWidth())
-			 return true ;
-		 if ( this.padding != castOther.padding)
-			 return true ;
-		 if (this.shapeType != castOther.getShapeType())
-			 return false ;
 		 
 		 return true ;
 	}
@@ -391,25 +345,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
     	
         result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
         result = 37 * result + this.getCreationSerial();
-        result = 37 * result + this.XPosition ;
-        result = 37 * result + this.YPosition ;
-        result = 37 * result + this.width ;
-        result = 37 * result + this.height ;
-        result = 37 * result + ( getObjectType() == null ? 0 : this.hibObjectType.hashCode() );
-        result = 37 * result + ( getName() == null ? 0 : this.name.hashCode() );
-        result = 37 * result + ( getDescription() == null ? 0 : this.description.hashCode() );
-        result = 37 * result + ( getDetailedDescription() == null ? 0 : this.detailedDescription.hashCode() );
-        result = 37 * result + ( getUrl() == null ? 0 : this.url.hashCode() );
-        result = 37 * result + this.fillBlue ;
-        result = 37 * result + this.fillRed ;
-        result = 37 * result + this.fillGreen ;
-        result = 37 * result + this.lineGreen ;
-        result = 37 * result + this.lineBlue ;
-        result = 37 * result + this.lineRed ;
-        result = 37 * result + this.lineStyle.getCode() ;
-        result = 37 * result + this.lineWidth ;
-        result = 37 * result + this.padding ;
-        result = 37 * result + this.shapeType ;
         
         return result;
   }   
@@ -427,29 +362,28 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getFillColour()
 	 */
 	public RGB getFillColour() {
-		return new RGB ( this.fillRed , this.fillGreen , this.fillBlue );
+		return this.fillColour;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLineColour()
 	 */
 	public RGB getLineColour() {
-		return new RGB ( this.lineRed , this.lineGreen , this.lineBlue );
+		return this.lineColour;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLocation()
 	 */
 	public Location getLocation() {
-		return new Location( this.XPosition , this.YPosition);
+		return this.position;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getPrimitiveShape()
 	 */
 	public PrimitiveShapeType getPrimitiveShape() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		return this.shapeType;
 	}
 
 	/* (non-Javadoc)
@@ -460,18 +394,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getShapeModel()
-	 */
-	public ISubModel getShapeModel() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getSize()
 	 */
 	public Size getSize() {
-		return new Size ( this.width , this.height);
+		return this.size;
 	}
 
 	/* (non-Javadoc)
@@ -487,10 +413,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setFillColour(RGB fillColour) {
 		if ( fillColour == null )
 			throw new IllegalArgumentException () ;
-		
-		this.fillBlue = fillColour.getBlue() ;
-		this.fillRed = fillColour.getRed() ;
-		this.fillGreen = fillColour.getGreen() ;
+	
+		this.fillColour = fillColour;
 	}
 
 	/* (non-Javadoc)
@@ -499,10 +423,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setLineColour(RGB lineColour) {
 		if ( lineColour == null )
 			throw new IllegalArgumentException () ;
-		
-		this.lineBlue = lineColour.getBlue() ;
-		this.lineRed = lineColour.getRed() ;
-		this.lineGreen = lineColour.getGreen() ;
+
+		this.lineColour = lineColour;
 	}
 
 	/* (non-Javadoc)
@@ -520,18 +442,15 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setLocation(Location newLocation) {
 		if ( newLocation == null )
 			throw new IllegalArgumentException () ;
-		
-		this.XPosition = newLocation.getX() ;
-		this.YPosition = newLocation.getY() ;
+
+		this.position = newLocation;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setPrimitiveShape(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape)
 	 */
 	public void setPrimitiveShape(PrimitiveShapeType primitiveShape) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-		
+		this.shapeType = primitiveShape;
 	}
 
 	/* (non-Javadoc)
@@ -540,48 +459,14 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setSize(Size size) {
 		if ( size == null )
 			throw new IllegalArgumentException () ;
-		
-		this.width = size.getWidth() ;
-		this.height = size.getHeight() ;
-	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getFirstObject()
-	 */
-	public IZOrderedObject getFirstObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getLastObject()
-	 */
-	public IZOrderedObject getLastObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getNextObject()
-	 */
-	public IZOrderedObject getNextObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getPreviousObject()
-	 */
-	public IZOrderedObject getPreviousObject() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException () ;
+		this.size = size;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		// TODO test this.
 		return this.hibProperties.get(propDefn.getName());
 	}
 
@@ -589,16 +474,14 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
 	 */
 	public Iterator<IAnnotationProperty> propertyIterator() {
-		//return this.hibProperties.iterator();
-		//TODO:
-		return null;
+		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
-		return false;
+		return this.hibProperties.containsKey(property.getName());
 	}
 
 }

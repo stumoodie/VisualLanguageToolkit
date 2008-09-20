@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 
 /**
  * @author ntsorman
@@ -49,7 +49,7 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
-		final IContext mockContext = mockery.mock(IContext.class , "mockContext") ;
+		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
@@ -65,7 +65,7 @@ public class HibCanvasTest {
 	{
 		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
 		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
-		final IContext mockContext = mockery.mock(IContext.class , "mockContext") ;
+		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
 		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;

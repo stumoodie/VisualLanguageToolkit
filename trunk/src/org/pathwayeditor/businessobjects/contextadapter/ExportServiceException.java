@@ -1,12 +1,8 @@
 package org.pathwayeditor.businessobjects.contextadapter;
 
-public class ExportServiceException extends Throwable {
-
-	/**
-	 * 
-	 */
+public class ExportServiceException extends Exception {
 	private static final long serialVersionUID = 7000244894654454094L;
-    private IValidationReport report;
+
 	public ExportServiceException() {
 	}
 
@@ -14,12 +10,6 @@ public class ExportServiceException extends Throwable {
 		super(message);
 	}
 	
-	public ExportServiceException(String message, IValidationReport report) {
-		super(message);
-		this.report=report;
-		
-	}
-
 	public ExportServiceException(Throwable cause) {
 		super(cause);
 	}
@@ -27,10 +17,4 @@ public class ExportServiceException extends Throwable {
 	public ExportServiceException(String message, Throwable cause) {
 		super(message, cause);
 	}
-
-	IValidationReport getReport() {
-		return report;
-	}
-
-
 }

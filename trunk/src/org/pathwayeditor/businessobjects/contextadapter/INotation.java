@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.contextadapter;
 
-public interface IContext extends Comparable<IContext> {
+public interface INotation extends Comparable<INotation> {
 	
 	String getDisplayName();
 

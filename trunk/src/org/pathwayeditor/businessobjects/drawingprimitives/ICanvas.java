@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Date;
 
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -62,7 +62,7 @@ public interface ICanvas {
 	 * Get the Context assosiated with this Canvas.
 	 * @return the context. Cannot be null.
 	 */	
-	IContext getContext();
+	INotationSubsystem getNotationSubsystem();
 	
 	/**
 	 * Get the date this Canvas was last modified.

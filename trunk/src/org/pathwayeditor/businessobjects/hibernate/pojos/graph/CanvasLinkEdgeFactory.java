@@ -6,8 +6,10 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
@@ -24,6 +26,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNode;
  */
 public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements ILinkEdgeFactory {
 	private final HibModel canvas;
+	private final IHibNotationFactory hibNotationFactory; 
 	private ILinkObjectType objectType;
 	private HibShapeNode outNode;
 	private HibShapeNode inNode;
@@ -31,9 +34,10 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	/**
 	 * @param graph
 	 */
-	public CanvasLinkEdgeFactory(HibModel canvas) {
+	public CanvasLinkEdgeFactory(HibModel canvas, IHibNotationFactory hibNotationFactory) {
 		super();
 		this.canvas = canvas;
+		this.hibNotationFactory = hibNotationFactory;
 	}
 
 	public void setObjectType(ILinkObjectType objectType){
@@ -79,8 +83,8 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	@Override
 	protected HibLinkEdge newEdge(BaseChildCompoundGraph owningGraph,
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
-		return new HibLinkEdge((HibSubModel)owningGraph, edgeIndex,
-							(HibShapeNode)outNode, (HibShapeNode)inNode);
+		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
+		return new HibLinkEdge((HibSubModel)owningGraph, edgeIndex,	(HibShapeNode)outNode, (HibShapeNode)inNode, this.objectType, hibObjectType);
 	}
 
 	/* (non-Javadoc)

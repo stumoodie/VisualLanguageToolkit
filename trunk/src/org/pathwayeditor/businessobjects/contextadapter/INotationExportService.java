@@ -4,23 +4,8 @@ import java.io.File;
 
 import org.pathwayeditor.businessobjects.repository.IMap;
 
-public interface IContextAdapterExportService {
+public interface INotationExportService extends INotationService {
     
-	/**
-	 * 
-	 * @return the {@link IContext} to which this {@link ExportServiceException} service belongs.
-	 *  Must not return  null
-	 */
-	IContext getContext();
-
-	/**
-	 * Get Service provider which was be used to instantiate this service. 
-	 * This method could be used to get access to other services, which are registered for
-	 * that context. 
-	 * @return An non-null service provider which this service is registered with
-	 */
-	IContextAdapterServiceProvider getServiceProvider();
-	
 	/**
 	 * A method to return a human-readable form of the 
 	 * @return A <code>String</code>. Must not return null.

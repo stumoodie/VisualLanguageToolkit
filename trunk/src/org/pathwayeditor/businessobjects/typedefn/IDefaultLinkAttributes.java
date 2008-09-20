@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 
@@ -11,7 +12,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
  *
  */
 public interface IDefaultLinkAttributes {
-
+	String getName();
+	
+	String getDescription();
+	
+	String getDetailedDescription();
+	
+	String getUrl();
+	
 	/**
 	 * Get the line style of the object type.
 	 * @return a non-null LineStyle.
@@ -30,6 +38,8 @@ public interface IDefaultLinkAttributes {
 	 */
 	RGB getLineColour();
 
+	ConnectionRouter getRouter();
+	
 	/**
 	 * Get the definition of the link's source.
 	 * @return A non-null link end definition.

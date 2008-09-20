@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
@@ -14,12 +14,12 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
  */
 public class LabelObjectType implements INodeObjectType {
 	private static final String NAME = "LabelOT";
-	private final IContext context;
+	private final INotationSyntaxService notation;
 	private final String name;
 	private final IObjectTypeParentingRules parentingRules;
 	
-	public LabelObjectType(IContext context){
-		this.context = context;
+	public LabelObjectType(INotationSyntaxService notation){
+		this.notation = notation;
 		this.name = NAME;
 		this.parentingRules = new LabelDummyParentingRules(this);
 	}
@@ -27,8 +27,8 @@ public class LabelObjectType implements INodeObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDefiningContext()
 	 */
-	public IContext getDefiningContext() {
-		return this.context;
+	public INotationSyntaxService getDefiningContext() {
+		return this.notation;
 	}
 
 	/* (non-Javadoc)
@@ -60,7 +60,7 @@ public class LabelObjectType implements INodeObjectType {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((this.context == null) ? 0 : this.context.hashCode());
+				+ ((this.notation == null) ? 0 : this.notation.hashCode());
 		result = prime * result
 				+ ((this.name == null) ? 0 : this.name.hashCode());
 		return result;
@@ -78,10 +78,10 @@ public class LabelObjectType implements INodeObjectType {
 		if (!(obj instanceof LabelObjectType))
 			return false;
 		LabelObjectType other = (LabelObjectType) obj;
-		if (this.context == null) {
-			if (other.context != null)
+		if (this.notation == null) {
+			if (other.notation != null)
 				return false;
-		} else if (!this.context.equals(other.context))
+		} else if (!this.notation.equals(other.notation))
 			return false;
 		if (this.name == null) {
 			if (other.name != null)

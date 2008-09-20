@@ -11,7 +11,7 @@ public class HibObjectType  implements Serializable {
 
 
      private Long id;
-     private HibContext hibContext;
+     private HibNotation hibNotation;
      private String name;
      private String description;
  	private static final long serialVersionUID = -1860135213188225684L;
@@ -20,8 +20,8 @@ public class HibObjectType  implements Serializable {
     public HibObjectType() {
     }
 
-    public HibObjectType(HibContext hibContext, String name, String description) {
-       this.hibContext = hibContext;
+    public HibObjectType(HibNotation hibNotation, String name, String description) {
+       this.hibNotation = hibNotation;
        this.name = name;
        this.description = description;
     }
@@ -33,12 +33,12 @@ public class HibObjectType  implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public HibContext getContext() {
-        return this.hibContext;
+    public HibNotation getContext() {
+        return this.hibNotation;
     }
     
-    public void setContext(HibContext hibContext) {
-        this.hibContext = hibContext;
+    public void setContext(HibNotation hibNotation) {
+        this.hibNotation = hibNotation;
     }
     public String getName() {
         return this.name;
@@ -78,14 +78,14 @@ public class HibObjectType  implements Serializable {
 
 
     	
-   public void changeContext(HibContext newContext){
-	   HibContext oldContext = this.hibContext;
-	   this.hibContext = newContext;
+   public void changeContext(HibNotation newContext){
+	   HibNotation oldContext = this.hibNotation;
+	   this.hibNotation = newContext;
 	   if(oldContext != null){
 		   oldContext.getObjectTypes().remove(this);
 	   }
-	   if(this.hibContext != null){
-		   this.hibContext.getObjectTypes().add(this);
+	   if(this.hibNotation != null){
+		   this.hibNotation.getObjectTypes().add(this);
 	   }
    }
 

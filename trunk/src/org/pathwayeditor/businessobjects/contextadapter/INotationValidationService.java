@@ -4,21 +4,7 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.repository.IMap;
 
-public interface IContextAdapterValidationService {
-
-	/**
-	 * Get the context of for which this service applied.
-	 * @return An non-null context instance.
-	 */
-	IContext getContext();
-	
-	/**
-	 * Get Service provider which was be used to instantiate this service. 
-	 * This method could be used to get access to other services, which are registered for
-	 * that context. 
-	 * @return An non-null service provider which this service is registered with
-	 */
-	IContextAdapterServiceProvider getServiceProvider();
+public interface INotationValidationService extends INotationService {
 
 	/**
 	 * The CA does not need to implement as validation service. This method tests is one is implemented.

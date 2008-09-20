@@ -39,7 +39,7 @@ public class DbContextTest extends PojoTester{
 	public void testAddContext () throws Exception 
 	{	
 		doSetup () ;
-		HibContext contextToAdd = new HibContext ( CONTEXT_ID, CONTEXT_NAME, MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
+		HibNotation contextToAdd = new HibNotation ( CONTEXT_ID, CONTEXT_NAME, MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
 		
 		getSession().save(contextToAdd) ;
 		getSession().getTransaction().commit() ;
@@ -69,7 +69,7 @@ public class DbContextTest extends PojoTester{
 	{
 		doSetup () ;
 		Query retreivedContext = getSession().createQuery("from HibContext where id = '100001'" ) ;
-		HibContext dbContext = (HibContext) retreivedContext.uniqueResult() ;
+		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
 		HibObjectType newObjectType = new HibObjectType (dbContext, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
 		dbContext.addObjectType(newObjectType) ;
@@ -102,7 +102,7 @@ public class DbContextTest extends PojoTester{
 	{
 		doSetup () ;
 		Query retreivedContext = getSession().createQuery("from HibContext where id = '100002'" ) ;
-		HibContext dbContext = (HibContext) retreivedContext.uniqueResult() ;
+		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
 		getSession().delete(dbContext) ;
 		getSession().getTransaction().commit() ;

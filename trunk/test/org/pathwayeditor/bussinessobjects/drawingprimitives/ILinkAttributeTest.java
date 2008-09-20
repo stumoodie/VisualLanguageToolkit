@@ -6,11 +6,11 @@ package org.pathwayeditor.bussinessobjects.drawingprimitives;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -24,12 +24,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
 /**
  * @author ntsorman
@@ -58,7 +56,7 @@ public class ILinkAttributeTest {
 	private static final String URL = "url" ;
 	private static final String NEW_URL = "newurl" ;
 	
-	private static final String PROPERTY_NAME = "property" ;
+//	private static final String PROPERTY_NAME = "property" ;
 	
 	private static final ConnectionRouter ROUTER_TYPE = ConnectionRouter.SHORTEST_PATH ;
 	private static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;
@@ -67,7 +65,7 @@ public class ILinkAttributeTest {
 	private HibCanvas mockCanvas ;
 	private IBendPoint mockBendPoint1 ;
 	private IBendPoint mockBendPoint2 ;
-	private HibTextProperty textProperty ;
+//	private HibTextProperty textProperty ;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -89,9 +87,7 @@ public class ILinkAttributeTest {
 		
 		linkAttribute.setUrl(URL) ;
 		
-		textProperty = new HibTextProperty () ;
-		
-		linkAttribute.addLinkProperty(PROPERTY_NAME, textProperty) ;
+//		textProperty = new HibTextProperty () ;
 
 	}
 
@@ -225,12 +221,6 @@ public class ILinkAttributeTest {
 	}
 	
 	@Test
-	public void testAddProperty () throws Exception
-	{
-		assertEquals ( "get property" , textProperty , linkAttribute.getProperty(PROPERTY_NAME)) ;
-	}
-	
-	@Test
 	public void testGetLineStyle() throws Exception 
 	{
 		linkAttribute.setLineStyle(LINE_STYLE) ;
@@ -248,8 +238,10 @@ public class ILinkAttributeTest {
 	@Test
 	public void testGetPropertyIterator () throws Exception 
 	{
-		Set <IAnnotationProperty> properties = linkAttribute.propertyIterator() ;
-		assertEquals ( "property iterator contains one" , NUMERIC_VALUE_1 , properties.size() );
-		assertTrue ( "property iterator contains property" ,  properties.contains(textProperty)) ;
+		fail("Implement this test");
+//		Iterator <IAnnotationProperty> properties = linkAttribute.propertyIterator() ;
+		//FIXME:
+//		assertEquals ( "property iterator contains one" , NUMERIC_VALUE_1 , properties.size() );
+//		assertTrue ( "property iterator contains property" ,  properties.contains(textProperty)) ;
 	}
 }	
