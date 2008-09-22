@@ -41,7 +41,11 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
     private IPropertyBuilder propBuilder;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 
-	public HibLinkTerminus() {
+	/**
+	 * Default constructor to only be used by hibernate.
+	 * @deprecated use another constructor to initialise this class in application code.
+	 */
+	HibLinkTerminus() {
 	}
 
 	public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
@@ -50,6 +54,28 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.linkTermType = linkTermType;
 		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 		setDefaults(terminusDefn.getLinkTerminusDefaults());
+	}
+
+	/**
+	 * Constructs a new object with attributes copied from another one.
+	 * @param hibLinkAttribute
+	 * @param other
+	 */
+	public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, HibLinkTerminus other) {
+		this();
+		this.linkAttribute = hibLinkAttribute;
+		this.linkTermType = other.getLinkTermType();
+		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
+		this.endDecoratorType = other.getEndDecoratorType();
+		this.endDecSize = other.getEndSize();
+		this.offset = other.getOffset();
+		this.terminusColour = other.getTerminusColor();
+		this.terminusSize = other.getTerminusSize();
+		this.termShapeType = other.getTerminusDecoratorType();
+		for(HibProperty otherHibProp : other.getProperties().values()){
+			HibProperty copiedHibProp = (HibProperty)otherHibProp.getDefinition().copyProperty(propBuilder);
+			this.hibProperties.put(copiedHibProp.getDefinition().getName(), copiedHibProp);
+		}
 	}
 
 	/**
@@ -76,11 +102,11 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.id = id;
 	}
 
-	public HibLinkAttribute getLink() {
+	public HibLinkAttribute getAttribute() {
 		return this.linkAttribute;
 	}
 
-	void setLinkAttribute(HibLinkAttribute hibLinkAttribute) {
+	void setAttribute(HibLinkAttribute hibLinkAttribute) {
 		this.linkAttribute = hibLinkAttribute;
 		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 	}
@@ -127,26 +153,26 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.endDecSize = this.endDecSize.newHeight(height);
 	}
 
-    public int getTermDecColourRed() {
+    public int getTermDecRed() {
         return this.terminusColour.getRed();
     }
     
-    public void setTermDecColourRed(int red) {
+    public void setTermDecRed(int red) {
         this.terminusColour = this.terminusColour.newRed(red);
     }
-    public int getTermDecColourGreen() {
+    public int getTermDecGreen() {
         return this.terminusColour.getGreen();
     }
     
-    public void setTermDecColourGreen(int green) {
+    public void setTermDecGreen(int green) {
         this.terminusColour = this.terminusColour.newGreen(green);
     }
     
-    public int getTermDecColourBlue() {
+    public int getTermDecBlue() {
         return this.terminusColour.getBlue();
     }
     
-    public void setTermDecColourBlue(int blue) {
+    public void setTermDecBlue(int blue) {
         this.terminusColour = this.terminusColour.newBlue(blue);
     }
     
@@ -184,9 +210,9 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 			return false;
 		HibLinkTerminus castOther = (HibLinkTerminus) other;
 
-		return ((this.getLink() == castOther.getLink()) || (this.getLink() != null
-				&& castOther.getLink() != null && this.getLink().equals(
-				castOther.getLink())))
+		return ((this.getAttribute() == castOther.getAttribute()) || (this.getAttribute() != null
+				&& castOther.getAttribute() != null && this.getAttribute().equals(
+				castOther.getAttribute())))
 				&& (this.getLinkTermType() == castOther.getLinkTermType());
 	}
 
@@ -194,7 +220,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		int result = 17;
 
 		result = 37 * result
-				+ (getLink() == null ? 0 : this.getLink().hashCode());
+				+ (getAttribute() == null ? 0 : this.getAttribute().hashCode());
 		result = 37 * result + this.getLinkTermType().hashCode();
 
 		return result;
@@ -349,10 +375,10 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	 * getDefinition()
 	 */
 	public ILinkTerminusDefinition getDefinition() {
-		ILinkTerminusDefinition retVal = this.getLink().getObjectType()
+		ILinkTerminusDefinition retVal = this.getAttribute().getObjectType()
 				.getTargetTerminusDefinition();
 		if (this.getLinkTermType() == LinkTermType.SOURCE) {
-			retVal = this.getLink().getObjectType()
+			retVal = this.getAttribute().getObjectType()
 					.getSourceTerminusDefinition();
 		}
 		return retVal;

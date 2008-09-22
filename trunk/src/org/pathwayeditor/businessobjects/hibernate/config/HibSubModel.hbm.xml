@@ -2,12 +2,12 @@
 
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph" table="ChildCompoundGraph">
+	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" table="ChildCompoundGraph">
 		<id name="id" column="id" type="java.lang.Long">
 			<generator class="native">
 			</generator>
 		</id>
-		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph" cascade="all" not-null="true" >
+		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all" not-null="true" >
 		</many-to-one>
 		
 		<set name="edges" inverse="true" cascade="all,delete-orphan" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">

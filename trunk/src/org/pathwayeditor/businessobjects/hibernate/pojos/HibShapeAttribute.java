@@ -45,6 +45,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 
+	/**
+	 * Default constructor to be used only by hibernate.
+	 * @deprecated use any of the other constructors to construct this class in application code.
+	 */
 	HibShapeAttribute() {
 	}
 
@@ -352,6 +356,16 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 	
 	void setShapeNode(HibShapeNode newNode){
+		this.shapeNode = newNode;
+	}
+	
+	public void changeShapeNode(HibShapeNode newNode){
+		if(this.shapeNode != null){
+			this.shapeNode.setAttribute(null);
+		}
+		if(newNode != null){
+			newNode.setAttribute(this);
+		}
 		this.shapeNode = newNode;
 	}
 

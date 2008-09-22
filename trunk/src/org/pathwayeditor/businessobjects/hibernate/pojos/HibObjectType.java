@@ -32,11 +32,11 @@ public class HibObjectType implements Serializable {
 		this.id = id;
 	}
 
-	public HibNotation getContext() {
+	public HibNotation getNotation() {
 		return this.hibNotation;
 	}
 
-	public void setContext(HibNotation hibNotation) {
+	public void setNotation(HibNotation hibNotation) {
 		this.hibNotation = hibNotation;
 	}
 
@@ -65,10 +65,10 @@ public class HibObjectType implements Serializable {
 			return false;
 		HibObjectType castOther = (HibObjectType) other;
 
-		return ((this.getContext() == castOther.getContext()) || (this
-				.getContext() != null
-				&& castOther.getContext() != null && this.getContext().equals(
-				castOther.getContext())))
+		return ((this.getNotation() == castOther.getNotation()) || (this
+				.getNotation() != null
+				&& castOther.getNotation() != null && this.getNotation().equals(
+				castOther.getNotation())))
 				&& ((this.getName() == castOther.getName()) || (this.getName() != null
 						&& castOther.getName() != null && this.getName()
 						.equals(castOther.getName())));
@@ -78,7 +78,7 @@ public class HibObjectType implements Serializable {
 		int result = 17;
 
 		result = 37 * result
-				+ (getContext() == null ? 0 : this.getContext().hashCode());
+				+ (getNotation() == null ? 0 : this.getNotation().hashCode());
 		result = 37 * result
 				+ (getName() == null ? 0 : this.getName().hashCode());
 

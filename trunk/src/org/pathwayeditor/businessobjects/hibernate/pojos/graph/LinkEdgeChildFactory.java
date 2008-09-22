@@ -6,6 +6,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
@@ -47,8 +49,10 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	protected BaseCompoundEdge newEdge(BaseChildCompoundGraph owningChildGraph,
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
-		return new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex,
-					(HibShapeNode)outNode, (HibShapeNode)inNode, this.objectType, hibObjectType);
+		HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
+		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
+		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
+		return new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 	}
 
 	/* (non-Javadoc)

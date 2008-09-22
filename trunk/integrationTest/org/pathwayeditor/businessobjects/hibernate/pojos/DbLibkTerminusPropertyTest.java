@@ -66,7 +66,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLinkTerminus.getLink().getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE) ;
+		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE) ;
 		
 		dbLinkTerminus.addProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -102,7 +102,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		HibRichTextProperty textProperty = new HibRichTextProperty ((HibCanvas)dbLinkTerminus.getLink().getCanvas() , CREATION_SERIAL , RICH_TEXT_PROPERTY_VALUE ) ;
+		HibRichTextProperty textProperty = new HibRichTextProperty ((HibCanvas)dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , RICH_TEXT_PROPERTY_VALUE ) ;
 		
 		dbLinkTerminus.addProperty(RICH_TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -138,7 +138,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		HibNumberProperty textProperty = new HibNumberProperty ( (HibCanvas) dbLinkTerminus.getLink().getCanvas() , CREATION_SERIAL , NUMBER_VALUE_TEN ) ;
+		HibNumberProperty textProperty = new HibNumberProperty ( (HibCanvas) dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , NUMBER_VALUE_TEN ) ;
 		
 		dbLinkTerminus.addProperty(NUMBER_PROPERTY_NAME , textProperty ) ;
 		
@@ -177,7 +177,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		valuesToEnter.add(VALUE_TO_ENTER_1);
 		valuesToEnter.add(VALUE_TO_ENTER_2);
 		
-		HibListProperty listProperty = new HibListProperty ( (HibCanvas) dbLinkTerminus.getLink().getCanvas() , CREATION_SERIAL ,valuesToEnter ) ;
+		HibListProperty listProperty = new HibListProperty ( (HibCanvas) dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL ,valuesToEnter ) ;
 
 		
 		dbLinkTerminus.addProperty(LIST_PROPERTY_NAME , listProperty ) ;

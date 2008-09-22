@@ -75,12 +75,11 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint" />
 		</list>
-		<set name="linkTermini" inverse="true" cascade="all,delete-orphan">
-			<key>
-				<column name="linkAttributeId" not-null="true" />
-			</key>
-			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
-		</set>
+		<many-to-one name="sourceTerminus" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus">
+			<column name="source_terminus_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="targetTerminus" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus">
+			<column name="target_terminus_id" not-null="true" />
+		</many-to-one>
 	</class>
 </hibernate-mapping>

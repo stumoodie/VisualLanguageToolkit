@@ -9,7 +9,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1compoundnode" unique="true">
-        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel">
             	<column name="model_id" not-null="true" />
         	</many-to-one>
         	<property name="index" type="int" >

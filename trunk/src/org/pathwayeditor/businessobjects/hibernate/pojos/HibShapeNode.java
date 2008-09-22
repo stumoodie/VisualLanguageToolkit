@@ -52,8 +52,18 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return this.shapeAttribute;
 	}
 
-	public void setAttribute(HibShapeAttribute shapeAttribute) {
+	void setAttribute(HibShapeAttribute shapeAttribute) {
 		this.shapeAttribute = shapeAttribute;
+	}
+	
+	public void changeAttribute(HibShapeAttribute newShapeAttribute){
+		if(this.shapeAttribute != null){
+			this.shapeAttribute.setShapeNode(null);
+		}
+		if(newShapeAttribute != null){
+			newShapeAttribute.setShapeNode(this);
+		}
+		this.shapeAttribute = newShapeAttribute;
 	}
 
 	/* (non-Javadoc)

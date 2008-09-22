@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 
 /**
  * @author ntsorman
@@ -36,8 +36,8 @@ public class HibContextTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		context = new HibNotation (GLOBAL_ID, CONTEXT_NAME, MAJOR_VERSION,MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
+		Version vers = new Version(MAJOR_VERSION,MINOR_VERSION, PATCH_VERSION); 
+		context = new HibNotation (GLOBAL_ID, CONTEXT_NAME, CONTEXT_DESCRIPTION, vers) ;
 	}
 
 	@After

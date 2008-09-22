@@ -62,7 +62,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		return index;
 	}
 	
-	void setGraph(HibModel value) {
+	void setModel(HibModel value) {
 		this.graph = value;
 	}
 	

@@ -44,7 +44,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		
 		assertEquals ("link term type " , NUMERIC_VALUE_ONE , dbLinkTerminus.getLinkTermType()) ;
 		assertEquals ("link term offset" , NUMERIC_VALUE_TEN , dbLinkTerminus.getOffset()) ;
-		assertEquals ("parent link", dbLink.hashCode(), dbLinkTerminus.getLink().hashCode()) ;
+		assertEquals ("parent link", dbLink.hashCode(), dbLinkTerminus.getAttribute().hashCode()) ;
 	}
 	
 	@Test 

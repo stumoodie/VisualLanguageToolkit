@@ -9,7 +9,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1linkterminus" unique="true">
-        	<many-to-one name="link" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
+        	<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
             	<column name="linkAttributeId" not-null="true" />
         	</many-to-one>
         	<property name="linkTermType" type="LinkTermType">
@@ -40,7 +40,7 @@
         <property name="termDecBlue" type="int">
             <column name="term_dec_blue" not-null="true" />
         </property>
-        <property name="termDecEidth" type="int">
+        <property name="termDecWidth" type="int">
             <column name="term_dec_width" not-null="true" />
         </property>
         <property name="termDecHeight" type="int">

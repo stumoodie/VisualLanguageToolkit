@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -50,14 +51,18 @@ public class HibCanvasTest {
 		final HibMap mockMapDiagram = mockery.mock(HibMap.class , "mockMapDiagram") ;
 		final HibMap mockMapDiagram2 = mockery.mock(HibMap.class , "mockMapDiagram2") ;
 		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
+		final HibNotation mockHibNotation = mockery.mock(HibNotation.class, "mockhibNotation");
 		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
+		this.mockery.checking(new Expectations(){{}});
+		
+		canvas = new HibCanvas ( mockMapDiagram , mockContext, mockHibNotation) ;
+		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext, mockHibNotation) ;
 		
 		assertTrue ( canvas.equals(canvas)) ;
 		assertFalse ( canvas.equals(null)) ;
 		assertFalse ( canvas.equals(canvas2)) ;
 		assertFalse (canvas.equals(ANOTHER_OBJECT)) ;
+		this.mockery.assertIsSatisfied();
 	}
 	
 	@Test
@@ -66,9 +71,12 @@ public class HibCanvasTest {
 		final HibMap mockMapDiagram = mockery.mock(HibMap.class , "mockMapDiagram") ;
 		final HibMap mockMapDiagram2 = mockery.mock(HibMap.class , "mockMapDiagram2") ;
 		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
+		final HibNotation mockHibNotation = mockery.mock(HibNotation.class, "mockhibNotation");
 		
-		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
-		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext ) ;
+		this.mockery.checking(new Expectations(){{}});
+		
+		canvas = new HibCanvas ( mockMapDiagram , mockContext, mockHibNotation) ;
+		canvas2 = new HibCanvas ( mockMapDiagram2 , mockContext, mockHibNotation) ;
 		
 		assertEquals ( "same object" , canvas.hashCode() , canvas.hashCode()) ;
 		assertFalse ( "other object" , canvas.hashCode() == canvas2.hashCode()) ;
@@ -76,5 +84,6 @@ public class HibCanvasTest {
 		canvas2.setMapDiagram(mockMapDiagram) ;
 		
 		assertEquals ( "other object same Mapdiagram" , canvas.hashCode() , canvas2.hashCode()) ;
+		this.mockery.assertIsSatisfied();
 	}
 }

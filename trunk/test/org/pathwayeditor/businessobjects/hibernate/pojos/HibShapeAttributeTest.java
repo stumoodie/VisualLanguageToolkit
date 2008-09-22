@@ -32,7 +32,7 @@ public class HibShapeAttributeTest {
 	private static final int POSITION_VALUE = 50 ;
 	private static final String SHAPE_DESCR = "descr";
 	private static final String DETAILED_DESCR = "detailed descr";
-	private static final int NUMERIC_VALUE_ONE = 1;
+//	private static final int NUMERIC_VALUE_ONE = 1;
 	private static final int NUMERIC_VALUE_ZERO = 0;
 	private static final String PROPERTY_ID = "property_id" ;
 	

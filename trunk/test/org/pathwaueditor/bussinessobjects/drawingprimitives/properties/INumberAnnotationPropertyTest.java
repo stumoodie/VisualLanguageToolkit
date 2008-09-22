@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -17,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
 
@@ -40,8 +42,12 @@ public class INumberAnnotationPropertyTest {
 	@Before
 	public void setUp() throws Exception {
 		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
+		INumberPropertyDefinition mockPropDefn = this.mockery.mock(INumberPropertyDefinition.class, "mockpropDefn");
 		
-		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, NUMBER_VALUE) ;
+		this.mockery.checking(new Expectations(){{}});
+		
+		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, mockPropDefn) ;
+		this.mockery.assertIsSatisfied();
 	}
 
 	@After
@@ -51,8 +57,8 @@ public class INumberAnnotationPropertyTest {
 	@Test
 	public void testCreatedPlainTextProperty () throws Exception
 	{
-		assertEquals ( "creation serial" , CREATION_SERIAL , numberProperty.getPropertySerial()) ;
-		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getNumberValue() ) ;
+		assertEquals ( "creation serial" , CREATION_SERIAL , numberProperty.getCreationSerial()) ;
+		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getValue() ) ;
 		assertTrue ( "object value" , numberProperty.getValue() instanceof BigDecimal ) ;
 	}
 	
@@ -60,14 +66,14 @@ public class INumberAnnotationPropertyTest {
 	public void testChangeTextPropertyValue () throws Exception
 	{
 		numberProperty.setNumberValue(OTHER_NUMBER_VALUE) ;
-		assertEquals ( "text value" , OTHER_NUMBER_VALUE , numberProperty.getNumberValue() ) ;
+		assertEquals ( "text value" , OTHER_NUMBER_VALUE , numberProperty.getValue() ) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testChangeTextPropertyValueToNull () throws Exception
 	{
 		numberProperty.setNumberValue(null) ;
-		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getNumberValue() ) ;
+		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getValue() ) ;
 	}
 	
 }

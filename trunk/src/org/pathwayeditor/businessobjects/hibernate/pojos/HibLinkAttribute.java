@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -47,24 +46,62 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
 	private HibLinkTerminus sourceTerminus;
 	private HibLinkTerminus targetTerminus;
-	private ILinkEdge edge ;
+	private HibLinkEdge edge ;
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 
+	/**
+	 * Default constructor to be used only by hibernate.
+	 * @deprecated use any of the other constructors to construct this class in application code.
+	 */
 	HibLinkAttribute() {
 	}
 
-	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, ILinkEdge linkEdge, ILinkObjectType objectType,
-								HibObjectType hibObjectType) {
+	/**
+	 * Constructs new instance of this class.
+	 * @param hibCanvas
+	 * @param link_index
+	 * @param objectType
+	 * @param hibObjectType
+	 */
+	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, ILinkObjectType objectType, HibObjectType hibObjectType) {
 		this.hibCanvas = hibCanvas;
 		this.propertyBuilder = new PropertyBuilder(hibCanvas);
 		this.creationSerial = link_index;
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
-		this.edge = linkEdge;
 		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
 		this.targetTerminus = new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		addDefaults(objectType.getDefaultLinkAttributes());
+	}
+
+	/**
+	 * Constructs new instance that is a copy of another one.
+	 * @param hibCanvas
+	 * @param link_index
+	 * @param objectType
+	 * @param hibObjectType
+	 */
+	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, HibLinkAttribute otherAttribute) {
+		this.hibCanvas = hibCanvas;
+		this.propertyBuilder = new PropertyBuilder(hibCanvas);
+		this.creationSerial = link_index;
+		this.objectType = otherAttribute.objectType;
+		this.hibObjectType = otherAttribute.hibObjectType;
+		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceLinkTerminus());
+		this.targetTerminus = new HibLinkTerminus(this, otherAttribute.getTargetLinkTerminus());
+		this.lineColour = otherAttribute.getLineColor();
+		this.lineStyle = otherAttribute.getLineStyle();
+		this.lineWidth = otherAttribute.getLineWidth();
+		this.name = otherAttribute.getName();
+		this.description = otherAttribute.getDescription();
+		this.detailedDescription = otherAttribute.getDetailedDescription();
+		this.url = otherAttribute.getUrl();
+		this.routerType = otherAttribute.getRouter();
+		for(HibProperty props : otherAttribute.hibLinkProperties.values()){
+			HibProperty copiedProp = (HibProperty)props.getDefinition().copyProperty(this.propertyBuilder);
+			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
+		}
 	}
 
 	/**
@@ -88,8 +125,18 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		return this.id;
 	}
 	
-	public void setEdge(HibLinkEdge edge) {
+	void setLinkEdge(HibLinkEdge edge) {
 		this.edge = edge;
+	}
+	
+	public void changeLinkEdge(HibLinkEdge newEdge){
+		if(this.edge != null){
+			this.edge.setAttribute(null);
+		}
+		if(newEdge != null){
+			newEdge.setAttribute(this);
+		}
+		this.edge = newEdge;
 	}
 
 	@SuppressWarnings("unused")
@@ -411,14 +458,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
 	 */
-	public ILinkTerminus getSourceLinkTerminus() {
+	public HibLinkTerminus getSourceLinkTerminus() {
 		return this.sourceTerminus;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
 	 */
-	public ILinkTerminus getTargetLinkTerminus() {
+	public HibLinkTerminus getTargetLinkTerminus() {
 		return this.targetTerminus;
 	}
 }

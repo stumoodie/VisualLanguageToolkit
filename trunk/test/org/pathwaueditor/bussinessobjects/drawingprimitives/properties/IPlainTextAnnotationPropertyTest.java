@@ -6,6 +6,7 @@ package org.pathwaueditor.bussinessobjects.drawingprimitives.properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
@@ -39,8 +41,12 @@ public class IPlainTextAnnotationPropertyTest {
 	@Before
 	public void setUp() throws Exception {
 		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
+		IPlainTextPropertyDefinition mockPropDefn = this.mockery.mock(IPlainTextPropertyDefinition.class, "mockpropDefn");
 		
-		textProperty = new HibTextProperty ( mockCanvas, CREATION_SERIAL, TEXT_VALUE) ;
+		this.mockery.checking(new Expectations(){{}});
+		
+		textProperty = new HibTextProperty ( mockCanvas, CREATION_SERIAL, mockPropDefn) ;
+		this.mockery.assertIsSatisfied();
 	}
 
 	@After
@@ -50,7 +56,7 @@ public class IPlainTextAnnotationPropertyTest {
 	@Test
 	public void testCreatedPlainTextProperty () throws Exception
 	{
-		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getPropertySerial()) ;
+		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getCreationSerial()) ;
 		assertEquals ( "text value" , TEXT_VALUE , textProperty.getTextValue() ) ;
 		assertTrue ( "object value" , textProperty.getValue() instanceof String ) ;
 	}

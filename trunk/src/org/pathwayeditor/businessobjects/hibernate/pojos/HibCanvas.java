@@ -43,7 +43,8 @@ public class HibCanvas implements ICanvas , Serializable {
 	private IndexCounter creationSerialCounter;
 
 	/**
-	 * Default constructor used by hibernate.
+	 * Default constructor for use ONLY by hibernate.
+	 * @deprecated Use one of the other constructors to construct this class in application code.
 	 */
 	HibCanvas() {
 	}

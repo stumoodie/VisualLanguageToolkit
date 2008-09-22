@@ -15,7 +15,7 @@
 				<column name="folder_id" not-null="true" />
 			</key>
 			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" />
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
 		</set>
 		<many-to-one name="repository"  class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 			<column name="repository_id" not-null="true" />
