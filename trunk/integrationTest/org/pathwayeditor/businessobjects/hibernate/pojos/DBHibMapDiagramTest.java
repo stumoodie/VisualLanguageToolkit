@@ -40,7 +40,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
 		
-		HibMapDiagram towrite = new HibMapDiagram ( parentFolder , MAPDIAGRAM_NAME ) ;
+		HibMap towrite = new HibMap ( parentFolder , MAPDIAGRAM_NAME ) ;
 		towrite.setDescription(MAPDIAGRAM_DESCR) ;
 		towrite.setRepository(parentFolder.getRepository());
 		
@@ -75,7 +75,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	{
 		doSetup ();
 		Query retreivedMapDiagram = getSession().createQuery("from HibMapDiagram where id='100001'") ;
-		HibMapDiagram toDelete = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		HibMap toDelete = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		getSession().delete(toDelete) ;
 		getSession().getTransaction().commit() ;
 		Session session = getHibFactory().getCurrentSession() ;
@@ -90,18 +90,18 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		doSetup () ;
 		getSession().beginTransaction() ;
 		Query retreivedMapDiagram = getSession().createQuery("from HibMapDiagram where id='100001'") ;
-		List <HibMapDiagram> diagrams1 = getSession().createQuery("from HibMapDiagram").list();
-		HibMapDiagram toClone = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		List <HibMap> diagrams1 = getSession().createQuery("from HibMapDiagram").list();
+		HibMap toClone = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		Query retreivedFolder = getSession().createQuery("from HibFolder where id='100004'") ;
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
-		HibMapDiagram cloneDiagram = new HibMapDiagram ( parentFolder , toClone ) ;
+		HibMap cloneDiagram = new HibMap ( parentFolder , toClone ) ;
 		cloneDiagram.setRepository(parentFolder.getRepository());
 		parentFolder.addMapDiagram(cloneDiagram) ;
 		getSession().saveOrUpdate(parentFolder) ;
 		getSession().getTransaction().commit() ;
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction() ;
-		List <HibMapDiagram> diagrams = session.createQuery("from HibMapDiagram").list();
+		List <HibMap> diagrams = session.createQuery("from HibMapDiagram").list();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_MAPDIAGRAM_REF_DATA));

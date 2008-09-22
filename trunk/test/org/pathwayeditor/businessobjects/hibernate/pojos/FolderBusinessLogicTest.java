@@ -217,7 +217,7 @@ public class FolderBusinessLogicTest {
 		child.setName("one");
 		HibRootFolder root = new HibRootFolder();
 		root.addSubFolder(child);
-		HibMapDiagram d = new HibMapDiagram();
+		HibMap d = new HibMap();
 		child.addMapDiagram(d);
 		folder.moveSubfolder(child);
 		assertEquals(d, folder.getSubFolders().iterator().next()
@@ -253,7 +253,7 @@ public class FolderBusinessLogicTest {
 		HibSubFolder folder = new HibSubFolder();
 		HibSubFolder child = new HibSubFolder();
 		child.setName("one");
-		HibMapDiagram d = new HibMapDiagram(child, "a map");
+		HibMap d = new HibMap(child, "a map");
 		child.addMapDiagram(d);
 		assertEquals(d, child.getMapDiagrams().iterator().next());
 		folder.createCopyOfSubfolder(child);
@@ -293,7 +293,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testRemoveMapHappyCase() {
 		HibSubFolder folder = new HibSubFolder();
-		HibMapDiagram m = new HibMapDiagram();
+		HibMap m = new HibMap();
 		folder.addMapDiagram(m);
 		assertEquals(1,folder.numMaps());
 		folder.removeMap(m);
@@ -309,7 +309,7 @@ public class FolderBusinessLogicTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void testRemoveMapThrowsIllegalArgWhenMapFolderNull() {
 		HibSubFolder folder = new HibSubFolder();
-		HibMapDiagram m = new HibMapDiagram();
+		HibMap m = new HibMap();
 		folder.removeMap(m);
 	}
 	
@@ -317,7 +317,7 @@ public class FolderBusinessLogicTest {
 	public void testRemoveMapThrowsIllegalArgWhenMapNotChild() {
 		HibSubFolder folder = new HibSubFolder();
 		HibSubFolder folder2 = new HibSubFolder();
-		HibMapDiagram m = new HibMapDiagram();
+		HibMap m = new HibMap();
 		folder2.addMapDiagram(m);
 		assertEquals(1,folder2.numMaps());
 		folder.removeMap(m);
@@ -428,7 +428,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testNumMaps() {
 		assertEquals(0, childOne.numMaps());
-		childOne.addMapDiagram(new HibMapDiagram());
+		childOne.addMapDiagram(new HibMap());
 		assertEquals(1, childOne.numMaps());
 	}
 
@@ -445,8 +445,8 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testGetMapIteratorIteratesOverMaps() {
-		new HibMapDiagram(childOne, "JIMMY");
-		new HibMapDiagram(childOne, "KRANKIE");
+		new HibMap(childOne, "JIMMY");
+		new HibMap(childOne, "KRANKIE");
 		Iterator<? extends IMap> it = childOne.getMapIterator();
 		assertTrue(it.next().getName().equals("JIMMY") ? it.next().getName()
 				.equals("KRANKIE") : it.next().getName().equals("JIMMY"));
@@ -517,25 +517,25 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testContainsMapTrue() {
-		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne, JIMMY_KRANKIE);
+		HibMap newMapDiagram = new HibMap(childOne, JIMMY_KRANKIE);
 		assertTrue(childOne.containsMap(newMapDiagram));
 	}
 
 	@Test
 	public void testContainsMapFalse() {
-		HibMapDiagram newMapDiagram = new HibMapDiagram();
+		HibMap newMapDiagram = new HibMap();
 		assertFalse(childOne.containsMap(newMapDiagram));
 	}
 
 	@Test
 	public void testContainsMapNull() {
-		HibMapDiagram newMapDiagram = null;
+		HibMap newMapDiagram = null;
 		assertFalse(childOne.containsMap(newMapDiagram));
 	}
 
 	@Test
 	public void createCopyOfMapHappyCaseCopiesName() {
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,
+		HibMap newHibMapDiagram = new HibMap(childFour,
 				JIMMY_KRANKIE);
 		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
 		childOne.createCopyOfMap(newHibMapDiagram);
@@ -544,7 +544,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void createCopyOfMapHappyCaseCopiesDescription() {
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,
+		HibMap newHibMapDiagram = new HibMap(childFour,
 				JIMMY_KRANKIE);
 		newHibMapDiagram.setDescription(FANDABIDOSI);
 		childOne.createCopyOfMap(newHibMapDiagram);
@@ -554,7 +554,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void createCopyOfMapHappyCaseCopyDoesNotEqualOriginal() {
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram();
+		HibMap newHibMapDiagram = new HibMap();
 		childOne.createCopyOfMap(newHibMapDiagram);
 		assertFalse(newHibMapDiagram.equals(getMapInFolderCalled(childOne,
 				JIMMY_KRANKIE)));
@@ -573,7 +573,7 @@ public class FolderBusinessLogicTest {
 				c.called = true;
 			}
 		};
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childFour,
+		HibMap newHibMapDiagram = new HibMap(childFour,
 				JIMMY_KRANKIE);
 		childOne.createCopyOfMap(newHibMapDiagram);
 		assertTrue(c.called);
@@ -581,7 +581,7 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateCopyOfMapWhenAlreadyExistsThrowsIllegalArg() {
-		HibMapDiagram newHibMapDiagram = new HibMapDiagram(childOne,
+		HibMap newHibMapDiagram = new HibMap(childOne,
 				JIMMY_KRANKIE);
 		childOne.createCopyOfMap(newHibMapDiagram);
 		childOne.createCopyOfMap(newHibMapDiagram);
@@ -589,14 +589,14 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateCopyOfMapWhenMapIsNullThrowsIllegalArg() {
-		HibMapDiagram newHibMapDiagram = null;
+		HibMap newHibMapDiagram = null;
 		childOne.createCopyOfMap(newHibMapDiagram);
 	}
 
 	@Test
 	public void testMoveMapHappyCaseAddsMapToNewFolder() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		assertFalse(childFour.containsMap(newMap));
 		childFour.moveMap(newMap);
 		assertTrue(childFour.containsMap(newMap));
@@ -606,7 +606,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testMoveMapHappyCaseRemovesMapFromOldFolder() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		assertTrue(childOne.containsMap(newMap));
 		childFour.moveMap(newMap);
 		assertFalse(childOne.containsMap(newMap));
@@ -614,14 +614,14 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveMapThrowsIllegalArgIfMapIsNull() {
-		HibMapDiagram newMap = null;
+		HibMap newMap = null;
 		childFour.moveMap(newMap);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveMapThrowsIllegalArgIfMapIsAlreadyContained() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		childFour.moveMap(newMap);
 		childFour.moveMap(newMap);
 	}
@@ -629,7 +629,7 @@ public class FolderBusinessLogicTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveMapThrowsIllegalArgWhenMapWithSameNameExists(){
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		childFour.createMap(JIMMY_KRANKIE);
 		childFour.moveMap(newMap);
 	}
@@ -637,7 +637,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testCanRenameMapHappyCase() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(newMap, JIMMY_KRANKIE));
 	}
@@ -645,7 +645,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testCanRenameMapFalseWhenMapIsNullOrNameIsNull() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(null, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(newMap, null));
@@ -654,7 +654,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testRenameMapHappyCase() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled(childOne, FANDABIDOSI));
 		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
 		childOne.renameMap(newMap, FANDABIDOSI);
@@ -665,7 +665,7 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testRenameMapMalformedName() {
 		childOne.createMap(JIMMY_KRANKIE);
-		HibMapDiagram newMap = childOne.getMapDiagrams().iterator().next();
+		HibMap newMap = childOne.getMapDiagrams().iterator().next();
 		try {
 			childOne.renameMap(newMap, ".");
 			fail("should throw illegal arg for null or slashdot");
@@ -711,9 +711,9 @@ public class FolderBusinessLogicTest {
 		assertEquals("/", path);
 	}
 
-	private HibMapDiagram getMapInFolderCalled(HibFolder r, String name) {
-		Set<HibMapDiagram> maps = r.getMapDiagrams();
-		for (HibMapDiagram map : maps) {
+	private HibMap getMapInFolderCalled(HibFolder r, String name) {
+		Set<HibMap> maps = r.getMapDiagrams();
+		for (HibMap map : maps) {
 			if (map.getName().equals(name))
 				return map;
 		}
@@ -721,8 +721,8 @@ public class FolderBusinessLogicTest {
 	}
 
 	private boolean mapExistsCalled(HibFolder r, String name) {
-		Set<HibMapDiagram> maps = r.getMapDiagrams();
-		for (HibMapDiagram map : maps) {
+		Set<HibMap> maps = r.getMapDiagrams();
+		for (HibMap map : maps) {
 			if (map.getName().equals(name))
 				return true;
 		}

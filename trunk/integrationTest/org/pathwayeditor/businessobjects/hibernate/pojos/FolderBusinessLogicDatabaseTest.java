@@ -292,7 +292,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testContainsMapHappyCase() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.containsMap(map));
 	}
 
@@ -300,7 +300,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testContainsMapFalse() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.containsMap(map));
 		assertFalse(r.containsMap(map));
 	}
@@ -309,7 +309,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testCreateCopyOfMapHappyCase() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled((HibFolder) r, map.getName()));
 		assertEquals(
 				0,
@@ -361,7 +361,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testMoveMapHappyCaseRemovesMapFromOldParent() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IRootFolder r = rep.getRootFolder();
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled((HibFolder) r, map.getName()));
 		assertEquals(
 				1,
@@ -384,7 +384,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testCanRenameMapHappyCase() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertTrue(sub1.canRenameMap(map, JIMMY_KRANKIE));
 		assertFalse(sub1.canRenameMap(map, map.getName()));
 	}
@@ -392,7 +392,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testRenameMapHappyCase() {
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		assertEquals(
 				0,
@@ -432,8 +432,8 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	private boolean mapExistsCalled(HibFolder r, String name) {
-		Set<HibMapDiagram> maps = r.getMapDiagrams();
-		for (HibMapDiagram map : maps) {
+		Set<HibMap> maps = r.getMapDiagrams();
+		for (HibMap map : maps) {
 			if (map.getName().equals(name))
 				return true;
 		}

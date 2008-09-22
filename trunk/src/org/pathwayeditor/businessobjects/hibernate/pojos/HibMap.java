@@ -2,13 +2,12 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.UUID;
+import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
-public class HibMapDiagram  implements  IMap,
-		java.io.Serializable, IPropertyChangeSupport {
+public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	private static final long serialVersionUID = -7566323206185334088L;
 
 	private Long id;
@@ -16,34 +15,27 @@ public class HibMapDiagram  implements  IMap,
 	private String name = "";
 	private String description = "";
 	private HibRepository repository;
-	private int iNode = makeIntUUID();
+	private int iNode;
 	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
-	HibMapDiagram() {
+	HibMap() {
 		listenerManager = new PropertyChangeSupport(this);
 	}
 
-	/**
-	 * @return a int representation of the first 8 digits in a real UUID
-	 */
-	private int makeIntUUID() { // FIXME - this IS NOT GUARANTEED
-								// UNIQUE!!!!!!!!!!!!!
-		Long tempL = UUID.randomUUID().getMostSignificantBits();
-		return tempL.intValue();
-	}
-
-	public HibMapDiagram(HibFolder hibFolder, String name) {
+	public HibMap(HibFolder hibFolder, String name) {
 		this.folder = hibFolder;
 		this.name = name;
 		hibFolder.addMapDiagram(this);
 		this.repository = hibFolder.getRepository();
+		this.iNode = this.repository.getINodeCounter().nextIndex();
 		listenerManager = new PropertyChangeSupport(this);
 	}
 
-	public HibMapDiagram(HibFolder newParent, HibMapDiagram other) {
+	public HibMap(HibFolder newParent, HibMap other) {
 		this(newParent,other,false);
+		this.iNode = this.repository.getINodeCounter().nextIndex();
 	}
 
-	public HibMapDiagram(HibFolder newParent, HibMapDiagram other, boolean isCompleteCopy) {
+	public HibMap(HibFolder newParent, HibMap other, boolean isCompleteCopy) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
@@ -122,23 +114,6 @@ public class HibMapDiagram  implements  IMap,
 		this.description = description;
 	}
 
-	@Override
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof HibMapDiagram))
-			return false;
-		HibMapDiagram castOther = (HibMapDiagram) other;
-		return castOther.iNode==iNode;
-	}
-	
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result+iNode;
-		return result;
-	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -162,7 +137,42 @@ public class HibMapDiagram  implements  IMap,
 	/**
 	 * @param m
 	 */
-	protected void copyINode(HibMapDiagram m) {
+	protected void copyINode(HibMap m) {
 		this.iNode=m.iNode;
 		}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.getINode();
+		result = prime * result
+				+ ((this.getRepository() == null) ? 0 : this.getRepository().hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof HibMap))
+			return false;
+		HibMap other = (HibMap) obj;
+		if (this.getINode() != other.getINode())
+			return false;
+		if (this.getRepository() == null) {
+			if (other.getRepository() != null)
+				return false;
+		} else if (!this.getRepository().equals(other.getRepository()))
+			return false;
+		return true;
+	}
 }

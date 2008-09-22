@@ -122,8 +122,8 @@ public class SubFolderTest {
 	@Test 
 	public void testAddMapDiagram () throws Exception 
 	{
-		final HibMapDiagram mockMapDiagram = mockery.mock( HibMapDiagram.class , "mockMapDiagram") ; 
-		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
+		final HibMap mockMapDiagram = mockery.mock( HibMap.class , "mockMapDiagram") ; 
+		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {{
 		}});
 			
@@ -148,8 +148,8 @@ public class SubFolderTest {
 	@Test
 	public void testRemoveDiagram () throws Exception
 	{
-		final HibMapDiagram mockMapDiagram = mockery.mock( HibMapDiagram.class , "mockMapDiagram") ; 
-		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
+		final HibMap mockMapDiagram = mockery.mock( HibMap.class , "mockMapDiagram") ; 
+		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 
 		mockery.checking( new Expectations () {{
 		}});

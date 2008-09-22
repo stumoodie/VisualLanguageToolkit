@@ -46,7 +46,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
 		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100001'" ) ;
 		
-		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		assertEquals ("Grid X" , GRID_VALUE , dbCanvas.getGridX()) ;
@@ -102,7 +102,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		doSetup () ;
 		
 		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100004'" ) ;
-		HibMapDiagram parentMapDiagram = (HibMapDiagram) retreivedMapDiagram.uniqueResult() ;
+		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		
 		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;

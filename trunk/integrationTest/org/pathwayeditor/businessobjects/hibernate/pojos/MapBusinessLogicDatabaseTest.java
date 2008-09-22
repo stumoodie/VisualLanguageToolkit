@@ -27,7 +27,7 @@ public class MapBusinessLogicDatabaseTest extends GenericTester{
 	@Test
 	public void getOwnerHappyCase(){
 		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		getSession().close();
 		assertEquals(sub1,map.getOwner());
 	}
@@ -35,7 +35,7 @@ public class MapBusinessLogicDatabaseTest extends GenericTester{
 	@Test
 	public void testGetName(){
 		HibSubFolder sub1 = (HibSubFolder) getSession().createQuery("from HibSubFolder r where r.id = '100005'").uniqueResult();
-		HibMapDiagram map = sub1.getMapDiagrams().iterator().next();
+		HibMap map = sub1.getMapDiagrams().iterator().next();
 		getSession().close();
 		assertEquals("Diagram name", map.getName());
 	}

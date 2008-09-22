@@ -17,8 +17,12 @@ public class HibRootFolder extends HibFolder implements Serializable,
 	/**
 	 * Default contructor typically used by hibernate.
 	 */
-	public HibRootFolder() {
+	HibRootFolder() {
 		super();
+	}
+
+	public HibRootFolder(HibRepository repository) {
+		super(repository);
 	}
 
 	/**

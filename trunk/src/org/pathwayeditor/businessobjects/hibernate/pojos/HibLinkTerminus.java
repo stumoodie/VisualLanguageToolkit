@@ -13,6 +13,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
@@ -35,6 +38,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
     private PrimitiveShapeType termShapeType = null;
     private RGB terminusColour;
     private Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
+    private IPropertyBuilder propBuilder;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 
 	public HibLinkTerminus() {
@@ -44,6 +48,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this();
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
+		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 		setDefaults(terminusDefn.getLinkTerminusDefaults());
 	}
 
@@ -57,7 +62,9 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.termShapeType = linkTerminusDefaults.getTermDecoratorType();
 		this.terminusColour = linkTerminusDefaults.getTermColour();
 		this.terminusSize = linkTerminusDefaults.getTermSize();
-		//TODO: set default properties
+		for(IPropertyDefinition propDefn : linkTerminusDefaults.getPropertiesFilter().getAllProperties()){
+			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propBuilder));
+		}
 	}
 
 	public Long getId() {
@@ -73,8 +80,9 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		return this.linkAttribute;
 	}
 
-	public void setLink(HibLinkAttribute hibLinkAttribute) {
+	void setLinkAttribute(HibLinkAttribute hibLinkAttribute) {
 		this.linkAttribute = hibLinkAttribute;
+		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 	}
 
 	public LinkTermType getLinkTermType() {

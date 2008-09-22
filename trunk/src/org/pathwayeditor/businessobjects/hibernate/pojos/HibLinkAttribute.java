@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
@@ -19,8 +18,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
@@ -33,7 +32,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private static final long serialVersionUID = 8124494867402957446L;
 
 	private Long id;
-	private ICanvas hibCanvas;
+	private HibCanvas hibCanvas;
 	private int creationSerial;
 	private HibObjectType hibObjectType;
 	private ILinkObjectType objectType;
@@ -98,7 +97,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.id = id;
 	}
 
-	public ICanvas getCanvas() {
+	public HibCanvas getCanvas() {
 		return this.hibCanvas;
 	}
 

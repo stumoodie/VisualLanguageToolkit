@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.UUID;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -23,14 +22,19 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public static final String ILLEGAL_MAPNAME = "Map names must be unique and cannot be null or contain a slashdot";
 	public static final String MAP_ALREADY_EXISTS = "Map already existed in the folder.";
 	private Long id;
-	private Set<HibMapDiagram> hibMapDiagrams = new HashSet<HibMapDiagram>(0);
+	private Set<HibMap> hibMaps = new HashSet<HibMap>(0);
 	private Set<HibSubFolder> subFolders = new HashSet<HibSubFolder>(0);
 	private HibRepository repository;
-	private int iNode = makeIntUUID();
+	private int iNode;
 	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
 
-	public HibFolder() {
+	protected HibFolder() {
 		listenerManager = new PropertyChangeSupport(this);
+	}
+	
+	protected HibFolder(HibRepository repository){
+		this.repository = repository;
+		this.iNode = repository.getINodeCounter().nextIndex();
 	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener){
@@ -44,18 +48,10 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public void removePropertyChangeListener(PropertyChangeListener listener){
 		listenerManager.removePropertyChangeListener(listener);
 	}
-	/**
-	 * @return a int representation of the first 8 digits in a real UUID
-	 */
-	private int makeIntUUID() { // FIXME - this IS NOT GUARANTEED
-		// UNIQUE!!!!!!!!!!!!!
-		Long tempL = UUID.randomUUID().getMostSignificantBits();
-		return tempL.intValue();
-	}
 
 	public HibFolder(HibFolder other) {
-		for (HibMapDiagram diagram : other.getMapDiagrams()) {
-			this.hibMapDiagrams.add(new HibMapDiagram(this, diagram));
+		for (HibMap diagram : other.getMapDiagrams()) {
+			this.hibMaps.add(new HibMap(this, diagram));
 		}
 		for (HibSubFolder subFolder : other.getSubFolders()) {
 			this.subFolders.add(new HibSubFolder(this, subFolder));
@@ -64,8 +60,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public HibFolder(HibFolder other,boolean isCompleteCopy) {
 		if(isCompleteCopy)
 			this.iNode=other.iNode;
-		for (HibMapDiagram diagram : other.getMapDiagrams()) {
-			this.hibMapDiagrams.add(new HibMapDiagram(this, diagram,isCompleteCopy));
+		for (HibMap diagram : other.getMapDiagrams()) {
+			this.hibMaps.add(new HibMap(this, diagram,isCompleteCopy));
 		}
 		for (HibSubFolder subFolder : other.getSubFolders()) {
 			this.subFolders.add(new HibSubFolder(this, subFolder,isCompleteCopy));
@@ -76,7 +72,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return this.id;
 	}
 
-	void setId(Long id) {
+	@SuppressWarnings("unused")
+	private void setId(Long id) {
 		this.id = id;
 	}
 
@@ -88,12 +85,12 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return repository;
 	}
 
-	public Set<HibMapDiagram> getMapDiagrams() {
-		return this.hibMapDiagrams;
+	public Set<HibMap> getMapDiagrams() {
+		return this.hibMaps;
 	}
 
-	void setMapDiagrams(Set<HibMapDiagram> hibMapDiagrams) {
-		this.hibMapDiagrams = hibMapDiagrams;
+	void setMapDiagrams(Set<HibMap> hibMaps) {
+		this.hibMaps = hibMaps;
 	}
 
 	public Set<HibSubFolder> getSubFolders() {
@@ -141,24 +138,24 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		subFolder.setParentFolder(null);
 	}
 
-	void addMapDiagram(HibMapDiagram newMapDiagram) {
+	void addMapDiagram(HibMap newMapDiagram) {
 		if (newMapDiagram == null)
 			throw new IllegalArgumentException("newMapDiagram cannot be null");
 		HibFolder oldParentFolder = newMapDiagram.getFolder();
 		if (oldParentFolder != null) {
 			oldParentFolder.getMapDiagrams().remove(newMapDiagram);
 		}
-		this.hibMapDiagrams.add(newMapDiagram);
+		this.hibMaps.add(newMapDiagram);
 		newMapDiagram.setFolder(this);
 	}
 
-	void removeMapDiagram(HibMapDiagram mapDiagram) {
+	void removeMapDiagram(HibMap mapDiagram) {
 		if (mapDiagram == null)
 			throw new IllegalArgumentException("mapDiagram cannot be null");
 		if (mapDiagram.getFolder()==null||!mapDiagram.getFolder().equals(this))
 			throw new IllegalArgumentException(
 					"mapDiagram must belong to this folder");
-		this.hibMapDiagrams.remove(mapDiagram);
+		this.hibMaps.remove(mapDiagram);
 		mapDiagram.setFolder(null);
 	}
 
@@ -306,7 +303,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		if (nameMalFormed(name))
 			return false;
 		boolean canuse = true;
-		for (HibMapDiagram d : hibMapDiagrams) {
+		for (HibMap d : hibMaps) {
 			if (d.getName().equalsIgnoreCase(name))
 				canuse = false;
 		}
@@ -324,7 +321,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#containsMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public boolean containsMap(IMap newMap) {
-		boolean iscontained = hibMapDiagrams.contains(newMap);
+		boolean iscontained = hibMaps.contains(newMap);
 		return iscontained;
 	}
 
@@ -338,8 +335,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		if (this.containsMap(origMap))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
-		HibMapDiagram map = new HibMapDiagram(this, (HibMapDiagram) origMap);
-		hibMapDiagrams.add(map);
+		HibMap map = new HibMap(this, (HibMap) origMap);
+		hibMaps.add(map);
 		copyCanvasOf(origMap);
 		return map;
 	}
@@ -374,8 +371,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public IMap createMap(String newMapName) {
 		if (!canUseMapName(newMapName))
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
-		HibMapDiagram map = new HibMapDiagram(this, newMapName);
-		hibMapDiagrams.add(map);
+		HibMap map = new HibMap(this, newMapName);
+		hibMaps.add(map);
 		return map;
 	}
 
@@ -398,7 +395,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getMapIterator()
 	 */
 	public Iterator<? extends IMap> getMapIterator() {
-		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMapDiagrams
+		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMaps
 				.iterator();
 		return it;
 	}
@@ -415,9 +412,9 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
 		if(!canUseMapName(newMap.getName()))
 			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
-		HibMapDiagram m = (HibMapDiagram) newMap;
+		HibMap m = (HibMap) newMap;
 		m.changeFolder(this);
-		HibMapDiagram copy = new HibMapDiagram(this,m, true);
+		HibMap copy = new HibMap(this,m, true);
 		copy.changeFolder(this);
 		return copy;
 	}
@@ -442,9 +439,9 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#numMaps()
 	 */
 	public int numMaps() {
-		if (hibMapDiagrams == null)
+		if (hibMaps == null)
 			return 0;
-		int nummaps = hibMapDiagrams.size();
+		int nummaps = hibMaps.size();
 		return nummaps;
 	}
 
@@ -475,7 +472,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	}
 	
 	public void removeMap(IMap map){
-		removeMapDiagram((HibMapDiagram) map);
+		removeMapDiagram((HibMap) map);
 	}
 
 	/*
@@ -486,15 +483,15 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 */
 	public void renameMap(IMap map, String newMapName) {
 		if (canUseMapName(newMapName)) {
-			HibMapDiagram m = (HibMapDiagram) map;// map needs to be
+			HibMap m = (HibMap) map;// map needs to be
 			// explicitly removed from
 			// its owning collection and
 			// added back after name
 			// change
-			hibMapDiagrams.remove(m); // order is important - rename of map
+			hibMaps.remove(m); // order is important - rename of map
 			// changes equals!
 			m.setName(newMapName);
-			hibMapDiagrams.add(m);
+			hibMaps.add(m);
 		} else
 			throw new IllegalArgumentException();
 	}

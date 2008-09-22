@@ -37,7 +37,7 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	ISubFolder createSubfolder(String newSubfolderName);
 	
 	/**
-	 * Tests if the subfolder is contained (anywhere in the tree of children //TODO NH verify ) in this subfolder.
+	 * Tests if the subfolder is contained in this folder anywhere in the tree of children in this subfolder.
 	 * @param subFolder the subfolder to test, can be null.
 	 * @return true of the subfolder is contained here, false otherwise.
 	 */
@@ -82,9 +82,7 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * This operation will remove Maps and their contents too.  
 	 * @param subFolder the subfolder to be deleted. Cannot be null.
 	 * @throws IllegalArgumentException if subFolder is null.
-	 *TODO - NH assumptions follow
 	 * @throws IllegalArgumentException if subFolder is not contained in this folder
-	 * will remove the subfolder if it exists ANYWHERE in the child folder tree of this folder, not just in its immediate children
 	 */
 	void removeSubfolder(ISubFolder subFolder);
 	
@@ -116,7 +114,7 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * @param newFolderName the new name of the subfolder, which cannot be null.
 	 * @throws IllegalArgumentException if <code>subFolder</code> is not a child of this folder.
 	 * @throws IllegalArgumentException if <code>newFolderName</code> is null.
-	 * @throws IllegalArgumentException if <code>canRename</code> returns false. //TODO - verify NH
+	 * @throws IllegalArgumentException if <code>canRename</code> returns false.
 	 */
 	void renameSubfolder(ISubFolder subFolder, String newFolderName);
 	
@@ -145,7 +143,6 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * follows the naming rules, is not-null and that the name is unique for this folder (NOT case sensitive). 
 	 * @param name The name potential map to be tested.
 	 * @return True if creating a map of this name will succeed.
-	 * TODO - NH verify I am assuming that this method does not throw an IllegalArg exception if nameis null or malformed 
 	 */
 	boolean canUseMapName(String name);
 	

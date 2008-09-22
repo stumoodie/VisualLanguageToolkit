@@ -20,8 +20,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	}
 
 	public HibSubFolder(HibFolder parentFolder, String name) {
-		super();
-		setRepository(parentFolder.getRepository());
+		super(parentFolder.getRepository());
 		this.parentFolder = parentFolder;
 		this.name = name;
 	}
@@ -43,7 +42,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	 * 
 	 */
 	private void setMapDiagramRepositories() {
-		for(HibMapDiagram mapDiag: getMapDiagrams()){
+		for(HibMap mapDiag: getMapDiagrams()){
 			mapDiag.setRepository(getRepository());
 		}
 	}
@@ -54,7 +53,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	private void setSubFolderRepositoriesAndMapDiagramRepositories() {
 		for (HibSubFolder sub: getSubFolders()){
 			sub.setRepository(getRepository());
-			for (HibMapDiagram d: sub.getMapDiagrams())
+			for (HibMap d: sub.getMapDiagrams())
 				d.setRepository(getRepository());
 			sub.setSubFolderRepositoriesAndMapDiagramRepositories();
 		}

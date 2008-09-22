@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 
@@ -27,8 +26,6 @@ public interface ICanvasAttribute {
 	int getCreationSerial();	
 	
 	IObjectType getObjectType();
-	
-	boolean hasProperty(IPropertyDefinition property);
 	
 	/**
 	 * The business key is the combination of canvas and creation serial.

@@ -50,8 +50,8 @@ public class HibRootFolderTest {
 		
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibSubFolder mockSubFolder = mockery.mock(HibSubFolder.class , "mockSubFolder") ;
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram" ) ;
-		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ;
+		final HibMap mockMapDiagram = mockery.mock(HibMap.class , "mockMapDiagram" ) ;
+		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ;
 		final Set<HibSubFolder> mockSubFolderSet = mockery.mock( Set.class , "mockSubFolderSet") ;
 		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 				

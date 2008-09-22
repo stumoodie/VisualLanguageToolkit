@@ -60,8 +60,8 @@ public class DbHibSubFolderTest extends PojoTester{
 		HibSubFolder bFolder = new HibSubFolder (aFolder , FOLDER_NAME_TWO) ;
 		HibSubFolder cFolder = new HibSubFolder (aFolder , FOLDER_NAME_THREE) ;
 		
-		HibMapDiagram aMapDiagram = new HibMapDiagram () ;
-		HibMapDiagram bMapDiagram = new HibMapDiagram () ;
+		HibMap aMapDiagram = new HibMap () ;
+		HibMap bMapDiagram = new HibMap () ;
 		
 		aMapDiagram.setName(DIAGRAM_NAME_ONE) ;
 		bMapDiagram.setName(DIAGRAM_NAME_TWO) ;

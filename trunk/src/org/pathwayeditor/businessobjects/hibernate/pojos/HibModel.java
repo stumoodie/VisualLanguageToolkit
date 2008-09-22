@@ -38,6 +38,10 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private HibCanvas canvas;
 	private IHibNotationFactory hibNotationFactory;
 	
+	/**
+	 * Hibernate constructor. Do not use.
+	 * @deprecated
+	 */
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());
 	}
@@ -95,12 +99,12 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	}
 
 	@Override
-	protected IndexCounter getEdgeCounter() {
+	public final IndexCounter getEdgeCounter() {
 		return this.edgeCntr;
 	}
 
 	@Override
-	protected IndexCounter getNodeCounter() {
+	public final IndexCounter getNodeCounter() {
 		return this.nodeCntr;
 	}
 

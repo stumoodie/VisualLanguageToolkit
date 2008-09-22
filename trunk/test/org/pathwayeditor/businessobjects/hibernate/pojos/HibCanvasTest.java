@@ -47,8 +47,8 @@ public class HibCanvasTest {
 	@Test
 	public void testEquals () throws Exception 
 	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
+		final HibMap mockMapDiagram = mockery.mock(HibMap.class , "mockMapDiagram") ;
+		final HibMap mockMapDiagram2 = mockery.mock(HibMap.class , "mockMapDiagram2") ;
 		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;
@@ -63,8 +63,8 @@ public class HibCanvasTest {
 	@Test
 	public void testHashCode() throws Exception
 	{
-		final HibMapDiagram mockMapDiagram = mockery.mock(HibMapDiagram.class , "mockMapDiagram") ;
-		final HibMapDiagram mockMapDiagram2 = mockery.mock(HibMapDiagram.class , "mockMapDiagram2") ;
+		final HibMap mockMapDiagram = mockery.mock(HibMap.class , "mockMapDiagram") ;
+		final HibMap mockMapDiagram2 = mockery.mock(HibMap.class , "mockMapDiagram2") ;
 		final INotationSubsystem mockContext = mockery.mock(INotationSubsystem.class , "mockContext") ;
 		
 		canvas = new HibCanvas ( mockMapDiagram , mockContext ) ;

@@ -31,18 +31,18 @@ public class MapBusinessLogicTest {
 	
 	@Test
 	public void testNewMapDiagramSetsFolderReciprocally(){
-		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		HibMap newMapDiagram = new HibMap(childOne,JIMMY_KRANKIE);
 		assertTrue(newMapDiagram.getOwner().equals(childOne));
 	}
 	@Test
 	public void getOwnerHappyCase(){
-		HibMapDiagram newMapDiagram = new HibMapDiagram(childOne,JIMMY_KRANKIE);
+		HibMap newMapDiagram = new HibMap(childOne,JIMMY_KRANKIE);
 		assertTrue(newMapDiagram.getOwner().equals(childOne));
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void getOwnerNullTest(){
-		HibMapDiagram newMapDiagram = new HibMapDiagram();
+		HibMap newMapDiagram = new HibMap();
 		newMapDiagram.getOwner();
 	}
 	

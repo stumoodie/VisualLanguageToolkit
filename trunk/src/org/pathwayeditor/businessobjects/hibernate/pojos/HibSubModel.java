@@ -6,9 +6,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelectio
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
@@ -204,14 +202,14 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#linkEdgeFactory()
 	 */
-	public ILinkEdgeFactory linkEdgeFactory() {
+	public LinkEdgeChildFactory linkEdgeFactory() {
 		return new LinkEdgeChildFactory(this);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#shapeNodeFactory()
 	 */
-	public IShapeNodeFactory shapeNodeFactory() {
+	public ShapeNodeFactory shapeNodeFactory() {
 		return new ShapeNodeFactory(this.getRootNode());
 	}
 

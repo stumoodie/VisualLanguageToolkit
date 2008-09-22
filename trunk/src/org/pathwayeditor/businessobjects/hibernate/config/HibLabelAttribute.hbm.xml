@@ -24,9 +24,6 @@
 		<property name="height" type="int">
 			<column name="height" not-null="true" />
 		</property>
-		<property name="isDisplayed" type="boolean">
-			<column name="is_displayed" not-null="true" />
-		</property>
 		<property name="backgroundRed" type="int">
 			<column name="background_red" not-null="true" />
 		</property>
@@ -35,9 +32,6 @@
 		</property>
 		<property name="backgroundBlue" type="int">
 			<column name="background_blue" not-null="true" />
-		</property>
-		<property name="noFillSet" type="boolean">
-			<column name="no_fill_set" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

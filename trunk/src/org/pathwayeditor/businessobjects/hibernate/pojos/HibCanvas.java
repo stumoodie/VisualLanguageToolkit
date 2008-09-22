@@ -311,7 +311,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#createCopy(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public ICanvas createCopy(IMap map) {
-		return new HibCanvas((HibMapDiagram)map, this);
+		return new HibCanvas((HibMap)map, this);
 	}
 
 	/* (non-Javadoc)

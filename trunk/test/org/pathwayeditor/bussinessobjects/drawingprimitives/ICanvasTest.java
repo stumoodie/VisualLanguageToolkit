@@ -20,7 +20,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 
 /**
@@ -33,7 +33,7 @@ public class ICanvasTest {
 	private Mockery mockery = new JUnit4Mockery();
 	
 	private ICanvas canvas ;
-	private HibMapDiagram mapDiagram ;
+	private HibMap mapDiagram ;
 	private INotationSubsystem mockContext ;
 	private HibFolder folder ;
 	
@@ -65,7 +65,7 @@ public class ICanvasTest {
 			
 		}});
 		folder = new HibRootFolder () ;
-		mapDiagram = new HibMapDiagram (folder, MAP_DIAGRAM_NAME) ;
+		mapDiagram = new HibMap (folder, MAP_DIAGRAM_NAME) ;
 		canvas = new HibCanvas (  mapDiagram ,  mockContext);
 		this.canvas.setGridSize(GRID_SIZE);
 		this.canvas.setGridEnabled(GRID_ENABLED);

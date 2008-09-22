@@ -30,8 +30,8 @@ public class HibMapDiagramTest {
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
 	
-	private HibMapDiagram testMapDiagram = new HibMapDiagram () ;
-	private HibMapDiagram testMapDiagram2 = new HibMapDiagram () ;
+	private HibMap testMapDiagram = new HibMap () ;
+	private HibMap testMapDiagram2 = new HibMap () ;
 	
 	private static final String DIAGRAM_NAME1 = "diagram name" ;
 	private static final String DIAGRAM_DESCRIPTION1= "diagram description" ;
@@ -53,10 +53,10 @@ public class HibMapDiagramTest {
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
 			{atLeast(1).of(mockFolder).getRepository();}
-			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}	
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMap.class)));}	
 		});
-		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
-		testMapDiagram = new HibMapDiagram ( mockFolder , testMapDiagram2 ) ;
+		testMapDiagram2 = new HibMap ( mockFolder , DIAGRAM_NAME2 ) ;
+		testMapDiagram = new HibMap ( mockFolder , testMapDiagram2 ) ;
 		assertEquals ( "name same with source diagram" , DIAGRAM_NAME2 ,testMapDiagram.getName() ) ;
 		assertEquals ( "descr same with source diagram" , "" ,testMapDiagram.getDescription() ) ;
 		assertEquals ( "folder same with source diagram" , mockFolder ,testMapDiagram.getFolder() ) ;
@@ -67,14 +67,14 @@ public class HibMapDiagramTest {
 	{
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		final HibFolder mockFolder2 = mockery.mock(HibFolder.class , "mockFolder2") ;
-		final Set<HibMapDiagram> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
+		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {
 			{atLeast(1).of(mockFolder).getRepository();}
-			{atLeast(1).of(mockFolder).removeMapDiagram(with(any(HibMapDiagram.class)));}
-			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}		
+			{atLeast(1).of(mockFolder).removeMapDiagram(with(any(HibMap.class)));}
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMap.class)));}		
 		});
 		mockery.checking( new Expectations () {{
-			testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
+			testMapDiagram = new HibMap ( mockFolder , DIAGRAM_NAME1 ) ;
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockFolder2).getMapDiagrams() ; will(returnValue(mockMapDiagramSet));
 			atLeast(1).of(mockMapDiagramSet).add(testMapDiagram); will(returnValue(true));
@@ -91,11 +91,11 @@ public class HibMapDiagramTest {
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
 		{atLeast(1).of(mockFolder).getRepository();}
-		{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}	
+		{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMap.class)));}	
 		});
 		
-		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
-		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
+		testMapDiagram = new HibMap ( mockFolder , DIAGRAM_NAME1 ) ;
+		testMapDiagram2 = new HibMap ( mockFolder , DIAGRAM_NAME2 ) ;
 		
 		assertTrue ( "Equals with self" ,testMapDiagram.equals(testMapDiagram)) ;
 		assertFalse ( "Not equals with null" , testMapDiagram.equals(null)) ;
@@ -110,11 +110,11 @@ public class HibMapDiagramTest {
 		final HibFolder mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockery.checking( new Expectations () {
 			{atLeast(1).of(mockFolder).getRepository();}
-			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMapDiagram.class)));}		
+			{atLeast(1).of(mockFolder).addMapDiagram(with(any(HibMap.class)));}		
 		});
 		
-		testMapDiagram = new HibMapDiagram ( mockFolder , DIAGRAM_NAME1 ) ;
-		testMapDiagram2 = new HibMapDiagram ( mockFolder , DIAGRAM_NAME2 ) ;
+		testMapDiagram = new HibMap ( mockFolder , DIAGRAM_NAME1 ) ;
+		testMapDiagram2 = new HibMap ( mockFolder , DIAGRAM_NAME2 ) ;
 		
 		
 		assertFalse ( "Hash code not equals." , testMapDiagram.hashCode() == testMapDiagram2.hashCode() ) ;
