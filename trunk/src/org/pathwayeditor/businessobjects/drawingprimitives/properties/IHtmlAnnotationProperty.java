@@ -18,6 +18,6 @@ public interface IHtmlAnnotationProperty extends IVisualisableAnnotationProperty
 	 * Set the textual value associated with this property.
 	 * @throws IllegalArgumentException The property value cannot be null.
 	 */
-	void setRichTextValue(String newText);
+	void setValue(String newText);
 	
 }

@@ -39,7 +39,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	private Date modified = new Date();
 	private int mapINode;
 	private IRepository repository ;
-	private HibModel graph ;
+	private HibModel model ;
 	private IndexCounter creationSerialCounter;
 
 	/**
@@ -65,7 +65,7 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.snapToGridEnabled = other.snapToGridEnabled;
 		this.backgroundColour = other.getBackgroundColour();
 		this.canvasSize = other.getCanvasSize();
-		this.graph = new HibModel(this, other.getGraph());
+		this.model = new HibModel(this, other.getGraph());
 		this.notation = other.notation;
 		this.creationSerialCounter = new IndexCounter();
 	}
@@ -91,8 +91,12 @@ public class HibCanvas implements ICanvas , Serializable {
 		return this.notation;
 	}
 
-	public void setContext(HibNotation hibNotation) {
+	public void setHibNotation(HibNotation hibNotation) {
 		this.hibNotation = hibNotation;
+	}
+	
+	public HibNotation getHibNotation(){
+		return this.hibNotation;
 	}
 	
 	public Date getCreated() {
@@ -288,11 +292,11 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 
 	public HibModel getGraph() {
-		return this.graph;
+		return this.model;
 	}
 
 	public void setGraph(HibModel graph) {
-		this.graph = graph;
+		this.model = graph;
 	}
 
 	
@@ -319,6 +323,10 @@ public class HibCanvas implements ICanvas , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getModel()
 	 */
 	public HibModel getModel() {
-		return this.graph;
+		return this.model;
+	}
+	
+	void setModel(HibModel model){
+		this.model = model;
 	}
 }

@@ -18,8 +18,11 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -56,7 +59,7 @@ public class DbLinkPropertyTest extends PojoTester {
 		Query retreivedLinkProperty = getSession().createQuery("from HibTextProperty where id='100006'" ) ;
 		HibTextProperty dbLinkProperty = (HibTextProperty) retreivedLinkProperty.uniqueResult() ;
 		
-		assertEquals ( "property value" , RETREIVED_TEXT_PROPERTY_VALUE , dbLinkProperty.getTextValue()) ;
+		assertEquals ( "property value" , RETREIVED_TEXT_PROPERTY_VALUE , dbLinkProperty.getValue()) ;
 		
 	}
 	
@@ -67,8 +70,9 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
+		INumberPropertyDefinition defn = null;
 		
-		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , NUMBER_VALUE_TEN ) ;
+		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLink.addLinkProperty(NUMBER_PROPERTY_NAME , numberProperty ) ;
 		
@@ -103,8 +107,9 @@ public class DbLinkPropertyTest extends PojoTester {
 		doSetup() ;
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
+		IPlainTextPropertyDefinition defn = null;
 		
-		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
+		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLink.addLinkProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -139,8 +144,9 @@ public class DbLinkPropertyTest extends PojoTester {
 		doSetup() ;
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
+		IHtmlPropertyDefinition defn = null;
 		
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , TEXT_PROPERTY_VALUE ) ;
+		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLink.addLinkProperty(RICH_TEXT_PROPERTY_NAME , richTextProperty ) ;
 		
@@ -175,12 +181,13 @@ public class DbLinkPropertyTest extends PojoTester {
 		doSetup() ;
 		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
+		IListPropertyDefinition defn = null;
 		
 		List <String> valuesToEnter = new ArrayList<String> (2) ; 
 		valuesToEnter.add(VALUE_TO_ENTER_1);
 		valuesToEnter.add(VALUE_TO_ENTER_2);
 		
-		HibListProperty listProperty = new HibListProperty ((HibCanvas)dbLink.getCanvas() , CREATION_SERIAL ,valuesToEnter ) ;
+		HibListProperty listProperty = new HibListProperty ((HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
 //		listProperty.setValues(valuesToEnter) ;
 //		listProperty.setCreationSerial(CREATION_SERIAL);
@@ -213,40 +220,6 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 	}
 	
-	@Test
-	public void removePropertyFromLink () throws Exception 
-	{
-		doSetup() ;
-		Query retreivedLink = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
-		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
-		
-		dbLink.removeLinkProperty("linkpropertyname") ;
-		
-		
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit();
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				REMOVED_PROPERTY_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
-		
-	}
-	
-	@Ignore 
 	@Test
 	public void testDeletePropertyWithLink () throws Exception 
 	{

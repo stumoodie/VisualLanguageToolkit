@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
@@ -28,11 +29,16 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	private int iNode;
 	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
 
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	protected HibFolder() {
 		listenerManager = new PropertyChangeSupport(this);
 	}
 	
 	protected HibFolder(HibRepository repository){
+		this();
 		this.repository = repository;
 		this.iNode = repository.getINodeCounter().nextIndex();
 	}
@@ -394,10 +400,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getMapIterator()
 	 */
-	public Iterator<? extends IMap> getMapIterator() {
-		Iterator<? extends IMap> it = (Iterator<? extends IMap>) hibMaps
-				.iterator();
-		return it;
+	public Iterator<IMap> getMapIterator() {
+		return new IterationCaster<IMap, HibMap>(hibMaps.iterator());
 	}
 
 	/*
@@ -527,11 +531,14 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
 	 */
-	public Iterator<? extends ISubFolder> getSubFolderIterator() {
-		Iterator<HibSubFolder> it = subFolders.iterator();
-		return it;
+	public Iterator<ISubFolder> getSubFolderIterator() {
+		return new IterationCaster<ISubFolder, HibSubFolder>(subFolders.iterator());
 	}
 
+	public int getNumSubFolders(){
+		return this.subFolders.size();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -15,7 +15,11 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	private String name="";
 	private String description="";
 
-	public HibSubFolder() {
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
+	HibSubFolder() {
 		super();
 	}
 

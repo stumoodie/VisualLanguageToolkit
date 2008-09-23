@@ -18,7 +18,7 @@
 
         <one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all"/>
 
-        <many-to-one name="notation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation">
+        <many-to-one name="hibNotation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation">
             <column name="context_id" not-null="true" />
         </many-to-one>
 

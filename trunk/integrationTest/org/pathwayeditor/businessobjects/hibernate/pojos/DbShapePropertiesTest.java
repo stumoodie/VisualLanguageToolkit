@@ -56,7 +56,7 @@ public class DbShapePropertiesTest extends PojoTester {
 		Query retreivedShapeProperty = getSession().createQuery("from HibTextProperty where id='100006'" ) ;
 		HibTextProperty dbLinkProperty = (HibTextProperty) retreivedShapeProperty.uniqueResult() ;
 		
-		assertEquals ( "property value" , LOADED_TEXT_PROPERTY_VALUE , dbLinkProperty.getTextValue()) ;
+		assertEquals ( "property value" , LOADED_TEXT_PROPERTY_VALUE , dbLinkProperty.getValue()) ;
 		
 	}
 	
@@ -69,9 +69,7 @@ public class DbShapePropertiesTest extends PojoTester {
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibTextProperty textProperty = new HibTextProperty ( ) ;
-		textProperty.setTextValue(TEXT_PROPERTY_VALUE) ;
-		textProperty.setCreationSerial(CREATION_SERIAL);
-		textProperty.setCanvas(dbShape.getCanvas()) ;
+		textProperty.setValue(TEXT_PROPERTY_VALUE) ;
 		
 		dbShape.addProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -108,9 +106,7 @@ public class DbShapePropertiesTest extends PojoTester {
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibRichTextProperty textProperty = new HibRichTextProperty ( ) ;
-		textProperty.setRichTextValue(RICH_TEXT_PROPERTY_VALUE) ;
-		textProperty.setCreationSerial(CREATION_SERIAL);
-		textProperty.setCanvas(dbShape.getCanvas()) ;
+		textProperty.setValue(RICH_TEXT_PROPERTY_VALUE) ;
 		
 		dbShape.addProperty(RICH_TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -147,9 +143,7 @@ public class DbShapePropertiesTest extends PojoTester {
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibNumberProperty textProperty = new HibNumberProperty ( ) ;
-		textProperty.setNumberValue(NUMBER_VALUE_TEN) ;
-		textProperty.setCreationSerial(CREATION_SERIAL);
-		textProperty.setCanvas(dbShape.getCanvas()) ;
+		textProperty.setValue(NUMBER_VALUE_TEN) ;
 		
 		dbShape.addProperty(NUMBER_PROPERTY_NAME , textProperty ) ;
 		
@@ -187,13 +181,8 @@ public class DbShapePropertiesTest extends PojoTester {
 		HibListProperty numberProperty = new HibListProperty ( ) ;
 		
 		List <String> valuesToEnter = new ArrayList<String> (2) ; 
-		valuesToEnter.add(VALUE_TO_ENTER_1);
-		valuesToEnter.add(VALUE_TO_ENTER_2);
-		
-		
-		numberProperty.setValues(valuesToEnter) ;
-		numberProperty.setCreationSerial(CREATION_SERIAL);
-		numberProperty.setCanvas(dbShape.getCanvas()) ;
+		numberProperty.addValue(VALUE_TO_ENTER_1);
+		numberProperty.addValue(VALUE_TO_ENTER_2);
 		
 		dbShape.addProperty(LIST_PROPERTY_NAME , numberProperty ) ;
 		

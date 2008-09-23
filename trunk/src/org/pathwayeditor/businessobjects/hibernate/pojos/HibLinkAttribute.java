@@ -88,8 +88,8 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.creationSerial = link_index;
 		this.objectType = otherAttribute.objectType;
 		this.hibObjectType = otherAttribute.hibObjectType;
-		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceLinkTerminus());
-		this.targetTerminus = new HibLinkTerminus(this, otherAttribute.getTargetLinkTerminus());
+		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceTerminus());
+		this.targetTerminus = new HibLinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.lineColour = otherAttribute.getLineColor();
 		this.lineStyle = otherAttribute.getLineStyle();
 		this.lineWidth = otherAttribute.getLineWidth();
@@ -458,14 +458,22 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
 	 */
-	public HibLinkTerminus getSourceLinkTerminus() {
+	public HibLinkTerminus getSourceTerminus() {
 		return this.sourceTerminus;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
 	 */
-	public HibLinkTerminus getTargetLinkTerminus() {
+	public HibLinkTerminus getTargetTerminus() {
 		return this.targetTerminus;
+	}
+
+	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
+		this.sourceTerminus = sourceTerminus;
+	}
+
+	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
+		this.targetTerminus = targetTerminus;
 	}
 }

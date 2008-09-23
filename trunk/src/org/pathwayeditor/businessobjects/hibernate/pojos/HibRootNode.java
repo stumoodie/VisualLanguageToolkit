@@ -15,6 +15,14 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	private RootAttribute canvasAttribute = null;
 	
 	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
+	HibRootNode() {
+		super();
+	}
+
+	/**
 	 * @param model
 	 * @param rootNode
 	 * @param nodeIdxIdx
@@ -31,13 +39,6 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		this.canvasAttribute = new RootAttribute(canvas, nextIndex, objectType);
 	}
 	
-	/**
-	 * 
-	 */
-	HibRootNode() {
-		super();
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getAttribute()
 	 */

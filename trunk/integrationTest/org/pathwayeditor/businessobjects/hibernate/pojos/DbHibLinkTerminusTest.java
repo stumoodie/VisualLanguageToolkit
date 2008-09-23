@@ -17,6 +17,7 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
+import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -56,12 +57,12 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		
 		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'" );
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
+		ILinkTerminusDefinition defn = null;
 		
-		HibLinkTerminus newLinkTerminus = new HibLinkTerminus ();
+		HibLinkTerminus newLinkTerminus = new HibLinkTerminus (dbLink, LinkTermType.TARGET, defn);
 		newLinkTerminus.setOffset((short) 5  );
-		newLinkTerminus.setLinkTermType(LinkTermType.TARGET) ;
 		
-		dbLink.addLinkTermini(newLinkTerminus) ;
+		dbLink.setTargetTerminus(newLinkTerminus) ;
 		
 		getSession().saveOrUpdate(dbLink) ;
 		getSession().getTransaction().commit() ;

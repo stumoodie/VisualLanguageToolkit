@@ -20,8 +20,8 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	private HibShapeAttribute shapeAttribute ;
 	
 	/**
-	 * Hibernate constructor should only be used by hibernate.
-	 * @deprecated
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
 	 */
 	HibShapeNode(){
 		super();

@@ -118,7 +118,8 @@ public class DbHibLinkTest extends PojoTester{
 		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
 		HibObjectType dbObjectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 		
-		HibLinkAttribute linkToWrite = new HibLinkAttribute () ;
+//		HibLinkAttribute linkToWrite = new HibLinkAttribute () ;
+		HibLinkAttribute linkToWrite = null;
 		
 		linkToWrite.setCreationSerial(LINK_CREATION_SERIAL_2) ;
 		linkToWrite.setName(LINK_NAME_2) ;
@@ -133,8 +134,6 @@ public class DbHibLinkTest extends PojoTester{
 		linkToWrite.setUrl(LINK_URL_2) ;
 		
 		linkToWrite.setCanvas(dbCanvas) ;
-		linkToWrite.setObjectType(dbObjectType) ;
-		linkToWrite.setEdge(dbCompoundEdge) ;
 		
 		getSession().save(linkToWrite) ;
 		getSession().getTransaction().commit() ; 

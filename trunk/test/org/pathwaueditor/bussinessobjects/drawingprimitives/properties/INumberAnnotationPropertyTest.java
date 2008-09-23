@@ -65,14 +65,14 @@ public class INumberAnnotationPropertyTest {
 	@Test
 	public void testChangeTextPropertyValue () throws Exception
 	{
-		numberProperty.setNumberValue(OTHER_NUMBER_VALUE) ;
+		numberProperty.setValue(OTHER_NUMBER_VALUE) ;
 		assertEquals ( "text value" , OTHER_NUMBER_VALUE , numberProperty.getValue() ) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testChangeTextPropertyValueToNull () throws Exception
 	{
-		numberProperty.setNumberValue(null) ;
+		numberProperty.setValue(null) ;
 		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getValue() ) ;
 	}
 	

@@ -100,7 +100,7 @@ public class HibRootFolderTest {
 	 	
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
-	   HibRootFolder mockBORootFolder = new HibRootFolder();
+		HibRootFolder mockBORootFolder = new HibRootFolder();
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockSubfolder).setRepository(mockRepository);

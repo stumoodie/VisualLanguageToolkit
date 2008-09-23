@@ -14,6 +14,10 @@ public class HibRichTextProperty extends HibProperty implements Serializable, IH
 	private IHtmlPropertyDefinition propertyDefinition;
 	private String richTextValue;
 
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	HibRichTextProperty() {
 	}
 
@@ -33,7 +37,7 @@ public class HibRichTextProperty extends HibProperty implements Serializable, IH
 		return this.richTextValue;
 	}
 
-	public void setRichTextValue(String richTextValue) {
+	public void setValue(String richTextValue) {
 		if (richTextValue == null)
 			throw new IllegalArgumentException(
 					"richText value should not be null.");
@@ -48,16 +52,6 @@ public class HibRichTextProperty extends HibProperty implements Serializable, IH
 	 */
 	public IHtmlPropertyDefinition getDefinition() {
 		return this.propertyDefinition;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.properties.
-	 * IHtmlAnnotationProperty#setValue(java.lang.String)
-	 */
-	public void setValue(String newText) {
-		this.richTextValue = newText;
 	}
 
 	/*

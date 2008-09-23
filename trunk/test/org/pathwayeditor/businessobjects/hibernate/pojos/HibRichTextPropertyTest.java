@@ -4,6 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -13,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
 
 /**
  * @author ntsorman
@@ -37,7 +39,9 @@ public class HibRichTextPropertyTest {
 	@Before
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
+		IHtmlPropertyDefinition defn = null;
+		
+		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, defn) ;
 	}
 
 	@After
@@ -59,12 +63,13 @@ public class HibRichTextPropertyTest {
 	public void testAlterPropertyValues () throws Exception 
 	{
 		final HibCanvas newMockCanvas = mockery.mock(HibCanvas.class , "newMockCanvas") ;
+		IHtmlPropertyDefinition defn = null;
 		
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
+		richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, defn) ;
 		
-		richTextProperty.setRichTextValue(NEW_PROPERTY_VALUE) ;
-		richTextProperty.setCreationSerial(NEW_CREATION_SERIAL) ;
-		richTextProperty.setCanvas(newMockCanvas) ;
+		richTextProperty.setValue(NEW_PROPERTY_VALUE) ;
+//		richTextProperty.setCreationSerial(NEW_CREATION_SERIAL) ;
+//		richTextProperty.setCanvas(newMockCanvas) ;
 		
 		assertEquals ( "check value" , NEW_PROPERTY_VALUE , richTextProperty.getRichTextValue()) ;
 		assertEquals ( "check serial" , NEW_CREATION_SERIAL , richTextProperty.getCreationSerial() ) ;
@@ -74,14 +79,7 @@ public class HibRichTextPropertyTest {
 	@Test
 	public void testCopyNumberProperty () throws Exception 
 	{
-		HibRichTextProperty copyOfTextProperty = richTextProperty.copy(mockCanvas) ;
-		
-		assertEquals ( "copy of" , richTextProperty , copyOfTextProperty ) ;
+		fail("Imoplement me!");
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetOwner () throws Exception
-	{
-		richTextProperty.getOwningObject() ;
-	}
 }

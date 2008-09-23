@@ -17,11 +17,11 @@ public interface IPlainTextAnnotationProperty extends IVisualisableAnnotationPro
 	 * Get the textual value associated with this property.
 	 * @return The property definition instance. Cannot be null.
 	 */
-	String getTextValue();
+	String getValue();
 	
 	/**
 	 * Set the textual value associated with this property.
 	 * @throws IllegalArgumentException The property value cannot be null.
 	 */
-	void setTextValue(String textValue);
+	void setValue(String textValue);
 }

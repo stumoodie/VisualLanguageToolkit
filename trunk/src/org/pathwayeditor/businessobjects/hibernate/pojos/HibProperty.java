@@ -2,7 +2,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 /**
@@ -11,20 +10,24 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private static final long serialVersionUID = -1996477907215294788L;
 
-	private Long id;
-	private ICanvas hibCanvas;
+	private Long id = null;
+	private HibCanvas hibCanvas = null;
 	private int creationSerial;
 	private boolean displayed;
 
-	HibProperty() {
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
+	protected HibProperty() {
 	}
 
-	protected HibProperty(ICanvas hibCanvas, int creationSerial) {
+	protected HibProperty(HibCanvas hibCanvas, int creationSerial) {
 		this.hibCanvas = hibCanvas;
 		this.creationSerial = creationSerial;
 	}
 
-	protected HibProperty(ICanvas newCanvas, int newCreationSerial,	HibProperty other) {
+	protected HibProperty(HibCanvas newCanvas, int newCreationSerial,	HibProperty other) {
 		this.hibCanvas = newCanvas;
 		this.creationSerial = newCreationSerial;
 	}
@@ -38,7 +41,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		this.id = id;
 	}
 
-	public ICanvas getCanvas() {
+	public HibCanvas getCanvas() {
 		return this.hibCanvas;
 	}
 

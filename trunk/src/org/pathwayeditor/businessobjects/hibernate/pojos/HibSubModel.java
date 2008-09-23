@@ -32,6 +32,10 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
 	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
 
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	HibSubModel() {
 		super(new CompoundGraphCopyBuilder());
 		this.rootNode = null;

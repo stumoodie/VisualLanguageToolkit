@@ -28,12 +28,18 @@ public class HibRepository implements Serializable, IRepository {
 	private String description = null;
 	private HibRootFolder rootFolder = null;
 	private int buildNum;
-	private IndexCounter indexCounter;
+	private IndexCounter iNodeCounter;
      
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	HibRepository(){
+		this.iNodeCounter = new IndexCounter();
 	}
 
 	public HibRepository(String name, String description, int buildNum ) {
+		this();
 		if(name==null||name.equals(""))
 				throw new IllegalArgumentException(ILLEGAL_NAME);
 		this.name = name;
@@ -41,6 +47,7 @@ public class HibRepository implements Serializable, IRepository {
 			throw new IllegalArgumentException(ILLEGAL_DESCRIPTION);
 		this.description = description;
 		this.buildNum = buildNum;
+		this.iNodeCounter = new IndexCounter();
 		rootFolder = new HibRootFolder(this);
 	}
 
@@ -65,15 +72,15 @@ public class HibRepository implements Serializable, IRepository {
 	}
 	
 	public IndexCounter getINodeCounter(){
-		return this.indexCounter;
+		return this.iNodeCounter;
 	}
 
 	void setLastINode(int iNode){
-		this.indexCounter = new IndexCounter(iNode);
+		this.iNodeCounter = new IndexCounter(iNode);
 	}
 	
 	int getLastINode(){
-		return this.indexCounter.getLastIndex();
+		return this.iNodeCounter.getLastIndex();
 	}
 	
 	public String getName() {

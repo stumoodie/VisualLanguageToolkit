@@ -63,14 +63,14 @@ public class IHtmlAnnotationPropertyTest {
 	@Test
 	public void testChangeTextPropertyValue () throws Exception
 	{
-		htmlProperty.setRichTextValue(OTHER_TEXT_VALUE) ;
+		htmlProperty.setValue(OTHER_TEXT_VALUE) ;
 		assertEquals ( "text value" , OTHER_TEXT_VALUE , htmlProperty.getRichTextValue() ) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testChangeTextPropertyValueToNull () throws Exception
 	{
-		htmlProperty.setRichTextValue(null) ;
+		htmlProperty.setValue(null) ;
 		assertEquals ( "text value" , TEXT_VALUE , htmlProperty.getRichTextValue() ) ;
 	}
 	

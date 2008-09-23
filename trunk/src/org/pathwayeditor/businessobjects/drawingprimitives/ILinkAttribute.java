@@ -21,13 +21,13 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute {
 	 * Get the Link Decorator for the source of the link. Cannot be null.
 	 * @return the source link Decorator.
 	 */		
-	ILinkTerminus getSourceLinkTerminus();
+	ILinkTerminus getSourceTerminus();
 
 	/**
 	 * Get the Link Decorator for the target of the link. Cannot be null.
 	 * @return the target link Decorator.
 	 */		
-	ILinkTerminus getTargetLinkTerminus();
+	ILinkTerminus getTargetTerminus();
 
 	/**
 	 * Get the Connector router of the link. Cannot be null.

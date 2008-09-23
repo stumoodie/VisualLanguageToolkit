@@ -14,8 +14,9 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 /**
@@ -29,116 +30,94 @@ public class FolderBusinessLogicTest {
 
 	private static final String FANDABIDOSI = "fandabidosi";
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
+	private static final String EXPECTED_REPO_NAME = "test repo name";
+	private static final int EXPECTED_REPO_BUILD_NUM = 999;
+	private static final String EXPECTED_REPO_DESCRIPTION = "test repo descn";
+	private static final String CHILD_ONE_NAME = "one";
+	private static final String TEST_CHILD_NAME = "testChild";
+	private static final int INITIAL_NUM_ROOT_SUBFOLDERS = 1;
+	private static final int INITIAL_NUM_CHILDONE_SUBFOLDERS = 1;
+	private static final int INITIAL_NUM_CHILDFOUR_SUBFOLDERS = 0;
 
-	static {
-		HibernateUtil.setStubSessionFactoryAsDefault(); // dont use the database
-	}
-	protected HibSubFolder childOne;
-	protected HibSubFolder childTwo;
-	protected HibSubFolder childThree;
-	protected HibSubFolder childFour;
-	HibRootFolder root;
+//	static {
+//		HibernateUtil.setStubSessionFactoryAsDefault(); // dont use the database
+//	}
+	private IRepository repo;
+	private ISubFolder childOne;
+	private ISubFolder childTwo;
+	private ISubFolder childThree;
+	private ISubFolder childFour;
+	private IRootFolder root;
 
 	@Before
 	public void setUp() {
-		root = new HibRootFolder();
-		childOne = new HibSubFolder();
-		childTwo = new HibSubFolder();
-		childThree = new HibSubFolder();
-		childFour = new HibSubFolder();
-		childOne.setName("one");
-		childTwo.setName("two");
-		childThree.setName("three");
-		childFour.setName("four");
-		childOne.addSubFolder(childTwo);
-		childTwo.addSubFolder(childThree);
-		childThree.addSubFolder(childFour);
-		root.addSubFolder(childOne);
+		this.repo = new HibRepository(EXPECTED_REPO_NAME, EXPECTED_REPO_DESCRIPTION, EXPECTED_REPO_BUILD_NUM);
+		root = repo.getRootFolder();
+		childOne = root.createSubfolder(CHILD_ONE_NAME);
+		childTwo = childTwo.createSubfolder("two");
+		childThree = childTwo.createSubfolder("three");
+		childFour = childThree.createSubfolder("four");
 	}
 
 	@Test
 	public void canMoveFolderUniqueNameTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		assertTrue(folder.canMoveSubfolder((ISubFolder) child));
-		folder.addSubFolder(child);
-		assertFalse(folder.canMoveSubfolder((ISubFolder) child));
+		ISubFolder child = this.childFour.createSubfolder("one");
+		assertTrue(childOne.canMoveSubfolder(child));
+		assertFalse(root.canMoveSubfolder(child));
 	}
 
 	@Test
 	public void canMoveFolderFalseWHenFolderNullTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		assertTrue(folder.canMoveSubfolder((ISubFolder) child));
+		ISubFolder child = this.childFour.createSubfolder("one");
+		assertTrue(childOne.canMoveSubfolder((ISubFolder) child));
 		child = null;
-		assertFalse(folder.canMoveSubfolder((ISubFolder) child));
+		assertFalse(childOne.canMoveSubfolder((ISubFolder) child));
 	}
 
 	@Test
 	public void canMoveFolderCircularChildSimpleTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder childOne = new HibSubFolder();
-		childOne.setName("one");
-		assertTrue(folder.canMoveSubfolder((ISubFolder) childOne));
-		childOne.addSubFolder(folder);
-		assertFalse(folder.canMoveSubfolder((ISubFolder) childOne));
+		ISubFolder child = this.root.createSubfolder("one");
+		assertTrue(child.canMoveSubfolder((ISubFolder) childOne));
+		assertFalse(childOne.canMoveSubfolder((ISubFolder) childThree));
 	}
 
 	@Test
 	public void canMoveFolderCircularChildRecursionTest() {
-		HibSubFolder folder = new HibSubFolder();
-		assertTrue(folder.canMoveSubfolder((ISubFolder) childOne));
-		childThree.addSubFolder(folder);
-		assertFalse(folder.canMoveSubfolder((ISubFolder) childOne));
+		ISubFolder folder = this.root.createSubfolder("one");
+		assertTrue(childThree.canMoveSubfolder(folder));
+		assertFalse(folder.canMoveSubfolder(childOne));
 		assertTrue(folder.canMoveSubfolder((ISubFolder) childFour));
 	}
 
 	@Test
 	public void canUseSubfolderNameUniqueNameTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		String one = "one";
-		child.setName(one);
-		assertTrue(folder.canUseSubfolderName(one));
-		folder.addSubFolder(child);
-		assertFalse(folder.canUseSubfolderName(one));
+		assertTrue(childOne.canUseSubfolderName(CHILD_ONE_NAME));
+		assertFalse(root.canUseSubfolderName(CHILD_ONE_NAME));
 	}
 
 	@Test
 	public void canUseSubfolderNameNotCaseSensitiveTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		String one = "one";
-		child.setName(one);
-		assertTrue(folder.canUseSubfolderName(one));
-		folder.addSubFolder(child);
-		assertFalse(folder.canUseSubfolderName(one));
-		assertFalse(folder.canUseSubfolderName(one.toUpperCase()));
+		assertTrue(childOne.canUseSubfolderName(CHILD_ONE_NAME.toUpperCase()));
+		assertFalse(root.canUseSubfolderName(CHILD_ONE_NAME.toUpperCase()));
 	}
 
 	@Test
 	public void canUseSubfolderNameNullOrSlashdotThrowsIllegalArgumentExceptionTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		String one = "one";
-		child.setName(one);
-		assertTrue(folder.canUseSubfolderName(child.getName()));
+		assertTrue(childOne.canUseSubfolderName(CHILD_ONE_NAME));
 		try {
-			folder.canUseSubfolderName(".");
+			root.canUseSubfolderName(".");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;
 		}
 		try {
-			folder.canUseSubfolderName("\\");
+			root.canUseSubfolderName("\\");
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;
 		}
 		try {
-			folder.canUseSubfolderName(null);
+			root.canUseSubfolderName(null);
 			fail("should throw illegal arg for null or slashdot");
 		} catch (IllegalArgumentException e) {
 			;
@@ -147,56 +126,44 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void containsSubFolderDirectChildTest() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		assertFalse(folder.containsSubfolder(child));
-		folder.addSubFolder(child);
-		assertTrue(folder.containsSubfolder(child));
+		ISubFolder child = this.root.createSubfolder(TEST_CHILD_NAME);
+		assertFalse(childOne.containsSubfolder(child));
+		assertTrue(root.containsSubfolder(child));
 	}
 
 	@Test
 	public void containsSubFolderChildTreeTest() {
-		HibSubFolder folder = new HibSubFolder();
-		folder.addSubFolder(childOne);
-		assertTrue(folder.containsSubfolder(childFour));
+		assertTrue(root.containsSubfolder(childFour));
 	}
 
 	@Test
 	public void testCreateSubFolderSetsName() {
-		HibRootFolder folder = new HibRootFolder();
-		folder.createSubfolder("two");
-		assertTrue(folder.getSubFolders().iterator().next().getName().equals(
-				"two"));
+		childFour.createSubfolder(TEST_CHILD_NAME);
+		assertTrue(childFour.getSubFolderIterator().next().getName().equals(TEST_CHILD_NAME));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateSubFolderChecksNameUnique() {
-		HibSubFolder folder = new HibSubFolder();
-		folder.createSubfolder("two");
-		assertTrue(folder.getSubFolders().iterator().next().getName().equals(
+		root.createSubfolder("two");
+		assertTrue(root.getSubFolderIterator().next().getName().equals(
 				"two"));
-		folder.createSubfolder("three");
-		Iterator<HibSubFolder> it = folder.getSubFolders().iterator();
+		root.createSubfolder("three");
+		Iterator<ISubFolder> it = root.getSubFolderIterator();
 		assertTrue(it.next().getName().equals("two") ? it.next().getName()
 				.equals("three") : it.next().getName().equals("two"));
-		it = folder.getSubFolders().iterator();
+		it = root.getSubFolderIterator();
 		assertTrue(it.next().getName().equals("three") ? it.next().getName()
 				.equals("two") : it.next().getName().equals("three"));
-		folder.createSubfolder("two");
+		root.createSubfolder("two");
 	}
 
 	@Test
 	public void testMoveSubFolderAddsSubFolder() {
-		HibSubFolder folder = new HibSubFolder();
-		assertTrue(folder.getSubFolders().size() == 0);
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		HibRootFolder root = new HibRootFolder();
-		root.addSubFolder(child);
-		folder.moveSubfolder(child);
-		assertTrue(folder.getSubFolders().size() == 1);
-		assertEquals(child, folder.getSubFolders().iterator().next());
+		assertTrue(root.getNumSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
+		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
+		childFour.moveSubfolder(child);
+		assertTrue(childFour.getNumSubFolders() == INITIAL_NUM_CHILDFOUR_SUBFOLDERS+1);
+		assertEquals(child, childOne.getSubFolderIterator().next());
 	}
 
 	@Test

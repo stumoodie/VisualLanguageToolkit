@@ -23,6 +23,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -112,8 +113,8 @@ public class DbHibShapeTest extends PojoTester{
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 		HibShapeNode hibNode = (HibShapeNode) retreivedCompoundNode.uniqueResult() ;
-
-		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL, mockShapeObjectType) ;
+		
+		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL, mockShapeObjectType, objectType) ;
 		shapeToSave.setShapeNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
 		shapeToSave.setDescription(SHAPE_DESCR_2) ;
@@ -127,7 +128,7 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setLineWidth(NUMERIC_VALUE_TWO) ;
 		shapeToSave.setHibLineStyle(LineStyle.DASHED) ;
 		shapeToSave.setPadding(NUMERIC_VALUE_TWO) ;
-		shapeToSave.setShapeType((short)NUMERIC_VALUE_TWO) ;
+		shapeToSave.setShapeType(PrimitiveShapeType.CONCENTRIC_CIRCLES) ;
 		shapeToSave.setXPosition(POSITION_VALUE_2) ;
 		shapeToSave.setYPosition(POSITION_VALUE_2) ;
 		shapeToSave.setHeight(SIZE_VALUE_2) ;

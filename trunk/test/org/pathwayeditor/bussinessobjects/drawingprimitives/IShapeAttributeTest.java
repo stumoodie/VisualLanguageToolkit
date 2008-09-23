@@ -20,6 +20,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -63,7 +64,8 @@ public class IShapeAttributeTest {
 	public void setUp() throws Exception {
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
 		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
-		final HibShapeAttribute tempShapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType) ;
+		HibObjectType hibObjectType = this.mockery.mock(HibObjectType.class, "hibObjectType");
+		final HibShapeAttribute tempShapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
 		
 		tempShapeAttribute.setName(SHAPE_NAME) ;
 		tempShapeAttribute.setFillBlue(COLOR_VALUE) ;
@@ -311,26 +313,6 @@ public class IShapeAttributeTest {
 		shapeAttribute.setLineStyle(null) ;
 		assertEquals ( "lineStyle" , LineStyle.DASH_DOT , shapeAttribute.getLineStyle() );
 	}	
-		
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetFirstObject() {
-		shapeAttribute.getFirstObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetLastObject() {
-		shapeAttribute.getLastObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetNextObject() {
-		shapeAttribute.getNextObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetPreviousObject() {
-		shapeAttribute.getPreviousObject() ;
-	}
 	
 	@Test
 	public void testGetPropertyIterator () throws Exception 

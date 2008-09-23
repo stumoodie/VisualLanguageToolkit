@@ -14,6 +14,7 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -39,7 +40,8 @@ public class DbContextTest extends PojoTester{
 	public void testAddContext () throws Exception 
 	{	
 		doSetup () ;
-		HibNotation contextToAdd = new HibNotation ( CONTEXT_ID, CONTEXT_NAME, MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION, CONTEXT_DESCRIPTION) ;
+		Version version = new Version(MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION);
+		HibNotation contextToAdd = new HibNotation ( CONTEXT_ID, CONTEXT_NAME, CONTEXT_DESCRIPTION, version) ;
 		
 		getSession().save(contextToAdd) ;
 		getSession().getTransaction().commit() ;

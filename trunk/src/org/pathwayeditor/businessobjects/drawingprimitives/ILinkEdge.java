@@ -58,5 +58,5 @@ public interface ILinkEdge extends IDrawingElement {
 	ILinkAttribute getAttribute();
 	
 	
-	ISubModel getOwningSubCanvas();
+	ISubModel getOwningSubModel();
 }

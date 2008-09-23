@@ -21,6 +21,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 
 /**
@@ -57,6 +59,9 @@ public class ICanvasTest {
 	private static final int NEW_BACKGROUND_COLOR = 100 ;
 //	private static final int LESS_THAN_ZERO_SIZE = -10 ;
 //	private static final int OTHER_GRID_SIZE = 15 ;
+	private static final int EXPECTED_BUILD_NUM = 0;
+	private static final String EXPECTED_REPO_NAME = "testRepo";
+	private static final String EXPECTED_REPO_DESCN = "test descn";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -64,9 +69,11 @@ public class ICanvasTest {
 		this.mockery.checking(new Expectations(){{
 			
 		}});
-		folder = new HibRootFolder () ;
+		HibRepository repository = new HibRepository(EXPECTED_REPO_NAME, EXPECTED_REPO_DESCN, EXPECTED_BUILD_NUM); 
+		folder = new HibRootFolder (repository) ;
 		mapDiagram = new HibMap (folder, MAP_DIAGRAM_NAME) ;
-		canvas = new HibCanvas (  mapDiagram ,  mockContext);
+		HibNotation mockNotationSubsystem = this.mockery.mock(HibNotation.class, "HibNotation"); 
+		canvas = new HibCanvas (  mapDiagram , mockContext, mockNotationSubsystem);
 		this.canvas.setGridSize(GRID_SIZE);
 		this.canvas.setGridEnabled(GRID_ENABLED);
 		this.canvas.setSnapToGrid(SNAP_TO_GRID_ENABLED);

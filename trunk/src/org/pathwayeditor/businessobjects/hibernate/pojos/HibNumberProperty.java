@@ -17,7 +17,11 @@ public class HibNumberProperty extends HibProperty implements Serializable , INu
      private BigDecimal numberValue;
      private INumberPropertyDefinition propDefn;
 
-    HibNumberProperty() {
+     /**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
+     HibNumberProperty() {
     }
 
     public HibNumberProperty(HibCanvas hibCanvas, int creationSerial, INumberPropertyDefinition propDefn) {
@@ -32,7 +36,7 @@ public class HibNumberProperty extends HibProperty implements Serializable , INu
     	this.propDefn = other.propDefn;
     }
     
-    public void setNumberValue(BigDecimal numberValue) {
+    public void setValue(BigDecimal numberValue) {
     	if ( numberValue == null)
     		throw new IllegalArgumentException ("Number value should not be null.") ; 
         this.numberValue = numberValue;

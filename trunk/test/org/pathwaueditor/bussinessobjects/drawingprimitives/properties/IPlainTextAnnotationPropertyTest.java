@@ -57,22 +57,22 @@ public class IPlainTextAnnotationPropertyTest {
 	public void testCreatedPlainTextProperty () throws Exception
 	{
 		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getCreationSerial()) ;
-		assertEquals ( "text value" , TEXT_VALUE , textProperty.getTextValue() ) ;
+		assertEquals ( "text value" , TEXT_VALUE , textProperty.getValue() ) ;
 		assertTrue ( "object value" , textProperty.getValue() instanceof String ) ;
 	}
 	
 	@Test
 	public void testChangeTextPropertyValue () throws Exception
 	{
-		textProperty.setTextValue(OTHER_TEXT_VALUE) ;
-		assertEquals ( "text value" , OTHER_TEXT_VALUE , textProperty.getTextValue() ) ;
+		textProperty.setValue(OTHER_TEXT_VALUE) ;
+		assertEquals ( "text value" , OTHER_TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testChangeTextPropertyValueToNull () throws Exception
 	{
-		textProperty.setTextValue(null) ;
-		assertEquals ( "text value" , TEXT_VALUE , textProperty.getTextValue() ) ;
+		textProperty.setValue(null) ;
+		assertEquals ( "text value" , TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
 

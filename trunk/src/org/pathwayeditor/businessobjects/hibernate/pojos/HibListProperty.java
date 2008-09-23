@@ -19,6 +19,10 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	private List<String> values = new ArrayList<String>(0);
 	private IListPropertyDefinition propDefn;
 	
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	HibListProperty() {
 	}
 
@@ -50,6 +54,10 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	 */
 	public List<String> getValue() {
 		return this.values;
+	}
+	
+	void setValue(List<String> value){
+		this.values = value;
 	}
 
 	/* (non-Javadoc)

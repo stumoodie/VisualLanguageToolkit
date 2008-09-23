@@ -65,7 +65,7 @@ public class HibNumberPropertyTest {
 	@Test
 	public void testAlterPropertyValues () throws Exception 
 	{
-		numberProperty.setNumberValue(NEW_PROPERTY_VALUE) ;
+		numberProperty.setValue(NEW_PROPERTY_VALUE) ;
 		
 		assertEquals ( "check value" , NEW_PROPERTY_VALUE , numberProperty.getValue()) ;
 	}

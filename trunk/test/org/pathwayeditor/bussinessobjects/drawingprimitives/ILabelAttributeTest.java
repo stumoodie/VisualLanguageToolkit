@@ -17,6 +17,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
@@ -63,10 +64,11 @@ public class ILabelAttributeTest {
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
 		final IDefaultLabelAttributes mockDefaults = mockery.mock(IDefaultLabelAttributes.class, "mockDefaults");
+		IPlainTextPropertyDefinition defn = null;
 		
-		property = new HibTextProperty ( null , CREATION_SERIAL , PROPERTY_VALUE) ;
+		property = new HibTextProperty ( null , CREATION_SERIAL , defn) ;
 		
-		labelAttribute = new HibLabelAttribute ( mockCanvas, property, mockDefaults);
+		labelAttribute = new HibLabelAttribute ( mockCanvas, CREATION_SERIAL, property, mockDefaults);
 		labelAttribute.setLocation(POSITION_VALUE);
 		labelAttribute.setSize(SIZE_VALUE);
 		labelAttribute.setBackgroundColor(BACKGROUND_COLOR);

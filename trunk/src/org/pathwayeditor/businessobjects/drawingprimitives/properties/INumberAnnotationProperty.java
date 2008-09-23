@@ -20,6 +20,6 @@ public interface INumberAnnotationProperty extends IVisualisableAnnotationProper
 	/**
 	 * Get the numerical value associated with this property.
 	 */
-	void setNumberValue(BigDecimal newValue);
+	void setValue(BigDecimal newValue);
 	
 }

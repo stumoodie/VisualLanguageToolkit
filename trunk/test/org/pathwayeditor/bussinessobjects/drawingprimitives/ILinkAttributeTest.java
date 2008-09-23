@@ -28,6 +28,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 /**
  * @author ntsorman
@@ -71,9 +72,9 @@ public class ILinkAttributeTest {
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
 		HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
+		ILinkObjectType mockLinkObjectType = mockery.mock(ILinkObjectType.class, "mockLinkObjectType");
 		
-		
-		HibLinkAttribute tempLinkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	mockObjectType ) ;
+		HibLinkAttribute tempLinkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	mockLinkObjectType,mockObjectType ) ;
 		
 		tempLinkAttribute.setCreationSerial(CREATION_SERIAL) ;
 		
@@ -118,14 +119,14 @@ public class ILinkAttributeTest {
 	public void testGetLinkSourceDecoration() throws Exception
 	{
 		// TODO
-		linkAttribute.getSourceLinkTerminus() ;
+		linkAttribute.getSourceTerminus() ;
 	}
 	
 	@Test(expected=UnsupportedOperationException.class)
 	public void testGetLinkTargetDecoration() throws Exception
 	{
 		// TODO
-		linkAttribute.getTargetLinkTerminus() ;
+		linkAttribute.getTargetTerminus() ;
 	}
 	
 	@Test
@@ -193,26 +194,6 @@ public class ILinkAttributeTest {
 	{
 		linkAttribute.setUrl(null) ;
 		assertEquals ( "url" , URL , linkAttribute.getUrl()) ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetFirstObject() {
-		linkAttribute.getFirstObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetLastObject() {
-		linkAttribute.getLastObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetNextObject() {
-		linkAttribute.getNextObject() ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetPreviousObject() {
-		linkAttribute.getPreviousObject() ;
 	}
 	
 	@Test

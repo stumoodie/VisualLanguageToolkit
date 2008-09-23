@@ -89,7 +89,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		return inNode;
 	}
 	
-	void setOwningChildGraph(HibSubModel value) {
+	void setOwningSubModel(HibSubModel value) {
 		this.owningChildGraph = value;
 	}
 	
@@ -168,7 +168,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getOwningSubCanvas()
 	 */
-	public HibSubModel getOwningSubCanvas() {
+	public HibSubModel getOwningSubModel() {
 		return this.getOwningChildGraph();
 	}
 

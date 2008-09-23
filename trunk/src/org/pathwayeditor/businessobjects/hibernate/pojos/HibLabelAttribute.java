@@ -92,6 +92,10 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.position = this.position.newX(XPosition);
 	}
 
+	public int getXPosition() {
+		return this.position.getX();
+	}
+
 	public int getYPosition() {
 		return this.position.getY();
 	}

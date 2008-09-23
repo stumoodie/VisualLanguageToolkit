@@ -129,14 +129,16 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * null, but can be empty.
 	 * @return
 	 */
-	Iterator<? extends IMap> getMapIterator();
+	Iterator<IMap> getMapIterator();
 	
 	/**
 	 * Provide an iterator that iterates through the immediate children of this folder. It cannot be
 	 * null, but can be empty.
 	 * @return
 	 */
-	Iterator< ? extends ISubFolder> getSubFolderIterator();
+	Iterator<ISubFolder> getSubFolderIterator();
+	
+	int getNumSubFolders();
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name

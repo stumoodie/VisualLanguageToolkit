@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 
 /**
  * @author ntsorman
@@ -32,9 +33,10 @@ public class HibShapeAttributeTest {
 	private static final int POSITION_VALUE = 50 ;
 	private static final String SHAPE_DESCR = "descr";
 	private static final String DETAILED_DESCR = "detailed descr";
-//	private static final int NUMERIC_VALUE_ONE = 1;
+	private static final int NUMERIC_VALUE_ONE = 1;
 	private static final int NUMERIC_VALUE_ZERO = 0;
 	private static final String PROPERTY_ID = "property_id" ;
+	private static final PrimitiveShapeType EXPECTED_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
 	
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);
@@ -134,7 +136,7 @@ public class HibShapeAttributeTest {
 		aShape.setLineWidth(NUMERIC_VALUE_ONE + a) ;
 		aShape.setHibLineStyle(LineStyle.values()[a]) ;
 		aShape.setPadding(NUMERIC_VALUE_ONE + a) ;
-		aShape.setShapeType((short)(NUMERIC_VALUE_ONE + a)) ;
+		aShape.setShapeType(EXPECTED_SHAPE_TYPE) ;
 		aShape.setXPosition(POSITION_VALUE + a) ;
 		aShape.setYPosition(POSITION_VALUE + a) ;
 		aShape.setHeight(SIZE_VALUE + a) ;
