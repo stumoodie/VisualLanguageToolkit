@@ -11,10 +11,10 @@ import org.pathwayeditor.testutils.StubSessionFactory;
  * 
  */
 public class HibernateUtil {
-	private static HibernateDataSource dataSource = new HibernateDataSource(
-			"hibernate.cfg.xml");
+	private static HibernateDataSource dataSource;
 	private static SessionFactory defaultSessionFactory;
 	private static Session session;
+	private static boolean testingOnly;
 
 	// ///////////// THIS IS THE FIX FOR LEOPARD CLASSLOADER BUG PLEASE DONT
 	// REMOVE///////////
@@ -23,16 +23,14 @@ public class HibernateUtil {
 			Thread.currentThread().setContextClassLoader(
 					ClassLoader.getSystemClassLoader());
 	}
-	static {
-		defaultSessionFactory = dataSource.getSessionFactory();
-	}
 
 	/**
 	 * A static method to get the default Session factory singleton; may create
-	 * a new database if sessionFactory is instantiated by this method call. To
-	 * change this behaviour modify //TODO - nh
+	 * a new database if sessionFactory is instantiated by this method call.
 	 */
 	public static SessionFactory getSessionFactory() {
+		if(dataSource==null)
+			dataSource=new HibernateDataSource("hibernate.cfg.xml");
 		if (defaultSessionFactory == null) {
 			defaultSessionFactory = dataSource.getSessionFactory();
 		}
@@ -46,6 +44,7 @@ public class HibernateUtil {
 
 	public static void setStubSessionFactoryAsDefault() {
 		defaultSessionFactory = new StubSessionFactory();
+		testingOnly=true;
 	}
 
 	public static void commit(Session session) {
@@ -72,7 +71,9 @@ public class HibernateUtil {
 	 * @param conn
 	 */
 	public static void setConnectionInfo(IConnectionInfo conn) {
-		dataSource.setConnectionInfo(conn);
+		if(testingOnly)
+			return;
+			dataSource=new HibernateDataSource(conn);
 		defaultSessionFactory = dataSource.getSessionFactory();
 	}
 

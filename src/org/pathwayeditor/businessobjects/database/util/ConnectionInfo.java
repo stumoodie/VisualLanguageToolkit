@@ -10,14 +10,15 @@ package org.pathwayeditor.businessobjects.database.util;
 public class ConnectionInfo implements IConnectionInfo{
 	private String userName="sa";
 	private String password="";
-	private String url=MakeNewDatabaseDropOld.CONNECTION_URL;
+	private String url=IConnectionInfo.DATABASE_DEFAULT_URL;
 	private String repositoryName;
 	private String driverName="org.hsqldb.jdbcDriver";
 	
+	//TODO NH - remove this constructor when we have multiple repositories
 	public ConnectionInfo(){
 		
 	}
-
+	//TODO NH - there are more hibernate properties which can be specified; in future a larger constructor will probably be necessary
 	public ConnectionInfo(String userName, String password, String url, String repositoryName, String driverName){
 		this.userName=userName;
 		this.password=password;

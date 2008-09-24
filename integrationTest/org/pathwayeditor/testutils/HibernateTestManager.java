@@ -135,6 +135,6 @@ public class HibernateTestManager implements IDatabaseTester {
 	 * @param conn
 	 */
 	public void setConnectionInfo(IConnectionInfo conn) {
-		hibBuilder.setConnectionInfo(conn);
+		hibBuilder=new HibernateDataSource(conn);
 	}
 }

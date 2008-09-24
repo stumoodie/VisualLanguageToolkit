@@ -21,17 +21,26 @@ public class HibernateDataSource {
 	private String connectionUrl;
 	private String userName;
 	private String password;
-
 	/**
-	 * @param xmlConfigFile
+	 * @param xmlConfigFile with setup paramaters for Hibernate
 	 */
 	public HibernateDataSource(String xmlConfigFile) {
-		Configuration hibConf = new Configuration();
-		this.hibConfig = hibConf.configure(xmlConfigFile);
+		this.hibConfig = new Configuration().configure(xmlConfigFile);
 		this.driverClass = hibConfig.getProperty(HIB_PROP_DRIVER_CLASS);
 		this.connectionUrl = hibConfig.getProperty(HIB_PROP_URL);
 		this.userName = hibConfig.getProperty(HIB_PROP_USERNAME);
 		this.password = hibConfig.getProperty(HIB_PROP_PASSWORD);
+	}
+	
+	/**
+	 * @param conn a connectioninfo object with setup paramaters for Hibernate
+	 */
+	public HibernateDataSource(IConnectionInfo conn) {
+		hibConfig = new Configuration();
+		hibConfig.setProperty(HIB_PROP_DRIVER_CLASS,conn.getDriverName());
+		hibConfig.setProperty(HIB_PROP_URL,conn.getUrl());
+		hibConfig.setProperty(HIB_PROP_USERNAME,conn.getUserName());
+		hibConfig.setProperty(HIB_PROP_PASSWORD, conn.getPassword());
 	}
 
 	public String getDriverClass() {
@@ -63,16 +72,6 @@ public class HibernateDataSource {
 	 */
 	public Configuration getHibConfig() {
 		return hibConfig;
-	}
-
-	/**
-	 * @param conn information for a jdbc connection
-	 */
-	public void setConnectionInfo(IConnectionInfo conn) {
-		hibConfig.setProperty(HibernateDataSource.HIB_PROP_DRIVER_CLASS,conn.getDriverName());
-		hibConfig.setProperty(HibernateDataSource.HIB_PROP_URL,conn.getUrl());
-		hibConfig.setProperty(HibernateDataSource.HIB_PROP_USERNAME,conn.getUserName());
-		hibConfig.setProperty(HibernateDataSource.HIB_PROP_PASSWORD, conn.getPassword());
 	}
 
 }
