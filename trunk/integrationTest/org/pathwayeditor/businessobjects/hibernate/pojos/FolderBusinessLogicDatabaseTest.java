@@ -164,9 +164,9 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void removeMapWhenMapFromDatabaseQueryTest(){
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
 		IMap map = (IMap) getSession().createQuery("from HibMapDiagram m where m.id = '100001'").uniqueResult();
-		assertEquals(1,sub1.numMaps());
+		assertEquals(1,sub1.getNumMaps());
 		sub1.removeMap(map);
-		assertEquals(0,sub1.numMaps());
+		assertEquals(0,sub1.getNumMaps());
 		bo.synchroniseRepository();
 		assertNull(getSession().createQuery(
 		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
@@ -180,9 +180,9 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			if(search.getName().equals("Diagram name"))
 				map=search;
 		}
-		assertEquals(1,sub1.numMaps());
+		assertEquals(1,sub1.getNumMaps());
 		sub1.removeMap(map);
-		assertEquals(0,sub1.numMaps());
+		assertEquals(0,sub1.getNumMaps());
 		bo.synchroniseRepository();
 		assertNull(getSession().createQuery(
 		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
@@ -197,9 +197,9 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 				map=search;
 		}
 		bo.synchroniseRepository();
-		assertEquals(1,sub1.numMaps());
+		assertEquals(1,sub1.getNumMaps());
 		sub1.removeMap(map);
-		assertEquals(0,sub1.numMaps());
+		assertEquals(0,sub1.getNumMaps());
 		bo.synchroniseRepository();
 		assertNull(getSession().createQuery(
 		"from HibMapDiagram m where m.id = '100001'").uniqueResult());
@@ -227,8 +227,8 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testNumMaps() {
 		IRootFolder r = rep.getRootFolder();
 		HibSubFolder sub1 = (HibSubFolder) rep.getFolderByPath("/subfolder2/subfolder4");
-		assertEquals(0, r.numMaps());
-		assertEquals(1, sub1.numMaps());
+		assertEquals(0, r.getNumMaps());
+		assertEquals(1, sub1.getNumMaps());
 	}
 
 	@Test
