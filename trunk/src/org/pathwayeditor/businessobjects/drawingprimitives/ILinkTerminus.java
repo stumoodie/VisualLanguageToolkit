@@ -1,10 +1,13 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
 public interface ILinkTerminus {
@@ -35,11 +38,18 @@ public interface ILinkTerminus {
 
 	void setEndDecoratorType ( LinkEndDecoratorShape linkEndDecoratorShape  );
 
+	Iterator<IAnnotationProperty> propertyIterator();
+	
 	/**
 	 * Identity based on the owningLink and the link end type.
-	 * @param other
-	 * @return
+	 * @param other the other object to test.
+	 * @return true of the objects are equal based on the business key, false otherwise.
 	 */
 	boolean equals(Object other);
-	
+
+	/**
+	 * As equals.
+	 * @return
+	 */
+	int hashCode();
 }

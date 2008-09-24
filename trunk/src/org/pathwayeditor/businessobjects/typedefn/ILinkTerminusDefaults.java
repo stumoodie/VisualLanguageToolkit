@@ -20,7 +20,7 @@ public interface ILinkTerminusDefaults {
 	 * Get the offset value. The default is zero.
 	 * @return
 	 */
-	short getOffset();
+	short getGap();
 	
 	/**
 	 * Get the property filter to access the properties.

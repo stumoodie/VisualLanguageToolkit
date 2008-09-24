@@ -33,21 +33,24 @@ public class HibNumberPropertyTest {
 	private static final int 		CREATION_SERIAL = 12345 ;
 	
 	private static final BigDecimal NEW_PROPERTY_VALUE 	= new BigDecimal ( 20000000 ) ;
-	private static final int 		NEW_CREATION_SERIAL = 54321 ;
 	
-	private HibNumberProperty numberProperty ;
+	
 	private HibCanvas mockCanvas ;
-	private INumberPropertyDefinition mockTermDefn;
+	private HibNumberProperty numberProperty ;
+	private INumberPropertyDefinition mockDefn;
 	
 	@Before
 	public void setUp() throws Exception {
-		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ;
-		mockTermDefn = mockery.mock(INumberPropertyDefinition.class, "mocktermDefn");
+		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
+		mockDefn = mockery.mock(INumberPropertyDefinition.class, "mockDefn");
+
+		this.mockery.checking(new Expectations(){{
+			allowing(mockDefn).getDefaultValue(); will(returnValue(PROPERTY_VALUE));
+		}});
 		
-		this.mockery.checking(new Expectations(){{}});
-		
-		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, mockTermDefn) ;
+		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, mockDefn) ;
 	}
+
 
 	@After
 	public void tearDown() throws Exception {
@@ -58,8 +61,6 @@ public class HibNumberPropertyTest {
 	{
 		assertEquals ( "check value" , PROPERTY_VALUE , numberProperty.getValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , numberProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , mockCanvas , numberProperty.getCanvas() ) ;
-		
 	}
 
 	@Test
@@ -70,12 +71,4 @@ public class HibNumberPropertyTest {
 		assertEquals ( "check value" , NEW_PROPERTY_VALUE , numberProperty.getValue()) ;
 	}
 	
-	@Test
-	public void testCopyNumberProperty () throws Exception 
-	{
-		
-		HibNumberProperty copyOfNumberProperty = new HibNumberProperty(mockCanvas, NEW_CREATION_SERIAL, numberProperty) ;
-		
-		assertEquals ( "copy of" , numberProperty , copyOfNumberProperty ) ;
-	}
 }

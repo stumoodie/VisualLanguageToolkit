@@ -15,6 +15,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import uk.ed.inf.graph.util.IndexCounter;
+
 /**
  * @author ntsorman
  *
@@ -54,12 +56,14 @@ public class HibRootFolderTest {
 		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ;
 		final Set<HibSubFolder> mockSubFolderSet = mockery.mock( Set.class , "mockSubFolderSet") ;
 		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
+		final IndexCounter indexCounter = new IndexCounter();
 				
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockBORootFolder).getMapDiagrams();
 			atLeast(1).of(mockBORootFolder).getSubFolders();
 		}});
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
+		this.mockery.assertIsSatisfied();
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockSubFolder).setRepository(mockRepository);
 			atLeast(1).of(mockSubFolder).getParentFolder(); will(returnValue(null)) ;
@@ -78,6 +82,8 @@ public class HibRootFolderTest {
 			one(mockSubFolderSet).iterator(); will(returnIterator(mockSubFolder)) ;
 			one(mockSubFolderSet).iterator(); will(returnIterator()) ;
 			
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+			
 		}} ) ;
 				
 		testRootFolder1.addSubFolder(mockSubFolder) ;
@@ -91,6 +97,7 @@ public class HibRootFolderTest {
 		assertEquals ("RootFolder has the same reposirory", mockRepository ,  testRootFolder2.getOwningRepository() ) ;
 		assertEquals ( "one subfolder" , SUBFOLDERS , testRootFolder2.getSubFolders().size() ) ;
 		assertEquals ( "one map diagram" , MAP_DIAGRAMS , testRootFolder2.getMapDiagrams().size() ) ;
+		this.mockery.assertIsSatisfied();
 	}
 
 	

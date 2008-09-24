@@ -41,13 +41,9 @@ public class FolderBusinessLogicTest {
 	private static final String TEST_CHILD_NAME = "testChild";
 	private static final String TEST_FOLDER_NAME = "testFolder";
 	private static final int INITIAL_NUM_ROOT_SUBFOLDERS = 1;
-	private static final int INITIAL_NUM_CHILDONE_SUBFOLDERS = 1;
 	private static final int INITIAL_NUM_CHILDFOUR_SUBFOLDERS = 0;
 	private static final String TEST_MAP_NAME = "testMap";
 
-//	static {
-//		HibernateUtil.setStubSessionFactoryAsDefault(); // dont use the database
-//	}
 	private IRepository repo;
 	private ISubFolder childOne;
 	private ISubFolder childTwo;

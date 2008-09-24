@@ -35,7 +35,7 @@ public class HibRootFolder extends HibFolder implements Serializable,
 	 * @param other
 	 */
 	public HibRootFolder(HibRepository newRepository, HibRootFolder other) {
-		super(other);
+		super(newRepository, other);
 		setOwningRepository(newRepository);
 	}
 

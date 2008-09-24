@@ -4,8 +4,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -31,18 +31,23 @@ public class HibTextPropertyTest {
 	private static final int 	CREATION_SERIAL = 12345 ;
 	
 	private static final String NEW_PROPERTY_VALUE 	= "New property value" ;
-	private static final int 	NEW_CREATION_SERIAL = 54321 ;
 	
-	private HibTextProperty textProperty  ;
 	private HibCanvas mockCanvas ;
+	private HibTextProperty textProperty ;
+	private IPlainTextPropertyDefinition mockDefn;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		IPlainTextPropertyDefinition defn = null;
+		mockDefn = mockery.mock(IPlainTextPropertyDefinition.class, "mockDefn");
+
+		this.mockery.checking(new Expectations(){{
+			allowing(mockDefn).getDefaultValue(); will(returnValue(PROPERTY_VALUE));
+		}});
 		
-		textProperty = new HibTextProperty ( mockCanvas, CREATION_SERIAL, defn) ;
+		textProperty = new HibTextProperty ( mockCanvas, CREATION_SERIAL, mockDefn) ;
 	}
+
 
 	@After
 	public void tearDown() throws Exception {
@@ -54,26 +59,14 @@ public class HibTextPropertyTest {
 	{
 		assertEquals ( "check value" , PROPERTY_VALUE , textProperty.getValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , textProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , mockCanvas , textProperty.getCanvas() ) ;
 	}
 	
 	@Test
 	public void testAlterPropertyValues () throws Exception 
 	{
-		final HibCanvas newMockCanvas = mockery.mock(HibCanvas.class , "newMockCanvas") ;
-		
 		textProperty.setValue(NEW_PROPERTY_VALUE) ;
-//		textProperty.setCreationSerial(NEW_CREATION_SERIAL) ;
-//		textProperty.setCanvas(newMockCanvas) ;
 		
 		assertEquals ( "check value" , NEW_PROPERTY_VALUE , textProperty.getValue()) ;
-		assertEquals ( "check serial" , NEW_CREATION_SERIAL , textProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , newMockCanvas , textProperty.getCanvas() ) ;
-	}
-	
-	@Test
-	public void testCopyNumberProperty () throws Exception 
-	{
-		fail("implement me!");
+		assertEquals ( "check serial" , CREATION_SERIAL , textProperty.getCreationSerial() ) ;
 	}
 }

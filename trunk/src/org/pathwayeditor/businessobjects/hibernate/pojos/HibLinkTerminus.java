@@ -4,6 +4,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -13,9 +14,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
@@ -84,7 +87,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	private void setDefaults(ILinkTerminusDefaults linkTerminusDefaults) {
 		this.endDecoratorType = linkTerminusDefaults.getEndDecoratorType();
 		this.endDecSize = linkTerminusDefaults.getEndSize();
-		this.offset = linkTerminusDefaults.getOffset();
+		this.offset = linkTerminusDefaults.getGap();
 		this.termShapeType = linkTerminusDefaults.getTermDecoratorType();
 		this.terminusColour = linkTerminusDefaults.getTermColour();
 		this.terminusSize = linkTerminusDefaults.getTermSize();
@@ -382,6 +385,13 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 					.getSourceTerminusDefinition();
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#propertyIterator()
+	 */
+	public Iterator<IAnnotationProperty> propertyIterator() {
+		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
 	}
 
 }

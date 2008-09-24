@@ -55,7 +55,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		listenerManager.removePropertyChangeListener(listener);
 	}
 
-	public HibFolder(HibFolder other) {
+	public HibFolder(HibRepository repository, HibFolder other) {
+		this.repository = repository;
 		for (HibMap diagram : other.getMapDiagrams()) {
 			this.hibMaps.add(new HibMap(this, diagram));
 		}
@@ -63,7 +64,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			this.subFolders.add(new HibSubFolder(this, subFolder));
 		}
 	}
-	public HibFolder(HibFolder other,boolean isCompleteCopy) {
+	public HibFolder(HibRepository repository, HibFolder other,boolean isCompleteCopy) {
+		this.repository = repository;
 		if(isCompleteCopy)
 			this.iNode=other.iNode;
 		for (HibMap diagram : other.getMapDiagrams()) {

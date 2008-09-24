@@ -33,7 +33,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 		this(newParent,other,false);
 	}
 	public HibSubFolder(HibFolder newParent, HibSubFolder other,boolean isCompleteCopy) {
-		super(other,isCompleteCopy);
+		super(newParent.getRepository(), other,isCompleteCopy);
 		setRepository(newParent.getRepository());
 		setMapDiagramRepositories();
 		setSubFolderRepositoriesAndMapDiagramRepositories();

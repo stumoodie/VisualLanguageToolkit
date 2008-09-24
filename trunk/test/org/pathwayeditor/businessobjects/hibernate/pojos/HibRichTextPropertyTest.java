@@ -4,8 +4,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -35,25 +35,29 @@ public class HibRichTextPropertyTest {
 	
 	private HibCanvas mockCanvas ;
 	private HibRichTextProperty richTextProperty ;
+	private IHtmlPropertyDefinition mockDefn;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		IHtmlPropertyDefinition defn = null;
+		mockDefn = mockery.mock(IHtmlPropertyDefinition.class, "mockDefn");
+
+		this.mockery.checking(new Expectations(){{
+			allowing(mockDefn).getDefaultValue(); will(returnValue(PROPERTY_VALUE));
+		}});
 		
-		HibRichTextProperty richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, defn) ;
+		richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, mockDefn) ;
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		this.richTextProperty = null;
 	}
 	
 	
 	@Test
 	public void testCreateRichTextProperty () throws Exception 
 	{
-		
-		
 		assertEquals ( "check value" , PROPERTY_VALUE , richTextProperty.getRichTextValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , richTextProperty.getCreationSerial() ) ;
 		assertEquals ( "check canvas" , mockCanvas , richTextProperty.getCanvas() ) ;
@@ -62,24 +66,10 @@ public class HibRichTextPropertyTest {
 	@Test
 	public void testAlterPropertyValues () throws Exception 
 	{
-		final HibCanvas newMockCanvas = mockery.mock(HibCanvas.class , "newMockCanvas") ;
-		IHtmlPropertyDefinition defn = null;
-		
-		richTextProperty = new HibRichTextProperty ( mockCanvas, CREATION_SERIAL, defn) ;
-		
 		richTextProperty.setValue(NEW_PROPERTY_VALUE) ;
-//		richTextProperty.setCreationSerial(NEW_CREATION_SERIAL) ;
-//		richTextProperty.setCanvas(newMockCanvas) ;
 		
 		assertEquals ( "check value" , NEW_PROPERTY_VALUE , richTextProperty.getRichTextValue()) ;
-		assertEquals ( "check serial" , NEW_CREATION_SERIAL , richTextProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , newMockCanvas , richTextProperty.getCanvas() ) ;
-	}
-	
-	@Test
-	public void testCopyNumberProperty () throws Exception 
-	{
-		fail("Imoplement me!");
+		assertEquals ( "check serial" , CREATION_SERIAL , richTextProperty.getCreationSerial() ) ;
 	}
 	
 }

@@ -5,18 +5,16 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jmock.integration.junit4.JMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 
 /**
  * @author ntsorman
  *
  */
-@RunWith(JMock.class)
+//@RunWith(JMock.class)
 public class HibContextTest {
 
 //	private Mockery mockery = new JUnit4Mockery() {{

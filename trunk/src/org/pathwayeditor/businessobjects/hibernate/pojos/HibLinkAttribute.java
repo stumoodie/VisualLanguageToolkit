@@ -30,6 +30,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private static final long serialVersionUID = 8124494867402957446L;
 
+	private RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
 	private Long id;
 	private HibCanvas hibCanvas;
 	private int creationSerial;
@@ -39,7 +40,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private String description;
 	private String detailedDescription;
 	private String url;
-	private RGB lineColour;
+	private RGB lineColour = DEFAULT_LINE_COLOUR;
 	private LineStyle lineStyle;
 	private int lineWidth;
 	private ConnectionRouter routerType;

@@ -24,19 +24,23 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
 
+	private RGB DEFAULT_FILL_COLOUR = new RGB(0, 0, 0);
+	private RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
+	private Size DEFAULT_SIZE = new Size(20, 20);
+	private Location DEFAULT_LOCATION = new Location(0, 0);
 	private HibCanvas canvas;
 	private Long id;
 	private int creationSerial;
-	private Location position;
-	private Size size;
+	private Location position = DEFAULT_LOCATION;
+	private Size size = DEFAULT_SIZE;
 	private HibObjectType hibObjectType;
 	private IShapeObjectType shapeObjectType;
 	private String name;
 	private String description;
 	private String detailedDescription;
 	private String url = null;
-	private RGB fillColour;
-	private RGB lineColour;
+	private RGB fillColour = DEFAULT_FILL_COLOUR;
+	private RGB lineColour = DEFAULT_LINE_COLOUR;
 	private LineStyle lineStyle;
 	private int lineWidth;
 	private int padding;

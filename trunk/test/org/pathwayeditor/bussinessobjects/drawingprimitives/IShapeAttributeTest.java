@@ -6,6 +6,11 @@ package org.pathwayeditor.bussinessobjects.drawingprimitives;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -17,12 +22,17 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
@@ -56,52 +66,41 @@ public class IShapeAttributeTest {
 	private static final String PROPERTY_ID = "property_id" ;
 	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
 	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
+
+	public static final int EXPECTED_DEFAULT_LINE_WIDTH = 0;
+	public static final String EXPECTED_DEFAULT_NAME = SHAPE_NAME;
+	public static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
+	public static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
+	public static final String EXPECTED_DEFAULT_URL = URL_VALUE;
+	private static final String EXPECTED_DEFAULT_DESCRIPTION = SHAPE_DESCR;
+	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = DETAILED_DESCR;
+	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
+	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
+	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LINE_STYLE;
 	
 	private IShapeAttribute shapeAttribute ;
-	private HibProperty mockProperty ;
+//	private IAnnotationProperty mockProperty ;
 	
 	@Before
 	public void setUp() throws Exception {
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
 		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
 		HibObjectType hibObjectType = this.mockery.mock(HibObjectType.class, "hibObjectType");
-		final HibShapeAttribute tempShapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
+//		mockProperty = mockery.mock(IAnnotationProperty.class , "mockProperty") ;
+		final IDefaultShapeAttributes mockDefaults = new DefaultsStub();;
 		
-		tempShapeAttribute.setName(SHAPE_NAME) ;
-		tempShapeAttribute.setFillBlue(COLOR_VALUE) ;
-		tempShapeAttribute.setFillGreen(COLOR_VALUE) ;
-		tempShapeAttribute.setFillRed(COLOR_VALUE) ;
-		tempShapeAttribute.setXPosition(POSITION_VALUE) ;
-		tempShapeAttribute.setYPosition(POSITION_VALUE) ;
-		tempShapeAttribute.setDetailedDescription(DETAILED_DESCR) ;
-		tempShapeAttribute.setDescription(SHAPE_DESCR) ;
-		tempShapeAttribute.setHeight(SIZE_VALUE) ;
-		tempShapeAttribute.setWidth(SIZE_VALUE) ;
-		tempShapeAttribute.setUrl(URL_VALUE) ;
-		tempShapeAttribute.setLineWidth(NUMERIC_VALUE_ONE);
-		tempShapeAttribute.setLineBlue(COLOR_VALUE) ;
-		tempShapeAttribute.setLineRed(COLOR_VALUE) ;
-		tempShapeAttribute.setLineGreen(COLOR_VALUE) ;
-		tempShapeAttribute.setLineStyle(LINE_STYLE) ;
-		
-		
-		
-		mockProperty = mockery.mock(HibProperty.class , "mockProperty") ;
-		
-		tempShapeAttribute.addProperty(PROPERTY_ID , mockProperty) ;
-		
-		shapeAttribute = tempShapeAttribute ;
+		this.mockery.checking(new Expectations(){{
+			allowing(mockObjectType).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
+			
+		}});
+		
+		shapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
+		this.mockery.assertIsSatisfied();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-	}
-	
-	@Test
-	public void testSomething () throws Exception
-	{
-
 	}
 	
 	@Test
@@ -206,10 +205,9 @@ public class IShapeAttributeTest {
 		assertEquals ( "changed Width" , SIZE_VALUE , ((HibShapeAttribute)shapeAttribute).getWidth() ) ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testSetPrimitiveShape () throws Exception
 	{
-		// TODO 
 		shapeAttribute.setPrimitiveShape(null) ;
 	}
 	
@@ -321,5 +319,156 @@ public class IShapeAttributeTest {
 //		Iterator<IAnnotationProperty> properties = shapeAttribute.propertyIterator() ;
 //		assertTrue ( "containsProperty" , properties.contains(mockProperty)) ;
 //		assertEquals ( "number of properties" , NUMERIC_VALUE_ONE , properties.size() );
+	}
+	
+	
+	private static class DefaultsStub implements IDefaultShapeAttributes {
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDefaultLabelAttributes()
+		 */
+		public IDefaultLabelAttributes getDefaultLabelAttributes() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDescription()
+		 */
+		public String getDescription() {
+			return EXPECTED_DEFAULT_DESCRIPTION;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDetailedDescription()
+		 */
+		public String getDetailedDescription() {
+			return EXPECTED_DEFAULT_DETAILED_DESCRIPTION;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getFillColour()
+		 */
+		public RGB getFillColour() {
+			return EXPECTED_DEFAULT_FILL_COLOUR;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineColour()
+		 */
+		public RGB getLineColour() {
+			return EXPECTED_DEFAULT_LINE_COLOUR;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineStyle()
+		 */
+		public LineStyle getLineStyle() {
+			return EXPECTED_DEFAULT_LINE_STYLE;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineWidth()
+		 */
+		public int getLineWidth() {
+			return EXPECTED_DEFAULT_LINE_WIDTH;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getName()
+		 */
+		public String getName() {
+			return EXPECTED_DEFAULT_NAME;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getPropertiesFilter()
+		 */
+		public IPropertyDefinitionFilter getPropertiesFilter() {
+			return new StubPropDefn();
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getShapeType()
+		 */
+		public PrimitiveShapeType getShapeType() {
+			return EXPECTED_DEFAULT_SHAPE_TYPE;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getSize()
+		 */
+		public Size getSize() {
+			return EXPECTED_DEFAULT_SIZE;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getURL()
+		 */
+		public String getURL() {
+			return EXPECTED_DEFAULT_URL;
+		}
+		
+	}
+	
+	private static class StubPropDefn implements IPropertyDefinitionFilter {
+		private final Set<IPropertyDefinition> retVal = Collections.emptySet();
+		
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllProperties()
+		 */
+		public Set<IPropertyDefinition> getAllProperties() {
+			return retVal;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllPropertiesIterator()
+		 */
+		public Iterator<IPropertyDefinition> getAllPropertiesIterator() {
+			return retVal.iterator();
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getEditableProperties()
+		 */
+		public Set<IPropertyDefinition> getEditableProperties() {
+			return retVal;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getFormattedTextProperties()
+		 */
+		public Set<IPropertyDefinition> getFormattedTextProperties() {
+			return retVal;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getNumberProperties()
+		 */
+		public Set<IPropertyDefinition> getNumberProperties() {
+			return retVal;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getObjectType()
+		 */
+		public IObjectType getObjectType() {
+			throw new UnsupportedOperationException("not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getTextProperties()
+		 */
+		public Set<IPropertyDefinition> getTextProperties() {
+			return retVal;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getVisualisableProperties()
+		 */
+		public Set<IPropertyDefinition> getVisualisableProperties() {
+			return retVal;
+		}
+		
 	}
 }
