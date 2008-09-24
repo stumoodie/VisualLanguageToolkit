@@ -151,4 +151,36 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public boolean isDescendent(ISubFolder childFolder){
+		IFolder parent = childFolder.getParent();
+		boolean retVal = false;
+		// now we traverse up the tree to it's root and see this
+		// folder is present. If it is then this class is an
+		// ancestor of childFolder.
+		while(parent instanceof ISubFolder && !retVal) {
+			retVal = this.equals(parent);
+			parent = ((ISubFolder)parent).getParent();
+		}
+		return retVal;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canMoveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
+	 */
+	public boolean canMoveSubfolder(ISubFolder subFolder) {
+		boolean folderCanBeMoved = false;
+		if (subFolder == null)
+			return folderCanBeMoved;
+		if (!subFolder.isDescendent(this) && canUseSubfolderName(subFolder.getName()) && this.getRepository().equals(subFolder.getRepository()))
+			folderCanBeMoved = true;
+		return folderCanBeMoved;
+	}
+
+	public boolean canCopySubfolder(ISubFolder origSubFolder){
+		return origSubFolder != null && !origSubFolder.getParent().equals(this) && this.canUseSubfolderName(origSubFolder.getName())
+		&& !origSubFolder.isDescendent(this);
+	}
 }

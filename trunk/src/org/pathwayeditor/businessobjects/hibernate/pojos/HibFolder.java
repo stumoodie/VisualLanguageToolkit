@@ -169,34 +169,36 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.iNode;
+		result = prime * result
+				+ ((this.getRepository() == null) ? 0 : this.getRepository().hashCode());
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof HibFolder)) {
+		if (!(obj instanceof HibFolder))
 			return false;
-		}
-		final HibFolder other = (HibFolder) obj;
-		if (iNode == other.getINode())
-			return true;
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return 31 + iNode;
+		HibFolder other = (HibFolder) obj;
+		if (this.iNode != other.getINode())
+			return false;
+		if (this.getRepository() == null) {
+			if (other.getRepository() != null)
+				return false;
+		} else if (!this.getRepository().equals(other.getRepository()))
+			return false;
+		return true;
 	}
 
 	public int getINode() {
@@ -209,40 +211,26 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 
 	// /////////////////////////BUSINESS LOGIC
 	// METHODS/////////////////////////////////////////////
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canMoveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
-	 */
-	public boolean canMoveSubfolder(ISubFolder subFolder) {
-		boolean folderCanBeMoved = false;
-		if (subFolder == null)
-			return folderCanBeMoved;
-		if (!testeeChildOf(this, subFolder)
-				&& canUseSubfolderName(subFolder.getName()))
-			folderCanBeMoved = true;
-		return folderCanBeMoved;
-	}
 
-	/**
-	 * @param testee
-	 *            folder which may be a child
-	 * @param testFolder
-	 *            folder which may be a parent
-	 * @return true if testee folder is a child anywhere in the child subfolder
-	 *         tree of given test folder
-	 */
-	private boolean testeeChildOf(IFolder testee, IFolder testFolder) {
-		Set<HibSubFolder> children = ((HibFolder) testFolder).getSubFolders();
-		if (children.contains(testee)) {
-			return true;
-		}
-		for (HibSubFolder sub : children) {
-			if (((HibFolder) sub).testeeChildOf(testee, sub))
-				return true;
-		}
-		return false;
-	}
+//	/**
+//	 * @param testee
+//	 *            folder which may be a child
+//	 * @param testFolder
+//	 *            folder which may be a parent
+//	 * @return true if testee folder is a child anywhere in the child subfolder
+//	 *         tree of given test folder
+//	 */
+//	private boolean testeeChildOf(IFolder testee, IFolder testFolder) {
+//		Set<HibSubFolder> children = ((HibFolder) testFolder).getSubFolders();
+//		if (children.contains(testee)) {
+//			return true;
+//		}
+//		for (HibSubFolder sub : children) {
+//			if (((HibFolder) sub).testeeChildOf(testee, sub))
+//				return true;
+//		}
+//		return false;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -250,7 +238,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#containsSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public boolean containsSubfolder(ISubFolder subFolder) {
-		boolean contains = testeeChildOf(subFolder, this);
+		boolean contains = subFolder != null && this.equals(subFolder.getParent());
 		return contains;
 	}
 
@@ -327,33 +315,26 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#containsMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public boolean containsMap(IMap newMap) {
-		boolean iscontained = hibMaps.contains(newMap);
+		boolean iscontained = newMap != null && this.equals(newMap.getOwner());
 		return iscontained;
 	}
 
+	public boolean canCopyMap(IMap origMap){
+		return origMap != null && !this.containsMap(origMap) && canUseMapName(origMap.getName());
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#createCopyOfMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public IMap createCopyOfMap(IMap origMap) {
-		if (origMap == null)
+		if (!canCopyMap(origMap))
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
-		if (this.containsMap(origMap))
-			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
+
 		HibMap map = new HibMap(this, (HibMap) origMap);
 		hibMaps.add(map);
-		copyCanvasOf(origMap);
 		return map;
-	}
-
-	/**
-	 * @param origMap
-	 *            makes a copy of the original maps canvas, points it to the
-	 *            copy map and then saves it to the database
-	 */
-	void copyCanvasOf(IMap origMap) {
-		// TODO implement - NH
 	}
 
 	/*
@@ -404,18 +385,19 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return new IterationCaster<IMap, HibMap>(hibMaps.iterator());
 	}
 
+	public boolean canMoveMap(IMap origMap){
+		return origMap != null && this.canUseMapName(origMap.getName()) && !origMap.getOwner().equals(this) && this.getRepository().equals(origMap.getRepository());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#moveMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public IMap moveMap(IMap newMap) {
-		if (newMap == null)
+		if (canMoveMap(newMap) == false)
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
-		if (this.containsMap(newMap))
-			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
-		if(!canUseMapName(newMap.getName()))
-			throw new IllegalArgumentException(MAP_ALREADY_EXISTS);
+
 		HibMap m = (HibMap) newMap;
 		m.changeFolder(this);
 		HibMap copy = new HibMap(this,m, true);
@@ -442,7 +424,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#numMaps()
 	 */
-	public int numMaps() {
+	public int getNumMaps() {
 		if (hibMaps == null)
 			return 0;
 		int nummaps = hibMaps.size();
@@ -467,12 +449,10 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#removeSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
 	 */
 	public void removeSubfolder(ISubFolder subFolder) {
-		if (subFolders.contains(subFolder))
-			removeHibSubFolder((HibSubFolder) subFolder);
-		else {
-			for (HibSubFolder sub : subFolders)
-				sub.removeSubfolder(subFolder);
-		}
+		if (!subFolders.contains(subFolder))
+			throw new IllegalArgumentException(NOT_CHILD);
+		
+		removeHibSubFolder((HibSubFolder) subFolder);
 	}
 	
 	public void removeMap(IMap map){

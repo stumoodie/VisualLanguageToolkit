@@ -31,7 +31,6 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		this();
 		this.folder = hibFolder;
 		this.name = name;
-		hibFolder.addMapDiagram(this);
 		this.repository = hibFolder.getRepository();
 		this.iNode = this.repository.getINodeCounter().nextIndex();
 		listenerManager = new PropertyChangeSupport(this);
@@ -127,8 +126,6 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getOwner()
 	 */
 	public IFolder getOwner() {
-		if (folder == null||!folder.containsMap(this))
-			throw new IllegalArgumentException();
 		return folder;
 	}
 

@@ -3,6 +3,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
+import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 // Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
 
@@ -66,5 +67,27 @@ public class HibRootFolder extends HibFolder implements Serializable,
 	@Override
 	public String getPath() {
 		return "/";
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#isDescendent(org.pathwayeditor.businessobjects.repository.ISubFolder)
+	 */
+	public boolean isDescendent(ISubFolder subFolder) {
+		// the root folder is the root of everything in the same repository
+		return subFolder.getRepository().equals(this.getRepository());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canCopySubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
+	 */
+	public boolean canCopySubfolder(ISubFolder subFolder) {
+		return subFolder != null && !subFolder.getParent().equals(this) && this.canUseSubfolderName(subFolder.getName());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IFolder#canMoveSubfolder(org.pathwayeditor.businessobjects.repository.ISubFolder)
+	 */
+	public boolean canMoveSubfolder(ISubFolder subFolder) {
+		return subFolder != null && !subFolder.getParent().equals(this) && this.canUseSubfolderName(subFolder.getName()) && this.getRepository().equals(subFolder.getRepository());
 	}
 }
