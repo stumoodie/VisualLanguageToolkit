@@ -10,10 +10,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Iterator;
-import java.util.Set;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
@@ -34,6 +35,9 @@ public class FolderBusinessLogicTest {
 	private static final int EXPECTED_REPO_BUILD_NUM = 999;
 	private static final String EXPECTED_REPO_DESCRIPTION = "test repo descn";
 	private static final String CHILD_ONE_NAME = "one";
+	private static final String CHILD_TWO_NAME = "two";
+	private static final String CHILD_THREE_NAME = "three";
+	private static final String CHILD_FOUR_NAME = "four";
 	private static final String TEST_CHILD_NAME = "testChild";
 	private static final String TEST_FOLDER_NAME = "testFolder";
 	private static final int INITIAL_NUM_ROOT_SUBFOLDERS = 1;
@@ -56,39 +60,49 @@ public class FolderBusinessLogicTest {
 		this.repo = new HibRepository(EXPECTED_REPO_NAME, EXPECTED_REPO_DESCRIPTION, EXPECTED_REPO_BUILD_NUM);
 		root = repo.getRootFolder();
 		childOne = root.createSubfolder(CHILD_ONE_NAME);
-		childTwo = childTwo.createSubfolder("two");
-		childThree = childTwo.createSubfolder("three");
-		childFour = childThree.createSubfolder("four");
+		childTwo = childOne.createSubfolder(CHILD_TWO_NAME);
+		childThree = childTwo.createSubfolder(CHILD_THREE_NAME);
+		childFour = childThree.createSubfolder(CHILD_FOUR_NAME);
 	}
 
+	@After
+	public void tearDown(){
+		this.repo = null;
+		this.root = null;
+		this.childOne = null;
+		this.childTwo = null;
+		this.childThree = null;
+		this.childFour = null;
+	}
+	
 	@Test
 	public void canMoveFolderUniqueNameTest() {
-		ISubFolder child = this.childFour.createSubfolder("one");
+		ISubFolder child = this.childFour.createSubfolder(CHILD_ONE_NAME);
 		assertTrue(childOne.canMoveSubfolder(child));
 		assertFalse(root.canMoveSubfolder(child));
 	}
 
 	@Test
 	public void canMoveFolderFalseWHenFolderNullTest() {
-		ISubFolder child = this.childFour.createSubfolder("one");
-		assertTrue(childOne.canMoveSubfolder((ISubFolder) child));
+		ISubFolder child = this.childFour.createSubfolder(CHILD_ONE_NAME);
+		assertTrue(childOne.canMoveSubfolder(child));
 		child = null;
-		assertFalse(childOne.canMoveSubfolder((ISubFolder) child));
+		assertFalse(childOne.canMoveSubfolder(child));
 	}
 
 	@Test
 	public void canMoveFolderCircularChildSimpleTest() {
-		ISubFolder child = this.root.createSubfolder("one");
-		assertTrue(child.canMoveSubfolder((ISubFolder) childOne));
-		assertFalse(childOne.canMoveSubfolder((ISubFolder) childThree));
+		ISubFolder child = this.root.createSubfolder(TEST_CHILD_NAME);
+		assertTrue(child.canMoveSubfolder(childOne));
+		assertFalse(childTwo.canMoveSubfolder(childOne));
 	}
 
 	@Test
 	public void canMoveFolderCircularChildRecursionTest() {
 		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
 		assertTrue(childThree.canMoveSubfolder(folder));
-		assertFalse(folder.canMoveSubfolder(childOne));
-		assertTrue(folder.canMoveSubfolder((ISubFolder) childFour));
+		assertFalse(childFour.canMoveSubfolder(childOne));
+		assertTrue(folder.canMoveSubfolder(childFour));
 	}
 
 	@Test
@@ -135,7 +149,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void containsSubFolderChildTreeTest() {
-		assertTrue(root.containsSubfolder(childFour));
+		assertTrue(root.isDescendent(childFour));
 	}
 
 	@Test
@@ -146,17 +160,11 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateSubFolderChecksNameUnique() {
-		root.createSubfolder("two");
-		assertTrue(root.getSubFolderIterator().next().getName().equals(
-				"two"));
-		root.createSubfolder("three");
-		Iterator<ISubFolder> it = root.getSubFolderIterator();
-		assertTrue(it.next().getName().equals("two") ? it.next().getName()
-				.equals("three") : it.next().getName().equals("two"));
-		it = root.getSubFolderIterator();
-		assertTrue(it.next().getName().equals("three") ? it.next().getName()
-				.equals("two") : it.next().getName().equals("three"));
-		root.createSubfolder("two");
+		ISubFolder testFolder = root.createSubfolder(CHILD_TWO_NAME);
+		root.createSubfolder(CHILD_THREE_NAME);
+		assertEquals("expected num folder", INITIAL_NUM_ROOT_SUBFOLDERS+2, root.getNumSubFolders());
+		assertTrue("has child two subfolder", root.containsSubfolder(testFolder));
+		root.createSubfolder(CHILD_TWO_NAME);
 	}
 
 	@Test
@@ -165,7 +173,7 @@ public class FolderBusinessLogicTest {
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		childFour.moveSubfolder(child);
 		assertTrue(childFour.getNumSubFolders() == INITIAL_NUM_CHILDFOUR_SUBFOLDERS+1);
-		assertEquals(child, childOne.getSubFolderIterator().next());
+		assertEquals(child, childFour.getSubFolderIterator().next());
 	}
 
 	@Test
@@ -180,8 +188,8 @@ public class FolderBusinessLogicTest {
 	public void testMoveSubFolderAddsMapsToSubFolder() {
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		IMap d = child.createMap(TEST_MAP_NAME);
-		childOne.moveSubfolder(child);
-		assertEquals(d, childOne.getSubFolderIterator().next()
+		childFour.moveSubfolder(child);
+		assertEquals(d, childFour.getSubFolderIterator().next()
 				.getMapIterator().next());
 	}
 
@@ -191,11 +199,11 @@ public class FolderBusinessLogicTest {
 		folder.createCopyOfSubfolder(childOne);
 		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
 		ISubFolder sub = iter.next();
-		assertTrue(sub.getName().equals("one"));
-		sub = iter.next();
-		assertTrue(sub.getName().equals("two"));
-		sub = iter.next();
-		assertTrue(sub.getName().equals("three"));
+		assertTrue(sub.getName().equals(CHILD_ONE_NAME));
+		sub = sub.getSubFolderIterator().next();
+		assertTrue(sub.getName().equals(CHILD_TWO_NAME));
+		sub = sub.getSubFolderIterator().next();
+		assertTrue(sub.getName().equals(CHILD_THREE_NAME));
 	}
 
 	@Test
@@ -204,17 +212,17 @@ public class FolderBusinessLogicTest {
 		folder.createCopyOfSubfolder(childOne);
 		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
 		ISubFolder sub = iter.next();
-		assertTrue(sub.equals(childOne));
-		sub = iter.next();
-		assertTrue(sub.equals(childTwo));
-		sub = iter.next();
-		assertTrue(sub.equals(childThree));
+		assertFalse(sub.equals(childOne));
+		sub = sub.getSubFolderIterator().next();
+		assertFalse(sub.equals(childTwo));
+		sub = sub.getSubFolderIterator().next();
+		assertFalse(sub.equals(childThree));
 	}
 
 	@Test
 	public void testCopySubFolderAlsoCopiesMapsAndTheMapsAreNotEqualToOriginals() {
 		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
-		ISubFolder child = folder.createSubfolder(TEST_CHILD_NAME);
+		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		IMap d = child.createMap(TEST_MAP_NAME);
 		assertEquals(d, child.getMapIterator().next());
 		folder.createCopyOfSubfolder(child);
@@ -226,75 +234,51 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testRemoveSubFolderRemovesSubFolderAsDirectChild() {
-		HibSubFolder folder = new HibSubFolder();
-		folder.addSubFolder(childOne);
-		HibSubFolder sub = folder.getSubFolders().iterator().next();
-		assertTrue(sub.getName().equals("one"));
-		folder.removeSubfolder(sub);
-		assertEquals(0, folder.getSubFolders().size());
+		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder child = folder.createSubfolder(TEST_CHILD_NAME);
+		folder.removeSubfolder(child);
+		assertEquals(0, folder.getNumSubFolders());
 	}
 
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testRemoveSubFolderRemovesSubFolderAsInDirectChild() {
-		HibSubFolder folder = new HibSubFolder();
-		folder.addSubFolder(childOne);
-		HibSubFolder sub = folder.getSubFolders().iterator().next();
-		HibSubFolder one = sub;
-		sub = sub.getSubFolders().iterator().next();
-		HibSubFolder two = sub;
-		sub = sub.getSubFolders().iterator().next();
-		assertTrue(sub.getName().equals("three"));
-		folder.removeSubfolder(sub);
-		assertEquals(1, folder.getSubFolders().size());
-		assertEquals(1, one.getSubFolders().size());
-		assertEquals(0, two.getSubFolders().size());
+		ISubFolder sub = childTwo.getSubFolderIterator().next();
+		assertTrue(sub.getName().equals(CHILD_THREE_NAME));
+		root.removeSubfolder(sub);
 	}
 
 	@Test
 	public void testRemoveMapHappyCase() {
-		HibSubFolder folder = new HibSubFolder();
-		HibMap m = new HibMap();
-		folder.addMapDiagram(m);
-		assertEquals(1,folder.numMaps());
-		folder.removeMap(m);
-		assertEquals(0,folder.numMaps());
+		IMap m = childOne.createMap(TEST_MAP_NAME);
+		assertEquals(1,childOne.getNumMaps());
+		assertTrue(childOne.containsMap(m));
+		childOne.removeMap(m);
+		assertEquals(0, childOne.getNumMaps());
+		assertFalse(childOne.containsMap(m));
 	}
 
 	@Test (expected = IllegalArgumentException.class)
 	public void testRemoveMapThrowsIllegalArgWhenMapIsNull() {
-		HibSubFolder folder = new HibSubFolder();
-		folder.removeMap(null);
+		childOne.removeMap(null);
 	}
 
 	@Test (expected = IllegalArgumentException.class)
-	public void testRemoveMapThrowsIllegalArgWhenMapFolderNull() {
-		HibSubFolder folder = new HibSubFolder();
-		HibMap m = new HibMap();
-		folder.removeMap(m);
-	}
-	
-	@Test (expected = IllegalArgumentException.class)
 	public void testRemoveMapThrowsIllegalArgWhenMapNotChild() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		HibMap m = new HibMap();
-		folder2.addMapDiagram(m);
-		assertEquals(1,folder2.numMaps());
-		folder.removeMap(m);
+		IMap m = root.createMap(TEST_MAP_NAME);
+		childOne.removeMap(m);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCanrenameSubFolderFailsWhenSubFolderNotChild() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = this.root.createSubfolder(TEST_CHILD_NAME);
 		folder.canRenameSubfolder(folder2, JIMMY_KRANKIE);
 	}
 
 	@Test
 	public void testCanRenameSubFolderNameIsIllegal() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = folder.createSubfolder(TEST_CHILD_NAME);
 		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
 		try {
 			folder.canRenameSubfolder(folder2, ".");
@@ -318,17 +302,15 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testCanrenameSubFolderWhenSubFolderIsChildNewNameUnused() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = folder.createSubfolder(TEST_CHILD_NAME);
 		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
 	}
 
 	@Test
 	public void testCanrenameSubFolderWhenSubFolderIsChildNewNameUsed() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = folder.createSubfolder(TEST_CHILD_NAME);
 		assertTrue(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
 		folder.createSubfolder(JIMMY_KRANKIE);
 		assertFalse(folder.canRenameSubfolder(folder2, JIMMY_KRANKIE));
@@ -336,16 +318,15 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testRenameSubFolderFailsWhenSubFolderNotChild() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = this.root.createSubfolder(TEST_CHILD_NAME);
 		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
 	}
 
 	@Test
 	public void testRenameSubFolderNameIsIllegal() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = this.root.createSubfolder(TEST_CHILD_NAME);
 		try {
 			folder.renameSubfolder(folder2, ".");
 			fail("should throw illegal arg for null or slashdot");
@@ -368,18 +349,16 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testRenameSubFolderWhenSubFolderIsChildNewNameUnused() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = folder.createSubfolder(TEST_CHILD_NAME);
 		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
 		assertTrue(folder2.getName().equals(JIMMY_KRANKIE));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testRenameSubFolderWhenSubFolderIsChildNewNameUsed() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder folder2 = new HibSubFolder();
-		folder.addSubFolder(folder2);
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder folder2 = this.root.createSubfolder(TEST_CHILD_NAME);
 		folder.createSubfolder(JIMMY_KRANKIE);
 		folder.renameSubfolder(folder2, JIMMY_KRANKIE);
 		assertFalse(folder2.getName().equals(JIMMY_KRANKIE));
@@ -387,9 +366,9 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testNumMaps() {
-		assertEquals(0, childOne.numMaps());
-		childOne.addMapDiagram(new HibMap());
-		assertEquals(1, childOne.numMaps());
+		assertEquals(0, childOne.getNumMaps());
+		childOne.createMap(TEST_MAP_NAME);
+		assertEquals(1, childOne.getNumMaps());
 	}
 
 	@Test
@@ -405,11 +384,18 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testGetMapIteratorIteratesOverMaps() {
-		new HibMap(childOne, "JIMMY");
-		new HibMap(childOne, "KRANKIE");
-		Iterator<? extends IMap> it = childOne.getMapIterator();
-		assertTrue(it.next().getName().equals("JIMMY") ? it.next().getName()
-				.equals("KRANKIE") : it.next().getName().equals("JIMMY"));
+		childOne.createMap(JIMMY_KRANKIE);
+		childOne.createMap(FANDABIDOSI);
+		Iterator<IMap> it = childOne.getMapIterator();
+		{
+			String nextFolderName = it.next().getName();
+			assertTrue(nextFolderName.equals(JIMMY_KRANKIE) ? true : nextFolderName.equals(FANDABIDOSI));
+		}
+		{
+			String nextFolderName = it.next().getName();
+			assertTrue(nextFolderName.equals(JIMMY_KRANKIE) ? true : nextFolderName.equals(FANDABIDOSI));
+		}
+		assertFalse("iterator exhausted", it.hasNext());
 	}
 
 	@Test
@@ -477,14 +463,14 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testContainsMapTrue() {
-		HibMap newMapDiagram = new HibMap(childOne, JIMMY_KRANKIE);
-		assertTrue(childOne.containsMap(newMapDiagram));
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
+		assertTrue(childOne.containsMap(newMap));
 	}
 
 	@Test
 	public void testContainsMapFalse() {
-		HibMap newMapDiagram = new HibMap();
-		assertFalse(childOne.containsMap(newMapDiagram));
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
+		assertFalse(childOne.containsMap(newMap));
 	}
 
 	@Test
@@ -495,56 +481,43 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void createCopyOfMapHappyCaseCopiesName() {
-		HibMap newHibMapDiagram = new HibMap(childFour,
-				JIMMY_KRANKIE);
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
 		assertFalse(mapExistsCalled(childOne, JIMMY_KRANKIE));
-		childOne.createCopyOfMap(newHibMapDiagram);
+		childOne.createCopyOfMap(newMap);
 		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
 	}
 
 	@Test
 	public void createCopyOfMapHappyCaseCopiesDescription() {
-		HibMap newHibMapDiagram = new HibMap(childFour,
-				JIMMY_KRANKIE);
-		newHibMapDiagram.setDescription(FANDABIDOSI);
-		childOne.createCopyOfMap(newHibMapDiagram);
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
+		newMap.setDescription(FANDABIDOSI);
+		childOne.createCopyOfMap(newMap);
 		assertEquals(FANDABIDOSI, getMapInFolderCalled(childOne, JIMMY_KRANKIE)
 				.getDescription());
 	}
 
 	@Test
 	public void createCopyOfMapHappyCaseCopyDoesNotEqualOriginal() {
-		HibMap newHibMapDiagram = new HibMap();
-		childOne.createCopyOfMap(newHibMapDiagram);
-		assertFalse(newHibMapDiagram.equals(getMapInFolderCalled(childOne,
-				JIMMY_KRANKIE)));
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
+		IMap copy = childOne.createCopyOfMap(newMap);
+		assertFalse(newMap.equals(copy));
 	}
 
 	@Test
-	// TODO - NH not a real test as it subs the target test class!!!!!!!!!!
 	public void testCreateCopyOfMapHappyCaseCopiesMapCanvas() {
-		class CanvasCopyCalled {
-			public boolean called = false;
-		}
-		final CanvasCopyCalled c = new CanvasCopyCalled();
-		childOne = new HibSubFolder() {
-			@Override
-			void copyCanvasOf(IMap origMap) {
-				c.called = true;
-			}
-		};
-		HibMap newHibMapDiagram = new HibMap(childFour,
-				JIMMY_KRANKIE);
-		childOne.createCopyOfMap(newHibMapDiagram);
-		assertTrue(c.called);
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
+		IMap c = childOne.createCopyOfMap(newMap);
+		assertTrue(childOne.containsMap(c));
+		assertTrue(childFour.containsMap(newMap));
+		assertEquals(newMap.getName(), c.getName());
+		assertFalse(newMap.getINode() == c.getINode());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateCopyOfMapWhenAlreadyExistsThrowsIllegalArg() {
-		HibMap newHibMapDiagram = new HibMap(childOne,
-				JIMMY_KRANKIE);
-		childOne.createCopyOfMap(newHibMapDiagram);
-		childOne.createCopyOfMap(newHibMapDiagram);
+		IMap newMap = childFour.createMap(JIMMY_KRANKIE);
+		childOne.createCopyOfMap(newMap);
+		childOne.createCopyOfMap(newMap);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -555,8 +528,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testMoveMapHappyCaseAddsMapToNewFolder() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		assertFalse(childFour.containsMap(newMap));
 		childFour.moveMap(newMap);
 		assertTrue(childFour.containsMap(newMap));
@@ -565,8 +537,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testMoveMapHappyCaseRemovesMapFromOldFolder() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		assertTrue(childOne.containsMap(newMap));
 		childFour.moveMap(newMap);
 		assertFalse(childOne.containsMap(newMap));
@@ -580,32 +551,28 @@ public class FolderBusinessLogicTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveMapThrowsIllegalArgIfMapIsAlreadyContained() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		childFour.moveMap(newMap);
 		childFour.moveMap(newMap);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testMoveMapThrowsIllegalArgWhenMapWithSameNameExists(){
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		childFour.createMap(JIMMY_KRANKIE);
 		childFour.moveMap(newMap);
 	}
 
 	@Test
 	public void testCanRenameMapHappyCase() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(newMap, JIMMY_KRANKIE));
 	}
 
 	@Test
 	public void testCanRenameMapFalseWhenMapIsNullOrNameIsNull() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		assertTrue(childOne.canRenameMap(newMap, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(null, FANDABIDOSI));
 		assertFalse(childOne.canRenameMap(newMap, null));
@@ -613,8 +580,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testRenameMapHappyCase() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		assertFalse(mapExistsCalled(childOne, FANDABIDOSI));
 		assertTrue(mapExistsCalled(childOne, JIMMY_KRANKIE));
 		childOne.renameMap(newMap, FANDABIDOSI);
@@ -624,8 +590,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testRenameMapMalformedName() {
-		childOne.createMap(JIMMY_KRANKIE);
-		HibMap newMap = childOne.getMapDiagrams().iterator().next();
+		IMap newMap = childOne.createMap(JIMMY_KRANKIE);
 		try {
 			childOne.renameMap(newMap, ".");
 			fail("should throw illegal arg for null or slashdot");
@@ -671,18 +636,20 @@ public class FolderBusinessLogicTest {
 		assertEquals("/", path);
 	}
 
-	private HibMap getMapInFolderCalled(HibFolder r, String name) {
-		Set<HibMap> maps = r.getMapDiagrams();
-		for (HibMap map : maps) {
+	private IMap getMapInFolderCalled(IFolder r, String name) {
+		Iterator<IMap> mapIter = r.getMapIterator();
+		while(mapIter.hasNext()) {
+			IMap map = mapIter.next();
 			if (map.getName().equals(name))
 				return map;
 		}
 		return null;
 	}
 
-	private boolean mapExistsCalled(HibFolder r, String name) {
-		Set<HibMap> maps = r.getMapDiagrams();
-		for (HibMap map : maps) {
+	private boolean mapExistsCalled(IFolder r, String name) {
+		Iterator<IMap> mapIter = r.getMapIterator();
+		while(mapIter.hasNext()) {
+			IMap map = mapIter.next();
 			if (map.getName().equals(name))
 				return true;
 		}
