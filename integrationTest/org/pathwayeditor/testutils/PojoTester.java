@@ -18,7 +18,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
+import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
+import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 
 /**
  * @author nhanlon
@@ -29,13 +30,13 @@ public abstract class PojoTester {
 	private static HibernateTestManager dbTester = null;
 	private SessionFactory hibFactory;
 	private Session session;
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
+	private static IConnectionInfo testInfo = new ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb",
+			"repo name","org.hsqldb.jdbcDriver", "org.hibernate.dialect.HSQLDialect","thread"); 
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
+		dbTester = new HibernateTestManager(testInfo);
 		dbTester.createSchema();
-		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
 	}
 
 	@AfterClass

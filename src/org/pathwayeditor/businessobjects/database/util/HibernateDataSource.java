@@ -16,47 +16,36 @@ public class HibernateDataSource {
 	public static final String HIB_PROP_URL = "hibernate.connection.url";
 	public static final String HIB_PROP_USERNAME = "hibernate.connection.username";
 	public static final String HIB_PROP_PASSWORD = "hibernate.connection.password";
+	public static final String HIB_DIALECT="hibernate.dialect";
+	public static final String HIB_SESS_CONTEXT="hibernate.current_session_context_class";
 	private Configuration hibConfig;
-	private String driverClass;
-	private String connectionUrl;
-	private String userName;
-	private String password;
-	/**
-	 * @param xmlConfigFile with setup paramaters for Hibernate
-	 */
-	public HibernateDataSource(String xmlConfigFile) {
-		this.hibConfig = new Configuration().configure(xmlConfigFile);
-		this.driverClass = hibConfig.getProperty(HIB_PROP_DRIVER_CLASS);
-		this.connectionUrl = hibConfig.getProperty(HIB_PROP_URL);
-		this.userName = hibConfig.getProperty(HIB_PROP_USERNAME);
-		this.password = hibConfig.getProperty(HIB_PROP_PASSWORD);
-	}
-	
 	/**
 	 * @param conn a connectioninfo object with setup paramaters for Hibernate
 	 */
 	public HibernateDataSource(IConnectionInfo conn) {
-		hibConfig = new Configuration();
+		hibConfig = new Configuration().configure("hibernate.cfg.xml");//sets up class mappings and default connection settings
 		hibConfig.setProperty(HIB_PROP_DRIVER_CLASS,conn.getDriverName());
 		hibConfig.setProperty(HIB_PROP_URL,conn.getUrl());
 		hibConfig.setProperty(HIB_PROP_USERNAME,conn.getUserName());
 		hibConfig.setProperty(HIB_PROP_PASSWORD, conn.getPassword());
+		hibConfig.setProperty(HIB_DIALECT, conn.getDialect());
+		hibConfig.setProperty(HIB_SESS_CONTEXT, conn.getSessionContext());
 	}
 
 	public String getDriverClass() {
-		return this.driverClass;
+		return hibConfig.getProperty(HIB_PROP_DRIVER_CLASS);
 	}
 
 	public String getConnectionUrl() {
-		return this.connectionUrl;
+		return hibConfig.getProperty(HIB_PROP_URL);
 	}
 
 	public String getUserName() {
-		return this.userName;
+		return hibConfig.getProperty(HIB_PROP_USERNAME);
 	}
 
 	public String getPassword() {
-		return this.password;
+		return  hibConfig.getProperty(HIB_PROP_PASSWORD);
 	}
 
 	/**

@@ -12,13 +12,13 @@ import java.sql.SQLException;
  * @author nhanlon Drops the (default) database and recreates; a ddl file is used.
  */
 public class MakeNewDatabaseDropOld {
+	// public static final String CONNECTION_URL="jdbc:hsqldb:mem:dev";
 	public static final String CONNECTION_URL = IConnectionInfo.DATABASE_DEFAULT_URL;
 	private static final String PASSWORD = "";
 	private static final String USERNAME = "sa";
 	private static Connection conn;
 	private static HqlDbSchema schemaManager;
-	
-	//rewrite this bit to take arguments when we have multiple repositories/databases to handle
+
 	public static void main(String[] args) throws SQLException,
 			ClassNotFoundException {
 		Class.forName("org.hsqldb.jdbcDriver");

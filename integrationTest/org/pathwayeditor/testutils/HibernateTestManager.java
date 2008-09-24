@@ -20,12 +20,12 @@ import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
  *
  */
 public class HibernateTestManager implements IDatabaseTester {
-	private final IDatabaseTester delegator;
-	private final HqlDbSchema schemaManager;
+	private  IDatabaseTester delegator;
+	private HqlDbSchema schemaManager;
 	private HibernateDataSource hibBuilder;
 	
-	public HibernateTestManager(String xmlConfigFile) {
-		this(new HibernateDataSource(xmlConfigFile));
+	public HibernateTestManager(IConnectionInfo info){
+		this(new HibernateDataSource(info));
 	}
 	
 	public HibernateTestManager(HibernateDataSource manager) {

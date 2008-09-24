@@ -2,6 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<!-- Default settings present here may be overwritten by runtime ConnectionInfo objects; the mapping resource data is however definitive-->
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>

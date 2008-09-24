@@ -30,16 +30,11 @@ public class HibernateUtil {
 	 */
 	public static SessionFactory getSessionFactory() {
 		if(dataSource==null)
-			dataSource=new HibernateDataSource("hibernate.cfg.xml");
+			dataSource=new HibernateDataSource(new ConnectionInfo());
 		if (defaultSessionFactory == null) {
 			defaultSessionFactory = dataSource.getSessionFactory();
 		}
 		return defaultSessionFactory;
-	}
-	
-	public static void setTestSessionFactoryAsDefault(String testFileName) {
-		dataSource = new HibernateDataSource(testFileName);
-		defaultSessionFactory = dataSource.getSessionFactory();
 	}
 
 	public static void setStubSessionFactoryAsDefault() {
@@ -73,7 +68,7 @@ public class HibernateUtil {
 	public static void setConnectionInfo(IConnectionInfo conn) {
 		if(testingOnly)
 			return;
-			dataSource=new HibernateDataSource(conn);
+			dataSource=new HibernateDataSource(conn); //TODO - when we have multiple respositories we will keep a cache of datasources
 		defaultSessionFactory = dataSource.getSessionFactory();
 	}
 

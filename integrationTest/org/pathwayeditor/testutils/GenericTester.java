@@ -20,6 +20,7 @@ import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
 import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
 import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
 import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
+import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 
 /**
  * @author nhanlon
@@ -28,15 +29,14 @@ import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 public abstract class GenericTester {
 
 	private static HibernateTestManager dbTester = null;
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static IBusinessObjectFactory bofac =new BusinessObjectFactory(new 
-			ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb","repo name","org.hsqldb.jdbcDriver"));
+	private static IConnectionInfo testInfo = new ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb",
+			"repo name","org.hsqldb.jdbcDriver", "org.hibernate.dialect.HSQLDialect","thread"); 
+	private static IBusinessObjectFactory bofac =new BusinessObjectFactory(testInfo);
 	protected IBusinessObjectFactory bo = bofac;
 	
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
-		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
+		dbTester = new HibernateTestManager(testInfo);
 		dbTester.createSchema();
 	}
 
