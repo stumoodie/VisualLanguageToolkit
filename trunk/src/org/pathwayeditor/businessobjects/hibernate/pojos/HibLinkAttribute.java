@@ -60,14 +60,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/**
 	 * Constructs new instance of this class.
 	 * @param hibCanvas
-	 * @param link_index
+	 * @param linkIndex
 	 * @param objectType
 	 * @param hibObjectType
 	 */
-	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, ILinkObjectType objectType, HibObjectType hibObjectType) {
+	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, ILinkObjectType objectType, HibObjectType hibObjectType) {
 		this.hibCanvas = hibCanvas;
 		this.propertyBuilder = new PropertyBuilder(hibCanvas);
-		this.creationSerial = link_index;
+		this.creationSerial = linkIndex;
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
 		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
@@ -78,14 +78,13 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	/**
 	 * Constructs new instance that is a copy of another one.
 	 * @param hibCanvas
-	 * @param link_index
-	 * @param objectType
-	 * @param hibObjectType
-	 */
-	public HibLinkAttribute(HibCanvas hibCanvas, int link_index, HibLinkAttribute otherAttribute) {
+	 * @param linkIndex
+	 * @param otherAttribute
+s	 */
+	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, HibLinkAttribute otherAttribute) {
 		this.hibCanvas = hibCanvas;
 		this.propertyBuilder = new PropertyBuilder(hibCanvas);
-		this.creationSerial = link_index;
+		this.creationSerial = linkIndex;
 		this.objectType = otherAttribute.objectType;
 		this.hibObjectType = otherAttribute.hibObjectType;
 		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceTerminus());

@@ -35,9 +35,11 @@ public class FolderBusinessLogicTest {
 	private static final String EXPECTED_REPO_DESCRIPTION = "test repo descn";
 	private static final String CHILD_ONE_NAME = "one";
 	private static final String TEST_CHILD_NAME = "testChild";
+	private static final String TEST_FOLDER_NAME = "testFolder";
 	private static final int INITIAL_NUM_ROOT_SUBFOLDERS = 1;
 	private static final int INITIAL_NUM_CHILDONE_SUBFOLDERS = 1;
 	private static final int INITIAL_NUM_CHILDFOUR_SUBFOLDERS = 0;
+	private static final String TEST_MAP_NAME = "testMap";
 
 //	static {
 //		HibernateUtil.setStubSessionFactoryAsDefault(); // dont use the database
@@ -83,7 +85,7 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void canMoveFolderCircularChildRecursionTest() {
-		ISubFolder folder = this.root.createSubfolder("one");
+		ISubFolder folder = this.root.createSubfolder(TEST_FOLDER_NAME);
 		assertTrue(childThree.canMoveSubfolder(folder));
 		assertFalse(folder.canMoveSubfolder(childOne));
 		assertTrue(folder.canMoveSubfolder((ISubFolder) childFour));
@@ -168,67 +170,58 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testMoveSubFolderAddsParentToSubFolderCopy() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		HibRootFolder root = new HibRootFolder();
-		root.addSubFolder(child);
-		ISubFolder copy = folder.moveSubfolder(child);
-		assertEquals(folder, copy.getParent());
+		assertTrue(root.getNumSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
+		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
+		ISubFolder copy = childFour.moveSubfolder(child);
+		assertEquals(childFour, copy.getParent());
 	}
 
 	@Test
 	public void testMoveSubFolderAddsMapsToSubFolder() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		HibRootFolder root = new HibRootFolder();
-		root.addSubFolder(child);
-		HibMap d = new HibMap();
-		child.addMapDiagram(d);
-		folder.moveSubfolder(child);
-		assertEquals(d, folder.getSubFolders().iterator().next()
-				.getMapDiagrams().iterator().next());
+		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
+		IMap d = child.createMap(TEST_MAP_NAME);
+		childOne.moveSubfolder(child);
+		assertEquals(d, childOne.getSubFolderIterator().next()
+				.getMapIterator().next());
 	}
 
 	@Test
 	public void testCopySubFolderCopiesWholeSubTree() {
-		HibSubFolder folder = new HibSubFolder();
+		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		folder.createCopyOfSubfolder(childOne);
-		HibSubFolder sub = folder.getSubFolders().iterator().next();
+		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
+		ISubFolder sub = iter.next();
 		assertTrue(sub.getName().equals("one"));
-		sub = sub.getSubFolders().iterator().next();
+		sub = iter.next();
 		assertTrue(sub.getName().equals("two"));
-		sub = sub.getSubFolders().iterator().next();
+		sub = iter.next();
 		assertTrue(sub.getName().equals("three"));
 	}
 
 	@Test
 	public void testCopySubFolderMakesCopyWhichIsNotEqualToOriginal() {
-		HibSubFolder folder = new HibSubFolder();
+		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		folder.createCopyOfSubfolder(childOne);
-		HibSubFolder sub = folder.getSubFolders().iterator().next();
-		assertFalse(sub.equals(childOne));
-		sub = sub.getSubFolders().iterator().next();
-		assertFalse(sub.equals(childTwo));
-		sub = sub.getSubFolders().iterator().next();
-		assertFalse(sub.equals(childThree));
+		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
+		ISubFolder sub = iter.next();
+		assertTrue(sub.equals(childOne));
+		sub = iter.next();
+		assertTrue(sub.equals(childTwo));
+		sub = iter.next();
+		assertTrue(sub.equals(childThree));
 	}
 
 	@Test
 	public void testCopySubFolderAlsoCopiesMapsAndTheMapsAreNotEqualToOriginals() {
-		HibSubFolder folder = new HibSubFolder();
-		HibSubFolder child = new HibSubFolder();
-		child.setName("one");
-		HibMap d = new HibMap(child, "a map");
-		child.addMapDiagram(d);
-		assertEquals(d, child.getMapDiagrams().iterator().next());
+		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
+		ISubFolder child = folder.createSubfolder(TEST_CHILD_NAME);
+		IMap d = child.createMap(TEST_MAP_NAME);
+		assertEquals(d, child.getMapIterator().next());
 		folder.createCopyOfSubfolder(child);
 		assertTrue(d.getDescription().equals(
-				folder.getSubFolders().iterator().next().getMapDiagrams()
-						.iterator().next().getDescription()));
-		assertFalse(d.equals(folder.getSubFolders().iterator().next()
-				.getMapDiagrams().iterator().next()));
+				folder.getSubFolderIterator().next().getMapIterator().next().getDescription()));
+		assertFalse(d.equals(folder.getSubFolderIterator().next()
+				.getMapIterator().next()));
 	}
 
 	@Test

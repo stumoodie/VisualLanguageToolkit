@@ -17,11 +17,18 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	private HibRepository repository;
 	private int iNode;
 	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
+
+	
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
 	HibMap() {
 		listenerManager = new PropertyChangeSupport(this);
 	}
 
 	public HibMap(HibFolder hibFolder, String name) {
+		this();
 		this.folder = hibFolder;
 		this.name = name;
 		hibFolder.addMapDiagram(this);

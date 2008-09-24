@@ -23,9 +23,10 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	}
 
 	/**
+	 * Constructor that creates a new instance of the root node. 
 	 * @param model
-	 * @param rootNode
-	 * @param nodeIdxIdx
+	 * @param nodeIdx
+	 * @param objectType
 	 */
 	public HibRootNode(HibModel model, int nodeIdx, IRootObjectType objectType) {
 		super(model, null, nodeIdx);
@@ -33,7 +34,7 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		this.canvasAttribute = new RootAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), objectType);
 	}
 
-	public void setObjectType(IRootObjectType objectType){
+	void setObjectType(IRootObjectType objectType){
 		HibCanvas canvas = this.getModel().getCanvas();
 		int nextIndex = canvas.getAttributeSerialCounter().nextIndex();
 		this.canvasAttribute = new RootAttribute(canvas, nextIndex, objectType);

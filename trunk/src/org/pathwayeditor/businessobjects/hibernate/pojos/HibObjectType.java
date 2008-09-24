@@ -13,7 +13,11 @@ public class HibObjectType implements Serializable {
 	private String name;
 	private String description;
 
-	public HibObjectType() {
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
+	HibObjectType() {
 	}
 
 	public HibObjectType(HibNotation hibNotation, String name,

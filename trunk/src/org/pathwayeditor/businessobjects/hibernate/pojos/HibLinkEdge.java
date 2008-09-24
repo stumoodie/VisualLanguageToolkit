@@ -17,6 +17,10 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private HibSubModel owningChildGraph;
 	private HibLinkAttribute attribute;
 	
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
 	HibLinkEdge() {
 		super();
 	}

@@ -30,8 +30,8 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private INodeObjectType objectType;
 
 	/**
-	 * Contructor for use by hibernate only.
-	 * @deprecated
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
 	 */
 	HibLabelAttribute() {
 	}

@@ -21,6 +21,10 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
 	protected HibCompoundNode() {
 		super();
 		createInEdgeSet(this.inEdges);

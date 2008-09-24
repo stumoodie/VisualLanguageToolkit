@@ -39,8 +39,8 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private IHibNotationFactory hibNotationFactory;
 	
 	/**
-	 * Hibernate constructor. Do not use.
-	 * @deprecated
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
 	 */
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());

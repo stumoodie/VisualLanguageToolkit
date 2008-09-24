@@ -16,9 +16,6 @@ public class RootAttribute implements ICanvasAttribute {
 	private final int creationSerial;
 	private final IRootObjectType objectType;
 	
-	/**
-	 * 
-	 */
 	public RootAttribute(HibCanvas canvas, int creationSerial, IRootObjectType objectType) {
 		this.canvas = canvas;
 		this.creationSerial = creationSerial;

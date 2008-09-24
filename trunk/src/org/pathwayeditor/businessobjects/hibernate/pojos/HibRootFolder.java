@@ -30,7 +30,8 @@ public class HibRootFolder extends HibFolder implements Serializable,
 	 * Copy constructor for hibernate object. Copies to a new repository that is
 	 * provided.
 	 * 
-	 * @param owningRepository
+	 * @param newRepository
+	 * @param other
 	 */
 	public HibRootFolder(HibRepository newRepository, HibRootFolder other) {
 		super(other);
