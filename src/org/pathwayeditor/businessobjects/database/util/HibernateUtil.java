@@ -2,7 +2,6 @@ package org.pathwayeditor.businessobjects.database.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.pathwayeditor.testutils.StubSessionFactory;
 
 /**
  * A Hibernate utility class providing session factory access.

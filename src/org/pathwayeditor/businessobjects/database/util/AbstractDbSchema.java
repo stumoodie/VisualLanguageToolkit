@@ -1,4 +1,4 @@
-package org.pathwayeditor.testutils;
+package org.pathwayeditor.businessobjects.database.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;

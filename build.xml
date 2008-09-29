@@ -1,0 +1,41 @@
+<project name="BusinessObjectsBuild" default="buildAll">
+	<path id="classpath">
+			<fileset dir="./lib" includes="**/*.jar"  />
+		</path>
+		
+	<target name="mkdirs" depends=""
+		description="--> Creates the directories used in the build">
+		<mkdir dir="./bin" />
+	</target>
+	
+	<target name="clean">
+	   <delete dir="./bin"  ></delete>
+	</target>
+	
+	<target name="buildAll" description="main build task" depends ="buildSrc, buildTest,buildIntegrationTest"/>
+	
+	<target name="buildTest" description="test build task"
+		depends="buildSrc">
+		<javac classpathref="classpath" srcdir="./test" debug="true"
+			debuglevel="lines,vars,source" destdir="./bin">
+			<exclude name="**/businessobjects/pojos/**"/>
+		</javac>
+	</target>
+	
+	<target name="buildIntegrationTest" description="test integration build task"
+		depends="buildSrc">
+		<javac classpathref="classpath" srcdir="./integrationTest" debug="true"
+			debuglevel="lines,vars,source" destdir="./bin">
+			<exclude name="**/businessobjects/pojos/**"/>
+		</javac>
+	</target>
+	
+	<target name="buildSrc" description="src build task"
+		depends="clean,mkdirs">
+		<javac classpathref="classpath" srcdir="./src" debug="true"
+			debuglevel="lines,vars,source" destdir="./bin">
+			<exclude name="**/businessobjects/pojos/**"/>
+		</javac>
+	</target>
+	
+</project>

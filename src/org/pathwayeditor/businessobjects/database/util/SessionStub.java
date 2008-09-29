@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.testutils;
+package org.pathwayeditor.businessobjects.database.util;
 
 import java.io.Serializable;
 import java.sql.Connection;

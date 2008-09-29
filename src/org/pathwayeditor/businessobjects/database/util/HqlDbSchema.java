@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pathwayeditor.testutils.AbstractDbSchema;
 
 public class HqlDbSchema extends AbstractDbSchema {
 	final String schemaCreationDdl[];
