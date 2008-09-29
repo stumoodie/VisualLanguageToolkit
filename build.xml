@@ -1,6 +1,6 @@
 <project name="hibernate-test" default="hibernatePojos">
-	<path id="toolslib">
- 		<fileset dir="lib/org.hibernate.eclipse_3.2.2.Beta1/">
+	<path id="toolslib">	
+ 		<fileset dir="lib/hibernate-3.2/lib">
 	 	 <include name="**/*.jar"/>
 		</fileset>
 		<pathelement location="lib/postgresql-8.3-603.jdbc2.jar"/>

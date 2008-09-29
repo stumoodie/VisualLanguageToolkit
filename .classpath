@@ -59,6 +59,6 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/DbUnit/dbunit-2.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/dbunit-2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
