@@ -7,7 +7,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodePair;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 
+import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.compound.base.BaseCompoundNodePair;
+import uk.ed.inf.graph.directed.IDirectedPair;
 
 /**
  * @author smoodie
@@ -90,5 +93,12 @@ public class ShapeNodePair extends BaseCompoundNodePair implements IShapeNodePai
 	@Override
 	public HibShapeNode getOutNode() {
 		return this.outNode;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.directed.IDirectedPair#reversedNodes()
+	 */
+	public IDirectedPair<BaseCompoundNode, BaseCompoundEdge> reversedNodes() {
+		return new ShapeNodePair(this.inNode, this.outNode);
 	}	
 }

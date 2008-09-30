@@ -72,7 +72,7 @@
        	<property name="padding" type="int">
            	<column name="padding" not-null="true" />
        	</property>
-       	<property name="shapeType" type="short">
+       	<property name="primitiveShape" type="PrimitiveShapeType">
            	<column name="shape_type" not-null="true" />
        	</property>
        	<map name="properties" table="ShapeAttributeProperty" cascade="all,delete-orphan">

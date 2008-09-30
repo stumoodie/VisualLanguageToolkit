@@ -31,7 +31,8 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	private final static int DEF_END_DEC_WIDTH = 0;
 	private final static int DEF_END_DEC_HEIGHT = 0;
 	private final static int DEFAULT_OFFSET = 0;
-
+	private final static RGB DEFAULT_TERM_COLOUR = new RGB(0, 0, 0);
+	
 	private Long id = null;
 	private HibLinkAttribute linkAttribute = null;
 	private LinkTermType linkTermType = null;
@@ -39,7 +40,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	private LinkEndDecoratorShape endDecoratorType = null;
 	private Size endDecSize = new Size(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
     private PrimitiveShapeType termShapeType = null;
-    private RGB terminusColour;
+    private RGB terminusColour = DEFAULT_TERM_COLOUR;
     private Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
     private IPropertyBuilder propBuilder;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);

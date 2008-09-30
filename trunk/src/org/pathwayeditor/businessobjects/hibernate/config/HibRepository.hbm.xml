@@ -24,5 +24,13 @@
         <one-to-one name="hibRootFolder"
         	 cascade="all" property-ref="owningRepository"
         	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/>
+        <set name="folders" inverse="true" cascade="all,delete-orphan">
+        	<key column="iNode" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder"/> 
+        </set>
+        <set name="maps" inverse="true" cascade="all,delete-orphan">
+        	<key column="iNode" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap"/> 
+        </set>
     </class>
 </hibernate-mapping>

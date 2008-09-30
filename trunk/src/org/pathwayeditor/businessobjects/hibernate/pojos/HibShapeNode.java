@@ -35,7 +35,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, HibShapeAttribute shapeAttribute){
 		super(parentNode.getGraph(), parentNode, nodeIndex);
-		this.shapeAttribute = shapeAttribute;
+		this.changeAttribute(shapeAttribute);
 	}
 	
 	/* (non-Javadoc)

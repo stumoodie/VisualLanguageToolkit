@@ -41,7 +41,7 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		this.iNode = this.repository.getINodeCounter().nextIndex();
 	}
 
-	public HibMap(HibFolder newParent, HibMap other, boolean isCompleteCopy) {
+	private HibMap(HibFolder newParent, HibMap other, boolean isCompleteCopy) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
@@ -73,9 +73,9 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	}
 	
 	// NH - we need this for moveSubFolder and moveMapDiagram to work - see the wiki
-	protected void nullId(){
-		this.id=null;
-	}
+//	protected void nullId(){
+//		this.id=null;
+//	}
 
 	public void setRepository(HibRepository repository) {
 		this.repository = repository;
@@ -178,5 +178,18 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		} else if (!this.getRepository().equals(other.getRepository()))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @param object
+	 */
+	void changeRepository(HibRepository repository) {
+		if(this.repository != null){
+			this.repository.getMaps().remove(this);
+		}
+		if(repository != null){
+			repository.getMaps().add(this);
+		}
+		this.repository = repository;
 	}
 }

@@ -86,7 +86,7 @@ public class DbHibShapeTest extends PojoTester{
 		assertEquals ("line width" , NUMERIC_VALUE_ONE , dbShape.getLineWidth()) ;
 		assertEquals ("line style" , SOLID , dbShape.getLineStyle()) ;
 		assertEquals ("padding" , NUMERIC_VALUE_ONE , dbShape.getPadding()) ;
-		assertEquals ("shape type" , NUMERIC_VALUE_ONE , dbShape.getShapeType()) ;
+		assertEquals ("shape type" , NUMERIC_VALUE_ONE , dbShape.getPrimitiveShape()) ;
 		assertEquals ("x position" , POSITION_VALUE , dbShape.getXPosition()) ;
 		assertEquals ("y position" , POSITION_VALUE , dbShape.getYPosition()) ;
 		assertEquals ("height" , SIZE_VALUE , dbShape.getHeight()) ;
@@ -128,7 +128,7 @@ public class DbHibShapeTest extends PojoTester{
 		shapeToSave.setLineWidth(NUMERIC_VALUE_TWO) ;
 		shapeToSave.setHibLineStyle(LineStyle.DASHED) ;
 		shapeToSave.setPadding(NUMERIC_VALUE_TWO) ;
-		shapeToSave.setShapeType(PrimitiveShapeType.CONCENTRIC_CIRCLES) ;
+		shapeToSave.setPrimitiveShape(PrimitiveShapeType.CONCENTRIC_CIRCLES) ;
 		shapeToSave.setXPosition(POSITION_VALUE_2) ;
 		shapeToSave.setYPosition(POSITION_VALUE_2) ;
 		shapeToSave.setHeight(SIZE_VALUE_2) ;

@@ -10,7 +10,7 @@
         </id>
         <properties name="xak1linkterminus" unique="true">
         	<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
-            	<column name="linkAttributeId" not-null="true" />
+            	<column name="owning_link_id" not-null="true" />
         	</many-to-one>
         	<property name="linkTermType" type="LinkTermType">
             	<column name="link_term_type" not-null="true" />

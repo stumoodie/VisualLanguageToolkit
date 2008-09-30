@@ -29,6 +29,8 @@ public class HibRepository implements Serializable, IRepository {
 	private HibRootFolder rootFolder = null;
 	private int buildNum;
 	private IndexCounter iNodeCounter;
+	private Set<HibFolder> folders;
+	private Set<HibMap> maps;
      
 	/**
 	 * Constructor should only be used by hiberate.
@@ -228,5 +230,33 @@ public class HibRepository implements Serializable, IRepository {
 		if(fetchFolder(rootFolder,path)==null)
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the folder
+	 */
+	public Set<HibFolder> getFolders() {
+		return this.folders;
+	}
+
+	/**
+	 * @param folder the folder to set
+	 */
+	void setFolders(Set<HibFolder> folder) {
+		this.folders = folder;
+	}
+
+	/**
+	 * @return the maps
+	 */
+	public Set<HibMap> getMaps() {
+		return this.maps;
+	}
+
+	/**
+	 * @param maps the maps to set
+	 */
+	void setMaps(Set<HibMap> maps) {
+		this.maps = maps;
 	}
 }

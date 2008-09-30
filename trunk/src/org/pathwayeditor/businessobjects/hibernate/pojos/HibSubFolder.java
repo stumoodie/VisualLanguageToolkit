@@ -29,17 +29,27 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 		this.name = name;
 	}
 
+//	public HibSubFolder(HibFolder newParent, HibSubFolder other) {
+//		this(newParent,other,false);
+//	}
+
 	public HibSubFolder(HibFolder newParent, HibSubFolder other) {
-		this(newParent,other,false);
-	}
-	public HibSubFolder(HibFolder newParent, HibSubFolder other,boolean isCompleteCopy) {
-		super(newParent.getRepository(), other,isCompleteCopy);
+		super(newParent.getRepository(), other);
 		setRepository(newParent.getRepository());
 		setMapDiagramRepositories();
 		setSubFolderRepositoriesAndMapDiagramRepositories();
 		this.parentFolder = newParent;
 		this.name = other.name;
 	}
+
+//	public HibSubFolder(HibFolder newParent, HibSubFolder other,boolean isCompleteCopy) {
+//		super(newParent.getRepository(), other,isCompleteCopy);
+//		setRepository(newParent.getRepository());
+//		setMapDiagramRepositories();
+//		setSubFolderRepositoriesAndMapDiagramRepositories();
+//		this.parentFolder = newParent;
+//		this.name = other.name;
+//	}
 	
 
 	/**

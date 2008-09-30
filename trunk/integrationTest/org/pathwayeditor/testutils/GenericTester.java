@@ -29,15 +29,20 @@ public abstract class GenericTester {
 
 	private static HibernateTestManager dbTester = null;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static IBusinessObjectFactory bofac =new BusinessObjectFactory(new 
-			ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb","repo name","org.hsqldb.jdbcDriver"));
-	protected IBusinessObjectFactory bo = bofac;
+	private static IBusinessObjectFactory bofac = null;
+//	private IBusinessObjectFactory bo = bofac;
+	
+	public IBusinessObjectFactory getBusinessObjectFactory(){
+		return bofac;
+	}
 	
 	@BeforeClass
 	public static void initSchema() throws Exception {
 		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
 		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
 		dbTester.createSchema();
+		bofac = new BusinessObjectFactory(new 
+					ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb","repo name","org.hsqldb.jdbcDriver"));
 	}
 
 	@AfterClass
@@ -72,7 +77,7 @@ public abstract class GenericTester {
 	}
 
 	protected HibernateTestManager getDbTester() {
-		return this.dbTester;
+		return dbTester;
 	}
 
 	protected Session getSession() {

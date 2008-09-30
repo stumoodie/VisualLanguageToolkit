@@ -27,10 +27,24 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		super(parent.getModel(), parent, index);
 		IDefaultLabelAttributes defaultLabelAttributes = property.getDefinition().getLabelDefaults(); 
 		int newSerial = this.getModel().getCanvas().getAttributeSerialCounter().nextIndex();
-		this.labelAttribute = new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, defaultLabelAttributes);
+		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, defaultLabelAttributes));
 	}
 	
 	
+	/**
+	 * @param hibLabelAttribute
+	 */
+	public void changeLabelAttribute(HibLabelAttribute hibLabelAttribute) {
+		if(hibLabelAttribute != null){
+			hibLabelAttribute.getLabelNode().setAttribute(null);
+		}
+		if(this.labelAttribute != null){
+			this.labelAttribute.setLabelNode(null);
+		}
+		this.labelAttribute = hibLabelAttribute;
+	}
+
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getAttribute()
 	 */

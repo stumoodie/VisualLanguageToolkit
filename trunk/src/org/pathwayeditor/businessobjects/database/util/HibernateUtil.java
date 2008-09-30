@@ -14,7 +14,7 @@ public class HibernateUtil {
 	private static HibernateDataSource dataSource = new HibernateDataSource(
 			"hibernate.cfg.xml");
 	private static SessionFactory defaultSessionFactory;
-	private static Session session;
+//	private static Session session;
 
 	// ///////////// THIS IS THE FIX FOR LEOPARD CLASSLOADER BUG PLEASE DONT
 	// REMOVE///////////
@@ -53,19 +53,21 @@ public class HibernateUtil {
 	}
 
 	public static void commit() {
-		session = defaultSessionFactory.getCurrentSession();
-		if (session.getTransaction() != null
-				&& session.getTransaction().isActive())
-			session.getTransaction().commit();
+//		session = defaultSessionFactory.getCurrentSession();
+//		if (session.getTransaction() != null
+//				&& session.getTransaction().isActive())
+//			session.getTransaction().commit();
+		defaultSessionFactory.getCurrentSession().getTransaction().commit();
 	}
 
 	/**
 	 * @return
 	 */
 	public static Session getSession() {
-		session = defaultSessionFactory.getCurrentSession();
+		Session session = defaultSessionFactory.getCurrentSession();
 		session.beginTransaction();
 		return session;
+//		return defaultSessionFactory.getCurrentSession();
 	}
 
 	/**

@@ -435,13 +435,6 @@ s	 */
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#addLinkProperty(java.lang.String, org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
-	 */
-	public void addLinkProperty(String name, IAnnotationProperty toAdd) {
-		this.addLinkProperty(name, (HibProperty)toAdd) ;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkEdge()
 	 */
 	public ILinkEdge getLinkEdge() {

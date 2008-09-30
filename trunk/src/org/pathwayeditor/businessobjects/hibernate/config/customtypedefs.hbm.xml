@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 <typedef name="ArrowHeadStyleType" class="org.pathwayeditor.businessobjects.hibernate.customtypes.GenericEnumUserType">
-	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.ArrowheadStyle</param>
+	<param name="enumClass">org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape</param>
 	<param name="identifierMethod">toInt</param>
 	<param name="valueOfMethod">fromInt</param>
 </typedef>

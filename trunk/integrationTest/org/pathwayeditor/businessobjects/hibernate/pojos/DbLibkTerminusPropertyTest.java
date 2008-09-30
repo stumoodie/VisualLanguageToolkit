@@ -67,7 +67,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	{
 		doSetup() ;
 		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id=100001") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IPlainTextPropertyDefinition defn = null;
 		

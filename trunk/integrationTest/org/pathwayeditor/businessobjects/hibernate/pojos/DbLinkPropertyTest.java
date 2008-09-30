@@ -46,7 +46,7 @@ public class DbLinkPropertyTest extends PojoTester {
 	private static final String ADDED_TEXT_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/AddedTextPropertyRefData.xml";
 	private static final String ADDED_RICH_TEXT_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/AddedRichTextPropertyRefData.xml";
 	private static final String ADDED_LIST_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/AddedListPropertyRefData.xml";
-	private static final String REMOVED_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/RemovedPropertyRefData.xml";
+//	private static final String REMOVED_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/RemovedPropertyRefData.xml";
 	private static final String DELETED_LINK_AND_PROPERTY_DATA = "integrationTest/DbLinkPropertyTestData/DbDeletedLinkAndPropertyRefData.xml";
 	
 
@@ -73,8 +73,6 @@ public class DbLinkPropertyTest extends PojoTester {
 		INumberPropertyDefinition defn = null;
 		
 		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
-		
-		dbLink.addLinkProperty(NUMBER_PROPERTY_NAME , numberProperty ) ;
 		
 		getSession().save(numberProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
@@ -111,8 +109,6 @@ public class DbLinkPropertyTest extends PojoTester {
 		
 		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
-		dbLink.addLinkProperty(TEXT_PROPERTY_NAME , textProperty ) ;
-		
 		getSession().save(textProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
 		getSession().getTransaction().commit() ;
@@ -147,8 +143,6 @@ public class DbLinkPropertyTest extends PojoTester {
 		IHtmlPropertyDefinition defn = null;
 		
 		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
-		
-		dbLink.addLinkProperty(RICH_TEXT_PROPERTY_NAME , richTextProperty ) ;
 		
 		getSession().save(richTextProperty) ;
 		getSession().saveOrUpdate(dbLink) ;
@@ -192,8 +186,6 @@ public class DbLinkPropertyTest extends PojoTester {
 //		listProperty.setValues(valuesToEnter) ;
 //		listProperty.setCreationSerial(CREATION_SERIAL);
 //		numberProperty.setCanvas() ;
-		
-		dbLink.addLinkProperty(LIST_PROPERTY_NAME , listProperty ) ;
 		
 		getSession().save(listProperty) ;
 		getSession().saveOrUpdate(dbLink) ;

@@ -136,7 +136,7 @@ public class HibShapeAttributeTest {
 		aShape.setLineWidth(NUMERIC_VALUE_ONE + a) ;
 		aShape.setHibLineStyle(LineStyle.values()[a]) ;
 		aShape.setPadding(NUMERIC_VALUE_ONE + a) ;
-		aShape.setShapeType(EXPECTED_SHAPE_TYPE) ;
+		aShape.setPrimitiveShape(EXPECTED_SHAPE_TYPE) ;
 		aShape.setXPosition(POSITION_VALUE + a) ;
 		aShape.setYPosition(POSITION_VALUE + a) ;
 		aShape.setHeight(SIZE_VALUE + a) ;

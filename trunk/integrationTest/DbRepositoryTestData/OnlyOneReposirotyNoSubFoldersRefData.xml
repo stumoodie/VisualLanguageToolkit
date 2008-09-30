@@ -5,11 +5,13 @@
 		<column>name</column>
 		<column>description</column>
 		<column>build_num</column>
+		<column>last_inode</column>
 			<row>
 				<value>100002</value>
 				<value>repo name2</value>
 				<value>repository description2</value>
 				<value>5678</value>
+				<value>1</value>
 			</row>
 	</table>
 	<table name="Folder" >
@@ -19,7 +21,7 @@
 			<row>
 				<value>100006</value><!-- rootFolder2 -->
 				<value>100002</value>
-				<value>6</value>
+				<value>1</value>
 			</row>
 	</table>
 	<table name="RootFolder" >

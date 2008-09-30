@@ -32,7 +32,7 @@ public class DbHibLinkTest extends PojoTester{
 	private static final String CHANGED_CANVAS_DATA = "integrationTest/DbLinkTestData/DbChangedCanvasRefData.xml";
 	
 	
-	private static final int LINK_CREATION_SERIAL = 34567 ;
+	private static final int LINK_CREATION_SERIAL = 2 ;
 	private static final String LINK_NAME = "link_name" ;
 	private static final String LINK_DESCR = "link_descr" ;
 	private static final String LINK_DETAILED_DESCR = "link_detailed_descr" ;

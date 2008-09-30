@@ -55,7 +55,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		listenerManager.removePropertyChangeListener(listener);
 	}
 
-	public HibFolder(HibRepository repository, HibFolder other) {
+	protected HibFolder(HibRepository repository, HibFolder other) {
 		this.repository = repository;
 		for (HibMap diagram : other.getMapDiagrams()) {
 			this.hibMaps.add(new HibMap(this, diagram));
@@ -64,17 +64,19 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			this.subFolders.add(new HibSubFolder(this, subFolder));
 		}
 	}
-	public HibFolder(HibRepository repository, HibFolder other,boolean isCompleteCopy) {
-		this.repository = repository;
-		if(isCompleteCopy)
-			this.iNode=other.iNode;
-		for (HibMap diagram : other.getMapDiagrams()) {
-			this.hibMaps.add(new HibMap(this, diagram,isCompleteCopy));
-		}
-		for (HibSubFolder subFolder : other.getSubFolders()) {
-			this.subFolders.add(new HibSubFolder(this, subFolder,isCompleteCopy));
-		}
-	}
+
+	
+//	protected HibFolder(HibRepository repository, HibFolder other,boolean isCompleteCopy) {
+//		this.repository = repository;
+//		if(isCompleteCopy)
+//			this.iNode=other.iNode;
+//		for (HibMap diagram : other.getMapDiagrams()) {
+//			this.hibMaps.add(new HibMap(this, diagram,isCompleteCopy));
+//		}
+//		for (HibSubFolder subFolder : other.getSubFolders()) {
+//			this.subFolders.add(new HibSubFolder(this, subFolder,isCompleteCopy));
+//		}
+//	}
 
 	public Long getId() {
 		return this.id;
@@ -85,10 +87,20 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		this.id = id;
 	}
 
-	public void setRepository(HibRepository repository) {
+	void setRepository(HibRepository repository) {
 		this.repository = repository;
 	}
 
+	void changeRepository(HibRepository repository){
+		if(this.repository != null){
+			this.repository.getFolders().remove(this);
+		}
+		if(repository != null){
+			repository.getFolders().add(this);
+		}
+		this.repository = repository;
+	}
+	
 	public HibRepository getRepository() {
 		return repository;
 	}
@@ -402,9 +414,9 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 
 		HibMap m = (HibMap) newMap;
 		m.changeFolder(this);
-		HibMap copy = new HibMap(this,m, true);
-		copy.changeFolder(this);
-		return copy;
+//		HibMap copy = new HibMap(this,m, true);
+//		copy.changeFolder(this);
+		return m;
 	}
 
 	/*
@@ -415,10 +427,13 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public ISubFolder moveSubfolder(ISubFolder subFolder) {
 		if (!canMoveSubfolder(subFolder))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
-		HibFolder copy = new HibSubFolder(this, (HibSubFolder) subFolder, true);
-		addSubFolder((HibSubFolder) copy);
-		subFolder.getParent().removeSubfolder(subFolder);
-		return (ISubFolder) copy;
+//		HibFolder copy = new HibSubFolder(this, (HibSubFolder) subFolder, true);
+//		addSubFolder((HibSubFolder) copy);
+//		subFolder.getParent().removeSubfolder(subFolder);
+//		return (ISubFolder) copy;
+		HibSubFolder hibSubFolder = (HibSubFolder)subFolder;
+		hibSubFolder.changeParentFolder(this);
+		return hibSubFolder;
 	}
 
 	/*
@@ -454,11 +469,15 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		if (!subFolders.contains(subFolder))
 			throw new IllegalArgumentException(NOT_CHILD);
 		
-		removeHibSubFolder((HibSubFolder) subFolder);
+		HibSubFolder hibSubFolder = (HibSubFolder) subFolder; 
+		removeHibSubFolder(hibSubFolder);
+		hibSubFolder.changeRepository(null);
 	}
 	
 	public void removeMap(IMap map){
-		removeMapDiagram((HibMap) map);
+		HibMap hibMap = (HibMap) map; 
+		removeMapDiagram(hibMap);
+		hibMap.changeRepository(null);
 	}
 
 	/*

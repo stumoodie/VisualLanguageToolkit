@@ -9,6 +9,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphMoveBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LabelNodeFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LinkEdgeChildFactory;
@@ -37,7 +38,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
 	 */
 	HibSubModel() {
-		super(new CompoundGraphCopyBuilder());
+		super(new CompoundGraphCopyBuilder(), new CompoundGraphMoveBuilder());
 		this.rootNode = null;
 		this.createNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
 		this.createEdgeSet(this.edges);

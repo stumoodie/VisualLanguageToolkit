@@ -5,11 +5,13 @@
 		<column>name</column>
 		<column>description</column>
 		<column>build_num</column>
+		<column>last_inode</column>
 		<row>
 			<value>100001</value>
 			<value>repo name</value>
 			<value>repository description</value>
 			<value>2534</value>
+			<value>2</value>
 		</row>
 	</table>
 	<table name="Folder" >
@@ -43,7 +45,7 @@
 				<value>Diagram name</value>
 				<value>Diagram Description</value>
 				<value>100001</value>
-				<value>1</value>
+				<value>2</value>
 			</row>
 	</table>
 		<table name="Context">
@@ -66,7 +68,8 @@
 	</table>
 		<table name="Canvas">
 		<column>id</column>
-		<column>map_id</column>
+		<column>repository_id</column>
+		<column>map_inode</column>
 		<column>context_id</column>
 		<column>grid_x</column>
 		<column>grid_y</column>
@@ -82,6 +85,7 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
+				<value>2</value>
 				<value>100001</value>
 				<value>10</value>
 				<value>10</value>
