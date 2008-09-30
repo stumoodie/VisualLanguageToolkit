@@ -31,9 +31,9 @@ public class DbHibRepositoryTest extends PojoTester  {
 	private static final String ALT_REPOSITORY_NAME = "repo name 3" ;
 	private static final String ALT_REPOSITORY_DESCRIPTION = "repository description 3" ;
 	private static final int ALT_REPOSITORY_VERSION = 25343;
-//	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
+	private static final String REF_DATA = "integrationTest/DbSourceData/DbSourceRepositoryRefData.xml";
 	
-	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbRepositoryTestData/ExpectedChangeRootRefData.xml";
+//	private static final String CHANGE_ROOT_EXPECTED_RESULTS = "integrationTest/DbRepositoryTestData/ExpectedChangeRootRefData.xml";
 	private static final String DELETED_REPOSITORY_NO_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneReposirotyNoSubFoldersRefData.xml";
 	private static final String DELETED_REPOSITORY_SUBFOLDERS = "integrationTest/DbRepositoryTestData/OnlyOneRepositoryWithSubFoldersRefData.xml";
 	private static final String EXPECTED_FIRST_REPO_NAME = "repo name";
@@ -43,6 +43,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	private static final int EXPECTED_FIRST_REPO_NUM_MAPS = 1;
 	private static final int EXPECTED_FIRST_REPO_NUM_FOLDERS = 5;
 	private static final Long EXPECTED_FIRST_REPO_ID = 100001L;
+	private static final String ADDED_REPO_DATA = "integrationTest/DbRepositoryTestData/AdditionalRepositoryNoSubFoldersRefData.xml";
 
 	@SuppressWarnings("unchecked")
 	@Test
@@ -76,11 +77,11 @@ public class DbHibRepositoryTest extends PojoTester  {
 		getSession().save(repositoryToWrite) ;
 		
 		getSession().getTransaction().commit() ;
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				DELETED_REPOSITORY_NO_SUBFOLDERS));
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(ADDED_REPO_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		IDataSet expectedChanges = new CompositeDataSet(new XmlDataSet(new FileInputStream(REF_DATA)),
+				expectedDeltas);
 		
 		for (String t : testTables) {
 			ITable expectedTable = DefaultColumnFilter
@@ -142,10 +143,9 @@ public class DbHibRepositoryTest extends PojoTester  {
 		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
-		HibRootFolder dbRootFolder = dbRepository.getHibRootFolder() ;
+//		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
 		
 		getSession().delete(dbRepository) ;
-		getSession().delete(dbRootFolder) ;
 		getSession().getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -169,7 +169,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	}
 
 	protected String getDbUnitDataFilePath() {
-		return "integrationTest/DbSourceData/DbSourceRepositoryRefData.xml";
+		return REF_DATA;
 	}
 
 }

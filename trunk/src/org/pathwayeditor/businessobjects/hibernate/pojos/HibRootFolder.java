@@ -13,7 +13,7 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
 public class HibRootFolder extends HibFolder implements Serializable,
 		IRootFolder {
 	private static final long serialVersionUID = 3780104587152506255L;
-	private HibRepository owningRepository = null;
+//	private HibRepository owningRepository = null;
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -36,35 +36,34 @@ public class HibRootFolder extends HibFolder implements Serializable,
 	 */
 	public HibRootFolder(HibRepository newRepository, HibRootFolder other) {
 		super(newRepository, other);
-		setOwningRepository(newRepository);
+//		setOwningRepository(newRepository);
 	}
 
-	public HibRepository getOwningRepository() {
-		return this.owningRepository;
-	}
+//	public HibRepository getOwningRepository() {
+//		return this.owningRepository;
+//	}
 
-	void setOwningRepository(HibRepository hibRepository) {
-		this.owningRepository = hibRepository;
-		setRepository(hibRepository);
-	}
+//	void setOwningRepository(HibRepository hibRepository) {
+//		this.owningRepository = hibRepository;
+//		setRepository(hibRepository);
+//	}
 
-	public void changeRepository(HibRepository newRepository) {
-		HibRepository oldRepository = this.owningRepository;
-		this.owningRepository = newRepository;
-		if (oldRepository != null) {
-			oldRepository.setHibRootFolder(null);
-		}
-		if (this.owningRepository != null) {
-			this.owningRepository.setHibRootFolder(this);
-		}
-	}
+//	public void changeRepository(HibRepository newRepository) {
+//		HibRepository oldRepository = this.owningRepository;
+//		this.owningRepository = newRepository;
+//		if (oldRepository != null) {
+//			oldRepository.setHibRootFolder(null);
+//		}
+//		if (this.owningRepository != null) {
+//			this.owningRepository.setHibRootFolder(this);
+//		}
+//	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder#getPath()
 	 */
-	@Override
 	public String getPath() {
 		return "/";
 	}

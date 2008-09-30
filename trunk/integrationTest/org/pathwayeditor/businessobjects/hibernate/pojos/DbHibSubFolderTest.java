@@ -52,9 +52,9 @@ public class DbHibSubFolderTest extends PojoTester{
 		
 		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
 		
-		HibRootFolder aRootFolder = new HibRootFolder () ;
-		aRootFolder.setRepository(aRepository);
-		aRootFolder.setOwningRepository(aRepository);
+		HibRootFolder aRootFolder = (HibRootFolder)aRepository.getRootFolder();
+//		aRootFolder.setRepository(aRepository);
+//		aRootFolder.setOwningRepository(aRepository);
 		
 		HibSubFolder aFolder = new HibSubFolder (aRootFolder , FOLDER_NAME_ONE) ;
 		HibSubFolder bFolder = new HibSubFolder (aFolder , FOLDER_NAME_TWO) ;

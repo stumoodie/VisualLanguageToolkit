@@ -9,16 +9,14 @@
 			<column name="id" />
 			<generator class="native" />
 		</id>
-		<set name="mapDiagrams" inverse="true"
-			cascade="all">
+		<set name="mapDiagrams" inverse="true" cascade="all">
 			<key>
 				<column name="folder_id" not-null="true" />
 			</key>
-			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
 		</set>
-		<many-to-one name="repository"  class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
-			<column name="repository_id" not-null="true" />
+		<many-to-one name="repository"  class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+			<column name="repository_id" not-null="false" />
 		</many-to-one>
 		<set name="subFolders" inverse="true"
 			cascade="all">
@@ -32,15 +30,10 @@
 			<column name="inode" not-null="true" />
 		</property>
 		
-		<joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
-			table="RootFolder">
+		<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"	table="RootFolder">
 			<key>
 				<column name="id" not-null="true" unique="true" />
 			</key>
-			<many-to-one name="owningRepository" unique="true" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" >
-				<column name="owning_repository_id" not-null="true" />
-			</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass

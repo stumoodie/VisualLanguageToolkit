@@ -94,7 +94,7 @@ public class HibRootFolderTest {
 		
 		testRootFolder2 = new HibRootFolder ( mockRepository , testRootFolder1 ) ;
 		
-		assertEquals ("RootFolder has the same reposirory", mockRepository ,  testRootFolder2.getOwningRepository() ) ;
+		assertEquals ("RootFolder has the same reposirory", mockRepository ,  testRootFolder2.getRepository() ) ;
 		assertEquals ( "one subfolder" , SUBFOLDERS , testRootFolder2.getSubFolders().size() ) ;
 		assertEquals ( "one map diagram" , MAP_DIAGRAMS , testRootFolder2.getMapDiagrams().size() ) ;
 		this.mockery.assertIsSatisfied();
@@ -155,7 +155,7 @@ public class HibRootFolderTest {
 		}});
 		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );
 		
-		assertEquals ( mockRepository , testRootFolder1.getOwningRepository() ) ;
+		assertEquals ( mockRepository , testRootFolder1.getRepository() ) ;
 	}
 	
 	@Test 

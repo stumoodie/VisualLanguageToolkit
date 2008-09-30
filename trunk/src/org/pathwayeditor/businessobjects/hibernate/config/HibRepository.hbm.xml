@@ -21,15 +21,15 @@
         <property name="lastINode" type="integer">
         	<column name="last_inode" not-null="true" />
         </property>
-        <one-to-one name="hibRootFolder"
-        	 cascade="all" property-ref="owningRepository"
-        	 class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"/>
+        <many-to-one name="rootFolder" cascade="all" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder">
+        	<column name="root_folder_id" not-null="false"/>
+        </many-to-one>
         <set name="folders" inverse="true" cascade="all,delete-orphan">
-        	<key column="iNode" not-null="true"/>
+        	<key column="repository_id" not-null="true"/>
         	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder"/> 
         </set>
         <set name="maps" inverse="true" cascade="all,delete-orphan">
-        	<key column="iNode" not-null="true"/>
+        	<key column="repository_id" not-null="true"/>
         	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap"/> 
         </set>
     </class>

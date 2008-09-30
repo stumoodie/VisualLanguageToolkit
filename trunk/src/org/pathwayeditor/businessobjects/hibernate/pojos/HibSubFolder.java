@@ -112,11 +112,12 @@ public class HibSubFolder extends HibFolder implements ISubFolder, Serializable 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder#getPath()
 	 */
-	@Override
 	public String getPath() {
-		String path=parentFolder.getPath()+"/"+name;
-		path=path.replaceAll("//","/");
-		return path;
+		StringBuilder pathBuilder = new StringBuilder(parentFolder.getPath());
+		pathBuilder.append(name);
+		pathBuilder.append("/");
+//		path=path.replaceAll("//","/");
+		return pathBuilder.toString();
 	}
 //	/*
 //	 * (non-Javadoc)

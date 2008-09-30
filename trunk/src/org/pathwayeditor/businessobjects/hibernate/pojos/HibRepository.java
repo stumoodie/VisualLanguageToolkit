@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IRepository;
-import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 import uk.ed.inf.graph.util.IndexCounter;
@@ -20,7 +19,7 @@ public class HibRepository implements Serializable, IRepository {
 	private static final String ILLEGAL_NAME = "Name of a respoitory must not be either null or empty String and must be unique";
 	private static final long serialVersionUID = -841109914395755034L;
 	private static final String ILLEGAL_DESCRIPTION = "Description of a repository cannot be null";
-	private static final String ILLEGAL_ROOTFOLDER = "Root folder cannot be null";
+//	private static final String ILLEGAL_ROOTFOLDER = "Root folder cannot be null";
 	private static final String ILLEGAL_SUBFOLDERNAME = "Folder name cannot be null or empty String";
 	private static final String PATH_DOES_NOT_EXIST = "This path does not exist in this repository";
 	private Long id = null;
@@ -57,10 +56,10 @@ public class HibRepository implements Serializable, IRepository {
 	   HibRootFolder oldRootFolder = this.rootFolder;
 	   this.rootFolder = newRootFolder;
 	   if(oldRootFolder != null){
-		   oldRootFolder.setOwningRepository(null);
+		   oldRootFolder.setRepository(null);
 	   }
 	   if(this.rootFolder != null){
-		   this.rootFolder.setOwningRepository(this);
+		   this.rootFolder.setRepository(this);
 	   }
    }
 	
@@ -90,8 +89,6 @@ public class HibRepository implements Serializable, IRepository {
 	}
 
 	public void setName(String name) {
-		if(name==null||name.equals(""))
-			throw new IllegalArgumentException(ILLEGAL_NAME);
 		this.name = name;
 	}
 
@@ -100,22 +97,14 @@ public class HibRepository implements Serializable, IRepository {
 	}
 
 	public void setDescription(String description) {
-		if(description==null)
-			throw new IllegalArgumentException(ILLEGAL_DESCRIPTION);
 		this.description = description;
 	}
 
-	public HibRootFolder getHibRootFolder() {
-		return this.rootFolder;
-	}
-	
-	public IRootFolder getRootFolder() {
-		if(this.rootFolder==null)
-			throw new IllegalArgumentException(ILLEGAL_ROOTFOLDER);
+	public HibRootFolder getRootFolder() {
 		return rootFolder;
 	}
 
-	void setHibRootFolder(HibRootFolder hibRootFolder) {
+	void setRootFolder(HibRootFolder hibRootFolder) {
 		this.rootFolder = hibRootFolder;
 	}
 

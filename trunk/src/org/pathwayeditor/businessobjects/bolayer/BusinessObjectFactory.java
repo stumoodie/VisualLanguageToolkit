@@ -54,7 +54,7 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 				rep = makeAndSavedefaultRepository();
 			((HibRepository)rep).getMaps().size();
 			((HibRepository)rep).getFolders().size();
-			HibRootFolder root = rep.getHibRootFolder();
+			HibRootFolder root = rep.getRootFolder();
 			loadSubFoldersAndMaps(root);
 //			HibernateUtil.commit();
 			s.getTransaction().commit();

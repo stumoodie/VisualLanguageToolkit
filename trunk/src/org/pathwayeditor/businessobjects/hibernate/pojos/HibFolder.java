@@ -540,13 +540,4 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return this.subFolders.size();
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getPath()
-	 */
-	public String getPath() {
-		return "";
-	}
-
 }

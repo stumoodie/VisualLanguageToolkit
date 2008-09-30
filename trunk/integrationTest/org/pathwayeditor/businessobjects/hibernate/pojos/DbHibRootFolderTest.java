@@ -110,9 +110,9 @@ public class DbHibRootFolderTest  extends PojoTester {
 		doSetup() ;
 		Query repositoryGetter = getSession().createQuery ( "From HibRepository where id='100002'") ;
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
-		HibRootFolder oldRootFolder = dbRepository.getHibRootFolder();
+		HibRootFolder oldRootFolder = dbRepository.getRootFolder();
 		HibRootFolder cloneOfRootFolder = new HibRootFolder ( dbRepository , oldRootFolder ) ;
-		dbRepository.setHibRootFolder(null);
+		dbRepository.changeRootFolder(null);
 		getSession().delete(oldRootFolder) ;
 		getSession().flush();
 		dbRepository.changeRootFolder(cloneOfRootFolder) ;

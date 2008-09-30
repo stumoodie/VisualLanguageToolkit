@@ -63,9 +63,11 @@ public abstract class GenericTester {
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 			Exception {
+		disableConstraints();
 		getDbTester().setDataSet(
 				new XmlDataSet(new FileInputStream(getDbUnitDataFilePath())));
 		getDbTester().onSetup();
+		enableConstraints();
 	}
 
 	/**
@@ -73,7 +75,9 @@ public abstract class GenericTester {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		disableConstraints();
 		dbTester.onTearDown();
+		enableConstraints();
 	}
 
 	protected HibernateTestManager getDbTester() {
@@ -95,7 +99,7 @@ public abstract class GenericTester {
 		conn.commit();
 	}
 	
-	protected void disbleConstraints() throws Exception {
+	protected void disableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
 		conn.createStatement().executeQuery("SET referential_integrity FALSE");
 		conn.commit();
