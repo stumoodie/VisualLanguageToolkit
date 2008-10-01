@@ -13,7 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-antlr-1.6.5.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-junit-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-launcher-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-swing-1.6.5.jar"/>
