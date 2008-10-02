@@ -55,17 +55,23 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <!-- set name="hibShapeAttributes" inverse="true" table="shape" cascade="all,delete-orphan">
+        <set name="shapeAttributes" inverse="true" table="shapeAttribute" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
         </set>
-        <set name="hibLinkAttributes" inverse="true" table="link" cascade="all,delete-orphan">
+        <set name="labelAttributes" inverse="true" table="labelAttribute" cascade="all,delete-orphan">
+            <key>
+                <column name="canvas_id" not-null="true" />
+            </key>
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
+        </set>
+        <set name="linkAttributes" inverse="true" table="linkAttribute" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
-        </set-->     
+        </set>     
     </class>
 </hibernate-mapping>

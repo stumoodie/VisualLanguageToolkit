@@ -62,12 +62,27 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		return this.hibCanvas;
 	}
 
-	public void setCanvas(HibCanvas hibCanvas) {
+	void setCanvas(HibCanvas hibCanvas) {
 		this.hibCanvas = hibCanvas;
-		this.objectType = new LabelObjectType(this.hibCanvas
-				.getNotationSubsystem().getSyntaxService());
+		if(hibCanvas != null){
+			this.objectType = new LabelObjectType(this.hibCanvas
+					.getNotationSubsystem().getSyntaxService());
+		}
+		else{
+			this.objectType = null;
+		}
 	}
 
+	public void changeHibCanvas(HibCanvas canvas){
+		if(this.hibCanvas != null){
+			this.hibCanvas.getLabelAttributes().remove(this);
+		}
+		if(canvas != null){
+			canvas.getLabelAttributes().add(this);
+		}
+		this.setCanvas(canvas);
+	}
+	
 	public int getCreation_serial() {
 		return this.creationSerial;
 	}

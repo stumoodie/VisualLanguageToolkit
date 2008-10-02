@@ -149,10 +149,25 @@ s	 */
 	}
 
 	public void setCanvas(HibCanvas hibCanvas) {
-		this.propertyBuilder = new PropertyBuilder(hibCanvas);
+		if(hibCanvas != null){
+			this.propertyBuilder = new PropertyBuilder(hibCanvas);
+		}
+		else{
+			this.propertyBuilder = null;
+		}
 		this.hibCanvas = hibCanvas;
 	}
 
+	public void changeHibCanvas(HibCanvas canvas){
+		if(this.hibCanvas != null){
+			this.hibCanvas.getLinkAttributes().remove(this);
+		}
+		if(canvas != null){
+			canvas.getLinkAttributes().add(this);
+		}
+		this.setCanvas(canvas);
+	}
+	
 	public int getCreationSerial() {
 		return this.creationSerial;
 	}

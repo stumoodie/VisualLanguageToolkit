@@ -10,9 +10,7 @@
 			<generator class="native" />
 		</id>
 		<properties name="xak1drawingobject" unique="true">
-			<many-to-one name="canvas"
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas"
-				fetch="select">
+			<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
 				<column name="canvas_id" not-null="true" />
 			</many-to-one>
 			<property name="creationSerial" type="int">

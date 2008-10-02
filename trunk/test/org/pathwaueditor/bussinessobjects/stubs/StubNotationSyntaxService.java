@@ -61,4 +61,12 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		return this.notationSubsystem;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService#getShapeObjectType(java.lang.String)
+	 */
+	public IShapeObjectType getShapeObjectType(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

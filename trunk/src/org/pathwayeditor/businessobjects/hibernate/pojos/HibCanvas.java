@@ -2,6 +2,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -41,6 +43,9 @@ public class HibCanvas implements ICanvas , Serializable {
 	private IRepository repository ;
 	private HibModel model ;
 	private IndexCounter creationSerialCounter;
+	private Set<HibShapeAttribute> shapeAttributes = new HashSet<HibShapeAttribute>(0);
+	private Set<HibLinkAttribute> linkAttributes = new HashSet<HibLinkAttribute>(0);
+	private Set<HibLabelAttribute> labelAttributes = new HashSet<HibLabelAttribute>(0);
 
 	/**
 	 * Default constructor for use ONLY by hibernate.
@@ -89,6 +94,10 @@ public class HibCanvas implements ICanvas , Serializable {
 
 	public INotationSubsystem getNotationSubsystem() {
 		return this.notation;
+	}
+	
+	public void setNotationSubsystem(INotationSubsystem notationSubsystem){
+		this.notation = notationSubsystem;
 	}
 
 	public void setHibNotation(HibNotation hibNotation) {
@@ -328,5 +337,29 @@ public class HibCanvas implements ICanvas , Serializable {
 	
 	void setModel(HibModel model){
 		this.model = model;
+	}
+
+	public Set<HibShapeAttribute> getShapeAttributes() {
+		return this.shapeAttributes;
+	}
+
+	public void setShapeAttributes(Set<HibShapeAttribute> shapeAttributes) {
+		this.shapeAttributes = shapeAttributes;
+	}
+
+	public Set<HibLinkAttribute> getLinkAttributes() {
+		return this.linkAttributes;
+	}
+
+	public void setLinkAttributes(Set<HibLinkAttribute> linkAttributes) {
+		this.linkAttributes = linkAttributes;
+	}
+
+	public Set<HibLabelAttribute> getLabelAttributes() {
+		return this.labelAttributes;
+	}
+
+	public void setLabelAttributes(Set<HibLabelAttribute> labelAttributes) {
+		this.labelAttributes = labelAttributes;
 	}
 }

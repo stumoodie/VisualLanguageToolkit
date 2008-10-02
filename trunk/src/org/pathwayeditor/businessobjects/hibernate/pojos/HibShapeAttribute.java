@@ -138,8 +138,18 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.size.getWidth();
 	}
 	
-	public void setCanvas(HibCanvas canvas) {
+	void setCanvas(HibCanvas canvas) {
 		this.canvas = canvas;
+	}
+	
+	public void changeHibCanvas(HibCanvas canvas){
+		if(this.canvas != null){
+			this.canvas.getShapeAttributes().remove(this);
+		}
+		if(canvas != null){
+			canvas.getShapeAttributes().add(this);
+		}
+		this.setCanvas(canvas);
 	}
 	
 	public void setWidth(int width) {
@@ -158,6 +168,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.shapeObjectType;
 	}
 	
+	public void setShapeObjectType(IShapeObjectType shapeObjectType) {
+		this.shapeObjectType = shapeObjectType;
+	}
+
 	public HibObjectType getHibObjectType () {
 		return this.hibObjectType ;
 	}

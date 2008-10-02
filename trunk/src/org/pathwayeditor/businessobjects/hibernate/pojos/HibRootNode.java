@@ -34,7 +34,7 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		this.canvasAttribute = new RootAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), objectType);
 	}
 
-	void setObjectType(IRootObjectType objectType){
+	public void setObjectType(IRootObjectType objectType){
 		HibCanvas canvas = this.getModel().getCanvas();
 		int nextIndex = canvas.getAttributeSerialCounter().nextIndex();
 		this.canvasAttribute = new RootAttribute(canvas, nextIndex, objectType);

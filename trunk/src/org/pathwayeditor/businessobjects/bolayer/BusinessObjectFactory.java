@@ -4,6 +4,9 @@
 package org.pathwayeditor.businessobjects.bolayer;
 
 import java.util.Iterator;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,13 +23,18 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  * 
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
-	private IRepository rep;
+	private static final String ILLEGAL_STATE_REPO_NOT_OPEN = "The repository is must be open for this operation to be performed";
+	private final Object myLock = new Object();
 	private final SessionFactory fact;
 	private final String repositoryName;
+	private final AtomicReference<IRepository> rep;
+	private final Set<ICanvas> openCanvases;
 
 	public BusinessObjectFactory(SessionFactory fact, String repositoryName) {
 		this.fact = fact;
 		this.repositoryName = repositoryName;
+		this.rep = new AtomicReference<IRepository>(null);
+		this.openCanvases = new CopyOnWriteArraySet<ICanvas>();
 	}
 
 	/*
@@ -34,12 +42,35 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#getRepository()
 	 */
-	public synchronized IRepository getRepository() {
-		if (rep == null) {
+	public IRepository getRepository() {
+		if(this.isRepositoryOpen() == false) throw new IllegalArgumentException(ILLEGAL_STATE_REPO_NOT_OPEN);
+		return rep.get();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isRepositoryOpen()
+	 */
+	public boolean isRepositoryOpen() {
+		return this.rep.get() != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#openRepository()
+	 */
+	public void openRepository() {
+		synchronized(myLock){
+			if(isRepositoryOpen()) throw new IllegalStateException("Cannot open a repository that is already open");
 			loadRepository();
 		}
-		return rep;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#closeRepository()
+	 */
+	public void closeRepository() {
+		this.rep.set(null);
+	}
+
 
 	private void loadRepository(){
 		Session s = this.fact.getCurrentSession();
@@ -47,16 +78,14 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 		HibRepository hibRep = (HibRepository) s.createQuery(
 				"from HibRepository r  where r.name = :name").setString(
 				"name",repositoryName).uniqueResult();
-//		if (rep == null)
-//			rep = makeAndSavedefaultRepository();
 		hibRep.getMaps().size();
 		hibRep.getFolders().size();
 		HibRootFolder root = hibRep.getRootFolder();
 		loadSubFoldersAndMaps(root);
-//		HibernateUtil.commit();
 		s.getTransaction().commit();
-		rep = hibRep;
+		rep.set(hibRep);
 	}
+
 
 	/**
 	 * @param root
@@ -71,20 +100,10 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#createTransientCanvas()
-	 */
-	public synchronized ICanvas createTransientCanvas() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#getCanvas(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public synchronized ICanvas getCanvas(IMap map) {
-		// TODO Auto-generated method stub
+	public ICanvas openCanvas(IMap map) {
+		if(this.isRepositoryOpen() == false) throw new IllegalArgumentException(ILLEGAL_STATE_REPO_NOT_OPEN);
 		return null;
 	}
 
@@ -93,7 +112,8 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
-	public synchronized void synchroniseCanvas(ICanvas canvas) {
+	public void synchroniseCanvas(ICanvas canvas) {
+		if(this.isRepositoryOpen() == false) throw new IllegalArgumentException(ILLEGAL_STATE_REPO_NOT_OPEN);
 		//TODO: implement me!
 	}
 
@@ -102,11 +122,56 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
-	public synchronized void synchroniseRepository() {
+	public void synchroniseRepository() {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		s.saveOrUpdate(rep);
 		s.getTransaction().commit();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#canOpenCanvas(org.pathwayeditor.businessobjects.repository.IMap)
+	 */
+	public boolean canOpenCanvas(IMap owningMap) {
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		int count = (Integer)s.getNamedQuery("canvasExistsForMap").setInteger("inode", owningMap.getINode())
+						.setEntity("repo", owningMap.getRepository()).uniqueResult();
+		s.getTransaction().commit();
+		return count > 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#closeCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public void closeCanvas(ICanvas canvas) {
+		this.openCanvases.remove(canvas);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#openCanvasIterator()
+	 */
+	public Iterator<ICanvas> openCanvasIterator() {
+		if(this.isRepositoryOpen() == false) throw new IllegalArgumentException(ILLEGAL_STATE_REPO_NOT_OPEN);
+		return this.openCanvases.iterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isCanvasOpen(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public boolean isCanvasOpen(ICanvas canvas) {
+		return this.openCanvases.contains(canvas);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isCanvasOwnedHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public boolean isCanvasOwnedHere(ICanvas canvas) {
+		boolean retVal = false;
+		if(canvas != null){
+			retVal = this.rep.get().equals(canvas.getOwningMap().getRepository());
+		}
+		return retVal;
 	}
 
 }

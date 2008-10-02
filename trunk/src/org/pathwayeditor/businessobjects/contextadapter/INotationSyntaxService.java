@@ -46,4 +46,10 @@ public interface INotationSyntaxService extends INotationService {
 	 */
 	IRootObjectType getRootMapObjectType();
 
+	/**
+	 * @param name
+	 * @return
+	 */
+	IShapeObjectType getShapeObjectType(String name);
+
 }

@@ -39,7 +39,9 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibFolder.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibMap.hbm.xml" />
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />
-
-        
     </session-factory>
+    
+    <query name="canvasExistsForMap"><![CDATA[
+    	select count(*) from HibCanvas c  where c.inode = :inode and c.repository = :repo
+    	]]></query>
 </hibernate-configuration>
