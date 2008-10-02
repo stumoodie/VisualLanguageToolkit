@@ -12,6 +12,7 @@ import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
@@ -86,7 +87,7 @@ public class ICanvasTest {
 	public void tearDown() throws Exception {
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testCanvasCreated () throws Exception 
 	{
 		assertEquals ( "Map diagram " , mapDiagram , canvas.getOwningMap()) ;
@@ -99,7 +100,7 @@ public class ICanvasTest {
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testChangeCanvasSize () throws Exception 
 	{
 		canvas.setCanvasSize(new Size (NEW_CANVAS_SIZE , NEW_CANVAS_SIZE)) ;
@@ -108,7 +109,7 @@ public class ICanvasTest {
 		assertEquals ( "width" , NEW_CANVAS_SIZE , ((HibCanvas)canvas).getCanvasWidth() ) ;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Ignore @Test(expected=IllegalArgumentException.class)
 	public void testChangeCanvasSizeToNull () throws Exception
 	{
 		canvas.setCanvasSize(null) ;
@@ -117,7 +118,7 @@ public class ICanvasTest {
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testChangeBackgroundColor () throws Exception
 	{
 		canvas.setBackgroundColour(new RGB(NEW_BACKGROUND_COLOR,NEW_BACKGROUND_COLOR,NEW_BACKGROUND_COLOR)) ;
@@ -127,7 +128,7 @@ public class ICanvasTest {
 		assertEquals ( "green" , NEW_BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundGreen() ) ;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Ignore @Test(expected=IllegalArgumentException.class)
 	public void testChangeBackgroundColorToNull () throws Exception
 	{
 		canvas.setBackgroundColour(null) ;

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
@@ -18,8 +19,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
 import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
-import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 
 /**
  * @author nhanlon
@@ -36,13 +35,12 @@ public abstract class GenericTester {
 		return bofac;
 	}
 	
+	protected abstract String getTestRepositoryName();
+	
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
 		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
 		dbTester.createSchema();
-		bofac = new BusinessObjectFactory(new 
-					ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb","repo name","org.hsqldb.jdbcDriver"));
 	}
 
 	@AfterClass
@@ -50,11 +48,17 @@ public abstract class GenericTester {
 		dbTester.dropSchema();
 	}
 
+	protected abstract void doAdditionalSetUp();
+	
+	protected abstract void doAdditionalTearDown();
+
 	@Before
 	public void setUp() throws Exception {
+		bofac = new BusinessObjectFactory(dbTester.getHibernateSessionFactory(), getTestRepositoryName());
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		doSetup();
+		doAdditionalSetUp();
 	}
 
 	protected void saveAndCommit(Serializable in) {
@@ -75,17 +79,37 @@ public abstract class GenericTester {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		doAdditionalTearDown();
 		disableConstraints();
 		dbTester.onTearDown();
 		enableConstraints();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected final <T> List<T> runQuery(String query){
+		Session sess = getSession();
+		sess.beginTransaction();
+		List<T> retVal = (List<T>)sess.createQuery(query).list();
+		sess.getTransaction();
+		return retVal;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected final <T> T runUniqueQuery(String query){
+		Session sess = getSession();
+		sess.beginTransaction();
+		T retVal = (T)sess.createQuery(query).uniqueResult();
+		sess.getTransaction();
+		return retVal;
+	}
+	
+	
 	protected HibernateTestManager getDbTester() {
 		return dbTester;
 	}
 
 	protected Session getSession() {
-		return HibernateUtil.getSession();
+		return dbTester.getHibernateSessionFactory().getCurrentSession();
 	}
 
 	/**

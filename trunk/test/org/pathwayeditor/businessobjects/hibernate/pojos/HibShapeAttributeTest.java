@@ -13,6 +13,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -71,7 +72,7 @@ public class HibShapeAttributeTest {
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testEquals () throws Exception 
 	{
 		shape = new HibShapeAttribute ();
@@ -97,7 +98,7 @@ public class HibShapeAttributeTest {
 		assertTrue (shape.equals(shape2)) ;
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testHashCode () throws Exception  
 	{
 		shape = new HibShapeAttribute ();

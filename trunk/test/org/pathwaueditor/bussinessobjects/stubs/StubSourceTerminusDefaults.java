@@ -1,0 +1,86 @@
+/**
+ * 
+ */
+package org.pathwaueditor.bussinessobjects.stubs;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
+import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
+
+/**
+ * @author smoodie
+ *
+ */
+public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
+	public static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
+	public static final short EXPECTED_OFFSET = 1 ;
+	public static final Size EXPECTED_END_SIZE = new Size(10, 20);
+	public static final Size EXPECTED_TERM_SIZE = new Size(10, 20);
+	public static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 300);
+	public static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
+	public static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
+
+	private final IPropertyDefinitionFilter stubPropertiesFilter = new StubPropertyDefinitionFilter();
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getDefaultLabelAttributes()
+	 */
+	public IDefaultLabelAttributes getDefaultLabelAttributes() {
+		throw new UnsupportedOperationException("not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndDecoratorType()
+	 */
+	public LinkEndDecoratorShape getEndDecoratorType() {
+		return EXPECTED_END_DEC;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndSize()
+	 */
+	public Size getEndSize() {
+		return EXPECTED_END_SIZE;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getGap()
+	 */
+	public short getGap() {
+		return EXPECTED_OFFSET;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getPropertiesFilter()
+	 */
+	public IPropertyDefinitionFilter getPropertiesFilter() {
+		return this.stubPropertiesFilter;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getTermColour()
+	 */
+	public RGB getTermColour() {
+		return EXPECTED_TERM_COLOUR;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getTermDecoratorType()
+	 */
+	public PrimitiveShapeType getTermDecoratorType() {
+		return EXPECTED_TERM_DEC;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getTermSize()
+	 */
+	public Size getTermSize() {
+		return EXPECTED_TERM_SIZE;
+	}
+
+}

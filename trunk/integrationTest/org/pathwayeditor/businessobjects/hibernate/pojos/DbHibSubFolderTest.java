@@ -15,6 +15,7 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -45,7 +46,7 @@ public class DbHibSubFolderTest extends PojoTester{
 	private static final String SUBFOLDER_TWO_NAME = "subfolder2" ;
 	
 	
-	@Test
+	@Ignore @Test
 	public void testWriteSubFolderToDB () throws Exception 
 	{	
 		doSetup () ;
@@ -96,7 +97,7 @@ public class DbHibSubFolderTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testCloneFolderSubFolderAndMapDiagramsAndMoveAllBetweenRepositories () throws Exception
 	{
 		doSetup ();
@@ -135,7 +136,7 @@ public class DbHibSubFolderTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteSubFolders () throws Exception
 	{
 		doSetup ();
@@ -183,7 +184,7 @@ public class DbHibSubFolderTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteParentFolderAndSubFolders () throws Exception 
 	{	
 		doSetup() ;

@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -48,7 +49,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		assertEquals ("parent link", dbLink.hashCode(), dbLinkTerminus.getAttribute().hashCode()) ;
 	}
 	
-	@Test 
+	@Ignore @Test 
 	public void testCreateLinkTerminus () throws Exception
 	{
 		
@@ -88,7 +89,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteLinkTerminus () throws Exception 
 	{
 		doSetup();

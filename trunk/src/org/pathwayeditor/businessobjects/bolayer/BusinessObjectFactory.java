@@ -6,9 +6,7 @@ package org.pathwayeditor.businessobjects.bolayer;
 import java.util.Iterator;
 
 import org.hibernate.Session;
-import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
-import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
+import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
@@ -22,16 +20,13 @@ import org.pathwayeditor.businessobjects.repository.ISubFolder;
  * 
  */
 public class BusinessObjectFactory implements IBusinessObjectFactory {
-	private HibRepository rep;
-	private IConnectionInfo conn = new ConnectionInfo();//uses default parameters
+	private IRepository rep;
+	private final SessionFactory fact;
+	private final String repositoryName;
 
-	public BusinessObjectFactory(IConnectionInfo conn) {
-		this.conn = conn;
-		HibernateUtil.setConnectionInfo(conn);
-	}
-
-	public BusinessObjectFactory() {
-		HibernateUtil.setConnectionInfo(conn);
+	public BusinessObjectFactory(SessionFactory fact, String repositoryName) {
+		this.fact = fact;
+		this.repositoryName = repositoryName;
 	}
 
 	/*
@@ -41,44 +36,26 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 */
 	public synchronized IRepository getRepository() {
 		if (rep == null) {
-			String repositoryName =  conn.getRepositoryName();
-			if(repositoryName==null)
-				repositoryName=IConnectionInfo.REPOSITORY_DEFAULT_NAME;
-//			Session s = HibernateUtil.getSession();
-			Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-			s.getTransaction().begin();
-			rep = (HibRepository) s.createQuery(
-					"from HibRepository r  where r.name = :name").setString(
-					"name",repositoryName).uniqueResult();
-			if (rep == null)
-				rep = makeAndSavedefaultRepository();
-			((HibRepository)rep).getMaps().size();
-			((HibRepository)rep).getFolders().size();
-			HibRootFolder root = rep.getRootFolder();
-			loadSubFoldersAndMaps(root);
-//			HibernateUtil.commit();
-			s.getTransaction().commit();
+			loadRepository();
 		}
-//		Session s = HibernateUtil.getSession();
-//		s.lock(rep, LockMode.NONE);
 		return rep;
 	}
 
-	/**
-	 * @return
-	 */
-	private HibRepository makeAndSavedefaultRepository() {
-		rep = new HibRepository(IConnectionInfo.REPOSITORY_DEFAULT_NAME,
-				"local", 0);
-		Session s = HibernateUtil.getSession();
-		s.save(rep);
-//		HibernateUtil.commit(s);
-		return rep;
-	}
-
-	public synchronized IRepository getFreshRepository(String name) {
-		rep = null;
-		return getRepository();
+	private void loadRepository(){
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		HibRepository hibRep = (HibRepository) s.createQuery(
+				"from HibRepository r  where r.name = :name").setString(
+				"name",repositoryName).uniqueResult();
+//		if (rep == null)
+//			rep = makeAndSavedefaultRepository();
+		hibRep.getMaps().size();
+		hibRep.getFolders().size();
+		HibRootFolder root = hibRep.getRootFolder();
+		loadSubFoldersAndMaps(root);
+//		HibernateUtil.commit();
+		s.getTransaction().commit();
+		rep = hibRep;
 	}
 
 	/**
@@ -86,8 +63,6 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 */
 	private void loadSubFoldersAndMaps(HibFolder folder) {
 		folder.getMapDiagrams().size(); // note - its the call to size() that
-		// forces Hibernate to initialise the
-		// collection - so do not remove!
 		for (Iterator<ISubFolder> i = folder.getSubFolderIterator(); i.hasNext();) {
 			loadSubFoldersAndMaps((HibFolder) i.next());
 		}
@@ -119,7 +94,7 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	public synchronized void synchroniseCanvas(ICanvas canvas) {
-
+		//TODO: implement me!
 	}
 
 	/*
@@ -128,18 +103,10 @@ public class BusinessObjectFactory implements IBusinessObjectFactory {
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
 	public synchronized void synchroniseRepository() {
-		Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-//		try {
-			s.getTransaction().begin();
-			s.saveOrUpdate(rep);
-			s.getTransaction().commit();
-//			s = HibernateUtil.getSession();
-//			s.lock(rep, LockMode.NONE);// this step ensures that the repository stays locked to the current session regardless of multiple calls tp synchronise
-//		} catch (SQLException e) {					// without this step, the 'commit' step unlocks the repository from the session.
-//			if (s != null)
-//				s.close();
-//			throw new RuntimeException(e);
-//		}
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		s.saveOrUpdate(rep);
+		s.getTransaction().commit();
 	}
 
 }

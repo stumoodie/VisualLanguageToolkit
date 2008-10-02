@@ -64,7 +64,7 @@ public class DbHibShapeTest extends PojoTester{
 	
 	private final Mockery mockery = new JUnit4Mockery();
 	
-	@Test
+	@Ignore @Test
 	public void testLoadedShape () throws Exception
 	{
 		doSetup () ;
@@ -95,7 +95,7 @@ public class DbHibShapeTest extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testAddShape () throws Exception 
 	{
 		final IShapeObjectType mockShapeObjectType = this.mockery.mock(IShapeObjectType.class, "mockShapeObjectType");
@@ -161,7 +161,7 @@ public class DbHibShapeTest extends PojoTester{
 		this.mockery.assertIsSatisfied();
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteShape () throws Exception 
 	{
 		doSetup () ;

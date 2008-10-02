@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -38,7 +39,7 @@ public class dbHibCanvasTest extends  PojoTester {
 	private static final String CHECK_DATE_STRING = "1970-01-01 00:00:00.0" ;
 	
 	
-	@Test
+	@Ignore @Test
 	public void testLoadedCanvas () throws Exception
 	{
 		doSetup();
@@ -66,7 +67,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		assertEquals ("modified date" , CHECK_DATE_STRING , dbCanvas.getModified().toString() ) ;
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteEmptyCanvas () throws Exception 
 	{
 		doSetup();
@@ -96,7 +97,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		}
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testCloneCanvas () throws Exception
 	{
 		doSetup () ;

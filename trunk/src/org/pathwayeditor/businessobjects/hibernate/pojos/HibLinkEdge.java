@@ -77,16 +77,16 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		return graph;
 	}
 	
-	void setOutNode(IShapeNode value) {
-		this.outNode = (HibShapeNode)value;
+	void setOutNode(HibShapeNode value) {
+		this.outNode = value;
 	}
 	
 	public HibShapeNode getOutNode() {
 		return outNode;
 	}
 	
-	void setInNode(IShapeNode value) {
-		this.inNode = (HibShapeNode)value;
+	void setInNode(HibShapeNode value) {
+		this.inNode = value;
 	}
 	
 	public HibShapeNode getInNode() {

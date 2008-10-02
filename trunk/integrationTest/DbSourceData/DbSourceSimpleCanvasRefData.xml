@@ -6,7 +6,7 @@
 		<column>description</column>
 		<column>build_num</column>
 		<column>last_inode</column>
-		<column>root_node_id</column>
+		<column>root_folder_id</column>
 		<row>
 			<value>100001</value>
 			<value>repo name</value>

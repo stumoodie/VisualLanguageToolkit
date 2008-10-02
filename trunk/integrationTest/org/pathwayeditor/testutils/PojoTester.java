@@ -18,7 +18,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
 
 /**
  * @author nhanlon
@@ -28,14 +27,13 @@ public abstract class PojoTester {
 
 	private static HibernateTestManager dbTester = null;
 	private SessionFactory hibFactory;
-	private Session session;
+//	private Session session;
 	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
 		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
 		dbTester.createSchema();
-		HibernateUtil.setTestSessionFactoryAsDefault(HIB_CONFIG_FILE);
 	}
 
 	@AfterClass
@@ -57,7 +55,7 @@ public abstract class PojoTester {
 	}
 
 	protected void startNewTransaction() {
-		setSession(getHibFactory().openSession());
+//		setSession(getHibFactory().openSession());
 		getSession().beginTransaction();
 	}
 
@@ -85,7 +83,7 @@ public abstract class PojoTester {
 	}
 
 	protected HibernateTestManager getDbTester() {
-		return this.dbTester;
+		return dbTester;
 	}
 
 	protected SessionFactory getHibFactory() {
@@ -93,12 +91,12 @@ public abstract class PojoTester {
 	}
 
 	protected Session getSession() {
-		return this.session;
+		return this.getHibFactory().getCurrentSession();
 	}
 
-	protected void setSession(Session sess) {
-		this.session = sess;
-	}
+//	protected void setSession(Session sess) {
+//		this.session = sess;
+//	}
 
 	/**
 	 * @return path to xml file containing setup data for DBUnit

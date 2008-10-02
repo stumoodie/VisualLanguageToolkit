@@ -6,53 +6,43 @@ package org.pathwayeditor.bussinessobjects.drawingprimitives;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.pathwaueditor.bussinessobjects.stubs.StubDefaultLinkAttributes;
+import org.pathwaueditor.bussinessobjects.stubs.StubLinkObjectType;
+import org.pathwaueditor.bussinessobjects.stubs.StubMap;
+import org.pathwaueditor.bussinessobjects.stubs.StubNotation;
+import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubSystem;
+import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 
 /**
  * @author ntsorman
  *
  */
-@RunWith(JMock.class)
+//@RunWith(JMock.class)
 public class ILinkAttributeTest {
-	
-	private Mockery mockery = new JUnit4Mockery() {{
-		 setImposteriser(ClassImposteriser.INSTANCE);
-	}};
+//	
+//	private Mockery mockery = new JUnit4Mockery() {{
+//		 setImposteriser(ClassImposteriser.INSTANCE);
+//	}};
 	
 	private static final int LINK_INDEX = 1 ;
 	private static final int CREATION_SERIAL = 1 ;
@@ -70,20 +60,20 @@ public class ILinkAttributeTest {
 	private static final String URL = "url" ;
 	private static final String NEW_URL = "newurl" ;
 	
-	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
-	private static final String EXPECTED_DEFAULT_NAME = "link name";
-	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
-	private static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
-	private static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
-	private static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
-	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
-	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
-	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
-	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
-	private static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+//	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
+//	private static final String EXPECTED_DEFAULT_NAME = "link name";
+//	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
+//	private static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
+//	private static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
+//	private static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
+//	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
+//	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
+//	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
+//	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
+//	private static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+//	private static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
 	private static final int NEW_LINE_WIDTH = 99;
 	private static final int INVALID_LINE_WIDTH = -99;
-	private static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
 
 	
 	private static final ConnectionRouter ROUTER_TYPE = ConnectionRouter.SHORTEST_PATH ;
@@ -93,22 +83,30 @@ public class ILinkAttributeTest {
 	private HibCanvas mockCanvas ;
 	private IBendPoint mockBendPoint1 ;
 	private IBendPoint mockBendPoint2 ;
+	private ILinkObjectType stubObjectType;
 //	private HibTextProperty textProperty ;
 	
 	@Before
 	public void setUp() throws Exception {
-		mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
-		final HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
-		final ILinkObjectType mockLinkObjectType = mockery.mock(ILinkObjectType.class, "mockLinkObjectType");
-		final IDefaultLinkAttributes stubDefaults = new DefaultsStub();
+//		mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
+//		final HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
+//		final ILinkObjectType mockLinkObjectType = mockery.mock(ILinkObjectType.class, "mockLinkObjectType");
+//		final IDefaultLinkAttributes stubDefaults = new StubDefaultLinkAttributes();
 
-		this.mockery.checking(new Expectations(){{
-			allowing(mockLinkObjectType).getDefaultLinkAttributes(); will(returnValue(stubDefaults));
-			
-			
-		}});
+//		this.mockery.checking(new Expectations(){{
+//			allowing(mockLinkObjectType).getDefaultLinkAttributes(); will(returnValue(stubDefaults));
+//			
+//			
+//		}});
+		INotationSubsystem stubNotationSubSystem = new StubNotationSubSystem();
+		IMap stubMap = new StubMap();
+		HibNotation notation = new HibNotation(StubNotation.EXPECTED_GLOBAL_ID, StubNotation.EXPECTED_NAME, StubNotation.EXPECTED_DESCRIPTION,
+				new Version(StubNotation.EXPECTED_MAJOR_VERSION, StubNotation.EXPECTED_MINOR_VERSION, StubNotation.EXPECTED_PATCH_VERSION));
+		mockCanvas = new HibCanvas(stubMap, stubNotationSubSystem, notation);
+		HibObjectType objectType = new HibObjectType(notation, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
+		stubObjectType = new StubLinkObjectType();
 		
-		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	mockLinkObjectType,mockObjectType ) ;
+		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	stubObjectType, objectType ) ;
 		
 //		tempLinkAttribute.setCreationSerial(CREATION_SERIAL) ;
 		
@@ -140,21 +138,20 @@ public class ILinkAttributeTest {
 		assertEquals ( "correct creationSerial" , CREATION_SERIAL , linkAttribute.getCreationSerial()) ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testGetObjectType () throws Exception
 	{
-		// TODO
-		linkAttribute.getObjectType() ;
+		assertEquals("correct OT", stubObjectType, linkAttribute.getObjectType());
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testGetLinkSourceDecoration() throws Exception
 	{
 		// TODO
 		linkAttribute.getSourceTerminus() ;
 	}
 	
-	@Test(expected=UnsupportedOperationException.class)
+	@Test
 	public void testGetLinkTargetDecoration() throws Exception
 	{
 		// TODO
@@ -164,7 +161,7 @@ public class ILinkAttributeTest {
 	@Test
 	public void testSetRouter() throws Exception
 	{
-		assertEquals ( "null router" , null , linkAttribute.getRouter() ) ;
+		assertEquals ( "null router" , StubDefaultLinkAttributes.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouter() ) ;
 		linkAttribute.setRouter(ROUTER_TYPE) ;
 		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouter() );
 	}
@@ -221,10 +218,11 @@ public class ILinkAttributeTest {
 		assertEquals ( "url" , NEW_URL , linkAttribute.getUrl()) ;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
 	public void testSetUrlToNull() throws Exception 
 	{
-		linkAttribute.setUrl(null) ;
+		assertEquals ( "url" , StubDefaultLinkAttributes.EXPECTED_DEFAULT_URL , linkAttribute.getUrl()) ;
+		linkAttribute.setUrl(URL) ;
 		assertEquals ( "url" , URL , linkAttribute.getUrl()) ;
 	}
 	
@@ -242,171 +240,6 @@ public class ILinkAttributeTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetLineStyleToNull() {
 		linkAttribute.setLineStyle(null) ;
-	}
-	
-	@Test
-	public void testGetPropertyIterator () {
-		fail("Implement this test");
-//		Iterator <IAnnotationProperty> properties = linkAttribute.propertyIterator() ;
-		//FIXME:
-//		assertEquals ( "property iterator contains one" , NUMERIC_VALUE_1 , properties.size() );
-//		assertTrue ( "property iterator contains property" ,  properties.contains(textProperty)) ;
-	}
-	
-	private static class DefaultsStub implements IDefaultLinkAttributes {
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDefaultLabelAttributes()
-		 */
-		public IDefaultLabelAttributes getDefaultLabelAttributes() {
-			throw new UnsupportedOperationException("not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDescription()
-		 */
-		public String getDescription() {
-			return EXPECTED_DEFAULT_DESCRIPTION;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDetailedDescription()
-		 */
-		public String getDetailedDescription() {
-			return EXPECTED_DEFAULT_DETAILED_DESCRIPTION;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineColour()
-		 */
-		public RGB getLineColour() {
-			return EXPECTED_DEFAULT_LINE_COLOUR;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineStyle()
-		 */
-		public LineStyle getLineStyle() {
-			return EXPECTED_DEFAULT_LINE_STYLE;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineWidth()
-		 */
-		public int getLineWidth() {
-			return EXPECTED_DEFAULT_LINE_WIDTH;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getName()
-		 */
-		public String getName() {
-			return EXPECTED_DEFAULT_NAME;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getURL()
-		 */
-		public String getURL() {
-			return EXPECTED_DEFAULT_URL;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getLinkSource()
-		 */
-		public ILinkTerminusDefaults getLinkSource() {
-			throw new UnsupportedOperationException("not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getLinkTarget()
-		 */
-		public ILinkTerminusDefaults getLinkTarget() {
-			throw new UnsupportedOperationException("not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getPropertyDefinitionFilter()
-		 */
-		public IPropertyDefinitionFilter getPropertyDefinitionFilter() {
-			return new StubPropDefn();
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getRouter()
-		 */
-		public ConnectionRouter getRouter() {
-			return EXPECTED_DEFAULT_ROUTER;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getUrl()
-		 */
-		public String getUrl() {
-			return EXPECTED_DEFAULT_URL;
-		}
-		
-	}
-	
-	private static class StubPropDefn implements IPropertyDefinitionFilter {
-		private final Set<IPropertyDefinition> retVal = Collections.emptySet();
-		
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllProperties()
-		 */
-		public Set<IPropertyDefinition> getAllProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllPropertiesIterator()
-		 */
-		public Iterator<IPropertyDefinition> getAllPropertiesIterator() {
-			return retVal.iterator();
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getEditableProperties()
-		 */
-		public Set<IPropertyDefinition> getEditableProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getFormattedTextProperties()
-		 */
-		public Set<IPropertyDefinition> getFormattedTextProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getNumberProperties()
-		 */
-		public Set<IPropertyDefinition> getNumberProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getObjectType()
-		 */
-		public IObjectType getObjectType() {
-			throw new UnsupportedOperationException("not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getTextProperties()
-		 */
-		public Set<IPropertyDefinition> getTextProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getVisualisableProperties()
-		 */
-		public Set<IPropertyDefinition> getVisualisableProperties() {
-			return retVal;
-		}
-		
 	}
 
 }	

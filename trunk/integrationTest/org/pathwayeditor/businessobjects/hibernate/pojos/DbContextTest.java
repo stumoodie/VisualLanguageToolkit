@@ -13,6 +13,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.testutils.PojoTester;
@@ -36,7 +37,7 @@ public class DbContextTest extends PojoTester{
 	private static final String ADDED_OBJECT_TYPE_DATA = "integrationTest/DbContextTestData/AddedObjectTypeRefData.xml";
 	private static final String DELETED_CONTEXT_DATA = "integrationTest/DbContextTestData/DeletedContextRefData.xml";
 	
-	@Test
+	@Ignore @Test
 	public void testAddContext () throws Exception 
 	{	
 		doSetup () ;
@@ -66,7 +67,7 @@ public class DbContextTest extends PojoTester{
 		}
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testaddObjectTypeToContext () throws Exception 
 	{
 		doSetup () ;
@@ -99,7 +100,7 @@ public class DbContextTest extends PojoTester{
 		}
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteContext () throws Exception 
 	{
 		doSetup () ;

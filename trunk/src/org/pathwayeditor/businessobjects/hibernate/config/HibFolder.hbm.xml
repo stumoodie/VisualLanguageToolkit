@@ -43,10 +43,8 @@
 				<column name="id" not-null="true" unique="true" />
 			</key>
 			<properties name="xak1subfolder" unique="true">
-				<many-to-one name="parentFolder"
-					foreign-key="xfk1SubFolderParentFolder"
-					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
-					<column name="parent_folder_id" not-null="true" />
+				<many-to-one name="parentFolder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
+					<column name="parent_folder_id" not-null="false" />
 				</many-to-one>
 				<property name="name" type="string">
 					<column name="name" length="128" not-null="true" />

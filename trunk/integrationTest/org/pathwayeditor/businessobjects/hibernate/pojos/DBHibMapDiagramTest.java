@@ -17,6 +17,7 @@ import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -32,7 +33,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	private static final String ADDED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/AddedMapDiagramRefData.xml";
 	private static final String CLONED_MAPDIAGRAM_REF_DATA = "integrationTest/DbRepositoryTestData/ClonedMapDiagramRefData.xml";
 	
-	@Test
+	@Ignore @Test
 	public void testAddNewMapDiagram () throws Exception 
 	{
 		doSetup () ;
@@ -70,7 +71,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testDeleteMapDiagram () throws Exception
 	{
 		doSetup ();
@@ -84,7 +85,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		assertEquals(0,retreivedMapDiagram.list().size());
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testCloneMapDiagram () throws Exception 
 	{
 		doSetup () ;

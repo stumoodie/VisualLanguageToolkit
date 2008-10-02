@@ -13,6 +13,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
@@ -53,7 +54,7 @@ public class IPlainTextAnnotationPropertyTest {
 	public void tearDown() throws Exception {
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testCreatedPlainTextProperty () throws Exception
 	{
 		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getCreationSerial()) ;
@@ -61,14 +62,14 @@ public class IPlainTextAnnotationPropertyTest {
 		assertTrue ( "object value" , textProperty.getValue() instanceof String ) ;
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testChangeTextPropertyValue () throws Exception
 	{
 		textProperty.setValue(OTHER_TEXT_VALUE) ;
 		assertEquals ( "text value" , OTHER_TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Ignore @Test
 	public void testChangeTextPropertyValueToNull () throws Exception
 	{
 		textProperty.setValue(null) ;

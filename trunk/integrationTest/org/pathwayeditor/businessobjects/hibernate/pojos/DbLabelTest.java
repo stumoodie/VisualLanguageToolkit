@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -16,7 +17,7 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DbLabelTest extends PojoTester{
 	
-	@Test
+	@Ignore @Test
 	public void testSetTextProperty() throws Exception{
 		doSetup () ;
 		
@@ -30,7 +31,7 @@ public class DbLabelTest extends PojoTester{
 		assertEquals("fish and chips",property.getValue());
 	}
 
-	@Test
+	@Ignore @Test
 	public void testSetRichTextProperty() throws Exception{
 		doSetup () ;
 		
@@ -44,7 +45,7 @@ public class DbLabelTest extends PojoTester{
 		assertEquals("fish and chips",property.getRichTextValue());
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testSetNumberProperty() throws Exception{
 		doSetup () ;
 		
@@ -58,7 +59,7 @@ public class DbLabelTest extends PojoTester{
 		assertEquals(new BigDecimal(2),property.getValue());
 	}
 	
-	@Test
+	@Ignore @Test
 	public void testSetListProperty() throws Exception{
 		doSetup () ;
 		

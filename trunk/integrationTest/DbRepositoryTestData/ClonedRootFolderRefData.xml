@@ -5,11 +5,14 @@
 		<column>name</column>
 		<column>description</column>
 		<column>build_num</column>
+		<column>root_folder_id</column>
+		<column>last_inode</column>
 			<row>
 				<value>100001</value>
 				<value>repo name</value>
 				<value>repository description</value>
 				<value>2534</value>
+				<value></value>
 			</row>
 			<row>
 				<value>100002</value>
