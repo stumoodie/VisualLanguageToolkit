@@ -72,8 +72,8 @@ public class ILinkAttributeTest {
 //	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
 //	private static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
 //	private static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
-	private static final int NEW_LINE_WIDTH = 99;
-	private static final int INVALID_LINE_WIDTH = -99;
+//	private static final int NEW_LINE_WIDTH = 99;
+//	private static final int INVALID_LINE_WIDTH = -99;
 
 	
 	private static final ConnectionRouter ROUTER_TYPE = ConnectionRouter.SHORTEST_PATH ;
@@ -103,7 +103,7 @@ public class ILinkAttributeTest {
 		HibNotation notation = new HibNotation(StubNotation.EXPECTED_GLOBAL_ID, StubNotation.EXPECTED_NAME, StubNotation.EXPECTED_DESCRIPTION,
 				new Version(StubNotation.EXPECTED_MAJOR_VERSION, StubNotation.EXPECTED_MINOR_VERSION, StubNotation.EXPECTED_PATCH_VERSION));
 		mockCanvas = new HibCanvas(stubMap, stubNotationSubSystem, notation);
-		HibObjectType objectType = new HibObjectType(notation, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
+		HibObjectType objectType = new HibObjectType(notation, StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
 		stubObjectType = new StubLinkObjectType();
 		
 		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	stubObjectType, objectType ) ;

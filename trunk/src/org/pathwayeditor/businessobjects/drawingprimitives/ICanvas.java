@@ -90,7 +90,7 @@ public interface ICanvas {
 	
 	/**
 	 * Get the model for this canvas.
-	 * @return
+	 * @return the model associated with the canvas, which cannot be null. 
 	 */
 	IModel getModel();
 

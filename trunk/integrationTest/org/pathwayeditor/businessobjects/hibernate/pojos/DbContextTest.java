@@ -36,6 +36,7 @@ public class DbContextTest extends PojoTester{
 	private static final String ADDED_CONTEXT_DATA = "integrationTest/DbContextTestData/DbAddedContextRefData.xml";
 	private static final String ADDED_OBJECT_TYPE_DATA = "integrationTest/DbContextTestData/AddedObjectTypeRefData.xml";
 	private static final String DELETED_CONTEXT_DATA = "integrationTest/DbContextTestData/DeletedContextRefData.xml";
+	private static final int OBJECT_TYPE_UID = 0;
 	
 	@Ignore @Test
 	public void testAddContext () throws Exception 
@@ -74,7 +75,7 @@ public class DbContextTest extends PojoTester{
 		Query retreivedContext = getSession().createQuery("from HibContext where id = '100001'" ) ;
 		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
-		HibObjectType newObjectType = new HibObjectType (dbContext, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
+		HibObjectType newObjectType = new HibObjectType (dbContext, OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
 		dbContext.addObjectType(newObjectType) ;
 		
 		getSession().saveOrUpdate(dbContext) ;

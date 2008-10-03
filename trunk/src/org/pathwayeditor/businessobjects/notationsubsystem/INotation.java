@@ -21,7 +21,8 @@ public interface INotation extends Comparable<INotation> {
 	int hashCode();
 
 	/**
-	 * @return
+	 * Gets the global identifier for this version of the notation. This uniquely identifies the notation.
+	 * @return the global id that globally uniquely identifies this version of the notation.
 	 */
 	String getGlobalId();
 }

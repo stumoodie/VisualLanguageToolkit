@@ -19,7 +19,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 public class StubLinkObjectType implements ILinkObjectType {
 	public static final String EXPECTED_NAME = "linkType";
 	public static final String EXPECTED_DESCRIPTION = "linkType description";
-	private static final int EXPECTED_UNIQUE_ID = 1;
+	public static final int EXPECTED_UNIQUE_ID = 1;
 	
 	private final ILinkTerminusDefinition sourceTermDefn = new StubSourceLinkTerminusDefinition(this);
 	private final ILinkTerminusDefinition targetTermDefn = new StubTargetLinkTerminusDefinition(this);

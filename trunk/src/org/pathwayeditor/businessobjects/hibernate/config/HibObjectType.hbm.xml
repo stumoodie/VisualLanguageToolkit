@@ -12,10 +12,13 @@
         	<many-to-one name="notation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation">
             	<column name="context_id" not-null="true" />
         	</many-to-one>
-	        <property name="name" type="string">
-    	        <column name="name" length="128" not-null="true" />
+	        <property name="uniqueId" type="int">
+    	        <column name="unique_id" not-null="true" />
 	        </property>
 	    </properties>
+	        <property name="displayName" type="string">
+    	        <column name="display_name" length="128" not-null="true" />
+	        </property>
         <property name="description" type="string">
             <column name="description" length="2048" not-null="true" />
         </property>

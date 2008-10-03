@@ -40,7 +40,7 @@ public class ILabelAttributeTest {
 	private HibCanvas mockCanvas ;
 	private HibProperty property ;
 	
-	private static final String PROPERTY_VALUE = "value" ;
+//	private static final String PROPERTY_VALUE = "value" ;
 	
 	private static final int CREATION_SERIAL = 12345 ;
 	private static final int POSITION_X = 50 ;

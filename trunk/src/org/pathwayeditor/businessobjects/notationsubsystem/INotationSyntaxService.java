@@ -3,6 +3,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -47,9 +48,45 @@ public interface INotationSyntaxService extends INotationService {
 	IRootObjectType getRootMapObjectType();
 
 	/**
-	 * @param name
-	 * @return
+	 * Tests if an object type with the given uniqueId exists in this syntax service.
+	 * @param uniqueId the unique id to be tested.
+	 * @return true if is contains the object type, false otherwise.
 	 */
-	IShapeObjectType getShapeObjectType(String name);
+	boolean containsShapeObjectType(int uniqueID); 
+	
+	/**
+	 * Retrieve the object type based on it's object id.
+	 * @param uniqueId the unique identifier of the object type.
+	 * @return the object type, which cannot be null.
+	 */
+	IShapeObjectType getShapeObjectType(int uniqueId);
+
+	/**
+	 * Tests if a link object type with the given uniqueId exists in this syntax service.
+	 * @param uniqueId the unique id to be tested.
+	 * @return true if is contains the link object type, false otherwise.
+	 */
+	boolean containsLinkObjectType(int uniqueID); 
+	
+	/**
+	 * Retrieve the link object type based on it's object id.
+	 * @param uniqueId the unique identifier of the object type.
+	 * @return the object type, which cannot be null.
+	 */
+	ILinkObjectType getLinkObjectType(int uniqueId);
+
+	/**
+	 * Tests if a object type with the given uniqueId exists in this syntax service.
+	 * @param uniqueId the unique id to be tested.
+	 * @return true if is contains the object type, false otherwise.
+	 */
+	boolean containsObjectType(int uniqueID); 
+	
+	/**
+	 * Retrieve the lobject type based on it's unique id.
+	 * @param uniqueId the unique identifier of the object type.
+	 * @return the object type, which cannot be null.
+	 */
+	IObjectType getObjectType(int uniqueId);
 
 }
