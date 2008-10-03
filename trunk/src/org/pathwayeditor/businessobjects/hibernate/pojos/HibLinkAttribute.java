@@ -21,7 +21,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyB
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 /**
@@ -105,18 +105,18 @@ s	 */
 	}
 
 	/**
-	 * @param defaultLinkAttributes
+	 * @param linkAttributeDefaults
 	 */
-	private void addDefaults(IDefaultLinkAttributes defaultLinkAttributes) {
-		this.lineColour = defaultLinkAttributes.getLineColour();
-		this.lineStyle = defaultLinkAttributes.getLineStyle();
-		this.lineWidth = defaultLinkAttributes.getLineWidth();
-		this.name = defaultLinkAttributes.getName();
-		this.description = defaultLinkAttributes.getDescription();
-		this.detailedDescription = defaultLinkAttributes.getDetailedDescription();
-		this.url = defaultLinkAttributes.getUrl();
-		this.routerType = defaultLinkAttributes.getRouter();
-		for(IPropertyDefinition propDefn : defaultLinkAttributes.getPropertyDefinitionFilter().getAllProperties()){
+	private void addDefaults(ILinkAttributeDefaults linkAttributeDefaults) {
+		this.lineColour = linkAttributeDefaults.getLineColour();
+		this.lineStyle = linkAttributeDefaults.getLineStyle();
+		this.lineWidth = linkAttributeDefaults.getLineWidth();
+		this.name = linkAttributeDefaults.getName();
+		this.description = linkAttributeDefaults.getDescription();
+		this.detailedDescription = linkAttributeDefaults.getDetailedDescription();
+		this.url = linkAttributeDefaults.getUrl();
+		this.routerType = linkAttributeDefaults.getRouter();
+		for(IPropertyDefinition propDefn : linkAttributeDefaults.getPropertyDefinitionFilter().getAllProperties()){
 			this.hibLinkProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
 		}
 	}

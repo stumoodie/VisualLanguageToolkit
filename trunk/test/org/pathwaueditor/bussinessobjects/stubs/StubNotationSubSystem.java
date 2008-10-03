@@ -5,15 +5,15 @@ package org.pathwaueditor.bussinessobjects.stubs;
 
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.contextadapter.INotation;
-import org.pathwayeditor.businessobjects.contextadapter.INotationAutolayoutService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationConversionService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationExportService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationImportService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationPluginService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
-import org.pathwayeditor.businessobjects.contextadapter.INotationValidationService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationConversionService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationPluginService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 
 /**
  * @author smoodie

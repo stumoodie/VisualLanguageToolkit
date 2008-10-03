@@ -9,11 +9,21 @@ public interface IShapeObjectType extends INodeObjectType {
 	}; 
 	
 	/**
+	 * Returns the unique identifier for the link object type, which must be a positive integer.
+	 * @return the unique id, which must comply with the postcondition: <code>getUniqueId() > 0</code>. 
+	 */
+	int getUniqueId();
+
+	/**
 	 * Get the parenting rules of the shape
 	 */
 	IShapeParentingRules getParentingRules();
 
-	IDefaultShapeAttributes getDefaultAttributes();
+	/**
+	 * Gets the default attrributes for this object type.
+	 * @return
+	 */
+	IShapeAttributeDefaults getDefaultAttributes();
 	
 	/**
 	 * Is the line colour editable

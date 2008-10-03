@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
@@ -13,7 +13,9 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
  *
  */
 public class LabelObjectType implements INodeObjectType {
+	private static final int LABEL_UNIQUE_ID = -1;
 	private static final String NAME = "LabelOT";
+	
 	private final INotationSyntaxService notation;
 	private final String name;
 	private final IObjectTypeParentingRules parentingRules;
@@ -27,7 +29,7 @@ public class LabelObjectType implements INodeObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDefiningContext()
 	 */
-	public INotationSyntaxService getDefiningContext() {
+	public INotationSyntaxService getSyntaxService() {
 		return this.notation;
 	}
 
@@ -119,5 +121,12 @@ public class LabelObjectType implements INodeObjectType {
 			return false;
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getUniqueId()
+	 */
+	public int getUniqueId() {
+		return LABEL_UNIQUE_ID;
 	}
 }

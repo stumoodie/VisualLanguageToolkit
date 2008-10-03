@@ -8,7 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 
@@ -30,7 +30,7 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getDefaultLabelAttributes()
 	 */
-	public IDefaultLabelAttributes getDefaultLabelAttributes() {
+	public ILabelAttributeDefaults getDefaultLabelAttributes() {
 		throw new UnsupportedOperationException("not implemented");
 	}
 

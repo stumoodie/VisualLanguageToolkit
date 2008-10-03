@@ -9,8 +9,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 
@@ -18,7 +18,7 @@ import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
  * @author smoodie
  *
  */
-public class StubDefaultLinkAttributes implements IDefaultLinkAttributes {
+public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	public static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
 	public static final String EXPECTED_DEFAULT_NAME = "link name";
 	public static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
@@ -36,56 +36,56 @@ public class StubDefaultLinkAttributes implements IDefaultLinkAttributes {
 	private final ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDefaultLabelAttributes()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDefaultLabelAttributes()
 	 */
-	public IDefaultLabelAttributes getDefaultLabelAttributes() {
+	public ILabelAttributeDefaults getDefaultLabelAttributes() {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDescription()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
 	 */
 	public String getDescription() {
 		return EXPECTED_DEFAULT_DESCRIPTION;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDetailedDescription()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
 	 */
 	public String getDetailedDescription() {
 		return EXPECTED_DEFAULT_DETAILED_DESCRIPTION;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineColour()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineColour()
 	 */
 	public RGB getLineColour() {
 		return EXPECTED_DEFAULT_LINE_COLOUR;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineStyle()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineStyle()
 	 */
 	public LineStyle getLineStyle() {
 		return EXPECTED_DEFAULT_LINE_STYLE;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineWidth()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 	 */
 	public int getLineWidth() {
 		return EXPECTED_DEFAULT_LINE_WIDTH;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getName()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getName()
 	 */
 	public String getName() {
 		return EXPECTED_DEFAULT_NAME;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getURL()
+	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
 	 */
 	public String getURL() {
 		return EXPECTED_DEFAULT_URL;

@@ -1,4 +1,4 @@
-package org.pathwayeditor.businessobjects.contextadapter;
+package org.pathwayeditor.businessobjects.notationsubsystem;
 
 public interface INotation extends Comparable<INotation> {
 	

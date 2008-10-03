@@ -3,7 +3,7 @@
  */
 package org.pathwaueditor.bussinessobjects.stubs;
 
-import org.pathwayeditor.businessobjects.contextadapter.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 
 /**
  * @author smoodie

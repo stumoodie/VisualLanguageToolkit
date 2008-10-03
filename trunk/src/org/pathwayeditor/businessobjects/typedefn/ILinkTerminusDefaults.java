@@ -18,7 +18,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 public interface ILinkTerminusDefaults {
 	/**
 	 * Get the offset value. The default is zero.
-	 * @return
+	 * @return the gap size, which cannot be negative: <code>getGap() >= 0</code>.
 	 */
 	short getGap();
 	
@@ -29,7 +29,7 @@ public interface ILinkTerminusDefaults {
 	IPropertyDefinitionFilter getPropertiesFilter();
 
 	/**
-	 * get the shape type of rhe decorator.
+	 * get the shape type of the decorator.
 	 * @return the shape type.
 	 */
 	PrimitiveShapeType getTermDecoratorType();
@@ -58,6 +58,6 @@ public interface ILinkTerminusDefaults {
 	 */
 	Size getEndSize();
 
-	IDefaultLabelAttributes getDefaultLabelAttributes();
+	ILabelAttributeDefaults getDefaultLabelAttributes();
 	
 }

@@ -8,7 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 public class HibLabelAttribute implements Serializable, ILabelAttribute {
@@ -36,7 +36,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	HibLabelAttribute() {
 	}
 
-	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	IDefaultLabelAttributes labelDefaults) {
+	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
 		this.hibCanvas = hibCanvas;
 		this.creationSerial = creationSerial;
 		this.visualisableProperty = property;
@@ -44,7 +44,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		populateDefaults(labelDefaults);
 	}
 
-	private void populateDefaults(IDefaultLabelAttributes labelDefaults) {
+	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
 		this.setSize(labelDefaults.getSize());
 		this.setBackgroundColor(labelDefaults.getFillColour());
 	}

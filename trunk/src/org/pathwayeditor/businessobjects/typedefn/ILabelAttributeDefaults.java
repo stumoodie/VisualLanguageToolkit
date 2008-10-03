@@ -10,7 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
  * @date 12 Jun 2008
  * 
  */
-public interface IDefaultLabelAttributes { 
+public interface ILabelAttributeDefaults { 
 
 	Size getSize();
 

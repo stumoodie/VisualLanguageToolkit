@@ -12,7 +12,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
  * @author smoodie
  *
  */
-public interface IDefaultShapeAttributes {
+public interface IShapeAttributeDefaults {
 	String getName();
 
 	String getDescription();
@@ -35,5 +35,5 @@ public interface IDefaultShapeAttributes {
 
 	IPropertyDefinitionFilter getPropertiesFilter();
 
-	IDefaultLabelAttributes getDefaultLabelAttributes();
+	ILabelAttributeDefaults getDefaultLabelAttributes();
 }

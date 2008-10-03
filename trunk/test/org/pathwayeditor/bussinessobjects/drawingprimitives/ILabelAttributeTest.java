@@ -23,7 +23,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
  * @author ntsorman
@@ -64,7 +64,7 @@ public class ILabelAttributeTest {
 	@Before
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		final IDefaultLabelAttributes mockDefaults = mockery.mock(IDefaultLabelAttributes.class, "mockDefaults");
+		final ILabelAttributeDefaults mockDefaults = mockery.mock(ILabelAttributeDefaults.class, "mockDefaults");
 		IPlainTextPropertyDefinition defn = null;
 		
 		property = new HibTextProperty ( null , CREATION_SERIAL , defn) ;

@@ -1,6 +1,6 @@
-package org.pathwayeditor.businessobjects.contextadapter;
+package org.pathwayeditor.businessobjects.notationsubsystem;
 
-import org.pathwayeditor.businessobjects.contextadapter.IValidationRuleDefinition.RuleEnforcement;
+import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition.RuleEnforcement;
 
 
 /**

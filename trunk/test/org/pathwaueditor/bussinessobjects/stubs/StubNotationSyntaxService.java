@@ -5,9 +5,9 @@ package org.pathwaueditor.bussinessobjects.stubs;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.contextadapter.INotation;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;

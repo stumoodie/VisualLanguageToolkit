@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public interface IPropertyDefinition {
 
@@ -30,7 +30,7 @@ public interface IPropertyDefinition {
 	 */
 	boolean isEditable();
 	
-	IDefaultLabelAttributes getLabelDefaults();
+	ILabelAttributeDefaults getLabelDefaults();
 	
 	IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder);
 

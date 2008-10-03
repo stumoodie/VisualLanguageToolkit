@@ -7,16 +7,38 @@ public interface ILinkObjectType extends IObjectType {
 	public static enum LinkEditableAttributes{ COLOUR, LINE_STYLE, LINE_WIDTH };
 	
 	/**
+	 * Returns the unique identifier for the link object type, which must be a positive integer.
+	 * @return the unique id, which must comply with the postcondition: <code>getUniqueId() > 0</code>.
+	 */
+	int getUniqueId();
+	
+	/**
 	 * Gets the connection rules for this link.
 	 * @return A non-null instance of the connection rules.
 	 */
 	ILinkConnectionRules getLinkConnectionRules();
 
-	IDefaultLinkAttributes getDefaultLinkAttributes();
+	/**
+	 * Gets the default attributes for the link.
+	 * @return the default attributes class, which cannot be null.
+	 */
+	ILinkAttributeDefaults getDefaultLinkAttributes();
 	
+	/**
+	 * Get the source terminus definition.
+	 * @return the definition, which cannot be null.
+	 */
 	ILinkTerminusDefinition getSourceTerminusDefinition();
 	
+	/**
+	 * Get the target terminus definition.
+	 * @return the definition, which cannot be null.
+	 */
 	ILinkTerminusDefinition getTargetTerminusDefinition();
 	
+	/**
+	 * Get the editable attributes for this type.
+	 * @return the set of editable attributes, which cannot be null, but can be empty.
+	 */
 	EnumSet<LinkEditableAttributes> getEditiableAttributes();
 }

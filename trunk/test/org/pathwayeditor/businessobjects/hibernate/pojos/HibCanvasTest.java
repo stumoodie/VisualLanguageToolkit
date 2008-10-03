@@ -16,7 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
  * @author ntsorman

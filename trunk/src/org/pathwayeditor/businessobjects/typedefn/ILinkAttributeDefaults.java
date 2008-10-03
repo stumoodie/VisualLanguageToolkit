@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
  * @author smoodie
  *
  */
-public interface IDefaultLinkAttributes {
+public interface ILinkAttributeDefaults {
 	String getName();
 	
 	String getDescription();
@@ -38,21 +38,29 @@ public interface IDefaultLinkAttributes {
 	 */
 	RGB getLineColour();
 
+	/**
+	 * Get the default router type to be used for this link.
+	 * @return the router type, cannot be null.
+	 */
 	ConnectionRouter getRouter();
 	
-	/**
-	 * Get the definition of the link's source.
-	 * @return A non-null link end definition.
-	 */
-	ILinkTerminusDefaults getLinkSource();
+//	/**
+//	 * Get the definition of the link's source.
+//	 * @return A non-null link end definition.
+//	 */
+//	ILinkTerminusDefaults getLinkSource();
+//	
+//	/**
+//	 * Get the definition of the link's target.
+//	 * @return A non-null link end definition.
+//	 */
+//	ILinkTerminusDefaults getLinkTarget();
 	
 	/**
-	 * Get the definition of the link's target.
-	 * @return A non-null link end definition.
+	 * Gets the default for any label associated with this link attribute
+	 * @return the label defaults, which cannot be null.
 	 */
-	ILinkTerminusDefaults getLinkTarget();
-	
-	IDefaultLabelAttributes getDefaultLabelAttributes();
+	ILabelAttributeDefaults getDefaultLabelAttributes();
 	
 	/**
 	 * Get the context configurable properties via a utility class.

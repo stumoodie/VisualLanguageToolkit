@@ -4,7 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 /**
@@ -25,9 +25,9 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	
 	public HibLabelNode(HibCompoundNode parent, int index, HibProperty property){
 		super(parent.getModel(), parent, index);
-		IDefaultLabelAttributes defaultLabelAttributes = property.getDefinition().getLabelDefaults(); 
+		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
 		int newSerial = this.getModel().getCanvas().getAttributeSerialCounter().nextIndex();
-		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, defaultLabelAttributes));
+		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
 	}
 	
 	

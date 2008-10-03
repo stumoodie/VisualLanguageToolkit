@@ -18,7 +18,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyB
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes;
+import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public class HibShapeAttribute implements IShapeAttribute,  Serializable {
@@ -86,7 +86,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 	
 	
-	private void populateDefaults(IDefaultShapeAttributes shapeDefaults){
+	private void populateDefaults(IShapeAttributeDefaults shapeDefaults){
 		this.description = shapeDefaults.getDescription();
 		this.detailedDescription = shapeDefaults.getDetailedDescription();
 		this.setFillColour(shapeDefaults.getFillColour());

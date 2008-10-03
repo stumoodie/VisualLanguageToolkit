@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
@@ -25,6 +24,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
  * @author ntsorman

@@ -5,8 +5,8 @@ package org.pathwaueditor.bussinessobjects.stubs;
 
 import java.util.EnumSet;
 
-import org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -19,6 +19,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 public class StubLinkObjectType implements ILinkObjectType {
 	public static final String EXPECTED_NAME = "linkType";
 	public static final String EXPECTED_DESCRIPTION = "linkType description";
+	private static final int EXPECTED_UNIQUE_ID = 1;
 	
 	private final ILinkTerminusDefinition sourceTermDefn = new StubSourceLinkTerminusDefinition(this);
 	private final ILinkTerminusDefinition targetTermDefn = new StubTargetLinkTerminusDefinition(this);
@@ -27,7 +28,7 @@ public class StubLinkObjectType implements ILinkObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
-	public IDefaultLinkAttributes getDefaultLinkAttributes() {
+	public ILinkAttributeDefaults getDefaultLinkAttributes() {
 		return new StubDefaultLinkAttributes();
 	}
 
@@ -62,7 +63,7 @@ public class StubLinkObjectType implements ILinkObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDefiningContext()
 	 */
-	public INotationSyntaxService getDefiningContext() {
+	public INotationSyntaxService getSyntaxService() {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
@@ -85,6 +86,13 @@ public class StubLinkObjectType implements ILinkObjectType {
 	 */
 	public int compareTo(IObjectType o) {
 		throw new UnsupportedOperationException("do not use!");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getUniqueId()
+	 */
+	public int getUniqueId() {
+		return EXPECTED_UNIQUE_ID;
 	}
 
 }

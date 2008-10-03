@@ -26,7 +26,7 @@ public interface ILinkTerminusDefinition {
 	
 	/**
 	 * The type of link end, i.e. target or source.
-	 * @return
+	 * @return the terminus type, which cannot be null.
 	 */
 	LinkTermType getLinkEndCode();
 			

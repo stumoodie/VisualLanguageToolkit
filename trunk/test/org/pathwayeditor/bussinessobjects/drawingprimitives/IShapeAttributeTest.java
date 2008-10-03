@@ -30,8 +30,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultLabelAttributes;
-import org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -91,7 +91,7 @@ public class IShapeAttributeTest {
 		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
 		HibObjectType hibObjectType = this.mockery.mock(HibObjectType.class, "hibObjectType");
 //		mockProperty = mockery.mock(IAnnotationProperty.class , "mockProperty") ;
-		final IDefaultShapeAttributes mockDefaults = new DefaultsStub();;
+		final IShapeAttributeDefaults mockDefaults = new DefaultsStub();;
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockObjectType).getDefaultAttributes(); will(returnValue(mockDefaults));
@@ -286,87 +286,87 @@ public class IShapeAttributeTest {
 	}
 	
 	
-	private static class DefaultsStub implements IDefaultShapeAttributes {
+	private static class DefaultsStub implements IShapeAttributeDefaults {
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDefaultLabelAttributes()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDefaultLabelAttributes()
 		 */
-		public IDefaultLabelAttributes getDefaultLabelAttributes() {
+		public ILabelAttributeDefaults getDefaultLabelAttributes() {
 			throw new UnsupportedOperationException("not implemented");
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDescription()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
 		 */
 		public String getDescription() {
 			return EXPECTED_DEFAULT_DESCRIPTION;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getDetailedDescription()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
 		 */
 		public String getDetailedDescription() {
 			return EXPECTED_DEFAULT_DETAILED_DESCRIPTION;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getFillColour()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getFillColour()
 		 */
 		public RGB getFillColour() {
 			return EXPECTED_DEFAULT_FILL_COLOUR;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineColour()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineColour()
 		 */
 		public RGB getLineColour() {
 			return EXPECTED_DEFAULT_LINE_COLOUR;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineStyle()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineStyle()
 		 */
 		public LineStyle getLineStyle() {
 			return EXPECTED_DEFAULT_LINE_STYLE;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getLineWidth()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 		 */
 		public int getLineWidth() {
 			return EXPECTED_DEFAULT_LINE_WIDTH;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getName()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getName()
 		 */
 		public String getName() {
 			return EXPECTED_DEFAULT_NAME;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getPropertiesFilter()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getPropertiesFilter()
 		 */
 		public IPropertyDefinitionFilter getPropertiesFilter() {
 			return new StubPropDefn();
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getShapeType()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
 		 */
 		public PrimitiveShapeType getShapeType() {
 			return EXPECTED_DEFAULT_SHAPE_TYPE;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getSize()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getSize()
 		 */
 		public Size getSize() {
 			return EXPECTED_DEFAULT_SIZE;
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultShapeAttributes#getURL()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
 		 */
 		public String getURL() {
 			return EXPECTED_DEFAULT_URL;

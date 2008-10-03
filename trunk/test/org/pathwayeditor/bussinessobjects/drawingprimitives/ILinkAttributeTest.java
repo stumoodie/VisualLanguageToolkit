@@ -19,7 +19,6 @@ import org.pathwaueditor.bussinessobjects.stubs.StubLinkObjectType;
 import org.pathwaueditor.bussinessobjects.stubs.StubMap;
 import org.pathwaueditor.bussinessobjects.stubs.StubNotation;
 import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubSystem;
-import org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
@@ -30,6 +29,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 

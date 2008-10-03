@@ -1,4 +1,4 @@
-package org.pathwayeditor.businessobjects.contextadapter;
+package org.pathwayeditor.businessobjects.notationsubsystem;
 
 public class ExportServiceException extends Exception {
 	private static final long serialVersionUID = 7000244894654454094L;
