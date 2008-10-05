@@ -1,61 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
 <project name="BusinessObjectsBuild" default="buildAll">
 	<property name="build.dir" value="./bin" />
+	<property name="build.src.dir" value="./bin/src" />
 	<property name="src.dir" value="./src" />
 	<property name="test.dir" value="./test" />
 	<property name="integration.test.dir" value="./integrationTest" />
+	<property name="jar.dir" value="./jars" />
+	<property name="jar.name" value="BusinessObjects.jar" />
+	<property name="lib.dir" value="./lib" />
+	<property name = "application.dir" value="../org.pathwayeditor.applicationNew/lib"/>
 
 	<path id="classpath">
-	<pathelement  location="lib/junit4.4/junit-4.4.jar" />
-	<pathelement  location="lib/hibernate-3.2/hibernate3.jar" />
-	<pathelement  location="lib/hsqldb/lib/hsqldb.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/ant-1.6.5.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/ant-antlr-1.6.5.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/ant-launcher-1.6.5.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/antlr-2.7.6.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/ant-swing-1.6.5.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/asm.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/asm-attrs.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/c3p0-0.9.1.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/checkstyle-all.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/cleanimports.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/commons-collections-2.1.1.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/commons-logging-1.0.4.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/concurrent-1.3.2.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/dom4j-1.6.1.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/ehcache-1.2.3.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jaas.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jacc-1_0-fr.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/javassist.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jaxen-1.1-beta-7.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jboss-cache.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jboss-common.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jboss-jmx.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jboss-system.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jgroups-2.2.8.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/jta.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/oscache-2.1.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/proxool-0.8.3.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/swarmcache-1.0rc2.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/syndiag2.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/versioncheck.jar"/>
-	<pathelement  location="lib/hibernate-3.2/lib/xml-apis.jar"/>
-	<pathelement  location="lib/slf4j-1.5.2/slf4j-api-1.5.2.jar"/>
-	<pathelement  location="lib/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
-	<pathelement  location="lib/apache-log4j-1.2.15/log4j-1.2.15.jar" />
-	<pathelement  location="lib/hibernate-3.2/lib/xerces-2.6.2.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/bsh-core-2.0b4.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/cglib-2.1_3-src.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/cglib-nodep-2.1_3.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/hamcrest-core-1.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/hamcrest-library-1.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/jmock-2.5.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/jmock-junit3-2.5.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/jmock-junit4-2.5.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
-	<pathelement  location="lib/jmock-2.5.1/objenesis-1.0.jar"/>
-	<pathelement  location="lib/dbunit-2.2.jar"/>
-	<pathelement  location="lib/compoundgraph/compoundgraph.jar"/>
+		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/hibernate3.jar" />
+		<pathelement location="${lib.dir}/hsqldb/${lib.dir}/hsqldb.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/ant-1.6.5.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/ant-antlr-1.6.5.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/ant-launcher-1.6.5.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/antlr-2.7.6.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/ant-swing-1.6.5.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/asm.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/asm-attrs.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/c3p0-0.9.1.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/checkstyle-all.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/cleanimports.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/commons-collections-2.1.1.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/commons-logging-1.0.4.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/concurrent-1.3.2.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/dom4j-1.6.1.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/ehcache-1.2.3.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jaas.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jacc-1_0-fr.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/javassist.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jaxen-1.1-beta-7.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jboss-cache.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jboss-common.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jboss-jmx.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jboss-system.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jgroups-2.2.8.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/jta.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/oscache-2.1.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/proxool-0.8.3.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/swarmcache-1.0rc2.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/syndiag2.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/versioncheck.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/xml-apis.jar" />
+		<pathelement location="${lib.dir}/slf4j-1.5.2/slf4j-api-1.5.2.jar" />
+		<pathelement location="${lib.dir}/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar" />
+		<pathelement location="${lib.dir}/apache-log4j-1.2.15/log4j-1.2.15.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/${lib.dir}/xerces-2.6.2.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/bsh-core-2.0b4.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/cg${lib.dir}-2.1_3-src.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/cg${lib.dir}-nodep-2.1_3.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-core-1.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-${lib.dir}rary-1.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit4-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
+		<pathelement location="${lib.dir}/dbunit-2.2.jar" />
+		<pathelement location="${lib.dir}/compoundgraph/compoundgraph.jar" />
 	</path>
 
 	<path id="test.classpath">
@@ -64,55 +71,50 @@
 	</path>
 
 
-	<target name="mkdirs" depends=""
-		description="--> Creates the directories used in the build">
+	<target name="mkdirs" depends="" description="--> Creates the directories used in the build">
 		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.src.dir}" />
 	</target>
 
 	<target name="clean">
-		<delete dir="${build.dir}"></delete>
+		<delete dir="${build.dir}">
+		</delete>
 	</target>
 
-	<target name="buildAll" description="main build task"
-		depends="buildSrc, buildTest, buildIntegrationTest" />
+	<target name="buildAll" description="main build task" depends="buildSrc, buildTest, buildIntegrationTest,jar" />
 
-	<target name="buildTest" description="test build task"
-		depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${test.dir}"
-			debug="true" debuglevel="lines,vars,source"
-			destdir="${build.dir}">
+	<target name="buildTest" description="test build task" depends="buildSrc">
+		<javac classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${test.dir}">
-				<exclude name="**/*.java"/>
-             </fileset>
+				<exclude name="**/*.java" />
+			</fileset>
 		</copy>
 	</target>
 
-	<target name="buildIntegrationTest"
-		description="test integration build task" depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${integration.test.dir}"
-			debug="true" debuglevel="lines,vars,source"
-			destdir="${build.dir}">
+	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc">
+		<javac classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${integration.test.dir}">
-				<exclude name="**/*.java"/>
-             </fileset>
+				<exclude name="**/*.java" />
+			</fileset>
 		</copy>
 	</target>
 
-	<target name="buildSrc" description="src build task"
-		depends="clean,mkdirs">
+	<target name="buildSrc" description="src build task" depends="clean,mkdirs">
 		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
-		<javac classpathref="classpath" srcdir="${src.dir}" debug="true"
-			debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac classpathref="classpath" srcdir="${src.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 			<exclude name="**/businessobjects/pojos/**" />
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${src.dir}">
-				<exclude name="**/*.java"/>
-             </fileset>
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+		<copy todir="${build.src.dir}">
+			<fileset dir="${build.dir}" />
 		</copy>
 	</target>
 
@@ -120,8 +122,10 @@
 		<delete dir="${build.dir}/test/logs" />
 		<mkdir dir="${build.dir}/test/logs" />
 		<!-- <echo>running with classpath ${toString:test.classpath}</echo>-->
-		<!--run test cases. All test class names  should end in 'Test' to avoid
-			inclusion of inner classes. -->
+		<!--
+			run test cases. All test class names should end in 'Test' to avoid
+			inclusion of inner classes.
+		-->
 		<junit printsummary="yes" haltonfailure="no" fork="true">
 			<classpath>
 				<path refid="test.classpath" />
@@ -140,10 +144,22 @@
 
 		<!-- generate report -->
 		<junitreport todir="${build.dir}/test/junitReports">
-			<fileset dir="${build.dir}/test/logs"
-				includes="**/*.xml" />
+			<fileset dir="${build.dir}/test/logs" includes="**/*.xml" />
 			<report todir="${build.dir}/test/junitReports" />
 		</junitreport>
+	</target>
+
+	<target name="jar">
+		<delete dir="${jar.dir}" />
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${jar.name}">
+			<fileset dir="${build.src.dir}" />
+		</jar>
+	</target>
+	<target name="jar-and-export" depends="jar">
+		<copy todir="${application.dir}">
+			<fileset dir="${jar.dir}" />
+		</copy>
 	</target>
 
 </project>
