@@ -13,7 +13,11 @@ public interface IRepositoryManagerBuilder {
 
 	void setConnectionInfo(IConnectionInfo connection);
 	
+	IConnectionInfo getConnectionInfo();
+	
 	void setNotationSubsystemPool(INotationSubsystemPool notationSubsystemPool);
+	
+	INotationSubsystemPool getNotationSubsystemPool();
 	
 	/**
 	 * Tests if the notation subsystem pool and connection information are correctly initialised,
