@@ -33,9 +33,6 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	private HibShapeNode outNode;
 	private HibShapeNode inNode;
 	
-	/**
-	 * @param graph
-	 */
 	public CanvasLinkEdgeFactory(HibModel canvas, IHibNotationFactory hibNotationFactory) {
 		super();
 		this.canvas = canvas;
@@ -139,7 +136,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	/**
 	 * Checks that the node pair is valid. Here this means that both nodes must be non-null, of type HibShapeNode
 	 * and belong to the same graph as this factory.
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#isValidNodePair()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#isValidShapeNodePair(IShapeNode, IShapeNode)
 	 */
 	public boolean isValidShapeNodePair(IShapeNode source, IShapeNode target) {
 		return this.isValidNodePair(outNode, inNode);

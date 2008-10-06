@@ -4,6 +4,8 @@
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
 /**
+ * A service provided by a notation subsystem. 
+ * Services provided by a notation subsystem should implement an interface that extends this interface. 
  * @author smoodie
  *
  */

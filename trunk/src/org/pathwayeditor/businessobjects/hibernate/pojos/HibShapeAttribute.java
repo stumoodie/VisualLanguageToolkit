@@ -96,7 +96,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineWidth = shapeDefaults.getLineWidth();
 		this.name = shapeDefaults.getName();
 		this.url = shapeDefaults.getURL();
-		for(IPropertyDefinition propDefn : shapeDefaults.getPropertiesFilter().getAllProperties()){
+		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyIterator();
+		while(propIter.hasNext()){
+			IPropertyDefinition propDefn = propIter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
 		}
 	}

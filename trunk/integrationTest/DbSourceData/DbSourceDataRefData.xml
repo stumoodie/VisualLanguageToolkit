@@ -189,17 +189,20 @@
 		<column>context_id</column>
 		<column>name</column>
 		<column>description</column>
+		<column>classification_code</column>
 		<row>
 			<value>100001</value>
 			<value>100001</value>
 			<value>objectName</value>
 			<value>objectDescr</value>
+			<value>1</value>
 		</row>
 		<row>
 			<value>100002</value>
 			<value>100002</value>
 			<value>objectName2</value>
 			<value>objectDescr2</value>
+			<value>1</value>
 		</row>
 	</table>
 	<table name="CompoundNode">

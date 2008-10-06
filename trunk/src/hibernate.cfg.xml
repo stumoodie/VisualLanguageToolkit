@@ -6,7 +6,9 @@
     <session-factory>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
         <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
+        <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/testdb</property-->
+        <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property-->
         <!--  <property name="hibernate.connection.url">jdbc:hsqldb:mem:dev</property>-->
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>
@@ -41,7 +43,4 @@
         <mapping resource="org/pathwayeditor/businessobjects/hibernate/config/HibRepository.hbm.xml" />
     </session-factory>
     
-    <query name="canvasExistsForMap"><![CDATA[
-    	select count(*) from HibCanvas c  where c.inode = :inode and c.repository = :repo
-    	]]></query>
 </hibernate-configuration>

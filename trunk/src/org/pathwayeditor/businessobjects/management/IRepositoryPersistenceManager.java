@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.bolayer;
+package org.pathwayeditor.businessobjects.management;
 
 import java.util.Iterator;
 
@@ -12,7 +12,7 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
  * @author smoodie
  *
  */
-public interface IRepositoryManager {
+public interface IRepositoryPersistenceManager extends IPersistenceManager {
 
 	/**
 	 * Tests if the repository is currently open.
@@ -23,23 +23,23 @@ public interface IRepositoryManager {
 	/**
 	 * Gets the repository for this instance that contains all the folders,
 	 * and maps. It will load it from persistent storage if necessary. 
-	 * @throws IllegalStateException if <code>isRepositoryOpen() == true</code> when this is called. 
+	 * @throws PersistenceManagerAlreadyOpenException if <code>isRepositoryOpen() == true</code> when this is called. 
 	 */
-	void openRepository();
+	void openRepository() throws PersistenceManagerAlreadyOpenException;
 	
 	/**
 	 * Gets the repository for this instance that contains all the folders,
 	 * and maps. 
 	 * @return the repository which is ready to be used, cannot be null.
-	 * @throws IllegalStateException if <code>isRepositoryOpen() == false</code>. 
+	 * @throws PersistenceManagerNotOpenException if <code>isRepositoryOpen() == false</code>. 
 	 */
-	IRepository getRepository();
+	IRepository getRepository() throws PersistenceManagerNotOpenException;
 	
 	/**
 	 * Synchronises the repository with persistent storage. 
-	 * @throws IllegalStateException if <code>isRepositoryOpen() == false</code>. 
+	 * @throws PersistenceManagerNotOpenException if <code>isRepositoryOpen() == false</code>. 
 	 */
-	void synchroniseRepository();
+	void synchroniseRepository() throws PersistenceManagerNotOpenException;
 	
 	/**
 	 * Closes the repository. If the repository is already closed, then does nothing.
@@ -59,9 +59,9 @@ public interface IRepositoryManager {
 	 * Returns an iterator to the set of maps that are currently open. Note that this may
 	 * include maps, being used by other instances of this class.
 	 * @return the iterator, which will not be null.
-	 * @throws IllegalStateException if <code>isRepositoryOpen() == false</code>. 
+	 * @throws PersistenceManagerNotOpenException if <code>isRepositoryOpen() == false</code>. 
 	 */
-	Iterator<IMap> openMapIterator();
+	Iterator<IMap> openMapIterator() throws PersistenceManagerNotOpenException;
 	
 	/**
 	 * Tests if the given map is currently open by this or any other instance of this class (If the repository is stored on a server then
@@ -76,7 +76,7 @@ public interface IRepositoryManager {
 	 * a map that is not already opened by this or another instance of the repository manager.
 	 * @param map the map to be opened. It must exists in this repository and not be open.
 	 * @return a content manager for the contents of the specified map, cannot be null.
-	 * @throws IllegalArgumentException if <code>canOpenMap(map)</code>.
+	 * @throws PersistenceManagerNotOpenException if <code>canOpenMap(map)</code>.
 	 */
-	IMapContentManager openMap(IMap map);
+	IMapContentPersistenceManager openMap(IMap map) throws PersistenceManagerNotOpenException;
 }

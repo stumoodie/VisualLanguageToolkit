@@ -46,7 +46,7 @@ public interface ISubModel {
 	 * empty and that it belongs to the same model as this one, or that the model
 	 * uses the same context adapter.  
 	 * @param destination
-	 * @return
+	 * @return true if the selection can be copied here, false otherwise.
 	 */
 	boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection);
 	
@@ -61,7 +61,7 @@ public interface ISubModel {
 	 * selected objects can be owned by this subModel or its children. This will return
 	 * true only if the move will succeed.  
 	 * @param canvasObjectSelection
-	 * @return
+	 * @return true if the selection can be moved here, false otherwise.
 	 */
 	boolean canMoveHere(ICanvasObjectSelection canvasObjectSelection);
 	
@@ -73,19 +73,19 @@ public interface ISubModel {
 	
 	/**
 	 * Number of shapes.
-	 * @return
+	 * @return the number of shapes.
 	 */
 	int getNumShapes();
 	
 	/**
 	 * Num links owned by this shape model. 
-	 * @return
+	 * @return the number of links.
 	 */
 	int getNumLinks();
 	
 	/**
 	 * Number of labels
-	 * @return
+	 * @return number of labels.
 	 */
 	int getNumLabels();
 	
@@ -93,19 +93,19 @@ public interface ISubModel {
 	 * Traverses over all the shapes in the sub-model, using depth-first
 	 * traversal. This means that each root node will be taken in turn and 
 	 * traversal will proceed down the tree until all nodes are traversed.
-	 * @return
+	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<IShapeNode> shapeIterator();
 	
 	/**
 	 * Traverses over the list of links in this sub-model.
-	 * @return
+	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<ILinkEdge> linkIterator();
 
 	/**
 	 * Traverses over the list of links in this sub-model.
-	 * @return
+	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<ILabelNode> labelIterator();
 }

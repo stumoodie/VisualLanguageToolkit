@@ -86,4 +86,11 @@ public class StubNotationSubSystem implements INotationSubsystem {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#isFallback()
+	 */
+	public boolean isFallback() {
+		return false;
+	}
+
 }

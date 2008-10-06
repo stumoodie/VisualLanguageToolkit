@@ -39,13 +39,15 @@ public interface INotationSyntaxService extends INotationService {
 	 */
 	Iterator<ILinkObjectType> linkTypeIterator();
 
+	Iterator<IObjectType> objectTypeIterator();
+
 	/**
 	 * Returns an object type defining the map attribute defaults and syntax rules for shapes that can be
 	 * placed on it.
 	 * @return An instance of the root map object. This cannot be null and the same object will always be
 	 * returned for a given instance of this interface.
 	 */
-	IRootObjectType getRootMapObjectType();
+	IRootObjectType getRootObjectType();
 
 	/**
 	 * Tests if an object type with the given uniqueId exists in this syntax service.

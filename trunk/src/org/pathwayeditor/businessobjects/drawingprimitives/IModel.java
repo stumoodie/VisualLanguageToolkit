@@ -68,13 +68,13 @@ public interface IModel {
 	
 	/**
 	 * Returns all the drawing nodes in this model.
-	 * @return
+	 * @return the drawing node iterator.
 	 */
 	Iterator<IDrawingNode> drawingNodeIterator();
 	
 	/**
 	 * Returns all the link edges in this model
-	 * @return
+	 * @return the link edge iterator.
 	 */
 	Iterator<ILinkEdge> linkEdgeIterator();
 }

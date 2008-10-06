@@ -12,26 +12,26 @@ public interface IDrawingElement {
 
 	/**
 	 * Get the model that owns this element.
-	 * @return
+	 * @return the model, which cannot be null.
 	 */
 	IModel getModel();
 	
 	/**
 	 * Get the attribute of the drawing element.
-	 * @return
+	 * @return the attribute, which cannot be null.
 	 */
 	ICanvasAttribute getAttribute();
 
 	/**
 	 * identity based on the canvas and the attribute combination. 
 	 * @param other
-	 * @return
+	 * @return true if objects are equal, false otherwise.
 	 */
 	boolean equals(Object other);
 	
 	/**
 	 * See equals for identity rules.
-	 * @return
+	 * @return the hash code.
 	 */
 	int hashCode();
 }

@@ -15,9 +15,6 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 	private final HibModel model;
 	private ShapeLinkSubgraph subGraph;
 	
-	/**
-	 * @param graph
-	 */
 	public ShapeLinkSubgraphBuilder(HibModel model) {
 		super();
 		this.model = model;

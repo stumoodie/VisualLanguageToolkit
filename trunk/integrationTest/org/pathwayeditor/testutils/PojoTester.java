@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.testutils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -28,11 +29,13 @@ public abstract class PojoTester {
 	private static HibernateTestManager dbTester = null;
 	private SessionFactory hibFactory;
 //	private Session session;
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
+	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
+	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
+	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
 
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
+		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
 		dbTester.createSchema();
 	}
 

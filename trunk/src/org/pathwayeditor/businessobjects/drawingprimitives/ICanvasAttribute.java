@@ -30,13 +30,13 @@ public interface ICanvasAttribute {
 	/**
 	 * The business key is the combination of canvas and creation serial.
 	 * @param other
-	 * @return
+	 * @return true if equal, false otherwise.
 	 */
 	boolean equals(Object other); 
 
 	/**
 	 * See <code>equals</code> for definition of identity.
-	 * @return
+	 * @return the hash code.
 	 */
 	int hashCode();
 }

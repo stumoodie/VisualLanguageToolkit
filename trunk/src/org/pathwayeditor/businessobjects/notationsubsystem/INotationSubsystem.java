@@ -18,6 +18,13 @@ public interface INotationSubsystem {
 	INotation getNotation();
 	
 	/**
+	 * Reports if the subsystem is a minimal or fallback subsystem. If it is then this subsystem should only bed used to read maps, and maps
+	 * should not be created using this subsystem. It should also not provide any additional services other than a syntax service.  
+	 * @return true if this is a fallback notation subsystem, false otherwise.
+	 */
+	boolean isFallback();
+	
+	/**
 	 * Obtains a syntax service implementation that is used by clients (typically EPE) to define the appearance
 	 * of the graphical notation and the syntactic rules of its shapes and links.
 	 * @return an implementation of the syntax service, which cannot be null.
@@ -61,7 +68,7 @@ public interface INotationSubsystem {
 	
 	/**
 	 * Obtains a set of conversion services. 
-	 * @return
+	 * @return the set of conversion services, which cannot be null.
 	 */
 	Set<INotationConversionService> getConversionServices();
 }

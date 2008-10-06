@@ -32,9 +32,6 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	private ILinkObjectType objectType;
 	private IHibNotationFactory hibNotationFactory;
 	
-	/**
-	 * @param parentNode
-	 */
 	public LinkEdgeChildFactory(HibSubModel subCanvas) {
 		super();
 		this.subCanvas = subCanvas;

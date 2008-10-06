@@ -32,8 +32,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
@@ -287,6 +285,7 @@ public class IShapeAttributeTest {
 	
 	
 	private static class DefaultsStub implements IShapeAttributeDefaults {
+		private final Set<IPropertyDefinition> retVal = Collections.emptySet();
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDefaultLabelAttributes()
@@ -345,13 +344,6 @@ public class IShapeAttributeTest {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getPropertiesFilter()
-		 */
-		public IPropertyDefinitionFilter getPropertiesFilter() {
-			return new StubPropDefn();
-		}
-
-		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
 		 */
 		public PrimitiveShapeType getShapeType() {
@@ -371,66 +363,12 @@ public class IShapeAttributeTest {
 		public String getURL() {
 			return EXPECTED_DEFAULT_URL;
 		}
-		
-	}
-	
-	private static class StubPropDefn implements IPropertyDefinitionFilter {
-		private final Set<IPropertyDefinition> retVal = Collections.emptySet();
-		
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllProperties()
-		 */
-		public Set<IPropertyDefinition> getAllProperties() {
-			return retVal;
-		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getAllPropertiesIterator()
+		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#propertyIterator()
 		 */
-		public Iterator<IPropertyDefinition> getAllPropertiesIterator() {
-			return retVal.iterator();
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getEditableProperties()
-		 */
-		public Set<IPropertyDefinition> getEditableProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getFormattedTextProperties()
-		 */
-		public Set<IPropertyDefinition> getFormattedTextProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getNumberProperties()
-		 */
-		public Set<IPropertyDefinition> getNumberProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getObjectType()
-		 */
-		public IObjectType getObjectType() {
-			throw new UnsupportedOperationException("not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getTextProperties()
-		 */
-		public Set<IPropertyDefinition> getTextProperties() {
-			return retVal;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter#getVisualisableProperties()
-		 */
-		public Set<IPropertyDefinition> getVisualisableProperties() {
-			return retVal;
+		public Iterator<IPropertyDefinition> propertyIterator() {
+			return this.retVal.iterator();
 		}
 		
 	}

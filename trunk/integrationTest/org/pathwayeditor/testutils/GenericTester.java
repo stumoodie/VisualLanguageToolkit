@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.testutils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -17,8 +18,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
-import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
+import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubsystemPool;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
+import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
 
 /**
  * @author nhanlon
@@ -27,11 +33,13 @@ import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
 public abstract class GenericTester {
 
 	private static HibernateTestManager dbTester = null;
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static IBusinessObjectFactory bofac = null;
+	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
+	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
+	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
+	private static IRepositoryPersistenceManager bofac = null;
 //	private IBusinessObjectFactory bo = bofac;
 	
-	public IBusinessObjectFactory getBusinessObjectFactory(){
+	public IRepositoryPersistenceManager getBusinessObjectFactory(){
 		return bofac;
 	}
 	
@@ -39,7 +47,7 @@ public abstract class GenericTester {
 	
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateTestManager(HIB_CONFIG_FILE);
+		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
 		dbTester.createSchema();
 	}
 
@@ -54,10 +62,14 @@ public abstract class GenericTester {
 
 	@Before
 	public void setUp() throws Exception {
-		bofac = new BusinessObjectFactory(dbTester.getHibernateSessionFactory(), getTestRepositoryName());
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		doSetup();
+		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(dbTester.getHibernateSessionFactory(),
+																					new StubNotationSubsystemPool());
+		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(dbTester.getHibernateSessionFactory(), getTestRepositoryName());  
+		bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
+		bofac.openRepository();
 		doAdditionalSetUp();
 	}
 
@@ -80,6 +92,8 @@ public abstract class GenericTester {
 	@After
 	public void tearDown() throws Exception {
 		doAdditionalTearDown();
+		bofac.closeRepository();
+		bofac = null;
 		disableConstraints();
 		dbTester.onTearDown();
 		enableConstraints();
@@ -90,7 +104,7 @@ public abstract class GenericTester {
 		Session sess = getSession();
 		sess.beginTransaction();
 		List<T> retVal = (List<T>)sess.createQuery(query).list();
-		sess.getTransaction();
+		sess.getTransaction().commit();
 		return retVal;
 	}
 	
@@ -99,7 +113,7 @@ public abstract class GenericTester {
 		Session sess = getSession();
 		sess.beginTransaction();
 		T retVal = (T)sess.createQuery(query).uniqueResult();
-		sess.getTransaction();
+		sess.getTransaction().commit();
 		return retVal;
 	}
 	

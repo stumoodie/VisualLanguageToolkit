@@ -21,13 +21,13 @@ public interface IShapeObjectType extends INodeObjectType {
 
 	/**
 	 * Gets the default attrributes for this object type.
-	 * @return
+	 * @return the default attributes, which cannot be null.
 	 */
 	IShapeAttributeDefaults getDefaultAttributes();
 	
 	/**
 	 * Is the line colour editable
-	 * @return
+	 * @return the set of editble attributes.
 	 */
 	EnumSet<EditableShapeAttributes> getEditableAttributes();
 

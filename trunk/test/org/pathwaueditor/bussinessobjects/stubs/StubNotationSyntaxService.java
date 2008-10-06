@@ -27,7 +27,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService#getRootMapObjectType()
 	 */
-	public IRootObjectType getRootMapObjectType() {
+	public IRootObjectType getRootObjectType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -114,6 +114,14 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getShapeObjectType(int)
 	 */
 	public IShapeObjectType getShapeObjectType(int uniqueId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#objectTypeIterator()
+	 */
+	public Iterator<IObjectType> objectTypeIterator() {
 		// TODO Auto-generated method stub
 		return null;
 	}

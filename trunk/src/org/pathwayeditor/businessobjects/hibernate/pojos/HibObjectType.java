@@ -14,6 +14,7 @@ public class HibObjectType implements Serializable {
 	private HibNotation hibNotation;
 	private String displayName;
 	private String description;
+	private ObjectTypeClassification classificationCode; 
 	private int uniqueId = DEFAULT_UNIQUE_ID;
 	
 	/**
@@ -23,8 +24,8 @@ public class HibObjectType implements Serializable {
 	HibObjectType() {
 	}
 
-	public HibObjectType(HibNotation hibNotation, int uniqueId, String name, String description) {
-		this.hibNotation = hibNotation;
+	public HibObjectType(int uniqueId, String name, String description) {
+		this.hibNotation = null;
 		this.uniqueId = uniqueId;
 		this.displayName = name;
 		this.description = description;
@@ -57,15 +58,25 @@ public class HibObjectType implements Serializable {
 		return this.hibNotation;
 	}
 
-	public void setNotation(HibNotation hibNotation) {
+	void setNotation(HibNotation hibNotation) {
+		this.hibNotation = hibNotation;
+	}
+	
+	public void changeNotation(HibNotation hibNotation){
+		if(this.hibNotation != null){
+			this.hibNotation.getObjectTypes().remove(this);
+		}
+		if(hibNotation != null){
+			hibNotation.getObjectTypes().add(this);
+		}
 		this.hibNotation = hibNotation;
 	}
 
-	public String getDisplayName() {
+	public String getName() {
 		return this.displayName;
 	}
 
-	public void setDisplayName(String displayName) {
+	public void setName(String displayName) {
 		this.displayName = displayName;
 	}
 
@@ -75,6 +86,14 @@ public class HibObjectType implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public ObjectTypeClassification getClassificationCode() {
+		return this.classificationCode;
+	}
+
+	public void setClassificationCode(ObjectTypeClassification classificationCode) {
+		this.classificationCode = classificationCode;
 	}
 
 	public boolean equals(Object other) {
@@ -90,9 +109,9 @@ public class HibObjectType implements Serializable {
 				.getNotation() != null
 				&& castOther.getNotation() != null && this.getNotation().equals(
 				castOther.getNotation())))
-				&& ((this.getDisplayName() == castOther.getDisplayName()) || (this.getDisplayName() != null
-						&& castOther.getDisplayName() != null && this.getDisplayName()
-						.equals(castOther.getDisplayName())));
+				&& ((this.getName() == castOther.getName()) || (this.getName() != null
+						&& castOther.getName() != null && this.getName()
+						.equals(castOther.getName())));
 	}
 
 	public int hashCode() {
@@ -101,20 +120,8 @@ public class HibObjectType implements Serializable {
 		result = 37 * result
 				+ (getNotation() == null ? 0 : this.getNotation().hashCode());
 		result = 37 * result
-				+ (getDisplayName() == null ? 0 : this.getDisplayName().hashCode());
+				+ (getName() == null ? 0 : this.getName().hashCode());
 
 		return result;
 	}
-
-	public void changeContext(HibNotation newContext) {
-		HibNotation oldContext = this.hibNotation;
-		this.hibNotation = newContext;
-		if (oldContext != null) {
-			oldContext.getObjectTypes().remove(this);
-		}
-		if (this.hibNotation != null) {
-			this.hibNotation.getObjectTypes().add(this);
-		}
-	}
-
 }

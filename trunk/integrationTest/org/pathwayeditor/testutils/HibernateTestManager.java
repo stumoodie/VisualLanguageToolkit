@@ -23,17 +23,19 @@ public class HibernateTestManager implements IDatabaseTester {
 	private final IDatabaseTester delegator;
 	private final HqlDbSchema schemaManager;
 	private HibernateDataSource hibBuilder;
+	private SessionFactory sessionFactory = null;
 	
-	public HibernateTestManager(String xmlConfigFile) {
-		this(new HibernateDataSource(xmlConfigFile));
+	public HibernateTestManager(String xmlConfigFile, File createSchemaScript, File dropSchemaScript) {
+		this(new HibernateDataSource(xmlConfigFile), createSchemaScript, dropSchemaScript);
 	}
 	
-	public HibernateTestManager(HibernateDataSource manager) {
+	public HibernateTestManager(HibernateDataSource manager, File createSchemaScript, File dropSchemaScript) {
 		this.hibBuilder=manager;
 		this.delegator = new HsqlJdbcDatabaseTester(hibBuilder);
 		try{
-			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(),
-					new File("schema/EPE Schema Create.ddl"), new File("schema/EPE Schema Drop.ddl"));
+//			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(),
+//					new File("schema/EPE Schema Create.ddl"), new File("schema/EPE Schema Drop.ddl"));
+			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(), createSchemaScript, dropSchemaScript);
 		}
 		catch(Exception e){
 			throw new RuntimeException(e);
@@ -54,13 +56,20 @@ public class HibernateTestManager implements IDatabaseTester {
 		return this.delegator.getConnection();
 	}
 
+	/**
+	 * Returns the session factory to be used for testing. Will only initialise the sessioon factory once
+	 * and so this instance will return the same session factory instance for every call of this method.
+	 * @return the hibernate session factory which will always be the same.
+	 */
 	public SessionFactory getHibernateSessionFactory(){
-		return hibBuilder.getSessionFactory();
+		if(this.sessionFactory == null){
+			this.sessionFactory = hibBuilder.getSessionFactory();
+		}
+		return this.sessionFactory;
 	}
 	
 	/**
 	 * Writes the ddl defined by hibernate to the database via the connection specified in the constructor.
-	 * @throws Exception if there was an error obtaining the database connection and writing the ddl 
 	 */
 	public void createSchema() {
 		try{
@@ -72,7 +81,6 @@ public class HibernateTestManager implements IDatabaseTester {
 	
 	/**
 	 * Writes the ddl defined by hibernate to the database via the connection specified in the constructor.
-	 * @throws Exception if there was an error obtaining the database connection and writing the ddl 
 	 */
 	public void dropSchema() {
 		try{

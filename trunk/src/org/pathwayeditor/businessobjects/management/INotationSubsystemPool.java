@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.bolayer;
+package org.pathwayeditor.businessobjects.management;
 
 import java.util.Iterator;
 

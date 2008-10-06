@@ -1,5 +1,7 @@
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
+
 public interface INotation extends Comparable<INotation> {
 	
 	String getDisplayName();
@@ -8,13 +10,7 @@ public interface INotation extends Comparable<INotation> {
 	
 	String getDescription () ;
 	
-	String getVersionString();
-	
-	int getMajorVersion();
-	
-	int getMinorVersion();
-	
-	int getPatchVersion();
+	Version getVersion();
 	
 	boolean equals(Object other);
 	

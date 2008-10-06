@@ -110,13 +110,13 @@ public class DbHibLinkTest extends PojoTester{
 	{
 		doSetup(); 
 		
-		Query retreivedCompoundEdge = getSession().createQuery("from HibLinkEdge where id='100001'" ) ;
+//		Query retreivedCompoundEdge = getSession().createQuery("from HibLinkEdge where id='100001'" ) ;
 		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'" ) ;
-		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id='100001'" ) ;
+//		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id='100001'" ) ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
-		HibObjectType dbObjectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
+//		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
+//		HibObjectType dbObjectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
 		
 //		HibLinkAttribute linkToWrite = new HibLinkAttribute () ;
 		HibLinkAttribute linkToWrite = null;

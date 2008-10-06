@@ -103,7 +103,8 @@ public class ILinkAttributeTest {
 		HibNotation notation = new HibNotation(StubNotation.EXPECTED_GLOBAL_ID, StubNotation.EXPECTED_NAME, StubNotation.EXPECTED_DESCRIPTION,
 				new Version(StubNotation.EXPECTED_MAJOR_VERSION, StubNotation.EXPECTED_MINOR_VERSION, StubNotation.EXPECTED_PATCH_VERSION));
 		mockCanvas = new HibCanvas(stubMap, stubNotationSubSystem, notation);
-		HibObjectType objectType = new HibObjectType(notation, StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
+		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
+		notation.addObjectType(objectType);
 		stubObjectType = new StubLinkObjectType();
 		
 		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	stubObjectType, objectType ) ;

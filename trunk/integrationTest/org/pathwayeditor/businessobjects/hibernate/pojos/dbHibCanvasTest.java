@@ -25,8 +25,8 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class dbHibCanvasTest extends  PojoTester {
 
-	private static final String DELETED_EMPTY_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/DbDeletedEmptyCanvasThroughMapDiagramRefData.xml";
-	private static final String CHANGED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/ChangedMapDiagramCanvasRefData.xml";
+//	private static final String DELETED_EMPTY_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/DbDeletedEmptyCanvasThroughMapDiagramRefData.xml";
+//	private static final String CHANGED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/ChangedMapDiagramCanvasRefData.xml";
 	private static final String CLONED_MAPDIAGRAM_REF_DATA = "integrationTest/DbCanvasTestData/ClonedCanvasRedData.xml";
 	private static final String DELETED_EMPTY_CANVAS_REF_DATA = "integrationTest/DbCanvasTestData/DeletedCanvasRefData.xml";
 	
@@ -45,9 +45,9 @@ public class dbHibCanvasTest extends  PojoTester {
 		doSetup();
 		
 		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
-		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100001'" ) ;
+//		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100001'" ) ;
 		
-		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
+//		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		assertEquals ("Grid X" , GRID_VALUE , dbCanvas.getGridX()) ;

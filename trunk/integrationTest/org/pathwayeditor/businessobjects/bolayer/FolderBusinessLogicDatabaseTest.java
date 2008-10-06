@@ -15,6 +15,8 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
+import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -34,7 +36,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testCreateSubFolderSetsName() {
+	public void testCreateSubFolderSetsName() throws PersistenceManagerException {
 		List test = runQuery("from HibSubFolder f where f.name='two'");
 		assertEquals(0, test.size());
 		IRootFolder f = rep.getRootFolder();
@@ -47,7 +49,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testMoveSubFolderRemovesSubFolderFromOldParent() {
+	public void testMoveSubFolderRemovesSubFolderFromOldParent() throws PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		IFolder sub = (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/"); 
 		r.moveSubfolder((ISubFolder) sub);
@@ -59,7 +61,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testMoveSubFolderAddsSubFolderToNewParent() {
+	public void testMoveSubFolderAddsSubFolderToNewParent() throws PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		IFolder sub = rep.getFolderByPath("/subfolder2/subfolder4/");
 		r.moveSubfolder((ISubFolder) sub);
@@ -101,19 +103,14 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void folderContainsSubFolderTest() {
 		IRootFolder r = rep.getRootFolder();
-		ISubFolder sub1 =  runUniqueQuery(
-		"from HibSubFolder r where r.id = '100002'");
-		ISubFolder sub2 =  runUniqueQuery(
-				"from HibSubFolder r where r.id = '100005'");
-		ISubFolder sub3 =  runUniqueQuery(
-				"from HibSubFolder r where r.id = '100006'");
+		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder1/");
+		ISubFolder sub2 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		assertTrue(r.containsSubfolder(sub1));
 		assertFalse(r.containsSubfolder(sub2));
-		assertFalse(r.containsSubfolder(sub3));
 	}
 
 	@Test
-	public void copySubFolderMakesFolderWithSameNameTest() {
+	public void copySubFolderMakesFolderWithSameNameTest() throws PersistenceManagerException {
 		//rep = this.getBusinessObjectFactory().getRepository("repo name");
 		IRootFolder r = rep.getRootFolder();
 		ISubFolder sub1 = (ISubFolder) rep.getFolderByPath("/subfolder2/subfolder4/");
@@ -131,7 +128,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void removeSubFolderTest() {
+	public void removeSubFolderTest() throws PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder1/");
 		assertTrue(r.containsSubfolder(sub1));
@@ -142,7 +139,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 	
 	@Test
-	public void removeMapWhenMapFromDatabaseQueryTest(){
+	public void removeMapWhenMapFromDatabaseQueryTest() throws PersistenceManagerException{
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 //		IMap map = (IMap) runQuery("from HibMap m where m.id = '100001'").uniqueResult();
 //		assertEquals(1,sub1.getNumMaps());
@@ -159,7 +156,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 	
 	@Test
-	public void removeMapWhenMapFromFolderLookupTest(){
+	public void removeMapWhenMapFromFolderLookupTest() throws PersistenceManagerException{
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IMap map=null;
 		Iterator<IMap> mapIter = sub1.getMapIterator();
@@ -176,7 +173,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 	
 	@Test
-	public void removeMapWhenMapBoSynchroniseCalledTwiceTest(){
+	public void removeMapWhenMapBoSynchroniseCalledTwiceTest() throws PersistenceManagerException{
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IMap map=null;
 		Iterator<IMap> mapIter = sub1.getMapIterator();
@@ -203,7 +200,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void renameSubFolderTest() {
+	public void renameSubFolderTest() throws PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder1/");
 		assertFalse(subFolderExistsCalled(r, JIMMY_KRANKIE));
@@ -254,26 +251,21 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void testRootFolderCreateMapHappyCase() {
+	public void testRootFolderCreateMapHappyCase() throws PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		assertFalse(mapExistsCalled( r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
 		this.getBusinessObjectFactory().synchroniseRepository();
-		r = runUniqueQuery(
-				"from HibRootFolder r where r.id = '100001'");
 		assertTrue(mapExistsCalled( r, JIMMY_KRANKIE));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateMapNameAlreadyInUseThrowsIllegalArgument()
-			throws SQLException {
+			throws SQLException, PersistenceManagerException {
 		IRootFolder r = rep.getRootFolder();
 		assertFalse(mapExistsCalled( r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
 		this.getBusinessObjectFactory().synchroniseRepository();
-		r = runUniqueQuery(
-				"from HibRootFolder r where r.id = '100001'");
-		assertTrue(mapExistsCalled( r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
 	}
 
@@ -294,7 +286,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void testCreateCopyOfMapHappyCase() {
+	public void testCreateCopyOfMapHappyCase() throws PersistenceManagerException {
 		ISubFolder sub1 = (ISubFolder) rep
 				.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
@@ -326,7 +318,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void testMoveMapHappyCaseAddsMapToNewParent() {
+	public void testMoveMapHappyCaseAddsMapToNewParent() throws PersistenceManagerException {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
 		IMap map = sub1.getMapIterator().next();
@@ -359,7 +351,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void testMoveMapHappyCaseRemovesMapFromOldParent() {
+	public void testMoveMapHappyCaseRemovesMapFromOldParent() throws PersistenceManagerException {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
 		IMap map = sub1.getMapIterator().next();
@@ -397,7 +389,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	@Test
-	public void testRenameMapHappyCase() {
+	public void testRenameMapHappyCase() throws PersistenceManagerException {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IMap map = sub1.getMapIterator().next();
 		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
@@ -478,7 +470,11 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	 */
 	@Override
 	protected void doAdditionalSetUp() {
-		rep = this.getBusinessObjectFactory().getRepository();
+		try {
+			rep = this.getBusinessObjectFactory().getRepository();
+		} catch (PersistenceManagerNotOpenException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/* (non-Javadoc)

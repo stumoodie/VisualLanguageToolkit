@@ -6,7 +6,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
-import java.util.List;
 
 import org.dbunit.Assertion;
 import org.dbunit.dataset.CompositeDataSet;
@@ -91,7 +90,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		doSetup () ;
 		getSession().beginTransaction() ;
 		Query retreivedMapDiagram = getSession().createQuery("from HibMapDiagram where id='100001'") ;
-		List <HibMap> diagrams1 = getSession().createQuery("from HibMapDiagram").list();
+//		List <HibMap> diagrams1 = getSession().createQuery("from HibMapDiagram").list();
 		HibMap toClone = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		Query retreivedFolder = getSession().createQuery("from HibFolder where id='100004'") ;
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
@@ -102,7 +101,7 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		getSession().getTransaction().commit() ;
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction() ;
-		List <HibMap> diagrams = session.createQuery("from HibMapDiagram").list();
+//		List <HibMap> diagrams = session.createQuery("from HibMapDiagram").list();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_MAPDIAGRAM_REF_DATA));

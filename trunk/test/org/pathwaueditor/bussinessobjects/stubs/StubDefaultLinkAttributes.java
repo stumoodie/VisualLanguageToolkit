@@ -3,16 +3,20 @@
  */
 package org.pathwaueditor.bussinessobjects.stubs;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 
 /**
  * @author smoodie
@@ -32,8 +36,8 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	public static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
 	public static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
 
-	private final ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();
-	private final ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();
+//	private final ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();
+//	private final ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDefaultLabelAttributes()
@@ -105,12 +109,6 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 		throw new UnsupportedOperationException("not implemented");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getPropertyDefinitionFilter()
-	 */
-	public IPropertyDefinitionFilter getPropertyDefinitionFilter() {
-		return new StubPropertyDefinitionFilter();
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getRouter()
@@ -124,6 +122,14 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	 */
 	public String getUrl() {
 		return EXPECTED_DEFAULT_URL;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults#propertyIterator()
+	 */
+	public Iterator<IPropertyDefinition> propertyIterator() {
+		Collection<IPropertyDefinition> collection = Collections.emptySet();
+		return collection.iterator();
 	}
 	
 }

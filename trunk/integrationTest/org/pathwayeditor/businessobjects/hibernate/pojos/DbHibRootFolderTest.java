@@ -26,10 +26,10 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DbHibRootFolderTest  extends PojoTester {
 	
-	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
-	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
+//	private static final String HIB_CONFIG_FILE = "test_hibernate.cfg.xml";
+//	private static final String REF_DATA = "integrationTest/DbRepositoryTestData/RepositoryRefData.xml";
 	private static final String ADDED_SUBFOLDER_REF_DATA = "integrationTest/DbRepositoryTestData/AddedSubFolderToRootFolderRefData.xml";
-	private static final String DELETED_ROOT_REF_DATA = "integrationTest/DbRepositoryTestData/DeletedRootFolderRefData.xml";
+//	private static final String DELETED_ROOT_REF_DATA = "integrationTest/DbRepositoryTestData/DeletedRootFolderRefData.xml";
 	private static final String CLONED_ROOTFOLDER_REF_DATA = "integrationTest/DbRepositoryTestData/ClonedRootFolderRefData.xml";
 	
 	

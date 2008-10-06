@@ -35,21 +35,21 @@ public interface IValidationReport {
 	/**
 	 * Returns an immutable<code>List</code> of individual validation errors and warnings.
 	 * If no validation items are present this method will return an empty List.
-	 * @return A <code>List</code> of {@link IValidationReportItems}
+	 * @return A <code>List</code> of {@link IValidationReportItem}
 	 */
 	List<IValidationReportItem> getValidationReportItems();
 	
 	/**
 	 * Reports if any warnings were issued during the validation checks. These are issues that may indicate potential problems with the map, or
 	 * stylistic or presentational issues that the user may wish to address.<br>
-	 * Specifically, will return true if getValidationReportItems() contains at least one item of status {@link ValidationStatus.WARNING}
+	 * Specifically, will return true if getValidationReportItems() contains at least one item of status.
 	 * @return true if warnings were issued, false otherwise.
 	 */
 	boolean hasWarnings();
 	
 	/**
 	 * Convenience method reports if a map has passed validation checks that have been performed on it by this instance.<br>
-	 * Will return <code>true</code> if getValidationReportItems() contains no items of status {@link ValidationStatus.ERROR}
+	 * Will return <code>true</code> if getValidationReportItems() contains no items of status.
 	 * @return true if it has, false otherwise.
 	 */
 	boolean isMapValid();

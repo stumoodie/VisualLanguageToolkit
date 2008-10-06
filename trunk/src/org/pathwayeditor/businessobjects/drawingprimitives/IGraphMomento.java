@@ -14,13 +14,13 @@ public interface IGraphMomento {
 
 	/**
 	 * The model that this is a momento of.
-	 * @return
+	 * @return the model, which cannot be null.
 	 */
 	IModel getModel();
 	
 	/**
 	 * The time the snapshot was taken.
-	 * @return
+	 * @return the creation date which cannot be null.
 	 */
 	Date getCreationDate();
 }

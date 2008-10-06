@@ -1,27 +1,24 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.bolayer;
+package org.pathwayeditor.businessobjects.management;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
  * @author smoodie
  *
  */
-public interface ICanvasLoader {
+public interface ICanvasPersistenceHandler {
 
 	void setOwningMap(IMap owningMap);
 
 	IMap getOwningMap();
 
 	void loadCanvas();
-
-	IHibNotationFactory getHibNotationFactory();
-
-	void setHibNotationFactory(IHibNotationFactory hibNotationFactory);
+	
+	void synchroniseCanvas();
 
 	public ICanvas getLoadedCanvas();
 

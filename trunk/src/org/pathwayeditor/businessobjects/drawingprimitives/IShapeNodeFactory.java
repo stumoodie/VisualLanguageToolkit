@@ -13,7 +13,7 @@ public interface IShapeNodeFactory {
 	
 	/**
 	 * Get the sub-canvas that this shape node will be draw on.
-	 * @return
+	 * @return the owning subcanvas.
 	 */
 	ISubModel getOwningSubCanvas();
 	

@@ -74,4 +74,12 @@
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
         </set>     
     </class>
+    
+    <query name="canvasExistsForMap"><![CDATA[
+    		select count(*) from HibCanvas c  where c.mapINode = :inode and c.repository = :repo
+        ]]></query>
+    <query name="loadCanvas"><![CDATA[
+    		from HibCanvas c  where c.repository = :repo and c.mapINode = :inode
+    	]]></query>
+    
 </hibernate-mapping>

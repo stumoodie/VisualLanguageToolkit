@@ -18,9 +18,6 @@ import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
  */
 public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implements ICanvasObjectSelection {
 
-	/**
-	 * @param builder
-	 */
 	public ShapeLinkSubgraphFactory(HibModel model) {
 		super(new ShapeLinkSubgraphBuilder(model));
 	}

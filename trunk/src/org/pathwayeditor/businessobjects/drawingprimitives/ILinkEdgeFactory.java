@@ -53,7 +53,7 @@ public interface ILinkEdgeFactory {
 	
 	/**
 	 * Tests if the link can be created given the nodes that are specified and the object type.
-	 * @return
+	 * @return true of the link can be created, false otherwise.
 	 */
 	boolean canCreateLink();
 	

@@ -57,7 +57,7 @@ public interface IValidationRuleDefinition {
 	 * Tests if the given ruleEnforcement is valid and appropriate for the current
 	 * rule level. Ensures MANDATORY rules can only be set as an ERROR. 
 	 * @param ruleEnforcement the enforcement to be tested.
-	 * @return
+	 * @return true if the the rule enforcement is valid, false otherwise.
 	 */
 	boolean isValidEnforcement(RuleEnforcement ruleEnforecement);
 	

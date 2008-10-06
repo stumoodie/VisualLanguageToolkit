@@ -3,9 +3,12 @@
  */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 /**
  * @author smoodie
@@ -44,18 +47,6 @@ public interface ILinkAttributeDefaults {
 	 */
 	ConnectionRouter getRouter();
 	
-//	/**
-//	 * Get the definition of the link's source.
-//	 * @return A non-null link end definition.
-//	 */
-//	ILinkTerminusDefaults getLinkSource();
-//	
-//	/**
-//	 * Get the definition of the link's target.
-//	 * @return A non-null link end definition.
-//	 */
-//	ILinkTerminusDefaults getLinkTarget();
-	
 	/**
 	 * Gets the default for any label associated with this link attribute
 	 * @return the label defaults, which cannot be null.
@@ -63,11 +54,9 @@ public interface ILinkAttributeDefaults {
 	ILabelAttributeDefaults getDefaultLabelAttributes();
 	
 	/**
-	 * Get the context configurable properties via a utility class.
-	 * The filter should be aware of changes made to the properties list
-	 * in the ILinkObjectType instance.
-	 * @return A non-null instance of IPropertyDefinitionFilter.
+	 * Provides an iterator for the set of all property definitions.
+	 * @return an iterator, that cannot be null, but may iterator over an empry collection.
 	 */
-	IPropertyDefinitionFilter getPropertyDefinitionFilter();
+	Iterator<IPropertyDefinition> propertyIterator();
 	
 }

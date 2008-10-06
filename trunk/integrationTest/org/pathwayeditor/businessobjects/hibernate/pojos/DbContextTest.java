@@ -75,7 +75,7 @@ public class DbContextTest extends PojoTester{
 		Query retreivedContext = getSession().createQuery("from HibContext where id = '100001'" ) ;
 		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
-		HibObjectType newObjectType = new HibObjectType (dbContext, OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
+		HibObjectType newObjectType = new HibObjectType (OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
 		dbContext.addObjectType(newObjectType) ;
 		
 		getSession().saveOrUpdate(dbContext) ;

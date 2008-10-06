@@ -96,7 +96,7 @@ public class HibNotation implements INotation, Serializable {
 		this.description = description;
 	}
 
-	Set<HibObjectType> getObjectTypes() {
+	public Set<HibObjectType> getObjectTypes() {
 		return this.hibObjectTypes;
 	}
 
@@ -104,11 +104,11 @@ public class HibNotation implements INotation, Serializable {
 		this.hibObjectTypes = hibObjectTypes;
 	}
 
-	void addObjectType(HibObjectType newObjectType) {
+	public void addObjectType(HibObjectType newObjectType) {
 		if (newObjectType == null)
 			throw new IllegalArgumentException("newObjectType cannot be null");
 
-		HibNotation oldContext = (HibNotation) newObjectType.getNotation();
+		HibNotation oldContext = newObjectType.getNotation();
 		if (oldContext != null) {
 			oldContext.hibObjectTypes.remove(newObjectType);
 		}
@@ -116,7 +116,7 @@ public class HibNotation implements INotation, Serializable {
 		newObjectType.setNotation(this);
 	}
 
-	void removeobjectType(HibObjectType hibObjectType) {
+	public void removeObjectType(HibObjectType hibObjectType) {
 		if (hibObjectType == null)
 			throw new IllegalArgumentException("objectType cannot be null");
 		if (hibObjectType.getNotation() != this)
@@ -175,9 +175,9 @@ public class HibNotation implements INotation, Serializable {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersionString()
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
 	 */
-	public String getVersionString() {
-		return version.toString();
+	public Version getVersion() {
+		return this.version;
 	}
 }

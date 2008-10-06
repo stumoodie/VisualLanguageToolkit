@@ -3,6 +3,7 @@
  */
 package org.pathwaueditor.bussinessobjects.stubs;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 
 /**
@@ -81,6 +82,14 @@ public class StubNotation implements INotation {
 	 */
 	public int compareTo(INotation o) {
 		throw new UnsupportedOperationException("not implemented!");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
+	 */
+	public Version getVersion() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

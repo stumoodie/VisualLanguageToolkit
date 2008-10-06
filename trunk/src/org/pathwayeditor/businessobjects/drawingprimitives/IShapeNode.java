@@ -28,7 +28,7 @@ public interface IShapeNode extends IDrawingNode, IZOrderedObject {
 	Iterator<ILinkEdge> targetLinkIterator();
 	
 		/**
-	 * Gets the {@link ShapeAttribute} that is connected to the particular Shape Node.
+	 * Gets the {@link IShapeAttribute} that is connected to the particular Shape Node.
 	 * @return the ShapeAttribute.
 	 */
 	IShapeAttribute getAttribute();

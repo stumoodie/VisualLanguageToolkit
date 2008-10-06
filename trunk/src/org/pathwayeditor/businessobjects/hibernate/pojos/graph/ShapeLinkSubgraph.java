@@ -14,9 +14,6 @@ import uk.ed.inf.graph.compound.base.BaseSubCompoundGraph;
 public class ShapeLinkSubgraph extends BaseSubCompoundGraph {
 	private final HibModel model;
 	
-	/**
-	 * @param superGraph
-	 */
 	public ShapeLinkSubgraph(HibModel model) {
 		super();
 		this.model = model;

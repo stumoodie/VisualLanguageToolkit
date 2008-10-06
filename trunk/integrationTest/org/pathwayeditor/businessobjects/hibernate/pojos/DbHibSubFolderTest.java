@@ -61,13 +61,13 @@ public class DbHibSubFolderTest extends PojoTester{
 		HibSubFolder bFolder = new HibSubFolder (aFolder , FOLDER_NAME_TWO) ;
 		HibSubFolder cFolder = new HibSubFolder (aFolder , FOLDER_NAME_THREE) ;
 		
-		HibMap aMapDiagram = new HibMap () ;
-		HibMap bMapDiagram = new HibMap () ;
+		HibMap aMapDiagram = new HibMap (aFolder, DIAGRAM_NAME_ONE);
+		HibMap bMapDiagram = new HibMap (bFolder, DIAGRAM_NAME_TWO);
 		
-		aMapDiagram.setName(DIAGRAM_NAME_ONE) ;
-		bMapDiagram.setName(DIAGRAM_NAME_TWO) ;
-		aMapDiagram.setRepository(aRepository);
-		bMapDiagram.setRepository(aRepository);
+//		aMapDiagram.setName(DIAGRAM_NAME_ONE) ;
+//		bMapDiagram.setName(DIAGRAM_NAME_TWO) ;
+//		aMapDiagram.setRepository(aRepository);
+//		bMapDiagram.setRepository(aRepository);
 		
 		aRepository.changeRootFolder(aRootFolder) ;
 		
@@ -150,7 +150,7 @@ public class DbHibSubFolderTest extends PojoTester{
 		assertEquals ( "SubFolder name" , SUBFOLDER_TWO_NAME , dbParentFolder.getName() ) ;
 		assertEquals ( "Number of Subfolders" , TWO_ENTRIES_TABLE , dbParentFolder.getSubFolders().size()) ;
 		
-		HibSubFolder subFolder1 , subFolder2 ;
+//		HibSubFolder subFolder1 , subFolder2 ;
 		
 		ArrayList <HibSubFolder> subFoldersList = new ArrayList <HibSubFolder> ( dbParentFolder.getSubFolders() ) ; 
 		

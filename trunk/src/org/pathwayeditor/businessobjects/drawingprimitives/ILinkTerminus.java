@@ -47,9 +47,5 @@ public interface ILinkTerminus {
 	 */
 	boolean equals(Object other);
 
-	/**
-	 * As equals.
-	 * @return
-	 */
 	int hashCode();
 }

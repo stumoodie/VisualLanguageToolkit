@@ -27,6 +27,11 @@ import org.hibernate.stat.Statistics;
  */
 public class StubSessionFactory implements SessionFactory {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5751993615459996852L;
+
 	/* (non-Javadoc)
 	 * @see org.hibernate.SessionFactory#close()
 	 */
