@@ -1,12 +1,10 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import java.io.Serializable;
-
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
 
-public class HibSubFolder extends HibFolder implements ISubFolder, Serializable {
+public class HibSubFolder extends HibFolder implements ISubFolder {
 	private static final long serialVersionUID = -7826318326217020101L;
 	public static final String FOLDER_RENAME_EVENT = "FOLDER_RENAME_EVENT";
 	private HibFolder parentFolder;

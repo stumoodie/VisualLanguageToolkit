@@ -293,6 +293,6 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
-		return this.visualisableProperty.equals(property);
+		return this.visualisableProperty.getDefinition().equals(property);
 	}
 }

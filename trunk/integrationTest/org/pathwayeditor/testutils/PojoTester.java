@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Statement;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
@@ -29,6 +30,7 @@ public abstract class PojoTester {
 	private static HibernateTestManager dbTester = null;
 	private SessionFactory hibFactory;
 //	private Session session;
+	private FileInputStream loadFile = null;
 	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
 	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
 	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
@@ -65,8 +67,8 @@ public abstract class PojoTester {
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 	Exception {
 		disbleConstraints() ;
-		getDbTester().setDataSet(
-				new XmlDataSet(new FileInputStream(getDbUnitDataFilePath())));
+		this.loadFile = new FileInputStream(getDbUnitDataFilePath());
+		getDbTester().setDataSet(new XmlDataSet(this.loadFile));
 		getDbTester().onSetup();
 		enableConstraints() ;
 	}
@@ -78,6 +80,7 @@ public abstract class PojoTester {
 	public void tearDown() throws Exception {
 		disbleConstraints() ;
 		dbTester.onTearDown();
+		this.loadFile.close();
 		enableConstraints() ;
 		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
 			this.hibFactory.close();
@@ -113,14 +116,32 @@ public abstract class PojoTester {
 	
 	protected void enableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity TRUE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity TRUE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
 	
 	protected void disbleConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity FALSE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity FALSE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
 
 }

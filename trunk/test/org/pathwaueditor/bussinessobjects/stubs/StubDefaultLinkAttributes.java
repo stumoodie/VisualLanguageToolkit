@@ -89,13 +89,6 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
-	 */
-	public String getURL() {
-		return EXPECTED_DEFAULT_URL;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getLinkSource()
 	 */
 	public ILinkTerminusDefaults getLinkSource() {

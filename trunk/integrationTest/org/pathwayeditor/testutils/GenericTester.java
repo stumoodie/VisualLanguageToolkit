@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
@@ -36,7 +37,8 @@ public abstract class GenericTester {
 	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
 	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
 	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
-	private static IRepositoryPersistenceManager bofac = null;
+	private IRepositoryPersistenceManager bofac = null;
+	private FileInputStream loadFile;
 //	private IBusinessObjectFactory bo = bofac;
 	
 	public IRepositoryPersistenceManager getBusinessObjectFactory(){
@@ -80,8 +82,8 @@ public abstract class GenericTester {
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 			Exception {
 		disableConstraints();
-		getDbTester().setDataSet(
-				new XmlDataSet(new FileInputStream(getDbUnitDataFilePath())));
+		this.loadFile = new FileInputStream(getDbUnitDataFilePath());
+		getDbTester().setDataSet(new XmlDataSet(this.loadFile));
 		getDbTester().onSetup();
 		enableConstraints();
 	}
@@ -96,6 +98,7 @@ public abstract class GenericTester {
 		bofac = null;
 		disableConstraints();
 		dbTester.onTearDown();
+		this.loadFile.close();
 		enableConstraints();
 	}
 
@@ -133,14 +136,31 @@ public abstract class GenericTester {
 	
 	protected void enableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity TRUE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity TRUE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
 	
 	protected void disableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity FALSE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity FALSE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
-
 }

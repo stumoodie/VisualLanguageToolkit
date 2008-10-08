@@ -4,7 +4,6 @@
 package org.pathwaueditor.bussinessobjects.drawingprimitives.properties;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
@@ -60,7 +59,6 @@ public class INumberAnnotationPropertyTest {
 	{
 		assertEquals ( "creation serial" , CREATION_SERIAL , numberProperty.getCreationSerial()) ;
 		assertEquals ( "text value" , NUMBER_VALUE , numberProperty.getValue() ) ;
-		assertTrue ( "object value" , numberProperty.getValue() instanceof BigDecimal ) ;
 	}
 	
 	@Ignore @Test

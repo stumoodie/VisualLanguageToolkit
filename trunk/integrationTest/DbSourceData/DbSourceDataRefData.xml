@@ -68,9 +68,9 @@
 		<column>id</column>
 		<column>global_id</column>
 		<column>name</column>
-		<column>description_</column>
+		<column>description</column>
 		<column>major_version</column>
-		<column>minor_version_</column>
+		<column>minor_version</column>
 		<column>patch_version</column>
 		<row>
 			<value>100001</value>
@@ -189,6 +189,7 @@
 		<column>context_id</column>
 		<column>name</column>
 		<column>description</column>
+		<column>unique_id</column>
 		<column>classification_code</column>
 		<row>
 			<value>100001</value>
@@ -196,12 +197,14 @@
 			<value>objectName</value>
 			<value>objectDescr</value>
 			<value>1</value>
+			<value>1</value>
 		</row>
 		<row>
 			<value>100002</value>
 			<value>100002</value>
 			<value>objectName2</value>
 			<value>objectDescr2</value>
+			<value>2</value>
 			<value>1</value>
 		</row>
 	</table>
@@ -547,6 +550,8 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
 		<column>displayed_property_id</column>
 		<column>is_displayed</column>
 		<column>background_red</column>
@@ -559,6 +564,8 @@
 		<column>height</column>
 		<row>
 			<value>100001</value>
+			<value>100001</value>
+			<value>4</value>
 			<value>100002</value>
 			<value>true</value>
 			<value>100</value>
@@ -572,6 +579,8 @@
 		</row>
 		<row>
 			<value>100002</value>
+			<value>100001</value>
+			<value>5</value>
 			<value>100003</value>
 			<value>true</value>
 			<value>100</value>
@@ -585,6 +594,8 @@
 		</row>
 		<row>
 			<value>100003</value>
+			<value>100001</value>
+			<value>6</value>
 			<value>100004</value>
 			<value>true</value>
 			<value>100</value>
@@ -598,6 +609,8 @@
 		</row>
 		<row>
 			<value>100004</value>
+			<value>100001</value>
+			<value>7</value>
 			<value>100005</value>
 			<value>true</value>
 			<value>100</value>

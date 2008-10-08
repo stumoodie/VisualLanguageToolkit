@@ -73,7 +73,7 @@ public class IBendpointTest {
 	}
 	
 	@Test
-	public void testgetOwningLink () throws Exception
+	public void testGetOwningLink () throws Exception
 	{
 		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
 		

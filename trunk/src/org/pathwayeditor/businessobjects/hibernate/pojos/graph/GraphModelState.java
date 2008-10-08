@@ -52,7 +52,7 @@ public class GraphModelState implements IGraphMomento, IGraphState<BaseCompoundN
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento#getCreationDate()
 	 */
 	public Date getCreationDate() {
-		return this.creationDate;
+		return new Date(this.creationDate.getTime());
 	}
 
 }

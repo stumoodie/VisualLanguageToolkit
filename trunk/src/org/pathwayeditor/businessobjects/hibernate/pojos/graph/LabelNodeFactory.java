@@ -19,7 +19,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
  *
  */
 public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelNodeFactory {
-	private HibProperty annotationProperty;
+	private HibProperty annotationProperty = null;
 	private final HibCompoundNode parent;
 	
 	/**

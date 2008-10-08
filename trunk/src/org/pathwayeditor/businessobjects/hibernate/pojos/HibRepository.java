@@ -136,7 +136,7 @@ public class HibRepository implements Serializable, IRepository {
 			return false;
 		HibRepository castOther = (HibRepository) other;
 
-		return ((this.getName() == castOther.getName()) || (this.getName() != null
+		return ((this.getName().equals(castOther.getName())) || (this.getName() != null
 				&& castOther.getName() != null && this.getName().equals(
 				castOther.getName())));
 	}

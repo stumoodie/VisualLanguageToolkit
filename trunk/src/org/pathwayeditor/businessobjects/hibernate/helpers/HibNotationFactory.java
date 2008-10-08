@@ -23,7 +23,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 public class HibNotationFactory implements IHibNotationFactory {
 	private final INotationSyntaxService syntaxService;
 	private final SessionFactory factory;
-	private HibNotation notation;
+	private HibNotation notation = null;
 	private final Map<IObjectType, HibObjectType> objectTypeMapping; 
 	
 	public HibNotationFactory(SessionFactory factory, INotationSyntaxService syntaxService){

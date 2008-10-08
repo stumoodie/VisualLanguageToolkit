@@ -4,7 +4,6 @@
 package org.pathwaueditor.bussinessobjects.drawingprimitives.properties;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -59,7 +58,6 @@ public class IPlainTextAnnotationPropertyTest {
 	{
 		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getCreationSerial()) ;
 		assertEquals ( "text value" , TEXT_VALUE , textProperty.getValue() ) ;
-		assertTrue ( "object value" , textProperty.getValue() instanceof String ) ;
 	}
 	
 	@Ignore @Test

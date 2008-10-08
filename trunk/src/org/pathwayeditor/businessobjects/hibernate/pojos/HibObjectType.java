@@ -109,7 +109,7 @@ public class HibObjectType implements Serializable {
 				.getNotation() != null
 				&& castOther.getNotation() != null && this.getNotation().equals(
 				castOther.getNotation())))
-				&& ((this.getName() == castOther.getName()) || (this.getName() != null
+				&& ((this.getName().equals(castOther.getName())) || (this.getName() != null
 						&& castOther.getName() != null && this.getName()
 						.equals(castOther.getName())));
 	}

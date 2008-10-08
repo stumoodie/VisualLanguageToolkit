@@ -27,8 +27,8 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNode;
  */
 public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implements ILinkEdgeFactory {
 	private final HibSubModel subCanvas;
-	private HibShapeNode outNode;
-	private HibShapeNode inNode;
+	private HibShapeNode outNode = null;
+	private HibShapeNode inNode = null;
 	private ILinkObjectType objectType;
 	private IHibNotationFactory hibNotationFactory;
 	

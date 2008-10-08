@@ -62,10 +62,11 @@ public class RepositoryBusinessLogicTest {
 	
 	@Test
 	public void testPublicConstructorEnsureDescriptionNeverNullButEmptyStringAllowed(){
-		try{@SuppressWarnings("unused")
-		IRepository rep = new HibRepository(REPOSITORY_NAME1,null,1);fail("empty name not allowed");}catch(IllegalArgumentException e) {;}
-		@SuppressWarnings("unused")
-		IRepository rep = new HibRepository(REPOSITORY_NAME1,"",1);
+		try{
+			new HibRepository(REPOSITORY_NAME1,null,1);
+			fail("empty name not allowed");
+		}catch(IllegalArgumentException e) {;}
+		new HibRepository(REPOSITORY_NAME1,"",1);
 	}
 	
 	@Test

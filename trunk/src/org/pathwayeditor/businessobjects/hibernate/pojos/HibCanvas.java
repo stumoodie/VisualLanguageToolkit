@@ -109,19 +109,19 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 	
 	public Date getCreated() {
-		return this.created;
+		return new Date(this.created.getTime());
 	}
 
 	public void setCreated(Date created) {
-		this.created = created;
+		this.created = new Date(created.getTime());
 	}
 
 	public Date getModified() {
-		return this.modified;
+		return new Date(this.modified.getTime());
 	}
 
 	public void setModified(Date modified) {
-		this.modified = modified;
+		this.modified = new Date(modified.getTime());
 	}
 
 	int getGridX() {

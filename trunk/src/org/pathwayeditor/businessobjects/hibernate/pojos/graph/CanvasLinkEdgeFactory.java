@@ -30,8 +30,8 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	private final HibModel canvas;
 	private final IHibNotationFactory hibNotationFactory; 
 	private ILinkObjectType objectType;
-	private HibShapeNode outNode;
-	private HibShapeNode inNode;
+	private HibShapeNode outNode = null;
+	private HibShapeNode inNode = null;
 	
 	public CanvasLinkEdgeFactory(HibModel canvas, IHibNotationFactory hibNotationFactory) {
 		super();
@@ -139,14 +139,14 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#isValidShapeNodePair(IShapeNode, IShapeNode)
 	 */
 	public boolean isValidShapeNodePair(IShapeNode source, IShapeNode target) {
-		return this.isValidNodePair(outNode, inNode);
+		return this.isValidNodePair((HibShapeNode)source, (HibShapeNode)target);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#setNodePair(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode, org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public void setShapeNodePair(IShapeNode source, IShapeNode target) {
-		this.setShapeNodePair(source, target);
+		this.setPair((HibShapeNode)source, (HibShapeNode)target);
 	}
 
 	/* (non-Javadoc)

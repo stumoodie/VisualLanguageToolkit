@@ -136,7 +136,7 @@ public class HibNotation implements INotation, Serializable {
 			return false;
 		HibNotation castOther = (HibNotation) other;
 
-		return ((this.getGlobalId() == castOther.getGlobalId()) || (this
+		return ((this.getGlobalId().equals(castOther.getGlobalId())) || (this
 				.getGlobalId() != null
 				&& castOther.getGlobalId() != null && this.getGlobalId()
 				.equals(castOther.getGlobalId())));
@@ -171,7 +171,7 @@ public class HibNotation implements INotation, Serializable {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getDisplayName()
 	 */
 	public String getDisplayName() {
-		return this.getDisplayName();
+		return this.name;
 	}
 
 	/* (non-Javadoc)
