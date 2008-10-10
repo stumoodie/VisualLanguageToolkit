@@ -55,6 +55,9 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
+        <property name="lastCreationSerial" type="int">
+        	<column name="last_creation_serial" not-null="true" />
+        </property>
         <set name="shapeAttributes" inverse="true" table="shapeAttribute" cascade="all,delete-orphan">
             <key>
                 <column name="canvas_id" not-null="true" />
@@ -65,7 +68,7 @@
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute"/> 
         </set>
         <set name="linkAttributes" inverse="true" table="linkAttribute" cascade="all,delete-orphan">
             <key>

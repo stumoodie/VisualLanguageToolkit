@@ -67,7 +67,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas")
-				.setEntity("repo",this.getOwningMap().getINode())
+				.setEntity("repo",this.getOwningMap().getRepository())
 				.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
 		Hibernate.initialize(hibCanvas);
 		hibCanvas.setMapDiagram(this.getOwningMap());

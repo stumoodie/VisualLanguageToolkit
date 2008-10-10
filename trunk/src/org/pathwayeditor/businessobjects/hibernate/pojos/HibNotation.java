@@ -25,6 +25,7 @@ public class HibNotation implements INotation, Serializable {
 	 * @deprecated Use another constructor. This constructor should not be used by application code.
 	 */
 	HibNotation() {
+		version = new Version (0, 0, 0) ;
 	}
 
 	/**

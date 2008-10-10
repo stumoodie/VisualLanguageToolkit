@@ -309,11 +309,11 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 
 	
-	void setLastIndexValue(int lastIndexValue){
+	void setLastCreationSerial(int lastIndexValue){
 		this.creationSerialCounter = new IndexCounter(lastIndexValue);
 	}
 	
-	int getLastIndexValue(){
+	int getLastCreationSerial(){
 		return this.creationSerialCounter.getLastIndex();
 	}
 	

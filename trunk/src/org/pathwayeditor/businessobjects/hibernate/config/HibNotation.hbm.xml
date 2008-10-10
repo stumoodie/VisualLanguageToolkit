@@ -19,14 +19,14 @@
             	<column name="major_version" not-null="true" />
 	        </property>
 	        <property name="minorVersion" type="int">
-    	        <column name="minor_version_" not-null="true" />
+    	        <column name="minor_version" not-null="true" />
 	        </property>
     	    <property name="patchVersion" type="int">
             	<column name="patch_version" not-null="true" />
         	</property>
         </properties>
         <property name="description" type="string">
-            <column name="description_" length="2048" not-null="true" />
+            <column name="description" length="2048" not-null="true" />
         </property>
         <set name="objectTypes" inverse="true" cascade="all,delete-orphan">
             <key>

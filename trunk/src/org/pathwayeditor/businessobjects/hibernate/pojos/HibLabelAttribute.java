@@ -34,6 +34,9 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
 	 */
 	HibLabelAttribute() {
+		size = new Size (0 , 0) ;
+		position = new Location ( 0 , 0 ) ;
+		background = new RGB ( 0 , 0 ,0 ) ;
 	}
 
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {

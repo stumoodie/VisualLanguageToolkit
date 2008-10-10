@@ -16,7 +16,9 @@
         		<column name="node_index" not-null="true"/>
         	</property>
         </properties>
-
+		
+		<one-to-one name="childCompoundGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all" property-ref="rootNode"/>
+		
 		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
 	       	<column name="parent_id" not-null="false"/>
         </many-to-one>

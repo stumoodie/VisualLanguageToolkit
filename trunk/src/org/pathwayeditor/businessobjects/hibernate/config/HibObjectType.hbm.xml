@@ -23,7 +23,7 @@
             <column name="description" length="2048" not-null="true" />
         </property>
         <property name="classificationCode" type="ObjectTypeClassification">
-        	<column name="classificiation_code" not-null="true"/>
+        	<column name="classification_code" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

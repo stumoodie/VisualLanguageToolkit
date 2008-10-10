@@ -50,6 +50,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibShapeAttribute() {
+		position = new Location ( 0 , 0 ) ;
+		size = new Size ( 0 , 0 ) ;
+		fillColour = new RGB ( 0 , 0 , 0 ) ;
+		lineColour = new RGB ( 0 , 0 , 0 ) ;
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){

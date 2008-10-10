@@ -59,7 +59,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 
 	public void loadNotation(){
 		Session sess = factory.getCurrentSession();
-		Query qry = sess.createQuery("select count(*) from HibNotation where globalId = :globalId").setString("globalId", notation.getGlobalId());
+		Query qry = sess.createQuery("from HibNotation where globalId = :globalId").setString("globalId", syntaxService.getNotation().getGlobalId());
 		this.notation = (HibNotation)qry.uniqueResult();
 		for(HibObjectType hibObjectType : this.notation.getObjectTypes()){
 			IObjectType objectType = this.syntaxService.getObjectType(hibObjectType.getUniqueId());
@@ -71,8 +71,8 @@ public class HibNotationFactory implements IHibNotationFactory {
 		INotation notation = syntaxService.getNotation();
 		Session sess = factory.getCurrentSession();
 		Query qry = sess.createQuery("select count(*) from HibNotation where globalId = :globalId").setString("globalId", notation.getGlobalId());
-		Integer numNotations = (Integer)qry.uniqueResult();
-		return numNotations.intValue() > 0;
+		long numNotations = (Long)qry.uniqueResult();
+		return numNotations > 0;
 	}
 	
 	
