@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.database.util;
+package org.pathwayeditor.businessobjects.management;
 
 /**
  * @author nhanlon

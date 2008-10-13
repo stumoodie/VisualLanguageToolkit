@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.database.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 
 /**
  * @author nhanlon 
@@ -34,7 +35,12 @@ public class HibernateDataSource {
 		this.password = hibConfig.getProperty(HIB_PROP_PASSWORD);
 	}
 
-	public String getDriverClass() {
+	public HibernateDataSource(String xmlConfigFile, IConnectionInfo connInfo) {
+		this(xmlConfigFile);
+		this.setConnectionInfo(connInfo);
+	}
+
+		public String getDriverClass() {
 		return this.driverClass;
 	}
 

@@ -27,4 +27,10 @@ public interface IMap extends IRepositoryItem {
 	String getDescription();
 	
 	void setDescription(String description);
+	
+	/**
+	 * The path of the map.
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem  
+	 */
+	String getPath();
 }

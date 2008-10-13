@@ -61,4 +61,12 @@ public class StubMap implements IMap {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IMap#getPath()
+	 */
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

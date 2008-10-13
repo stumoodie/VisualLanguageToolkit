@@ -19,7 +19,7 @@ public interface IRepositoryPersistenceHandler {
 	
 	void synchroniseRepository();
 
-	public IRepository getLoadedRepository();
+	IRepository getLoadedRepository();
 
 	/**
 	 * Sets the hibernate notation factory, the owning map and loaded canvas to null. This helps avoid memory leaks

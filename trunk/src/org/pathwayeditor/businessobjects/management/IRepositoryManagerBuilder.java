@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.businessobjects.management;
 
-import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 
 /**
  * @author smoodie

@@ -31,4 +31,10 @@ public interface IRepositoryItem {
 	 */
 	boolean equals(Object object);
 	
+	/**
+	 * Gets the path of the repository object. A path leading to a folder
+	 * should end with a '/' character, maps do not.
+	 * @return the path, which cannot be null.
+	 */
+	String getPath();
 }

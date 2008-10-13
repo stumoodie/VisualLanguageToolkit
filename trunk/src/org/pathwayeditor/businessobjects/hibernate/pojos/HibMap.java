@@ -192,4 +192,13 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		}
 		this.repository = repository;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IMap#getPath()
+	 */
+	public String getPath() {
+		StringBuilder pathBuilder = new StringBuilder(this.getOwner().getPath());
+		pathBuilder.append(name);
+		return pathBuilder.toString();
+	}
 }

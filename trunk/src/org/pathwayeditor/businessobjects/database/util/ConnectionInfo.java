@@ -3,6 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.database.util;
 
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
+
 /**
  * @author nhanlon
  * The default settings for ConnectionInfo are for the Hsql Database

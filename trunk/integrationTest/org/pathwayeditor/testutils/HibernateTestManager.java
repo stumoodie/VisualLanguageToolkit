@@ -12,7 +12,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.database.util.HqlDbSchema;
-import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 
 /**
  * @author smoodie

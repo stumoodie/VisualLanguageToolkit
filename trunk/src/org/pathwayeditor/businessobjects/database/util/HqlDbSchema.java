@@ -11,20 +11,30 @@ import java.util.List;
 
 import org.pathwayeditor.testutils.AbstractDbSchema;
 
-public class HqlDbSchema extends AbstractDbSchema {
+public class HqlDbSchema extends AbstractDbSchema implements ISchemaManager {
 	final String schemaCreationDdl[];
 	final String dropSchemaDdl[];
 
-	public HqlDbSchema(Connection connection, String creationDdl[], String dropDdl[]) {
-		super(connection);
+	public HqlDbSchema(String creationDdl[], String dropDdl[]) {
+		super();
 		this.schemaCreationDdl = new String[creationDdl.length];
 		System.arraycopy(creationDdl, 0, this.schemaCreationDdl, 0, creationDdl.length);
 		this.dropSchemaDdl = new String[dropDdl.length];
 		System.arraycopy(dropDdl, 0, this.dropSchemaDdl, 0, dropDdl.length);
 	}
 
+	public HqlDbSchema(Connection connection, String creationDdl[], String dropDdl[]) {
+		this(creationDdl, dropDdl);
+		this.setConnection(connection);
+	}
+
 	public HqlDbSchema(Connection connection, File creationDdl, File dropDdl) {
-		super(connection);
+		this(creationDdl, dropDdl);
+		this.setConnection(connection);
+	}	
+	
+	public HqlDbSchema(File creationDdl, File dropDdl) {
+		super();
 		BufferedReader is = null;
 		try{
 			is = new BufferedReader(new FileReader(creationDdl));

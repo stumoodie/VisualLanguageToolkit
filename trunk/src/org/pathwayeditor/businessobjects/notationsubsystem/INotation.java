@@ -32,7 +32,7 @@ public interface INotation extends Comparable<INotation> {
 	
 	/**
 	 * Gets the version of the notation. 
-	 * @return 
+	 * @return  the notation version, cannot be null.
 	 */
 	Version getVersion();
 	

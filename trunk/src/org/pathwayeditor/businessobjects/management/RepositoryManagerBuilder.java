@@ -1,11 +1,7 @@
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.management;
 
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
-import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
 
