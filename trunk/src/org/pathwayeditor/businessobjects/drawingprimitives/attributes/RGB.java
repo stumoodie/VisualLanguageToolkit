@@ -38,7 +38,7 @@ public final class RGB {
 	}
 	
 	public RGB newBlue(int newBlue){
-		return new RGB(this.blue, this.green, newBlue);
+		return new RGB(this.red, this.green, newBlue);
 	}
 	
 	@Override

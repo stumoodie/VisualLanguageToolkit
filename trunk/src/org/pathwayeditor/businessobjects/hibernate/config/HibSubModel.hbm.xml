@@ -11,7 +11,7 @@
 		</many-to-one>
 		
 		<set name="edges" inverse="true" cascade="all,delete-orphan" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
-			<key column="owning_child_graph_id"/>
+			<key column="owning_child_model_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>
 	</class>

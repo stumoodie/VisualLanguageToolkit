@@ -19,12 +19,22 @@
 		
 		<one-to-one name="childCompoundGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all" property-ref="rootNode"/>
 		
+		<set name="children" inverse="true" cascade="all,delete-orphan" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.NodeSetType">
+			<key column="parent_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" />
+		</set>
+		
 		<many-to-one name="parentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
 	       	<column name="parent_id" not-null="false"/>
         </many-to-one>
 
 		<set name="inEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
 			<key column="in_node_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
+		</set>
+		
+		<set name="outEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
+			<key column="out_node_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>
 

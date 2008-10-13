@@ -12,8 +12,8 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private Long id;
 	private HibModel graph;
 	private int index;
-	private HibShapeNode outNode;
-	private HibShapeNode inNode;
+	private HibCompoundNode outNode;
+	private HibCompoundNode inNode;
 	private HibSubModel owningChildGraph;
 	private HibLinkAttribute attribute;
 	
@@ -77,19 +77,19 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		return graph;
 	}
 	
-	void setOutNode(HibShapeNode value) {
+	void setOutNode(HibCompoundNode value) {
 		this.outNode = value;
 	}
 	
-	public HibShapeNode getOutNode() {
+	public HibCompoundNode getOutNode() {
 		return outNode;
 	}
 	
-	void setInNode(HibShapeNode value) {
+	void setInNode(HibCompoundNode value) {
 		this.inNode = value;
 	}
 	
-	public HibShapeNode getInNode() {
+	public HibCompoundNode getInNode() {
 		return inNode;
 	}
 	
@@ -180,14 +180,14 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getSourceShape()
 	 */
 	public HibShapeNode getSourceShape() {
-		return this.getOutNode();
+		return (HibShapeNode) this.getOutNode();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#getTargetShape()
 	 */
 	public HibShapeNode getTargetShape() {
-		return this.getInNode();
+		return (HibShapeNode) this.getInNode();
 	}
 
 	/* (non-Javadoc)

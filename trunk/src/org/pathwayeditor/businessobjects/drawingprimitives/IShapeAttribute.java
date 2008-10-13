@@ -157,6 +157,18 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute {
 	 * @throws IllegalArgumentException if lineStyle is null.
 	 */
 	void setLineStyle(LineStyle lineStyle);
+	
+	/**
+	 * Returns the padding for this Shape.
+	 * @return the padding of this Shape.
+	 */
+	int getPadding () ;
+	
+	/**
+	 * Sets the padding for this Shape
+	 * @param padding the new padding.
+	 */
+	void setPadding ( int padding ) ;
 
 	IShapeNode getShapeNode();
 	
