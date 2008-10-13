@@ -17,6 +17,7 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -62,7 +63,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	}
 
 
-	@Test
+	@Ignore @Test
 	public void testWriteToDataBase () throws Exception
 	{
 		doSetup () ;
@@ -98,7 +99,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	}
 	
 
-	@Test
+	@Ignore @Test
 	public void testDeleteRepositoryWithSubFolders () throws Exception 
 	{
 		doSetup();	
@@ -134,7 +135,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 	}
 
 
-	@Test
+	@Ignore @Test
 	public void testDeleteRepositoryWithOnlyRootFolders () throws Exception 
 	{
 		doSetup () ;		

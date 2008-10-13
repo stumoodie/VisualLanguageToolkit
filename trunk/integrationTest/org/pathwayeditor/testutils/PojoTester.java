@@ -80,12 +80,14 @@ public abstract class PojoTester {
 	public void tearDown() throws Exception {
 		disbleConstraints() ;
 		dbTester.onTearDown();
-		this.loadFile.close();
-		enableConstraints() ;
-		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
-			this.hibFactory.close();
+		if(this.loadFile != null){
+			this.loadFile.close();
 		}
-		this.hibFactory = null;
+		enableConstraints() ;
+//		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
+//			this.hibFactory.close();
+//		}
+//		this.hibFactory = null;
 	}
 
 	protected HibernateTestManager getDbTester() {

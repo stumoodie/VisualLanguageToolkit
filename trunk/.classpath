@@ -12,14 +12,13 @@
 			<attribute name="javadoc_location" value="file://lib/hsqldb/doc/src/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/cglib-nodep-2.1_3.jar" sourcepath="lib/jmock-2.4.0/cglib-2.1_3-src.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-core-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/hamcrest-library-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit3-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-junit4-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/jmock-legacy-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jmock-2.4.0/objenesis-1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/cglib-nodep-2.1_3.jar" sourcepath="lib/jmock-2.4.0/cglib-2.1_3-src.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/hamcrest-core-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/hamcrest-library-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/jmock-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/jmock-junit4-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
+	<classpathentry kind="lib" path="/Users/smoodie/workspace/BusinessObjects/lib/jmock-2.5.1/objenesis-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/DbUnit/dbunit-2.2.3.jar" sourcepath="lib/DbUnit/dbunit-2.2.3-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/DbUnit/dbunit-2.2.3-javadoc.jar!/"/>

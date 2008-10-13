@@ -7,16 +7,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
+import org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
 
@@ -25,7 +22,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersiste
  * 
  */
 public class RepositoryManagerBuilderTest {
-	private static final String CONNECTION_URL = "jdbc:hsqldb:file:DB/EmbeddedDb;ifexists=true";
+	private static final String CONNECTION_URL = "jdbc:hsqldb:file:DB/EmbeddedDb";
 	private static final String PASSWORD = "";
 	private static final String USERNAME = "sa";
 	private static final String DRIVER_NAME = "org.hsqldb.jdbcDriver";
@@ -38,23 +35,25 @@ public class RepositoryManagerBuilderTest {
 	private static final File DB_DIR = new File("DB");
 	private IRepositoryPersistenceManager bofac = null;
 	private HibernateDataSource dataSource;
+	private IDatabaseManager databaseManager;
 	
 	@Before
 	public void setUp() throws Exception {
 		// check that DB directory exists. If it does not then create new DB
 		IConnectionInfo connInfo = new DefaultConnection();
+		InitialisedDefaultDB worker = new InitialisedDefaultDB(HIB_CONFIG_FILE, connInfo, SCHEMA_CREATION_SCRIPT,
+				SCHEMA_DROP_SCRIPT);
+		worker.removeDB();
+		worker.buildSchema();
+		worker.addInitialData();
+		worker.shutDownDb();
 		this.dataSource = new HibernateDataSource(HIB_CONFIG_FILE);
 		dataSource.setConnectionInfo(connInfo);
 		if(!DB_DIR.exists()){
 			System.err.println("Database does not exists. The database should be created before this test case is run");
 		}
-//		if (!DB_DIR.exists()) {
-//			InitialisedDefaultDB dbInitialiser = new InitialisedDefaultDB(
-//					dataSource, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
-//			dbInitialiser.buildSchema();
-//			dbInitialiser.addInitialData();
-//			dbInitialiser.shutDownDb();
-//		}
+		this.databaseManager = new HsqlDatabaseManager(connInfo);
+		this.databaseManager.startup();
 		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(
 				dataSource.getSessionFactory(), new StubNotationSubsystemPool());
 		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(
@@ -85,6 +84,10 @@ public class RepositoryManagerBuilderTest {
 			bofac.closeRepository();
 		
 		bofac = null;
+		this.dataSource.getSessionFactory().close();
+		this.databaseManager.shutdown();
+		this.databaseManager = null;
+		this.dataSource = null;
 //		shutdownDB();
 //		if (DB_DIR.exists()) {
 //			deleteDir(DB_DIR);
@@ -106,16 +109,16 @@ public class RepositoryManagerBuilderTest {
 		assertTrue("repo open", bofac.isRepositoryOpen());
 	}
 
-	@SuppressWarnings("deprecation")
-	private void shutdownDB() throws SQLException {
-		Session sess = this.dataSource.getSessionFactory().getCurrentSession();
-		Connection conn = sess.connection();
-		conn.setAutoCommit(false);
-		Statement stmt = conn.createStatement();
-		stmt.execute("SHUTDOWN COMPACT");
-		stmt.close();
-		conn.commit();
-	}
+//	@SuppressWarnings("deprecation")
+//	private void shutdownDB() throws SQLException {
+//		Session sess = this.dataSource.getSessionFactory().getCurrentSession();
+//		Connection conn = sess.connection();
+//		conn.setAutoCommit(false);
+//		Statement stmt = conn.createStatement();
+//		stmt.execute("SHUTDOWN COMPACT");
+//		stmt.close();
+//		conn.commit();
+//	}
 	
 	private static class DefaultConnection implements IConnectionInfo {
 
