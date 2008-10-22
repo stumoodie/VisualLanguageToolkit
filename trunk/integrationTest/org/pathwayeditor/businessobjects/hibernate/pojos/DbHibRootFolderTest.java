@@ -4,6 +4,9 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.FileInputStream;
 
 import org.dbunit.Assertion;
@@ -31,13 +34,27 @@ public class DbHibRootFolderTest  extends PojoTester {
 	private static final String ADDED_SUBFOLDER_REF_DATA = "integrationTest/DbRepositoryTestData/AddedSubFolderToRootFolderRefData.xml";
 //	private static final String DELETED_ROOT_REF_DATA = "integrationTest/DbRepositoryTestData/DeletedRootFolderRefData.xml";
 	private static final String CLONED_ROOTFOLDER_REF_DATA = "integrationTest/DbRepositoryTestData/ClonedRootFolderRefData.xml";
-	
-	
-	
 	private static final String SUB_FOLDER_NAME = "subfolder5" ;
+	private static final Long EXPECTED_REPO_ID = 100001L;
 	
 	
 	
+	@Test
+	public void testLoadRootFolder () throws Exception 
+	{
+		doSetup() ;
+		Query rootFolderGetter = getSession().createQuery ( "From HibRootFolder where id='100001'") ;
+		
+		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
+		HibRepository actualRepository = dbRootFolder.getRepository();
+		Long actualRepoId = actualRepository.getId(); 
+		getSession().getTransaction().commit() ;
+		
+		assertNotNull("has repository", actualRepository);
+		assertEquals("expected repository", EXPECTED_REPO_ID, actualRepoId);
+		
+	}
+
 	@Test
 	public void testAddFoldersToRootFolder () throws Exception 
 	{

@@ -1,18 +1,20 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
+import org.pathwayeditor.businessobjects.repository.ListenableFolder;
+import org.pathwayeditor.businessobjects.repository.IFolderContentChangeEvent.ChangeType;
 
-public abstract class HibFolder implements Serializable, IFolder, IPropertyChangeSupport {
+public abstract class HibFolder implements Serializable, IFolder {
 	private static final long serialVersionUID = 8668639813872187460L;
 	public static final String ILLEGAL_SUBFOLDERNAME = "Subfolder names must be unique and cannot be null or contain a slashdot";
 	public static final String ILLEGAL_SUBFOLDER = "Subfolder cannot be added";
@@ -24,14 +26,13 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	private Set<HibSubFolder> subFolders = new HashSet<HibSubFolder>(0);
 	private HibRepository repository;
 	private int iNode;
-	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
+	private final ListenableFolder listenable = new ListenableFolder();
 
 	/**
 	 * Constructor should only be used by hiberate.
 	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
 	 */
 	protected HibFolder() {
-		listenerManager = new PropertyChangeSupport(this);
 	}
 	
 	protected HibFolder(HibRepository repository){
@@ -40,20 +41,9 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		this.iNode = repository.getINodeCounter().nextIndex();
 	}
 	
-	public void addPropertyChangeListener(PropertyChangeListener listener){
-		listenerManager.addPropertyChangeListener(listener);
-	}
-	
-	public void firePropertyChange(String property,Object oldValue,Object newValue){
-		listenerManager.firePropertyChange(property, oldValue, newValue);
-	}
-	
-	public void removePropertyChangeListener(PropertyChangeListener listener){
-		listenerManager.removePropertyChangeListener(listener);
-	}
-
 	protected HibFolder(HibRepository repository, HibFolder other) {
 		this.repository = repository;
+		this.iNode = repository.getINodeCounter().nextIndex();
 		for (HibMap diagram : other.getMapDiagrams()) {
 			this.hibMaps.add(new HibMap(this, diagram));
 		}
@@ -323,6 +313,32 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return iscontained;
 	}
 
+	public boolean containsMap(String newMapName){
+		boolean retVal = false;
+		if(newMapName != null){
+			for(IMap map : this.hibMaps){
+				if(map.getName().equals(newMapName)){
+					retVal = true;
+					break;
+				}
+			}
+		}
+		return retVal;
+	}
+	
+	public boolean containsSubfolder(String newFolderName){
+		boolean retVal = false;
+		if(newFolderName != null){
+			for(ISubFolder folder : this.subFolders){
+				if(folder.getName().equals(newFolderName)){
+					retVal = true;
+					break;
+				}
+			}
+		}
+		return retVal;
+	}
+	
 	public boolean canCopyMap(IMap origMap){
 		return origMap != null && !this.containsMap(origMap) && canUseMapName(origMap.getName());
 	}
@@ -338,6 +354,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 
 		HibMap map = new HibMap(this, (HibMap) origMap);
 		hibMaps.add(map);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, map, this);
 		return map;
 	}
 
@@ -351,6 +368,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDER);
 		HibSubFolder copy = new HibSubFolder(this, (HibSubFolder) origSubfolder);
 		addSubFolder(copy);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, copy, this);
 		return copy;
 	}
 
@@ -364,6 +382,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 		HibMap map = new HibMap(this, newMapName);
 		hibMaps.add(map);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, map, this);
 		return map;
 	}
 
@@ -377,6 +396,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
 		HibSubFolder folder = new HibSubFolder(this, newSubfolderName);
 		subFolders.add(folder);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, folder, this);
 		return folder;
 	}
 
@@ -402,10 +422,11 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		if (canMoveMap(newMap) == false)
 			throw new IllegalArgumentException(ILLEGAL_MAPNAME);
 
+		IFolder oldParent = newMap.getOwner();
 		HibMap m = (HibMap) newMap;
 		m.changeFolder(this);
-//		HibMap copy = new HibMap(this,m, true);
-//		copy.changeFolder(this);
+		this.listenable.notifyDescendentChange(ChangeType.REMOVED, null, oldParent);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, newMap, this);
 		return m;
 	}
 
@@ -421,8 +442,11 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 //		addSubFolder((HibSubFolder) copy);
 //		subFolder.getParent().removeSubfolder(subFolder);
 //		return (ISubFolder) copy;
+		IFolder oldParent = subFolder.getParent();
 		HibSubFolder hibSubFolder = (HibSubFolder)subFolder;
 		hibSubFolder.changeParentFolder(this);
+		this.listenable.notifyDescendentChange(ChangeType.REMOVED, null, oldParent);
+		this.listenable.notifyDescendentChange(ChangeType.ADDED, subFolder, this);
 		return hibSubFolder;
 	}
 
@@ -462,12 +486,14 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		HibSubFolder hibSubFolder = (HibSubFolder) subFolder; 
 		removeHibSubFolder(hibSubFolder);
 		hibSubFolder.changeRepository(null);
+		this.listenable.notifyDescendentChange(ChangeType.REMOVED, null, this);
 	}
 	
 	public void removeMap(IMap map){
 		HibMap hibMap = (HibMap) map; 
 		removeMapDiagram(hibMap);
 		hibMap.changeRepository(null);
+		this.listenable.notifyDescendentChange(ChangeType.REMOVED, null, this);
 	}
 
 	/*
@@ -478,15 +504,8 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	 */
 	public void renameMap(IMap map, String newMapName) {
 		if (canUseMapName(newMapName)) {
-			HibMap m = (HibMap) map;// map needs to be
-			// explicitly removed from
-			// its owning collection and
-			// added back after name
-			// change
-			hibMaps.remove(m); // order is important - rename of map
-			// changes equals!
+			HibMap m = (HibMap) map;
 			m.setName(newMapName);
-			hibMaps.add(m);
 		} else
 			throw new IllegalArgumentException();
 	}
@@ -500,21 +519,7 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 	public void renameSubfolder(ISubFolder subFolder, String newFolderName) {
 		if (!canRenameSubfolder(subFolder, newFolderName))
 			throw new IllegalArgumentException(ILLEGAL_SUBFOLDERNAME);
-		((HibSubFolder) subFolder).setName(newFolderName); // this step is
-		// necessary as
-		// Hibernate
-		// does not see
-		// the subFolder
-		// as = any
-		// object in
-		// this
-		subFolders.remove((HibSubFolder) subFolder); // folders
-		// collection of
-		// subfolders - so
-		// changes in the
-		// name are not
-		// propogated.
-		subFolders.add((HibSubFolder) subFolder);
+		((HibSubFolder) subFolder).setName(newFolderName);
 	}
 
 	/*
@@ -530,4 +535,27 @@ public abstract class HibFolder implements Serializable, IFolder, IPropertyChang
 		return this.subFolders.size();
 	}
 	
+	protected final ListenableFolder getListenable(){
+		return this.listenable;
+	}
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public final void addChangeListener(IRepositoryItemChangeListener changeListener) {
+		this.listenable.addListener(changeListener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getChangeListeners()
+	 */
+	public final List<IRepositoryItemChangeListener> getChangeListeners() {
+		return this.listenable.exportListenerList();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public final void removeChangeListener(IRepositoryItemChangeListener changeListener) {
+		this.listenable.removeListener(changeListener);
+	}
 }

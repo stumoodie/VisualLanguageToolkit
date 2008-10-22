@@ -1,6 +1,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
@@ -14,6 +15,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.repository.IFolderContentChangeEvent;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent;
+import org.pathwayeditor.businessobjects.repository.IRootFolder;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -29,23 +34,48 @@ public class HibRootFolderTest {
 	}};
 
 	
-	private HibRootFolder testRootFolder1 = new HibRootFolder();
-	private HibRootFolder testRootFolder2 = new HibRootFolder();
+	private HibRootFolder testRootFolder1;
+	private HibRootFolder testRootFolder2;
+	private boolean changeDetected = false;
 	
 	private static final String REPOSITORY_NAME = "repositoryName" ;
-	
 	private static final int SUBFOLDERS = 1 ;
 	private static final int MAP_DIAGRAMS = 1 ;
+	private static final int BUILD_NUM = 1000;
+	private static final String REPO_DESCN = "repo desciption";
+	private static final String EXPECTED_SUBFOLDER_NAME = "subfolderName";
+	private HibRepository repo = null;
 	
 	@Before
 	public void setUp() throws Exception {
-
+		this.repo = new HibRepository(REPOSITORY_NAME, REPO_DESCN, BUILD_NUM);
+		testRootFolder1 = repo.getRootFolder();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 	
+	@Test
+	public void testCreateSubfolderListener(){
+		IRootFolder actualRootFolder = repo.getRootFolder();
+		this.changeDetected = false;
+		actualRootFolder.addChangeListener(new IRepositoryItemChangeListener() {
+
+			public void ancestorChange(IFolderContentChangeEvent e) {
+				changeDetected = true;
+			}
+
+			public void propertyChange(IRepositoryPropertyChangeEvent e) {
+
+			}
+
+		});
+		actualRootFolder.createSubfolder(EXPECTED_SUBFOLDER_NAME);
+		assertTrue("listener called", this.changeDetected);
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testCopyConstructor () throws Exception
 	{
@@ -61,6 +91,8 @@ public class HibRootFolderTest {
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockBORootFolder).getMapDiagrams();
 			atLeast(1).of(mockBORootFolder).getSubFolders();
+
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}});
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		this.mockery.assertIsSatisfied();
@@ -106,13 +138,19 @@ public class HibRootFolderTest {
 	{
 	 	
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
-		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
-		HibRootFolder mockBORootFolder = new HibRootFolder();
-		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
+		final IndexCounter indexCounter = new IndexCounter();
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
-			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
-			atLeast(1).of(mockSubfolder).setParentFolder(testRootFolder1); 
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+		}} ) ;
+		HibRootFolder mockBORootFolder = new HibRootFolder(mockRepository);
+		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
+		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
+		mockery.checking( new Expectations () {{
+			allowing(mockSubfolder).setRepository(mockRepository);
+			allowing(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
+			allowing(mockSubfolder).setParentFolder(testRootFolder1); 
+
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}} ) ;
 		testRootFolder1.addSubFolder(mockSubfolder) ;
 		assertEquals ( 1 , testRootFolder1.getSubFolders().size() );
@@ -122,19 +160,21 @@ public class HibRootFolderTest {
 	public void removeSubFolder () throws Exception 
 	{
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
+		final IndexCounter indexCounter = new IndexCounter();
+		mockery.checking( new Expectations () {{
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+		}} ) ;
+		HibRootFolder mockBORootFolder = new HibRootFolder(mockRepository);
+		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
-		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockBORootFolder).getMapDiagrams();
-			atLeast(1).of(mockBORootFolder).getSubFolders();
-		}});
-		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );
-		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockSubfolder).setRepository(mockRepository);
-			atLeast(1).of(mockSubfolder).getParentFolder(); will(returnValue(testRootFolder1)) ;
-			atLeast(1).of(mockSubfolder).setParentFolder(testRootFolder1); 
-			atLeast(1).of(mockSubfolder).setParentFolder(null);
-						
+			allowing(mockSubfolder).setRepository(mockRepository);
+			one(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
+			allowing(mockSubfolder).setParentFolder(testRootFolder1); 
+			allowing(mockSubfolder).setParentFolder(null); 
+			one(mockSubfolder).getParentFolder(); will(returnValue(testRootFolder1)) ;
+
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}} ) ;
 		
 		testRootFolder1.addSubFolder(mockSubfolder) ;
@@ -149,9 +189,12 @@ public class HibRootFolderTest {
 	{
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
+		final IndexCounter indexCounter = new IndexCounter();
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockBORootFolder).getMapDiagrams();
 			atLeast(1).of(mockBORootFolder).getSubFolders();
+
+			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}});
 		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );
 		

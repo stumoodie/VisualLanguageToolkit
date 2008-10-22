@@ -3,6 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.repository;
 
+import java.util.List;
+
 /**
  * An item held in the repository. It is uniquely identified by its inode within the repository.
  * @author smoodie
@@ -37,4 +39,26 @@ public interface IRepositoryItem {
 	 * @return the path, which cannot be null.
 	 */
 	String getPath();
+
+	/**
+	 * Adds a listener to the repository item.
+	 * @param changeListener the listener, which cannot be null.
+	 * @throws IllegalArgumentException if <code>changeListener == null</code>.
+	 */
+	void addChangeListener(IRepositoryItemChangeListener changeListener);
+	
+	/**
+	 * Removes a listener to the repository item. If the listener is not found
+	 * then this is ignored.
+	 * @param changeListener the listener, which cannot be null.
+	 * @throws IllegalArgumentException if <code>changeListener == null</code>.
+	 */
+	void removeChangeListener(IRepositoryItemChangeListener changeListener);
+	
+	/**
+	 * Gets a list of listeners added to this repository item. This will be
+	 * empty if there are none.
+	 * @return the list of listeners.
+	 */
+	List<IRepositoryItemChangeListener> getChangeListeners();
 }

@@ -15,7 +15,7 @@
 			</key>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
 		</set>
-		<many-to-one name="repository"  class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+		<many-to-one name="repository"  cascade="all" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 			<column name="repository_id" not-null="false" />
 		</many-to-one>
 		<set name="subFolders" inverse="true"

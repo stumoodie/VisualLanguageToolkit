@@ -24,5 +24,13 @@
 			<column name="last_edge_index" not-null="true"/>
 		</property>
 		
+        <!-- set name="edges" inverse="true" cascade="all,delete-orphan">
+        	<key column="model_id" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge"/> 
+        </set>
+        <set name="nodes" inverse="true" cascade="all,delete-orphan">
+        	<key column="model_id" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/> 
+        </set-->
 	</class>
 </hibernate-mapping>

@@ -33,4 +33,9 @@
         	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap"/> 
         </set>
     </class>
+    
+	<query name="loadRepository"><![CDATA[
+		from HibRepository as r left outer join fetch r.rootFolder where r.name = :name
+    ]]></query>
+    
 </hibernate-mapping>

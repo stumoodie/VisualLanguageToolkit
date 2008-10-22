@@ -2,6 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent.PropertyType;
 
 
 public class HibSubFolder extends HibFolder implements ISubFolder {
@@ -31,9 +32,9 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 
 	public HibSubFolder(HibFolder newParent, HibSubFolder other) {
 		super(newParent.getRepository(), other);
-		setRepository(newParent.getRepository());
-		setMapDiagramRepositories();
-		setSubFolderRepositoriesAndMapDiagramRepositories();
+//		setRepository(newParent.getRepository());
+//		setMapDiagramRepositories();
+//		setSubFolderRepositoriesAndMapDiagramRepositories();
 		this.parentFolder = newParent;
 		this.name = other.name;
 	}
@@ -48,26 +49,26 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 //	}
 	
 
-	/**
-	 * 
-	 */
-	private void setMapDiagramRepositories() {
-		for(HibMap mapDiag: getMapDiagrams()){
-			mapDiag.setRepository(getRepository());
-		}
-	}
+//	/**
+//	 * 
+//	 */
+//	private void setMapDiagramRepositories() {
+//		for(HibMap mapDiag: getMapDiagrams()){
+//			mapDiag.setRepository(getRepository());
+//		}
+//	}
 
-	/**
-	 * 
-	 */
-	private void setSubFolderRepositoriesAndMapDiagramRepositories() {
-		for (HibSubFolder sub: getSubFolders()){
-			sub.setRepository(getRepository());
-			for (HibMap d: sub.getMapDiagrams())
-				d.setRepository(getRepository());
-			sub.setSubFolderRepositoriesAndMapDiagramRepositories();
-		}
-	}
+//	/**
+//	 * 
+//	 */
+//	private void setSubFolderRepositoriesAndMapDiagramRepositories() {
+//		for (HibSubFolder sub: getSubFolders()){
+//			sub.setRepository(getRepository());
+//			for (HibMap d: sub.getMapDiagrams())
+//				d.setRepository(getRepository());
+//			sub.setSubFolderRepositoriesAndMapDiagramRepositories();
+//		}
+//	}
 
 	public HibFolder getParentFolder() {
 		return this.parentFolder;
@@ -84,7 +85,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 	public void setName(String name) {
 		String oldname=this.name;
 		this.name = name;
-		firePropertyChange(FOLDER_RENAME_EVENT, oldname, name);
+		this.getListenable().notifyProperyChange(PropertyType.NAME, oldname, name);
 	}
 
 	public void changeParentFolder(HibFolder newParentFolder) {
@@ -156,7 +157,9 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 	}
 
 	public void setDescription(String description) {
+		String oldValue = this.description;
 		this.description = description;
+		this.getListenable().notifyProperyChange(PropertyType.DESCRIPTION, oldValue, this.description);
 	}
 	
 	public boolean isDescendent(ISubFolder childFolder){
@@ -190,4 +193,5 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 		return origSubFolder != null && !origSubFolder.getParent().equals(this) && this.canUseSubfolderName(origSubFolder.getName())
 		&& !origSubFolder.isDescendent(this);
 	}
+
 }

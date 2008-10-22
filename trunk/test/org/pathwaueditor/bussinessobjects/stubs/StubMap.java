@@ -3,9 +3,12 @@
  */
 package org.pathwaueditor.bussinessobjects.stubs;
 
+import java.util.List;
+
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
 
 /**
  * @author smoodie
@@ -67,6 +70,31 @@ public class StubMap implements IMap {
 	public String getPath() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public void addChangeListener(IRepositoryItemChangeListener changeListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getChangeListeners()
+	 */
+	public List<IRepositoryItemChangeListener> getChangeListeners() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public void removeChangeListener(
+			IRepositoryItemChangeListener changeListener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

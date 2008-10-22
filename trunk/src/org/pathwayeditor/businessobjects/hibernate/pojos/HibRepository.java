@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent.PropertyType;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -30,6 +36,7 @@ public class HibRepository implements Serializable, IRepository {
 	private IndexCounter iNodeCounter;
 	private Set<HibFolder> folders;
 	private Set<HibMap> maps;
+	private final List<IRepositoryChangeListener> listeners = new CopyOnWriteArrayList<IRepositoryChangeListener>();
      
 	/**
 	 * Constructor should only be used by hiberate.
@@ -89,7 +96,9 @@ public class HibRepository implements Serializable, IRepository {
 	}
 
 	public void setName(String name) {
+		String oldValue = this.name;
 		this.name = name;
+		this.notifyPropertyChangeEvent(PropertyType.NAME, oldValue, this.name);
 	}
 
 	public String getDescription() {
@@ -97,7 +106,9 @@ public class HibRepository implements Serializable, IRepository {
 	}
 
 	public void setDescription(String description) {
+		String oldValue = this.description;
 		this.description = description;
+		this.notifyPropertyChangeEvent(PropertyType.DESCRIPTION, oldValue, this.description);
 	}
 
 	public HibRootFolder getRootFolder() {
@@ -169,27 +180,29 @@ public class HibRepository implements Serializable, IRepository {
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getFolderByPath(java.lang.String)
 	 */
 	public IFolder getFolderByPath(String path) {
-	     if (!pathExists(path))
+		IRepositoryItem repoItem = fetchItem(rootFolder, path);
+		if (repoItem == null || !(repoItem instanceof IFolder))
 	    	 throw new IllegalArgumentException(PATH_DOES_NOT_EXIST);
-	     return fetchFolder(rootFolder,path);
+		
+	     return (IFolder)repoItem;
 	}
 
-	/**
-	 * @param path
-	 * @return
-	 */
-	private IFolder fetchFolder(HibFolder folder,String path) {
-		if(folder.getPath().equals(path))
-			return folder;
-		Set<HibSubFolder>subs = folder.getSubFolders();
-		for (HibSubFolder sub:subs){
-			IFolder target =fetchFolder(sub, path); 
-			if(target!=null){
-				return target;
-			}
-		}
-		return null;
-	}
+//	/**
+//	 * @param path
+//	 * @return
+//	 */
+//	private IFolder fetchFolder(HibFolder folder,String path) {
+//		if(folder.getPath().equals(path))
+//			return folder;
+//		Set<HibSubFolder>subs = folder.getSubFolders();
+//		for (HibSubFolder sub:subs){
+//			IFolder target =fetchFolder(sub, path); 
+//			if(target!=null){
+//				return target;
+//			}
+//		}
+//		return null;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getFoldersByName(java.lang.String)
@@ -216,9 +229,11 @@ public class HibRepository implements Serializable, IRepository {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#pathExists(java.lang.String)
 	 */
 	public boolean pathExists(String path) {
-		if(fetchFolder(rootFolder,path)==null)
-			return false;
-		return true;
+		boolean retVal = false;
+		if(path != null){
+			retVal = fetchItem(rootFolder,path) != null; 
+		}
+		return retVal;
 	}
 
 	/**
@@ -247,5 +262,84 @@ public class HibRepository implements Serializable, IRepository {
 	 */
 	void setMaps(Set<HibMap> maps) {
 		this.maps = maps;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener)
+	 */
+	public void addChangeListener(IRepositoryChangeListener listener) {
+		this.listeners.add(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getListeners()
+	 */
+	public List<IRepositoryChangeListener> getListeners() {
+		return new ArrayList<IRepositoryChangeListener>(this.listeners);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener)
+	 */
+	public void removeChangeListener(IRepositoryChangeListener listener) {
+		this.listeners.remove(listener);
+	}
+	
+	private void notifyPropertyChangeEvent(final IRepositoryPropertyChangeEvent.PropertyType type, final Object oldValue, final String newValue){
+		for(IRepositoryChangeListener listener : this.listeners){
+			IRepositoryPropertyChangeEvent e = new IRepositoryPropertyChangeEvent(){
+
+				public Object getNewValue() {
+					return newValue;
+				}
+
+				public Object getOldValue() {
+					return oldValue;
+				}
+
+				public PropertyType getPropertyName() {
+					return type;
+				}
+			};
+			listener.propertyChange(e);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#findRepositoryItemByPath(java.lang.String)
+	 */
+	public IRepositoryItem findRepositoryItemByPath(String path) {
+		IRepositoryItem retVal = null;
+		if(path != null){
+			retVal = fetchItem(rootFolder, path);
+		}
+		return retVal;
+	}
+
+	/**
+	 * @param path
+	 * @return
+	 */
+	private IRepositoryItem fetchItem(IFolder folder, String path) {
+		IRepositoryItem repoItem = null;
+		if(folder.getPath().equals(path)){
+			repoItem = folder;
+		}
+		else{
+			Iterator<IMap> mapIter = folder.getMapIterator();
+			while(mapIter.hasNext() && repoItem == null){
+				IMap map = mapIter.next();
+				if(map.getPath().equals(path)){
+					repoItem = map;
+				}
+			}
+			if(repoItem == null){
+				Iterator<ISubFolder> iter = folder.getSubFolderIterator();
+				while(iter.hasNext() && repoItem == null){
+					repoItem = fetchItem(iter.next(), path);
+				}
+			}
+		}
+		return repoItem;
 	}
 }

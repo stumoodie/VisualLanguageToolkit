@@ -2,9 +2,7 @@ package org.pathwayeditor.businessobjects.repository;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyChangeSupport;
-
-public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
+public interface IFolder extends IRepositoryItem {
 	/**
 	 * @return the path to this folder in the folder tree, starting from the root folder which has the path '/'; calling this provides a string which can be
 	 *  used by HibRepository's getFolderByPath() method  to return the given folder. Paths are NOT case sensitive.
@@ -42,6 +40,13 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * @return true of the subfolder is contained here, false otherwise.
 	 */
 	boolean containsSubfolder(ISubFolder subFolder);
+	
+	/**
+	 * Tests if a subfolder with this name is contained in this folder.
+	 * @param subFolderName the subfolder name to test, can be null.
+	 * @return true if a subfolder with this name is contained in this folder, false otherwise.
+	 */
+	boolean containsSubfolder(String subFolderName);
 	
 	/**
 	 * Tests if the <code>subfolder</code> is a descendent of this folder.     
@@ -224,6 +229,13 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * @return True if the map is contained in this folder, false otherwise.
 	 */
 	boolean containsMap(IMap newMap);
+
+	/**
+	 * Tests if a map with this name is contained by this folder.
+	 * @param newMapName The map name to test, which can be null.
+	 * @return True if a map with this name is contained in this folder, false otherwise.
+	 */
+	boolean containsMap(String newMapName);
 
 	/**
 	 * Tests of a map can be renamed to the new name. This requires the new name

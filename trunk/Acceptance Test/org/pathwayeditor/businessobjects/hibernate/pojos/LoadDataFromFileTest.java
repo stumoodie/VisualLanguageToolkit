@@ -332,7 +332,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		rootFolder = repository.getRootFolder() ;
 		
-		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
+//		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
 		
 		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
 		subFolder2 = (ISubFolder)repository.getFolderByPath( SUBFOLDER2_PATH) ;

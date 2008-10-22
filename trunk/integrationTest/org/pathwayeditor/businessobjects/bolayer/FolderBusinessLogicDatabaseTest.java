@@ -18,8 +18,11 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IFolder;
+import org.pathwayeditor.businessobjects.repository.IFolderContentChangeEvent;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.testutils.GenericTester;
@@ -32,8 +35,59 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 
 	private static final String JIMMY_KRANKIE = "JimmyKrankie";
 	private static final String TEST_REPO_NAME = "repo name";
+	private static final int TEST_ROOT_INODE = 1;
+	private static final int EXPECTED_NUM_ROOT_SUBFOLDERS = 2;
 	private IRepository rep;
+	private boolean changeDetected;
 
+	@Test
+	public void testRootFolderHasRepoSet(){
+		IRepository actualRepo = rep;
+		assertEquals("expected name", TEST_REPO_NAME, actualRepo.getName());
+		IRootFolder actualRoot = actualRepo.getRootFolder();
+		assertEquals("root id", TEST_ROOT_INODE, actualRoot.getINode());
+		assertNotNull("has repository set", actualRoot.getRepository());
+		assertEquals("has correct repository", actualRepo, actualRoot.getRepository());
+		assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS, actualRoot.getNumSubFolders());
+	}
+	
+	@Test
+	public void testSyncroniseAfterAddingSubfolderToRoot() throws PersistenceManagerNotOpenException{
+		{
+			IRootFolder actualRootFolder = rep.getRootFolder();
+			actualRootFolder.createSubfolder(JIMMY_KRANKIE);
+			this.getBusinessObjectFactory().synchroniseRepository();
+		}
+		{
+			IRepository actualRepo = rep;
+			assertEquals("expected name", TEST_REPO_NAME, actualRepo.getName());
+			IRootFolder actualRoot = actualRepo.getRootFolder();
+			assertEquals("root id", TEST_ROOT_INODE, actualRoot.getINode());
+			assertNotNull("has repository set", actualRoot.getRepository());
+			assertEquals("has correct repository", actualRepo, actualRoot.getRepository());
+			assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS+1, actualRoot.getNumSubFolders());
+			assertTrue("has new subfolder", actualRepo.pathExists("/" + JIMMY_KRANKIE + "/"));
+		}
+	}
+	
+	@Test
+	public void testAddSubfolderToRootFolderListener() throws PersistenceManagerNotOpenException {
+		IRootFolder actualRootFolder = rep.getRootFolder();
+		this.changeDetected = false;
+		actualRootFolder.addChangeListener(new IRepositoryItemChangeListener() {
+
+			public void ancestorChange(IFolderContentChangeEvent e) {
+				changeDetected = true;
+			}
+
+			public void propertyChange(IRepositoryPropertyChangeEvent e) {
+			}
+
+		});
+		actualRootFolder.createSubfolder(JIMMY_KRANKIE);
+		assertTrue("listener called", this.changeDetected);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testCreateSubFolderSetsName() throws PersistenceManagerException {

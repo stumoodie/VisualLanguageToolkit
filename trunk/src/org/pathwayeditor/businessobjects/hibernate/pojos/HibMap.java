@@ -1,13 +1,15 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
+import java.util.List;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
+import org.pathwayeditor.businessobjects.repository.ListenableMap;
+import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent.PropertyType;
 
-public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
+public class HibMap implements IMap, Serializable {
 	private static final long serialVersionUID = -7566323206185334088L;
 
 	private Long id;
@@ -16,7 +18,7 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	private String description = "";
 	private HibRepository repository;
 	private int iNode;
-	private PropertyChangeSupport listenerManager; // stores all registered listeners for this class
+	private final ListenableMap listenable = new ListenableMap();
 
 	
 	/**
@@ -24,7 +26,6 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
 	 */
 	HibMap() {
-		listenerManager = new PropertyChangeSupport(this);
 	}
 
 	public HibMap(HibFolder hibFolder, String name) {
@@ -33,7 +34,6 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		this.name = name;
 		this.repository = hibFolder.getRepository();
 		this.iNode = this.repository.getINodeCounter().nextIndex();
-		listenerManager = new PropertyChangeSupport(this);
 	}
 
 	public HibMap(HibFolder newParent, HibMap other) {
@@ -48,19 +48,6 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		this.repository = newParent.getRepository();
 		if(isCompleteCopy)
 			this.iNode=other.iNode;
-		listenerManager = new PropertyChangeSupport(this);
-	}
-	
-	public void addPropertyChangeListener(PropertyChangeListener listener){
-		listenerManager.addPropertyChangeListener(listener);
-	}
-	
-	public void firePropertyChange(String property,Object oldValue,Object newValue){
-		listenerManager.firePropertyChange(property, oldValue, newValue);
-	}
-	
-	public void removePropertyChangeListener(PropertyChangeListener listener){
-		listenerManager.removePropertyChangeListener(listener);
 	}
 	
 	public Long getId() {
@@ -109,7 +96,9 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	}
 
 	public void setName(String name) {
+		String oldName = this.name;
 		this.name = name;
+		this.listenable.notifyProperyChange(PropertyType.NAME, oldName, this.name);
 	}
 
 	public String getDescription() {
@@ -117,7 +106,9 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 	}
 
 	public void setDescription(String description) {
+		String oldValue = this.description;
 		this.description = description;
+		this.listenable.notifyProperyChange(PropertyType.DESCRIPTION, oldValue, this.description);
 	}
 
 	/*
@@ -200,5 +191,27 @@ public class HibMap implements IMap, Serializable, IPropertyChangeSupport {
 		StringBuilder pathBuilder = new StringBuilder(this.getOwner().getPath());
 		pathBuilder.append(name);
 		return pathBuilder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public void addChangeListener(IRepositoryItemChangeListener changeListener) {
+		this.listenable.addListener(changeListener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getChangeListeners()
+	 */
+	public List<IRepositoryItemChangeListener> getChangeListeners() {
+		return this.listenable.exportListenerList();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
+	 */
+	public void removeChangeListener(
+			IRepositoryItemChangeListener changeListener) {
+		this.listenable.removeListener(changeListener);
 	}
 }

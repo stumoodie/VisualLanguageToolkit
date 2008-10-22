@@ -94,6 +94,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 
 	void setEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> value) {
 		this.edges = value;
+		this.createEdgeSet(this.edges);
 	}
 
 	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getEdges() {

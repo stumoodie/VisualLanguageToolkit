@@ -42,6 +42,13 @@ public interface IRepository {
 	IFolder getFolderByPath(String path);
 
 	/**
+	 * Finds the repository item that matches the given path. 
+	 * @param path the path in the repository to search for, which can be null.
+	 * @return the repository item that matches the path, or null if it cannot be found.
+	 */
+	IRepositoryItem findRepositoryItemByPath(String path);
+	
+	/**
 	 * @param path
 	 *            a path to look for in the subfolder tree of this folder
 	 * @return true if the path exists, false if it does not
@@ -91,4 +98,10 @@ public interface IRepository {
 	 *         otherwise.
 	 */
 	boolean equals(Object other);
+	
+	void addChangeListener(IRepositoryChangeListener listener);
+	
+	void removeChangeListener(IRepositoryChangeListener listener);
+	
+	List<IRepositoryChangeListener> getListeners();
 }

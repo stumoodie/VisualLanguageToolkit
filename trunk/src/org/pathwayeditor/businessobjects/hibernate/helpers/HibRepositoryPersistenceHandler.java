@@ -48,16 +48,20 @@ public class HibRepositoryPersistenceHandler implements	IRepositoryPersistenceHa
 		this.rep = null;
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
-		HibRepository hibRep = (HibRepository) s.createQuery(
-				"from HibRepository r  where r.name = :name")
+		HibRepository hibRep = (HibRepository) s.getNamedQuery("loadRepository")
 				.setString("name", this.repoName).uniqueResult();
+		initialiseRepository(hibRep);
+		s.getTransaction().commit();
+		rep = hibRep;
+	}
+	
+	private void initialiseRepository(HibRepository hibRep){
 		Hibernate.initialize(hibRep);
 		Hibernate.initialize(hibRep.getMaps());
 		Hibernate.initialize(hibRep.getFolders());
 		HibRootFolder root = hibRep.getRootFolder();
+//		Hibernate.initialize(root);
 		loadSubFoldersAndMaps(root);
-		s.getTransaction().commit();
-		rep = hibRep;
 	}
 	
 	/**
@@ -90,7 +94,9 @@ public class HibRepositoryPersistenceHandler implements	IRepositoryPersistenceHa
 	public void synchroniseRepository() {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
+		HibRepository hibRep = (HibRepository)this.rep; 
 		s.saveOrUpdate(this.rep);
+		initialiseRepository(hibRep);
 		s.getTransaction().commit();
 	}
 }
