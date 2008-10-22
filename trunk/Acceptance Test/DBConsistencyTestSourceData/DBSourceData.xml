@@ -227,7 +227,7 @@
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
-				<value>8</value>
+				<value>18</value>
 				<value>8</value>
 			</row>
 	</table>
@@ -513,52 +513,52 @@
 			<value>100001</value>
 			<value>100003</value>
 			<value>100002</value>
-			<value>100001</value>
+			<value>100002</value>
 		</row>
 		<row>
 			<value>100003</value><!-- CONNECTS 2 =>6 -->
 			<value>100001</value>
 			<value>2</value>
-			<value>100003</value>
+			<value>100001</value>
 			<value>100003</value>
 			<value>100007</value>
-			<value>100001</value>
+			<value>100003</value>
 		</row>
 		<row>
 			<value>100004</value><!-- CONNECTS 2 =>4 -->
 			<value>100001</value>
 			<value>3</value>
-			<value>100003</value>
+			<value>100001</value>
 			<value>100003</value>
 			<value>100005</value>
-			<value>100001</value>
+			<value>100004</value>
 		</row>
 		<row>
 			<value>100005</value><!-- CONNECTS 7 =>6 -->
 			<value>100001</value>
 			<value>4</value>
-			<value>100008</value>
+			<value>100003</value>
 			<value>100008</value>
 			<value>100007</value>
-			<value>100001</value>
+			<value>100005</value>
 		</row>
 		<row>
 			<value>100006</value><!-- CONNECTS 6 =>7 -->
 			<value>100001</value>
 			<value>5</value>
-			<value>100007</value>
+			<value>100003</value>
 			<value>100007</value>
 			<value>100008</value>
-			<value>100001</value>
+			<value>100006</value>
 		</row>
 		<row>
 			<value>100007</value><!-- CONNECTS 7 =>3 -->
 			<value>100001</value>
 			<value>6</value>
-			<value>100008</value>
+			<value>100001</value>
 			<value>100008</value>
 			<value>100004</value>
-			<value>100001</value>
+			<value>100007</value>
 		</row>
 		<row>
 			<value>100008</value><!-- CONNECTS 1 =>1 -->
@@ -567,7 +567,7 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100001</value>
+			<value>100008</value>
 		</row>
 		<row>
 			<value>100009</value><!-- CONNECTS 1 =>1 -->
@@ -576,7 +576,7 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100001</value>
+			<value>100009</value>
 		</row>
 	</table>
 	<!-- END OF GRAPH STRUCTURE -->
@@ -999,10 +999,10 @@
 			<value>101</value>
 			<value>101</value>
 			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
 			<value>100001</value>
 			<value>1</value>
 		</row>
@@ -1014,10 +1014,10 @@
 			<value>102</value>
 			<value>102</value>
 			<value>true</value>
-			<value>2</value>
-			<value>2</value>
-			<value>2</value>
-			<value>2</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
 			<value>100001</value>
 			<value>21</value>
 		</row>
@@ -1029,10 +1029,10 @@
 			<value>103</value>
 			<value>103</value>
 			<value>true</value>
-			<value>3</value>
-			<value>3</value>
-			<value>3</value>
-			<value>3</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
 			<value>100001</value>
 			<value>3</value>
 		</row>
@@ -1044,10 +1044,10 @@
 			<value>104</value>
 			<value>1040</value>
 			<value>true</value>
-			<value>4</value>
-			<value>4</value>
-			<value>4</value>
-			<value>4</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
 			<value>100001</value>
 			<value>4</value>
 		</row>
@@ -1059,10 +1059,10 @@
 			<value>105</value>
 			<value>105</value>
 			<value>true</value>
-			<value>5</value>
-			<value>5</value>
-			<value>5</value>
-			<value>5</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
 			<value>100001</value>
 			<value>5</value>
 		</row>
@@ -1074,10 +1074,10 @@
 			<value>106</value>
 			<value>106</value>
 			<value>true</value>
-			<value>6</value>
-			<value>6</value>
-			<value>6</value>
-			<value>6</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
 			<value>100001</value>
 			<value>6</value>
 		</row>
@@ -1089,12 +1089,12 @@
 			<value>107</value>
 			<value>107</value>
 			<value>true</value>
-			<value>7</value>
-			<value>7</value>
-			<value>7</value>
-			<value>7</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
 			<value>100001</value>
-			<value>22</value>
+			<value>7</value>
 		</row>
 		<row>
 			<value>100008</value>
@@ -1104,12 +1104,12 @@
 			<value>108</value>
 			<value>108</value>
 			<value>true</value>
-			<value>8</value>
-			<value>8</value>
-			<value>8</value>
-			<value>8</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
 			<value>100001</value>
-			<value>122</value>
+			<value>8</value>
 		</row>
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
@@ -1365,4 +1365,20 @@
 		</row>
 	</table>
 	<!-- END OF DECORATORS -->
+	<!-- BENDPOINTS -->
+	<table name="bendpoint">
+		<column>id</column>
+		<column>link_attribute_id</column>
+		<column>index_pos</column>
+		<column>x_position</column>
+		<column>y_position</column>
+			<row>
+				<value>100001</value>
+				<value>100001</value>
+				<value>1</value>
+				<value>51</value>
+				<value>51</value>
+			</row>
+	</table>
+	<!-- END OF BENDPOINTS -->
 </dataset>

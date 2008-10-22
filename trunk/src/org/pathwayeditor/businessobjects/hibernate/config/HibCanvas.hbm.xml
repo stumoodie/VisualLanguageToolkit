@@ -82,7 +82,7 @@
     		select count(*) from HibCanvas c  where c.mapINode = :inode and c.repository = :repo
         ]]></query>
     <query name="loadCanvas"><![CDATA[
-    		from HibCanvas c  where c.repository = :repo and c.mapINode = :inode
+    		from HibCanvas c inner join fetch c.model m inner join fetch m.rootNode where c.repository = :repo and c.mapINode = :inode
     	]]></query>
     
 </hibernate-mapping>

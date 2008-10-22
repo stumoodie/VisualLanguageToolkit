@@ -12,10 +12,16 @@ import java.util.Iterator;
 
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -62,7 +68,45 @@ public class LoadDataFromFileTest extends GenericTester{
 	private IShapeAttribute shapeAttribute7 ;
 	private IShapeAttribute shapeAttribute8 ;
 	
+	private ILabelNode labelNode1 ;
+	private ILabelNode labelNode2 ;
+	private ILabelNode labelNode3 ;
+	private ILabelNode labelNode4 ;
+	private ILabelNode labelNode5 ;
+	private ILabelNode labelNode6 ;
+	private ILabelNode labelNode7 ;
+	private ILabelNode labelNode8 ;
 	
+	private ILabelAttribute labelAttribute1 ;
+	private ILabelAttribute labelAttribute2 ;
+	private ILabelAttribute labelAttribute3 ;
+	private ILabelAttribute labelAttribute4 ;
+	private ILabelAttribute labelAttribute5 ;
+	private ILabelAttribute labelAttribute6 ;
+	private ILabelAttribute labelAttribute7 ;
+	private ILabelAttribute labelAttribute8 ;
+	
+	private ILinkEdge linkEdge1 ;
+	private ILinkEdge linkEdge2 ;
+	private ILinkEdge linkEdge3;
+	private ILinkEdge linkEdge4 ;
+	private ILinkEdge linkEdge5 ;
+	private ILinkEdge linkEdge6 ;
+	private ILinkEdge linkEdge7 ;
+	private ILinkEdge linkEdge8 ;
+	private ILinkEdge linkEdge9 ;
+	
+	private ILinkAttribute linkAttribute1 ;
+	private ILinkAttribute linkAttribute2 ;
+	private ILinkAttribute linkAttribute3 ;
+	private ILinkAttribute linkAttribute4 ;
+	private ILinkAttribute linkAttribute5 ;
+	private ILinkAttribute linkAttribute6 ;
+	private ILinkAttribute linkAttribute7 ;
+	private ILinkAttribute linkAttribute8 ;
+	private ILinkAttribute linkAttribute9 ;
+	
+	private IBendPoint bendpoint ;
 	
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String ROOT_FOLDER_PATH = "/" ;
@@ -100,6 +144,42 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String SHAPE_ATTR8_DESCR = "descr8" ;
 	private static final String SHAPE_ATTR8_DETAIL_DESCR = "detailed descr8" ;
 	private static final String SHAPE_ATTR8_URL = "http://www.shape8URL.org" ;
+	private static final String LINK_ATTR1_URL = "http://www.HibLink1.org" ;
+	private static final String LINK_ATTR2_URL = "http://www.HibLink2.org" ;
+	private static final String LINK_ATTR3_URL = "http://www.HibLink3.org" ;
+	private static final String LINK_ATTR4_URL = "http://www.HibLink4.org" ;
+	private static final String LINK_ATTR5_URL = "http://www.HibLink5.org" ;
+	private static final String LINK_ATTR6_URL = "http://www.HibLink6.org" ;
+	private static final String LINK_ATTR7_URL = "http://www.HibLink7.org" ;
+	private static final String LINK_ATTR8_URL = "http://www.HibLink8.org" ;
+	private static final String LINK_ATTR9_URL = "http://www.HibLink9.org" ;
+	private static final String LINK_ATTR1_NAME = "link_name1" ;
+	private static final String LINK_ATTR2_NAME = "link_name2" ;
+	private static final String LINK_ATTR3_NAME = "link_name3" ;
+	private static final String LINK_ATTR4_NAME = "link_name4" ;
+	private static final String LINK_ATTR5_NAME = "link_name5" ;
+	private static final String LINK_ATTR6_NAME = "link_name6" ;
+	private static final String LINK_ATTR7_NAME = "link_name7" ;
+	private static final String LINK_ATTR8_NAME = "link_name8" ;
+	private static final String LINK_ATTR9_NAME = "link_name9" ;
+	private static final String LINK_ATTR1_DESCR = "link_descr1" ;
+	private static final String LINK_ATTR2_DESCR = "link_descr2" ;
+	private static final String LINK_ATTR3_DESCR = "link_descr3" ;
+	private static final String LINK_ATTR4_DESCR = "link_descr4" ;
+	private static final String LINK_ATTR5_DESCR = "link_descr5" ;
+	private static final String LINK_ATTR6_DESCR = "link_descr6" ;
+	private static final String LINK_ATTR7_DESCR = "link_descr7" ;
+	private static final String LINK_ATTR8_DESCR = "link_descr8" ;
+	private static final String LINK_ATTR9_DESCR = "link_descr9" ;
+	private static final String LINK_ATTR1_DET_DESCR = "link_detailed_descr1" ;
+	private static final String LINK_ATTR2_DET_DESCR = "link_detailed_descr2" ;
+	private static final String LINK_ATTR3_DET_DESCR = "link_detailed_descr3" ;
+	private static final String LINK_ATTR4_DET_DESCR = "link_detailed_descr4" ;
+	private static final String LINK_ATTR5_DET_DESCR = "link_detailed_descr5" ;
+	private static final String LINK_ATTR6_DET_DESCR = "link_detailed_descr6" ;
+	private static final String LINK_ATTR7_DET_DESCR = "link_detailed_descr7" ;
+	private static final String LINK_ATTR8_DET_DESCR = "link_detailed_descr8" ;
+	private static final String LINK_ATTR9_DET_DESCR = "link_detailed_descr9" ;
 	
 	private static final int NUMBER_OF_SUBFOLDERS_IN_ROOT = 2 ;
 	private static final int NUMBER_OF_MAPS_IN_ROOT = 0 ;
@@ -125,6 +205,14 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int SHAPENODE6_INDEX = 6 ;
 	private static final int SHAPENODE7_INDEX = 7 ;
 	private static final int SHAPENODE8_INDEX = 8 ;
+	private static final int LABELNODE1_INDEX = 9 ;
+	private static final int LABELNODE2_INDEX = 10 ;
+	private static final int LABELNODE3_INDEX = 11 ;
+	private static final int LABELNODE4_INDEX = 12 ;
+	private static final int LABELNODE5_INDEX = 13 ;
+	private static final int LABELNODE6_INDEX = 14 ;
+	private static final int LABELNODE7_INDEX = 15 ;
+	private static final int LABELNODE8_INDEX = 16 ;
 	private static final int NUM_OF_SHAPENODE1_SHAPE_CHILDREN = 2 ;
 	private static final int NUM_OF_SHAPENODE1_LABEL_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE1_LINK_CHILDREN = 0 ;
@@ -173,6 +261,28 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int SHAPE_ATTRIBUTE8_CREATION_SERIAL = 8 ;
 	private static final int SHAPE_ATTRIBUTE8_LINE_WIDTH = 8 ;
 	private static final int SHAPE_ATTRIBUTE8_LINE_PADDING = 8 ;
+	private static final int LINK_EDGE1_INDEX = 0 ;
+	private static final int LINK_EDGE2_INDEX = 1 ;
+	private static final int LINK_EDGE3_INDEX = 2 ;
+	private static final int LINK_EDGE4_INDEX = 3 ;
+	private static final int LINK_EDGE5_INDEX = 4 ;
+	private static final int LINK_EDGE6_INDEX = 5 ;
+	private static final int LINK_EDGE7_INDEX = 6 ;
+	private static final int LINK_EDGE8_INDEX = 7 ;
+	private static final int LINK_EDGE9_INDEX = 8 ;
+	private static final int LINK_ATTRIBUTE1_SERIAL = 1 ; 
+	private static final int LINK_ATTRIBUTE2_SERIAL = 2 ; 
+	private static final int LINK_ATTRIBUTE3_SERIAL = 3 ; 
+	private static final int LINK_ATTRIBUTE4_SERIAL = 4 ; 
+	private static final int LINK_ATTRIBUTE5_SERIAL = 5 ; 
+	private static final int LINK_ATTRIBUTE6_SERIAL = 6 ; 
+	private static final int LINK_ATTRIBUTE7_SERIAL = 7 ; 
+	private static final int LINK_ATTRIBUTE8_SERIAL = 8 ; 
+	private static final int LINK_ATTRIBUTE9_SERIAL = 9 ; 
+	
+	private static final int NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN = 0 ;
+	private static final int NUM_OF_ANY_LABELNODE_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_ANY_LABELNODE_LINK_CHILDREN = 0 ;
 	
 	private static final RGB RGB_100 = new RGB ( 100 , 100 , 100 ) ;
 	private static final RGB RGB_101 = new RGB ( 101 , 101 , 101 ) ;
@@ -183,6 +293,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final RGB RGB_106 = new RGB ( 106 , 106 , 106 ) ;
 	private static final RGB RGB_107 = new RGB ( 107 , 107 , 107 ) ;
 	private static final RGB RGB_108 = new RGB ( 108 , 108 	, 108 ) ;
+	private static final RGB RGB_109 = new RGB ( 109 , 109 	, 109 ) ;
 	
 	private static final Size SIZE_10 = new Size ( 10 , 10 ) ;
 	private static final Size SIZE_51 = new Size ( 51 , 51 ) ;
@@ -799,6 +910,402 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "0 shapeNodes" , 0 , numOfShapeNodes) ;
 				
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode1AndLabelAttribute1 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode1) ;
+		assertNotNull ("labelNode1 has SubModel" , labelNode1.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode1.getAttribute()) ;
+		
+		assertEquals ( "labelNode1 index" , LABELNODE1_INDEX , labelNode1.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode1.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode1.getParent().getIndex() ) ;
+		assertEquals ( "labelNode1 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode1.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode1 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode1.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode1 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode1.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute1 color" , RGB_101 , labelAttribute1.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute1 position" , LOCATION_51 , labelAttribute1.getLocation()) ;
+		assertEquals ( "labelAttribute1 size" , SIZE_51 , labelAttribute1.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode2AndLabelAttribute2 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode2) ;
+		assertNotNull ("labelNode1 has SubModel" , labelNode2.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode2.getAttribute()) ;
+		
+		assertEquals ( "labelNode2 index" , LABELNODE2_INDEX , labelNode2.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode2.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode2.getParent().getIndex() ) ;
+		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode2.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode2.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode2.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute2 color" , RGB_102 , labelAttribute2.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute2 position" , LOCATION_52 , labelAttribute2.getLocation()) ;
+		assertEquals ( "labelAttribute2 size" , SIZE_52 , labelAttribute2.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode3AndLabelAttribute3 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode3) ;
+		assertNotNull ("labelNode3 has SubModel" , labelNode3.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode3.getAttribute()) ;
+		
+		assertEquals ( "labelNode3 index" , LABELNODE3_INDEX , labelNode3.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode3.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode3.getParent().getIndex() ) ;
+		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode3.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode3.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode3.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute2 color" , RGB_103 , labelAttribute3.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute2 position" , LOCATION_53 , labelAttribute3.getLocation()) ;
+		assertEquals ( "labelAttribute2 size" , SIZE_53 , labelAttribute3.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode4AndLabelAttribute4 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode4) ;
+		assertNotNull ("labelNode4 has SubModel" , labelNode4.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode4.getAttribute()) ;
+		
+		assertEquals ( "labelNode4 index" , LABELNODE4_INDEX , labelNode4.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode4.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode4.getParent().getIndex() ) ;
+		assertEquals ( "labelNode4 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode4.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode4 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode4.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode4 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode4.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute4 color" , RGB_104 , labelAttribute4.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute4 position" , LOCATION_54 , labelAttribute4.getLocation()) ;
+		assertEquals ( "labelAttribute4 size" , SIZE_54 , labelAttribute4.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode5AndLabelAttribute5 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode5) ;
+		assertNotNull ("labelNode5 has SubModel" , labelNode5.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode5.getAttribute()) ;
+		
+		assertEquals ( "labelNode5 index" , LABELNODE5_INDEX , labelNode5.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode5.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode5.getParent().getIndex() ) ;
+		assertEquals ( "labelNode5 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode5.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode5 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode5.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode5 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode5.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute5 color" , RGB_105 , labelAttribute5.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute5 position" , LOCATION_55 , labelAttribute5.getLocation()) ;
+		assertEquals ( "labelAttribute5 size" , SIZE_55 , labelAttribute5.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode6AndLabelAttribute6 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode6) ;
+		assertNotNull ("labelNode6 has SubModel" , labelNode6.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode6.getAttribute()) ;
+		
+		assertEquals ( "labelNode6 index" , LABELNODE6_INDEX , labelNode6.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode6.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode6.getParent().getIndex() ) ;
+		assertEquals ( "labelNode6 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode6.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode6 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode6.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode6 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode6.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute6 color" , RGB_106 , labelAttribute6.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute6 position" , LOCATION_56 , labelAttribute6.getLocation()) ;
+		assertEquals ( "labelAttribute6 size" , SIZE_56 , labelAttribute6.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode7AndLabelAttribute7 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode7) ;
+		assertNotNull ("labelNode7 has SubModel" , labelNode7.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode7.getAttribute()) ;
+		
+		assertEquals ( "labelNode7 index" , LABELNODE7_INDEX , labelNode7.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode7.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode7.getParent().getIndex() ) ;
+		assertEquals ( "labelNode7 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode7.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode7 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode7.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode7 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode7.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute7 color" , RGB_107 , labelAttribute7.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute7 position" , LOCATION_57 , labelAttribute7.getLocation()) ;
+		assertEquals ( "labelAttribute7 size" , SIZE_57 , labelAttribute7.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLabelNode8AndLabelAttribute8 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , labelNode8) ;
+		assertNotNull ("labelNode3 has SubModel" , labelNode8.getSubCanvas()) ;
+		assertNotNull ( "has attribute" , labelNode8.getAttribute()) ;
+		
+		assertEquals ( "labelNode8 index" , LABELNODE8_INDEX , labelNode8.getIndex() ) ;
+		assertEquals ( "model check" , dbModel , labelNode8.getModel()) ;
+		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode8.getParent().getIndex() ) ;
+		assertEquals ( "labelNode8 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode8.getSubCanvas().getNumShapes()) ;
+		assertEquals ( "labelNode8 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode8.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "labelNode8 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode8.getSubCanvas().getNumLinks()) ;
+		
+		assertEquals ( "labelAttribute8 color" , RGB_108 , labelAttribute8.getBackgroundColor() ) ;
+		assertEquals ( "labelAttribute8 position" , LOCATION_58 , labelAttribute8.getLocation()) ;
+		assertEquals ( "labelAttribute8 size" , SIZE_58 , labelAttribute8.getSize() ) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge1AndLinkAttribute1 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge1) ;
+		assertNotNull ( "has attribute" , linkEdge1.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE1_INDEX , linkEdge1.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge1.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge1.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode1 , linkEdge1.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode2 , linkEdge1.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute1.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE1_SERIAL , linkAttribute1.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_101 , linkAttribute1.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute1.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute1.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR1_URL , linkAttribute1.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR1_NAME , linkAttribute1.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR1_DET_DESCR , linkAttribute1.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge2AndLinkAttribute2 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge2) ;
+		assertNotNull ( "has attribute" , linkEdge2.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE2_INDEX , linkEdge2.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge2.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge2.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode2 , linkEdge2.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode3 , linkEdge2.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute2.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE2_SERIAL , linkAttribute2.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_102 , linkAttribute2.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute2.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute2.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR2_URL , linkAttribute2.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR2_NAME , linkAttribute2.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR2_DET_DESCR , linkAttribute2.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge3AndLinkAttribute3 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge3) ;
+		assertNotNull ( "has attribute" , linkEdge3.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE3_INDEX , linkEdge3.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge3.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge3.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode2 , linkEdge3.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge3.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute3.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE3_SERIAL , linkAttribute3.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_103 , linkAttribute3.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute3.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute3.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR3_URL , linkAttribute3.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR3_NAME , linkAttribute3.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR3_DET_DESCR , linkAttribute3.getDetailedDescription()) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge4AndLinkAttribute4 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge4) ;
+		assertNotNull ( "has attribute" , linkEdge4.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE4_INDEX , linkEdge4.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge4.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge4.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode2 , linkEdge4.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode4 , linkEdge4.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute4.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE4_SERIAL , linkAttribute4.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_104 , linkAttribute4.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute4.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute4.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR4_URL , linkAttribute4.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR4_NAME , linkAttribute4.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR4_DET_DESCR , linkAttribute4.getDetailedDescription()) ;
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge5AndLinkAttribute5 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge5) ;
+		assertNotNull ( "has attribute" , linkEdge5.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE5_INDEX , linkEdge5.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge5.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge5.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode7 , linkEdge5.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge5.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute5.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE5_SERIAL , linkAttribute5.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_105 , linkAttribute5.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute5.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute5.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR5_URL , linkAttribute5.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR5_NAME , linkAttribute5.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR5_DET_DESCR , linkAttribute5.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge6AndLinkAttribute6 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge6) ;
+		assertNotNull ( "has attribute" , linkEdge6.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE6_INDEX , linkEdge6.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge6.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge6.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode7 , linkEdge6.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge6.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute6.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE6_SERIAL , linkAttribute6.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_106 , linkAttribute6.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute6.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute6.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR6_URL , linkAttribute6.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR6_NAME , linkAttribute6.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR6_DET_DESCR , linkAttribute6.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge7AndLinkAttribute7 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge7) ;
+		assertNotNull ( "has attribute" , linkEdge7.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE7_INDEX , linkEdge7.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge7.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge7.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode7 , linkEdge7.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge7.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute7.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE7_SERIAL , linkAttribute7.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_107 , linkAttribute7.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute7.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute7.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR7_URL , linkAttribute7.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR7_NAME , linkAttribute7.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR7_DET_DESCR , linkAttribute7.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge8AndLinkAttribute8 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge8) ;
+		assertNotNull ( "has attribute" , linkEdge8.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE8_INDEX , linkEdge8.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge8.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge8.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode7 , linkEdge8.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge8.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute8.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE8_SERIAL , linkAttribute8.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_108 , linkAttribute8.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute8.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute8.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR8_URL , linkAttribute8.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR8_NAME , linkAttribute8.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR8_DET_DESCR , linkAttribute8.getDetailedDescription()) ;
+		
+	}
+	
+	@Test
+	public void testCheckIntegrityOfLinkEdge9AndLinkAttribute9 () throws Exception
+	{
+		loadObjects() ;
+		assertNotNull ( "is not Null" , linkEdge9) ;
+		assertNotNull ( "has attribute" , linkEdge9.getAttribute()) ;
+		
+		assertEquals ( "link edge index" , LINK_EDGE9_INDEX , linkEdge9.getIndex()) ;
+		assertEquals ( "model check" , dbModel , linkEdge9.getModel()) ;
+		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge9.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode7 , linkEdge9.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode6 , linkEdge9.getTargetShape() ) ;
+		
+		assertEquals ( "check Canvas" , dbCanvas , linkAttribute9.getCanvas() );
+		assertEquals ( "check creation serial" , LINK_ATTRIBUTE9_SERIAL , linkAttribute9.getCreationSerial()) ;
+		assertEquals ( "check line color" , RGB_109 , linkAttribute9.getLineColor() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute9.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute9.getRouter() ) ;
+		assertEquals ( "check URL" , LINK_ATTR9_URL , linkAttribute9.getUrl()) ;
+		assertEquals ( "check name" , LINK_ATTR9_NAME , linkAttribute9.getName()) ;
+		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
+		assertEquals ( "check detail desc" , LINK_ATTR9_DET_DESCR , linkAttribute9.getDetailedDescription()) ;
+		
+	}
+
+	
+	@Test
+	public void testCheckBendPoint () throws Exception
+	{
+		loadObjects () ;
+		
+		assertNotNull ( "is not null" , bendpoint ) ;
+		
+		assertEquals ( "check Location" , LOCATION_51 , bendpoint.getLocation() ) ;
+		assertEquals ( "check parent" , linkEdge1 , bendpoint.getOwningLink()) ;
+
 	}
 }
 	

@@ -1,0 +1,112 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<!--  START OF FILESYSTEM -->
+<dataset>
+<table name="CompoundNode">
+		<column>id</column>
+		<column>model_id</column>
+		<column>node_index</column>
+		<column>parent_id</column>
+			<row>
+				<value>100001</value><!-- Root Node -->
+				<value>100001</value>
+				<value>0</value>
+				<null/>
+			</row>
+			<row>
+				<value>100002</value><!-- node1 -->
+				<value>100001</value>
+				<value>1</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100003</value><!-- node2 -->
+				<value>100001</value>
+				<value>2</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100004</value><!-- node3 -->
+				<value>100001</value>
+				<value>3</value>
+				<value>100002</value>
+			</row>
+			<row>
+				<value>100005</value><!-- node4 -->
+				<value>100001</value>
+				<value>4</value>
+				<value>100002</value>
+			</row>
+			<row>
+				<value>100006</value><!-- node5 -->
+				<value>100001</value>
+				<value>5</value>
+				<value>100003</value>
+			</row>
+			<row>
+				<value>100007</value><!-- node6 -->
+				<value>100001</value>
+				<value>6</value>
+				<value>100003</value>
+			</row>
+			<row>
+				<value>100008</value><!-- node7 -->
+				<value>100001</value>
+				<value>7</value>
+				<value>100007</value>
+			</row>
+			<row>
+				<value>100009</value><!-- node8 -->
+				<value>100001</value>
+				<value>8</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100010</value><!-- label1 -->
+				<value>100001</value>
+				<value>9</value>
+				<value>100002</value>
+			</row>
+			<row>
+				<value>100011</value><!-- label2 -->
+				<value>100001</value>
+				<value>10</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100012</value><!-- label3 -->
+				<value>100001</value>
+				<value>11</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100013</value><!-- label4 -->
+				<value>100001</value>
+				<value>12</value>
+				<value>100003</value>
+			</row>
+			<row>
+				<value>100014</value><!-- label5 -->
+				<value>100001</value>
+				<value>13</value>
+				<value>100001</value>
+			</row>
+			<row>
+				<value>100015</value><!-- label6 -->
+				<value>100001</value>
+				<value>14</value>
+				<value>100007</value>
+			</row>
+			<row>
+				<value>100016</value><!-- label7 -->
+				<value>100001</value>
+				<value>15</value>
+				<value>100003</value>
+			</row>
+			<row>
+				<value>100017</value><!-- label8 -->
+				<value>100001</value>
+				<value>16</value>
+				<value>100008</value>
+			</row>								
+	</table>
+</dataset>

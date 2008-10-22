@@ -85,7 +85,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		}
 	}
 
-	INodeSet<BaseCompoundNode, BaseCompoundEdge> getChildren() {
+	public INodeSet<BaseCompoundNode, BaseCompoundEdge> getChildren() {
 		return this.children;
 	}
 
@@ -94,7 +94,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		this.createOutEdgeSet(this.outEdges);
 	}
 	
-	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getOutEdges() {
+	public IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getOutEdges() {
 		return this.outEdges;
 	}
 	
@@ -103,7 +103,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		this.createInEdgeSet(this.inEdges);
 	}
 	
-	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getInEdges() {
+	public IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getInEdges() {
 		return this.inEdges;
 	}
 	

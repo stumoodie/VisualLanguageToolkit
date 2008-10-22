@@ -112,6 +112,43 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute {
 	 */
 	void setUrl ( String url) ;
 	
+	/**
+	 * Gets the Name that is related with this link.
+	 * @return the name of the link.
+	 */	
+	String getName () ;
+	
+	/**
+	 * Sets the Name that is related with this link.
+	 * @param newName the new Name
+	 */
+	void setName ( String newName) ;
+	
+	/**
+	 * Gets the Name that is related with this link.
+	 * @return the description of the link.
+	 */	
+	String getDescription () ;
+	
+	/**
+	 * Sets the Description that is related with this link.
+	 * @param newDescription the new Description
+	 */
+	void setDescription ( String newDescription) ;	
+	
+	/**
+	 * Gets the DetailedDescription that is related with this link.
+	 * @return the DetailedDescription of the link.
+	 */	
+	String getDetailedDescription () ;
+	
+	/**
+	 * Sets the DetailedDescription that is related with this link.
+	 * @param DetailedDescription the new DetailedDescription
+	 */
+	void setDetailedDescription ( String DetailedDescription) ;	
+	
+	
 	ILinkEdge getLinkEdge();
 
 	Iterator<IAnnotationProperty> propertyIterator();

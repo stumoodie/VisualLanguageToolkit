@@ -13,6 +13,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackNotationSubsystem;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
@@ -130,6 +131,11 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		while(nodeIter.hasNext()){
 			IDrawingNode node = nodeIter.next();
 			Hibernate.initialize(node.getAttribute());
+			HibCompoundNode hibNode = (HibCompoundNode)node;
+			Hibernate.initialize(hibNode.getChildren());
+			Hibernate.initialize(hibNode.getChildCompoundGraph());
+			Hibernate.initialize(hibNode.getInEdges());
+			Hibernate.initialize(hibNode.getOutEdges());
 			Iterator<ILinkEdge> edgeIter = node.getSubCanvas().linkIterator();
 			while(edgeIter.hasNext()){
 				HibLinkEdge link = (HibLinkEdge)edgeIter.next();
