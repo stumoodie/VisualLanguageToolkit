@@ -53,7 +53,6 @@
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-api-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/apache-log4j-1.2.15/log4j-1.2.15.jar" sourcepath="lib/apache-log4j-1.2.15/src/main/java"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CompoundGraph"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/bsh-core-2.0b4.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/cglib-2.1_3-src.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/cglib-nodep-2.1_3.jar"/>
@@ -65,5 +64,6 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/objenesis-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/CompoundGraph.jar" sourcepath="/CompoundGraph/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

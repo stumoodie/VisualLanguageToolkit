@@ -132,9 +132,11 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Iterator<IDrawingNode> nodeIter = model.drawingNodeIterator();
 		while(nodeIter.hasNext()){
 			IDrawingNode node = nodeIter.next();
+			Hibernate.initialize((HibCompoundNode)node);
 			Hibernate.initialize(node.getAttribute());
 			HibCompoundNode hibNode = (HibCompoundNode)node;
 			Hibernate.initialize(hibNode.getChildren());
+			Hibernate.initialize(hibNode.getParent());
 			Hibernate.initialize(hibNode.getChildCompoundGraph());
 			Hibernate.initialize(hibNode.getInEdges());
 			Hibernate.initialize(hibNode.getOutEdges());
