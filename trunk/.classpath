@@ -64,6 +64,6 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/CompoundGraph.jar" sourcepath="/CompoundGraph/src"/>
+	<classpathentry kind="lib" path="lib/compoundgraph/compoundgraph.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
