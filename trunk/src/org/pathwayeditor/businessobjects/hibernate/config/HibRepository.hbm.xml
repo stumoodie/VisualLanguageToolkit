@@ -25,17 +25,17 @@
         	<column name="root_folder_id" not-null="false"/>
         </many-to-one>
         <set name="folders" inverse="true" cascade="all,delete-orphan">
-        	<key column="repository_id" not-null="true"/>
+        	<key column="repository_id" not-null="false"/>
         	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder"/> 
         </set>
         <set name="maps" inverse="true" cascade="all,delete-orphan">
-        	<key column="repository_id" not-null="true"/>
+        	<key column="repository_id" not-null="false"/>
         	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap"/> 
         </set>
     </class>
     
 	<query name="loadRepository"><![CDATA[
-		from HibRepository as r left outer join fetch r.rootFolder where r.name = :name
+		from HibRepository as r left outer join fetch r.folders left outer join fetch r.maps where r.name = :name
     ]]></query>
     
 </hibernate-mapping>

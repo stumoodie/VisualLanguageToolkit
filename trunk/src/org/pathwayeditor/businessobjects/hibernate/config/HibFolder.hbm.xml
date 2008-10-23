@@ -18,8 +18,7 @@
 		<many-to-one name="repository"  cascade="all" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 			<column name="repository_id" not-null="false" />
 		</many-to-one>
-		<set name="subFolders" inverse="true"
-			cascade="all">
+		<set name="subFolders" inverse="true" cascade="all">
 			<key>
 				<column name="parent_folder_id" not-null="true" />
 			</key>

@@ -72,15 +72,18 @@ public class HibMapTest {
 		assertEquals ( "folder same with source diagram" , mockFolder ,testMapDiagram.getFolder() ) ;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testChangeFolder () throws Exception 
 	{
 		final HibFolder mockFolder2 = mockery.mock(HibFolder.class , "mockFolder2") ;
 		final Set<HibMap> mockMapDiagramSet = mockery.mock( Set.class , "mockMapDiagramSet") ; 
 		mockery.checking( new Expectations () {{
-			atLeast(1).of(mockFolder).removeMapDiagram(with(any(HibMap.class)));
+//			atLeast(1).of(mockFolder).removeMapDiagram(with(any(HibMap.class)));
+			atLeast(1).of(mockFolder).getMapDiagrams(); will(returnValue(mockMapDiagramSet));
 			atLeast(1).of(mockFolder2).getMapDiagrams() ; will(returnValue(mockMapDiagramSet));
 			atLeast(1).of(mockMapDiagramSet).add(testMapDiagram); will(returnValue(true));
+			atLeast(1).of(mockMapDiagramSet).remove(with(any(HibMap.class))); will(returnValue(true));
 		}});
 //		mockery.checking( new Expectations () {{
 //			testMapDiagram = new HibMap ( mockFolder , DIAGRAM_NAME1 ) ;

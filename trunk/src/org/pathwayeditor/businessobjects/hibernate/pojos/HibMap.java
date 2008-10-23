@@ -83,7 +83,7 @@ public class HibMap implements IMap, Serializable {
 	public void changeFolder(HibFolder newFolder) {
 		HibFolder oldOwner = this.folder;
 		if (oldOwner != null) {
-			oldOwner.removeMapDiagram(this);
+			oldOwner.getMapDiagrams().remove(this);
 		}
 		this.folder = newFolder;
 		if (this.folder != null) {
