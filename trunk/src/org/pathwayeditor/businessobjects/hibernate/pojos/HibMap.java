@@ -128,13 +128,19 @@ public class HibMap implements IMap, Serializable {
 	public int getINode() {
 		return iNode;
 	}
+	
+	
+	@SuppressWarnings("unused")
+	private void setINode(int iNode){
+		this.iNode = iNode;
+	}
 
-	/**
-	 * @param m
-	 */
-	protected void copyINode(HibMap m) {
-		this.iNode=m.iNode;
-		}
+//	/**
+//	 * @param m
+//	 */
+//	protected void copyINode(HibMap m) {
+//		this.iNode=m.iNode;
+//		}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

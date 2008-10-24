@@ -199,6 +199,10 @@ public abstract class HibFolder implements Serializable, IFolder {
 		return this.iNode;
 	}
 
+	public int getiNode() {
+		return this.iNode;
+	}
+
 	protected void setINode(int node) {
 		this.iNode = node;
 	}
@@ -206,25 +210,6 @@ public abstract class HibFolder implements Serializable, IFolder {
 	// /////////////////////////BUSINESS LOGIC
 	// METHODS/////////////////////////////////////////////
 
-//	/**
-//	 * @param testee
-//	 *            folder which may be a child
-//	 * @param testFolder
-//	 *            folder which may be a parent
-//	 * @return true if testee folder is a child anywhere in the child subfolder
-//	 *         tree of given test folder
-//	 */
-//	private boolean testeeChildOf(IFolder testee, IFolder testFolder) {
-//		Set<HibSubFolder> children = ((HibFolder) testFolder).getSubFolders();
-//		if (children.contains(testee)) {
-//			return true;
-//		}
-//		for (HibSubFolder sub : children) {
-//			if (((HibFolder) sub).testeeChildOf(testee, sub))
-//				return true;
-//		}
-//		return false;
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -483,10 +468,22 @@ public abstract class HibFolder implements Serializable, IFolder {
 		if (!subFolders.contains(subFolder))
 			throw new IllegalArgumentException(NOT_CHILD);
 		
-		HibSubFolder hibSubFolder = (HibSubFolder) subFolder; 
+		HibSubFolder hibSubFolder = (HibSubFolder) subFolder;
+		// subfolder and all descendents in tree must be removed from repository
+		// so that hibernate knows to remove them from the DB.  
 		removeHibSubFolder(hibSubFolder);
-		hibSubFolder.changeRepository(null);
+		markChildrenRemoved(hibSubFolder);
 		this.listenable.notifyDescendentChange(ChangeType.REMOVED, null, this);
+	}
+
+	private void markChildrenRemoved(HibSubFolder currFolder){
+		currFolder.changeRepository(null);
+		for(HibMap childMap : currFolder.getMapDiagrams()){
+			childMap.changeRepository(null);
+		}
+		for(HibSubFolder subFolder : currFolder.getSubFolders()){
+			markChildrenRemoved(subFolder);
+		}
 	}
 	
 	public void removeMap(IMap map){

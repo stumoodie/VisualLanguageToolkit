@@ -10,6 +10,8 @@
 	<property name="jar.name" value="BusinessObjects.jar" />
 	<property name="lib.dir" value="./lib" />
 	<property name="application.dir" value="../org.pathwayeditor.applicationNew/lib" />
+	<property name="target" value="1.5" />
+	<property name="source" value="1.5" />
 
 	<path id="classpath">
 		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
@@ -105,7 +107,7 @@
 
 	<target name="buildSrc" description="src build task" depends="clean,mkdirs">
 		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
-		<javac classpathref="classpath" srcdir="${src.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 			<exclude name="**/businessobjects/pojos/**" />
 		</javac>
 		<copy todir="${build.dir}">

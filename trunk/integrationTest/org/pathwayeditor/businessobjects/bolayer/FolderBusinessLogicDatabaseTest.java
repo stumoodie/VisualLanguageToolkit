@@ -204,7 +204,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		this.getBusinessObjectFactory().synchroniseRepository();
 		Session sess = getSession();
 		sess.beginTransaction();
-		IMap mapResult = (IMap)sess.createQuery("from HibMap m where m.iNode = ?").setInteger(0, iNode).uniqueResult();
+		IMap mapResult = (IMap)sess.createQuery("from HibMap m where m.INode = ?").setInteger(0, iNode).uniqueResult();
 		sess.getTransaction().commit();
 		assertNull(mapResult);
 	}

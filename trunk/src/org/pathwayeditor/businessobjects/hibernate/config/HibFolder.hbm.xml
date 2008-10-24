@@ -25,7 +25,8 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder" />
 		</set>
-		<property name="INode" type="int">
+
+		<property name="INode" type="int" access="property">
 			<column name="inode" not-null="true" />
 		</property>
 		

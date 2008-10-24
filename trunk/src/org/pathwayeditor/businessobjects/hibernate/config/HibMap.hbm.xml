@@ -22,7 +22,7 @@
         <many-to-one name="repository" class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 			<column name="repository_id" not-null="false" />
 		</many-to-one>
-		<property name="iNode" type="int">
+		<property name="INode" type="int" access="property">
 			<column name="inode" not-null="true" />
 		</property>
     </class>
