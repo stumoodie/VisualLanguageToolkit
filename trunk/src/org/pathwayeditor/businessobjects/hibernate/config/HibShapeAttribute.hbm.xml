@@ -30,7 +30,7 @@
             <column name="height" not-null="true" />
         </property>
 
-        <many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">
+        <many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" cascade="none">
         	<column name="object_type_id" not-null="true" />
          </many-to-one>
        	<property name="name" type="string" access="property">

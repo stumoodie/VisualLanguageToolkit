@@ -1,9 +1,12 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 
 /**
@@ -26,7 +29,7 @@ public interface ILinkTerminusDefaults {
 	 * Get the property filter to access the properties.
 	 * @return Returns a property filter. Guaranteed to be not null.
 	 */
-	IPropertyDefinitionFilter getPropertiesFilter();
+	Iterator<IPropertyDefinition> propertyDefinitionIterator();
 
 	/**
 	 * get the shape type of the decorator.

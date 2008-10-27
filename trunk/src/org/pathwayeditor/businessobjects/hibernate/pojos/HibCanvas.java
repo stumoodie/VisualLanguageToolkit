@@ -8,9 +8,11 @@ import java.util.Set;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -28,13 +30,17 @@ public class HibCanvas implements ICanvas , Serializable {
 	private static final int DEFAULT_GRID_HEIGHT = 20;
 	private static final int DEFAULT_GRID_WIDTH = 20;
 
+	private static final boolean DEFAULT_GRIB_ENABLED_VALUE = false;
+
+	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
+
 	private Long id;
 	private IMap map;
 	private HibNotation hibNotation;
 	private INotationSubsystem notation;
 	private Size gridSize = new Size(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
-	private boolean gridEnabled;
-	private boolean snapToGridEnabled;
+	private boolean gridEnabled = DEFAULT_GRIB_ENABLED_VALUE;
+	private boolean snapToGridEnabled = DEFAULT_SNAP_TO_GRID_VALUE;
 	private RGB backgroundColour = new RGB(DEFAULT_BGD_RED, DEFAULT_BGD_GREEN, DEFAULT_BGD_BLUE);
 	private Size canvasSize = new Size(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 	private Date created = new Date();
@@ -55,10 +61,15 @@ public class HibCanvas implements ICanvas , Serializable {
 	HibCanvas() {
 	}
 
-	public HibCanvas(IMap map, INotationSubsystem notationSubsystem, HibNotation hibNotation) {
+	public HibCanvas(IMap map, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
 		this.map = map;
+		this.repository = map.getRepository();
+		this.mapINode = map.getINode();
 		this.notation = notationSubsystem;
-		this.hibNotation = hibNotation;
+		this.hibNotation = hibNotationFactory.getNotation(notationSubsystem.getNotation());
+		this.creationSerialCounter = new IndexCounter();
+		IRootObjectType rootObjectType = notationSubsystem.getSyntaxService().getRootObjectType();
+		this.model = new HibModel(this, rootObjectType, hibNotationFactory);
 	}
 	
 	public HibCanvas(IMap newMap, HibCanvas other) {
@@ -205,30 +216,6 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.canvasSize = this.canvasSize.newHeight(canvasHeight);
 	}
 
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof HibCanvas))
-			return false;
-		HibCanvas castOther = (HibCanvas) other;
-
-		return ((this.getMapDiagram() == castOther.getMapDiagram()) || (this
-				.getMapDiagram() != null
-				&& castOther.getMapDiagram() != null && this.getMapDiagram()
-				.equals(castOther.getMapDiagram())));
-	}
-
-	public int hashCode() {
-		int result = 17;
-		result = 37
-				* result
-				+ (getMapDiagram() == null ? 0 : this.getMapDiagram()
-						.hashCode());
-
-		return result;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getBackgroundColour()
@@ -362,6 +349,41 @@ public class HibCanvas implements ICanvas , Serializable {
 
 	public void setLabelAttributes(Set<HibLabelAttribute> labelAttributes) {
 		this.labelAttributes = labelAttributes;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + this.mapINode;
+		result = prime * result
+				+ ((this.repository == null) ? 0 : this.repository.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof HibCanvas))
+			return false;
+		HibCanvas other = (HibCanvas) obj;
+		if (this.mapINode != other.getMapINode())
+			return false;
+		if (this.repository == null) {
+			if (other.getRepository() != null)
+				return false;
+		} else if (!this.repository.equals(other.getRepository()))
+			return false;
+		return true;
 	}
 
 	public Set<HibProperty> getProperties() {

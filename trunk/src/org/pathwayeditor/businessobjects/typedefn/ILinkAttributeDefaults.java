@@ -57,6 +57,6 @@ public interface ILinkAttributeDefaults {
 	 * Provides an iterator for the set of all property definitions.
 	 * @return an iterator, that cannot be null, but may iterator over an empry collection.
 	 */
-	Iterator<IPropertyDefinition> propertyIterator();
+	Iterator<IPropertyDefinition> propertyDefinitionIterator();
 	
 }

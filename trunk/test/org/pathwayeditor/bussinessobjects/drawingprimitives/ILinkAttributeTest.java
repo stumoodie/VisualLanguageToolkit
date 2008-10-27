@@ -14,16 +14,11 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwaueditor.bussinessobjects.stubs.StubDefaultLinkAttributes;
-import org.pathwaueditor.bussinessobjects.stubs.StubLinkObjectType;
-import org.pathwaueditor.bussinessobjects.stubs.StubMap;
-import org.pathwaueditor.bussinessobjects.stubs.StubNotation;
-import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubSystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
+import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -32,6 +27,11 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.bussinessobjects.stubs.StubHibNotationFactory;
+import org.pathwayeditor.bussinessobjects.stubs.StubMap;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubDefaultLinkAttributes;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkObjectType;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 
 /**
  * @author ntsorman
@@ -100,10 +100,10 @@ public class ILinkAttributeTest {
 //		}});
 		INotationSubsystem stubNotationSubSystem = new StubNotationSubSystem();
 		IMap stubMap = new StubMap();
-		HibNotation notation = new HibNotation(StubNotation.EXPECTED_GLOBAL_ID, StubNotation.EXPECTED_NAME, StubNotation.EXPECTED_DESCRIPTION,
-				new Version(StubNotation.EXPECTED_MAJOR_VERSION, StubNotation.EXPECTED_MINOR_VERSION, StubNotation.EXPECTED_PATCH_VERSION));
-		mockCanvas = new HibCanvas(stubMap, stubNotationSubSystem, notation);
+		IHibNotationFactory notationFact = new StubHibNotationFactory();
+		mockCanvas = new HibCanvas(stubMap, notationFact, stubNotationSubSystem);
 		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
+		HibNotation notation = notationFact.getNotation(stubNotationSubSystem.getNotation());
 		notation.addObjectType(objectType);
 		stubObjectType = new StubLinkObjectType();
 		

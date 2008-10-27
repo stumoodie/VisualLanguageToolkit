@@ -52,10 +52,10 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	
 	public HibModel(HibCanvas newCanvas, IRootObjectType rootObjectType, IHibNotationFactory hibNotationFactory) {
 		this();
-		this.rootNode = new HibRootNode(this, nodeCntr.getLastIndex(), rootObjectType);
-		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 		this.canvas = newCanvas;
 		this.hibNotationFactory = hibNotationFactory;
+		this.rootNode = new HibRootNode(this, nodeCntr.getLastIndex(), rootObjectType);
+		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 	}
 	
 	public HibModel(HibCanvas newCanvas, HibModel otherModel){

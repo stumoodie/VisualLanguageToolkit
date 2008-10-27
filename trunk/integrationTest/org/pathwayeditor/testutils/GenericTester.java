@@ -19,13 +19,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
+import org.pathwayeditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 
 /**
  * @author nhanlon

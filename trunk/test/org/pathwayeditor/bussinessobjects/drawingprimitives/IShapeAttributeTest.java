@@ -83,18 +83,22 @@ public class IShapeAttributeTest {
 	private IShapeAttribute shapeAttribute ;
 //	private IAnnotationProperty mockProperty ;
 	
+	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
 		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
 		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
 		HibObjectType hibObjectType = this.mockery.mock(HibObjectType.class, "hibObjectType");
 //		mockProperty = mockery.mock(IAnnotationProperty.class , "mockProperty") ;
-		final IShapeAttributeDefaults mockDefaults = new DefaultsStub();;
+		final IShapeAttributeDefaults mockDefaults = new DefaultsStub();
+		final Set<HibShapeAttribute> mockAttributeSet = this.mockery.mock(Set.class, "mockAttributeSet");
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockObjectType).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
+			allowing(mockCanvas).getShapeAttributes(); will(returnValue(mockAttributeSet));
 			
+			allowing(mockAttributeSet).add(with(any(HibShapeAttribute.class)));
 		}});
 		
 		shapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
@@ -367,7 +371,7 @@ public class IShapeAttributeTest {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#propertyIterator()
 		 */
-		public Iterator<IPropertyDefinition> propertyIterator() {
+		public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 			return this.retVal.iterator();
 		}
 		

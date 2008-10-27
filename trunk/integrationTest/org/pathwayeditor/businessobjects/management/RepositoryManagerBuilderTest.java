@@ -11,11 +11,11 @@ import java.io.File;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwaueditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
+import org.pathwayeditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 
 /**
  * @author smoodie

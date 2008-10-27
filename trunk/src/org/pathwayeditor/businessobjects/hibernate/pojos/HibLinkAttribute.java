@@ -116,7 +116,7 @@ s	 */
 		this.detailedDescription = linkAttributeDefaults.getDetailedDescription();
 		this.url = linkAttributeDefaults.getUrl();
 		this.routerType = linkAttributeDefaults.getRouter();
-		Iterator<IPropertyDefinition> propIter = linkAttributeDefaults.propertyIterator();
+		Iterator<IPropertyDefinition> propIter = linkAttributeDefaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();
 			this.hibLinkProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));

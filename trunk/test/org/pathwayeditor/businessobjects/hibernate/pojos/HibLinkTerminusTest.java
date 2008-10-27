@@ -23,7 +23,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionFilter;
 
 /**
  * @author ntsorman
@@ -47,14 +46,12 @@ public class HibLinkTerminusTest {
 	private ILinkTerminusDefinition mockTermDefn;
 	private ILinkTerminus linkTerminus;
 	private ILinkTerminusDefaults mockDefaults;
-	private IPropertyDefinitionFilter mockPropsFilter; 
 	
 	@Before
 	public void setUp() throws Exception {
 		mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
 		mockTermDefn = mockery.mock(ILinkTerminusDefinition.class, "mockTermDefn");
 		mockDefaults = mockery.mock(ILinkTerminusDefaults.class, "mockDefaults");
-		mockPropsFilter = mockery.mock(IPropertyDefinitionFilter.class, "mockPropsFilter");
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockHibLink).getCanvas();
@@ -67,9 +64,7 @@ public class HibLinkTerminusTest {
 			allowing(mockDefaults).getTermColour(); will(returnValue(EXPECTED_TERM_COLOUR));
 			allowing(mockDefaults).getTermDecoratorType(); will(returnValue(EXPECTED_TERM_DEC));
 			allowing(mockDefaults).getTermSize(); will(returnValue(EXPECTED_TERM_SIZE));
-			allowing(mockDefaults).getPropertiesFilter(); will(returnValue(mockPropsFilter));
-			
-			ignoring(mockPropsFilter);
+			allowing(mockDefaults).propertyDefinitionIterator(); will(returnIterator());
 		}});
 		
 		linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, mockTermDefn) ;

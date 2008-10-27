@@ -36,7 +36,7 @@ public interface IShapeAttributeDefaults {
 
 	int getLineWidth();
 
-	Iterator<IPropertyDefinition> propertyIterator();
+	Iterator<IPropertyDefinition> propertyDefinitionIterator();
 
 	ILabelAttributeDefaults getDefaultLabelAttributes();
 }

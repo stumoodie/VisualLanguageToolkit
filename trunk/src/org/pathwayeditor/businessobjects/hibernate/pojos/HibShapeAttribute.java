@@ -24,23 +24,36 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
 
+	private static final Location DEFAULT_POSITION = new Location(0,0);
+	private static final Size DEFAULT_SIZE = new Size(10,10);
+	private static final String DEFAULT_NAME = "";
+	private static final String DEFAULT_DESCN = "";
+	private static final String DEFAULT_DETAILS = "";
+	private static final String DEFAULT_URL = "";
+	private static final RGB DEFAULT_FILL = RGB.WHITE;
+	private static final RGB DEFAULT_LINE = RGB.BLACK;
+	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
+	private static final int DEFAULT_LINE_WIDTH = 1;
+	private static final int DEFAULT_PADDING = 0;
+	private static final PrimitiveShapeType DEFAULT_SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
+
 	private HibCanvas canvas;
 	private Long id;
 	private int creationSerial;
-	private Location position;
-	private Size size;
+	private Location position = DEFAULT_POSITION;
+	private Size size = DEFAULT_SIZE;
 	private HibObjectType hibObjectType;
 	private IShapeObjectType shapeObjectType;
-	private String name;
-	private String description;
-	private String detailedDescription;
-	private String url = null;
-	private RGB fillColour;
-	private RGB lineColour;
-	private LineStyle lineStyle;
-	private int lineWidth;
-	private int padding;
-	private PrimitiveShapeType shapeType;
+	private String name = DEFAULT_NAME;
+	private String description = DEFAULT_DESCN;
+	private String detailedDescription = DEFAULT_DETAILS;
+	private String url = DEFAULT_URL;
+	private RGB fillColour = DEFAULT_FILL;
+	private RGB lineColour = DEFAULT_LINE;
+	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
+	private int lineWidth = DEFAULT_LINE_WIDTH;
+	private int padding = DEFAULT_PADDING;
+	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
 	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
@@ -50,15 +63,12 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibShapeAttribute() {
-		position = new Location ( 0 , 0 ) ;
-		size = new Size ( 0 , 0 ) ;
-		fillColour = new RGB ( 0 , 0 , 0 ) ;
-		lineColour = new RGB ( 0 , 0 , 0 ) ;
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
 		this.canvas = hibCanvas;
 		this.creationSerial = creationSerial;
+		this.canvas.getShapeAttributes().add(this);
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
 		this.propertyBuilder = new PropertyBuilder(hibCanvas);
@@ -69,6 +79,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
 		this.canvas = newCanvas;
 		this.creationSerial = newCreationSerial;
+		this.canvas.getShapeAttributes().add(this);
 		this.position = other.position;
 		this.size = other.size;
 		this.hibObjectType = other.hibObjectType;
@@ -100,7 +111,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineWidth = shapeDefaults.getLineWidth();
 		this.name = shapeDefaults.getName();
 		this.url = shapeDefaults.getURL();
-		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyIterator();
+		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));

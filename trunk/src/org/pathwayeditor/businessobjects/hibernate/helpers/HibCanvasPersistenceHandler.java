@@ -18,7 +18,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
@@ -104,7 +103,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		for(HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()){
 			Hibernate.initialize(labelAttr);
 			labelAttr.setObjectType(labelObjectType);
-			Hibernate.initialize(labelAttr.getProperty().getValue());
 		}
 	}
 
@@ -202,8 +200,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		HibCanvas hibCanvas = null;
 		if(canvasTest == 0){
 			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem.getSyntaxService());
-			HibNotation hibNotation = hibNotationFactory.getNotation(notationSubsystem.getNotation());
-			hibCanvas = new HibCanvas(this.owningMap, notationSubsystem, hibNotation);
+			hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory, notationSubsystem);
 			s.save(hibCanvas);
 		}
 		else{

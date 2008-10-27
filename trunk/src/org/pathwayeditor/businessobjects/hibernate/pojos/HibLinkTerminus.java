@@ -92,7 +92,9 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.termShapeType = linkTerminusDefaults.getTermDecoratorType();
 		this.terminusColour = linkTerminusDefaults.getTermColour();
 		this.terminusSize = linkTerminusDefaults.getTermSize();
-		for(IPropertyDefinition propDefn : linkTerminusDefaults.getPropertiesFilter().getAllProperties()){
+		Iterator<IPropertyDefinition> iter = linkTerminusDefaults.propertyDefinitionIterator();
+		while(iter.hasNext()){
+			IPropertyDefinition propDefn = iter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propBuilder));
 		}
 	}

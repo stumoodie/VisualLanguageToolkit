@@ -95,7 +95,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getPropertiesFilter()
 	 */
-	public Iterator<IPropertyDefinition> propertyIterator() {
+	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return PROP_SET.iterator();
 	}
 

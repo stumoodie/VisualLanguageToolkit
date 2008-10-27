@@ -82,7 +82,7 @@ public class FallbackLinkAttributeDefaults implements ILinkAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults#getPropertyDefinitionFilter()
 	 */
-	public Iterator<IPropertyDefinition> propertyIterator() {
+	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return PROP_SET.iterator();
 	}
 
