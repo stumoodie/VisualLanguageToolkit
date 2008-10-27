@@ -52,7 +52,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		return this.labelAttribute;
 	}
 
-	public void setAttribute(HibLabelAttribute labelAttribute) {
+	void setAttribute(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
 	}
 

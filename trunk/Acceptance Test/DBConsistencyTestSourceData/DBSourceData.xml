@@ -97,12 +97,12 @@
 		<column>patch_version</column>
 			<row>
 				<value>100001</value>
-				<value>global id</value>
-				<value>context1</value>
-				<value>context descr</value>
-				<value>100</value>
-				<value>100</value>
-				<value>100</value>
+				<value>17326252</value>
+				<value>StubNotation1</value>
+				<value>Stub notation description</value>
+				<value>99</value>
+				<value>19</value>
+				<value>9</value>
 			</row>
 	</table>
 	<table name="ObjectType">
@@ -1019,7 +1019,7 @@
 			<value>52</value>
 			<value>52</value>
 			<value>100001</value>
-			<value>21</value>
+			<value>2</value>
 		</row>
 		<row>
 			<value>100003</value>
@@ -1042,7 +1042,7 @@
 			<value>true</value>
 			<value>104</value>
 			<value>104</value>
-			<value>1040</value>
+			<value>104</value>
 			<value>true</value>
 			<value>54</value>
 			<value>54</value>

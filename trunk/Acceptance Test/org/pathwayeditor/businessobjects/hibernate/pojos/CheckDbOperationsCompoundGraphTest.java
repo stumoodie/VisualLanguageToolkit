@@ -19,7 +19,6 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -32,8 +31,12 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
@@ -50,6 +53,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private Mockery mockery = new JUnit4Mockery() {{
 		 setImposteriser(ClassImposteriser.INSTANCE);
 	}};
+	
+	private IMapContentPersistenceManager map1Manager ;
 	
 	private IRepository repository;
 	private IRootFolder rootFolder ;
@@ -73,10 +78,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private ILabelNode newLabel ;
 	private ILinkEdge newLinkEdge ;
 	
+	private INotationSubsystem dbNotationSubSystem;
 	
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String SUBFOLDER1_PATH = "/subfolder1/" ;
 	private static final String SUBFOLDER2_PATH = "/subfolder2/" ;
+	
+	private static final Location NEW_NODE_LOCATION = new Location ( 75 , 75 ) ;
+	private static final Size NEW_NODE_SIZE = new Size (25 , 25) ;
 	
 
 	private final static String CREATED_LINK_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLinkEdge.xml" ;
@@ -103,18 +112,20 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		rootFolder = repository.getRootFolder() ;
 		
-//		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
+		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
 		
 		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
 		
 		mapDiagram1 = subFolder1.getMapIterator().next() ;
 		
-		IMapContentPersistenceManager map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram1) ;
+		map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram1) ;
 		map1Manager.loadContent() ;
 		dbCanvas = map1Manager.getCanvas() ;
 		
 		dbModel = dbCanvas.getModel() ;
 		dbRootNode = dbModel.getRootNode() ;
+		
+		dbNotationSubSystem = dbCanvas.getNotationSubsystem() ;
 		
 		
 		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubCanvas().shapeIterator() ;
@@ -201,13 +212,19 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		return REPOSITORY_NAME ;
 	}
 	
-	@Ignore
 	@Test
 	public void testCreateNewShapeNode () throws Exception 
 	{
+		loadData () ;
 		IShapeNodeFactory nodeFactory = dbRootNode.getSubCanvas().shapeNodeFactory() ;
-		assertTrue ( "can create node" , nodeFactory.canCreateShapeNode()) ;
+//		nodeFactory.setObjectType(new StubShapeObjectType () ) ;
+		nodeFactory.setObjectType(shapeNode1.getAttribute().getObjectType()) ;
+//		assertTrue ( "can create node" , nodeFactory.canCreateShapeNode()) ;
 		newNode = nodeFactory.createShapeNode() ;
+		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
+		newNode.getAttribute().setSize(NEW_NODE_SIZE) ;
+		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
@@ -228,10 +245,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
-	@Ignore
 	@Test
 	public void testCreateNewLabelNode () throws Exception 
 	{
+		loadData () ;
 		ILabelNodeFactory labelFactory = shapeNode1.getSubCanvas().labelNodeFactory() ;
 		newLabel = labelFactory.createLabel() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_LABEL_VALIDATION));
@@ -252,10 +269,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
 	@Test
 	public void testCreateNewEdgeLink () throws Exception 
 	{
+		loadData () ;
 		ILinkEdgeFactory linkFactory = dbRootNode.getSubCanvas().linkEdgeFactory() ;
 		linkFactory.setShapeNodePair(shapeNode5, shapeNode8) ;
 		assertTrue ( "can create link" , linkFactory.canCreateLink() ) ;

@@ -89,7 +89,7 @@ public class StubNotation implements INotation {
 	 */
 	public Version getVersion() {
 		// TODO Auto-generated method stub
-		return null;
+		return new Version (EXPECTED_MAJOR_VERSION , EXPECTED_MINOR_VERSION , EXPECTED_PATCH_VERSION ) ;
 	}
 
 }

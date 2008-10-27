@@ -79,11 +79,18 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.setCanvas(canvas);
 	}
 	
-	public int getCreation_serial() {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#
+	 * getCreationSerial()
+	 */
+
+	public int getCreationSerial() {
 		return this.creationSerial;
 	}
 
-	public void setCreation_serial(int label_index) {
+	public void setCreationSerial(int label_index) {
 		this.creationSerial = label_index;
 	}
 
@@ -144,7 +151,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	}
 
 	public void setBackgroundRed(int backgroundRed) {
-		this.background.newRed(backgroundRed);
+		this.background = this.background.newRed(backgroundRed);
 	}
 
 	public int getBackgroundGreen() {
@@ -176,14 +183,14 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 				.getCanvas() != null
 				&& castOther.getCanvas() != null && this.getCanvas().equals(
 				castOther.getCanvas())))
-				&& (this.getCreation_serial() == castOther.getCreation_serial());
+				&& (this.getCreationSerial() == castOther.getCreationSerial());
 	}
 
 	public int hashCode() {
 		int result = 17;
 		result = 37 * result
 				+ (getCanvas() == null ? 0 : this.getCanvas().hashCode());
-		result = 37 * result + this.getCreation_serial();
+		result = 37 * result + this.getCreationSerial();
 		return result;
 	}
 
@@ -221,16 +228,6 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#
-	 * getCreationSerial()
-	 */
-	public int getCreationSerial() {
-		return this.creationSerial;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
 	 * getBackgroundColor()
 	 */
@@ -244,6 +241,11 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 
 		this.background = color;
 
+	}
+	
+	public void setObjectType ( INodeObjectType nodeObjectType)
+	{
+		this.objectType = nodeObjectType ;
 	}
 
 	/*
@@ -290,12 +292,5 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
 		return this.visualisableProperty.getDefinition().equals(property);
-	}
-
-	/**
-	 * @param labelObjectType
-	 */
-	public void setObjectType(INodeObjectType labelObjectType) {
-		this.objectType = labelObjectType;
 	}
 }

@@ -144,6 +144,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String SHAPE_ATTR8_DESCR = "descr8" ;
 	private static final String SHAPE_ATTR8_DETAIL_DESCR = "detailed descr8" ;
 	private static final String SHAPE_ATTR8_URL = "http://www.shape8URL.org" ;
+	
 	private static final String LINK_ATTR1_URL = "http://www.HibLink1.org" ;
 	private static final String LINK_ATTR2_URL = "http://www.HibLink2.org" ;
 	private static final String LINK_ATTR3_URL = "http://www.HibLink3.org" ;
@@ -153,6 +154,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String LINK_ATTR7_URL = "http://www.HibLink7.org" ;
 	private static final String LINK_ATTR8_URL = "http://www.HibLink8.org" ;
 	private static final String LINK_ATTR9_URL = "http://www.HibLink9.org" ;
+	
 	private static final String LINK_ATTR1_NAME = "link_name1" ;
 	private static final String LINK_ATTR2_NAME = "link_name2" ;
 	private static final String LINK_ATTR3_NAME = "link_name3" ;
@@ -162,6 +164,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String LINK_ATTR7_NAME = "link_name7" ;
 	private static final String LINK_ATTR8_NAME = "link_name8" ;
 	private static final String LINK_ATTR9_NAME = "link_name9" ;
+	
 	private static final String LINK_ATTR1_DESCR = "link_descr1" ;
 	private static final String LINK_ATTR2_DESCR = "link_descr2" ;
 	private static final String LINK_ATTR3_DESCR = "link_descr3" ;
@@ -171,6 +174,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String LINK_ATTR7_DESCR = "link_descr7" ;
 	private static final String LINK_ATTR8_DESCR = "link_descr8" ;
 	private static final String LINK_ATTR9_DESCR = "link_descr9" ;
+	
 	private static final String LINK_ATTR1_DET_DESCR = "link_detailed_descr1" ;
 	private static final String LINK_ATTR2_DET_DESCR = "link_detailed_descr2" ;
 	private static final String LINK_ATTR3_DET_DESCR = "link_detailed_descr3" ;
@@ -193,10 +197,8 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int DATE_CHECK =1 ;
 	private static final int MONTH_CHECK =0 ;
 	private static final int YEAR_CHECK =70 ;
+	
 	private static final int ROOT_NODE_INDEX = 0 ;
-	private static final int NUM_OF_ROOTNODE_SHAPE_CHILDREN = 2 ;
-	private static final int NUM_OF_ROOTNODE_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_ROOTNODE_LINK_CHILDREN = 0 ;
 	private static final int SHAPENODE1_INDEX = 1 ;
 	private static final int SHAPENODE2_INDEX = 2 ;
 	private static final int SHAPENODE3_INDEX = 3 ;
@@ -205,6 +207,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int SHAPENODE6_INDEX = 6 ;
 	private static final int SHAPENODE7_INDEX = 7 ;
 	private static final int SHAPENODE8_INDEX = 8 ;
+	
 	private static final int LABELNODE1_INDEX = 9 ;
 	private static final int LABELNODE2_INDEX = 10 ;
 	private static final int LABELNODE3_INDEX = 11 ;
@@ -213,54 +216,64 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int LABELNODE6_INDEX = 14 ;
 	private static final int LABELNODE7_INDEX = 15 ;
 	private static final int LABELNODE8_INDEX = 16 ;
+	
+	private static final int NUM_OF_ROOTNODE_SHAPE_CHILDREN = 2 ;
 	private static final int NUM_OF_SHAPENODE1_SHAPE_CHILDREN = 2 ;
-	private static final int NUM_OF_SHAPENODE1_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE1_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE1_CREATION_SERIAL = 1 ;
-	private static final int SHAPE_ATTRIBUTE1_LINE_WIDTH = 1 ;
-	private static final int SHAPE_ATTRIBUTE1_LINE_PADDING = 1 ;
 	private static final int NUM_OF_SHAPENODE2_SHAPE_CHILDREN = 2 ;
-	private static final int NUM_OF_SHAPENODE2_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE2_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE2_CREATION_SERIAL = 2 ;
-	private static final int SHAPE_ATTRIBUTE2_LINE_WIDTH = 2 ;
-	private static final int SHAPE_ATTRIBUTE2_LINE_PADDING = 2 ;
 	private static final int NUM_OF_SHAPENODE3_SHAPE_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE3_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE3_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE3_CREATION_SERIAL = 3 ;
-	private static final int SHAPE_ATTRIBUTE3_LINE_WIDTH = 3 ;
-	private static final int SHAPE_ATTRIBUTE3_LINE_PADDING = 3 ;
 	private static final int NUM_OF_SHAPENODE4_SHAPE_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE4_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE4_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE4_CREATION_SERIAL = 4 ;
-	private static final int SHAPE_ATTRIBUTE4_LINE_WIDTH = 4 ;
-	private static final int SHAPE_ATTRIBUTE4_LINE_PADDING = 4 ;
 	private static final int NUM_OF_SHAPENODE5_SHAPE_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE5_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE5_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE5_CREATION_SERIAL = 5 ;
-	private static final int SHAPE_ATTRIBUTE5_LINE_WIDTH = 5 ;
-	private static final int SHAPE_ATTRIBUTE5_LINE_PADDING = 5 ;
 	private static final int NUM_OF_SHAPENODE6_SHAPE_CHILDREN = 1 ;
-	private static final int NUM_OF_SHAPENODE6_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE6_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE6_CREATION_SERIAL = 6 ;
-	private static final int SHAPE_ATTRIBUTE6_LINE_WIDTH = 6 ;
-	private static final int SHAPE_ATTRIBUTE6_LINE_PADDING = 6 ;
 	private static final int NUM_OF_SHAPENODE7_SHAPE_CHILDREN = 1 ;
-	private static final int NUM_OF_SHAPENODE7_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE7_LINK_CHILDREN = 0 ;
-	private static final int SHAPE_ATTRIBUTE7_CREATION_SERIAL = 7 ;
-	private static final int SHAPE_ATTRIBUTE7_LINE_WIDTH = 7 ;
-	private static final int SHAPE_ATTRIBUTE7_LINE_PADDING = 7 ;
 	private static final int NUM_OF_SHAPENODE8_SHAPE_CHILDREN = 0 ;
+	
+	private static final int NUM_OF_ROOTNODE_LABEL_CHILDREN = 3 ;
+	private static final int NUM_OF_SHAPENODE1_LABEL_CHILDREN = 1 ;
+	private static final int NUM_OF_SHAPENODE2_LABEL_CHILDREN = 2 ;
+	private static final int NUM_OF_SHAPENODE3_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE4_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE5_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE6_LABEL_CHILDREN = 1 ;
+	private static final int NUM_OF_SHAPENODE7_LABEL_CHILDREN = 1 ;
 	private static final int NUM_OF_SHAPENODE8_LABEL_CHILDREN = 0 ;
+	
+	private static final int NUM_OF_ROOTNODE_LINK_CHILDREN = 5  ;
+	private static final int NUM_OF_SHAPENODE1_LINK_CHILDREN = 2 ;
+	private static final int NUM_OF_SHAPENODE2_LINK_CHILDREN = 2 ;
+	private static final int NUM_OF_SHAPENODE3_LINK_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE4_LINK_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE5_LINK_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE6_LINK_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE7_LINK_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE8_LINK_CHILDREN = 0 ;
+	
+	private static final int SHAPE_ATTRIBUTE1_CREATION_SERIAL = 1 ;
+	private static final int SHAPE_ATTRIBUTE2_CREATION_SERIAL = 2 ;
+	private static final int SHAPE_ATTRIBUTE3_CREATION_SERIAL = 3 ;
+	private static final int SHAPE_ATTRIBUTE4_CREATION_SERIAL = 4 ;
+	private static final int SHAPE_ATTRIBUTE5_CREATION_SERIAL = 5 ;
+	private static final int SHAPE_ATTRIBUTE6_CREATION_SERIAL = 6 ;
+	private static final int SHAPE_ATTRIBUTE7_CREATION_SERIAL = 7 ;
 	private static final int SHAPE_ATTRIBUTE8_CREATION_SERIAL = 8 ;
+	
+	private static final int SHAPE_ATTRIBUTE1_LINE_WIDTH = 1 ;
+	private static final int SHAPE_ATTRIBUTE2_LINE_WIDTH = 2 ;
+	private static final int SHAPE_ATTRIBUTE3_LINE_WIDTH = 3 ;
+	private static final int SHAPE_ATTRIBUTE4_LINE_WIDTH = 4 ;
+	private static final int SHAPE_ATTRIBUTE5_LINE_WIDTH = 5 ;
+	private static final int SHAPE_ATTRIBUTE6_LINE_WIDTH = 6 ;
+	private static final int SHAPE_ATTRIBUTE7_LINE_WIDTH = 7 ;
 	private static final int SHAPE_ATTRIBUTE8_LINE_WIDTH = 8 ;
+	
+	private static final int SHAPE_ATTRIBUTE1_LINE_PADDING = 1 ;
+	private static final int SHAPE_ATTRIBUTE2_LINE_PADDING = 2 ;
+	private static final int SHAPE_ATTRIBUTE3_LINE_PADDING = 3 ;
+	private static final int SHAPE_ATTRIBUTE4_LINE_PADDING = 4 ;
+	private static final int SHAPE_ATTRIBUTE5_LINE_PADDING = 5 ;
+	private static final int SHAPE_ATTRIBUTE6_LINE_PADDING = 6 ;
+	private static final int SHAPE_ATTRIBUTE7_LINE_PADDING = 7 ;
 	private static final int SHAPE_ATTRIBUTE8_LINE_PADDING = 8 ;
+	
 	private static final int LINK_EDGE1_INDEX = 0 ;
 	private static final int LINK_EDGE2_INDEX = 1 ;
 	private static final int LINK_EDGE3_INDEX = 2 ;
@@ -270,6 +283,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int LINK_EDGE7_INDEX = 6 ;
 	private static final int LINK_EDGE8_INDEX = 7 ;
 	private static final int LINK_EDGE9_INDEX = 8 ;
+	
 	private static final int LINK_ATTRIBUTE1_SERIAL = 1 ; 
 	private static final int LINK_ATTRIBUTE2_SERIAL = 2 ; 
 	private static final int LINK_ATTRIBUTE3_SERIAL = 3 ; 
@@ -283,6 +297,17 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN = 0 ;
 	private static final int NUM_OF_ANY_LABELNODE_LABEL_CHILDREN = 0 ;
 	private static final int NUM_OF_ANY_LABELNODE_LINK_CHILDREN = 0 ;
+	
+	private static final int NUM_OF_BENDPOINTS_IN_LINK1 = 1 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK2 = 2 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK3 = 3 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK4 = 4 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK5 = 5 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK6 = 6 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK7 = 7 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK8 = 8 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK9 = 9 ;
+	
 	
 	private static final RGB RGB_100 = new RGB ( 100 , 100 , 100 ) ;
 	private static final RGB RGB_101 = new RGB ( 101 , 101 , 101 ) ;
@@ -331,8 +356,6 @@ public class LoadDataFromFileTest extends GenericTester{
 	{
 		
 		rootFolder = repository.getRootFolder() ;
-		
-//		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
 		
 		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
 		subFolder2 = (ISubFolder)repository.getFolderByPath( SUBFOLDER2_PATH) ;
@@ -409,6 +432,122 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		shapeNode8 = shapeNode7.getSubCanvas().shapeIterator().next() ;
 		shapeAttribute8 = shapeNode8.getAttribute() ;
+		
+		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubCanvas().linkIterator() ;	
+		
+		while ( rootNodeEdges.hasNext())
+		{
+			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
+			
+			if ( tempLinkEdge.getIndex() == 0 )
+			{
+				linkEdge1 = tempLinkEdge ;
+				linkAttribute1 = tempLinkEdge.getAttribute() ;
+//				bendpoint = linkAttribute1.bendPointIterator().next() ;
+			}
+			if ( tempLinkEdge.getIndex() == 1 )
+			{
+				linkEdge2 = tempLinkEdge ;
+				linkAttribute2 = tempLinkEdge.getAttribute() ;
+			}
+			if ( tempLinkEdge.getIndex() == 2 )
+			{
+				linkEdge3 = tempLinkEdge ;
+				linkAttribute3 = tempLinkEdge.getAttribute() ;
+			}
+			if ( tempLinkEdge.getIndex() == 3 )
+			{
+				linkEdge4 = tempLinkEdge ;
+				linkAttribute4 = tempLinkEdge.getAttribute() ;
+			}
+			if ( tempLinkEdge.getIndex() == 6 )
+			{
+				linkEdge7 = tempLinkEdge ;
+				linkAttribute7 = tempLinkEdge.getAttribute() ;
+			}
+		}
+		
+		Iterator<ILinkEdge> shapeNode1Edges = shapeNode1.getSubCanvas().linkIterator() ;
+		while ( shapeNode1Edges.hasNext())
+		{
+			ILinkEdge tempLinkEdge = shapeNode1Edges.next() ;
+			
+			if ( tempLinkEdge.getIndex() == 7 )
+			{
+				linkEdge8 = tempLinkEdge ;
+				linkAttribute8 = tempLinkEdge.getAttribute() ;
+			}
+			if ( tempLinkEdge.getIndex() == 8 )
+			{
+				linkEdge9 = tempLinkEdge ;
+				linkAttribute9 = tempLinkEdge.getAttribute() ;
+			}
+		}
+		
+		Iterator<ILinkEdge> shapeNode2Edges = shapeNode2.getSubCanvas().linkIterator() ;
+		while ( shapeNode2Edges.hasNext())
+		{
+			ILinkEdge tempLinkEdge = shapeNode2Edges.next() ;
+			
+			if ( tempLinkEdge.getIndex() == 4 )
+			{
+				linkEdge5 = tempLinkEdge ;
+				linkAttribute5 = tempLinkEdge.getAttribute() ;
+			}
+			if ( tempLinkEdge.getIndex() == 5 )
+			{
+				linkEdge6 = tempLinkEdge ;
+				linkAttribute6 = tempLinkEdge.getAttribute() ;
+			}
+		}
+		
+		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubCanvas().labelIterator() ;
+		while ( rootNodeLabels.hasNext() )
+		{
+			ILabelNode tempLabelNode = rootNodeLabels.next() ;
+			
+			if ( tempLabelNode.getIndex() == 10 )
+			{
+				labelNode2 =  tempLabelNode ;
+				labelAttribute2 = tempLabelNode.getAttribute() ;
+			}
+			if ( tempLabelNode.getIndex() == 11 )
+			{
+				labelNode3 =  tempLabelNode ;
+				labelAttribute3 = tempLabelNode.getAttribute() ;
+			}
+			if ( tempLabelNode.getIndex() == 13 )
+			{
+				labelNode5 =  tempLabelNode ;
+				labelAttribute5 = tempLabelNode.getAttribute() ;
+			}
+		}
+		
+		labelNode1 = shapeNode1.getSubCanvas().labelIterator().next() ;
+		labelAttribute1 = labelNode1.getAttribute() ;
+		
+		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubCanvas().labelIterator() ;
+		while ( shapeNode2Labels.hasNext() )
+		{
+			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
+			
+			if ( tempLabelNode.getIndex() == 12 )
+			{
+				labelNode4 =  tempLabelNode ;
+				labelAttribute4 = tempLabelNode.getAttribute() ;
+			}
+			if ( tempLabelNode.getIndex() == 15 )
+			{
+				labelNode7 =  tempLabelNode ;
+				labelAttribute7 = tempLabelNode.getAttribute() ;
+			}
+		}
+		
+		labelNode6 = shapeNode6.getSubCanvas().labelIterator().next() ;
+		labelAttribute6 = labelNode6.getAttribute() ;
+		
+		labelNode8 = shapeNode7.getSubCanvas().labelIterator().next() ;
+		labelAttribute8 = labelNode8.getAttribute() ;
 	}
 
 	/* (non-Javadoc)
@@ -568,8 +707,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , dbRootNode.getModel()) ;
 		assertNull ( "no parent for rootNode" , dbRootNode.getParent() ) ;
 		assertEquals ( "rootnode has 2 shapes", NUM_OF_ROOTNODE_SHAPE_CHILDREN , dbRootNode.getSubCanvas().getNumShapes()) ;
-//		assertEquals ( "rootnode has no labels", NUM_OF_ROOTNODE_LABEL_CHILDREN , dbRootNode.getSubCanvas().getNumLabels()) ;
-		assertEquals ( "rootnode has no links", NUM_OF_ROOTNODE_LINK_CHILDREN , dbRootNode.getSubCanvas().getNumLinks()) ;
+		assertEquals ( "rootnode has no labels", NUM_OF_ROOTNODE_LABEL_CHILDREN , dbRootNode.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "rootnode has 5 links", NUM_OF_ROOTNODE_LINK_CHILDREN , dbRootNode.getSubCanvas().getNumLinks()) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -596,7 +735,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , shapeNode1.getModel()) ;
 		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode1.getParent().getIndex() ) ;
 		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE1_SHAPE_CHILDREN , shapeNode1.getSubCanvas().getNumShapes()) ;
-//		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE1_LABEL_CHILDREN , shapeNode1.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE1_LABEL_CHILDREN , shapeNode1.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE1_LINK_CHILDREN , shapeNode1.getSubCanvas().getNumLinks()) ;
 		
 		assertEquals ( "shapeAttribute1 creation serial" , SHAPE_ATTRIBUTE1_CREATION_SERIAL , shapeAttribute1.getCreationSerial()  ) ;
@@ -637,7 +776,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , shapeNode2.getModel()) ;
 		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode2.getParent().getIndex() ) ;
 		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE2_SHAPE_CHILDREN , shapeNode2.getSubCanvas().getNumShapes()) ;
-//		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE2_LABEL_CHILDREN , shapeNode2.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE2_LABEL_CHILDREN , shapeNode2.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE2_LINK_CHILDREN , shapeNode2.getSubCanvas().getNumLinks()) ;
 		
 		assertEquals ( "shapeAttribute2 creation serial" , SHAPE_ATTRIBUTE2_CREATION_SERIAL , shapeAttribute2.getCreationSerial()  ) ;
@@ -801,7 +940,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , shapeNode6.getModel()) ;
 		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , shapeNode6.getParent().getIndex() ) ;
 		assertEquals ( "shapeNode6 one shapes", NUM_OF_SHAPENODE6_SHAPE_CHILDREN , shapeNode6.getSubCanvas().getNumShapes()) ;
-//		assertEquals ( "shapeNode6 has no labels", NUM_OF_SHAPENODE6_LABEL_CHILDREN , shapeNode6.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "shapeNode6 has no labels", NUM_OF_SHAPENODE6_LABEL_CHILDREN , shapeNode6.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "shapeNode6 has no links", NUM_OF_SHAPENODE6_LINK_CHILDREN , shapeNode6.getSubCanvas().getNumLinks()) ;
 		
 		assertEquals ( "shapeAttribute6 creation serial" , SHAPE_ATTRIBUTE6_CREATION_SERIAL , shapeAttribute6.getCreationSerial()  ) ;
@@ -842,7 +981,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , shapeNode7.getModel()) ;
 		assertEquals ( "parent is shapeNode6" , shapeNode6.getIndex() , shapeNode7.getParent().getIndex() ) ;
 		assertEquals ( "shapeNode7 has one shapes", NUM_OF_SHAPENODE7_SHAPE_CHILDREN , shapeNode7.getSubCanvas().getNumShapes()) ;
-//		assertEquals ( "shapeNode7 has no labels", NUM_OF_SHAPENODE7_LABEL_CHILDREN , shapeNode7.getSubCanvas().getNumLabels()) ;
+		assertEquals ( "shapeNode7 has no labels", NUM_OF_SHAPENODE7_LABEL_CHILDREN , shapeNode7.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "shapeNode7 has no links", NUM_OF_SHAPENODE7_LINK_CHILDREN , shapeNode7.getSubCanvas().getNumLinks()) ;
 		
 		assertEquals ( "shapeAttribute7 creation serial" , SHAPE_ATTRIBUTE7_CREATION_SERIAL , shapeAttribute7.getCreationSerial()  ) ;
@@ -922,7 +1061,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "labelNode1 index" , LABELNODE1_INDEX , labelNode1.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , labelNode1.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode1.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , labelNode1.getParent().getIndex() ) ;
 		assertEquals ( "labelNode1 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode1.getSubCanvas().getNumShapes()) ;
 		assertEquals ( "labelNode1 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode1.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "labelNode1 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode1.getSubCanvas().getNumLinks()) ;
@@ -982,7 +1121,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "labelNode4 index" , LABELNODE4_INDEX , labelNode4.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , labelNode4.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode4.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , labelNode4.getParent().getIndex() ) ;
 		assertEquals ( "labelNode4 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode4.getSubCanvas().getNumShapes()) ;
 		assertEquals ( "labelNode4 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode4.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "labelNode4 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode4.getSubCanvas().getNumLinks()) ;
@@ -1022,7 +1161,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "labelNode6 index" , LABELNODE6_INDEX , labelNode6.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , labelNode6.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode6.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode6" , shapeNode6.getIndex() , labelNode6.getParent().getIndex() ) ;
 		assertEquals ( "labelNode6 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode6.getSubCanvas().getNumShapes()) ;
 		assertEquals ( "labelNode6 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode6.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "labelNode6 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode6.getSubCanvas().getNumLinks()) ;
@@ -1042,7 +1181,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "labelNode7 index" , LABELNODE7_INDEX , labelNode7.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , labelNode7.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode7.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , labelNode7.getParent().getIndex() ) ;
 		assertEquals ( "labelNode7 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode7.getSubCanvas().getNumShapes()) ;
 		assertEquals ( "labelNode7 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode7.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "labelNode7 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode7.getSubCanvas().getNumLinks()) ;
@@ -1062,7 +1201,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "labelNode8 index" , LABELNODE8_INDEX , labelNode8.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , labelNode8.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode8.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode7" , shapeNode7.getIndex() , labelNode8.getParent().getIndex() ) ;
 		assertEquals ( "labelNode8 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode8.getSubCanvas().getNumShapes()) ;
 		assertEquals ( "labelNode8 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode8.getSubCanvas().getNumLabels()) ;
 		assertEquals ( "labelNode8 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode8.getSubCanvas().getNumLinks()) ;
@@ -1088,12 +1227,13 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute1.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE1_SERIAL , linkAttribute1.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_101 , linkAttribute1.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute1.getLineStyle() ) ;
+		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute1.getLineStyle() ) ;
 		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute1.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR1_URL , linkAttribute1.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR1_NAME , linkAttribute1.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR1_DET_DESCR , linkAttribute1.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
 		
 	}
 	
@@ -1108,18 +1248,18 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , linkEdge2.getModel()) ;
 		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge2.getOwningSubModel() ) ;
 		assertEquals ( "source shape" , shapeNode2 , linkEdge2.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode3 , linkEdge2.getTargetShape() ) ;
+		assertEquals ( "target shape" , shapeNode1 , linkEdge2.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute2.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE2_SERIAL , linkAttribute2.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_102 , linkAttribute2.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute2.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute2.getRouter() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute2.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute2.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR2_URL , linkAttribute2.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR2_NAME , linkAttribute2.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR2_DET_DESCR , linkAttribute2.getDetailedDescription()) ;
-		
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1144,6 +1284,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR3_NAME , linkAttribute3.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR3_DET_DESCR , linkAttribute3.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1162,12 +1303,13 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute4.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE4_SERIAL , linkAttribute4.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_104 , linkAttribute4.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute4.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute4.getRouter() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute4.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute4.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR4_URL , linkAttribute4.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR4_NAME , linkAttribute4.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR4_DET_DESCR , linkAttribute4.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1179,19 +1321,20 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "link edge index" , LINK_EDGE5_INDEX , linkEdge5.getIndex()) ;
 		assertEquals ( "model check" , dbModel , linkEdge5.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge5.getOwningSubModel() ) ;
+		assertEquals ( "owning subModel" , shapeNode2.getSubCanvas() , linkEdge5.getOwningSubModel() ) ;
 		assertEquals ( "source shape" , shapeNode7 , linkEdge5.getSourceShape() ) ;
 		assertEquals ( "target shape" , shapeNode6 , linkEdge5.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute5.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE5_SERIAL , linkAttribute5.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_105 , linkAttribute5.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute5.getLineStyle() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DOT , linkAttribute5.getLineStyle() ) ;
 		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute5.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR5_URL , linkAttribute5.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR5_NAME , linkAttribute5.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR5_DET_DESCR , linkAttribute5.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
 		
 	}
 	
@@ -1204,19 +1347,20 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "link edge index" , LINK_EDGE6_INDEX , linkEdge6.getIndex()) ;
 		assertEquals ( "model check" , dbModel , linkEdge6.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge6.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode7 , linkEdge6.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge6.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , shapeNode2.getSubCanvas() , linkEdge6.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode6 , linkEdge6.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode7 , linkEdge6.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute6.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE6_SERIAL , linkAttribute6.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_106 , linkAttribute6.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute6.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute6.getRouter() ) ;
+		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute6.getLineStyle() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute6.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR6_URL , linkAttribute6.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR6_NAME , linkAttribute6.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR6_DET_DESCR , linkAttribute6.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
 		
 	}
 	
@@ -1231,17 +1375,18 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "model check" , dbModel , linkEdge7.getModel()) ;
 		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge7.getOwningSubModel() ) ;
 		assertEquals ( "source shape" , shapeNode7 , linkEdge7.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge7.getTargetShape() ) ;
+		assertEquals ( "target shape" , shapeNode3 , linkEdge7.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute7.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE7_SERIAL , linkAttribute7.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_107 , linkAttribute7.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute7.getLineStyle() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute7.getLineStyle() ) ;
 		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute7.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR7_URL , linkAttribute7.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR7_NAME , linkAttribute7.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR7_DET_DESCR , linkAttribute7.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
 		
 	}
 	
@@ -1254,19 +1399,20 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "link edge index" , LINK_EDGE8_INDEX , linkEdge8.getIndex()) ;
 		assertEquals ( "model check" , dbModel , linkEdge8.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge8.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode7 , linkEdge8.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge8.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , shapeNode1.getSubCanvas() , linkEdge8.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode1 , linkEdge8.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode1 , linkEdge8.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute8.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE8_SERIAL , linkAttribute8.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_108 , linkAttribute8.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute8.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute8.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute8.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR8_URL , linkAttribute8.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR8_NAME , linkAttribute8.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR8_DET_DESCR , linkAttribute8.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
 		
 	}
 	
@@ -1279,19 +1425,20 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "link edge index" , LINK_EDGE9_INDEX , linkEdge9.getIndex()) ;
 		assertEquals ( "model check" , dbModel , linkEdge9.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubCanvas() , linkEdge9.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode7 , linkEdge9.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge9.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , shapeNode1.getSubCanvas() , linkEdge9.getOwningSubModel() ) ;
+		assertEquals ( "source shape" , shapeNode1 , linkEdge9.getSourceShape() ) ;
+		assertEquals ( "target shape" , shapeNode1 , linkEdge9.getTargetShape() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute9.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE9_SERIAL , linkAttribute9.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_109 , linkAttribute9.getLineColor() ) ;
-		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute9.getLineStyle() ) ;
+		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute9.getLineStyle() ) ;
 		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute9.getRouter() ) ;
 		assertEquals ( "check URL" , LINK_ATTR9_URL , linkAttribute9.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR9_NAME , linkAttribute9.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR9_DET_DESCR , linkAttribute9.getDetailedDescription()) ;
+//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute1.numBendPoints()) ;
 		
 	}
 
