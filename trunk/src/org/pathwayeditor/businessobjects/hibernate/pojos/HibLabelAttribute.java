@@ -67,13 +67,6 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 
 	void setCanvas(HibCanvas hibCanvas) {
 		this.hibCanvas = hibCanvas;
-		if(hibCanvas != null){
-			this.objectType = new LabelObjectType(this.hibCanvas
-					.getNotationSubsystem().getSyntaxService());
-		}
-		else{
-			this.objectType = null;
-		}
 	}
 
 	public void changeHibCanvas(HibCanvas canvas){
@@ -297,5 +290,12 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
 		return this.visualisableProperty.getDefinition().equals(property);
+	}
+
+	/**
+	 * @param labelObjectType
+	 */
+	public void setObjectType(INodeObjectType labelObjectType) {
+		this.objectType = labelObjectType;
 	}
 }

@@ -11,7 +11,7 @@
         	<many-to-one name="repository" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" cascade="none">
             	<column name="repository_id" not-null="true" />
         	</many-to-one>
-        	<property name="mapINode" type="int">
+        	<property name="mapINode" type="int" access="property">
         		<column name="map_inode" not-null="true"/>
         	</property>
         </properties>
@@ -22,31 +22,31 @@
             <column name="context_id" not-null="true" />
         </many-to-one>
 
-        <property name="gridX" type="int">
+        <property name="gridX" type="int" access="property">
             <column name="grid_x" not-null="true" />
         </property>
-        <property name="gridY" type="int">
+        <property name="gridY" type="int" access="property">
             <column name="grid_y" not-null="true" />
         </property>
-        <property name="gridEnabled" type="boolean">
+        <property name="gridEnabled" type="boolean" access="property">
             <column name="grid_enabled" not-null="true" />
         </property>
-        <property name="snapToGridEnabled" type="boolean">
+        <property name="snapToGridEnabled" type="boolean" access="property">
             <column name="snap_to_grid_enabled" not-null="true" />
         </property>
-        <property name="backgroundRed" type="int">
+        <property name="backgroundRed" type="int" access="property">
             <column name="background_red" not-null="true" />
         </property>
-        <property name="backgroundGreen" type="int">
+        <property name="backgroundGreen" type="int" access="property">
             <column name="background_green" not-null="true" />
         </property>
-        <property name="backgroundBlue" type="int">
+        <property name="backgroundBlue" type="int" access="property">
             <column name="background_blue" not-null="true" />
         </property>
-        <property name="canvasWidth" type="int">
+        <property name="canvasWidth" type="int" access="property">
             <column name="canvas_width" not-null="true" />
         </property>
-        <property name="canvasHeight" type="int">
+        <property name="canvasHeight" type="int" access="property">
             <column name="canvas_height" not-null="true" />
         </property>
         <property name="created" type="java.util.Date">
@@ -55,7 +55,7 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <property name="lastCreationSerial" type="int">
+        <property name="lastCreationSerial" type="int" access="property">
         	<column name="last_creation_serial" not-null="true" />
         </property>
         <set name="shapeAttributes" inverse="true" table="shapeAttribute" cascade="all,delete-orphan">

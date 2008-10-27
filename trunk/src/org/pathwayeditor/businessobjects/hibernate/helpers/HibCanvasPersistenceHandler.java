@@ -21,12 +21,14 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
@@ -98,8 +100,10 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	}
 
 	private void initLabelAttributes(HibCanvas hibCanvas) {
+		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		for(HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()){
 			Hibernate.initialize(labelAttr);
+			labelAttr.setObjectType(labelObjectType);
 		}
 	}
 

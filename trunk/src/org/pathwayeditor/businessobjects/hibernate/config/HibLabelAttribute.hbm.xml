@@ -12,25 +12,25 @@
 				<column name="displayed_property_id" not-null="true" />
 			</many-to-one>
 		</properties>
-		<property name="XPosition" type="int">
+		<property name="XPosition" type="int" access="property">
 			<column name="x_position" not-null="true" />
 		</property>
-		<property name="YPosition" type="int">
+		<property name="YPosition" type="int" access="property">
 			<column name="y_position" not-null="true" />
 		</property>
-		<property name="width" type="int">
+		<property name="width" type="int" access="property">
 			<column name="width" not-null="true" />
 		</property>
-		<property name="height" type="int">
+		<property name="height" type="int" access="property">
 			<column name="height" not-null="true" />
 		</property>
-		<property name="backgroundRed" type="int">
+		<property name="backgroundRed" type="int" access="property">
 			<column name="background_red" not-null="true" />
 		</property>
-		<property name="backgroundGreen" type="int">
+		<property name="backgroundGreen" type="int" access="property">
 			<column name="background_green" not-null="true" />
 		</property>
-		<property name="backgroundBlue" type="int">
+		<property name="backgroundBlue" type="int" access="property">
 			<column name="background_blue" not-null="true" />
 		</property>
 	</class>

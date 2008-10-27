@@ -13,66 +13,66 @@
         	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
         		<column name="canvas_id" not-null="true"/>
         	</many-to-one>
-        	<property name="creationSerial" type="int">
+        	<property name="creationSerial" type="int" access="property">
         		<column name="creation_serial" not-null="true" />
         	</property>
         </properties>
-        <property name="XPosition" type="int">
+        <property name="XPosition" type="int" access="property">
             <column name="x_position" not-null="true" />
         </property>
-        <property name="YPosition" type="int">
+        <property name="YPosition" type="int" access="property">
             <column name="y_position" not-null="true" />
         </property>
-        <property name="width" type="int">
+        <property name="width" type="int" access="property">
             <column name="width" not-null="true" />
         </property>
-        <property name="height" type="int">
+        <property name="height" type="int" access="property">
             <column name="height" not-null="true" />
         </property>
 
-        <many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" fetch="select">
+        <many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">
         	<column name="object_type_id" not-null="true" />
          </many-to-one>
-       	<property name="name" type="string">
+       	<property name="name" type="string" access="property">
 	        <column name="name" length="128" not-null="true" />
         </property>
-       	<property name="description" type="string">
+       	<property name="description" type="string" access="property">
            	<column name="description" length="2048" not-null="true" />
 	    </property>
-        <property name="detailedDescription" type="string">
+        <property name="detailedDescription" type="string" access="property">
       	    <column name="detailed_description" not-null="true" />
        	</property>
-       	<property name="url" type="string">
+       	<property name="url" type="string" access="property">
            	<column name="url" length="2048" not-null="true" />
        	</property>
-       	<property name="fillRed" type="int">
+       	<property name="fillRed" type="int" access="property">
            	<column name="fill_red" not-null="true" />
 	    </property>
-        <property name="fillGreen" type="int">
+        <property name="fillGreen" type="int" access="property">
       	    <column name="fill_green" not-null="true" />
        	</property>
-       	<property name="fillBlue" type="int">
+       	<property name="fillBlue" type="int" access="property">
            	<column name="fill_blue" not-null="true" />
        	</property>
        	<property name="lineRed" type="int">
            	<column name="line_red" not-null="true" />
        	</property>
-       	<property name="lineGreen" type="int">
+       	<property name="lineGreen" type="int" access="property">
            	<column name="line_green" not-null="true" />
        	</property>
-       	<property name="lineBlue" type="int">
+       	<property name="lineBlue" type="int" access="property">
            	<column name="line_blue" not-null="true" />
        	</property>
-       	<property name="lineStyle" type="LineStyleType">
+       	<property name="lineStyle" type="LineStyleType" access="property">
            	<column name="line_style" not-null="true" />
        	</property>
-       	<property name="lineWidth" type="int">
+       	<property name="lineWidth" type="int" access="property">
            	<column name="line_width" not-null="true" />
        	</property>
-       	<property name="padding" type="int">
+       	<property name="padding" type="int" access="property">
            	<column name="padding" not-null="true" />
        	</property>
-       	<property name="primitiveShape" type="PrimitiveShapeType">
+       	<property name="primitiveShape" type="PrimitiveShapeType" access="property">
            	<column name="shape_type" not-null="true" />
        	</property>
        	<map name="properties" table="ShapeAttributeProperty" cascade="all,delete-orphan">
