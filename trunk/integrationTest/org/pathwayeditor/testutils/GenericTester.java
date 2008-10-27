@@ -64,6 +64,7 @@ public abstract class GenericTester {
 
 	@Before
 	public void setUp() throws Exception {
+		try {
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		doSetup();
@@ -73,6 +74,12 @@ public abstract class GenericTester {
 		bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
 		bofac.openRepository();
 		doAdditionalSetUp();
+		}
+		catch ( Exception exc)
+		{
+			exc.printStackTrace() ;
+			throw exc ;
+		}
 	}
 
 	protected void saveAndCommit(Serializable in) {

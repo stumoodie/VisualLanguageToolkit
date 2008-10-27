@@ -104,6 +104,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		for(HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()){
 			Hibernate.initialize(labelAttr);
 			labelAttr.setObjectType(labelObjectType);
+			Hibernate.initialize(labelAttr.getProperty().getValue());
 		}
 	}
 
@@ -113,6 +114,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			ILinkObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getLinkObjectType(shapeAttr.getHibObjectType().getUniqueId());
 			shapeAttr.setObjectType(objectType);
 			Hibernate.initialize(shapeAttr.getHibLinkProperties());
+			Hibernate.initialize(shapeAttr.getBendPoints());
 		}
 	}
 
