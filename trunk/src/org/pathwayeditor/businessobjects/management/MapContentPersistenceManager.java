@@ -8,6 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
@@ -45,9 +46,10 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 	public void loadContent() throws PersistenceManagerAlreadyOpenException {
 		synchronized(myLock){
 			if(this.isOpen()) throw new PersistenceManagerAlreadyOpenException(this);
-			
 			this.canvasPersistenceHandler.setOwningMap(this.owningMap);
-			this.canvasPersistenceHandler.loadCanvas();
+			if(this.canvasPersistenceHandler.doesCanvasExist()){
+				this.canvasPersistenceHandler.loadCanvas();
+			}
 			this.open.set(true);
 		}
 		this.fireStatusChange();
@@ -60,7 +62,11 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 	public ICanvas getCanvas() throws PersistenceManagerNotOpenException {
 		synchronized(myLock){
 			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
-			return this.canvasPersistenceHandler.getLoadedCanvas();
+			ICanvas retVal = this.canvasPersistenceHandler.getLoadedCanvas();
+			if(retVal == null){
+				throw new IllegalStateException("canvas does not exists or was not loaded");
+			}
+			return retVal;
 		}
 	}
 
@@ -98,6 +104,27 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 	void fireStatusChange(){
 		for(IMapContentManagerStatusListener listener : this.listeners){
 			listener.stateChanged(this);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
+	 */
+	public void createCanvas(INotationSubsystem notationSubsystem) throws PersistenceManagerNotOpenException {
+		if(notationSubsystem == null) throw new IllegalArgumentException("notationSubsystem cannot be null");
+		synchronized(myLock){
+			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
+			this.canvasPersistenceHandler.createCanvas(notationSubsystem);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager#doesCanvasExit()
+	 */
+	public boolean doesCanvasExist() throws PersistenceManagerNotOpenException {
+		synchronized(myLock){
+			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
+			return this.canvasPersistenceHandler.doesCanvasExist();
 		}
 	}
 

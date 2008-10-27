@@ -18,6 +18,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
@@ -180,6 +181,43 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		s.getTransaction().begin();
 		s.saveOrUpdate(this.loadedCanvas);
 		s.getTransaction().commit();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
+	 */
+	public void createCanvas(INotationSubsystem notationSubsystem) {
+		this.loadedCanvas = null;
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
+			.setEntity("repo",this.getOwningMap().getRepository())
+			.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
+		HibCanvas hibCanvas = null;
+		if(canvasTest == 0){
+			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem.getSyntaxService());
+			HibNotation hibNotation = hibNotationFactory.getNotation(notationSubsystem.getNotation());
+			hibCanvas = new HibCanvas(this.owningMap, notationSubsystem, hibNotation);
+			s.save(hibCanvas);
+		}
+		else{
+			throw new IllegalStateException("canvas already exists");
+		}
+		s.getTransaction().commit();
+		this.loadedCanvas = hibCanvas;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler#doesCanvasExist()
+	 */
+	public boolean doesCanvasExist() {
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
+			.setEntity("repo",this.getOwningMap().getRepository())
+			.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
+		s.getTransaction().commit();
+		return canvasTest > 0;
 	}
 }
 

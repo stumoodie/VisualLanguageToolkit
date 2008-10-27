@@ -4,6 +4,7 @@
 package org.pathwayeditor.businessobjects.management;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
@@ -28,5 +29,19 @@ public interface ICanvasPersistenceHandler {
 	 * were just initialised.
 	 */
 	void reset();
+
+	/**
+	 * Creates a new canvas for the map specified by <code>getOwningMap()</code>. This creates the canvas, but does not
+	 * load it.
+	 * @param notationSubsystem the notation subsystem that the new canvas will use.
+	 * @throws IllegalStateException if <code>getOwningMap() == null || doesCanvasExist() == true</code>.
+	 */
+	void createCanvas(INotationSubsystem notationSubsystem);
+
+	/**
+	 * Tests if a canvas exists for the current map.
+	 * @return true if it does, false otherwise.
+	 */
+	boolean doesCanvasExist();
 
 }
