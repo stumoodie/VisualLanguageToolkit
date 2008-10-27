@@ -288,7 +288,7 @@ s	 */
 		this.routerType = routerType;
 	}
 
-	List<HibBendPoint> getBendPoints() {
+	public List<HibBendPoint> getBendPoints() {
 		return this.hibBendPoints;
 	}
 

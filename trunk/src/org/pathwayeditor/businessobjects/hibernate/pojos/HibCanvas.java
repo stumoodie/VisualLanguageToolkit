@@ -46,6 +46,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	private Set<HibShapeAttribute> shapeAttributes = new HashSet<HibShapeAttribute>(0);
 	private Set<HibLinkAttribute> linkAttributes = new HashSet<HibLinkAttribute>(0);
 	private Set<HibLabelAttribute> labelAttributes = new HashSet<HibLabelAttribute>(0);
+	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
 
 	/**
 	 * Default constructor for use ONLY by hibernate.
@@ -361,5 +362,13 @@ public class HibCanvas implements ICanvas , Serializable {
 
 	public void setLabelAttributes(Set<HibLabelAttribute> labelAttributes) {
 		this.labelAttributes = labelAttributes;
+	}
+
+	public Set<HibProperty> getProperties() {
+		return this.properties;
+	}
+
+	public void setProperties(Set<HibProperty> properties) {
+		this.properties = properties;
 	}
 }

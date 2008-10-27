@@ -1375,9 +1375,16 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-				<value>1</value>
+				<value>0</value>
 				<value>51</value>
 				<value>51</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100002</value>
+				<value>0</value>
+				<value>52</value>
+				<value>52</value>
 			</row>
 	</table>
 	<!-- END OF BENDPOINTS -->

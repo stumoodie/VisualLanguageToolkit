@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -26,6 +27,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -106,7 +112,17 @@ public class LoadDataFromFileTest extends GenericTester{
 	private ILinkAttribute linkAttribute8 ;
 	private ILinkAttribute linkAttribute9 ;
 	
-	private IBendPoint bendpoint ;
+	private IAnnotationProperty property1 ;
+	private IAnnotationProperty property2 ;
+	private IAnnotationProperty property3 ;
+	private IAnnotationProperty property4 ;
+	private IAnnotationProperty property5 ;
+	private IAnnotationProperty property6 ;
+	private IAnnotationProperty property7 ;
+	private IAnnotationProperty property8 ;
+	
+	private IBendPoint bendpoint1 ;
+	private IBendPoint bendpoint2 ;
 	
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String ROOT_FOLDER_PATH = "/" ;
@@ -299,14 +315,14 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int NUM_OF_ANY_LABELNODE_LINK_CHILDREN = 0 ;
 	
 	private static final int NUM_OF_BENDPOINTS_IN_LINK1 = 1 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK2 = 2 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK3 = 3 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK4 = 4 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK5 = 5 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK6 = 6 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK7 = 7 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK8 = 8 ;
-	private static final int NUM_OF_BENDPOINTS_IN_LINK9 = 9 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK2 = 1 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK3 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK4 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK5 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK6 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK7 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK8 = 0 ;
+	private static final int NUM_OF_BENDPOINTS_IN_LINK9 = 0 ;
 	
 	
 	private static final RGB RGB_100 = new RGB ( 100 , 100 , 100 ) ;
@@ -338,7 +354,28 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final Location LOCATION_56 = new Location ( 56, 56) ;
 	private static final Location LOCATION_57 = new Location ( 57, 57) ;
 	private static final Location LOCATION_58 = new Location ( 58, 58) ;
-
+	
+	private static final int PROPERTY1_CREATION_SERIAL = 1 ; 
+	private static final int PROPERTY2_CREATION_SERIAL = 2 ; 
+	private static final int PROPERTY3_CREATION_SERIAL = 3 ; 
+	private static final int PROPERTY4_CREATION_SERIAL = 4 ; 
+	private static final int PROPERTY5_CREATION_SERIAL = 5 ; 
+	private static final int PROPERTY6_CREATION_SERIAL = 6 ; 
+	private static final int PROPERTY7_CREATION_SERIAL = 7 ; 
+	private static final int PROPERTY8_CREATION_SERIAL = 8 ; 
+	
+	private static final String PROPERTY1_VALUE = "textPropertyValue" ;
+	private static final String PROPERTY2_VALUE = "textPropertyValue2" ;
+	private static final String PROPERTY3_VALUE = "richtextvalue" ;
+	private static final String PROPERTY4_VALUE = "richtextvalue2" ;
+	private static final int PROPERTY5_VALUE = 1 ;
+	private static final int PROPERTY6_VALUE = 2 ;
+	private static final String PROPERTY7_LIST_VALUE1 = "first in list 1" ;
+	private static final String PROPERTY7_LIST_VALUE2 = "second in list 1" ;
+	private static final String PROPERTY8_LIST_VALUE1 = "first in list 2" ;
+	private static final String PROPERTY8_LIST_VALUE2 = "second in list 2" ;
+	
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.testutils.GenericTester#doAdditionalSetUp()
 	 */
@@ -443,12 +480,13 @@ public class LoadDataFromFileTest extends GenericTester{
 			{
 				linkEdge1 = tempLinkEdge ;
 				linkAttribute1 = tempLinkEdge.getAttribute() ;
-//				bendpoint = linkAttribute1.bendPointIterator().next() ;
+				bendpoint1 = linkAttribute1.bendPointIterator().next() ;
 			}
 			if ( tempLinkEdge.getIndex() == 1 )
 			{
 				linkEdge2 = tempLinkEdge ;
 				linkAttribute2 = tempLinkEdge.getAttribute() ;
+				bendpoint2 = linkAttribute2.bendPointIterator().next() ;
 			}
 			if ( tempLinkEdge.getIndex() == 2 )
 			{
@@ -510,21 +548,25 @@ public class LoadDataFromFileTest extends GenericTester{
 			{
 				labelNode2 =  tempLabelNode ;
 				labelAttribute2 = tempLabelNode.getAttribute() ;
+				property2 = labelAttribute2.getProperty() ;
 			}
 			if ( tempLabelNode.getIndex() == 11 )
 			{
 				labelNode3 =  tempLabelNode ;
 				labelAttribute3 = tempLabelNode.getAttribute() ;
+				property3 = labelAttribute3.getProperty() ;
 			}
 			if ( tempLabelNode.getIndex() == 13 )
 			{
 				labelNode5 =  tempLabelNode ;
 				labelAttribute5 = tempLabelNode.getAttribute() ;
+				property5 = labelAttribute5.getProperty() ;
 			}
 		}
 		
 		labelNode1 = shapeNode1.getSubCanvas().labelIterator().next() ;
 		labelAttribute1 = labelNode1.getAttribute() ;
+		property1 = labelAttribute1.getProperty() ;
 		
 		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubCanvas().labelIterator() ;
 		while ( shapeNode2Labels.hasNext() )
@@ -535,19 +577,23 @@ public class LoadDataFromFileTest extends GenericTester{
 			{
 				labelNode4 =  tempLabelNode ;
 				labelAttribute4 = tempLabelNode.getAttribute() ;
+				property4 = labelAttribute4.getProperty() ;
 			}
 			if ( tempLabelNode.getIndex() == 15 )
 			{
 				labelNode7 =  tempLabelNode ;
 				labelAttribute7 = tempLabelNode.getAttribute() ;
+				property7 = labelAttribute7.getProperty() ;
 			}
 		}
 		
 		labelNode6 = shapeNode6.getSubCanvas().labelIterator().next() ;
 		labelAttribute6 = labelNode6.getAttribute() ;
+		property6 = labelAttribute6.getProperty() ;
 		
 		labelNode8 = shapeNode7.getSubCanvas().labelIterator().next() ;
 		labelAttribute8 = labelNode8.getAttribute() ;
+		property8 = labelAttribute8.getProperty() ;
 	}
 
 	/* (non-Javadoc)
@@ -582,6 +628,56 @@ public class LoadDataFromFileTest extends GenericTester{
 		shapeAttribute6 = null ;
 		shapeAttribute7 = null ;
 		shapeAttribute8 = null ;
+		
+		labelNode1 = null;
+		labelNode2 = null;
+		labelNode3 = null;
+		labelNode4 = null;
+		labelNode5 = null;
+		labelNode6 = null;
+		labelNode7 = null;
+		labelNode8 = null;
+		
+		labelAttribute1 = null;
+		labelAttribute2 = null;
+		labelAttribute3 = null;
+		labelAttribute4 = null;
+		labelAttribute5 = null;
+		labelAttribute6 = null;
+		labelAttribute7 = null;
+		labelAttribute8 = null;
+		
+		linkEdge1 = null;
+		linkEdge2 = null;
+		linkEdge3 = null;
+		linkEdge4 = null;
+		linkEdge5 = null;
+		linkEdge6 = null;
+		linkEdge7 = null;
+		linkEdge8 = null;
+		linkEdge9 = null;
+		
+		linkAttribute1 = null;
+		linkAttribute2 = null;
+		linkAttribute3 = null;
+		linkAttribute4 = null;
+		linkAttribute5 = null;
+		linkAttribute6 = null;
+		linkAttribute7 = null;
+		linkAttribute8 = null;
+		linkAttribute9 = null;
+		
+		property1 = null;
+		property2 = null;
+		property3 = null;
+		property4 = null;
+		property5 = null;
+		property6 = null;
+		property7 = null;
+		property8 = null;
+		
+		bendpoint1 = null;
+		bendpoint2 = null;
 	}
 
 	/* (non-Javadoc)
@@ -1233,7 +1329,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR1_NAME , linkAttribute1.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR1_DET_DESCR , linkAttribute1.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
 		
 	}
 	
@@ -1259,7 +1355,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR2_NAME , linkAttribute2.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR2_DET_DESCR , linkAttribute2.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1284,7 +1380,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR3_NAME , linkAttribute3.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR3_DET_DESCR , linkAttribute3.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1309,7 +1405,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR4_NAME , linkAttribute4.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR4_DET_DESCR , linkAttribute4.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK4 , linkAttribute3.numBendPoints()) ;
 	}
 	
 	@Test
@@ -1334,7 +1430,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR5_NAME , linkAttribute5.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR5_DET_DESCR , linkAttribute5.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
 		
 	}
 	
@@ -1360,7 +1456,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR6_NAME , linkAttribute6.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR6_DET_DESCR , linkAttribute6.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
 		
 	}
 	
@@ -1386,7 +1482,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR7_NAME , linkAttribute7.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR7_DET_DESCR , linkAttribute7.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
 		
 	}
 	
@@ -1412,7 +1508,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR8_NAME , linkAttribute8.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR8_DET_DESCR , linkAttribute8.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
 		
 	}
 	
@@ -1438,20 +1534,129 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check name" , LINK_ATTR9_NAME , linkAttribute9.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR9_DET_DESCR , linkAttribute9.getDetailedDescription()) ;
-//		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute1.numBendPoints()) ;
+		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute9.numBendPoints()) ;
 		
 	}
-
 	
 	@Test
-	public void testCheckBendPoint () throws Exception
+	public void testLoadedProperty1 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property1 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property1.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property1 instanceof IPlainTextAnnotationProperty ) ;
+		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property1 ;
+		assertEquals ( "value" , PROPERTY1_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY1_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty2 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property2 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property2.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property2 instanceof IPlainTextAnnotationProperty ) ;
+		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property2 ;
+		assertEquals ( "value" , PROPERTY2_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY2_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty3 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property3 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property3.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property3 instanceof IHtmlAnnotationProperty ) ;
+		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property3 ;
+		assertEquals ( "value" , PROPERTY3_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY3_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty4 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property4 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property4.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property4 instanceof IHtmlAnnotationProperty ) ;
+		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property4 ;
+		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY4_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty5 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property5 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property5.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property5 instanceof INumberAnnotationProperty ) ;
+		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property5 ;
+		assertEquals ( "value" , PROPERTY5_VALUE, theProperty.getValue().intValue()) ;
+		assertEquals ( "creation serial" , PROPERTY5_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty6 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property6 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property6.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property6 instanceof INumberAnnotationProperty ) ;
+		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property6 ;
+		assertEquals ( "value" , PROPERTY6_VALUE, theProperty.getValue().intValue()) ;
+		assertEquals ( "creation serial" , PROPERTY6_CREATION_SERIAL , property6 .getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty7 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property7 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property7.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property7 instanceof IListAnnotationProperty ) ;
+		IListAnnotationProperty theProperty = (IListAnnotationProperty) property7 ;
+		List <String> listValues = theProperty.getValue() ;
+		assertEquals ( "first element" , PROPERTY7_LIST_VALUE1 , listValues.get(0)) ;
+		assertEquals ( "second element" , PROPERTY7_LIST_VALUE2 , listValues.get(1)) ;
+		assertEquals ( "creation serial" , PROPERTY7_CREATION_SERIAL , property7 .getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testLoadedProperty8 () throws Exception 
+	{
+		loadObjects() ;
+		assertNotNull ( "is not null " , property8 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property8.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property8 instanceof IListAnnotationProperty ) ;
+		IListAnnotationProperty theProperty = (IListAnnotationProperty) property8 ;
+		List <String> listValues =  theProperty.getValue() ;
+		assertEquals ( "first element" , PROPERTY8_LIST_VALUE1 , listValues.get(0)) ;
+		assertEquals ( "second element" , PROPERTY8_LIST_VALUE2 , listValues.get(1)) ;
+		assertEquals ( "creation serial" , PROPERTY8_CREATION_SERIAL , property8 .getCreationSerial()) ;
+	}
+	
+	@Test
+	public void testCheckBendPoints () throws Exception
 	{
 		loadObjects () ;
+		assertNotNull ( "is not null" , bendpoint1 ) ;
+		assertEquals ( "check Location" , LOCATION_51 , bendpoint1.getLocation() ) ;
+		assertEquals ( "check parent" , linkAttribute1 , bendpoint1.getOwningLink()) ;
 		
-		assertNotNull ( "is not null" , bendpoint ) ;
-		
-		assertEquals ( "check Location" , LOCATION_51 , bendpoint.getLocation() ) ;
-		assertEquals ( "check parent" , linkEdge1 , bendpoint.getOwningLink()) ;
+		assertNotNull ( "is not null" , bendpoint2 ) ;
+		assertEquals ( "check Location" , LOCATION_52 , bendpoint2.getLocation() ) ;
+		assertEquals ( "check parent" , linkAttribute2 , bendpoint2.getOwningLink()) ;
 
 	}
 }
