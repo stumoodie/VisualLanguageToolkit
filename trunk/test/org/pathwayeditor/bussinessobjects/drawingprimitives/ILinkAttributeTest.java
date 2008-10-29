@@ -28,9 +28,9 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.StubHibNotationFactory;
+import org.pathwayeditor.bussinessobjects.stubs.StubLinkObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.StubMap;
-import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubDefaultLinkAttributes;
-import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkObjectType;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkAttributeDefaults;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 
 /**
@@ -162,7 +162,7 @@ public class ILinkAttributeTest {
 	@Test
 	public void testSetRouter() throws Exception
 	{
-		assertEquals ( "null router" , StubDefaultLinkAttributes.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouter() ) ;
+		assertEquals ( "null router" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouter() ) ;
 		linkAttribute.setRouter(ROUTER_TYPE) ;
 		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouter() );
 	}
@@ -222,7 +222,7 @@ public class ILinkAttributeTest {
 	@Test
 	public void testSetUrlToNull() throws Exception 
 	{
-		assertEquals ( "url" , StubDefaultLinkAttributes.EXPECTED_DEFAULT_URL , linkAttribute.getUrl()) ;
+		assertEquals ( "url" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_URL , linkAttribute.getUrl()) ;
 		linkAttribute.setUrl(URL) ;
 		assertEquals ( "url" , URL , linkAttribute.getUrl()) ;
 	}

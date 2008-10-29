@@ -5,6 +5,7 @@
 	<property name="build.src.dir" value="./bin/src" />
 	<property name="src.dir" value="./src" />
 	<property name="test.dir" value="./test" />
+	<property name="stubs.dir" value="./stubs" />
 	<property name="integration.test.dir" value="./integrationTest" />
 	<property name="jar.dir" value="./jars" />
 	<property name="jar.name" value="BusinessObjects.jar" />
@@ -85,22 +86,34 @@
 
 	<target name="buildAll" description="main build task" depends="buildSrc, api-docs,buildTest, buildIntegrationTest,jar" />
 
-	<target name="buildTest" description="test build task" depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+	<target name="buildStubs" description="build task" depends="buildSrc">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${stubs.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		</javac>
+		<!--copy todir="${build.dir}">
+			<fileset dir="${stubs.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy-->
+	</target>
+
+	<target name="buildTest" description="test build task" depends="buildSrc,buildStubs">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${test.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc,buildStubs">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${integration.test.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 	</target>
@@ -113,6 +126,7 @@
 		<copy todir="${build.dir}">
 			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 		<copy todir="${build.src.dir}">
@@ -157,7 +171,7 @@
 		</junitreport>
 	</target>
 
-	<target name="jar">
+	<target name="jar" depends="buildSrc">
 		<delete dir="${jar.dir}" />
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${jar.name}">

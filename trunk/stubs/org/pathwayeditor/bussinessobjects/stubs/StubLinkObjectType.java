@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
+package org.pathwayeditor.bussinessobjects.stubs;
 
 import java.util.EnumSet;
 
@@ -11,6 +11,9 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkAttributeDefaults;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubSourceLinkTerminusDefinition;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubTargetLinkTerminusDefinition;
 
 /**
  * @author smoodie
@@ -29,7 +32,7 @@ public class StubLinkObjectType implements ILinkObjectType {
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
 	public ILinkAttributeDefaults getDefaultLinkAttributes() {
-		return new StubDefaultLinkAttributes();
+		return new StubLinkAttributeDefaults();
 	}
 
 	/* (non-Javadoc)

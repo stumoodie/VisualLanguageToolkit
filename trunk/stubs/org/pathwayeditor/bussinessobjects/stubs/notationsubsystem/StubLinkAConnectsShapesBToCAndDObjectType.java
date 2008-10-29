@@ -11,100 +11,119 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
  * @author smoodie
  *
  */
-public class StubLinkAConnectsShapesBToCAndDObjectType implements
-		ILinkObjectType {
-
+public class StubLinkAConnectsShapesBToCAndDObjectType implements ILinkObjectType {
+	private static final EnumSet<LinkEditableAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(LinkEditableAttributes.COLOUR);
+	private static final int UNIQUE_ID = 5;
+	private static final String DESCRIPTION = "Link A Object Type";
+	private static final String NAME = "Link A";
+	private final INotationSyntaxService syntaxService;
+	private final ILinkAttributeDefaults linkAttributeDefaults;
+	private final ILinkConnectionRules connectionRules;
+	private final ILinkTerminusDefinition sourceTerminusDefn;
+	private final ILinkTerminusDefinition targetTerminusDefn;
+	
 	/**
 	 * @param stubNotationSyntaxService
 	 */
-	public StubLinkAConnectsShapesBToCAndDObjectType(
-			StubNotationSyntaxService stubNotationSyntaxService) {
-		// TODO Auto-generated constructor stub
+	public StubLinkAConnectsShapesBToCAndDObjectType(INotationSyntaxService stubNotationSyntaxService) {
+		this.syntaxService = stubNotationSyntaxService;
+		this.linkAttributeDefaults = new StubLinkAttributeDefaults();
+		this.sourceTerminusDefn = new StubSourceLinkTerminusDefinition(this);
+		this.targetTerminusDefn = new StubTargetLinkTerminusDefinition(this);
+		this.connectionRules = new ILinkConnectionRules(){
+
+			public ILinkObjectType getLinkObjectType() {
+				return StubLinkAConnectsShapesBToCAndDObjectType.this;
+			}
+
+			public boolean isValidSource(IShapeObjectType source) {
+				return source.getUniqueId() == StubShapeBChildOfAllObjectType.UNIQUE_ID;
+			}
+
+			public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
+				boolean sourceOk = isValidSource(source);
+				boolean targetOk = target.getUniqueId() == StubShapeCParentOfShapeDObjectType.UNIQUE_ID
+					|| target.getUniqueId() == StubShapeDChildOfShapeCObjectType.UNIQUE_ID;
+				return sourceOk && targetOk;
+			}
+			
+		};
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
 	public ILinkAttributeDefaults getDefaultLinkAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.linkAttributeDefaults;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getEditiableAttributes()
 	 */
 	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		return EDITABLE_ATTRIBUTES;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getLinkConnectionRules()
 	 */
 	public ILinkConnectionRules getLinkConnectionRules() {
-		// TODO Auto-generated method stub
-		return null;
+		return connectionRules;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getSourceTerminusDefinition()
 	 */
 	public ILinkTerminusDefinition getSourceTerminusDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.sourceTerminusDefn;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getTargetTerminusDefinition()
 	 */
 	public ILinkTerminusDefinition getTargetTerminusDefinition() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.targetTerminusDefn;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getUniqueId()
 	 */
 	public int getUniqueId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return UNIQUE_ID;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDescription()
 	 */
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return DESCRIPTION;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getName()
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getSyntaxService()
 	 */
 	public INotationSyntaxService getSyntaxService() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.syntaxService;
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(IObjectType o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getUniqueId() < o.getUniqueId() ? -1 : this.getUniqueId() > o.getUniqueId() ? 1 : 0;
 	}
 
 }

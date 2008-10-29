@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
+package org.pathwayeditor.bussinessobjects.stubs;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
