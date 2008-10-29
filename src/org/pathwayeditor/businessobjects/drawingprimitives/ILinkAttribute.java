@@ -6,24 +6,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Connection
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanvasAttribute {
-	
-	/**
-	 * Get the Canvas related with this Link. Cannot be null.
-	 * @return the Canvas. Cannot be null.
-	 */	
-	ICanvas getCanvas();
-
-	/**
-	 * Get the Creation serial of this Link Cannot be null.
-	 * @return the Serial.
-	 */	
-	int getCreationSerial();
-	
+public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.
@@ -35,13 +21,13 @@ public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanv
 	 * Get the Link Decorator for the source of the link. Cannot be null.
 	 * @return the source link Decorator.
 	 */		
-	ILinkEndDecorator getLinkSourceDecoration();
+	ILinkTerminus getSourceTerminus();
 
 	/**
 	 * Get the Link Decorator for the target of the link. Cannot be null.
 	 * @return the target link Decorator.
 	 */		
-	ILinkEndDecorator getLinkTargetDecoration();
+	ILinkTerminus getTargetTerminus();
 
 	/**
 	 * Get the Connector router of the link. Cannot be null.
@@ -127,16 +113,43 @@ public interface ILinkAttribute extends IZOrderedObject, IAnnotatedObject, ICanv
 	void setUrl ( String url) ;
 	
 	/**
-	 * Adds a new Property in the link.
-	 * @param name The identifier for this property.
-	 * @param toAdd The property to add on this link
-	 * @throws IllegalArgumentException if toAdd is null.
-	 */
-	void addLinkProperty ( String name , IAnnotationProperty toAdd ) ;
+	 * Gets the Name that is related with this link.
+	 * @return the name of the link.
+	 */	
+	String getName () ;
 	
 	/**
-	 * Given a property name, returns the related property of this link.
-	 * @return the property that is assigned to the given identifier. If no property exists null is returned.
+	 * Sets the Name that is related with this link.
+	 * @param newName the new Name
 	 */
-	IAnnotationProperty getProperty ( String propName );
+	void setName ( String newName) ;
+	
+	/**
+	 * Gets the Name that is related with this link.
+	 * @return the description of the link.
+	 */	
+	String getDescription () ;
+	
+	/**
+	 * Sets the Description that is related with this link.
+	 * @param newDescription the new Description
+	 */
+	void setDescription ( String newDescription) ;	
+	
+	/**
+	 * Gets the DetailedDescription that is related with this link.
+	 * @return the DetailedDescription of the link.
+	 */	
+	String getDetailedDescription () ;
+	
+	/**
+	 * Sets the DetailedDescription that is related with this link.
+	 * @param DetailedDescription the new DetailedDescription
+	 */
+	void setDetailedDescription ( String DetailedDescription) ;	
+	
+	
+	ILinkEdge getLinkEdge();
+
+	Iterator<IAnnotationProperty> propertyIterator();
 }

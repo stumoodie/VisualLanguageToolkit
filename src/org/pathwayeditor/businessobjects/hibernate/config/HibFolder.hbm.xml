@@ -9,38 +9,31 @@
 			<column name="id" />
 			<generator class="native" />
 		</id>
-		<set name="mapDiagrams" inverse="true"
-			cascade="all,delete-orphan">
+		<set name="mapDiagrams" inverse="true" cascade="all">
 			<key>
 				<column name="folder_id" not-null="true" />
 			</key>
-			<one-to-many
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMapDiagram" />
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
 		</set>
-		<many-to-one name="repository"  class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
-			<column name="repository_id" not-null="true" />
+		<many-to-one name="repository"  cascade="all" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+			<column name="repository_id" not-null="false" />
 		</many-to-one>
-		<set name="subFolders" inverse="true"
-			cascade="all,delete-orphan">
+		<set name="subFolders" inverse="true" cascade="all">
 			<key>
 				<column name="parent_folder_id" not-null="true" />
 			</key>
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder" />
 		</set>
-		<property name="INode" type="int">
+
+		<property name="INode" type="int" access="property">
 			<column name="inode" not-null="true" />
 		</property>
 		
-		<joined-subclass
-			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"
-			table="RootFolder">
+		<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder"	table="RootFolder">
 			<key>
 				<column name="id" not-null="true" unique="true" />
 			</key>
-			<many-to-one name="owningRepository" unique="true" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" >
-				<column name="owning_repository_id" not-null="true" />
-			</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass
@@ -50,10 +43,8 @@
 				<column name="id" not-null="true" unique="true" />
 			</key>
 			<properties name="xak1subfolder" unique="true">
-				<many-to-one name="parentFolder"
-					foreign-key="xfk1SubFolderParentFolder"
-					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
-					<column name="parent_folder_id" not-null="true" />
+				<many-to-one name="parentFolder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
+					<column name="parent_folder_id" not-null="false" />
 				</many-to-one>
 				<property name="name" type="string">
 					<column name="name" length="128" not-null="true" />

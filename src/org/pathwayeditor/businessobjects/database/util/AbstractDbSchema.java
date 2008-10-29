@@ -5,9 +5,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class AbstractDbSchema {
+	protected Connection connection;
 
-	protected final Connection connection;
-
+	public AbstractDbSchema(){
+		this.connection = null;
+	}
+	
 	public AbstractDbSchema(Connection connection) {
 		this.connection = connection;
 	}
@@ -18,6 +21,14 @@ public abstract class AbstractDbSchema {
 	
 	public void dropSchema() throws SQLException{
 		executeDdl(getSchemaDropDdl());
+	}
+
+	public Connection getConnection() {
+		return this.connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
 
 	protected abstract String[] getSchemaCreationDdl();
@@ -32,9 +43,10 @@ public abstract class AbstractDbSchema {
 				stmt.execute(ddl);
 			}
 			finally{
-				stmt.close();
+				if(stmt != null){
+					stmt.close();
+				}
 			}
 		}
 	}
-
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/pathwayeditor/businessobjects/pojos/Label.java|org/pathwayeditor/businessobjects/pojos/Link.java|org/pathwayeditor/businessobjects/pojos/Model.java|org/pathwayeditor/businessobjects/pojos/ModelLinkFactory.java|org/pathwayeditor/businessobjects/pojos/RootObject.java|org/pathwayeditor/businessobjects/pojos/SelectionSubgraph.java|org/pathwayeditor/businessobjects/pojos/Shape.java|org/pathwayeditor/businessobjects/pojos/ShapeFactory.java|org/pathwayeditor/businessobjects/pojos/ShapeModel.java|org/pathwayeditor/businessobjects/pojos/ChildModelLinkFactory.java|org/pathwayeditor/businessobjects/pojos/CommonModelNode.java|org/pathwayeditor/businessobjects/pojos/CopyBuilder.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="stubs"/>
+	<classpathentry kind="src" path="Acceptance Test"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="integrationTest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -11,8 +13,14 @@
 			<attribute name="javadoc_location" value="file://lib/hsqldb/doc/src/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/DbUnit/dbunit-2.2.3.jar" sourcepath="lib/DbUnit/dbunit-2.2.3-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/DbUnit/dbunit-2.2.3-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-antlr-1.6.5.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-junit-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-launcher-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-swing-1.6.5.jar"/>
@@ -41,11 +49,11 @@
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/swarmcache-1.0rc2.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/syndiag2.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/versioncheck.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-api-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib/apache-log4j-1.2.15/log4j-1.2.15.jar" sourcepath="lib/apache-log4j-1.2.15/src/main/java"/>
-	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/xerces-2.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/bsh-core-2.0b4.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/cglib-2.1_3-src.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/cglib-nodep-2.1_3.jar"/>
@@ -57,7 +65,6 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/dbunit-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/compoundgraph/compoundgraph.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,11 +5,14 @@
 	<property name="build.src.dir" value="./bin/src" />
 	<property name="src.dir" value="./src" />
 	<property name="test.dir" value="./test" />
+	<property name="stubs.dir" value="./stubs" />
 	<property name="integration.test.dir" value="./integrationTest" />
 	<property name="jar.dir" value="./jars" />
 	<property name="jar.name" value="BusinessObjects.jar" />
 	<property name="lib.dir" value="./lib" />
 	<property name="application.dir" value="../org.pathwayeditor.applicationNew/lib" />
+	<property name="target" value="1.5" />
+	<property name="source" value="1.5" />
 	<property name="hsqldb.dir" value="${lib.dir}/hsqldb/lib/" />
 
 	<path id="classpath">
@@ -62,7 +65,7 @@
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
-		<pathelement location="${lib.dir}/dbunit-2.2.jar" />
+		<pathelement location="${lib.dir}/DbUnit/dbunit-2.2.3.jar" />
 		<pathelement location="${lib.dir}/compoundgraph/compoundgraph.jar" />
 	</path>
 
@@ -84,34 +87,47 @@
 
 	<target name="buildAll" description="main build task" depends="buildSrc, api-docs,buildTest, buildIntegrationTest,jar" />
 
-	<target name="buildTest" description="test build task" depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+	<target name="buildStubs" description="build task" depends="buildSrc">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${stubs.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		</javac>
+		<!--copy todir="${build.dir}">
+			<fileset dir="${stubs.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy-->
+	</target>
+
+	<target name="buildTest" description="test build task" depends="buildSrc,buildStubs">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${test.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 	</target>
 
-	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc">
-		<javac classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc,buildStubs">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${integration.test.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name="buildSrc" description="src build task" depends="clean,mkdirs">
 		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
-		<javac classpathref="classpath" srcdir="${src.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
 			<exclude name="**/businessobjects/pojos/**" />
 		</javac>
 		<copy todir="${build.dir}">
 			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
 		<copy todir="${build.src.dir}">
@@ -156,31 +172,31 @@
 		</junitreport>
 	</target>
 
-	<target name="jar">
+	<target name="jar" depends="buildSrc">
 		<delete dir="${jar.dir}" />
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${jar.name}">
 			<fileset dir="${build.src.dir}" />
 		</jar>
 	</target>
-	<target name="jar-and-export" depends="build-database,jar">
+	<target name="jar-and-export" depends="jar">
 		<copy todir="${application.dir}">
 			<fileset dir="${jar.dir}" />
 		</copy>
 	</target>
-
+	
 	<target name="build-database">
-		<java classname="org.pathwayeditor.businessobjects.database.util.MakeNewDeploymentDatabase" fork="true" failonerror="true">
+		<java classname="org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB" fork="true" failonerror="true">
 			<classpath>
 				<pathelement location="${build.dir}" />
-				<pathelement location="${hsqldb.dir}/hsqldb.jar" />
+				<path refid="test.classpath" />
 			</classpath>
 		</java>
 		<copy todir="${application.dir}/hsqldb/lib">
 			<fileset dir="${hsqldb.dir}">
-				<include name="epeDep.log" />
-				<include name="epeDep.properties" />
-				<include name="epeDep.script" />
+				<include name="EmbeddedDb.app.log" />
+				<include name="EmbeddedDb.properties" />
+				<include name="EmbeddedDb.script" />
 			</fileset>
 		</copy>
 	</target>

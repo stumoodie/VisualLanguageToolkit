@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import org.pathwayeditor.businessobjects.typedefn.IHtmlPropertyDefinition;
-
 public interface IHtmlAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
 	
 	/**
@@ -20,6 +18,6 @@ public interface IHtmlAnnotationProperty extends IVisualisableAnnotationProperty
 	 * Set the textual value associated with this property.
 	 * @throws IllegalArgumentException The property value cannot be null.
 	 */
-	void setRichTextValue(String newText);
+	void setValue(String newText);
 	
 }

@@ -1,53 +1,34 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import java.util.EnumSet;
+
 
 public interface IShapeObjectType extends INodeObjectType {
+	public static enum EditableShapeAttributes { 
+		LINE_COLOUR, LINE_STYLE, LINE_WIDTH, FILL_COLOUR, SHAPE_SIZE, SHAPE_TYPE
+	}; 
+	
+	/**
+	 * Returns the unique identifier for the link object type, which must be a positive integer.
+	 * @return the unique id, which must comply with the postcondition: <code>getUniqueId() > 0</code>. 
+	 */
+	int getUniqueId();
 
-	IPrimitiveShape getShapeType();
-
-	String getDescription();
-
-	String getDetailedDescription();
-
-	String getName();
-
-	String getURL();
-
-	int getSizeWidth();
-
-	int getSizeHeight();
-
-	LineStyle getLineStyle();
-
-	int getLineColourRed();
-
-	int getLineColourGreen();
-
-	int getLineColourBlue();
-
-	int getFillTransparency();
-
-	int getFillColourRed();
-
-	int getFillColourGreen();
-
-	int getFillColourBlue();
-
-	void addProperty(IPropertyDefinition createTextProperty);
-
-	int getLineWidth();
-
-	IPropertyDefinitionFilter getPropertiesFilter();
-
+	/**
+	 * Get the parenting rules of the shape
+	 */
 	IShapeParentingRules getParentingRules();
 
-	boolean isLineColourEditable();
+	/**
+	 * Gets the default attrributes for this object type.
+	 * @return the default attributes, which cannot be null.
+	 */
+	IShapeAttributeDefaults getDefaultAttributes();
+	
+	/**
+	 * Is the line colour editable
+	 * @return the set of editble attributes.
+	 */
+	EnumSet<EditableShapeAttributes> getEditableAttributes();
 
-	boolean isLineStyleEditable();
-	
-	boolean isLineWidthEditable();
-	
-	boolean isFillEditable();
 }

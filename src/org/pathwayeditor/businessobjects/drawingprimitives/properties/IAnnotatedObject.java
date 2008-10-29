@@ -5,8 +5,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
-
 /**
  * @author smoodie
  *

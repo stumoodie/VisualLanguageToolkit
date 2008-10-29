@@ -1,14 +1,16 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 
 public interface IAnnotationProperty {
+	
+	ICanvas getCanvas();
 	
 	/**
 	 * Get the serial number of this property.
 	 * @return The property serial. Cannot be null.
 	 */
-	int getPropertySerial();
+	int getCreationSerial();
 	
 	/**
 	 * Get the definition associated with this PlainTextProperty.

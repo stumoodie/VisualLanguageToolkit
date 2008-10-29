@@ -2,19 +2,19 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Date;
 
-import org.pathwayeditor.businessobjects.contextadapter.IContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 
 public interface ICanvas {
 	
 	/**
-	 * Get the map assosiated with this Canvas.
+	 * Get the map associated with this Canvas.
 	 * @return The map . Cannot be null.
 	 */
-	IMap getMap();
+	IMap getOwningMap();
 	
 	/**
 	 * Enable or disable the Snap to Grid funcionality.
@@ -30,7 +30,7 @@ public interface ICanvas {
 	/**
 	 * Enable or disable the Grid.
 	 */	
-	void setGridEnabled(boolean snapToGridStatus);
+	void setGridEnabled(boolean gridStatus);
 	
 	/**
 	 * Get Grid status.
@@ -42,19 +42,9 @@ public interface ICanvas {
 	 * Set Grid size.
 	 * @throws IllegalArgumentException if X or Y are less than zero.
 	 */	
-	void setGrid(int width, int height);
+	void setGridSize(Size newSize);
 	
-	/**
-	 * Get the width of the grid.
-	 * @return a numeric value representing the width of the grid.
-	 */
-	int gridWidth();
-
-	/**
-	 * Get the height of the grid.
-	 * @return a numeric value representing the heigth of the grid.
-	 */
-	int gridHeight();
+	Size getGridSize();
 
 	/**
 	 * Set the background color of this Canvas.
@@ -72,7 +62,7 @@ public interface ICanvas {
 	 * Get the Context assosiated with this Canvas.
 	 * @return the context. Cannot be null.
 	 */	
-	IContext getContext();
+	INotationSubsystem getNotationSubsystem();
 	
 	/**
 	 * Get the date this Canvas was last modified.
@@ -90,11 +80,26 @@ public interface ICanvas {
 	 * Get the size of this map
 	 * @return the size. Cannot be null.
 	 */	
-	Size getMapSize () ;
+	Size getCanvasSize () ;
 	
 	/**
 	 * Set the size of this map
 	 * @throws IllegalArgumentException if value is null.
 	 */	
-	void setMapSize ( Size size ) ;
+	void setCanvasSize ( Size size ) ;
+	
+	/**
+	 * Get the model for this canvas.
+	 * @return the model associated with the canvas, which cannot be null. 
+	 */
+	IModel getModel();
+
+	
+	/**
+	 * Create a copy of this canvas and add it to the given map.
+	 * @param map the map that will own the copied map. This cannot be the same map that owns this model. 
+	 * @return The newly created model.
+	 * @throws IllegalArgumentException if <code>getOwningMap().equals(map)</code>.
+	 */
+	ICanvas createCopy(IMap map);
 }

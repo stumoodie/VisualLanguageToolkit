@@ -1,58 +1,16 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import java.util.EnumSet;
+
 
 public interface ILinkObjectType extends IObjectType {
-
-	/**
-	 * Get the line style of the object type.
-	 * @return a non-null LineStyle.
-	 */
-	LineStyle getLineStyle();
-
-	/**
-	 * Get the width of the line drawing the link. 
-	 * @return the line width.
-	 */
-	int getLineWidth();
-
-	/**
-	 * The red component of the RGB fill colour. The number can be between 0 and 255.
-	 * @return a red colour value.
-	 */
-	int getLineColourRed();
-
-	/**
-	 * The green component of the RGB fill colour. The number can be between 0 and 255.
-	 * @return a green colour value.
-	 */
-	int getLineColourGreen();
-
-	/**
-	 * The blue component of the RGB fill colour. The number can be between 0 and 255.
-	 * @return a blue colour value.
-	 */
-	int getLineColourBlue();
+	public static enum LinkEditableAttributes{ COLOUR, LINE_STYLE, LINE_WIDTH };
 	
 	/**
-	 * Get the definition of the link's source.
-	 * @return A non-null link end definition.
+	 * Returns the unique identifier for the link object type, which must be a positive integer.
+	 * @return the unique id, which must comply with the postcondition: <code>getUniqueId() > 0</code>.
 	 */
-	ILinkEndDefinition getLinkSource();
-	
-	/**
-	 * Get the definition of the link's target.
-	 * @return A non-null link end definition.
-	 */
-	ILinkEndDefinition getLinkTarget();
-	
-	/**
-	 * Get the context configurable properties via a utility class.
-	 * The filter should be aware of changes made to the properties list
-	 * in the ILinkObjectType instance.
-	 * @return A non-null instance of IPropertyDefinitionFilter.
-	 */
-	IPropertyDefinitionFilter getPropertyDefinitionFilter();
+	int getUniqueId();
 	
 	/**
 	 * Gets the connection rules for this link.
@@ -61,20 +19,26 @@ public interface ILinkObjectType extends IObjectType {
 	ILinkConnectionRules getLinkConnectionRules();
 
 	/**
-	 * Determines whether the line colour of the link can be modified. 
-	 * @return true is it editable, false otherwise.
+	 * Gets the default attributes for the link.
+	 * @return the default attributes class, which cannot be null.
 	 */
-	boolean isLineColourEditable();
+	ILinkAttributeDefaults getDefaultLinkAttributes();
 	
 	/**
-	 * Determines whether the line width of the link can be modified. 
-	 * @return true is it editable, false otherwise.
+	 * Get the source terminus definition.
+	 * @return the definition, which cannot be null.
 	 */
-	boolean isLineWidthEditable();
-
+	ILinkTerminusDefinition getSourceTerminusDefinition();
+	
 	/**
-	 * Determines whether the line style of the link can be modified. 
-	 * @return true is it editable, false otherwise.
+	 * Get the target terminus definition.
+	 * @return the definition, which cannot be null.
 	 */
-	boolean isLineStyleEditable();
+	ILinkTerminusDefinition getTargetTerminusDefinition();
+	
+	/**
+	 * Get the editable attributes for this type.
+	 * @return the set of editable attributes, which cannot be null, but can be empty.
+	 */
+	EnumSet<LinkEditableAttributes> getEditiableAttributes();
 }

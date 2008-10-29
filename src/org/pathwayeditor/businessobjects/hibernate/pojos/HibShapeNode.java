@@ -5,172 +5,99 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IChildCompoundGraph;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+
+import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
 /**
  * @author nhanlon
  *
  */
 public class HibShapeNode extends HibCompoundNode implements IShapeNode {
-	
 	private HibShapeAttribute shapeAttribute ;
 	
+	/**
+	 * Constructor should only be used by hiberate.
+	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
+	 */
 	HibShapeNode(){
 		super();
 	}
 	
-	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex){
-		super(parentNode, nodeIndex);
+	/**
+	 * Constructor to be used by application code.
+	 * @param parentNode
+	 * @param nodeIndex
+	 * @param shapeAttribute
+	 */
+	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, HibShapeAttribute shapeAttribute){
+		super(parentNode.getGraph(), parentNode, nodeIndex);
+		this.changeAttribute(shapeAttribute);
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#childShapeIterator()
-	 */
-	public Iterator<IShapeNode> childShapeIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getChildModel()
 	 */
-	public IChildCompoundGraph getChildModel() {
-		// TODO Auto-generated method stub
-		return null;
+	public HibSubModel getSubCanvas() {
+		return this.getChildCompoundGraph();
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumChildren()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getAttribute()
 	 */
-	public int getNumChildren() {
-		// TODO Auto-generated method stub
-		return 0;
+	public HibShapeAttribute getAttribute() {
+		return this.shapeAttribute;
+	}
+
+	void setAttribute(HibShapeAttribute shapeAttribute) {
+		this.shapeAttribute = shapeAttribute;
+	}
+	
+	public void changeAttribute(HibShapeAttribute newShapeAttribute){
+		if(this.shapeAttribute != null){
+			this.shapeAttribute.setShapeNode(null);
+		}
+		if(newShapeAttribute != null){
+			newShapeAttribute.setShapeNode(this);
+		}
+		this.shapeAttribute = newShapeAttribute;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumLabels()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
 	 */
-	public int getNumLabels() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumLinks()
-	 */
-	public int getNumLinks() {
-		// TODO Auto-generated method stub
-		return 0;
+	public IShapeObjectType getObjectType() {
+		return this.shapeAttribute.getObjectType();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumSourceLinks()
 	 */
 	public int getNumSourceLinks() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getOutDegree();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumTargetLinks()
 	 */
 	public int getNumTargetLinks() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getParentShape()
-	 */
-	public IShapeNode getParentShape() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#labelIterator()
-	 */
-	public Iterator<ILabelAttribute> labelIterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#linkIterator()
-	 */
-	public Iterator<ILinkAttribute> linkIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getInDegree();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#sourceLinkIterator()
 	 */
-	public Iterator<ILinkAttribute> sourceLinkIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<ILinkEdge> sourceLinkIterator() {
+		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.getOutEdgeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#targetLinkIterator()
 	 */
-	public Iterator<ILinkAttribute> targetLinkIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<ILinkEdge> targetLinkIterator() {
+		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.getInEdgeIterator());
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getAttribute()
-	 */
-	public IShapeAttribute getAttribute() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getFirstObject()
-	 */
-	public IZOrderedObject getFirstObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getLastObject()
-	 */
-	public IZOrderedObject getLastObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getNextObject()
-	 */
-	public IZOrderedObject getNextObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getPreviousObject()
-	 */
-	public IZOrderedObject getPreviousObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public HibShapeAttribute getShapeAttribute() {
-		return this.shapeAttribute;
-	}
-
-	public void setShapeAttribute(HibShapeAttribute shapeAttribute) {
-		this.shapeAttribute = shapeAttribute;
-	}
-	
-	
 }

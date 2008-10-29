@@ -1,0 +1,32 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="Repository" >
+		<column>name</column>
+		<column>description</column>
+		<column>build_num</column>
+		<column>last_inode</column>
+			<row>
+				<value>repo name 3</value>
+				<value>repository description 3</value>
+				<value>25343</value>
+				<value>1</value>
+			</row>
+	</table>
+	<table name="Folder" >
+		<column>inode</column>
+			<row>
+				<value>1</value>
+			</row>
+	</table>
+</dataset>
+
+<!-- 
+{TREE VIEW}
+/===========================================\
+|											|
+|[/]Repository2(100002)						|
+|		|									|
+|		RootFolder2(100002)					|
+|											|
+\===========================================/
+-->

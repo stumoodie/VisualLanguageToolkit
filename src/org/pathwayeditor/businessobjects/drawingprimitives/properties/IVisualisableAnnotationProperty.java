@@ -17,12 +17,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 public interface IVisualisableAnnotationProperty {
 	
 	/**
-	 * Get the definition associated with this property.
-	 * @return The property definition instance. Cannot be null.
-	 */
-	IVisualisableAnnotationProperty getProperty();
-	
-	/**
 	 * Reports the recorded displayed state of the visualisable property. Not this does not affect the
 	 * display of the property directly, but simply records whether it is displayed.
 	 * @return true is the property s being displayed, false otherwise.

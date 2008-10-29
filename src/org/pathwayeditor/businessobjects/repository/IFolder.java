@@ -2,9 +2,7 @@ package org.pathwayeditor.businessobjects.repository;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyChangeSupport;
-
-public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
+public interface IFolder extends IRepositoryItem {
 	/**
 	 * @return the path to this folder in the folder tree, starting from the root folder which has the path '/'; calling this provides a string which can be
 	 *  used by HibRepository's getFolderByPath() method  to return the given folder. Paths are NOT case sensitive.
@@ -37,16 +35,31 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	ISubFolder createSubfolder(String newSubfolderName);
 	
 	/**
-	 * Tests if the subfolder is contained (anywhere in the tree of children //TODO NH verify ) in this subfolder.
+	 * Tests if the subfolder is contained in this folder.
 	 * @param subFolder the subfolder to test, can be null.
 	 * @return true of the subfolder is contained here, false otherwise.
 	 */
 	boolean containsSubfolder(ISubFolder subFolder);
 	
 	/**
+	 * Tests if a subfolder with this name is contained in this folder.
+	 * @param subFolderName the subfolder name to test, can be null.
+	 * @return true if a subfolder with this name is contained in this folder, false otherwise.
+	 */
+	boolean containsSubfolder(String subFolderName);
+	
+	/**
+	 * Tests if the <code>subfolder</code> is a descendent of this folder.     
+	 * @param subFolder the subfolder to test, which can be null.
+	 * @return true if this <code>subFolder</code> is descendent, false otherwise.
+	 */
+	public boolean isDescendent(ISubFolder subFolder);
+	
+	/**
 	 * Tests is the new folder can legally be added as a subfolder of this folder.
 	 * It checks if the subfolder's name will be unique and that the subfolder
-	 * does not contain this folder as a child (thus creating a cycle). 
+	 * does not contain this folder as a child (thus creating a cycle).
+	 * It must also be in the same repository.
 	 * @param subFolder The subfolder to be tested. It can be null.
 	 * @return true if the folder can successfully be added as a subfolder,
 	 * or false if <code>subFolder</code> is null or if any of the validity 
@@ -69,22 +82,31 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	ISubFolder moveSubfolder(ISubFolder subFolder);
 
 	/**
+	 * Tests is the copied folder can legally be added as a subfolder of this folder.
+	 * It checks if the subfolder's name will be unique and that the subfolder
+	 * does not contain this folder as a child (thus creating a cycle). 
+	 * @param subFolder The subfolder to be tested. It can be null.
+	 * @return true if the copied folder can successfully be added as a subfolder,
+	 * or false if <code>subFolder</code> is null or if any of the validity 
+	 * rules are violated. 
+	 */
+	boolean canCopySubfolder(ISubFolder subFolder);
+
+	/**
 	 * Create a copy of <code>origSubfolder</code> in this subfolder. This copies the tree of repository
 	 * items (subfolders and maps) from this point downwards. The new copies will have new inode values.  
 	 * @param origSubfolder the original subfolder to be copied from. 
 	 * @return an instance of the new folder that has been created as a result of the copy in this subfolder.
-	 * @throws an IllegalArgumentException if the canUseSubFolderName() returns false for original folder 
+	 * @throws IllegalArgumentException if <code>canCopySubfolder() == false</code>. 
 	 */
 	ISubFolder createCopyOfSubfolder(ISubFolder origSubfolder);
 	
 	/**
-	 * Remove the subfolder from here and destroy it and the tree of repository items from this point downwards.
-	 * This operation will remove Maps and their contents too.  
+	 * Remove the subfolder from this folder.
+	 * This operation will also remove all descendent Maps and subfolders that belong to this subfolder.  
 	 * @param subFolder the subfolder to be deleted. Cannot be null.
 	 * @throws IllegalArgumentException if subFolder is null.
-	 *TODO - NH assumptions follow
 	 * @throws IllegalArgumentException if subFolder is not contained in this folder
-	 * will remove the subfolder if it exists ANYWHERE in the child folder tree of this folder, not just in its immediate children
 	 */
 	void removeSubfolder(ISubFolder subFolder);
 	
@@ -114,9 +136,7 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * <code>canRenameSubfolder(subFolder, newFolderName) == true</code>.  
 	 * @param subFolder the subfolder to rename which must have this folder as its parent folder.
 	 * @param newFolderName the new name of the subfolder, which cannot be null.
-	 * @throws IllegalArgumentException if <code>subFolder</code> is not a child of this folder.
-	 * @throws IllegalArgumentException if <code>newFolderName</code> is null.
-	 * @throws IllegalArgumentException if <code>canRename</code> returns false. //TODO - verify NH
+	 * @throws IllegalArgumentException if <code>canRename</code> returns false.
 	 */
 	void renameSubfolder(ISubFolder subFolder, String newFolderName);
 	
@@ -124,28 +144,29 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * the number of maps belonging to this folder.
 	 * @return the number of maps.
 	 */
-	int numMaps();
+	int getNumMaps();
 
 	/**
 	 * Provide an iterator that iterates throw the maps belonging to this folder. It cannot be
 	 * null, but can be empty.
-	 * @return
+	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<? extends IMap> getMapIterator();
+	Iterator<IMap> getMapIterator();
 	
 	/**
 	 * Provide an iterator that iterates through the immediate children of this folder. It cannot be
 	 * null, but can be empty.
-	 * @return
+	 * @return the iterator, which cannot be null.
 	 */
-	Iterator< ? extends ISubFolder> getSubFolderIterator();
+	Iterator<ISubFolder> getSubFolderIterator();
+	
+	int getNumSubFolders();
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name
 	 * follows the naming rules, is not-null and that the name is unique for this folder (NOT case sensitive). 
 	 * @param name The name potential map to be tested.
 	 * @return True if creating a map of this name will succeed.
-	 * TODO - NH verify I am assuming that this method does not throw an IllegalArg exception if nameis null or malformed 
 	 */
 	boolean canUseMapName(String name);
 	
@@ -160,15 +181,36 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	IMap createMap(String newMapName);
 	
 	/**
+	 * Tests is the copied map can be added to this folder.
+	 * It checks if the map's name will be unique and that this folder
+	 * does not contain this map already. 
+	 * @param origMap The map to be tested. It can be null.
+	 * @return true if the copied map can successfully be copied and added to this folder,
+	 * or false otherwise. 
+	 */
+	boolean canCopyMap(IMap origMap);
+
+	/**
 	 * Creates a new map in this folder that is a copy of another map. The map 
 	 * contents are also copied into the new map. The new map is assigned to this
 	 * folder. Note that the map to be copied cannot be null or contained by the current
 	 * folder as this would result in a name clash. 
 	 * @param origMap The map to be copied from.
 	 * @return The newly created map.
-	 * @throws IllegalArgumentException if the origMap is null or if <code>containsMap(origMap) == true</code>.
+	 * @throws IllegalArgumentException if <code>canCopyMap(origMap) == false</code>.
 	 */
 	IMap createCopyOfMap(IMap origMap);
+	
+	/**
+	 * Tests is the map can moved to this folder.
+	 * It checks if the map's name will be unique and that the folder
+	 * does not contain this map already. 
+	 * It must also be in the same repository.
+	 * @param origMap The map to be tested. It can be null.
+	 * @return true if the map can successfully be moved to this folder,
+	 * or false otherwise. 
+	 */
+	boolean canMoveMap(IMap origMap);
 	
 	/**
 	 * Adds a copy of the map to the new folder and orphans the original map.
@@ -187,6 +229,13 @@ public interface IFolder extends IRepositoryItem, IPropertyChangeSupport{
 	 * @return True if the map is contained in this folder, false otherwise.
 	 */
 	boolean containsMap(IMap newMap);
+
+	/**
+	 * Tests if a map with this name is contained by this folder.
+	 * @param newMapName The map name to test, which can be null.
+	 * @return True if a map with this name is contained in this folder, false otherwise.
+	 */
+	boolean containsMap(String newMapName);
 
 	/**
 	 * Tests of a map can be renamed to the new name. This requires the new name

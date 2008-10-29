@@ -9,11 +9,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * @author nhanlon Drops the (default) database and recreates; a ddl file is used.
+ * @author nhanlon A ddl file is used for schema creation/destruction.
  */
 public class MakeNewDatabaseDropOld {
 	// public static final String CONNECTION_URL="jdbc:hsqldb:mem:dev";
-	public static final String CONNECTION_URL = IConnectionInfo.DATABASE_DEFAULT_URL;
+	public static final String CONNECTION_URL = "jdbc:hsqldb:hsql://localhost/epeDev";
 	private static final String PASSWORD = "";
 	private static final String USERNAME = "sa";
 	private static Connection conn;

@@ -1,15 +1,16 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IPrimitiveShape;
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , ICanvasAttribute {
+public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute {
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -100,10 +101,10 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	 * @param primitiveShape the new primitive shape. Cannot be null
 	 * @throws IllegalArgumentException if primitiveShape is null.
 	 */
-	void setPrimitiveShape(IPrimitiveShape primitiveShape);
+	void setPrimitiveShape(PrimitiveShapeType primitiveShape);
 	
 	
-	IPrimitiveShape getPrimitiveShape();
+	PrimitiveShapeType getPrimitiveShape();
 	
 	/**
 	 * Returns a {@link RGB} representation for the background color of this Shape
@@ -158,16 +159,18 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject , IC
 	void setLineStyle(LineStyle lineStyle);
 	
 	/**
-	 * Tests is the property of the given name exists in this shape.
-	 * @param propertyName The name of the property. Can be null.
-	 * @return true of the shape contains the property, false otherwise.
+	 * Returns the padding for this Shape.
+	 * @return the padding of this Shape.
 	 */
-	boolean hasProperty(String propertyName);
+	int getPadding () ;
 	
 	/**
-	 * Gets the property of the given name.
-	 * @param propertyName the name of the property
-	 * @throws IllegalArgumentException if <code>hasProperty(propertyName) == false</code>.
+	 * Sets the padding for this Shape
+	 * @param padding the new padding.
 	 */
-	IAnnotationProperty getProperty(String propertyName);
+	void setPadding ( int padding ) ;
+
+	IShapeNode getShapeNode();
+	
+	Iterator<IAnnotationProperty> propertyIterator();
 }

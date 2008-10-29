@@ -9,7 +9,7 @@
             <generator class="native" />
         </id>
         <properties name="xak1property" unique="true">
-        	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" fetch="select">
+        	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
             	<column name="canvas_id" not-null="true" />
         	</many-to-one>
         	<property name="creationSerial" type="int">
@@ -21,7 +21,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-	        <property name="textValue" type="string">
+	        <property name="value" type="string">
     	        <column name="text_value" length="4096" not-null="true" />
         	</property>
     	</joined-subclass>
@@ -30,7 +30,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-	        <property name="richTextValue" type="text">
+	        <property name="value" type="text">
     	        <column name="rich_text_value" not-null="true" />
         	</property>
     	</joined-subclass>
@@ -39,7 +39,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-	        <property name="numberValue" type="big_decimal">
+	        <property name="value" type="big_decimal">
     	        <column name="number_value" precision="30" scale="6" not-null="true" />
         	</property>
     	</joined-subclass>
@@ -48,7 +48,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<list name="values" table="listvalue">
+    		<list name="value" table="listvalue">
     			<key>
     				<column name="list_property_id" not-null="true"/>
     			</key>

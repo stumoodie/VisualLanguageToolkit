@@ -19,11 +19,11 @@ public class GenericEnumUserType implements UserType, ParameterizedType {
     private static final String DEFAULT_VALUE_OF_METHOD_NAME = "valueOf";
 
     @SuppressWarnings("unchecked")
-	private Class<? extends Enum> enumClass;
+	private Class<? extends Enum> enumClass = null;
     private Class<?> identifierType;
-    private Method identifierMethod;
-    private Method valueOfMethod;
-    private NullableType type;
+    private Method identifierMethod = null;
+    private Method valueOfMethod = null;
+    private NullableType type = null;
     private int[] sqlTypes;
 
     public void setParameterValues(Properties parameters) {

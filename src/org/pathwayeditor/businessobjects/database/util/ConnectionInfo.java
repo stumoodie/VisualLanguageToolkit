@@ -3,32 +3,37 @@
  */
 package org.pathwayeditor.businessobjects.database.util;
 
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
+
 /**
  * @author nhanlon
  * The default settings for ConnectionInfo are for the Hsql Database
  */
 public class ConnectionInfo implements IConnectionInfo{
-	private String userName="sa";
-	private String password="";
-	private String url=IConnectionInfo.DATABASE_DEFAULT_URL;
-	private String repositoryName;
-	private String driverName="org.hsqldb.jdbcDriver";
-	private String dialect="org.hibernate.dialect.HSQLDialect";
-	private String sessionContext="thread";
+//	private final String userName="sa";
+//	private final String password="";
+//	private final String url="jdbc:hsqldb:hsql://localhost/epeDev";
+//	private final String repositoryName;
+//	private final String driverName="org.hsqldb.jdbcDriver";
+	private final String userName;
+	private final String password;
+	private final String url;
+	private final String repositoryName;
+	private final String driverName;
 	
-	//TODO NH - remove this constructor when we have multiple repositories
-	public ConnectionInfo(){
-		
-	}
-	//TODO NH - there are more hibernate properties which can be specified; in future a larger constructor will probably be necessary
-	public ConnectionInfo(String userName, String password, String url, String repositoryName, String driverName, String dialect, String sessionContext){
+//	public ConnectionInfo(){
+//		
+//	}
+//
+	public ConnectionInfo(String userName, String password, String url, String repositoryName, String driverName){
+		if(userName == null || password == null || url == null || repositoryName == null || driverName == null)
+			throw new IllegalArgumentException("parmeters cannot be null");
+			
 		this.userName=userName;
 		this.password=password;
 		this.url=url;
 		this.repositoryName=repositoryName;
 		this.driverName=driverName;
-		this.dialect=dialect;
-		this.sessionContext=sessionContext;
 	}
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.util.IConnectionInfo#getPassword()
@@ -59,17 +64,4 @@ public class ConnectionInfo implements IConnectionInfo{
 	public String getDriverName() {
 		return this.driverName;
 	}
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.database.util.IConnectionInfo#getDialect()
-	 */
-	public String getDialect() {
-		return dialect;
-	}
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.database.util.IConnectionInfo#getSessionContext()
-	 */
-	public String getSessionContext() {
-		return sessionContext;
-	}
-
 }

@@ -17,6 +17,14 @@ public final class Size {
 		return height;
 	}
 
+	public Size newWidth(int newWidth){
+		return new Size(newWidth, this.height);
+	}
+	
+	public Size newHeight(int newHeight){
+		return new Size(this.width, newHeight);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

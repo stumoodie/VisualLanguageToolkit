@@ -19,7 +19,11 @@ public class HibBendPoint  implements IBendPoint,  Serializable {
      private int XPosition;
      private int YPosition;
 
-    public HibBendPoint() {
+ 	/**
+ 	 * Default constructor that should only be used by hibernate.
+ 	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+ 	 */
+    HibBendPoint() {
     }
 
     public HibBendPoint(HibLinkAttribute owningLink, int indexPos, int XPosition, int YPosition) {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" table="CompoundGraph">
+		<id name="id" column="id" type="java.lang.Long">
+			<generator class="native">
+			</generator>
+		</id>
+		
+        <many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
+            <column name="canvas_id" not-null="true" />
+        </many-to-one>
+
+		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
+			 cascade="all" not-null="true">
+		</many-to-one> 
+		
+		<property name="lastNodeIndex" type="int">
+			<column name="last_node_index" not-null="true"/>
+		</property>
+		
+		<property name="lastEdgeIndex" type="int">
+			<column name="last_edge_index" not-null="true"/>
+		</property>
+		
+        <!-- set name="edges" inverse="true" cascade="all,delete-orphan">
+        	<key column="model_id" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge"/> 
+        </set>
+        <set name="nodes" inverse="true" cascade="all,delete-orphan">
+        	<key column="model_id" not-null="true"/>
+        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/> 
+        </set-->
+	</class>
+</hibernate-mapping>

@@ -3,81 +3,64 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 /**
  * @author nhanlon
  *
  */
 public class HibLabelNode extends HibCompoundNode implements ILabelNode {
-	
 	private HibLabelAttribute labelAttribute ;
 	
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
+	HibLabelNode(){
+		super();
+	}
+	
+	
+	public HibLabelNode(HibCompoundNode parent, int index, HibProperty property){
+		super(parent.getModel(), parent, index);
+		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
+		int newSerial = this.getModel().getCanvas().getAttributeSerialCounter().nextIndex();
+		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
+	}
+	
+	
+	/**
+	 * @param hibLabelAttribute
+	 */
+	public void changeLabelAttribute(HibLabelAttribute hibLabelAttribute) {
+		if(hibLabelAttribute != null){
+			hibLabelAttribute.getLabelNode().setAttribute(null);
+		}
+		if(this.labelAttribute != null){
+			this.labelAttribute.setLabelNode(null);
+		}
+		this.labelAttribute = hibLabelAttribute;
+	}
+
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getAttribute()
 	 */
-	public ILabelAttribute getAttribute() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getOwningShape()
-	 */
-	public IShapeNode getOwningShape() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode#getNodeIndex()
-	 */
-	public int getNodeIndex() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getFirstObject()
-	 */
-	public IZOrderedObject getFirstObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getLastObject()
-	 */
-	public IZOrderedObject getLastObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getNextObject()
-	 */
-	public IZOrderedObject getNextObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getPreviousObject()
-	 */
-	public IZOrderedObject getPreviousObject() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public HibLabelAttribute getLabelAttribute() {
+	public HibLabelAttribute getAttribute() {
 		return this.labelAttribute;
 	}
 
-	public void setLabelAttribute(HibLabelAttribute labelAttribute) {
+	void setAttribute(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
+	 */
+	public INodeObjectType getObjectType() {
+		return this.labelAttribute.getObjectType();
 	}
 	
 	

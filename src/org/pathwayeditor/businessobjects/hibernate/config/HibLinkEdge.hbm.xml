@@ -9,23 +9,23 @@
             <generator class="native" />
         </id>
         <properties name="xak1compoundedge" unique="true">
-        	<many-to-one name="graph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundGraph">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all">
             	<column name="model_id" not-null="true" />
         	</many-to-one>
         	<property name="index" type="int" >
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="linkAttribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="all">
+        <many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
 		       	<column name="link_attribute_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="owningChildGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibChildCompoundGraph">
+        <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all">
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
         	<column name="out_node_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode">
+        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
         	<column name="in_node_id" not-null="true"/>
         </many-to-one>
     </class>

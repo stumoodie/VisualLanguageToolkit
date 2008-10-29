@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -15,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 
 /**
  * @author ntsorman
@@ -31,61 +33,42 @@ public class HibNumberPropertyTest {
 	private static final int 		CREATION_SERIAL = 12345 ;
 	
 	private static final BigDecimal NEW_PROPERTY_VALUE 	= new BigDecimal ( 20000000 ) ;
-	private static final int 		NEW_CREATION_SERIAL = 54321 ;
 	
-	private HibNumberProperty numberProperty ;
+	
 	private HibCanvas mockCanvas ;
+	private HibNumberProperty numberProperty ;
+	private INumberPropertyDefinition mockDefn;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockCanvas = mockery.mock(HibCanvas.class , "HibCanvas") ; 
-		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
+		mockDefn = mockery.mock(INumberPropertyDefinition.class, "mockDefn");
+
+		this.mockery.checking(new Expectations(){{
+			allowing(mockDefn).getDefaultValue(); will(returnValue(PROPERTY_VALUE));
+		}});
+		
+		numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, mockDefn) ;
 	}
+
 
 	@After
 	public void tearDown() throws Exception {
 	}
 	
 	@Test
-	public void testCreateNumberPropery () throws Exception
+	public void testCheckInitialiasedCorrectly() throws Exception
 	{
-
-		
-		assertEquals ( "check value" , PROPERTY_VALUE , numberProperty.getNumberValue()) ;
+		assertEquals ( "check value" , PROPERTY_VALUE , numberProperty.getValue()) ;
 		assertEquals ( "check serial" , CREATION_SERIAL , numberProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , mockCanvas , numberProperty.getCanvas() ) ;
-		
 	}
 
 	@Test
 	public void testAlterPropertyValues () throws Exception 
 	{
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		final HibCanvas newMockCanvas = mockery.mock(HibCanvas.class , "newMockCanvas") ;
+		numberProperty.setValue(NEW_PROPERTY_VALUE) ;
 		
-		HibNumberProperty numberProperty = new HibNumberProperty ( mockCanvas, CREATION_SERIAL, PROPERTY_VALUE) ;
-		
-		numberProperty.setNumberValue(NEW_PROPERTY_VALUE) ;
-		numberProperty.setCreationSerial(NEW_CREATION_SERIAL) ;
-		numberProperty.setCanvas(newMockCanvas) ;
-		
-		assertEquals ( "check value" , NEW_PROPERTY_VALUE , numberProperty.getNumberValue()) ;
-		assertEquals ( "check serial" , NEW_CREATION_SERIAL , numberProperty.getCreationSerial() ) ;
-		assertEquals ( "check canvas" , newMockCanvas , numberProperty.getCanvas() ) ;
+		assertEquals ( "check value" , NEW_PROPERTY_VALUE , numberProperty.getValue()) ;
 	}
 	
-	@Test
-	public void testCopyNumberProperty () throws Exception 
-	{
-		
-		HibNumberProperty copyOfNumberProperty = numberProperty.copy(mockCanvas) ;
-		
-		assertEquals ( "copy of" , numberProperty , copyOfNumberProperty ) ;
-	}
-	
-	@Test(expected=UnsupportedOperationException.class)
-	public void testGetOwner () throws Exception
-	{
-		numberProperty.getOwningObject() ;
-	}
 }

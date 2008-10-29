@@ -15,11 +15,4 @@ public interface IRootObjectParentingRules extends IObjectTypeParentingRules {
 	 */
 	IRootObjectType getObjectType();
 	
-	/**
-	 * Tests if a shape type is a valid child of the owning object type. 
-	 * @param possibleChild non-null instance of the shape type.
-	 * @return true if valid, false otherwise.
-	 * @throws IllegalArgumentException if possibleChild is null.
-	 */
-	boolean isValidChildByCode(IRootObjectType possibleChild);
 }

@@ -3,75 +3,102 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
-
-public class HibLabelAttribute  implements Serializable, ILabelAttribute {
+public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private static final long serialVersionUID = -2354270083525870259L;
 
-     private Long id;
-     private HibCanvas hibCanvas;
-     private int creation_serial;
-     private int XPosition;
-     private int YPosition;
-     private int width;
-     private int height;
-     private HibProperty visualisableProperty;
-     private boolean isDisplayed;
-     private int backgroundRed;
-     private int backgroundGreen;
-     private int backgroundBlue;
-     private boolean noFillSet;
-     private HibLabelNode labelNode ;
+	private static final int DEFAULT_X = 0;
+	private static final int DEFAULT_Y = 0;
+	private static final int DEFAULT_HEIGHT = 0;
+	private static final int DEFAULT_WIDTH = 0;
 
-    public HibLabelAttribute() {
-    }
+	private Long id;
+	private HibCanvas hibCanvas;
+	private int creationSerial;
+	private Location position = new Location(DEFAULT_X, DEFAULT_Y);
+	private Size size = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	private HibProperty visualisableProperty;
+	private RGB background;
+	private HibLabelNode labelNode;
+	private INodeObjectType objectType;
 
-    public HibLabelAttribute(HibCanvas hibCanvas, int creation_serial, int XPosition, int YPosition, int width, int height, HibProperty visualisableProperty, boolean isDisplayed, int backgroundRed, int backgroundGreen, int backgroundBlue, boolean noFillSet) {
-       this.hibCanvas = hibCanvas;
-       this.creation_serial = creation_serial;
-       this.XPosition = XPosition;
-       this.YPosition = YPosition;
-       this.width = width;
-       this.height = height;
-       this.visualisableProperty = visualisableProperty;
-       this.isDisplayed = isDisplayed;
-       this.backgroundRed = backgroundRed;
-       this.backgroundGreen = backgroundGreen;
-       this.backgroundBlue = backgroundBlue;
-       this.noFillSet = noFillSet;
-    }
-   
-    public Long getId() {
-        return this.id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public HibCanvas getCanvas() {
-        return this.hibCanvas;
-    }
-    
-    public void setCanvas(HibCanvas hibCanvas) {
-        this.hibCanvas = hibCanvas;
-    }
-    public int getCreation_serial() {
-        return this.creation_serial;
-    }
-    
-    public void setCreation_serial(int label_index) {
-        this.creation_serial = label_index;
-    }
-    public int getXPosition() {
-        return this.XPosition;
-    }
-    
-    public HibLabelNode getLabelNode() {
+	/**
+	 * Default constructor that should only be used by hibernate.
+	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
+	 */
+	HibLabelAttribute() {
+		size = new Size (0 , 0) ;
+		position = new Location ( 0 , 0 ) ;
+		background = new RGB ( 0 , 0 ,0 ) ;
+	}
+
+	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
+		this.hibCanvas = hibCanvas;
+		this.creationSerial = creationSerial;
+		this.visualisableProperty = property;
+		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
+		populateDefaults(labelDefaults);
+	}
+
+	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
+		this.setSize(labelDefaults.getSize());
+		this.setBackgroundColor(labelDefaults.getFillColour());
+	}
+
+	public Long getId() {
+		return this.id;
+	}
+
+	@SuppressWarnings("unused")
+	private void setId(Long id) {
+		this.id = id;
+	}
+
+	public HibCanvas getCanvas() {
+		return this.hibCanvas;
+	}
+
+	void setCanvas(HibCanvas hibCanvas) {
+		this.hibCanvas = hibCanvas;
+	}
+
+	public void changeHibCanvas(HibCanvas canvas){
+		if(this.hibCanvas != null){
+			this.hibCanvas.getLabelAttributes().remove(this);
+		}
+		if(canvas != null){
+			canvas.getLabelAttributes().add(this);
+		}
+		this.setCanvas(canvas);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#
+	 * getCreationSerial()
+	 */
+
+	public int getCreationSerial() {
+		return this.creationSerial;
+	}
+
+	public void setCreationSerial(int label_index) {
+		this.creationSerial = label_index;
+	}
+
+	public Location getPosition() {
+		return this.position;
+	}
+
+	public HibLabelNode getLabelNode() {
 		return this.labelNode;
 	}
 
@@ -80,220 +107,190 @@ public class HibLabelAttribute  implements Serializable, ILabelAttribute {
 	}
 
 	public void setXPosition(int XPosition) {
-        this.XPosition = XPosition;
-    }
-    public int getYPosition() {
-        return this.YPosition;
-    }
-    
-    public void setYPosition(int YPosition) {
-        this.YPosition = YPosition;
-    }
-    public int getWidth() {
-        return this.width;
-    }
-    
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    public int getHeight() {
-        return this.height;
-    }
-    
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    public HibProperty getVisualisableProperty() {
-        return this.visualisableProperty;
-    }
-    
-    public void setVisualisableProperty(HibProperty visualisableProperty) {
-        this.visualisableProperty = visualisableProperty;
-    }
-    public boolean isIsDisplayed() {
-        return this.isDisplayed;
-    }
-    
-    public void setIsDisplayed(boolean isDisplayed) {
-        this.isDisplayed = isDisplayed;
-    }
-    public int getBackgroundRed() {
-        return this.backgroundRed;
-    }
-    
-    public void setBackgroundRed(int backgroundRed) {
-        this.backgroundRed = backgroundRed;
-    }
-    public int getBackgroundGreen() {
-        return this.backgroundGreen;
-    }
-    
-    public void setBackgroundGreen(int backgroundGreen) {
-        this.backgroundGreen = backgroundGreen;
-    }
-    public int getBackgroundBlue() {
-        return this.backgroundBlue;
-    }
-    
-    public void setBackgroundBlue(int backgroundBlue) {
-        this.backgroundBlue = backgroundBlue;
-    }
-    public boolean isNoFillSet() {
-        return this.noFillSet;
-    }
-    
-    public void setNoFillSet(boolean noFillSet) {
-        this.noFillSet = noFillSet;
-    }
+		this.position = this.position.newX(XPosition);
+	}
 
+	public int getXPosition() {
+		return this.position.getX();
+	}
 
-   public boolean equals(Object other) {
-         if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof HibLabelAttribute) ) return false;
-		 HibLabelAttribute castOther = ( HibLabelAttribute ) other; 
-         
-		 return ( (this.getCanvas()==castOther.getCanvas()) || ( this.getCanvas()!=null && castOther.getCanvas()!=null && this.getCanvas().equals(castOther.getCanvas()) ) )
- && (this.getCreation_serial()==castOther.getCreation_serial());
-   }
-   
-   public int hashCode() {
-         int result = 17;
-         result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
-         result = 37 * result + this.getCreation_serial();
-         return result;
-   }
+	public int getYPosition() {
+		return this.position.getY();
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLocation()
- */
-public Location getLocation() {
-	return new Location ( this.XPosition , this.YPosition );
-}
+	public void setYPosition(int YPosition) {
+		this.position = this.position.newY(YPosition);
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getProperty()
- */
-public IAnnotationProperty getProperty() {
-	return this.visualisableProperty ;
-}
+	public int getWidth() {
+		return this.size.getWidth();
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getSize()
- */
-public Size getSize() {
-	return new Size ( this.height , this.width);
-}
+	public void setWidth(int width) {
+		this.size = this.size.newWidth(width);
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getFirstObject()
- */
-public IZOrderedObject getFirstObject() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public int getHeight() {
+		return this.size.getHeight();
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getLastObject()
- */
-public IZOrderedObject getLastObject() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public void setHeight(int height) {
+		this.size = this.size.newHeight(height);
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getNextObject()
- */
-public IZOrderedObject getNextObject() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public IAnnotationProperty getVisualisableProperty() {
+		return this.visualisableProperty;
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderedObject#getPreviousObject()
- */
-public IZOrderedObject getPreviousObject() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public void setVisualisableProperty(HibProperty visualisableProperty) {
+		this.visualisableProperty = visualisableProperty;
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#getCreationSerial()
- */
-public int getCreationSerial() {
-	return this.creation_serial;
-}
+	public int getBackgroundRed() {
+		return this.background.getRed();
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getBackgroundColor()
- */
-public RGB getBackgroundColor() {
-	return new RGB ( this.backgroundRed , this.backgroundGreen , this.backgroundRed);
-}
+	public void setBackgroundRed(int backgroundRed) {
+		this.background = this.background.newRed(backgroundRed);
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#isDisplayed()
- */
-public boolean isDisplayed() {
-	return this.isDisplayed;
-}
+	public int getBackgroundGreen() {
+		return this.background.getGreen();
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#isFillSet()
- */
-public boolean isFillSet() {
-	return this.noFillSet;
-}
+	public void setBackgroundGreen(int backgroundGreen) {
+		this.background = this.background.newGreen(backgroundGreen);
+	}
 
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setBackgroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
- */
-public void setBackgroundColor(RGB color) {
-	if ( color == null )
-		throw new IllegalArgumentException ("Color cannot be null.") ;
+	public int getBackgroundBlue() {
+		return this.background.getBlue();
+	}
+
+	public void setBackgroundBlue(int backgroundBlue) {
+		this.background = this.background.newBlue(backgroundBlue);
+	}
+
+	public boolean equals(Object other) {
+		if ((this == other))
+			return true;
+		if ((other == null))
+			return false;
+		if (!(other instanceof HibLabelAttribute))
+			return false;
+		HibLabelAttribute castOther = (HibLabelAttribute) other;
+
+		return ((this.getCanvas() == castOther.getCanvas()) || (this
+				.getCanvas() != null
+				&& castOther.getCanvas() != null && this.getCanvas().equals(
+				castOther.getCanvas())))
+				&& (this.getCreationSerial() == castOther.getCreationSerial());
+	}
+
+	public int hashCode() {
+		int result = 17;
+		result = 37 * result
+				+ (getCanvas() == null ? 0 : this.getCanvas().hashCode());
+		result = 37 * result + this.getCreationSerial();
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
+	 * getLocation()
+	 */
+	public Location getLocation() {
+		return this.position;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
+	 * getProperty()
+	 */
+	public IAnnotationProperty getProperty() {
+		return this.visualisableProperty;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getSize
+	 * ()
+	 */
+	public Size getSize() {
+		return this.size;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
+	 * getBackgroundColor()
+	 */
+	public RGB getBackgroundColor() {
+		return this.background;
+	}
+
+	public void setBackgroundColor(RGB color) {
+		if (color == null)
+			throw new IllegalArgumentException("Color cannot be null.");
+
+		this.background = color;
+
+	}
 	
-	this.backgroundBlue = color.getBlue() ;
-	this.backgroundGreen = color.getGreen() ;
-	this.backgroundRed = color.getRed() ;
-	
+	public void setObjectType ( INodeObjectType nodeObjectType)
+	{
+		this.objectType = nodeObjectType ;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
+	 * setLocation
+	 * (org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
+	 */
+	public void setLocation(Location location) {
+		if (location == null)
+			throw new IllegalArgumentException("location cannot be null.");
+
+		this.position = location;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setSize
+	 * (org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+	 */
+	public void setSize(Size size) {
+		if (size == null)
+			throw new IllegalArgumentException("size cannot be null.");
+
+		this.size = size;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#
+	 * getObjectType()
+	 */
+	public INodeObjectType getObjectType() {
+		return this.objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean hasProperty(IPropertyDefinition property) {
+		return this.visualisableProperty.getDefinition().equals(property);
+	}
 }
-
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setDisplayed(boolean)
- */
-public void setDisplayed(boolean displayed) {
-	this.isDisplayed = displayed ;
-}
-
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setFillSet(boolean)
- */
-public void setFillSet(boolean fillSet) {
-	this.noFillSet = fillSet ;
-}
-
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
- */
-public void setLocation(Location location) {
-	if ( location == null )
-		throw new IllegalArgumentException ( "location cannot be null.") ;
-	
-	this.XPosition = location.getX() ; 
-	this.YPosition = location.getY() ; 
-}
-
-/* (non-Javadoc)
- * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
- */
-public void setSize(Size size) {
-	if ( size == null )
-		throw new IllegalArgumentException ("size cannot be null.") ;
-	
-	this.height = size.getHeight() ;
-	this.width = size.getWidth() ;
-}   
-
-}
-
-

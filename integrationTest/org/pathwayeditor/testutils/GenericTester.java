@@ -3,10 +3,13 @@
  */
 package org.pathwayeditor.testutils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Statement;
+import java.util.List;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
@@ -16,11 +19,13 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwayeditor.businessobjects.bolayer.BusinessObjectFactory;
-import org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory;
-import org.pathwayeditor.businessobjects.database.util.ConnectionInfo;
-import org.pathwayeditor.businessobjects.database.util.HibernateUtil;
-import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
+import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
+import org.pathwayeditor.bussinessobjects.stubs.StubNotationSubsystemPool;
 
 /**
  * @author nhanlon
@@ -29,14 +34,22 @@ import org.pathwayeditor.businessobjects.database.util.IConnectionInfo;
 public abstract class GenericTester {
 
 	private static HibernateTestManager dbTester = null;
-	private static IConnectionInfo testInfo = new ConnectionInfo("sa","","jdbc:hsqldb:mem:testDb",
-			"repo name","org.hsqldb.jdbcDriver", "org.hibernate.dialect.HSQLDialect","thread"); 
-	private static IBusinessObjectFactory bofac =new BusinessObjectFactory(testInfo);
-	protected IBusinessObjectFactory bo = bofac;
+	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
+	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
+	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
+	private IRepositoryPersistenceManager bofac = null;
+	private FileInputStream loadFile;
+//	private IBusinessObjectFactory bo = bofac;
+	
+	public IRepositoryPersistenceManager getBusinessObjectFactory(){
+		return bofac;
+	}
+	
+	protected abstract String getTestRepositoryName();
 	
 	@BeforeClass
 	public static void initSchema() throws Exception {
-		dbTester = new HibernateTestManager(testInfo);
+		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
 		dbTester.createSchema();
 	}
 
@@ -45,11 +58,28 @@ public abstract class GenericTester {
 		dbTester.dropSchema();
 	}
 
+	protected abstract void doAdditionalSetUp();
+	
+	protected abstract void doAdditionalTearDown();
+
 	@Before
 	public void setUp() throws Exception {
+		try {
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		doSetup();
+		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(dbTester.getHibernateSessionFactory(),
+																					new StubNotationSubsystemPool());
+		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(dbTester.getHibernateSessionFactory(), getTestRepositoryName());  
+		bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
+		bofac.openRepository();
+		doAdditionalSetUp();
+		}
+		catch ( Exception exc)
+		{
+			exc.printStackTrace() ;
+			throw exc ;
+		}
 	}
 
 	protected void saveAndCommit(Serializable in) {
@@ -58,9 +88,11 @@ public abstract class GenericTester {
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 			Exception {
-		getDbTester().setDataSet(
-				new XmlDataSet(new FileInputStream(getDbUnitDataFilePath())));
+		disableConstraints();
+		this.loadFile = new FileInputStream(getDbUnitDataFilePath());
+		getDbTester().setDataSet(new XmlDataSet(this.loadFile));
 		getDbTester().onSetup();
+		enableConstraints();
 	}
 
 	/**
@@ -68,15 +100,40 @@ public abstract class GenericTester {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		doAdditionalTearDown();
+		bofac.closeRepository();
+		bofac = null;
+		disableConstraints();
 		dbTester.onTearDown();
+		this.loadFile.close();
+		enableConstraints();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected final <T> List<T> runQuery(String query){
+		Session sess = getSession();
+		sess.beginTransaction();
+		List<T> retVal = (List<T>)sess.createQuery(query).list();
+		sess.getTransaction().commit();
+		return retVal;
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected final <T> T runUniqueQuery(String query){
+		Session sess = getSession();
+		sess.beginTransaction();
+		T retVal = (T)sess.createQuery(query).uniqueResult();
+		sess.getTransaction().commit();
+		return retVal;
+	}
+	
+	
 	protected HibernateTestManager getDbTester() {
-		return this.dbTester;
+		return dbTester;
 	}
 
 	protected Session getSession() {
-		return HibernateUtil.getSession();
+		return dbTester.getHibernateSessionFactory().getCurrentSession();
 	}
 
 	/**
@@ -86,14 +143,31 @@ public abstract class GenericTester {
 	
 	protected void enableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity TRUE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity TRUE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
 	
-	protected void disbleConstraints() throws Exception {
+	protected void disableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
-		conn.createStatement().executeQuery("SET referential_integrity FALSE");
-		conn.commit();
+		Statement stmt = null;
+		try{
+			stmt = conn.createStatement();
+			stmt.executeQuery("SET referential_integrity FALSE");
+			conn.commit();
+		}
+		finally{
+			if(stmt != null){
+				stmt.close();
+			}
+		}
 	}
-
 }

@@ -9,12 +9,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface IZOrderedObject {
 
-	IZOrderedObject getNextObject();
-	
-	IZOrderedObject getPreviousObject();
-	
-	IZOrderedObject getFirstObject();
-	
-	IZOrderedObject getLastObject();
+	//TODO:  need to implement z-ordering
+//	IZOrderedObject getNextObject();
+//	
+//	IZOrderedObject getPreviousObject();
+//	
+//	IZOrderedObject getFirstObject();
+//	
+//	IZOrderedObject getLastObject();
 	
 }

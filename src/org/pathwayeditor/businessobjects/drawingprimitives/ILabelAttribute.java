@@ -17,7 +17,7 @@ public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 	 * Set the location for this LabelAttribute.
 	 * @throws IllegalArgumentException if the location is null.
 	 */
-	void setLocation ( Location location) ;
+	void setLocation (Location location) ;
 	
 	/**
 	 * Get the size of this LabelAttribute.
@@ -29,7 +29,7 @@ public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 	 * Set the size for this LabelAttribute.
 	 * @throws IllegalArgumentException if the size is null.
 	 */
-	void setSize ( Size size ) ;
+	void setSize (Size size);
 	
 	/**
 	 * Get the property assosiated with the current Label
@@ -47,18 +47,11 @@ public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 	 * Get the background color of this Label.
 	 * @return the RGB representation of the color of the Label.
 	 */	
-	RGB getBackgroundColor () ;
+	RGB getBackgroundColor ();
 	
 	/**
 	 * Set the background color of this Label.
 	 * @throws IllegalArgumentException if value is null.
 	 */
-	void setBackgroundColor ( RGB color) ;
-	
-	
-	boolean isDisplayed () ;
-	void setDisplayed (boolean displayed) ;
-	
-	boolean isFillSet () ;
-	void setFillSet ( boolean fillSet) ;
+	void setBackgroundColor (RGB color);
 }
