@@ -19,6 +19,7 @@ import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -74,6 +75,16 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private IShapeNode shapeNode7 ;
 	private IShapeNode shapeNode8 ;
 	
+	private ILinkEdge linkEdge1 ;
+	private ILinkEdge linkEdge2 ;
+	private ILinkEdge linkEdge3;
+	private ILinkEdge linkEdge4 ;
+	private ILinkEdge linkEdge5 ;
+	private ILinkEdge linkEdge6 ;
+	private ILinkEdge linkEdge7 ;
+	private ILinkEdge linkEdge8 ;
+	private ILinkEdge linkEdge9 ;
+	
 	private IShapeNode newNode ;
 	private ILabelNode newLabel ;
 	private ILinkEdge newLinkEdge ;
@@ -91,9 +102,12 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String CREATED_LINK_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLinkEdge.xml" ;
 	private final static String CREATED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedShapeNode.xml" ;
 	private final static String CREATED_LABEL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLabelNode.xml" ;
-	private final static String DELETED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeletedShapeNode.xml" ;
-	private final static String MOVED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/movedShapeNode.xml" ;
+	private final static String DELETED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeleteShapeNode.xml" ;
+	private final static String MOVED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/MovedNodeValidation.xml" ;
 	private final static String COPIED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/copiedShapeNode.xml" ;
+	private final static String DELETED_EDGE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedEdge.xml" ;
+	private final static String DELETED_TWO_SHAPES_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedTwoShapes.xml" ;
+	
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.integrationtestutils.GenericTester#doAdditionalSetUp()
@@ -184,6 +198,34 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		shapeNode8 = shapeNode7.getSubCanvas().shapeIterator().next() ;
 		
 		
+		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubCanvas().linkIterator() ;	
+		
+		while ( rootNodeEdges.hasNext())
+		{
+			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
+			
+			if ( tempLinkEdge.getIndex() == 0 )
+			{
+				linkEdge1 = tempLinkEdge ;
+			}
+			if ( tempLinkEdge.getIndex() == 1 )
+			{
+				linkEdge2 = tempLinkEdge ;
+			}
+			if ( tempLinkEdge.getIndex() == 2 )
+			{
+				linkEdge3 = tempLinkEdge ;
+			}
+			if ( tempLinkEdge.getIndex() == 3 )
+			{
+				linkEdge4 = tempLinkEdge ;
+			}
+			if ( tempLinkEdge.getIndex() == 6 )
+			{
+				linkEdge7 = tempLinkEdge ;
+			}
+		}
+		
 		
 	}
 
@@ -212,6 +254,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		return REPOSITORY_NAME ;
 	}
 	
+	@Ignore
 	@Test
 	public void testCreateNewShapeNode () throws Exception 
 	{
@@ -245,6 +288,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
+	@Ignore
 	@Test
 	public void testCreateNewLabelNode () throws Exception 
 	{
@@ -269,6 +313,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testCreateNewEdgeLink () throws Exception 
 	{
@@ -295,6 +340,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testDeleteNode () throws Exception
 	{
@@ -304,7 +350,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		objectSelection.addShape(this.shapeNode8);
 		this.dbModel.removeSubgraph(objectSelection) ;
-		
+		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
@@ -323,6 +369,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testMoveNode () throws Exception
 	{
@@ -332,7 +379,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addShape(shapeNode8) ;
 		
 		dbRootNode.getSubCanvas().moveHere(objectSelection) ;
-		
+		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(MOVED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
@@ -351,6 +398,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void testCopyNode () throws Exception
 	{
@@ -360,7 +408,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addShape(shapeNode8) ;
 		
 		dbRootNode.getSubCanvas().copyHere(objectSelection) ;
-		
+		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(COPIED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
@@ -378,6 +426,80 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 							.getTableMetaData()));
 		}
 		
+	}
+	
+	@Ignore
+	@Test
+	public void testDeleteEdge () throws Exception 
+	{
+		loadData () ;
+		
+		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
+		objectSelection.addLink(linkEdge1) ;
+		
+		this.dbModel.removeSubgraph(objectSelection) ;
+		map1Manager.synchronise() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_EDGE_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+	}
+	
+	@Ignore
+	@Test
+	public void testDeleteTwoConnectedShapes () throws Exception
+	{
+		loadData() ;
+		
+		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
+		objectSelection.addShape(shapeNode3) ;
+		objectSelection.addShape(shapeNode7) ;
+		
+		this.dbModel.removeSubgraph(objectSelection) ;
+		map1Manager.synchronise() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_TWO_SHAPES_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+
+	}
+	
+	@Ignore
+	@Test
+	public void testDeleteAll () throws Exception 
+	{
+		loadData() ;
+		
+		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
+		objectSelection.addShape(shapeNode1) ;
+		objectSelection.addShape(shapeNode2) ;
+		this.dbModel.removeSubgraph(objectSelection);
+		map1Manager.synchronise() ;
 	}
 
 }
