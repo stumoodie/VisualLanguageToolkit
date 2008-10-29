@@ -3,7 +3,9 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -81,8 +83,8 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getPropertiesIterator()
 	 */
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<IPropertyDefinition> emptySet = Collections.emptySet();
+		return emptySet.iterator();
 	}
 
 }
