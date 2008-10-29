@@ -10,6 +10,7 @@
 	<property name="jar.name" value="BusinessObjects.jar" />
 	<property name="lib.dir" value="./lib" />
 	<property name="application.dir" value="../org.pathwayeditor.applicationNew/lib" />
+	<property name="hsqldb.dir" value="${lib.dir}/hsqldb/lib/" />
 
 	<path id="classpath">
 		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
@@ -162,9 +163,25 @@
 			<fileset dir="${build.src.dir}" />
 		</jar>
 	</target>
-	<target name="jar-and-export" depends="jar">
+	<target name="jar-and-export" depends="build-database,jar">
 		<copy todir="${application.dir}">
 			<fileset dir="${jar.dir}" />
+		</copy>
+	</target>
+
+	<target name="build-database">
+		<java classname="org.pathwayeditor.businessobjects.database.util.MakeNewDeploymentDatabase" fork="true" failonerror="true">
+			<classpath>
+				<pathelement location="${build.dir}" />
+				<pathelement location="${hsqldb.dir}/hsqldb.jar" />
+			</classpath>
+		</java>
+		<copy todir="${application.dir}/hsqldb/lib">
+			<fileset dir="${hsqldb.dir}">
+				<include name="epeDep.log" />
+				<include name="epeDep.properties" />
+				<include name="epeDep.script" />
+			</fileset>
 		</copy>
 	</target>
 
