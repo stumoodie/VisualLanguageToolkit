@@ -2,13 +2,19 @@
 
 <project name="BusinessObjectsBuild" default="buildAll">
 	<property name="build.dir" value="./bin" />
-	<property name="build.src.dir" value="./bin/src" />
+	<property name="build.dir.src" value="${build.dir}/src"/>
+	<property name="build.dir.tests" value="${build.dir}/test"/>
+	<property name="build.dir.stubs" value="${build.dir}/stubs"/>
+	<property name="docs.build.dir" value="./doc"/>
 	<property name="src.dir" value="./src" />
 	<property name="test.dir" value="./test" />
 	<property name="stubs.dir" value="./stubs" />
 	<property name="integration.test.dir" value="./integrationTest" />
+	<property name="acceptance.test.dir" value="./Acceptance Test" />
 	<property name="jar.dir" value="./jars" />
-	<property name="jar.name" value="BusinessObjects.jar" />
+	<property name="jar.name.bin" value="BusinessObjects.jar" />
+	<property name="jar.name.src" value="BusinessObjects-src.jar" />
+	<property name="jar.name.doc" value="BusinessObjects-docs.jar" />
 	<property name="lib.dir" value="./lib" />
 	<property name="application.dir" value="../org.pathwayeditor.applicationNew/lib" />
 	<property name="target" value="1.5" />
@@ -16,14 +22,15 @@
 	<property name="hsqldb.dir" value="${lib.dir}/hsqldb/lib/" />
 
 	<path id="classpath">
+		<pathelement location="${build.dir.src}" />
 		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/hibernate3.jar" />
-		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
+		<!--pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-1.6.5.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-antlr-1.6.5.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-launcher-1.6.5.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-swing-1.6.5.jar" /-->
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/antlr-2.7.6.jar" />
-		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-swing-1.6.5.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/asm.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/asm-attrs.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/c3p0-0.9.1.jar" />
@@ -33,12 +40,12 @@
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/commons-logging-1.0.4.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/concurrent-1.3.2.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/dom4j-1.6.1.jar" />
-		<pathelement location="${lib.dir}/hibernate-3.2/lib/ehcache-1.2.3.jar" />
+		<!--pathelement location="${lib.dir}/hibernate-3.2/lib/ehcache-1.2.3.jar" /-->
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jaas.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jacc-1_0-fr.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/javassist.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jaxen-1.1-beta-7.jar" />
-		<pathelement location="${lib.dir}/hibernate-3.2/lib/jboss-cache.jar" />
+		<!--pathelement location="${lib.dir}/hibernate-3.2/lib/jboss-cache.jar" /-->
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jboss-common.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jboss-jmx.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jboss-system.jar" />
@@ -46,7 +53,7 @@
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/jta.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/oscache-2.1.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/proxool-0.8.3.jar" />
-		<pathelement location="${lib.dir}/hibernate-3.2/lib/swarmcache-1.0rc2.jar" />
+		<!--pathelement location="${lib.dir}/hibernate-3.2/lib/swarmcache-1.0rc2.jar" /-->
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/syndiag2.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/versioncheck.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/xml-apis.jar" />
@@ -55,29 +62,34 @@
 		<pathelement location="${lib.dir}/apache-log4j-1.2.15/log4j-1.2.15.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/xerces-2.6.2.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/bsh-core-2.0b4.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/cglib-2.1_3-src.jar" />
+		<!--pathelement location="${lib.dir}/jmock-2.5.1/cglib-2.1_3-src.jar" /-->
 		<pathelement location="${lib.dir}/jmock-2.5.1/cglib-nodep-2.1_3.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-core-1.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-library-1.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-2.5.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" />
+		<!--pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" /-->
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit4-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
 		<pathelement location="${lib.dir}/DbUnit/dbunit-2.2.3.jar" />
+		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
 		<pathelement location="${lib.dir}/compoundgraph/compoundgraph.jar" />
 	</path>
 
 	<path id="test.classpath">
 		<path refid="classpath" />
-		<pathelement location="${build.dir}" />
+		<pathelement location="${build.dir.src}" />
+		<pathelement location="${build.dir.tests}" />
+		<pathelement location="${build.dir.stubs}" />
 	</path>
 
 
 	<target name="mkdirs" depends="" description="--> Creates the directories used in the build">
 		<mkdir dir="${build.dir}" />
-		<mkdir dir="${build.src.dir}" />
+		<mkdir dir="${build.dir.src}" />
+		<mkdir dir="${build.dir.tests}" />
+		<mkdir dir="${build.dir.stubs}" />
 	</target>
 
 	<target name="clean">
@@ -85,22 +97,23 @@
 		</delete>
 	</target>
 
-	<target name="buildAll" description="main build task" depends="buildSrc, api-docs,buildTest, buildIntegrationTest,jar" />
+	<target name="buildAll" description="main build task" depends="clean,buildSrc, api-docs,buildTest, buildIntegrationTest, buildAcceptanceTest, jarAll" />
 
 	<target name="buildStubs" description="build task" depends="buildSrc">
-		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${stubs.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${stubs.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.stubs}">
 		</javac>
-		<!--copy todir="${build.dir}">
+		<copy todir="${build.dir.stubs}">
 			<fileset dir="${stubs.dir}">
 				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
 			</fileset>
-		</copy-->
+		</copy>
 	</target>
 
 	<target name="buildTest" description="test build task" depends="buildSrc,buildStubs">
-		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.tests}">
 		</javac>
-		<copy todir="${build.dir}">
+		<copy todir="${build.dir.tests}">
 			<fileset dir="${test.dir}">
 				<exclude name="**/*.java" />
 				<exclude name="**/*.class" />
@@ -109,9 +122,9 @@
 	</target>
 
 	<target name="buildIntegrationTest" description="test integration build task" depends="buildSrc,buildStubs">
-		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${integration.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.tests}">
 		</javac>
-		<copy todir="${build.dir}">
+		<copy todir="${build.dir.tests}">
 			<fileset dir="${integration.test.dir}">
 				<exclude name="**/*.java" />
 				<exclude name="**/*.class" />
@@ -119,29 +132,36 @@
 		</copy>
 	</target>
 
-	<target name="buildSrc" description="src build task" depends="clean,mkdirs">
-		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
-		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir}">
-			<exclude name="**/businessobjects/pojos/**" />
+	<target name="buildAcceptanceTest" description="acceptance test build task" depends="buildSrc,buildStubs">
+		<javac source="${source}" target="${target}" classpathref="test.classpath" srcdir="${acceptance.test.dir}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.tests}">
 		</javac>
-		<copy todir="${build.dir}">
+		<copy todir="${build.dir.tests}">
+			<fileset dir="${acceptance.test.dir}">
+				<exclude name="**/*.java" />
+				<exclude name="**/*.class" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="buildSrc" description="src build task" depends="mkdirs">
+		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
+		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.src}">
+		</javac>
+		<copy todir="${build.dir.src}">
 			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
 				<exclude name="**/*.class" />
 			</fileset>
 		</copy>
-		<copy todir="${build.src.dir}">
-			<fileset dir="${build.dir}" />
-		</copy>
 	</target>
 
 	<target name="api-docs" depends="buildSrc">
-		<javadoc access="package" author="true" splitindex="true" use="true" version="true" source="1.5" sourcepath="src" destdir="doc" doctitle="Business Objects API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false">
+		<javadoc access="package" author="true" splitindex="true" use="true" version="true" source="1.5" sourcepath="${src.dir}" destdir="${docs.build.dir}" doctitle="Business Objects API" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false">
 			<classpath refid="classpath" />
 		</javadoc>
 	</target>
 
-	<target name="tests">
+	<target name="tests" depends="buildTest, buildIntegrationTest, buildAcceptanceTest">
 		<delete dir="${build.dir}/test/logs" />
 		<mkdir dir="${build.dir}/test/logs" />
 		<!-- <echo>running with classpath ${toString:test.classpath}</echo>-->
@@ -149,13 +169,13 @@
 			run test cases. All test class names should end in 'Test' to avoid
 			inclusion of inner classes.
 		-->
-		<junit printsummary="yes" haltonfailure="no" fork="true">
+		<junit printsummary="yes" haltonfailure="no" fork="yes">
 			<classpath>
 				<path refid="test.classpath" />
 			</classpath>
 			<batchtest todir="${build.dir}/test/logs">
 				<formatter type="xml" />
-				<fileset dir="${build.dir}">
+				<fileset dir="${build.dir.tests}">
 					<include name="**/*Test.class" />
 				</fileset>
 			</batchtest>
@@ -172,14 +192,33 @@
 		</junitreport>
 	</target>
 
-	<target name="jar" depends="buildSrc">
+	<target name="jarAll" depends="jar-bin, jar-src, jar-docs"/>
+	
+	<target name="init-jardirs">
 		<delete dir="${jar.dir}" />
 		<mkdir dir="${jar.dir}" />
-		<jar destfile="${jar.dir}/${jar.name}">
-			<fileset dir="${build.src.dir}" />
+	</target>
+	
+	<target name="jar-bin" depends="buildSrc, init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.bin}">
+			<fileset dir="${build.dir.src}" />
 		</jar>
 	</target>
-	<target name="jar-and-export" depends="jar">
+	
+	<target name="jar-src" depends="init-jardirs">
+		<jar destfile="${jar.dir}/${jar.name.src}">
+			<fileset dir="${src.dir}" />
+		</jar>
+	</target>
+	
+	<target name="jar-docs" depends="buildSrc">
+		<mkdir dir="${jar.dir}" />
+		<jar destfile="${jar.dir}/${jar.name.doc}">
+			<fileset dir="${docs.build.dir}" />
+		</jar>
+	</target>
+				
+	<target name="jar-and-export" depends="jar-bin">
 		<copy todir="${application.dir}">
 			<fileset dir="${jar.dir}" />
 		</copy>
@@ -188,8 +227,8 @@
 	<target name="build-database">
 		<java classname="org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB" fork="true" failonerror="true">
 			<classpath>
-				<pathelement location="${build.dir}" />
-				<path refid="test.classpath" />
+				<pathelement location="${build.dir.src}" />
+				<path refid="classpath" />
 			</classpath>
 		</java>
 		<copy todir="${application.dir}/hsqldb/lib">

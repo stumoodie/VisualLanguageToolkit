@@ -23,7 +23,7 @@ public class HibernateTestManager implements IDatabaseTester {
 	private final IDatabaseTester delegator;
 	private final HqlDbSchema schemaManager;
 	private HibernateDataSource hibBuilder;
-	private SessionFactory sessionFactory = null;
+	private static SessionFactory sessionFactory = null;
 	
 	public HibernateTestManager(String xmlConfigFile, File createSchemaScript, File dropSchemaScript) {
 		this(new HibernateDataSource(xmlConfigFile), createSchemaScript, dropSchemaScript);
@@ -62,10 +62,10 @@ public class HibernateTestManager implements IDatabaseTester {
 	 * @return the hibernate session factory which will always be the same.
 	 */
 	public SessionFactory getHibernateSessionFactory(){
-		if(this.sessionFactory == null){
-			this.sessionFactory = hibBuilder.getSessionFactory();
+		if(sessionFactory == null){
+			sessionFactory = hibBuilder.getSessionFactory();
 		}
-		return this.sessionFactory;
+		return sessionFactory;
 	}
 	
 	/**

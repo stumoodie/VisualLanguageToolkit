@@ -71,9 +71,8 @@ public class LoadSmallDataTest extends GenericTester{
 	
 	private void loadData ( ) throws Exception
 	{
-		rootFolder = (IRootFolder)repository.getFolderByPath( ROOT_FOLDER_PATH) ;
-		
-		mapDiagram = rootFolder.getMapIterator().next() ;
+		rootFolder = repository.getRootFolder() ;
+		this.mapDiagram = (IMap)repository.findRepositoryItemByPath("/Diagram name");
 		
 		IMapContentPersistenceManager map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram) ;
 		map1Manager.loadContent() ;
