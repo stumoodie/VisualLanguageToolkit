@@ -77,7 +77,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.terminusSize = other.getTerminusSize();
 		this.termShapeType = other.getTerminusDecoratorType();
 		for(HibProperty otherHibProp : other.getProperties().values()){
-			HibProperty copiedHibProp = (HibProperty)otherHibProp.getDefinition().copyProperty(propBuilder);
+			HibProperty copiedHibProp = (HibProperty)otherHibProp.getDefinition().copyProperty(propBuilder,otherHibProp);
 			this.hibProperties.put(copiedHibProp.getDefinition().getName(), copiedHibProp);
 		}
 	}

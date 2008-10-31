@@ -99,7 +99,7 @@ s	 */
 		this.url = otherAttribute.getUrl();
 		this.routerType = otherAttribute.getRouter();
 		for(HibProperty props : otherAttribute.hibLinkProperties.values()){
-			HibProperty copiedProp = (HibProperty)props.getDefinition().copyProperty(this.propertyBuilder);
+			HibProperty copiedProp = (HibProperty)props.getDefinition().copyProperty(this.propertyBuilder,props);
 			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
 		}
 	}
