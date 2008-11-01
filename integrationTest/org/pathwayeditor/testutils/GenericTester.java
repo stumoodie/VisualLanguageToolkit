@@ -6,7 +6,6 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -51,10 +51,12 @@ public abstract class GenericTester {
 	public static void initSchema() throws Exception {
 		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
 		dbTester.createSchema();
+		dbTester.createHibernateSessionFactory();
 	}
 
 	@AfterClass
 	public static void dropSchema() throws Exception {
+		dbTester.discardHibernateSessionFactory();
 		dbTester.dropSchema();
 	}
 
@@ -63,28 +65,27 @@ public abstract class GenericTester {
 	protected abstract void doAdditionalTearDown();
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Throwable {
 		try {
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 		doSetup();
-		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(dbTester.getHibernateSessionFactory(),
+		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(dbTester.getSessionFactory(),
 																					new StubNotationSubsystemPool());
-		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(dbTester.getHibernateSessionFactory(), getTestRepositoryName());  
+		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(dbTester.getSessionFactory(), getTestRepositoryName());  
 		bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
 		bofac.openRepository();
 		doAdditionalSetUp();
 		}
-		catch ( Exception exc)
-		{
+		catch( Throwable exc){
 			exc.printStackTrace() ;
 			throw exc ;
 		}
 	}
 
-	protected void saveAndCommit(Serializable in) {
-		getSession().saveOrUpdate(in);
-	}
+//	protected void saveAndCommit(Serializable in) {
+//		getSession().saveOrUpdate(in);
+//	}
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 			Exception {
@@ -99,19 +100,37 @@ public abstract class GenericTester {
 	 * @throws java.lang.Exception
 	 */
 	@After
-	public void tearDown() throws Exception {
-		doAdditionalTearDown();
-		bofac.closeRepository();
-		bofac = null;
-		disableConstraints();
-		dbTester.onTearDown();
-		this.loadFile.close();
-		enableConstraints();
+	public void tearDown() throws Throwable {
+		try {
+			try {
+				doAdditionalTearDown();
+				bofac.closeRepository();
+				bofac = null;
+				if (dbTester.getSessionFactory().getCurrentSession().isOpen()
+						&& dbTester.getSessionFactory().getCurrentSession()
+								.getTransaction().isActive()) {
+					String msg = "Session and transaction have not be closed properly in class: "
+							+ this.getClass().getCanonicalName();
+					System.err.println(msg);
+					this.getSessionFactory().getCurrentSession().getTransaction()
+							.commit();
+					throw new RuntimeException(msg);
+				}
+			} finally {
+				disableConstraints();
+				dbTester.onTearDown();
+				this.loadFile.close();
+				enableConstraints();
+			}
+		} catch (Throwable ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	protected final <T> List<T> runQuery(String query){
-		Session sess = getSession();
+		Session sess = this.getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
 		List<T> retVal = (List<T>)sess.createQuery(query).list();
 		sess.getTransaction().commit();
@@ -120,7 +139,7 @@ public abstract class GenericTester {
 	
 	@SuppressWarnings("unchecked")
 	protected final <T> T runUniqueQuery(String query){
-		Session sess = getSession();
+		Session sess = this.getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
 		T retVal = (T)sess.createQuery(query).uniqueResult();
 		sess.getTransaction().commit();
@@ -132,10 +151,14 @@ public abstract class GenericTester {
 		return dbTester;
 	}
 
-	protected Session getSession() {
-		return dbTester.getHibernateSessionFactory().getCurrentSession();
-	}
+//	protected Session getSession() {
+//		return dbTester.getHibernateSessionFactory().getCurrentSession();
+//	}
 
+	protected final SessionFactory getSessionFactory(){
+		return dbTester.getSessionFactory();
+	}
+	
 	/**
 	 * @return path to xml file containing setup data for DBUnit
 	 */

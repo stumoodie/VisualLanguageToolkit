@@ -13,60 +13,80 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
  *
  */
 public class StubRootObjectType implements IRootObjectType {
-
+	private static final int UNIQUE_ID = 0;
+	public static final String DESCRIPTION = "Root Object Type Description";
+	public static final String NAME = "Root Object Type";
+	private final INotationSyntaxService syntaxService;
+	
 	/**
 	 * 
 	 */
 	public StubRootObjectType(INotationSyntaxService syntaxService) {
-		// TODO Auto-generated constructor stub
+		this.syntaxService = syntaxService;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IRootObjectType#getParentingRules()
 	 */
 	public IRootObjectParentingRules getParentingRules() {
-		// TODO Auto-generated method stub
-		return null;
+		return new RootObjectParentingRules();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IRootObjectType#getUniqueId()
 	 */
 	public int getUniqueId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return UNIQUE_ID;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDescription()
 	 */
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return DESCRIPTION;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getName()
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return NAME;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getSyntaxService()
 	 */
 	public INotationSyntaxService getSyntaxService() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.syntaxService;
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(IObjectType o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getUniqueId() < o.getUniqueId() ? -1 : this.getUniqueId() > o.getUniqueId() ? 1 : 0;
 	}
 
+	private class RootObjectParentingRules implements IRootObjectParentingRules {
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules#getObjectType()
+		 */
+		public IRootObjectType getObjectType() {
+			return StubRootObjectType.this;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules#isValidChild(org.pathwayeditor.businessobjects.typedefn.IObjectType)
+		 */
+		public boolean isValidChild(IObjectType possibleChild) {
+			boolean retVal = false;
+			if(getObjectType().getUniqueId() == StubShapeAParentOfAllObjectType.UNIQUE_ID
+					|| getObjectType().getUniqueId() == StubShapeCParentOfShapeDObjectType.UNIQUE_ID){
+				retVal = true; 
+			}
+			return retVal;
+		}
+		
+	}
 }

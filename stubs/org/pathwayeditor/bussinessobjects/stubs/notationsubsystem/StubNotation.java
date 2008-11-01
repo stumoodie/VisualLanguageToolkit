@@ -81,14 +81,13 @@ public class StubNotation implements INotation {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(INotation o) {
-		throw new UnsupportedOperationException("not implemented!");
+		return this.getGlobalId().compareTo(o.getGlobalId());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
 	 */
 	public Version getVersion() {
-		// TODO Auto-generated method stub
 		return new Version (EXPECTED_MAJOR_VERSION , EXPECTED_MINOR_VERSION , EXPECTED_PATCH_VERSION ) ;
 	}
 

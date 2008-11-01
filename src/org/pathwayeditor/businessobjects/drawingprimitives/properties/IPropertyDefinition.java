@@ -38,5 +38,5 @@ public interface IPropertyDefinition {
 	 * @param propertyBuilder
 	 * @return the copied annotation property.
 	 */
-	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty prop);
+	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty);
 }

@@ -23,7 +23,7 @@ public class HibernateTestManager implements IDatabaseTester {
 	private final IDatabaseTester delegator;
 	private final HqlDbSchema schemaManager;
 	private HibernateDataSource hibBuilder;
-	private static SessionFactory sessionFactory = null;
+	private SessionFactory sessionFactory = null;
 	
 	public HibernateTestManager(String xmlConfigFile, File createSchemaScript, File dropSchemaScript) {
 		this(new HibernateDataSource(xmlConfigFile), createSchemaScript, dropSchemaScript);
@@ -57,15 +57,30 @@ public class HibernateTestManager implements IDatabaseTester {
 	}
 
 	/**
-	 * Returns the session factory to be used for testing. Will only initialise the sessioon factory once
+	 * Returns the session factory to be used for testing. Will only initialise the session factory once
 	 * and so this instance will return the same session factory instance for every call of this method.
-	 * @return the hibernate session factory which will always be the same.
 	 */
-	public SessionFactory getHibernateSessionFactory(){
+	public void createHibernateSessionFactory(){
 		if(sessionFactory == null){
 			sessionFactory = hibBuilder.getSessionFactory();
 		}
-		return sessionFactory;
+		else{
+			throw new IllegalStateException("Hibernate factor has not been discarded. This will result in a resource leak");
+		}
+	}
+	
+	public SessionFactory getSessionFactory(){
+		if(this.sessionFactory == null){
+			throw new IllegalStateException("Hibernate session has not been created");
+		}
+		return this.sessionFactory;
+	}
+	
+	public void discardHibernateSessionFactory(){
+		if(sessionFactory != null){
+			this.sessionFactory.close();
+			this.sessionFactory = null;
+		}
 	}
 	
 	/**

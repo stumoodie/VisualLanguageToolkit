@@ -48,15 +48,8 @@ public interface ILinkAttributeDefaults {
 	ConnectionRouter getRouter();
 	
 	/**
-	 * Gets the default for any label associated with this link attribute
-	 * @return the label defaults, which cannot be null.
-	 */
-	ILabelAttributeDefaults getDefaultLabelAttributes();
-	
-	/**
 	 * Provides an iterator for the set of all property definitions.
 	 * @return an iterator, that cannot be null, but may iterator over an empry collection.
 	 */
 	Iterator<IPropertyDefinition> propertyDefinitionIterator();
-	
 }

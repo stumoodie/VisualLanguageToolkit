@@ -36,7 +36,9 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	public void testAddNewMapDiagram () throws Exception 
 	{
 		doSetup () ;
-		Query retreivedFolder = getSession().createQuery("from HibFolder where id='100005'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedFolder = sess.createQuery("from HibFolder where id='100005'") ;
 		
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
 		
@@ -46,8 +48,8 @@ public class DBHibMapDiagramTest  extends PojoTester{
 		
 		parentFolder.addMapDiagram(towrite) ;
 		
-		getSession().saveOrUpdate(parentFolder) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(parentFolder) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_MAPDIAGRAM_REF_DATA));
@@ -74,10 +76,12 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	public void testDeleteMapDiagram () throws Exception
 	{
 		doSetup ();
-		Query retreivedMapDiagram = getSession().createQuery("from HibMapDiagram where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedMapDiagram = sess.createQuery("from HibMapDiagram where id='100001'") ;
 		HibMap toDelete = (HibMap) retreivedMapDiagram.uniqueResult() ;
-		getSession().delete(toDelete) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(toDelete) ;
+		sess.getTransaction().commit() ;
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction() ;
 		retreivedMapDiagram = session.createQuery("from HibMapDiagram") ;
@@ -88,17 +92,18 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	public void testCloneMapDiagram () throws Exception 
 	{
 		doSetup () ;
-		getSession().beginTransaction() ;
-		Query retreivedMapDiagram = getSession().createQuery("from HibMapDiagram where id='100001'") ;
-//		List <HibMap> diagrams1 = getSession().createQuery("from HibMapDiagram").list();
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedMapDiagram = sess.createQuery("from HibMapDiagram where id='100001'") ;
+//		List <HibMap> diagrams1 = sess.createQuery("from HibMapDiagram").list();
 		HibMap toClone = (HibMap) retreivedMapDiagram.uniqueResult() ;
-		Query retreivedFolder = getSession().createQuery("from HibFolder where id='100004'") ;
+		Query retreivedFolder = sess.createQuery("from HibFolder where id='100004'") ;
 		HibFolder parentFolder = (HibFolder) retreivedFolder.uniqueResult() ;
 		HibMap cloneDiagram = new HibMap ( parentFolder , toClone ) ;
 		cloneDiagram.setRepository(parentFolder.getRepository());
 		parentFolder.addMapDiagram(cloneDiagram) ;
-		getSession().saveOrUpdate(parentFolder) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(parentFolder) ;
+		sess.getTransaction().commit() ;
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction() ;
 //		List <HibMap> diagrams = session.createQuery("from HibMapDiagram").list();

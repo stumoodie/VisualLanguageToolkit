@@ -13,7 +13,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveS
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 
 /**
@@ -30,13 +29,6 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	public static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
 
 	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getDefaultLabelAttributes()
-	 */
-	public ILabelAttributeDefaults getDefaultLabelAttributes() {
-		throw new UnsupportedOperationException("not implemented");
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndDecoratorType()
 	 */

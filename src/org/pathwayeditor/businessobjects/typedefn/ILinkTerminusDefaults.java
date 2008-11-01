@@ -60,7 +60,4 @@ public interface ILinkTerminusDefaults {
 	 * @return a non-negative integer value.
 	 */
 	Size getEndSize();
-
-	ILabelAttributeDefaults getDefaultLabelAttributes();
-	
 }

@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -36,17 +37,19 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	public void testLoadLinkTerminus () throws Exception
 	{
 		doSetup();
-		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'" );
+		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'" );
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		
 		assertEquals ("link term type " , NUMERIC_VALUE_ONE , dbLinkTerminus.getLinkTermType()) ;
 		assertEquals ("link term offset" , NUMERIC_VALUE_TEN , dbLinkTerminus.getOffset()) ;
 		assertEquals ("parent link", dbLink.hashCode(), dbLinkTerminus.getAttribute().hashCode()) ;
+		sess.getTransaction().commit();
 	}
 	
 	@Ignore @Test 
@@ -54,9 +57,9 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	{
 		
 		doSetup();
-
-		
-		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'" );
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'" );
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		ILinkTerminusDefinition defn = null;
 		
@@ -65,8 +68,8 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		
 		dbLink.setTargetTerminus(newLinkTerminus) ;
 		
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_LINKTERMINUS_DATA));
@@ -93,12 +96,13 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	public void testDeleteLinkTerminus () throws Exception 
 	{
 		doSetup();
-		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
-		getSession().delete(dbLinkTerminus) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbLinkTerminus) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_LINKTERMINUS_DATA));

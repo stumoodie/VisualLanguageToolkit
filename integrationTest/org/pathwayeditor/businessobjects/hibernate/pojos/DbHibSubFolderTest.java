@@ -50,7 +50,8 @@ public class DbHibSubFolderTest extends PojoTester{
 	public void testWriteSubFolderToDB () throws Exception 
 	{	
 		doSetup () ;
-		
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
 		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
 		
 		HibRootFolder aRootFolder = (HibRootFolder)aRepository.getRootFolder();
@@ -79,9 +80,9 @@ public class DbHibSubFolderTest extends PojoTester{
 		aRootFolder.addMapDiagram(aMapDiagram) ;
 		aFolder.addMapDiagram(bMapDiagram) ;
 		
-		getSession().save(aRepository) ;
+		sess.save(aRepository) ;
 		
-		getSession().getTransaction().commit() ;
+		sess.getTransaction().commit() ;
 		
 		Session session = getHibFactory().getCurrentSession() ;
 		session.beginTransaction();
@@ -101,19 +102,20 @@ public class DbHibSubFolderTest extends PojoTester{
 	public void testCloneFolderSubFolderAndMapDiagramsAndMoveAllBetweenRepositories () throws Exception
 	{
 		doSetup ();
-		
-		Query retrievedSubFolder = getSession().createQuery( "From HibSubFolder where id='100003'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;
 		HibSubFolder dbSourceFolder = (HibSubFolder) retrievedSubFolder.uniqueResult() ;
 		
-		Query retrievedRootFolder = getSession().createQuery( "From HibRootFolder where id='100006'") ;
+		Query retrievedRootFolder = sess.createQuery( "From HibRootFolder where id='100006'") ;
 		HibRootFolder dbRootFolder = (HibRootFolder) retrievedRootFolder.uniqueResult() ;
 		HibSubFolder copyOfSubFolder = new HibSubFolder ( dbRootFolder , dbSourceFolder ) ;
 		copyOfSubFolder.setRepository(dbRootFolder.getRepository());
 		dbRootFolder.addSubFolder(copyOfSubFolder) ;
 		
-		getSession().saveOrUpdate(dbRootFolder);
+		sess.saveOrUpdate(dbRootFolder);
 		
-		getSession().getTransaction().commit();
+		sess.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_SUBFOLDER_REF_DATA));
@@ -141,7 +143,9 @@ public class DbHibSubFolderTest extends PojoTester{
 	{
 		doSetup ();
 		
-		Query retrievedSubFolder = getSession().createQuery( "From HibSubFolder where id='100003'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;
 		
 		HibSubFolder dbParentFolder = (HibSubFolder) retrievedSubFolder.uniqueResult() ;
 		
@@ -159,8 +163,8 @@ public class DbHibSubFolderTest extends PojoTester{
 			dbParentFolder.removeHibSubFolder(subFolder) ;
 		}
 		
-		getSession().saveOrUpdate(dbParentFolder) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbParentFolder) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_REF_DATA));
@@ -188,13 +192,14 @@ public class DbHibSubFolderTest extends PojoTester{
 	public void testDeleteParentFolderAndSubFolders () throws Exception 
 	{	
 		doSetup() ;
-
-		Query retrievedSubFolder = getSession().createQuery( "From HibSubFolder where id='100003'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;
 		HibSubFolder dbParentFolder = (HibSubFolder) retrievedSubFolder.uniqueResult() ;
 		assertEquals ( "Number of subfolders" , TWO_ENTRIES_TABLE , dbParentFolder.getSubFolders().size()) ;
 		assertEquals ( "SubFolder name" , SUBFOLDER_TWO_NAME , dbParentFolder.getName() ) ;
-		getSession().delete(dbParentFolder) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbParentFolder) ;
+		sess.getTransaction().commit() ;
 
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_PARENT_WITH_CHILDREN));

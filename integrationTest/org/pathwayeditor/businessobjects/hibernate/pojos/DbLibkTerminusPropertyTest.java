@@ -18,6 +18,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
@@ -55,20 +56,21 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	public void testLoadLinkProperty () throws Exception 
 	{
 		doSetup() ;
-		
-		Query retreivedLinkTerminusProperty = getSession().createQuery("from HibTextProperty where id='100007'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminusProperty = sess.createQuery("from HibTextProperty where id='100007'" ) ;
 		HibTextProperty dbLinkTerminusProperty = (HibTextProperty) retreivedLinkTerminusProperty.uniqueResult() ;
-		
 		assertEquals ( "property value" , LOADED_TEXT_PROPERTY_VALUE , dbLinkTerminusProperty.getValue()) ;
-		
+		sess.getTransaction().commit();
 	}
 	
 	@Ignore @Test
 	public void testAddTextProperty () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id=100001") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id=100001") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IPlainTextPropertyDefinition defn = null;
 		
@@ -76,9 +78,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		
 		dbLinkTerminus.addProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbLinkTerminus) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbLinkTerminus) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_TEXT_PROPERTY_DATA));
@@ -104,8 +106,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	public void testAddRichTextProperty () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IHtmlPropertyDefinition defn = null;
 		
@@ -113,9 +116,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		
 		dbLinkTerminus.addProperty(RICH_TEXT_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbLinkTerminus) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbLinkTerminus) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_RICH_TEXT_PROPERTY_DATA));
@@ -142,7 +145,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	{
 		doSetup() ;
 		
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		INumberPropertyDefinition defn = null;
 		
@@ -150,9 +155,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		
 		dbLinkTerminus.addProperty(NUMBER_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbLinkTerminus) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbLinkTerminus) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_NUMBER_PROPERTY_DATA));
@@ -178,7 +183,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	public void testAddNewListProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IListPropertyDefinition defn = null;
 		
@@ -191,9 +198,9 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		
 		dbLinkTerminus.addProperty(LIST_PROPERTY_NAME , listProperty ) ;
 		
-		getSession().save(listProperty) ;
-		getSession().saveOrUpdate(dbLinkTerminus) ;
-		getSession().getTransaction().commit() ;
+		sess.save(listProperty) ;
+		sess.saveOrUpdate(dbLinkTerminus) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -220,13 +227,15 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	public void removePropertyFromShape () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedLinkTerminus = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		
 		dbLinkTerminus.removeProperty("LinkTerminusPropertyName") ;
 		
-		getSession().saveOrUpdate(dbLinkTerminus) ;
-		getSession().getTransaction().commit();
+		sess.saveOrUpdate(dbLinkTerminus) ;
+		sess.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				REMOVED_PROPERTY_DATA));

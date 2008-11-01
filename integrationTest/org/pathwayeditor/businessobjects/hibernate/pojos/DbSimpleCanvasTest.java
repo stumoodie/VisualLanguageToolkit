@@ -13,6 +13,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
@@ -31,15 +32,16 @@ public class DbSimpleCanvasTest extends PojoTester{
 	{
 		doSetup () ;
 
-		startNewTransaction();
-		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id = '100001'"  ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedCanvas = sess.createQuery("from HibCanvas where id = '100001'"  ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 
 //		List<HibLinkAttribute> links = new ArrayList<HibLinkAttribute> ( dbCanvas.getHibLinkAttributes()) ;
 		
-		getSession().delete(dbCanvas) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbCanvas) ;
+		sess.getTransaction().commit() ;
 	
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_CANVAS_DATA));

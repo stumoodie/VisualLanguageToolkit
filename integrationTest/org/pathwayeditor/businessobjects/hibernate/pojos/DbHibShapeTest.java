@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -68,8 +69,9 @@ public class DbHibShapeTest extends PojoTester{
 	public void testLoadedShape () throws Exception
 	{
 		doSetup () ;
-		
-		Query retreivedShape = getSession().createQuery("from HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery("from HibShapeAttribute where id='100001'") ;
 		
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
@@ -105,10 +107,11 @@ public class DbHibShapeTest extends PojoTester{
 		}});
 		
 		doSetup () ;
-		
-		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'") ;
-		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id ='100001'");
-		Query retreivedCompoundNode = getSession().createQuery("from HibShapeNode where id='100002'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedCanvas = sess.createQuery("from HibCanvas where id='100001'") ;
+		Query retreivedObjectType = sess.createQuery("from HibObjectType where id ='100001'");
+		Query retreivedCompoundNode = sess.createQuery("from HibShapeNode where id='100002'") ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		HibObjectType objectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
@@ -137,8 +140,8 @@ public class DbHibShapeTest extends PojoTester{
 		
 		shapeToSave.setHibObjectType(objectType) ;
 		
-		getSession().save(hibNode);
-		getSession().getTransaction().commit() ;
+		sess.save(hibNode);
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CREATED_SHAPE_DATA));
@@ -165,12 +168,13 @@ public class DbHibShapeTest extends PojoTester{
 	public void testDeleteShape () throws Exception 
 	{
 		doSetup () ;
-		
-		Query retreivedShape = getSession().createQuery("from HibShapeNode where id='100002'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery("from HibShapeNode where id='100002'") ;
 		HibShapeNode dbShapeNode = (HibShapeNode) retreivedShape.uniqueResult() ;
 		
-		getSession().delete(dbShapeNode) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbShapeNode) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_SHAPE_DATA));
@@ -197,11 +201,13 @@ public class DbHibShapeTest extends PojoTester{
 	public void testDeleteCanvasWithShape () throws Exception 
 	{
 		doSetup () ;
-		Query retreivedCanvas = getSession().createQuery("From HibCanvas where id='100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedCanvas = sess.createQuery("From HibCanvas where id='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		getSession().delete(dbCanvas) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbCanvas) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_SHAPE_THROUGH_CANVAS));

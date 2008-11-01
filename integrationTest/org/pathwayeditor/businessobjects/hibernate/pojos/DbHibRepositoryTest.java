@@ -51,8 +51,9 @@ public class DbHibRepositoryTest extends PojoTester  {
 	public void testReadRepository() throws Exception {
 		doSetup();
 		
-		Session session = this.getSession();
-		HibRepository testRepo = (HibRepository)session.createCriteria(HibRepository.class).add(Restrictions.eq("name", EXPECTED_FIRST_REPO_NAME)).uniqueResult();
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		HibRepository testRepo = (HibRepository)sess.createCriteria(HibRepository.class).add(Restrictions.eq("name", EXPECTED_FIRST_REPO_NAME)).uniqueResult();
 		assertEquals("expected repo id", EXPECTED_FIRST_REPO_ID, testRepo.getId());
 		assertEquals("expected repo name", EXPECTED_FIRST_REPO_NAME, testRepo.getName());
 		assertEquals("expected repo name", EXPECTED_FIRST_REPO_DESCN, testRepo.getDescription());
@@ -60,6 +61,7 @@ public class DbHibRepositoryTest extends PojoTester  {
 		assertEquals("expected repo name", EXPECTED_FIRST_REPO_LAST_INODE, testRepo.getLastINode());
 		assertEquals("expected repo name", EXPECTED_FIRST_REPO_NUM_MAPS, testRepo.getMaps().size());
 		assertEquals("expected repo name", EXPECTED_FIRST_REPO_NUM_FOLDERS, testRepo.getFolders().size());
+		sess.getTransaction().commit();
 	}
 
 
@@ -68,16 +70,15 @@ public class DbHibRepositoryTest extends PojoTester  {
 	{
 		doSetup () ;
 		
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
 		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION);
 //		HibRootFolder rootFolderToWrite = new HibRootFolder () ;
 		
 		
 //		repositoryToWrite.changeRootFolder(rootFolderToWrite) ;
-		
-		
-		getSession().save(repositoryToWrite) ;
-		
-		getSession().getTransaction().commit() ;
+		sess.save(repositoryToWrite) ;
+		sess.getTransaction().commit() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(ADDED_REPO_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = getConnection().createDataSet(testTables);
@@ -103,16 +104,17 @@ public class DbHibRepositoryTest extends PojoTester  {
 	public void testDeleteRepositoryWithSubFolders () throws Exception 
 	{
 		doSetup();	
-		
-		Query repositoryGetter = getSession().createQuery ( "From HibRepository where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100001'") ;
 		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
 //		HibRootFolder dbRootFolder = dbRepository.getHibRootFolder() ;
 		
-		getSession().delete(dbRepository) ;
+		sess.delete(dbRepository) ;
 //		getSession().delete(dbRootFolder) ;
-		getSession().getTransaction().commit() ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_REPOSITORY_NO_SUBFOLDERS));
@@ -140,14 +142,16 @@ public class DbHibRepositoryTest extends PojoTester  {
 	{
 		doSetup () ;		
 		
-		Query repositoryGetter = getSession().createQuery ( "From HibRepository where id='100002'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100002'") ;
 		
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		
 //		HibRootFolder dbRootFolder = dbRepository.getRootFolder() ;
 		
-		getSession().delete(dbRepository) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbRepository) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_REPOSITORY_SUBFOLDERS));

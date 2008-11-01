@@ -15,13 +15,8 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
@@ -42,18 +37,18 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
-import org.pathwayeditor.integrationtestutils.GenericTester;
+import org.pathwayeditor.testutils.GenericTester;
 
 /**
  * @author ntsorman
  *
  */
-@RunWith(JMock.class)
+//@RunWith(JMock.class)
 public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
-	private Mockery mockery = new JUnit4Mockery() {{
-		 setImposteriser(ClassImposteriser.INSTANCE);
-	}};
+//	private Mockery mockery = new JUnit4Mockery() {{
+//		 setImposteriser(ClassImposteriser.INSTANCE);
+//	}};
 	
 	private IMapContentPersistenceManager map1Manager ;
 	
@@ -234,8 +229,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	 */
 	@Override
 	protected void doAdditionalTearDown() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)

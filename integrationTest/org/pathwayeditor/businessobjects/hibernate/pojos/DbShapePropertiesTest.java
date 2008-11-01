@@ -18,6 +18,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
@@ -53,20 +54,22 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testLoadLinkProperty () throws Exception 
 	{
 		doSetup() ;
-		
-		Query retreivedShapeProperty = getSession().createQuery("from HibTextProperty where id='100006'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShapeProperty = sess.createQuery("from HibTextProperty where id='100006'" ) ;
 		HibTextProperty dbLinkProperty = (HibTextProperty) retreivedShapeProperty.uniqueResult() ;
 		
 		assertEquals ( "property value" , LOADED_TEXT_PROPERTY_VALUE , dbLinkProperty.getValue()) ;
-		
+		sess.getTransaction().commit();
 	}
 	
 	@Ignore @Test
 	public void testAddTextProperty () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibTextProperty textProperty = new HibTextProperty ( ) ;
@@ -74,9 +77,9 @@ public class DbShapePropertiesTest extends PojoTester {
 		
 		dbShape.addProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbShape) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbShape) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_TEXT_PROPERTY_DATA));
@@ -102,8 +105,9 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testAddRichTextProperty () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibRichTextProperty textProperty = new HibRichTextProperty ( ) ;
@@ -111,9 +115,9 @@ public class DbShapePropertiesTest extends PojoTester {
 		
 		dbShape.addProperty(RICH_TEXT_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbShape) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbShape) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_RICH_TEXT_PROPERTY_DATA));
@@ -139,8 +143,9 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testAddNumberProperty () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibNumberProperty textProperty = new HibNumberProperty ( ) ;
@@ -148,9 +153,9 @@ public class DbShapePropertiesTest extends PojoTester {
 		
 		dbShape.addProperty(NUMBER_PROPERTY_NAME , textProperty ) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbShape) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbShape) ;
+		sess.getTransaction().commit() ;
 //		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_NUMBER_PROPERTY_DATA));
@@ -176,7 +181,9 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void testAddNewListProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		HibListProperty numberProperty = new HibListProperty ( ) ;
@@ -187,9 +194,9 @@ public class DbShapePropertiesTest extends PojoTester {
 		
 		dbShape.addProperty(LIST_PROPERTY_NAME , numberProperty ) ;
 		
-		getSession().save(numberProperty) ;
-		getSession().saveOrUpdate(dbShape) ;
-		getSession().getTransaction().commit() ;
+		sess.save(numberProperty) ;
+		sess.saveOrUpdate(dbShape) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -216,13 +223,15 @@ public class DbShapePropertiesTest extends PojoTester {
 	public void removePropertyFromShape () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedShape = getSession().createQuery( "From HibShapeAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
 		HibShapeAttribute dbShape = (HibShapeAttribute) retreivedShape.uniqueResult() ;
 		
 		dbShape.removeProperty("ShapePropertyName") ;
 		
-		getSession().saveOrUpdate(dbShape) ;
-		getSession().getTransaction().commit();
+		sess.saveOrUpdate(dbShape) ;
+		sess.getTransaction().commit();
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				REMOVED_PROPERTY_DATA));
@@ -244,49 +253,63 @@ public class DbShapePropertiesTest extends PojoTester {
 		
 	}
 	
-	@Ignore @Test
-	public void testDeletePropertyWithShape () throws Exception 
-	{
-		doSetup() ;
-		Query retreivedShapeNode = getSession().createQuery( "From HibShapeNode where id='100002'") ;
-		HibShapeNode dbShapeNode = (HibShapeNode) retreivedShapeNode.uniqueResult() ;
-		
-		getSession().delete(dbShapeNode) ;
-		getSession().getTransaction().commit() ;
-		
-		Query retreivedProperty = getSession().createQuery( "From HibProperty where id='100001'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100002'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100003'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100004'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100005'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100006'") ;
-			System.out.println (retreivedProperty.list().size()) ;
-		 retreivedProperty = getSession().createQuery( "From HibProperty where id='100007'") ;
-		System.out.println (retreivedProperty.list().size()) ;
-		
-		System.out.println ("linkterminus") ;
-		 retreivedProperty = getSession().createQuery( "From HibLinkTerminus where id='100001'") ;
-			System.out.println (retreivedProperty.list().size()) ;
-			
-			System.out.println ("linkAttribute") ;
-			 retreivedProperty = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
-				System.out.println (retreivedProperty.list().size()) ;
-		
+	@Ignore
+	@Test
+	public void testDeletePropertyWithShape() throws Exception {
+		doSetup();
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedShapeNode = sess
+				.createQuery("From HibShapeNode where id='100002'");
+		HibShapeNode dbShapeNode = (HibShapeNode) retreivedShapeNode
+				.uniqueResult();
+
+		sess.delete(dbShapeNode);
+		sess.getTransaction().commit();
+
+		sess.beginTransaction();
+		Query retreivedProperty = sess
+				.createQuery("From HibProperty where id='100001'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100002'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100003'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100004'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100005'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100006'");
+		System.out.println(retreivedProperty.list().size());
+		retreivedProperty = sess
+				.createQuery("From HibProperty where id='100007'");
+		System.out.println(retreivedProperty.list().size());
+
+		System.out.println("linkterminus");
+		retreivedProperty = sess
+				.createQuery("From HibLinkTerminus where id='100001'");
+		System.out.println(retreivedProperty.list().size());
+
+		System.out.println("linkAttribute");
+		retreivedProperty = sess
+				.createQuery("From HibLinkAttribute where id='100001'");
+		System.out.println(retreivedProperty.list().size());
+
+		sess.getTransaction().commit();
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_SHAPE_AND_PROPERTY_DATA));
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
 		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
+			ITable expectedTable = DefaultColumnFilter.includedColumnsTable(
+					expectedChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
 			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
 					actualChanges.getTable(t), expectedDeltas.getTable(t)
 							.getTableMetaData().getColumns());

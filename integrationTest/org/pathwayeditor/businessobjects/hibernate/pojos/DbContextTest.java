@@ -13,6 +13,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
@@ -44,9 +45,10 @@ public class DbContextTest extends PojoTester{
 		doSetup () ;
 		Version version = new Version(MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION);
 		HibNotation contextToAdd = new HibNotation ( CONTEXT_ID, CONTEXT_NAME, CONTEXT_DESCRIPTION, version) ;
-		
-		getSession().save(contextToAdd) ;
-		getSession().getTransaction().commit() ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		sess.save(contextToAdd) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_CONTEXT_DATA));
@@ -72,14 +74,16 @@ public class DbContextTest extends PojoTester{
 	public void testaddObjectTypeToContext () throws Exception 
 	{
 		doSetup () ;
-		Query retreivedContext = getSession().createQuery("from HibContext where id = '100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedContext = sess.createQuery("from HibContext where id = '100001'" ) ;
 		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
 		HibObjectType newObjectType = new HibObjectType (OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
 		dbContext.addObjectType(newObjectType) ;
 		
-		getSession().saveOrUpdate(dbContext) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbContext) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_OBJECT_TYPE_DATA));
@@ -105,11 +109,13 @@ public class DbContextTest extends PojoTester{
 	public void testDeleteContext () throws Exception 
 	{
 		doSetup () ;
-		Query retreivedContext = getSession().createQuery("from HibContext where id = '100002'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedContext = sess.createQuery("from HibContext where id = '100002'" ) ;
 		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
-		getSession().delete(dbContext) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbContext) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_CONTEXT_DATA));

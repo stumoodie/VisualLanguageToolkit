@@ -172,13 +172,14 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		r.createCopyOfSubfolder(sub1);
 		this.getBusinessObjectFactory().synchroniseRepository();
 		assertTrue(subFolderExistsCalled(r, sub1.getName()));
-		Session sess = getSession();
+		Session sess = getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
 		ISubFolder sub = (ISubFolder)sess.createQuery(
 			"from HibSubFolder s where s.parentFolder =:parent and s.name = :name")
 			.setEntity("parent", r).setString("name", sub1.getName())
 			.uniqueResult();
 		assertNotNull(sub);
+		sess.getTransaction().commit();
 	}
 
 	@Test
@@ -202,7 +203,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		sub1.removeMap(map);
 		assertEquals(0,sub1.getNumMaps());
 		this.getBusinessObjectFactory().synchroniseRepository();
-		Session sess = getSession();
+		Session sess = getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
 		IMap mapResult = (IMap)sess.createQuery("from HibMap m where m.INode = ?").setInteger(0, iNode).uniqueResult();
 		sess.getTransaction().commit();
@@ -347,7 +348,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IMap map = sub1.getMapIterator().next();
 		assertFalse(mapExistsCalled( r, map.getName()));
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 					"from HibMap m where m.folder =:parent and m.name = :name")
@@ -360,7 +361,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		{
 			this.getBusinessObjectFactory().synchroniseRepository();
 			assertTrue(mapExistsCalled(r, map.getName()));
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 					"from HibMap m where m.folder =:parent and m.name = :name")
@@ -383,7 +384,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertTrue(mapExistsCalled(r, map.getName()));
 		assertFalse(mapExistsCalled(sub1, map.getName()));
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")
@@ -393,7 +394,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			assertEquals(1, actualSize);
 		}
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")
@@ -411,7 +412,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IMap map = sub1.getMapIterator().next();
 		assertFalse(mapExistsCalled( r, map.getName()));
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")
@@ -423,7 +424,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		r.moveMap(map);
 		this.getBusinessObjectFactory().synchroniseRepository();
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")
@@ -448,7 +449,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IMap map = sub1.getMapIterator().next();
 		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")
@@ -461,7 +462,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		this.getBusinessObjectFactory().synchroniseRepository();
 		assertTrue(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		{
-			Session sess = getSession();
+			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
 			int actualSize = sess.createQuery(
 				"from HibMap m where m.folder =:parent and m.name = :name")

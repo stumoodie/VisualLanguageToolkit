@@ -17,6 +17,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
@@ -43,12 +44,14 @@ public class DbHibRootFolderTest  extends PojoTester {
 	public void testLoadRootFolder () throws Exception 
 	{
 		doSetup() ;
-		Query rootFolderGetter = getSession().createQuery ( "From HibRootFolder where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query rootFolderGetter = sess.createQuery ( "From HibRootFolder where id='100001'") ;
 		
 		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
 		HibRepository actualRepository = dbRootFolder.getRepository();
 		Long actualRepoId = actualRepository.getId(); 
-		getSession().getTransaction().commit() ;
+		sess.getTransaction().commit() ;
 		
 		assertNotNull("has repository", actualRepository);
 		assertEquals("expected repository", EXPECTED_REPO_ID, actualRepoId);
@@ -59,17 +62,14 @@ public class DbHibRootFolderTest  extends PojoTester {
 	public void testAddFoldersToRootFolder () throws Exception 
 	{
 		doSetup() ;
-		Query rootFolderGetter = getSession().createQuery ( "From HibRootFolder where id='100006'") ;
-		
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query rootFolderGetter = sess.createQuery ( "From HibRootFolder where id='100006'") ;
 		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
-		
 		HibSubFolder subFolderToAdd = new HibSubFolder ( dbRootFolder , SUB_FOLDER_NAME ) ;
-		
 		dbRootFolder.addSubFolder(subFolderToAdd) ;
-		
-		getSession().saveOrUpdate(dbRootFolder) ;
-		
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbRootFolder) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_SUBFOLDER_REF_DATA));
@@ -95,14 +95,14 @@ public class DbHibRootFolderTest  extends PojoTester {
 //	public void testDeleteRootFolder () throws Exception 
 //	{
 //		doSetup() ;
-//		getSession().beginTransaction();
-//		Query rootFolderGetter = getSession().createQuery ( "From HibRootFolder where id='100001'") ;
+//		sess.beginTransaction();
+//		Query rootFolderGetter = sess.createQuery ( "From HibRootFolder where id='100001'") ;
 //		
 //		HibRootFolder dbRootFolder = (HibRootFolder) rootFolderGetter.uniqueResult() ;
 //		HibRepository hibRepo = dbRootFolder.getRepository();
 //		dbRootFolder.changeRepository(null);
-//		getSession().saveOrUpdate(hibRepo) ;
-//		getSession().getTransaction().commit() ;
+//		sess.saveOrUpdate(hibRepo) ;
+//		sess.getTransaction().commit() ;
 //		
 //		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 //				DELETED_ROOT_REF_DATA));
@@ -128,16 +128,18 @@ public class DbHibRootFolderTest  extends PojoTester {
 	public void testCloneRootFolder () throws Exception
 	{
 		doSetup() ;
-		Query repositoryGetter = getSession().createQuery ( "From HibRepository where id='100002'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100002'") ;
 		HibRepository dbRepository = (HibRepository) repositoryGetter.uniqueResult() ;
 		HibRootFolder oldRootFolder = dbRepository.getRootFolder();
 		HibRootFolder cloneOfRootFolder = new HibRootFolder ( dbRepository , oldRootFolder ) ;
 		dbRepository.changeRootFolder(null);
-		getSession().delete(oldRootFolder) ;
-		getSession().flush();
+		sess.delete(oldRootFolder) ;
+		sess.flush();
 		dbRepository.changeRootFolder(cloneOfRootFolder) ;
-		getSession().saveOrUpdate(dbRepository) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbRepository) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_ROOTFOLDER_REF_DATA));

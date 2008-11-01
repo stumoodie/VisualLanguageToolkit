@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
@@ -54,8 +55,9 @@ public class DbHibLinkTest extends PojoTester{
 	public void testLoadLabel () throws Exception
 	{
 		doSetup();
-		
-		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 		
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		assertEquals ( "creation_serial" , LINK_CREATION_SERIAL , dbLink.getCreationSerial() ) ;
@@ -76,13 +78,14 @@ public class DbHibLinkTest extends PojoTester{
 	public void testDeleteLink () throws Exception
 	{
 		doSetup();
-		
-		Query retreivedLink = getSession().createQuery("from HibLinkEdge where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLink = sess.createQuery("from HibLinkEdge where id='100001'") ;
 		
 		HibLinkEdge dbLinEdge = (HibLinkEdge) retreivedLink.uniqueResult() ;
 		
-		getSession().delete(dbLinEdge) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbLinEdge) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_LINK_DATA));
@@ -109,10 +112,11 @@ public class DbHibLinkTest extends PojoTester{
 	public void testAddNewLink () throws Exception 
 	{
 		doSetup(); 
-		
-//		Query retreivedCompoundEdge = getSession().createQuery("from HibLinkEdge where id='100001'" ) ;
-		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100001'" ) ;
-//		Query retreivedObjectType = getSession().createQuery("from HibObjectType where id='100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+//		Query retreivedCompoundEdge = sess.createQuery("from HibLinkEdge where id='100001'" ) ;
+		Query retreivedCanvas = sess.createQuery("from HibCanvas where id='100001'" ) ;
+//		Query retreivedObjectType = sess.createQuery("from HibObjectType where id='100001'" ) ;
 		
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 //		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
@@ -135,8 +139,8 @@ public class DbHibLinkTest extends PojoTester{
 		
 		linkToWrite.setCanvas(dbCanvas) ;
 		
-		getSession().save(linkToWrite) ;
-		getSession().getTransaction().commit() ; 
+		sess.save(linkToWrite) ;
+		sess.getTransaction().commit() ; 
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CREATED_LINK_DATA));
@@ -164,14 +168,14 @@ public class DbHibLinkTest extends PojoTester{
 //		doSetup() ;
 //		
 //		startNewTransaction();
-//		Query retreivedLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+//		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 //		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 //		
-////		Query retreivedCanvas = getSession().createQuery("from HibCanvas where id='100002'" ) ;
+////		Query retreivedCanvas = sess.createQuery("from HibCanvas where id='100002'" ) ;
 ////		HibCanvas dbCanvas2 = (HibCanvas) retreivedCanvas.uniqueResult() ;
 //				
-//		getSession().saveOrUpdate(dbLink) ;
-//		getSession().getTransaction().commit() ;
+//		sess.saveOrUpdate(dbLink) ;
+//		sess.getTransaction().commit() ;
 //		
 //		Session session = this.getHibFactory().getCurrentSession() ;
 //		session.beginTransaction() ;

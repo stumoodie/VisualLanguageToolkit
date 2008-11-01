@@ -13,6 +13,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -32,16 +33,17 @@ public class DbBendpointTest extends PojoTester{
 	public void testAddBendPoint () throws Exception 
 	{
 		doSetup() ;
-		
-		Query retreivedContext = getSession().createQuery("from HibLinkAttribute where id = '100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100001'" ) ;
 		HibLinkAttribute dbLinkAttribute = (HibLinkAttribute) retreivedContext.uniqueResult() ;
 		
 		HibBendPoint newBendPoint = new HibBendPoint (dbLinkAttribute, INDEX, POSITION ,  POSITION) ;
 		
 		dbLinkAttribute.addBendPoint(newBendPoint) ;
 		
-		getSession().saveOrUpdate(dbLinkAttribute) ;
-		getSession().getTransaction().commit() ;
+		sess.saveOrUpdate(dbLinkAttribute) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				ADDED_BENDPOINT_DATA));
@@ -66,12 +68,13 @@ public class DbBendpointTest extends PojoTester{
 	public void testDeleteBendPoint () throws Exception
 	{
 		doSetup() ;
-		
-		Query retreivedContext = getSession().createQuery("from HibBendPoint where id = '100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedContext = sess.createQuery("from HibBendPoint where id = '100001'" ) ;
 		HibBendPoint dbHibBendPoint = (HibBendPoint) retreivedContext.uniqueResult() ;
 		
-		getSession().delete(dbHibBendPoint) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbHibBendPoint) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_BENDPOINT_DATA));

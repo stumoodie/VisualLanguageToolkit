@@ -18,6 +18,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
@@ -57,8 +58,11 @@ public class DbLinkPropertyTest extends PojoTester {
 	{
 		doSetup() ;
 		
-		Query retreivedLinkProperty = getSession().createQuery("from HibTextProperty where id='100006'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLinkProperty = sess.createQuery("from HibTextProperty where id='100006'" ) ;
 		HibTextProperty dbLinkProperty = (HibTextProperty) retreivedLinkProperty.uniqueResult() ;
+		sess.getTransaction().commit();
 		
 		assertEquals ( "property value" , RETREIVED_TEXT_PROPERTY_VALUE , dbLinkProperty.getValue()) ;
 		
@@ -69,15 +73,17 @@ public class DbLinkPropertyTest extends PojoTester {
 	{
 		doSetup () ;
 		
-		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		INumberPropertyDefinition defn = null;
 		
 		HibNumberProperty numberProperty = new HibNumberProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
-		getSession().save(numberProperty) ;
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.save(numberProperty) ;
+		sess.saveOrUpdate(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -104,15 +110,17 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewTextProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		IPlainTextPropertyDefinition defn = null;
 		
 		HibTextProperty textProperty = new HibTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
-		getSession().save(textProperty) ;
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.save(textProperty) ;
+		sess.saveOrUpdate(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -139,15 +147,17 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewRichTextProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		IHtmlPropertyDefinition defn = null;
 		
 		HibRichTextProperty richTextProperty = new HibRichTextProperty ( (HibCanvas)dbLink.getCanvas() , CREATION_SERIAL , defn) ;
 		
-		getSession().save(richTextProperty) ;
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.save(richTextProperty) ;
+		sess.saveOrUpdate(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -174,7 +184,9 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testAddNewListProperty () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedHibLink = getSession().createQuery("from HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedHibLink.uniqueResult() ;
 		IListPropertyDefinition defn = null;
 		
@@ -188,9 +200,9 @@ public class DbLinkPropertyTest extends PojoTester {
 //		listProperty.setCreationSerial(CREATION_SERIAL);
 //		numberProperty.setCanvas() ;
 		
-		getSession().save(listProperty) ;
-		getSession().saveOrUpdate(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.save(listProperty) ;
+		sess.saveOrUpdate(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
@@ -217,11 +229,13 @@ public class DbLinkPropertyTest extends PojoTester {
 	public void testDeletePropertyWithLink () throws Exception 
 	{
 		doSetup() ;
-		Query retreivedLink = getSession().createQuery( "From HibLinkAttribute where id='100001'") ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedLink = sess.createQuery( "From HibLinkAttribute where id='100001'") ;
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
-		getSession().delete(dbLink) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbLink) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_LINK_AND_PROPERTY_DATA));

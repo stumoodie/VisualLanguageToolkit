@@ -15,86 +15,76 @@ import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListene
  *
  */
 public class StubMap implements IMap {
+	public static final int INODE = 77;
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getDescription()
 	 */
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getName()
 	 */
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getOwner()
 	 */
 	public IFolder getOwner() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#setDescription(java.lang.String)
 	 */
 	public void setDescription(String description) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getINode()
 	 */
 	public int getINode() {
-		// TODO Auto-generated method stub
-		return 0;
+		return INODE;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getRepository()
 	 */
 	public IRepository getRepository() {
-		// TODO Auto-generated method stub
-		return null;
+		return new StubRepository();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getPath()
 	 */
 	public String getPath() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
 	 */
 	public void addChangeListener(IRepositoryItemChangeListener changeListener) {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#getChangeListeners()
 	 */
 	public List<IRepositoryItemChangeListener> getChangeListeners() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener)
 	 */
-	public void removeChangeListener(
-			IRepositoryItemChangeListener changeListener) {
-		// TODO Auto-generated method stub
-		
+	public void removeChangeListener(IRepositoryItemChangeListener changeListener) {
+		throw new UnsupportedOperationException("not implemented!");
 	}
 
 }

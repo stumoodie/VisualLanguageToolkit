@@ -14,7 +14,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveS
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 
@@ -38,13 +37,6 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 
 //	private final ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();
 //	private final ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDefaultLabelAttributes()
-	 */
-	public ILabelAttributeDefaults getDefaultLabelAttributes() {
-		throw new UnsupportedOperationException("not implemented");
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()

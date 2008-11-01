@@ -146,20 +146,6 @@ public class ILinkAttributeTest {
 	}
 	
 	@Test
-	public void testGetLinkSourceDecoration() throws Exception
-	{
-		// TODO
-		linkAttribute.getSourceTerminus() ;
-	}
-	
-	@Test
-	public void testGetLinkTargetDecoration() throws Exception
-	{
-		// TODO
-		linkAttribute.getTargetTerminus() ;
-	}
-	
-	@Test
 	public void testSetRouter() throws Exception
 	{
 		assertEquals ( "null router" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouter() ) ;

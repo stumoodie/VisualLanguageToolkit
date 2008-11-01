@@ -96,7 +96,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 
 		for (HibProperty property : other.hibProperties.values()) {
 			IPropertyDefinition defn = property.getDefinition(); 
-			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder,property));
+			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder, property));
 		}
 	}
 	

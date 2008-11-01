@@ -6,7 +6,6 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -14,7 +13,6 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -28,7 +26,7 @@ import org.junit.BeforeClass;
 public abstract class PojoTester {
 
 	private static HibernateTestManager dbTester = null;
-	private SessionFactory hibFactory;
+//	private SessionFactory hibFactory;
 //	private Session session;
 	private FileInputStream loadFile = null;
 	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
@@ -39,34 +37,36 @@ public abstract class PojoTester {
 	public static void initSchema() throws Exception {
 		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
 		dbTester.createSchema();
+		dbTester.createHibernateSessionFactory();
 	}
 
 	@AfterClass
 	public static void dropSchema() throws Exception {
+		dbTester.discardHibernateSessionFactory();
 		dbTester.dropSchema();
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		this.hibFactory = dbTester.getHibernateSessionFactory();
+//		this.hibFactory = dbTester.getSessionFactory();
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
-		startNewTransaction();
+//		startNewTransaction();
 	}
 
-	protected void saveAndCommit(Serializable in) {
-		getSession().saveOrUpdate(in);
-		getSession().getTransaction().commit();
-	}
+//	protected void saveAndCommit(Serializable in) {
+//		getSession().saveOrUpdate(in);
+//		getSession().getTransaction().commit();
+//	}
 
-	protected void startNewTransaction() {
-//		setSession(getHibFactory().openSession());
-		getSession().beginTransaction();
-	}
+//	protected void startNewTransaction() {
+////		setSession(getHibFactory().openSession());
+//		getSession().beginTransaction();
+//	}
 
 	protected void doSetup() throws DataSetException, FileNotFoundException,
 	Exception {
-		disbleConstraints() ;
+		disableConstraints() ;
 		this.loadFile = new FileInputStream(getDbUnitDataFilePath());
 		getDbTester().setDataSet(new XmlDataSet(this.loadFile));
 		getDbTester().onSetup();
@@ -78,32 +78,30 @@ public abstract class PojoTester {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		disbleConstraints() ;
+		disableConstraints() ;
 		dbTester.onTearDown();
 		if(this.loadFile != null){
 			this.loadFile.close();
 		}
 		enableConstraints() ;
-//		if (this.hibFactory != null && !this.hibFactory.isClosed()) {
-//			this.hibFactory.close();
-//		}
-//		this.hibFactory = null;
+		if(this.getHibFactory().getCurrentSession().isOpen() && this.getHibFactory().getCurrentSession().getTransaction().isActive()){
+			String msg = "Session and transaction have not be closed properly in class: " + this.getClass().getCanonicalName();
+			System.err.println(msg);
+			this.getHibFactory().getCurrentSession().getTransaction().commit();
+			throw new RuntimeException(msg);
+		}
 	}
 
-	protected HibernateTestManager getDbTester() {
+	protected final HibernateTestManager getDbTester() {
 		return dbTester;
 	}
 
-	protected SessionFactory getHibFactory() {
-		return this.hibFactory;
+	protected final SessionFactory getHibFactory() {
+		return dbTester.getSessionFactory();
 	}
 
-	protected Session getSession() {
-		return this.getHibFactory().getCurrentSession();
-	}
-
-//	protected void setSession(Session sess) {
-//		this.session = sess;
+//	protected Session getSession() {
+//		return this.getHibFactory().getCurrentSession();
 //	}
 
 	/**
@@ -111,12 +109,12 @@ public abstract class PojoTester {
 	 */
 	protected abstract String getDbUnitDataFilePath();
 	
-	protected IDatabaseConnection getConnection ()  throws Exception
+	protected final IDatabaseConnection getConnection ()  throws Exception
 	{
 		return dbTester.getConnection() ;
 	}
 	
-	protected void enableConstraints() throws Exception {
+	protected final void enableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
 		Statement stmt = null;
 		try{
@@ -131,7 +129,7 @@ public abstract class PojoTester {
 		}
 	}
 	
-	protected void disbleConstraints() throws Exception {
+	protected final void disableConstraints() throws Exception {
 		Connection conn = dbTester.getConnection().getConnection();
 		Statement stmt = null;
 		try{

@@ -49,8 +49,6 @@ public class LoadSmallDataTest extends GenericTester{
 	 */
 	@Override
 	protected void doAdditionalTearDown() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)

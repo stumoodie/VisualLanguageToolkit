@@ -15,6 +15,7 @@ import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.testutils.PojoTester;
@@ -44,8 +45,10 @@ public class dbHibCanvasTest extends  PojoTester {
 	{
 		doSetup();
 		
-		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
-//		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100001'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100001'" ) ;
+//		Query retreivedMapDiagram = sess.createQuery( "from HibMapDiagram where id ='100001'" ) ;
 		
 //		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
@@ -72,11 +75,13 @@ public class dbHibCanvasTest extends  PojoTester {
 	{
 		doSetup();
 		
-		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100003'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100003'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		getSession().delete(dbCanvas) ;
-		getSession().getTransaction().commit() ;
+		sess.delete(dbCanvas) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				DELETED_EMPTY_CANVAS_REF_DATA));
@@ -101,17 +106,18 @@ public class dbHibCanvasTest extends  PojoTester {
 	public void testCloneCanvas () throws Exception
 	{
 		doSetup () ;
-		
-		Query retreivedMapDiagram = getSession().createQuery( "from HibMapDiagram where id ='100004'" ) ;
+		Session sess = getHibFactory().getCurrentSession();
+		sess.beginTransaction();
+		Query retreivedMapDiagram = sess.createQuery( "from HibMapDiagram where id ='100004'" ) ;
 		HibMap parentMapDiagram = (HibMap) retreivedMapDiagram.uniqueResult() ;
 		
-		Query retreivedCanvas = getSession().createQuery( "from HibCanvas where id ='100001'" ) ;
+		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
 		HibCanvas toWrite= new HibCanvas (parentMapDiagram, dbCanvas) ;
 		
-		getSession().save(toWrite) ;
-		getSession().getTransaction().commit() ;
+		sess.save(toWrite) ;
+		sess.getTransaction().commit() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
 				CLONED_MAPDIAGRAM_REF_DATA));
