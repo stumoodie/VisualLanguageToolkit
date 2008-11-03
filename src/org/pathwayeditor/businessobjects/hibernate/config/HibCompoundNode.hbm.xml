@@ -28,6 +28,10 @@
 	       	<column name="parent_id" not-null="false"/>
         </many-to-one>
 
+		<property name="isRemoved" type="boolean">
+			<column name="is_removed" not-null="true"/>
+		</property>
+
 		<set name="inEdges" inverse="true" cascade="all" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
 			<key column="in_node_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />

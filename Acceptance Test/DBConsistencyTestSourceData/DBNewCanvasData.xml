@@ -65,7 +65,7 @@
 		<column>canvas_width</column>
 		<column>canvas_height</column>
 		<column>last_creation_serial</column>
-		<column>repository_id</column>
+		<column>repository_name</column>
 		<row>
 			<value>5</value>
 			<value>100001</value>
@@ -79,7 +79,7 @@
 			<value>200</value>
 			<value>300</value>
 			<value>1</value>
-			<value>100001</value>
+			<value>repo name</value>
 		</row> 
 	</table>
 	<!-- END OF CANVAS -->

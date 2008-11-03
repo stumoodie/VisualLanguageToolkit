@@ -28,5 +28,10 @@
         <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
         	<column name="in_node_id" not-null="true"/>
         </many-to-one>
+
+		<property name="isRemoved" type="boolean">
+			<column name="is_removed" not-null="true"/>
+		</property>
+
     </class>
 </hibernate-mapping>

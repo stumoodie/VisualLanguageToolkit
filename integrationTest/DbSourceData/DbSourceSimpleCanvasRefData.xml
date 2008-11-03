@@ -124,20 +124,24 @@
 		<column>id</column>
 		<column>model_id</column>
 		<column>node_index</column>
+		<column>is_removed</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>1</value>
+				<value>false</value>
 			</row>
 			<row>
 				<value>100002</value>
 				<value>100001</value>
 				<value>2</value>
+				<value>false</value>
 			</row>
 			<row>
 				<value>100003</value>
 				<value>100001</value>
 				<value>3</value>
+				<value>false</value>
 			</row>
 	</table>
 	<table name="RootObjectNode">
@@ -211,11 +215,13 @@
 		<column>model_id</column>
 		<column>edge_index</column>
 		<column>owning_node_id</column>
+		<column>is_removed</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
 				<value>100001</value>
+				<value>false</value>
 			</row>
 	</table>
 	<table name="LinkAttribute">

@@ -149,23 +149,27 @@
 		<column>model_id</column>
 		<column>node_index</column>
 		<column>parent_id</column>
+		<column>is_removed</column>
 			<row>
 				<value>100001</value><!-- Root Node -->
 				<value>100001</value>
 				<value>0</value>
 				<null/>
+				<value>false</value>
 			</row>
 			<row>
 				<value>100002</value><!--  Node1 -->
 				<value>100001</value>
 				<value>1</value>
 				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
 				<value>100003</value><!-- Node 2 -->
 				<value>100001</value>
 				<value>2</value>
 				<value>100001</value>
+				<value>false</value>
 			</row>			
 	</table>                               
 	<table name="ChildCompoundGraph">
@@ -210,6 +214,7 @@
 		<column>out_node_id</column>
 		<column>in_node_id</column>
 		<column>link_attribute_id</column>
+		<column>is_removed</column>
 		<row>
 			<value>100001</value><!-- CONNECTS 1 =>1 -->
 			<value>100001</value>
@@ -218,6 +223,7 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100001</value>
+			<value>false</value>
 		</row>
 	</table>
 	<!-- END OF GRAPH STRUCTURE -->

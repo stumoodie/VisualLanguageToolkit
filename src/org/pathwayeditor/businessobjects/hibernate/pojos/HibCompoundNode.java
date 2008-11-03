@@ -177,5 +177,14 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	public void setParentNode(HibCompoundNode parentNode) {
 		this.parentNode = parentNode;
 	}	
+
 	
+	void setIsRemoved(boolean removed){
+		this.markRemoved(removed);
+	}
+	
+	boolean getIsRemoved(){
+		// need to do this because isRemoved is final and this breaks hibernate 
+		return super.isRemoved();
+	}
 }

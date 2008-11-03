@@ -141,7 +141,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#canChangeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public boolean canChangeSource(IShapeNode newShape) {
-		// TODO Auto-generated method stub
+		// TODO implement this
 		return false;
 	}
 
@@ -149,7 +149,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#canChangeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public boolean canChangeTarget(IShapeNode newShape) {
-		// TODO Auto-generated method stub
+		// TODO implement this
 		return false;
 	}
 
@@ -157,16 +157,16 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#changeSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public void changeSource(IShapeNode newShape) {
-		// TODO Auto-generated method stub
-		
+		// TODO implement this
+		throw new UnsupportedOperationException("this functionmality has not been implemented yet");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#changeTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public void changeTarget(IShapeNode newShape) {
-		// TODO Auto-generated method stub
-		
+		// TODO implement this
+		throw new UnsupportedOperationException("this functionmality has not been implemented yet");
 	}
 
 	/* (non-Javadoc)
@@ -197,6 +197,15 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		return this.graph;
 	}
 
+
+	void setIsRemoved(boolean removed){
+		this.markRemoved(removed);
+	}
+	
+	boolean getIsRemoved(){
+		// need to do this because isRemoved is final and this breaks hibernate 
+		return super.isRemoved();
+	}
 
 }
 

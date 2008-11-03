@@ -43,7 +43,7 @@ alter table LinkAttribute drop constraint Relationship144;
 alter table LinkAttribute drop constraint Relationship145;
 alter table LinkTerminus drop constraint Relationship147;
 alter table Repository drop constraint Relationship63;
-alter table LabelAttribute drop constraint Relationship44;
+alter table LabelAttribute drop constraint Relationship444;
 drop table LinkEdge if exists;
 drop table CompoundNode if exists;
 drop table CompoundGraph if exists;
