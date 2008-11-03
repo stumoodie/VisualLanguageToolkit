@@ -110,7 +110,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	@Override
 	protected void doAdditionalSetUp() {
 		try {
-			repository = this.getBusinessObjectFactory().getRepository();
+			repository = this.getRepositoryPersistenceManager().getRepository();
 		} catch (PersistenceManagerNotOpenException e) {
 			throw new RuntimeException(e);
 		}
@@ -127,7 +127,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		mapDiagram1 = subFolder1.getMapIterator().next() ;
 		
-		map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram1) ;
+		map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram1) ;
 		map1Manager.loadContent() ;
 		dbCanvas = map1Manager.getCanvas() ;
 		

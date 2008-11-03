@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -102,8 +103,8 @@ public class ILinkAttributeTest {
 		IMap stubMap = new StubMap();
 		IHibNotationFactory notationFact = new StubHibNotationFactory();
 		mockCanvas = new HibCanvas(stubMap, notationFact, stubNotationSubSystem);
-		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION);
-		HibNotation notation = notationFact.getNotation(stubNotationSubSystem.getNotation());
+		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION, ObjectTypeClassification.SHAPE);
+		HibNotation notation = notationFact.getNotation();
 		notation.addObjectType(objectType);
 		stubObjectType = new StubLinkObjectType();
 		

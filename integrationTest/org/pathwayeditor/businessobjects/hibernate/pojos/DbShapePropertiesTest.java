@@ -53,7 +53,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Test
 	public void testLoadLinkProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShapeProperty = sess.createQuery("from HibTextProperty where id='100006'" ) ;
@@ -66,7 +65,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore @Test
 	public void testAddTextProperty () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
@@ -104,7 +102,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore @Test
 	public void testAddRichTextProperty () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
@@ -142,7 +139,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNumberProperty () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
@@ -180,7 +176,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNewListProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
@@ -222,7 +217,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore @Test
 	public void removePropertyFromShape () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery( "From HibShapeAttribute where id='100001'") ;
@@ -256,7 +250,6 @@ public class DbShapePropertiesTest extends PojoTester {
 	@Ignore
 	@Test
 	public void testDeletePropertyWithShape() throws Exception {
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShapeNode = sess

@@ -37,7 +37,7 @@ public class HibCanvasTest {
 //	private final static int NUMERIC_VALUE_TWO = 2;
 //	private final static int NUMERIC_VALUE_ZERO = 0;
 	private final static String ANOTHER_OBJECT = "another object" ;
-
+	private static final String EXPECTED_REPO_NAME = "repo";
 	private static final int EXPECTED_INODE_VAL = 111;
 
 	private static final int EXPECTED_OTHER_INODE_VAL = 999;
@@ -75,10 +75,12 @@ public class HibCanvasTest {
 			
 			allowing(mockMapDiagram3).getRepository(); will(returnValue(mockRepository));
 			allowing(mockMapDiagram3).getINode(); will(returnValue(EXPECTED_OTHER_INODE_VAL));
+
+			allowing(mockRepository).getName(); will(returnValue(EXPECTED_REPO_NAME));
 			
 			allowing(mockContext).getNotation(); will(returnValue(mockNotation));
 			
-			allowing(mockHibNotationFactory).getNotation(with(any(INotation.class))); will(returnValue(mockHibNotation));
+			allowing(mockHibNotationFactory).getNotation(); will(returnValue(mockHibNotation));
 			
 			allowing(mockContext).getSyntaxService(); will(returnValue(mockSyntaxService));
 			
@@ -121,9 +123,11 @@ public class HibCanvasTest {
 			allowing(mockMapDiagram3).getRepository(); will(returnValue(mockRepository));
 			allowing(mockMapDiagram3).getINode(); will(returnValue(EXPECTED_OTHER_INODE_VAL));
 			
+			allowing(mockRepository).getName(); will(returnValue(EXPECTED_REPO_NAME));
+			
 			allowing(mockContext).getNotation(); will(returnValue(mockNotation));
 			
-			allowing(mockHibNotationFactory).getNotation(with(any(INotation.class))); will(returnValue(mockHibNotation));
+			allowing(mockHibNotationFactory).getNotation(); will(returnValue(mockHibNotation));
 			
 			allowing(mockContext).getSyntaxService(); will(returnValue(mockSyntaxService));
 			

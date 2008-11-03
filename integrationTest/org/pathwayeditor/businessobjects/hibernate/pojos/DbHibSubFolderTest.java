@@ -49,7 +49,6 @@ public class DbHibSubFolderTest extends PojoTester{
 	@Ignore @Test
 	public void testWriteSubFolderToDB () throws Exception 
 	{	
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibRepository aRepository = new HibRepository (REPOSITORY_NAME , REPOSITORY_DESCRIPTION , REPOSITORY_VERSION) ;
@@ -101,7 +100,6 @@ public class DbHibSubFolderTest extends PojoTester{
 	@Ignore @Test
 	public void testCloneFolderSubFolderAndMapDiagramsAndMoveAllBetweenRepositories () throws Exception
 	{
-		doSetup ();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;
@@ -141,8 +139,6 @@ public class DbHibSubFolderTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteSubFolders () throws Exception
 	{
-		doSetup ();
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;
@@ -191,7 +187,6 @@ public class DbHibSubFolderTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteParentFolderAndSubFolders () throws Exception 
 	{	
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retrievedSubFolder = sess.createQuery( "From HibSubFolder where id='100003'") ;

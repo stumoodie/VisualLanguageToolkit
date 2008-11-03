@@ -36,7 +36,6 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	@Test
 	public void testLoadLinkTerminus () throws Exception
 	{
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
@@ -55,8 +54,6 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	@Ignore @Test 
 	public void testCreateLinkTerminus () throws Exception
 	{
-		
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'" );
@@ -95,7 +92,6 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteLinkTerminus () throws Exception 
 	{
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;

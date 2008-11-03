@@ -56,8 +56,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Test
 	public void testLoadShapeProperty () throws Exception 
 	{
-		doSetup() ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkProperty = sess.createQuery("from HibTextProperty where id='100006'" ) ;
@@ -71,8 +69,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNewNumberProperty () throws Exception 
 	{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
@@ -109,7 +105,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNewTextProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
@@ -146,7 +141,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNewRichTextProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
@@ -183,7 +177,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Ignore @Test
 	public void testAddNewListProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedHibLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
@@ -228,7 +221,6 @@ public class DbLinkPropertyTest extends PojoTester {
 	@Ignore @Test
 	public void testDeletePropertyWithLink () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLink = sess.createQuery( "From HibLinkAttribute where id='100001'") ;

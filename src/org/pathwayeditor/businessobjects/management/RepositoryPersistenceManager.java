@@ -86,9 +86,10 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#canOpenCanvas(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public boolean canOpenMap(IMap map) {
+	public boolean canOpenMap(IMap map) throws PersistenceManagerNotOpenException {
 		synchronized(myLock){
-			return this.isRepositoryOpen() && !this.openMaps.containsKey(map);
+			return map != null && map.getRepository().equals(this.getRepository())
+				&& this.isRepositoryOpen() && !this.openMaps.containsKey(map);
 		}
 	}
 
@@ -105,9 +106,9 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isCanvasOpen(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
-	public boolean isMapOpen(IMap canvas) {
+	public boolean isMapOpen(IMap map) {
 		synchronized(myLock){
-			return this.isRepositoryOpen() && this.openMaps.containsKey(canvas);
+			return this.isRepositoryOpen() && this.openMaps.containsKey(map);
 		}
 	}
 
@@ -115,6 +116,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * @see org.pathwayeditor.businessobjects.bolayer.IRepositoryManager#openMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public IMapContentPersistenceManager openMap(IMap map) throws PersistenceManagerNotOpenException {
+		if(map == null) throw new IllegalArgumentException("map cannot be null");
 		synchronized(myLock){
 			if(!this.isRepositoryOpen()) throw new PersistenceManagerNotOpenException(this);
 			IMapContentPersistenceManager retVal = new MapContentPersistenceManager(map, this.canvasPersistenceHandler);

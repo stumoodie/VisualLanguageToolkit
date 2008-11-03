@@ -37,7 +37,7 @@ public class LoadSmallDataTest extends GenericTester{
 	@Override
 	protected void doAdditionalSetUp() {
 		try {
-			repository = this.getBusinessObjectFactory().getRepository();
+			repository = this.getRepositoryPersistenceManager().getRepository();
 		} catch (PersistenceManagerNotOpenException e) {
 			throw new RuntimeException(e);
 		}
@@ -72,7 +72,7 @@ public class LoadSmallDataTest extends GenericTester{
 		rootFolder = repository.getRootFolder() ;
 		this.mapDiagram = (IMap)repository.findRepositoryItemByPath("/Diagram name");
 		
-		IMapContentPersistenceManager map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram) ;
+		IMapContentPersistenceManager map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram) ;
 		map1Manager.loadContent() ;
 		dbCanvas = map1Manager.getCanvas() ;
 		

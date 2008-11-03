@@ -49,8 +49,6 @@ public class DbHibRepositoryTest extends PojoTester  {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testReadRepository() throws Exception {
-		doSetup();
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibRepository testRepo = (HibRepository)sess.createCriteria(HibRepository.class).add(Restrictions.eq("name", EXPECTED_FIRST_REPO_NAME)).uniqueResult();
@@ -68,8 +66,6 @@ public class DbHibRepositoryTest extends PojoTester  {
 	@Ignore @Test
 	public void testWriteToDataBase () throws Exception
 	{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibRepository repositoryToWrite = new HibRepository (ALT_REPOSITORY_NAME, ALT_REPOSITORY_DESCRIPTION, ALT_REPOSITORY_VERSION);
@@ -103,7 +99,6 @@ public class DbHibRepositoryTest extends PojoTester  {
 	@Ignore @Test
 	public void testDeleteRepositoryWithSubFolders () throws Exception 
 	{
-		doSetup();	
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100001'") ;
@@ -140,8 +135,6 @@ public class DbHibRepositoryTest extends PojoTester  {
 	@Ignore @Test
 	public void testDeleteRepositoryWithOnlyRootFolders () throws Exception 
 	{
-		doSetup () ;		
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100002'") ;

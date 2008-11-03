@@ -24,7 +24,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -70,7 +69,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas")
-				.setEntity("repo",this.getOwningMap().getRepository())
+				.setString("repo",this.getOwningMap().getRepository().getName())
 				.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
 		Hibernate.initialize(hibCanvas);
 		hibCanvas.setMapDiagram(this.getOwningMap());
@@ -86,6 +85,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		initialiseAttributes(hibCanvas);
 		initialiseModel(loadedModel);
 		s.getTransaction().commit();
+		hibCanvas.setMapDiagram(this.getOwningMap());
 		this.loadedCanvas = hibCanvas;
 	}
 	
@@ -118,10 +118,10 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	}
 
 	private void initialiseModel(HibModel model){
-		INotationSyntaxService syntaxService = model.getCanvas().getNotationSubsystem().getSyntaxService();
-		HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, syntaxService);
+		INotationSubsystem notationSubsystem = model.getCanvas().getNotationSubsystem();
+		HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
 		hibNotationFactory.initialise();
-		hibNotationFactory.loadNotation();
+//		hibNotationFactory.loadNotation();
 		model.setHibNotationFactory(hibNotationFactory);
 		Hibernate.initialize(model);
 		// set the OT required by the root node
@@ -196,11 +196,12 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
-			.setEntity("repo",this.getOwningMap().getRepository())
+			.setString("repo",this.getOwningMap().getRepository().getName())
 			.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
 		HibCanvas hibCanvas = null;
 		if(canvasTest == 0){
-			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem.getSyntaxService());
+			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
+			hibNotationFactory.initialise();
 			hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory, notationSubsystem);
 			s.save(hibCanvas);
 		}
@@ -218,7 +219,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
-			.setEntity("repo",this.getOwningMap().getRepository())
+			.setString("repo",this.getOwningMap().getRepository().getName())
 			.setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
 		s.getTransaction().commit();
 		return canvasTest > 0;

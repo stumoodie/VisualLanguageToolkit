@@ -20,8 +20,6 @@ public class DbLabelTest extends PojoTester{
 	
 	@Ignore @Test
 	public void testSetTextProperty() throws Exception{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibLabelAttribute label= (HibLabelAttribute) sess.createQuery ( "From HibLabelAttribute label join fetch label.visualisableProperty where label.id = 100001").uniqueResult();
@@ -40,8 +38,6 @@ public class DbLabelTest extends PojoTester{
 
 	@Ignore @Test
 	public void testSetRichTextProperty() throws Exception{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibLabelAttribute label= (HibLabelAttribute) sess.createQuery ( "From HibLabelAttribute label join fetch label.visualisableProperty where label.id = 100004").uniqueResult();
@@ -60,8 +56,6 @@ public class DbLabelTest extends PojoTester{
 	
 	@Ignore @Test
 	public void testSetNumberProperty() throws Exception{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibLabelAttribute label= (HibLabelAttribute) sess.createQuery ( "From HibLabelAttribute label join fetch label.visualisableProperty where label.id = 100002").uniqueResult();
@@ -79,8 +73,6 @@ public class DbLabelTest extends PojoTester{
 	
 	@Ignore @Test
 	public void testSetListProperty() throws Exception{
-		doSetup () ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		HibLabelAttribute label= (HibLabelAttribute) sess.createQuery ( "From HibLabelAttribute label join fetch label.visualisableProperty where label.id = 100003").uniqueResult();

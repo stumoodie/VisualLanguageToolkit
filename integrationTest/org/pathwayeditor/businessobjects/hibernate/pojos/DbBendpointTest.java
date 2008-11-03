@@ -32,7 +32,6 @@ public class DbBendpointTest extends PojoTester{
 	@Test
 	public void testAddBendPoint () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100001'" ) ;
@@ -67,7 +66,6 @@ public class DbBendpointTest extends PojoTester{
 	@Test
 	public void testDeleteBendPoint () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedContext = sess.createQuery("from HibBendPoint where id = '100001'" ) ;

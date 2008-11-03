@@ -382,7 +382,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	@Override
 	protected void doAdditionalSetUp() {
 		try {
-			repository = this.getBusinessObjectFactory().getRepository();
+			repository = this.getRepositoryPersistenceManager().getRepository();
 		} catch (PersistenceManagerNotOpenException e) {
 			throw new RuntimeException(e);
 		}
@@ -400,7 +400,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		mapDiagram1 = subFolder1.getMapIterator().next() ;
 		mapDiagram2 = subFolder2.getMapIterator().next() ;
 		
-		IMapContentPersistenceManager map1Manager = this.getBusinessObjectFactory().openMap(mapDiagram1) ;
+		IMapContentPersistenceManager map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram1) ;
 		map1Manager.loadContent() ;
 		dbCanvas = map1Manager.getCanvas() ;
 		

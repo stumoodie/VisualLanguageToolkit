@@ -68,7 +68,7 @@
 	</table>
 		<table name="Canvas">
 		<column>id</column>
-		<column>repository_id</column>
+		<column>repository_name</column>
 		<column>map_inode</column>
 		<column>context_id</column>
 		<column>grid_x</column>
@@ -84,7 +84,7 @@
 		<column>last_modified</column> 
 			<row>
 				<value>100001</value>
-				<value>100001</value>
+				<value>repo name</value>
 				<value>2</value>
 				<value>100001</value>
 				<value>10</value>

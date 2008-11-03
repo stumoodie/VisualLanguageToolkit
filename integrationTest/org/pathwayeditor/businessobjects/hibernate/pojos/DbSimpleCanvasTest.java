@@ -30,8 +30,6 @@ public class DbSimpleCanvasTest extends PojoTester{
 	@Test
 	public void testDeleteSimpleCanvasAndShape () throws Exception
 	{
-		doSetup () ;
-
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedCanvas = sess.createQuery("from HibCanvas where id = '100001'"  ) ;

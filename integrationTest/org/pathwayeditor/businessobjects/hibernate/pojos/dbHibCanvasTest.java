@@ -43,8 +43,6 @@ public class dbHibCanvasTest extends  PojoTester {
 	@Ignore @Test
 	public void testLoadedCanvas () throws Exception
 	{
-		doSetup();
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100001'" ) ;
@@ -73,8 +71,6 @@ public class dbHibCanvasTest extends  PojoTester {
 	@Ignore @Test
 	public void testDeleteEmptyCanvas () throws Exception 
 	{
-		doSetup();
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100003'" ) ;
@@ -105,7 +101,6 @@ public class dbHibCanvasTest extends  PojoTester {
 	@Ignore @Test
 	public void testCloneCanvas () throws Exception
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedMapDiagram = sess.createQuery( "from HibMapDiagram where id ='100004'" ) ;

@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
  *
  */
 public class StubNotation implements INotation {
-	public static final String EXPECTED_NAME = "StubNotation";
+	public static final String EXPECTED_NAME = "StubNotation1";
 	public static final String EXPECTED_DESCRIPTION = "Stub notation description";
 	public static final String EXPECTED_DISPLAY_NAME = "Stub Notation";
 	public static final String EXPECTED_GLOBAL_ID = "17326252";
@@ -19,7 +19,7 @@ public class StubNotation implements INotation {
 	public static final int EXPECTED_MINOR_VERSION = 19;
 	public static final int EXPECTED_PATCH_VERSION = 9;
 	public static final String EXPECTED_VERSION_STRING = "99.19.9";
-	
+	private String globalId = EXPECTED_GLOBAL_ID;
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getDescription()
@@ -91,4 +91,29 @@ public class StubNotation implements INotation {
 		return new Version (EXPECTED_MAJOR_VERSION , EXPECTED_MINOR_VERSION , EXPECTED_PATCH_VERSION ) ;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.globalId == null) ? 0 : this.globalId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof StubNotation))
+			return false;
+		StubNotation other = (StubNotation) obj;
+		if (this.globalId == null) {
+			if (other.globalId != null)
+				return false;
+		} else if (!this.globalId.equals(other.globalId))
+			return false;
+		return true;
+	}
 }

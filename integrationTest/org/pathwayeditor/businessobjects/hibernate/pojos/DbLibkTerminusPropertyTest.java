@@ -55,7 +55,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Test
 	public void testLoadLinkProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminusProperty = sess.createQuery("from HibTextProperty where id='100007'" ) ;
@@ -67,7 +66,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Ignore @Test
 	public void testAddTextProperty () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id=100001") ;
@@ -105,7 +103,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Ignore @Test
 	public void testAddRichTextProperty () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
@@ -143,8 +140,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Ignore @Test
 	public void testAddNumberProperty () throws Exception
 	{
-		doSetup() ;
-		
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
@@ -182,7 +177,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Ignore @Test
 	public void testAddNewListProperty () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;
@@ -226,7 +220,6 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 	@Ignore @Test
 	public void removePropertyFromShape () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLinkTerminus = sess.createQuery( "From HibLinkTerminus where id='100001'") ;

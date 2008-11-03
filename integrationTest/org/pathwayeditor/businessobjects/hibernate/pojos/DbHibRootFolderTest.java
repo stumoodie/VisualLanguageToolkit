@@ -43,7 +43,6 @@ public class DbHibRootFolderTest  extends PojoTester {
 	@Test
 	public void testLoadRootFolder () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query rootFolderGetter = sess.createQuery ( "From HibRootFolder where id='100001'") ;
@@ -61,7 +60,6 @@ public class DbHibRootFolderTest  extends PojoTester {
 	@Test
 	public void testAddFoldersToRootFolder () throws Exception 
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query rootFolderGetter = sess.createQuery ( "From HibRootFolder where id='100006'") ;
@@ -127,7 +125,6 @@ public class DbHibRootFolderTest  extends PojoTester {
 	@Ignore @Test
 	public void testCloneRootFolder () throws Exception
 	{
-		doSetup() ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query repositoryGetter = sess.createQuery ( "From HibRepository where id='100002'") ;

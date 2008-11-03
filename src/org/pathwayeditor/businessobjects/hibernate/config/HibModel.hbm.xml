@@ -12,8 +12,7 @@
             <column name="canvas_id" not-null="true" />
         </many-to-one>
 
-		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
-			 cascade="all" not-null="true">
+		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" cascade="all" not-null="false">
 		</many-to-one> 
 		
 		<property name="lastNodeIndex" type="int">

@@ -32,6 +32,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	}
 	
 	protected HibCompoundNode(HibModel graph, HibCompoundNode parentNode, int nodeIndex) {
+		super();
 		this.graph = graph;
 		this.index = nodeIndex;
 		this.parentNode = parentNode;

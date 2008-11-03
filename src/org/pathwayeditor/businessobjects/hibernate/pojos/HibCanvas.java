@@ -11,7 +11,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ed.inf.graph.util.IndexCounter;
@@ -29,9 +28,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	private static final int DEFAULT_BGD_RED = 255;
 	private static final int DEFAULT_GRID_HEIGHT = 20;
 	private static final int DEFAULT_GRID_WIDTH = 20;
-
 	private static final boolean DEFAULT_GRIB_ENABLED_VALUE = false;
-
 	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
 
 	private Long id;
@@ -46,7 +43,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	private Date created = new Date();
 	private Date modified = new Date();
 	private int mapINode;
-	private IRepository repository ;
+	private String repository;
 	private HibModel model ;
 	private IndexCounter creationSerialCounter;
 	private Set<HibShapeAttribute> shapeAttributes = new HashSet<HibShapeAttribute>(0);
@@ -63,17 +60,17 @@ public class HibCanvas implements ICanvas , Serializable {
 
 	public HibCanvas(IMap map, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
 		this.map = map;
-		this.repository = map.getRepository();
+		this.repository = map.getRepository().getName();
 		this.mapINode = map.getINode();
 		this.notation = notationSubsystem;
-		this.hibNotation = hibNotationFactory.getNotation(notationSubsystem.getNotation());
+		this.hibNotation = hibNotationFactory.getNotation();
 		this.creationSerialCounter = new IndexCounter();
 		IRootObjectType rootObjectType = notationSubsystem.getSyntaxService().getRootObjectType();
 		this.model = new HibModel(this, rootObjectType, hibNotationFactory);
 	}
 	
 	public HibCanvas(IMap newMap, HibCanvas other) {
-		this.repository = newMap.getRepository();
+		this.repository = newMap.getRepository().getName();
 		this.mapINode = newMap.getINode();
 		this.map = newMap;
 		this.hibNotation = other.hibNotation;
@@ -280,11 +277,11 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.mapINode = mapINode;
 	}
 
-	public IRepository getRepository() {
+	public String getRepositoryName() {
 		return this.repository;
 	}
 
-	public void setRepository(IRepository repository) {
+	public void setRepositoryName(String repository) {
 		this.repository = repository;
 	}
 
@@ -379,9 +376,9 @@ public class HibCanvas implements ICanvas , Serializable {
 		if (this.mapINode != other.getMapINode())
 			return false;
 		if (this.repository == null) {
-			if (other.getRepository() != null)
+			if (other.getRepositoryName() != null)
 				return false;
-		} else if (!this.repository.equals(other.getRepository()))
+		} else if (!this.repository.equals(other.getRepositoryName()))
 			return false;
 		return true;
 	}

@@ -35,7 +35,6 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	@Ignore @Test
 	public void testAddNewMapDiagram () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedFolder = sess.createQuery("from HibFolder where id='100005'") ;
@@ -75,7 +74,6 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	@Ignore @Test
 	public void testDeleteMapDiagram () throws Exception
 	{
-		doSetup ();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedMapDiagram = sess.createQuery("from HibMapDiagram where id='100001'") ;
@@ -91,7 +89,6 @@ public class DBHibMapDiagramTest  extends PojoTester{
 	@Ignore @Test
 	public void testCloneMapDiagram () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedMapDiagram = sess.createQuery("from HibMapDiagram where id='100001'") ;

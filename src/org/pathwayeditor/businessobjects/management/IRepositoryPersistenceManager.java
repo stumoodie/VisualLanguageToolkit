@@ -47,12 +47,14 @@ public interface IRepositoryPersistenceManager extends IPersistenceManager {
 	void closeRepository();
 	
 	/**
-	 * Tests if the map can be opened, i.e. the map is valid and it isn't already opened by this or another repository manager instance.
+	 * Tests if the map can be opened. To pass the map must be valid (i.e. map is not null and belongs to this repository)
+	 *  and it isn't already opened by this or another repository manager instance.
 	 * Also the repository must also be open. 
 	 * @param owningMap the map to be tested, can be null.
+	 * @throws PersistenceManagerNotOpenException if <code>isRepositoryOpen()==false</code>.
 	 * @return <code>true</code> if the map can be opened, false otherwise.
 	 */
-	boolean canOpenMap(IMap owningMap);
+	boolean canOpenMap(IMap owningMap) throws PersistenceManagerNotOpenException;
 	
 	
 	/**
@@ -76,7 +78,8 @@ public interface IRepositoryPersistenceManager extends IPersistenceManager {
 	 * a map that is not already opened by this or another instance of the repository manager.
 	 * @param map the map to be opened. It must exists in this repository and not be open.
 	 * @return a content manager for the contents of the specified map, cannot be null.
-	 * @throws PersistenceManagerNotOpenException if <code>canOpenMap(map)</code>.
+	 * @throws PersistenceManagerNotOpenException if <code>isRepositoryOpen()==false</code>.
+	 * @throws IllegalArgumentException if <code>canOpenMap(map) == false</code>.
 	 */
 	IMapContentPersistenceManager openMap(IMap map) throws PersistenceManagerNotOpenException;
 }

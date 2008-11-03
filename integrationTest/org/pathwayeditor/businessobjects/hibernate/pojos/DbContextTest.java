@@ -38,11 +38,11 @@ public class DbContextTest extends PojoTester{
 	private static final String ADDED_OBJECT_TYPE_DATA = "integrationTest/DbContextTestData/AddedObjectTypeRefData.xml";
 	private static final String DELETED_CONTEXT_DATA = "integrationTest/DbContextTestData/DeletedContextRefData.xml";
 	private static final int OBJECT_TYPE_UID = 0;
+	private static final ObjectTypeClassification OBJECT_TYPE_CLASSN = ObjectTypeClassification.SHAPE;
 	
 	@Ignore @Test
 	public void testAddContext () throws Exception 
 	{	
-		doSetup () ;
 		Version version = new Version(MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION);
 		HibNotation contextToAdd = new HibNotation ( CONTEXT_ID, CONTEXT_NAME, CONTEXT_DESCRIPTION, version) ;
 		Session sess = getHibFactory().getCurrentSession();
@@ -73,13 +73,12 @@ public class DbContextTest extends PojoTester{
 	@Ignore @Test
 	public void testaddObjectTypeToContext () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedContext = sess.createQuery("from HibContext where id = '100001'" ) ;
 		HibNotation dbContext = (HibNotation) retreivedContext.uniqueResult() ;
 		
-		HibObjectType newObjectType = new HibObjectType (OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION) ;
+		HibObjectType newObjectType = new HibObjectType (OBJECT_TYPE_UID, OBJECT_TYPE_NAME, OBJECT_TYPE_DESCRIPTION,  OBJECT_TYPE_CLASSN) ;
 		dbContext.addObjectType(newObjectType) ;
 		
 		sess.saveOrUpdate(dbContext) ;
@@ -108,7 +107,6 @@ public class DbContextTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteContext () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedContext = sess.createQuery("from HibContext where id = '100002'" ) ;

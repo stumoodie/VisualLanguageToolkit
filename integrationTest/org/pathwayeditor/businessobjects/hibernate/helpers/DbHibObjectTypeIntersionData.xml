@@ -1,0 +1,261 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<dataset>
+	<table name="Repository">
+		<column>id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>build_num</column>
+		<column>last_inode</column>
+		<column>root_folder_id</column>
+	</table>
+	<table name="Folder">
+		<column>id</column>
+		<column>repository_id</column>
+		<column>inode</column>
+	</table>
+	<table name="RootFolder">
+		<column>id</column>
+	</table>
+	<table name="MapDiagram">
+		<column>id</column>
+		<column>folder_id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>repository_id</column>
+		<column>inode</column>
+	</table>
+	<table name="Context">
+		<column>global_id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>major_version</column>
+		<column>minor_version</column>
+		<column>patch_version</column>
+		<row>
+			<value>17326252</value>
+			<value>StubNotation1</value>
+			<value>Stub notation description</value>
+			<value>99</value>
+			<value>19</value>
+			<value>9</value>
+		</row>
+	</table>
+	<table name="Canvas">
+		<column>id</column>
+		<column>map_inode</column>
+		<column>context_id</column>
+		<column>grid_x</column>
+		<column>grid_y</column>
+		<column>grid_enabled</column>
+		<column>snap_to_grid_enabled</column>
+		<column>background_red</column>
+		<column>background_green</column>
+		<column>background_blue</column>
+		<column>canvas_width</column>
+		<column>canvas_height</column>
+		<column>created</column>
+		<column>last_modified</column>
+		<column>last_creation_serial</column>
+		<column>repository_id</column>
+	</table>
+	<table name="CompoundGraph">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>root_node_id</column>
+		<column>last_node_index</column>
+		<column>last_edge_index</column>
+	</table>
+	<table name="ObjectType">
+		<column>name</column>
+		<column>description</column>
+		<column>unique_id</column>
+		<column>classification_code</column>
+		<row>
+			<value>Root Object Type</value>
+			<value>Root Object Type Description</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		<row>
+			<value>Shape A</value>
+			<value>Shape A Test ObjectType</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>Shape B</value>
+			<value>Shape B Test ObjectType</value>
+			<value>2</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>Shape C</value>
+			<value>Shape C Test ObjectType</value>
+			<value>3</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>Shape D</value>
+			<value>Shape D Test ObjectType</value>
+			<value>4</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>Link A</value>
+			<value>Link A Object Type</value>
+			<value>5</value>
+			<value>2</value>
+		</row>
+		<row>
+			<value>Link B</value>
+			<value>Link B Object Type</value>
+			<value>6</value>
+			<value>2</value>
+		</row>
+	</table>
+	<table name="CompoundNode">
+		<column>id</column>
+		<column>model_id</column>
+		<column>node_index</column>
+		<column>parent_id</column>
+	</table>
+	<table name="RootObjectNode">
+		<column>id</column>
+	</table>
+	<table name="ShapeNode">
+		<column>id</column>
+		<column>shape_attribute_id</column>
+	</table>
+	<table name="LabelNode">
+		<column>id</column>
+		<column>label_attribute_id</column>
+	</table>
+	<table name="property">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+	</table>
+	<table name="textproperty">
+		<column>id</column>
+		<column>text_value</column>
+	</table>
+	<table name="numberproperty">
+		<column>id</column>
+		<column>number_value</column>
+	</table>
+	<table name="listproperty">
+		<column>id</column>
+	</table>
+	<table name="listvalue">
+		<column>list_property_id</column>
+		<column>index_pos</column>
+		<column>string_representation</column>
+	</table>
+	<table name="richtextProperty">
+		<column>id</column>
+		<column>rich_text_value</column>
+	</table>
+	<table name="ShapeAttribute">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>name</column>
+		<column>object_type_id</column>
+		<column>description</column>
+		<column>detailed_description</column>
+		<column>url</column>
+		<column>fill_red</column>
+		<column>fill_green</column>
+		<column>fill_blue</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>padding</column>
+		<column>shape_type</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
+	</table>
+	<table name="LinkEdge">
+		<column>id</column>
+		<column>model_id</column>
+		<column>edge_index</column>
+		<column>owning_child_model_id</column>
+		<column>out_node_id</column>
+		<column>in_node_id</column>
+		<column>link_attribute_id</column>
+	</table>
+	<table name="LinkAttribute">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>object_type_id</column>
+		<column>source_terminus_id</column>
+		<column>target_terminus_id</column>
+		<column>name</column>
+		<column>detailed_description</column>
+		<column>description</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>router_type</column>
+		<column>url</column>
+	</table>
+	<table name="LinkTerminus">
+		<column>id</column>
+		<column>link_term_type</column>
+		<column>offset_val</column>
+		<column>owning_link_id</column>
+		<column>end_dec_type</column>
+		<column>end_dec_width</column>
+		<column>end_dec_height</column>
+		<column>term_dec_type</column>
+		<column>term_dec_red</column>
+		<column>term_dec_green</column>
+		<column>term_dec_blue</column>
+		<column>term_dec_height</column>
+		<column>term_dec_width</column>
+	</table>
+	<table name="linkterminusproperty">
+		<column>link_terminus_id</column>
+		<column>property_id</column>
+		<column>name</column>
+	</table>
+	<table name="LabelAttribute">
+		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>displayed_property_id</column>
+		<column>is_displayed</column>
+		<column>background_red</column>
+		<column>background_green</column>
+		<column>background_blue</column>
+		<column>no_fill_set</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
+	</table>
+	<table name="shapeAttributeProperty">
+		<column>shape_attribute_id</column>
+		<column>property_id</column>
+		<column>name</column>
+	</table>
+	<table name="linkAttributeProperty">
+		<column>link_attribute_id</column>
+		<column>property_id</column>
+		<column>name</column>
+	</table>
+	<table name="bendpoint">
+		<column>id</column>
+		<column>link_attribute_id</column>
+		<column>index_pos</column>
+		<column>x_position</column>
+		<column>y_position</column>
+	</table>
+</dataset>

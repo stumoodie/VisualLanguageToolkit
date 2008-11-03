@@ -195,7 +195,7 @@
 		<column>created</column>
 		<column>last_modified</column>
 		<column>last_creation_serial</column>
-		<column>repository_id</column>
+		<column>repository_name</column>
 		<row>
 			<value>100001</value>
 			<value>4</value>
@@ -212,7 +212,7 @@
 			<value>1970-01-01</value>
 			<value>1970-01-01</value>
 			<value>2</value>
-			<value>100001</value>
+			<value>repo name</value>
 		</row> 
 	</table>
 	<!-- END OF CANVAS -->

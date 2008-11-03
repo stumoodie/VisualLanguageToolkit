@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="org/pathwayeditor/businessobjects/drawingprimitives/attributes/ArrowheadStyle.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="stubs"/>
 	<classpathentry kind="src" path="Acceptance Test"/>
 	<classpathentry kind="src" path="test"/>

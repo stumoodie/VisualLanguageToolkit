@@ -68,7 +68,6 @@ public class DbHibShapeTest extends PojoTester{
 	@Ignore @Test
 	public void testLoadedShape () throws Exception
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery("from HibShapeAttribute where id='100001'") ;
@@ -106,7 +105,6 @@ public class DbHibShapeTest extends PojoTester{
 			
 		}});
 		
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedCanvas = sess.createQuery("from HibCanvas where id='100001'") ;
@@ -167,7 +165,6 @@ public class DbHibShapeTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteShape () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedShape = sess.createQuery("from HibShapeNode where id='100002'") ;
@@ -200,7 +197,6 @@ public class DbHibShapeTest extends PojoTester{
 	@Test
 	public void testDeleteCanvasWithShape () throws Exception 
 	{
-		doSetup () ;
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedCanvas = sess.createQuery("From HibCanvas where id='100001'" ) ;

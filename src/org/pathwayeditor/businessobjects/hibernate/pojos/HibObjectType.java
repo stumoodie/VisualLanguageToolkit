@@ -24,11 +24,12 @@ public class HibObjectType implements Serializable {
 	HibObjectType() {
 	}
 
-	public HibObjectType(int uniqueId, String name, String description) {
+	public HibObjectType(int uniqueId, String name, String description, ObjectTypeClassification classnCode) {
 		this.hibNotation = null;
 		this.uniqueId = uniqueId;
 		this.displayName = name;
 		this.description = description;
+		this.classificationCode = classnCode;
 	}
 
 	public Long getId() {

@@ -54,7 +54,6 @@ public class DbHibLinkTest extends PojoTester{
 	@Ignore @Test
 	public void testLoadLabel () throws Exception
 	{
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLink = sess.createQuery("from HibLinkAttribute where id='100001'") ;
@@ -77,7 +76,6 @@ public class DbHibLinkTest extends PojoTester{
 	@Ignore @Test
 	public void testDeleteLink () throws Exception
 	{
-		doSetup();
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		Query retreivedLink = sess.createQuery("from HibLinkEdge where id='100001'") ;
@@ -111,7 +109,6 @@ public class DbHibLinkTest extends PojoTester{
 	@Ignore @Test
 	public void testAddNewLink () throws Exception 
 	{
-		doSetup(); 
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 //		Query retreivedCompoundEdge = sess.createQuery("from HibLinkEdge where id='100001'" ) ;
