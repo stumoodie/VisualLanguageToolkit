@@ -2,9 +2,15 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 
 /**
- * Encapsulates a validation rule.
- * @author Richard Adams
- *
+ * <p>Defines a validation rule. A validation rule can have a &quot;Level&quot; of either mandatory or optional. A validation
+ * rule has an &quot;Enforcement&quot; which defines the consequence of the rule being invalid.</p>
+ * 
+ * <p>If a rule is MANDATORY then it must always be validated and if the rule is invalid then this should be enforced as an error.
+ *  A rule level of MANDATORY must always have an enforcement level of ERROR.</p>
+ * 
+ * <p>If a rule is OPTIONAL then it will be validated <b>unless</b> enforcement is set to IGNORE. If the rule is invalid
+ * then this will be enforced as an error or warning depending on the <code>RuleEnforecement</code> setting. The default enforcement
+ * is set in the definition, but the application may choose to change this via <code>IValidationRuleConfig</code>.
  */
 public interface IValidationRuleDefinition {
 	 /** <em>Mandatory</em> means the rule must be satisfied and it will always generate validation errors on failure.<p>
