@@ -3,7 +3,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 import java.util.Date;
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 
 /**
  * Provides a snapshot of the validation status of a map.
@@ -25,12 +25,12 @@ public interface IValidationReport {
 	Date getValidationTime();
 	
 	/**
-	 * Returns the IMap which has been validated.<br>
-	 * This is not a snapshot of the map, the map can subsequently change after the report has been 
+	 * Returns the ICanvas which has been validated.<br>
+	 * This is not a snapshot, the canvas can subsequently change after the report has been 
 	 * generated.
-	 * @return an {@link IMap}, never null
+	 * @return an {@link ICanvas}, never null
 	 */
-	IMap getMap();
+	ICanvas getCanvas();
 	
 	/**
 	 * Returns an immutable<code>List</code> of individual validation errors and warnings.

@@ -9,7 +9,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefini
  * @author Richard Adams
  *
  */
-public interface IValidationRuleConfig {
+public interface IValidationRuleConfig extends Comparable <IValidationRuleConfig>{
 	
 	/**
 	 * Returns the definition of the rule that is being configured.

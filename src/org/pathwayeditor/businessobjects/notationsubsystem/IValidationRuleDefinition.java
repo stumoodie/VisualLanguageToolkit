@@ -12,7 +12,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
  * then this will be enforced as an error or warning depending on the <code>RuleEnforecement</code> setting. The default enforcement
  * is set in the definition, but the application may choose to change this via <code>IValidationRuleConfig</code>.
  */
-public interface IValidationRuleDefinition {
+public interface IValidationRuleDefinition extends Comparable <IValidationRuleDefinition>{
 	 /** <em>Mandatory</em> means the rule must be satisfied and it will always generate validation errors on failure.<p>
 	 *  <em>Optional</em> is a rule can be ignored, set to a warning or raised as an error.
 	 */
