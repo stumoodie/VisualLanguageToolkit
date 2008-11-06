@@ -74,6 +74,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
 		this.targetTerminus = new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		addDefaults(objectType.getDefaultLinkAttributes());
+		this.getCanvas().getLinkAttributes().add(this) ;
 	}
 
 	/**
@@ -102,6 +103,7 @@ s	 */
 			HibProperty copiedProp = (HibProperty)prop.getDefinition().copyProperty(this.propertyBuilder, prop);
 			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
 		}
+		this.getCanvas().getLinkAttributes().add(this) ;
 	}
 
 	/**

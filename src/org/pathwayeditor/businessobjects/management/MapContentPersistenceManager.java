@@ -54,7 +54,7 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 		}
 		this.fireStatusChange();
 //		this.repoManager.updateStatus(this);
-	}
+	}	
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#getCanvas()

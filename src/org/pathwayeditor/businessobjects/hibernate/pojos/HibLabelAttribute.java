@@ -45,6 +45,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.visualisableProperty = property;
 		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
+		this.getCanvas().getLabelAttributes().add(this) ;
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {

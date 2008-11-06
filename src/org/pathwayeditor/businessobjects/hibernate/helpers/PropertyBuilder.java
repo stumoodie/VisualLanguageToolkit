@@ -15,6 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyB
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibListProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
@@ -33,14 +34,18 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
 	 */
 	public IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn) {
-		return new HibRichTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		IHtmlAnnotationProperty anHTMLProperty = new HibRichTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		canvas.getProperties().add((HibProperty) anHTMLProperty) ;
+		return anHTMLProperty ;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition)
 	 */
 	public IPlainTextAnnotationProperty createPlainTextProperty(IPlainTextPropertyDefinition propDefn) {
-		return new HibTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		IPlainTextAnnotationProperty aTextProperty = new HibTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		canvas.getProperties().add((HibProperty) aTextProperty) ;
+		return aTextProperty ;
 	}
 
 	/* (non-Javadoc)
@@ -69,7 +74,9 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#createNumberProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition)
 	 */
 	public INumberAnnotationProperty createNumberProperty(INumberPropertyDefinition propDefn) {
-		return new HibNumberProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		INumberAnnotationProperty aNumberProperty =  new HibNumberProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		canvas.getProperties().add((HibProperty) aNumberProperty);
+		return aNumberProperty ;
 	}
 
 	/* (non-Javadoc)
@@ -83,7 +90,9 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#createListProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition)
 	 */
 	public IListAnnotationProperty createListProperty(IListPropertyDefinition propDefn) {
-		return new HibListProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		IListAnnotationProperty aListProperty =  new HibListProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		canvas.getProperties().add((HibProperty) aListProperty) ;
+		return aListProperty ;
 	}
 	
 }

@@ -27,7 +27,7 @@ import uk.ed.inf.graph.util.impl.FilteredIterator;
 import uk.ed.inf.graph.util.impl.NodeSet;
 
 public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
-	private Long id;
+	private Long id = null;
 	private HibCompoundNode rootNode;
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;

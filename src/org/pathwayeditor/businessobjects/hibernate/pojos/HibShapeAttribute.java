@@ -106,6 +106,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 			IPropertyDefinition defn = property.getDefinition(); 
 			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder, property));
 		}
+		this.getCanvas().getShapeAttributes().add(this) ;
 	}
 	
 	
@@ -124,6 +125,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 			IPropertyDefinition propDefn = propIter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
 		}
+		this.getCanvas().getShapeAttributes().add(this) ;
 	}
 
 	public Long getId() {

@@ -10,7 +10,7 @@
         </id>
         <properties name="xak1property" unique="true">
         	<many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
-            	<column name="canvas_id" not-null="true" />
+            	<column name="canvas_id" not-null="false" />
         	</many-to-one>
         	<property name="creationSerial" type="int">
 	            <column name="creation_serial" not-null="true" />
