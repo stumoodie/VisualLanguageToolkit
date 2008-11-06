@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener;
 import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
-import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
+import org.pathwayeditor.businessobjects.repository.ListenableRepository;
 import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent.PropertyType;
 
 import uk.ed.inf.graph.util.IndexCounter;
@@ -36,7 +35,7 @@ public class HibRepository implements Serializable, IRepository {
 	private IndexCounter iNodeCounter;
 	private Set<HibFolder> folders;
 	private Set<HibMap> maps;
-	private final List<IRepositoryChangeListener> listeners = new CopyOnWriteArrayList<IRepositoryChangeListener>();
+	private final ListenableRepository listenable = new ListenableRepository();
      
 	/**
 	 * Constructor should only be used by hiberate.
@@ -98,7 +97,7 @@ public class HibRepository implements Serializable, IRepository {
 	public void setName(String name) {
 		String oldValue = this.name;
 		this.name = name;
-		this.notifyPropertyChangeEvent(PropertyType.NAME, oldValue, this.name);
+		this.listenable.notifyPropertyChangeEvent(PropertyType.NAME, oldValue, this.name);
 	}
 
 	public String getDescription() {
@@ -108,7 +107,7 @@ public class HibRepository implements Serializable, IRepository {
 	public void setDescription(String description) {
 		String oldValue = this.description;
 		this.description = description;
-		this.notifyPropertyChangeEvent(PropertyType.DESCRIPTION, oldValue, this.description);
+		this.listenable.notifyPropertyChangeEvent(PropertyType.DESCRIPTION, oldValue, this.description);
 	}
 
 	public HibRootFolder getRootFolder() {
@@ -268,43 +267,23 @@ public class HibRepository implements Serializable, IRepository {
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#addChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener)
 	 */
 	public void addChangeListener(IRepositoryChangeListener listener) {
-		this.listeners.add(listener);
+		this.listenable.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#getListeners()
 	 */
 	public List<IRepositoryChangeListener> getListeners() {
-		return new ArrayList<IRepositoryChangeListener>(this.listeners);
+		return this.listenable.getListeners();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#removeChangeListener(org.pathwayeditor.businessobjects.repository.IRepositoryChangeListener)
 	 */
 	public void removeChangeListener(IRepositoryChangeListener listener) {
-		this.listeners.remove(listener);
+		this.listenable.removeChangeListener(listener);
 	}
 	
-	private void notifyPropertyChangeEvent(final IRepositoryPropertyChangeEvent.PropertyType type, final Object oldValue, final String newValue){
-		for(IRepositoryChangeListener listener : this.listeners){
-			IRepositoryPropertyChangeEvent e = new IRepositoryPropertyChangeEvent(){
-
-				public Object getNewValue() {
-					return newValue;
-				}
-
-				public Object getOldValue() {
-					return oldValue;
-				}
-
-				public PropertyType getPropertyName() {
-					return type;
-				}
-			};
-			listener.propertyChange(e);
-		}
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#findRepositoryItemByPath(java.lang.String)
 	 */
