@@ -7,10 +7,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute {
+public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IPropertyChangeListenee {
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -39,7 +40,7 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute {
 	
 	/**
 	 * Sets the new description for this Shape.
-	 * @param name the new description. Cannot be null
+	 * @param description the new description. Cannot be null
 	 * @throws IllegalArgumentException if description is null.
 	 */
 	void setDescription(String description);
@@ -85,7 +86,7 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute {
 	
 	/**
 	 * Sets the new size for this Shape.
-	 * @param url the new size. Cannot be null
+	 * @param size the new size. Cannot be null
 	 * @throws IllegalArgumentException if URL is null.
 	 */
 	void setSize(Size size);

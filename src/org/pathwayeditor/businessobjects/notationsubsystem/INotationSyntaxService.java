@@ -39,6 +39,10 @@ public interface INotationSyntaxService extends INotationService {
 	 */
 	Iterator<ILinkObjectType> linkTypeIterator();
 
+	/**
+	 * Returns an iterator over the object types help by this syntax service. 
+	 * @return The iterator, which may iterate over an empty collection.
+	 */
 	Iterator<IObjectType> objectTypeIterator();
 
 	/**
@@ -54,7 +58,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * @param uniqueId the unique id to be tested.
 	 * @return true if is contains the object type, false otherwise.
 	 */
-	boolean containsShapeObjectType(int uniqueID); 
+	boolean containsShapeObjectType(int uniqueId); 
 	
 	/**
 	 * Retrieve the object type based on it's object id.
@@ -68,7 +72,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * @param uniqueId the unique id to be tested.
 	 * @return true if is contains the link object type, false otherwise.
 	 */
-	boolean containsLinkObjectType(int uniqueID); 
+	boolean containsLinkObjectType(int uniqueId); 
 	
 	/**
 	 * Retrieve the link object type based on it's object id.
@@ -82,7 +86,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * @param uniqueId the unique id to be tested.
 	 * @return true if is contains the object type, false otherwise.
 	 */
-	boolean containsObjectType(int uniqueID); 
+	boolean containsObjectType(int uniqueId); 
 	
 	/**
 	 * Retrieve the lobject type based on it's unique id.

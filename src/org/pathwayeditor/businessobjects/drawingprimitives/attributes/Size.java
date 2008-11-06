@@ -49,4 +49,14 @@ public final class Size {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder retVal = new StringBuilder("Size(w=");
+		retVal.append(width);
+		retVal.append(", h=");
+		retVal.append(height);
+		retVal.append(")");
+		return retVal.toString();
+	}
 }

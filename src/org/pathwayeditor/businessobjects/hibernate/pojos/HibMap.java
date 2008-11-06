@@ -177,9 +177,6 @@ public class HibMap implements IMap, Serializable {
 		return true;
 	}
 
-	/**
-	 * @param object
-	 */
 	void changeRepository(HibRepository repository) {
 		if(this.repository != null){
 			this.repository.getMaps().remove(this);

@@ -55,7 +55,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		assertEquals ("Grid Y" , GRID_VALUE , dbCanvas.getGridY()) ;
 		
 		assertEquals ( "Grid enabled" , GRID_ENABLEMENT , dbCanvas.isGridEnabled()) ;
-		assertEquals ( "Snap enabled" , GRID_ENABLEMENT , dbCanvas.isSnapToGridEnabled()) ;
+		assertEquals ( "Snap enabled" , GRID_ENABLEMENT , dbCanvas.isSnapToGridOn()) ;
 		
 		assertEquals ("Canvas width" , CANVAS_SIZE , dbCanvas.getCanvasWidth() ) ;
 		assertEquals ("Canvas height" , CANVAS_SIZE , dbCanvas.getCanvasHeight() ) ;

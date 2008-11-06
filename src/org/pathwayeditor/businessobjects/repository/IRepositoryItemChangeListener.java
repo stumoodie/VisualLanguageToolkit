@@ -11,6 +11,6 @@ public interface IRepositoryItemChangeListener {
 
 	void propertyChange(IRepositoryPropertyChangeEvent e);
 	
-	void ancestorChange(IFolderContentChangeEvent e);
+	void descendentChange(IFolderContentChangeEvent e);
 	
 }

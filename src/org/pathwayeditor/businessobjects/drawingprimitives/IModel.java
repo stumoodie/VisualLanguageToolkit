@@ -26,9 +26,9 @@ public interface IModel {
 	
 	/**
 	 * Create a copy of this model and add it to the given map.
-	 * @param map the map that will own the copied map. This cannot be the same map that owns this model. 
+	 * @param canvas the canvas that will own the copied model. This cannot be the same canvas that owns this model. 
 	 * @return The newly created model.
-	 * @throws IllegalArgumentException if <code>getOwningMap().equals(map)</code>.
+	 * @throws IllegalArgumentException if <code>getCanvas().equals(canvas)</code>.
 	 */
 	IModel createCopy(ICanvas canvas);
 	

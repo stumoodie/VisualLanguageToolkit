@@ -65,7 +65,7 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 	 * @param ruleEnforcement the enforcement to be tested.
 	 * @return true if the the rule enforcement is valid, false otherwise.
 	 */
-	boolean isValidEnforcement(RuleEnforcement ruleEnforecement);
+	boolean isValidEnforcement(RuleEnforcement ruleEnforcement);
 	
 	/**
 	 * Gets the default enforcement level for this rule.

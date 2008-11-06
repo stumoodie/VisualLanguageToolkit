@@ -62,4 +62,13 @@ public final class Location {
 	public Location newY(int y) {
 		return new Location(this.x, y);
 	}
+	
+	public String toString(){
+		StringBuilder retVal = new StringBuilder("Location(x=");
+		retVal.append(x);
+		retVal.append(", y=");
+		retVal.append(y);
+		retVal.append(")");
+		return retVal.toString();
+	}
 }

@@ -63,7 +63,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * Tests if an edge can be created given the current state of the factory.
 	 * A new edge (in our case a LinkEdge) can be created if the the shape node pair is valid and
 	 * can form a link of the specified link object type.
-	 * @returns true if the above conditions are true, false otherwise.
+	 * @return true if the above conditions are true, false otherwise.
 	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory#canCreateEdge()
 	 */
 	@Override

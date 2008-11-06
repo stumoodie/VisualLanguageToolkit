@@ -13,6 +13,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -57,15 +60,19 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
+	
 
 	/**
 	 * Default constructor to be used only by hibernate.
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibShapeAttribute() {
+		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
+		this();
 		this.canvas = hibCanvas;
 		this.creationSerial = creationSerial;
 		this.canvas.getShapeAttributes().add(this);
@@ -77,6 +84,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 	
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
+		this();
 		this.canvas = newCanvas;
 		this.creationSerial = newCreationSerial;
 		this.canvas.getShapeAttributes().add(this);
@@ -202,7 +210,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setName(String name) {
+		String oldName = this.name;
 		this.name = name;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldName, this.name);
 	}
 
 	public String getDescription() {
@@ -210,7 +220,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setDescription(String description) {
+		String oldDescription = this.description;
 		this.description = description;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldDescription, this.description);
 	}
 
 	public String getDetailedDescription() {
@@ -218,7 +230,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setDetailedDescription(String detailedDescription) {
+		String oldDetailedDescription = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldDetailedDescription, this.detailedDescription);
 	}
 
 	public String getUrl() {
@@ -226,7 +240,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setUrl(String url) {
+		String oldUrl = this.url;
 		this.url = url;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldUrl, this.url);
 	}
 
 	public int getFillRed() {
@@ -292,8 +308,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setLineWidth(int lineWidth) {
 		if ( lineWidth < 0 )
 			throw new IllegalArgumentException () ;
-		
+
+		int oldLineWidth = this.lineWidth;
 		this.lineWidth = lineWidth;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
 	}
 
 	public int getPadding() {
@@ -301,7 +319,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setPadding(int padding) {
+		int oldPadding = padding;
 		this.padding = padding;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.PADDING, oldPadding, this.padding);
 	}
 
 	public Map<String, HibProperty> getProperties() {
@@ -447,8 +467,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setFillColour(RGB fillColour) {
 		if ( fillColour == null )
 			throw new IllegalArgumentException () ;
-	
+
+		RGB oldFillColour = this.fillColour;
 		this.fillColour = fillColour;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
 	}
 
 	/* (non-Javadoc)
@@ -458,7 +480,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		if ( lineColour == null )
 			throw new IllegalArgumentException () ;
 
+		RGB oldLineColour = this.lineColour;
 		this.lineColour = lineColour;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
 	}
 
 	/* (non-Javadoc)
@@ -467,7 +491,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public void setLineStyle(LineStyle lineStyle) {
 		if ( lineStyle == null )
 			throw new IllegalArgumentException ( "Line style cannot be null") ;
+
+		LineStyle oldLineStyle = this.lineStyle;
 		this.lineStyle = lineStyle ;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
 	}
 
 	/* (non-Javadoc)
@@ -477,7 +504,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		if ( newLocation == null )
 			throw new IllegalArgumentException () ;
 
+		Location oldLocation = this.position;
 		this.position = newLocation;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.position);
 	}
 
 	/* (non-Javadoc)
@@ -485,8 +514,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setPrimitiveShape(PrimitiveShapeType primitiveShape) {
 		if(primitiveShape == null) throw new IllegalArgumentException("primitive shape cannot be null");
-		
+
+		PrimitiveShapeType oldPrimitiveShape = this.shapeType;
 		this.shapeType = primitiveShape;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.PRIMITIVE_SHAPE_TYPE, oldPrimitiveShape, this.shapeType);
 	}
 
 	/* (non-Javadoc)
@@ -496,7 +527,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		if ( size == null )
 			throw new IllegalArgumentException () ;
 
+		Size oldSize = this.size;
 		this.size = size;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, this.size);
 	}
 
 	/* (non-Javadoc)
@@ -520,4 +553,24 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.hibProperties.containsKey(property.getName());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void addChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void removeChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.removeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#listenerIterator()
+	 */
+	public Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.listenablePropertyChangeItem.listenerIterator();
+	}
 }

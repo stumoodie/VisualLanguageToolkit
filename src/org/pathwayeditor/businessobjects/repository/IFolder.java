@@ -27,7 +27,7 @@ public interface IFolder extends IRepositoryItem {
 	 * Creates a new subfolder in this folder. Specifically this method creates a new folder
 	 * which is added to this folder as a subfolder.
 	 * Precondition: <code>canUseSubfolderName(name) == true</code>
-	 * @param name The name of the new subfolder.
+	 * @param newSubfolderName The name of the new subfolder.
 	 * @return The newly created subfolder. Guaranteed to be non-null.
 	 * @throws IllegalArgumentException if <code>canUseSubfolderName(name) == false</code>.
 	 * @throws IllegalArgumentException if name is null.
@@ -174,7 +174,7 @@ public interface IFolder extends IRepositoryItem {
 	 * Creates a new map in this folder. Specifically this method creates a new map
 	 * which is added to this folder as a map.
 	 * Precondition: <code>canUseMapName(name) == true</code>
-	 * @param name The name of the new map.
+	 * @param newMapName The name of the new map.
 	 * @return The newly created map. Guaranteed to be non-null.
 	 * @throws IllegalArgumentException if <code>canUseMapName(name) == false</code>.
 	 */

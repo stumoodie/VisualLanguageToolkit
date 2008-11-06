@@ -10,7 +10,7 @@ public interface IRootObjectType extends INodeObjectType {
 	int getUniqueId();
 
 	/**
-	 * Gets the patenting rules for the object type.
+	 * Gets the parenting rules for the object type.
 	 * @see #org.pathwayeditor.businessobjects.typedefn.INodeObjectType.getParentingRules() 
 	 */
 	IRootObjectParentingRules getParentingRules();

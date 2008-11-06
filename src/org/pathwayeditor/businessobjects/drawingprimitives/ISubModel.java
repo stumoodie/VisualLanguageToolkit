@@ -42,17 +42,17 @@ public interface ISubModel {
 	ILinkEdgeFactory linkEdgeFactory();
 	
 	/**
-	 * Is the submodel a valid destination? This requires that the sub-model is
+	 * Is this submodel a valid destination for the copy? This requires that the sub-model is
 	 * empty and that it belongs to the same model as this one, or that the model
 	 * uses the same context adapter.  
-	 * @param destination
+	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
 	 * @return true if the selection can be copied here, false otherwise.
 	 */
 	boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection);
 	
 	/**
-	 * Copy this submodel to the submodel provided.
-	 * @param destination
+	 * Copy the selected objects to this.
+	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
 	 */
 	void copyHere(ICanvasObjectSelection canvasObjectSelection); 
 	

@@ -56,14 +56,12 @@ public interface IMapContentPersistenceManager extends IPersistenceManager {
 	
 	/**
 	 * Synchronised the canvas with persistent storage. Note that the canvas must be open.
-	 * @param canvas the canvas to be synchronised, which cannot be null.
 	 * @throws PersistenceManagerNotOpenException if <code>isOpen() == false</code>. 
 	 */
 	void synchronise() throws PersistenceManagerNotOpenException;
 	
 	/**
 	 * Close the canvas. If the canvas or repository is already closed, then do nothing.
-	 * @param canvas the canvas to be closed.
 	 */
 	void close();
 	

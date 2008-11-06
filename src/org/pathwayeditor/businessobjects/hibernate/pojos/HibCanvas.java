@@ -3,11 +3,15 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -50,15 +54,18 @@ public class HibCanvas implements ICanvas , Serializable {
 	private Set<HibLinkAttribute> linkAttributes = new HashSet<HibLinkAttribute>(0);
 	private Set<HibLabelAttribute> labelAttributes = new HashSet<HibLabelAttribute>(0);
 	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
 
 	/**
 	 * Default constructor for use ONLY by hibernate.
 	 * @deprecated Use one of the other constructors to construct this class in application code.
 	 */
 	HibCanvas() {
+		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
 	public HibCanvas(IMap map, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
+		this();
 		this.map = map;
 		this.repository = map.getRepository().getName();
 		this.mapINode = map.getINode();
@@ -70,6 +77,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 	
 	public HibCanvas(IMap newMap, HibCanvas other) {
+		this();
 		this.repository = newMap.getRepository().getName();
 		this.mapINode = newMap.getINode();
 		this.map = newMap;
@@ -154,7 +162,9 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 
 	public void setGridSize(Size newGridSize){
+		Size oldGridSize = this.getGridSize();
 		this.gridSize = newGridSize;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.GRID_SIZE, oldGridSize, newGridSize);
 	}
 	
 	public boolean isGridEnabled() {
@@ -162,16 +172,20 @@ public class HibCanvas implements ICanvas , Serializable {
 	}
 
 	public void setGridEnabled(boolean gridEnabled) {
+		boolean oldGridEnabled = this.gridEnabled;
 		this.gridEnabled = gridEnabled;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.GRID_SHOWN, oldGridEnabled, gridEnabled);
 	}
 
-	public boolean isSnapToGridEnabled() {
-		return this.snapToGridEnabled;
-	}
-
-	public void setSnapToGridEnabled(boolean snapToGridEnabled) {
-		this.snapToGridEnabled = snapToGridEnabled;
-	}
+//	public boolean isSnapToGridEnabled() {
+//		return this.snapToGridEnabled;
+//	}
+//
+//	public void setSnapToGridEnabled(boolean snapToGridEnabled) {
+//		boolean oldSnapToGridEnabled = this.snapToGridEnabled;
+//		this.snapToGridEnabled = snapToGridEnabled;
+//		this.listenerablePropertyChangeItem.notifyProperyChange(PropertyChange.SNAP_TO_GRID_ENABLED, oldSnapToGridEnabled, this.snapToGridEnabled);
+//	}
 
 	public int getBackgroundRed() {
 		return this.backgroundColour.getRed();
@@ -242,16 +256,22 @@ public class HibCanvas implements ICanvas , Serializable {
 		if ( backgroundColour == null)
 			throw new IllegalArgumentException ( "BackgroundColor cannot be null") ;
 
+		RGB oldBackgroundColour = this.backgroundColour;
 		this.backgroundColour = backgroundColour;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BACKGROUND_COLOUR, oldBackgroundColour, this.backgroundColour);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setSnapToGrid(boolean)
 	 */
 	public void setSnapToGrid(boolean snapToGridStatus) {
-		this.gridEnabled = snapToGridStatus ;
+		this.snapToGridEnabled = snapToGridStatus ;
 	}
-
+	
+	boolean getSnapToGrid(){
+		return this.snapToGridEnabled;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMapSize()
 	 */
@@ -265,8 +285,10 @@ public class HibCanvas implements ICanvas , Serializable {
 	public void setCanvasSize(Size size) {
 		if (size == null)
 			throw new IllegalArgumentException () ;
-		
+
+		Size oldCanvasSize = this.canvasSize;
 		this.canvasSize = size;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.CANVAS_SIZE, oldCanvasSize, this.canvasSize);
 	}
 
 	public int getMapINode() {
@@ -389,5 +411,26 @@ public class HibCanvas implements ICanvas , Serializable {
 
 	public void setProperties(Set<HibProperty> properties) {
 		this.properties = properties;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void addChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#listenerIterator()
+	 */
+	public Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.listenablePropertyChangeItem.listenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void removeChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 }

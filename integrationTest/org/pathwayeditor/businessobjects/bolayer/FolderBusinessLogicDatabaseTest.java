@@ -76,7 +76,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		this.changeDetected = false;
 		actualRootFolder.addChangeListener(new IRepositoryItemChangeListener() {
 
-			public void ancestorChange(IFolderContentChangeEvent e) {
+			public void descendentChange(IFolderContentChangeEvent e) {
 				changeDetected = true;
 			}
 

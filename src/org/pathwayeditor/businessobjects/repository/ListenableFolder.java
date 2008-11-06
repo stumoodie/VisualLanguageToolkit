@@ -18,7 +18,7 @@ public class ListenableFolder extends ListenableRepositoryItem {
 	@Override
 	public final void fireDescendentChange(IFolderContentChangeEvent evt){
 		for(IRepositoryItemChangeListener listener : this.getListeners()){
-			listener.ancestorChange(evt);
+			listener.descendentChange(evt);
 		}
 	}
 	
