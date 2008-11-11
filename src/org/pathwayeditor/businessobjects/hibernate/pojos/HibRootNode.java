@@ -54,4 +54,26 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		return this.canvasAttribute.getObjectType();
 	}
 
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[model=");
+		builder.append(this.getModel());
+		builder.append(", index=");
+		builder.append(this.getIndex());
+		builder.append(", removed=");
+		builder.append(this.isRemoved());
+		builder.append(", attribute=");
+		builder.append(this.getAttribute());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundNode#removalAction()
+	 */
+	@Override
+	protected void removalAction(boolean removed) {
+		// will never be removed so do nothing.
+	}
 }

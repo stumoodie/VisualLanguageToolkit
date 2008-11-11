@@ -575,4 +575,15 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public Iterator<IPropertyChangeListener> listenerIterator() {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
+
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[canvas=");
+		builder.append(this.getCanvas());
+		builder.append(", serial=");
+		builder.append(this.getCreationSerial());
+		builder.append("]");
+		return builder.toString();
+	}
 }

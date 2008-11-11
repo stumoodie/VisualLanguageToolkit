@@ -146,7 +146,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			Hibernate.initialize(hibNode.getChildCompoundGraph());
 			Hibernate.initialize(hibNode.getInEdges());
 			Hibernate.initialize(hibNode.getOutEdges());
-			Iterator<ILinkEdge> edgeIter = node.getSubCanvas().linkIterator();
+			Iterator<ILinkEdge> edgeIter = node.getSubModel().linkIterator();
 			while(edgeIter.hasNext()){
 				HibLinkEdge link = (HibLinkEdge)edgeIter.next();
 				Hibernate.initialize(link);

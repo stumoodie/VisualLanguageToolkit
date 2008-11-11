@@ -433,4 +433,17 @@ public class HibCanvas implements ICanvas , Serializable {
 	public void removeChangeListener(IPropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[repoName=");
+		builder.append(this.getRepositoryName());
+		builder.append(", iNode=");
+		builder.append(this.getMapINode());
+		builder.append("]");
+		return builder.toString();
+	}
+
+
 }

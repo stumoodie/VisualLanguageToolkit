@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
  */
 public interface IRepositoryPersistenceHandler {
 
-	void setName(String name);
+//	void setName(String name);
 
 	String getName();
 

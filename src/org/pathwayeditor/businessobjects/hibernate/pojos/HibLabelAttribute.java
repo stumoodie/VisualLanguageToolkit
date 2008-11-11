@@ -294,4 +294,16 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	public boolean hasProperty(IPropertyDefinition property) {
 		return this.visualisableProperty.getDefinition().equals(property);
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[canvas=");
+		builder.append(this.getCanvas());
+		builder.append(", serial=");
+		builder.append(this.getCreationSerial());
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

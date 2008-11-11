@@ -5,12 +5,14 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
+
 
 /**
  * @author smoodie
  *
  */
-public interface IModel {
+public interface IModel extends IModelChangeListenee {
 
 	/**
 	 * Gets the map that owns this model.

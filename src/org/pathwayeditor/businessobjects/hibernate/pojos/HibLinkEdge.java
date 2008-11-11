@@ -207,5 +207,27 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		return super.isRemoved();
 	}
 
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[model=");
+		builder.append(this.getModel());
+		builder.append(", index=");
+		builder.append(this.getIndex());
+		builder.append(", removed=");
+		builder.append(this.isRemoved());
+		builder.append(", attribute=");
+		builder.append(this.getAttribute());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdge#removalAction()
+	 */
+	@Override
+	protected void removalAction(boolean removed) {
+		//TODO: need to add a notification.
+	}
 }
 

@@ -1,7 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -156,7 +155,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getSubCanvas()
 	 */
-	public ISubModel getSubCanvas() {
+	public HibSubModel getSubModel() {
 		return this.getChildCompoundGraph();
 	}
 

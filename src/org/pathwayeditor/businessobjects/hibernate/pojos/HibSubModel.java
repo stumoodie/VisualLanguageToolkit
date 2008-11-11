@@ -3,11 +3,15 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableSubModelStructureChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphMoveBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
@@ -32,6 +36,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
 	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
+	private final ListenableSubModelStructureChangeItem listenerHandler = new ListenableSubModelStructureChangeItem(this);
 
 	/**
 	 * Constructor should only be used by hiberate.
@@ -228,6 +233,36 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		ShapeLinkSubgraphFactory fact = (ShapeLinkSubgraphFactory)canvasObjectSelection;
 		ShapeLinkSubgraph subgraph = fact.createInducedSubgraph();
 		return this.canMoveHere(subgraph);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#addSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
+	 */
+	public void addSubModelNodeChangeListener(ISubModelChangeListener listener) {
+		this.listenerHandler.addSubModelNodeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#removeSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
+	 */
+	public void removeSubModelNodeChangeListener(ISubModelChangeListener listener) {
+		this.listenerHandler.removeSubModelNodeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#subModelNodeChangeListenerIterator()
+	 */
+	public Iterator<ISubModelChangeListener> subModelNodeChangeListenerIterator() {
+		return this.listenerHandler.subModelNodeChangeListenerIterator();
+	}
+
+	/**
+	 * Notify this submodel that a node has been chnged. Should be called by factories that add nodes to this
+	 * submodel.
+	 */
+	public void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode newNode) {
+		this.listenerHandler.notifyNodeStructureChange(ModelStructureChangeType.ADDED, newNode);
+		this.getModel().notifyNodeStructureChange(type, newNode);
 	}
 
 }

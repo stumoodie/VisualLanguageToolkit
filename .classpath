@@ -65,6 +65,10 @@
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-legacy-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/jmock-script-2.5.1.jar"/>
 	<classpathentry kind="lib" path="lib/jmock-2.5.1/objenesis-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/compoundgraph/compoundgraph.jar"/>
+	<classpathentry kind="lib" path="lib/compoundgraph/CompoundGraph.jar" sourcepath="lib/compoundgraph/CompoundGraph-src.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/compoundgraph/CompoundGraph-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

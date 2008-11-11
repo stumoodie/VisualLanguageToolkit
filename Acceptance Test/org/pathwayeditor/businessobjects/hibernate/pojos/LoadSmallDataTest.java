@@ -85,8 +85,8 @@ public class LoadSmallDataTest extends GenericTester{
 		loadData () ;
 		assertNotNull ( "root node not null" , dbRootNode) ;
 		
-		assertEquals ( "2 shapes in" , 2 , dbRootNode.getSubCanvas().getNumShapes()) ;
-		assertEquals ( "1 edges" , 1 , dbRootNode.getSubCanvas().getNumLinks()) ;
+		assertEquals ( "2 shapes in" , 2 , dbRootNode.getSubModel().getNumShapes()) ;
+		assertEquals ( "1 edges" , 1 , dbRootNode.getSubModel().getNumLinks()) ;
 	}
 
 }

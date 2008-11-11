@@ -50,4 +50,18 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 		this.addNode((HibShapeNode)selectedShape);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection#getModel()
+	 */
+	public HibModel getModel() {
+		return (HibModel)super.getGraph();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection#isEmpty()
+	 */
+	public boolean isEmpty() {
+		return !(super.edgeIterator().hasNext() || super.nodeIterator().hasNext()) ;
+	}
+
 }

@@ -5,11 +5,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee;
+
 /**
  * @author smoodie
  *
  */
-public interface ISubModel {
+public interface ISubModel extends ISubModelChangeListenee {
 
 	/**
 	 * Get model that this belongs to.

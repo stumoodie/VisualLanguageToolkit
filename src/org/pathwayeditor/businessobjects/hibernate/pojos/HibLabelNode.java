@@ -4,6 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
@@ -63,5 +64,34 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		return this.labelAttribute.getObjectType();
 	}
 	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[model=");
+		builder.append(this.getModel());
+		builder.append(", index=");
+		builder.append(this.getIndex());
+		builder.append(", removed=");
+		builder.append(this.isRemoved());
+		builder.append(", attribute=");
+		builder.append(this.getAttribute());
+		builder.append("]");
+		return builder.toString();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundNode#removalAction()
+	 */
+	@Override
+	protected void removalAction(boolean removed) {
+		if(removed){
+			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.DELETED, this);
+		}
+		else{
+			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, this);
+		}
+	}
+
 	
 }

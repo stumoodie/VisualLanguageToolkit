@@ -23,4 +23,16 @@ public interface ICanvasObjectSelection {
 	 */
 	void addLink(ILinkEdge selectedLink);
 	
+	
+	/**
+	 * Tests if anything has been added to the selection.
+	 * @return
+	 */
+	boolean isEmpty();
+	
+	/**
+	 * Gets the model that this selection refers to.
+	 * @return
+	 */
+	IModel getModel();
 }

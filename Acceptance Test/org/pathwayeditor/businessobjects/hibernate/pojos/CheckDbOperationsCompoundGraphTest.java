@@ -137,7 +137,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		dbNotationSubSystem = dbCanvas.getNotationSubsystem() ;
 		
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubCanvas().shapeIterator() ;
+		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
 		
 		while ( rootNodeChildrenIterator.hasNext())
 		{
@@ -154,7 +154,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubCanvas().shapeIterator() ;
+		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
 		while ( shape1ChildIterator.hasNext())
 		{
 			IShapeNode tempShapeNode = shape1ChildIterator.next();
@@ -171,7 +171,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubCanvas().shapeIterator() ;
+		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
 		while ( shape2ChildIterator.hasNext())
 		{
 			IShapeNode tempShapeNode = shape2ChildIterator.next();
@@ -188,12 +188,12 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		shapeNode7 = shapeNode6.getSubCanvas().shapeIterator().next() ;
+		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
 		
-		shapeNode8 = shapeNode7.getSubCanvas().shapeIterator().next() ;
+		shapeNode8 = shapeNode7.getSubModel().shapeIterator().next() ;
 		
 		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubCanvas().linkIterator() ;	
+		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
 		
 		while ( rootNodeEdges.hasNext())
 		{
@@ -252,7 +252,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	public void testCreateNewShapeNode () throws Exception 
 	{
 		loadData () ;
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubCanvas().shapeNodeFactory() ;
+		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
 //		nodeFactory.setObjectType(new StubShapeObjectType () ) ;
 		nodeFactory.setObjectType(shapeNode1.getAttribute().getObjectType()) ;
 //		assertTrue ( "can create node" , nodeFactory.canCreateShapeNode()) ;
@@ -286,7 +286,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	public void testCreateNewLabelNode () throws Exception 
 	{
 		loadData () ;
-		ILabelNodeFactory labelFactory = shapeNode1.getSubCanvas().labelNodeFactory() ;
+		ILabelNodeFactory labelFactory = shapeNode1.getSubModel().labelNodeFactory() ;
 		newLabel = labelFactory.createLabel() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_LABEL_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -311,7 +311,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	public void testCreateNewEdgeLink () throws Exception 
 	{
 		loadData () ;
-		ILinkEdgeFactory linkFactory = dbRootNode.getSubCanvas().linkEdgeFactory() ;
+		ILinkEdgeFactory linkFactory = dbRootNode.getSubModel().linkEdgeFactory() ;
 		linkFactory.setShapeNodePair(shapeNode5, shapeNode8) ;
 		assertTrue ( "can create link" , linkFactory.canCreateLink() ) ;
 		newLinkEdge = linkFactory.createLinkEdge() ;
@@ -371,7 +371,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
 		objectSelection.addShape(shapeNode8) ;
 		
-		dbRootNode.getSubCanvas().moveHere(objectSelection) ;
+		dbRootNode.getSubModel().moveHere(objectSelection) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(MOVED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -400,7 +400,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
 		objectSelection.addShape(shapeNode8) ;
 		
-		dbRootNode.getSubCanvas().copyHere(objectSelection) ;
+		dbRootNode.getSubModel().copyHere(objectSelection) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(COPIED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();

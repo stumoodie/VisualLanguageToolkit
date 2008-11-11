@@ -488,4 +488,16 @@ s	 */
 	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
 		this.targetTerminus = targetTerminus;
 	}
+
+
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[canvas=");
+		builder.append(this.getCanvas());
+		builder.append(", serial=");
+		builder.append(this.getCreationSerial());
+		builder.append("]");
+		return builder.toString();
+	}
 }

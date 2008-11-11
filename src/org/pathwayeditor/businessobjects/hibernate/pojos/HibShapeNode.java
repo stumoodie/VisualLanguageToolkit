@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -41,7 +42,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getChildModel()
 	 */
-	public HibSubModel getSubCanvas() {
+	public HibSubModel getSubModel() {
 		return this.getChildCompoundGraph();
 	}
 
@@ -100,4 +101,33 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	public Iterator<ILinkEdge> targetLinkIterator() {
 		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.getInEdgeIterator());
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[model=");
+		builder.append(this.getModel());
+		builder.append(", index=");
+		builder.append(this.getIndex());
+		builder.append(", removed=");
+		builder.append(this.isRemoved());
+		builder.append(", attribute=");
+		builder.append(this.getAttribute());
+		builder.append("]");
+		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundNode#removalAction()
+	 */
+	@Override
+	protected void removalAction(boolean removed) {
+		if(removed){
+			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.DELETED, this);
+		}
+		else{
+			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, this);
+		}
+	}
+
 }

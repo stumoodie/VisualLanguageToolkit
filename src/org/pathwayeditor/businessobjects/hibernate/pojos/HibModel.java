@@ -12,6 +12,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableModelStructureChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CanvasLinkEdgeFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
@@ -41,6 +44,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private IHibNotationFactory hibNotationFactory;
 	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
 	private Set<HibLinkEdge> edges = new HashSet<HibLinkEdge>(0);
+	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this); 
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -248,5 +252,45 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 
 	public void setEdges(Set<HibLinkEdge> edges) {
 		this.edges = edges;
+	}
+
+	/**
+	 * Notifies the mode that there has been a structural change. Should be used by submodels to notify the
+	 * model that they have changes.
+	 * @param type the change type.
+	 * @param changedNode the node that has changes.
+	 */
+	void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode changedNode){
+		this.listenerHandler.notifyNodeStructureChange(type, changedNode);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#addSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
+	 */
+	public void addModelNodeChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.addModelNodeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#removeSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
+	 */
+	public void removeModelNodeChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.removeModelNodeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#subModelNodeChangeListenerIterator()
+	 */
+	public Iterator<IModelChangeListener> modelNodeChangeListenerIterator() {
+		return this.modelNodeChangeListenerIterator();
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("[rootNodeIdx=");
+		builder.append(this.rootNode.getIndex());
+		builder.append("]");
+		return builder.toString();
 	}
 }

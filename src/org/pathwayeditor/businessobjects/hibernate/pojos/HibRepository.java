@@ -2,6 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -33,8 +34,8 @@ public class HibRepository implements Serializable, IRepository {
 	private HibRootFolder rootFolder = null;
 	private int buildNum;
 	private IndexCounter iNodeCounter;
-	private Set<HibFolder> folders;
-	private Set<HibMap> maps;
+	private Set<HibFolder> folders = new HashSet<HibFolder>();
+	private Set<HibMap> maps = new HashSet<HibMap>();
 	private final ListenableRepository listenable = new ListenableRepository();
      
 	/**
@@ -126,7 +127,7 @@ public class HibRepository implements Serializable, IRepository {
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 
-		buffer.append(getClass().getName()).append("@").append(
+		buffer.append(getClass().getSimpleName()).append("@").append(
 				Integer.toHexString(hashCode())).append(" [");
 		buffer.append("id").append("='").append(getId()).append("' ");
 		buffer.append("name").append("='").append(getName()).append("' ");
