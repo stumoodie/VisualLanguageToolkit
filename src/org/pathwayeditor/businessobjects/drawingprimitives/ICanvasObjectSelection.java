@@ -26,13 +26,13 @@ public interface ICanvasObjectSelection {
 	
 	/**
 	 * Tests if anything has been added to the selection.
-	 * @return
+	 * @return true if it is empty, false otherwise.
 	 */
 	boolean isEmpty();
 	
 	/**
 	 * Gets the model that this selection refers to.
-	 * @return
+	 * @return true if empty, false otherwise.
 	 */
 	IModel getModel();
 }
