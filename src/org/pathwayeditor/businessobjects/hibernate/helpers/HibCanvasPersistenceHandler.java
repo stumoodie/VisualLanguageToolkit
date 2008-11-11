@@ -185,6 +185,11 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		s.saveOrUpdate(this.loadedCanvas);
+		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
+		while ( nodeIterator.hasNext())
+		{
+			s.saveOrUpdate(nodeIterator.next());
+		}
 		s.getTransaction().commit();
 	}
 

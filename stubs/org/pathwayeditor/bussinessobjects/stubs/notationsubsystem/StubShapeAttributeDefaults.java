@@ -19,16 +19,17 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
  *
  */
 public class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
-	public static final String DESCRIPTION = "Shape Description";
-	public static final String DETAILS = "Shape Details";
-	public static final RGB FILL_COLOUR = RGB.GREEN;
-	public static final RGB LINE_COLOUR = RGB.RED;
-	public static final LineStyle LINE_STYLE = LineStyle.SOLID;
-	public static final int LINE_WIDTH = 2;
-	public static final String NAME = "A Shape";
-	public static final PrimitiveShapeType SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
-	public static final Size SIZE = new Size(19, 23);
-	public static final String URL = "http://www.gooogle.com";
+	public static final String DESCRIPTION = "description" ;
+	public static final String DETAILED_DESCRIPTION = "detailed description" ;
+	public static final RGB    FILL_COLOR = new RGB ( 100 , 100 , 100 ) ;
+	public static final RGB    LINE_COLOR = new RGB ( 150 , 150 , 150 ) ;
+	public static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
+	public static final int LINE_WIDTH = 1 ;
+	public static final String NAME = "name" ;
+	public static final PrimitiveShapeType PRIMITIVE_SHAPE_TYPE = PrimitiveShapeType.ARC ;
+	public static final Size SIZE = new Size ( 50 , 50 ) ;
+	public static final String URL = "http://www.url.com" ;
+	
 	private final Set<IPropertyDefinition> propertyDefinitionList;
 	
 	
@@ -50,21 +51,22 @@ public class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
 	 */
 	public String getDetailedDescription() {
-		return DETAILS;
+		return DETAILED_DESCRIPTION;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getFillColour()
 	 */
 	public RGB getFillColour() {
-		return FILL_COLOUR;
+		// TODO Auto-generated method stub
+		return FILL_COLOR;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineColour()
 	 */
 	public RGB getLineColour() {
-		return LINE_COLOUR;
+		return LINE_COLOR;
 	}
 
 	/* (non-Javadoc)
@@ -92,7 +94,7 @@ public class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
 	 */
 	public PrimitiveShapeType getShapeType() {
-		return SHAPE_TYPE;
+		return PRIMITIVE_SHAPE_TYPE;
 	}
 
 	/* (non-Javadoc)

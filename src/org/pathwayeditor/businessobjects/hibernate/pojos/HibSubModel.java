@@ -62,6 +62,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	public HibSubModel(HibCompoundNode rootNode) {
 		this();
 		this.rootNode = rootNode;
+		this.createNodeSet(this.rootNode.getChildren());
 	}
 
 	@Override

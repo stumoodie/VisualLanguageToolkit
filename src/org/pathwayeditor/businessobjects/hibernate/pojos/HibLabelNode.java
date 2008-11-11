@@ -36,13 +36,14 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	 * @param hibLabelAttribute
 	 */
 	public void changeLabelAttribute(HibLabelAttribute hibLabelAttribute) {
-		if(hibLabelAttribute != null){
-			hibLabelAttribute.getLabelNode().setAttribute(null);
-		}
 		if(this.labelAttribute != null){
-			this.labelAttribute.setLabelNode(null);
+			this.labelAttribute.setLabelNode(null) ;
+		}
+		if(hibLabelAttribute != null){
+			hibLabelAttribute.setLabelNode(this);
 		}
 		this.labelAttribute = hibLabelAttribute;
+
 	}
 
 

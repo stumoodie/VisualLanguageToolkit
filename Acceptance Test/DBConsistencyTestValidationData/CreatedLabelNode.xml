@@ -1,159 +1,335 @@
 <!DOCTYPE dataset SYSTEM "dataset.dtd" >
 <!--  START OF FILESYSTEM -->
 <dataset>
-	<table name="CompoundNode">
-		<column>id</column>
+<table name="CompoundNode">
 		<column>model_id</column>
 		<column>node_index</column>
-		<column>parent_id</column>
+		<column>is_removed</column>
 			<row>
-				<value>100001</value><!-- Root Node -->
 				<value>100001</value>
 				<value>0</value>
-				<null/>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100002</value><!-- node1 -->
 				<value>100001</value>
 				<value>1</value>
-				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100003</value><!-- node2 -->
 				<value>100001</value>
 				<value>2</value>
-				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100004</value><!-- node3 -->
 				<value>100001</value>
 				<value>3</value>
-				<value>100002</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100005</value><!-- node4 -->
 				<value>100001</value>
 				<value>4</value>
-				<value>100002</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100006</value><!-- node5 -->
 				<value>100001</value>
 				<value>5</value>
-				<value>100003</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100007</value><!-- node6 -->
 				<value>100001</value>
 				<value>6</value>
-				<value>100003</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100008</value><!-- node7 -->
 				<value>100001</value>
 				<value>7</value>
-				<value>100007</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100009</value><!-- node8 -->
 				<value>100001</value>
 				<value>8</value>
-				<value>100008</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100010</value><!-- label1 -->
 				<value>100001</value>
 				<value>9</value>
-				<value>100002</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100011</value><!-- label2 -->
 				<value>100001</value>
 				<value>10</value>
-				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100012</value><!-- label3 -->
 				<value>100001</value>
 				<value>11</value>
-				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100013</value><!-- label4 -->
 				<value>100001</value>
 				<value>12</value>
-				<value>100003</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100014</value><!-- label5 -->
 				<value>100001</value>
 				<value>13</value>
-				<value>100001</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100015</value><!-- label6 -->
 				<value>100001</value>
 				<value>14</value>
-				<value>100007</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100016</value><!-- label7 -->
 				<value>100001</value>
 				<value>15</value>
-				<value>100003</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100017</value><!-- label8 -->
 				<value>100001</value>
 				<value>16</value>
-				<value>100008</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100018</value><!-- node9 -->
 				<value>100001</value>
 				<value>17</value>
+				<value>false</value>
+			</row>		
+			<row>
 				<value>100001</value>
-			</row>								
+				<value>18</value>
+				<value>false</value>
+			</row>						
 	</table>
-<table name="LabelNode">
-		<column>id</column>
-		<column>label_attribute_id</column>
+<table name="ShapeAttribute">
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>name</column>
+		<column>object_type_id</column>
+		<column>description</column>
+		<column>detailed_description</column>
+		<column>url</column>
+		<column>fill_red</column>
+		<column>fill_green</column>
+		<column>fill_blue</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>padding</column>
+		<column>shape_type</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>width</column>
+		<column>height</column>
 		<row>
-			<value>100010</value>
 			<value>100001</value>
+			<value>1</value>
+			<value>shapeName1</value>
+			<value>100001</value>
+			<value>descr1</value>
+			<value>detailed descr1</value>
+			<value>http://www.shape1URL.org</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
 		</row>
 		<row>
-			<value>100011</value>
+			<value>100001</value>
+			<value>2</value>
+			<value>shapeName2</value>
 			<value>100002</value>
+			<value>descr2</value>
+			<value>detailed descr2</value>
+			<value>http://www.shape2URL.org</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>2</value>
+			<value>2</value>
+			<value>2</value>
+			<value>2</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
 		</row>
 		<row>
-			<value>100012</value>
+			<value>100001</value>
+			<value>3</value>
+			<value>shapeName3</value>
 			<value>100003</value>
+			<value>descr3</value>
+			<value>detailed descr3</value>
+			<value>http://www.shape3URL.org</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>3</value>
+			<value>3</value>
+			<value>3</value>
+			<value>3</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
 		</row>
 		<row>
-			<value>100013</value>
+			<value>100001</value>
+			<value>4</value>
+			<value>shapeName4</value>
 			<value>100004</value>
+			<value>descr4</value>
+			<value>detailed descr4</value>
+			<value>http://www.shape4URL.org</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>4</value>
+			<value>4</value>
+			<value>4</value>
+			<value>4</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
 		</row>
 		<row>
-			<value>100014</value>
-			<value>100005</value>
+			<value>100001</value>
+			<value>5</value>
+			<value>shapeName5</value>
+			<value>100001</value>
+			<value>descr5</value>
+			<value>detailed descr5</value>
+			<value>http://www.shape5URL.org</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>5</value>
+			<value>5</value>
+			<value>5</value>
+			<value>5</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
 		</row>
 		<row>
-			<value>100015</value>
-			<value>100006</value>
+			<value>100001</value>
+			<value>6</value>
+			<value>shapeName6</value>
+			<value>100002</value>
+			<value>descr6</value>
+			<value>detailed descr6</value>
+			<value>http://www.shape6URL.org</value>
+			<value>106</value>
+			<value>106</value>
+			<value>106</value>
+			<value>106</value>
+			<value>106</value>
+			<value>106</value>
+			<value>1</value>
+			<value>6</value>
+			<value>6</value>
+			<value>6</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
 		</row>
 		<row>
-			<value>100016</value>
-			<value>100007</value>
+			<value>100001</value>
+			<value>7</value>
+			<value>shapeName7</value>
+			<value>100003</value>
+			<value>descr7</value>
+			<value>detailed descr7</value>
+			<value>http://www.shape7URL.org</value>
+			<value>107</value>
+			<value>107</value>
+			<value>107</value>
+			<value>107</value>
+			<value>107</value>
+			<value>107</value>
+			<value>2</value>
+			<value>7</value>
+			<value>7</value>
+			<value>7</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
 		</row>
 		<row>
-			<value>100017</value>
-			<value>100008</value>
+			<value>100001</value>
+			<value>8</value>
+			<value>shapeName8</value>
+			<value>100004</value>
+			<value>descr8</value>
+			<value>detailed descr8</value>
+			<value>http://www.shape8URL.org</value>
+			<value>108</value>
+			<value>108</value>
+			<value>108</value>
+			<value>108</value>
+			<value>108</value>
+			<value>108</value>
+			<value>3</value>
+			<value>8</value>
+			<value>8</value>
+			<value>8</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
 		</row>
 		<row>
-			<value>100018</value>
-			<value>100009</value>
-		</row>
+			<value>100001</value>
+			<value>26</value>
+			<value>name</value>
+			<value>100001</value>
+			<value>description</value>
+			<value>detailed description</value>
+			<value>http://www.url.com</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>150</value>
+			<value>150</value>
+			<value>150</value>
+			<value>3</value>
+			<value>1</value>
+			<value>0</value>
+			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>50</value>
+			<value>50</value>
+		</row>																
 	</table>
 <table name="LabelAttribute">
 		<column>id</column>
@@ -194,7 +370,7 @@
 			<value>52</value>
 			<value>52</value>
 			<value>100001</value>
-			<value>21</value>
+			<value>2</value>
 		</row>
 		<row>
 			<value>100003</value>
@@ -215,7 +391,7 @@
 			<value>true</value>
 			<value>104</value>
 			<value>104</value>
-			<value>1040</value>
+			<value>104</value>
 			<value>true</value>
 			<value>54</value>
 			<value>54</value>
@@ -283,16 +459,16 @@
 		<row>
 			<value>100009</value>
 			<value>false</value>
-			<value>109</value>
-			<value>109</value>
-			<value>109</value>
-			<value>true</value>
-			<value>59</value>
-			<value>59</value>
-			<value>59</value>
-			<value>59</value>
+			<value>255</value>
+			<value>255</value>
+			<value>255</value>
+			<null/>
+			<value>0</value>
+			<value>0</value>
+			<value>20</value>
+			<value>10</value>
 			<value>100001</value>
-			<value>9</value>
+			<value>30</value>
 		</row>
 	</table>
 </dataset>

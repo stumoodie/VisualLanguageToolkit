@@ -54,4 +54,10 @@ public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 	 * @throws IllegalArgumentException if value is null.
 	 */
 	void setBackgroundColor (RGB color);
+	
+	/**
+	 * Get the displayed status of this Label.
+	 * @return the displayed status.
+	 */
+	boolean getIsDisplayed() ;
 }

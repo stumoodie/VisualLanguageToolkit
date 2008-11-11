@@ -19,9 +19,9 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  */
 public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
 	private static final EnumSet<LinkEditableAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(LinkEditableAttributes.LINE_WIDTH);
-	private static final int UNIQUE_ID = 6;
-	private static final String DESCRIPTION = "Link B Object Type";
-	private static final String NAME = "Link B";
+	public static final int UNIQUE_ID = 6;
+	public static final String DESCRIPTION = "objectDescr6";
+	public static final String NAME = "objectName6";
 	private final INotationSyntaxService syntaxService;
 	private final ILinkAttributeDefaults linkAttributeDefaults;
 	private final ILinkConnectionRules connectionRules;

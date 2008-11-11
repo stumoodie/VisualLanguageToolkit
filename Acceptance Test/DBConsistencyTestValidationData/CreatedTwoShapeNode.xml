@@ -1,219 +1,107 @@
 <!DOCTYPE dataset SYSTEM "dataset.dtd" >
 <!--  START OF FILESYSTEM -->
 <dataset>
-	<table name="CompoundNode">
-		<column>id</column>
+<table name="CompoundNode">
 		<column>model_id</column>
-		<column>parent_id</column>
+		<column>node_index</column>
+		<column>is_removed</column>
 			<row>
-				<value>100001</value><!-- Root Node -->
 				<value>100001</value>
-				<null/>
+				<value>0</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100002</value><!-- node1 -->
 				<value>100001</value>
-				<value>100001</value>
+				<value>1</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100003</value><!-- node2 -->
 				<value>100001</value>
-				<value>100001</value>
+				<value>2</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100004</value><!-- node3 -->
 				<value>100001</value>
-				<value>100002</value>
+				<value>3</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100005</value><!-- node4 -->
 				<value>100001</value>
-				<value>100002</value>
+				<value>4</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100006</value><!-- node5 -->
 				<value>100001</value>
-				<value>100003</value>
+				<value>5</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100007</value><!-- node6 -->
 				<value>100001</value>
-				<value>100003</value>
+				<value>6</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100008</value><!-- node7 -->
 				<value>100001</value>
-				<value>100007</value>
+				<value>7</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100009</value><!-- node8 -->
 				<value>100001</value>
-				<value>100008</value>
+				<value>8</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100010</value><!-- label1 -->
 				<value>100001</value>
-				<value>100002</value>
+				<value>9</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100011</value><!-- label2 -->
 				<value>100001</value>
-				<value>100001</value>
+				<value>10</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100012</value><!-- label3 -->
 				<value>100001</value>
-				<value>100001</value>
+				<value>11</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100013</value><!-- label4 -->
 				<value>100001</value>
-				<value>100003</value>
+				<value>12</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100014</value><!-- label5 -->
 				<value>100001</value>
-				<value>100001</value>
+				<value>13</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100015</value><!-- label6 -->
 				<value>100001</value>
-				<value>100007</value>
+				<value>14</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100016</value><!-- label7 -->
 				<value>100001</value>
-				<value>100003</value>
+				<value>15</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100017</value><!-- label8 -->
 				<value>100001</value>
-				<value>100008</value>
+				<value>16</value>
+				<value>false</value>
 			</row>
 			<row>
-				<value>100018</value><!-- node9 -->
 				<value>100001</value>
+				<value>17</value>
+				<value>false</value>
+			</row>
+			<row>
 				<value>100001</value>
+				<value>18</value>
+				<value>false</value>
 			</row>								
 	</table>
-	<table name="ChildCompoundGraph">
-		<column>id</column>
-		<column>root_node_id</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<value>100002</value>
-				<value>100002</value>
-			</row>
-			<row>
-				<value>100003</value>
-				<value>100003</value>
-			</row>
-			<row>
-				<value>100004</value>
-				<value>100004</value>
-			</row>
-			<row>
-				<value>100005</value>
-				<value>100005</value>
-			</row>
-			<row>
-				<value>100006</value>
-				<value>100006</value>
-			</row>
-			<row>
-				<value>100007</value>
-				<value>100007</value>
-			</row>
-			<row>
-				<value>100008</value>
-				<value>100008</value>
-			</row>
-			<row>
-				<value>100009</value>
-				<value>100009</value>
-			</row>
-			<row>
-				<value>100010</value>
-				<value>100010</value>
-			</row>
-			<row>
-				<value>100011</value>
-				<value>100011</value>
-			</row>
-			<row>
-				<value>100012</value>
-				<value>100012</value>
-			</row>
-			<row>
-				<value>100013</value>
-				<value>100013</value>
-			</row>
-			<row>
-				<value>100014</value>
-				<value>100014</value>
-			</row>
-			<row>
-				<value>100015</value>
-				<value>100015</value>
-			</row>
-			<row>
-				<value>100016</value>
-				<value>100016</value>
-			</row>
-			<row>
-				<value>100017</value>
-				<value>100017</value>
-			</row>
-			<row>
-				<value>100018</value>
-				<value>100018</value>
-			</row>
-	</table>
-	<table name="ShapeNode"><!-- REMEMBER TO SETUP THE SHAPEATTRIBUTES -->
-		<column>id</column>
-		<column>shape_attribute_id</column>
-		<row>
-			<value>100002</value><!-- ShapeAttrubute1 -->
-			<value>100001</value>
-		</row>
-		<row>
-			<value>100003</value><!-- ShapeAttrubute2 -->
-			<value>100002</value>
-		</row>
-		<row>
-			<value>100004</value><!-- ShapeAttrubute3 -->
-			<value>100003</value>
-		</row>
-		<row>
-			<value>100005</value><!-- ShapeAttrubute4 -->
-			<value>100004</value>
-		</row>
-		<row>
-			<value>100006</value><!-- ShapeAttrubute5 -->
-			<value>100005</value>
-		</row>
-		<row>
-			<value>100007</value><!-- ShapeAttrubute6 -->
-			<value>100006</value>
-		</row>
-		<row>
-			<value>100008</value><!-- ShapeAttrubute7 -->
-			<value>100007</value>
-		</row>
-		<row>
-			<value>100009</value><!-- ShapeAttrubute8 -->
-			<value>100008</value>
-		</row>
-		<row>
-			<value>100018</value><!-- ShapeAttrubute9 -->
-			<value>100009</value>
-		</row>
-	</table>
 <table name="ShapeAttribute">
-		<column>id</column>
 		<column>canvas_id</column>
 		<column>name</column>
 		<column>object_type_id</column>
@@ -235,7 +123,6 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<value>100001</value><!-- ASSIGNED TO node2 -->
 			<value>100001</value>
 			<value>shapeName1</value>
 			<value>100001</value>
@@ -258,7 +145,6 @@
 			<value>51</value>
 		</row>
 		<row>
-			<value>100002</value><!-- ASSIGNED TO node3 -->
 			<value>100001</value>
 			<value>shapeName2</value>
 			<value>100002</value>
@@ -281,7 +167,6 @@
 			<value>52</value>
 		</row>
 		<row>
-			<value>100003</value><!-- ASSIGNED TO node4 -->
 			<value>100001</value>
 			<value>shapeName3</value>
 			<value>100003</value>
@@ -304,7 +189,6 @@
 			<value>53</value>
 		</row>
 		<row>
-			<value>100004</value><!-- ASSIGNED TO node5 -->
 			<value>100001</value>
 			<value>shapeName4</value>
 			<value>100004</value>
@@ -327,7 +211,6 @@
 			<value>54</value>
 		</row>
 		<row>
-			<value>100005</value><!-- ASSIGNED TO node6 -->
 			<value>100001</value>
 			<value>shapeName5</value>
 			<value>100001</value>
@@ -350,7 +233,6 @@
 			<value>55</value>
 		</row>
 		<row>
-			<value>100006</value><!-- ASSIGNED TO node7 -->
 			<value>100001</value>
 			<value>shapeName6</value>
 			<value>100002</value>
@@ -373,7 +255,6 @@
 			<value>56</value>
 		</row>
 		<row>
-			<value>100007</value><!-- ASSIGNED TO node8 -->
 			<value>100001</value>
 			<value>shapeName7</value>
 			<value>100003</value>
@@ -396,7 +277,6 @@
 			<value>57</value>
 		</row>
 		<row>
-			<value>100008</value><!-- ASSIGNED TO node9 -->
 			<value>100001</value>
 			<value>shapeName8</value>
 			<value>100004</value>
@@ -418,8 +298,7 @@
 			<value>58</value>
 			<value>58</value>
 		</row>	
-			<row>
-			<value>100009</value><!-- ASSIGNED TO node10 -->
+		<row>
 			<value>100001</value>
 			<value>name</value>
 			<value>100001</value>
@@ -440,6 +319,28 @@
 			<value>75</value>
 			<value>50</value>
 			<value>50</value>
-		</row>															
+		</row>	
+		<row>
+			<value>100001</value>
+			<value>name</value>
+			<value>100001</value>
+			<value>description</value>
+			<value>detailed description</value>
+			<value>http://www.url.com</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>150</value>
+			<value>150</value>
+			<value>150</value>
+			<value>3</value>
+			<value>1</value>
+			<value>0</value>
+			<value>13</value>
+			<value>75</value>
+			<value>75</value>
+			<value>50</value>
+			<value>50</value>
+		</row>														
 	</table>
 </dataset>

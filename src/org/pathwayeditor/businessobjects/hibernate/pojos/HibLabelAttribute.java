@@ -28,6 +28,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private RGB background;
 	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
+	private boolean isDisplayed ;
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -294,6 +295,16 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	public boolean hasProperty(IPropertyDefinition property) {
 		return this.visualisableProperty.getDefinition().equals(property);
 	}
+
+	public boolean getIsDisplayed() {
+		return this.isDisplayed;
+	}
+
+	public void setIsDisplayed(boolean isDisplayed) {
+		this.isDisplayed = isDisplayed;
+	}
+	
+	
 	
 	@Override
 	public String toString(){

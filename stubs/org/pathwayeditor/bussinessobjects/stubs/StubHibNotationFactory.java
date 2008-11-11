@@ -31,6 +31,7 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
 	public HibObjectType getObjectType(IObjectType objectType) {
+		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Not implemented");
 	}
 

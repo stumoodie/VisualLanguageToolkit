@@ -17,7 +17,7 @@
 				<column name="creation_serial" not-null="true" />
 			</property>
 		</properties>
-		<many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType">
+		<many-to-one name="hibObjectType" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" cascade = "none">
 			<column name="object_type_id" not-null="true" />
 		</many-to-one>
 		<property name="name" type="string">
@@ -73,11 +73,32 @@
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint" />
 		</list>
+		
+		<list name="linkTermini" cascade="all,delete-orphan" inverse="true" >
+			<key>
+			 <column name="owning_link_id" not-null="true"/>
+			 </key>
+			 <list-index>
+			 		<column name="link_term_type" not-null="true"/>
+			 </list-index>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
+		</list>
+		
+		
+		<!-- 
+		<set name="targetTerminus" cascade="all,delete-orphan" inverse="true" >
+			<key column="target_terminus_id"/>
+			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
+		</set>  -->
+		
+		<!-- 
 		<many-to-one name="sourceTerminus" cascade="all" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus">
 			<column name="source_terminus_id" not-null="true" />
 		</many-to-one>
 		<many-to-one name="targetTerminus" cascade="all" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus">
 			<column name="target_terminus_id" not-null="true" />
 		</many-to-one>
+		 -->
+	
 	</class>
 </hibernate-mapping>

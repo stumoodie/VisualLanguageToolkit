@@ -39,5 +39,8 @@
 		<property name="backgroundBlue" type="int" access="property">
 			<column name="background_blue" not-null="true" />
 		</property>
+		<property name="isDisplayed" type="boolean" access="property">
+			<column name="is_displayed" not-null="true" />
+		</property>
 	</class>
 </hibernate-mapping>

@@ -63,7 +63,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		HibLinkTerminus newLinkTerminus = new HibLinkTerminus (dbLink, LinkTermType.TARGET, defn);
 		newLinkTerminus.setOffset((short) 5  );
 		
-		dbLink.setTargetTerminus(newLinkTerminus) ;
+//		dbLink.setTargetTerminus(newLinkTerminus) ;
 		
 		sess.saveOrUpdate(dbLink) ;
 		sess.getTransaction().commit() ;

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -45,11 +46,12 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private int lineWidth;
 	private ConnectionRouter routerType;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
-	private HibLinkTerminus sourceTerminus;
-	private HibLinkTerminus targetTerminus;
+//	private HibLinkTerminus sourceTerminus;
+//	private HibLinkTerminus targetTerminus;
 	private HibLinkEdge edge ;
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
+	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
 
 	/**
 	 * Default constructor to be used only by hibernate.
@@ -71,8 +73,10 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.creationSerial = linkIndex;
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
-		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
-		this.targetTerminus = new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
+//		this.sourceTerminus = new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
+//		this.targetTerminus = new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
+		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
 		addDefaults(objectType.getDefaultLinkAttributes());
 		this.getCanvas().getLinkAttributes().add(this) ;
 	}
@@ -89,8 +93,8 @@ s	 */
 		this.creationSerial = linkIndex;
 		this.objectType = otherAttribute.objectType;
 		this.hibObjectType = otherAttribute.hibObjectType;
-		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceTerminus());
-		this.targetTerminus = new HibLinkTerminus(this, otherAttribute.getTargetTerminus());
+//		this.sourceTerminus = new HibLinkTerminus(this, otherAttribute.getSourceTerminus());
+//		this.targetTerminus = new HibLinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.lineColour = otherAttribute.getLineColor();
 		this.lineStyle = otherAttribute.getLineStyle();
 		this.lineWidth = otherAttribute.getLineWidth();
@@ -470,23 +474,47 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
 	 */
-	public HibLinkTerminus getSourceTerminus() {
-		return this.sourceTerminus;
+//	public HibLinkTerminus getSourceTerminus() {
+//		return this.sourceTerminus;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
+//	 */
+//	public HibLinkTerminus getTargetTerminus() {
+//		return this.targetTerminus;
+//	}
+//
+//	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
+//		this.sourceTerminus = sourceTerminus;
+//	}
+//
+//	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
+//		this.targetTerminus = targetTerminus;
+//	}
+	
+	public List<HibLinkTerminus> getLinkTermini() {
+		return this.linkTermini;
+	}
+
+	public void setLinkTermini(List<HibLinkTerminus> linkTermini) {
+		this.linkTermini = linkTermini;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getSourceTerminus()
 	 */
-	public HibLinkTerminus getTargetTerminus() {
-		return this.targetTerminus;
+	public ILinkTerminus getSourceTerminus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
-		this.sourceTerminus = sourceTerminus;
-	}
-
-	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
-		this.targetTerminus = targetTerminus;
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getTargetTerminus()
+	 */
+	public ILinkTerminus getTargetTerminus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

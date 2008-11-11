@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
  */
 public class StubHtmlPropertyDefinition implements IHtmlPropertyDefinition {
 	public static final String DEFAULT_VALUE = "<html><head><title>Default Property Value</title></head><body><h1>Default Property</h1></body></html>";
-	public static final String NAME = "HTML Property";
+	public static final String NAME = "ShapeRichTextProperty";
 	public static final boolean IS_EDITABLE = true;
 	public static final boolean IS_VISUALISABLE = false;
 
