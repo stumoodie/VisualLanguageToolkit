@@ -6,12 +6,13 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -20,6 +21,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CanvasLinkEdgeFac
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.GraphModelState;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraphFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -44,7 +46,8 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private IHibNotationFactory hibNotationFactory;
 	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
 	private Set<HibLinkEdge> edges = new HashSet<HibLinkEdge>(0);
-	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this); 
+	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this);
+	private final transient IndexCounter momentoCntr;
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -52,6 +55,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 */
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());
+		this.momentoCntr = new IndexCounter();
 	}
 	
 	public HibModel(HibCanvas newCanvas, IRootObjectType rootObjectType, IHibNotationFactory hibNotationFactory) {
@@ -65,6 +69,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	public HibModel(HibCanvas newCanvas, HibModel otherModel){
 		super(new CompoundGraphCopyBuilder(), otherModel);
 		this.canvas = newCanvas;
+		this.momentoCntr = new IndexCounter();
 	}
 	
 	int getLastEdgeIndex() {
@@ -122,7 +127,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	}
 
 	public GraphModelState getCurrentState(){
-		return new GraphModelState(this, super.getCurrentState());
+		return new GraphModelState(this, this.momentoCntr.nextIndex(), super.getCurrentState());
 	}
 	
 //	public HibSubCompoundGraphFactory subgraphFactory() {
@@ -149,9 +154,9 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraph#removeSubgraph(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
-	public void removeSubgraph(ICanvasObjectSelection selection) {
-		ShapeLinkSubgraphFactory subgraphFactory = (ShapeLinkSubgraphFactory)selection;
-		this.removeSubgraph(subgraphFactory.createInducedSubgraph());
+	public void removeSubgraph(IDrawingElementSelection selection) {
+		ShapeLinkSubgraph subgraphFactory = (ShapeLinkSubgraph)selection;
+		super.removeSubgraph(subgraphFactory);
 	}
 
 	/* (non-Javadoc)
@@ -206,7 +211,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#newCanvasObjectSelection()
 	 */
-	public ICanvasObjectSelection newCanvasObjectSelection() {
+	public ISelectionFactory newSelectionFactory() {
 		return new ShapeLinkSubgraphFactory(this);
 	}
 

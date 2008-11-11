@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
@@ -41,7 +42,11 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 			BaseCompoundNode inNode) {
 		BaseChildCompoundEdgeFactory edgeFact = edgeOwner.edgeFactory();
 		edgeFact.setPair(outNode, inNode);
-		return edgeFact.createEdge();
+		BaseCompoundEdge retVal = edgeFact.createEdge();
+		HibSubModel subModel = (HibSubModel)retVal.getOwningChildGraph();
+		//FIXME: need to add an edge listener here!
+//		subModel.notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -61,6 +66,7 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 			HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
 			retVal = moveLabelNode(destHibParentNode, srcAttribute);
 		}
+		retVal.getChildCompoundGraph().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 	

@@ -59,14 +59,14 @@ public interface IModel extends IModelChangeListenee {
 	 * removal and copy operations.
 	 * @return the new instance, and which cannot be null.
 	 */
-	ICanvasObjectSelection newCanvasObjectSelection();
+	ISelectionFactory newSelectionFactory();
 	/**
 	 * Remove the nodes and edges in the model specified in the given selection.
 	 * In addition to the specified nodes and edges child nodes and edges of selected nodes and 
 	 * incident edges between selected nodes and their children will also be removed.
 	 * @param selection the selection of nodes and edges to be removed.
 	 */
-	void removeSubgraph(ICanvasObjectSelection selection);
+	void removeSubgraph(IDrawingElementSelection selection);
 	
 	/**
 	 * Returns all the drawing nodes in this model.

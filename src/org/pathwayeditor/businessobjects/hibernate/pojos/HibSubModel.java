@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
@@ -18,7 +18,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LabelNodeFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LinkEdgeChildFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph;
-import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraphFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
@@ -146,16 +145,14 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubMode#canCopyHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
-	public boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection) {
-		ShapeLinkSubgraphFactory fact = (ShapeLinkSubgraphFactory)canvasObjectSelection;
-		ShapeLinkSubgraph subgraph = fact.createInducedSubgraph();
-		return this.canCopyHere(subgraph);
+	public boolean canCopyHere(IDrawingElementSelection canvasObjectSelection) {
+		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+		return super.canCopyHere(subgraph);
 	}
 
-	public void copyHere(ICanvasObjectSelection canvasObjectSelection) {
-		ShapeLinkSubgraphFactory fact = (ShapeLinkSubgraphFactory)canvasObjectSelection;
-		ShapeLinkSubgraph subgraph = fact.createInducedSubgraph();
-		this.copyHere(subgraph);
+	public void copyHere(IDrawingElementSelection canvasObjectSelection) {
+		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+		super.copyHere(subgraph);
 	}
 
 	public HibModel getModel() {
@@ -195,10 +192,9 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.edgeIterator());
 	}
 
-	public void moveHere(ICanvasObjectSelection canvasObjectSelection) {
-		ShapeLinkSubgraphFactory fact = (ShapeLinkSubgraphFactory)canvasObjectSelection;
-		ShapeLinkSubgraph subgraph = fact.createInducedSubgraph();
-		this.moveHere(subgraph);
+	public void moveHere(IDrawingElementSelection canvasObjectSelection) {
+		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+		super.moveHere(subgraph);
 	}
 
 	public Iterator<IShapeNode> shapeIterator() {
@@ -230,10 +226,9 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#canMoveHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
-	public boolean canMoveHere(ICanvasObjectSelection canvasObjectSelection) {
-		ShapeLinkSubgraphFactory fact = (ShapeLinkSubgraphFactory)canvasObjectSelection;
-		ShapeLinkSubgraph subgraph = fact.createInducedSubgraph();
-		return this.canMoveHere(subgraph);
+	public boolean canMoveHere(IDrawingElementSelection canvasObjectSelection) {
+		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+		return super.canMoveHere(subgraph);
 	}
 
 	/* (non-Javadoc)

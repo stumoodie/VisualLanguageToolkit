@@ -50,13 +50,13 @@ public interface ISubModel extends ISubModelChangeListenee {
 	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
 	 * @return true if the selection can be copied here, false otherwise.
 	 */
-	boolean canCopyHere(ICanvasObjectSelection canvasObjectSelection);
+	boolean canCopyHere(IDrawingElementSelection canvasObjectSelection);
 	
 	/**
 	 * Copy the selected objects to this.
 	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
 	 */
-	void copyHere(ICanvasObjectSelection canvasObjectSelection); 
+	void copyHere(IDrawingElementSelection canvasObjectSelection); 
 	
 	/**
 	 * Tests if the selection can be moved to this SubModel. To no this non of the
@@ -65,13 +65,13 @@ public interface ISubModel extends ISubModelChangeListenee {
 	 * @param canvasObjectSelection
 	 * @return true if the selection can be moved here, false otherwise.
 	 */
-	boolean canMoveHere(ICanvasObjectSelection canvasObjectSelection);
+	boolean canMoveHere(IDrawingElementSelection canvasObjectSelection);
 	
 	/**
 	 * Move this selection to the submodel provided.
 	 * @param canvasObjectSelection
 	 */
-	void moveHere(ICanvasObjectSelection canvasObjectSelection); 
+	void moveHere(IDrawingElementSelection canvasObjectSelection); 
 	
 	/**
 	 * Number of shapes.

@@ -3,6 +3,12 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
+import java.util.Iterator;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
@@ -15,7 +21,7 @@ import uk.ed.inf.graph.util.impl.NodeSet;
  * @author smoodie
  *
  */
-public class ShapeLinkSubgraph extends BaseSubCompoundGraph {
+public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingElementSelection {
 	private final HibModel model;
 	
 	public ShapeLinkSubgraph(HibModel model) {
@@ -31,6 +37,41 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph {
 	@Override
 	public HibModel getSuperGraph() {
 		return this.model;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#drawingNodeIterator()
+	 */
+	public Iterator<IDrawingNode> drawingNodeIterator() {
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#getModel()
+	 */
+	public IModel getModel() {
+		return this.getSuperGraph();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#linkEdgeIterator()
+	 */
+	public Iterator<ILinkEdge> linkEdgeIterator() {
+		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(super.edgeIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#numTopDrawingNodes()
+	 */
+	public int numTopDrawingNodes() {
+		return super.getNumTopNodes();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#topDrawingNodeIterator()
+	 */
+	public Iterator<IDrawingNode> topDrawingNodeIterator() {
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.topNodeIterator());
 	}
 
 }

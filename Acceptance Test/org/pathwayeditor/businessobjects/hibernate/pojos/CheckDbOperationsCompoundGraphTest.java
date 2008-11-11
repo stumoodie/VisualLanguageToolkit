@@ -18,13 +18,13 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
@@ -460,10 +460,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData ();
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		
-		objectSelection.addShape(this.shapeNode8);
-		this.dbModel.removeSubgraph(objectSelection) ;
+		objectSelection.addDrawingNode(this.shapeNode8);
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -489,10 +489,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData() ;
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
-		objectSelection.addShape(shapeNode8) ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().moveHere(objectSelection) ;
+		dbRootNode.getSubModel().moveHere(objectSelection.createSelection()) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(MOVED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -518,10 +518,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData() ;
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
-		objectSelection.addShape(shapeNode8) ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().copyHere(objectSelection) ;
+		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(COPIED_NODE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -548,10 +548,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData () ;
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addLink(linkEdge1) ;
 		
-		this.dbModel.removeSubgraph(objectSelection) ;
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_EDGE_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -578,11 +578,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData() ;
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
-		objectSelection.addShape(shapeNode3) ;
-		objectSelection.addShape(shapeNode7) ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode3) ;
+		objectSelection.addDrawingNode(shapeNode7) ;
 		
-		this.dbModel.removeSubgraph(objectSelection) ;
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_TWO_SHAPES_VALIDATION));
 		String testTables[] = expectedDeltas.getTableNames();
@@ -609,10 +609,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData() ;
 		
-		ICanvasObjectSelection objectSelection = this.dbModel.newCanvasObjectSelection() ;
-		objectSelection.addShape(shapeNode1) ;
-		objectSelection.addShape(shapeNode2) ;
-		this.dbModel.removeSubgraph(objectSelection);
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode1) ;
+		objectSelection.addDrawingNode(shapeNode2) ;
+		this.dbModel.removeSubgraph(objectSelection.createSelection());
 		map1Manager.synchronise() ;
 		
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_ALL_VALIDATION));
