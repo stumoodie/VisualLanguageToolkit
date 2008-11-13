@@ -273,9 +273,9 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[rootNodeIdx=");
+		builder.append("(rootNodeIdx=");
 		builder.append(this.rootNode.getIndex());
-		builder.append("]");
+		builder.append(")");
 		return builder.toString();
 	}
 }

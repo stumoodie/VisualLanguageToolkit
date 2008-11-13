@@ -397,4 +397,30 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
+		return this.getProperty(propDefn.getName());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
+	 */
+	public IAnnotationProperty getProperty(String propName) {
+		return this.hibProperties.get(propName);
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("(linkatt=");
+		builder.append(this.linkAttribute);
+		builder.append(", termType=");
+		builder.append(this.termShapeType.name());
+		builder.append(")");
+		return builder.toString();
+	}
+
+
 }

@@ -97,6 +97,7 @@ public class HibObjectType implements Serializable {
 		this.classificationCode = classificationCode;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if ((this == other))
 			return true;
@@ -115,6 +116,7 @@ public class HibObjectType implements Serializable {
 						.equals(castOther.getName())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 
@@ -124,5 +126,20 @@ public class HibObjectType implements Serializable {
 				+ (getName() == null ? 0 : this.getName().hashCode());
 
 		return result;
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("(notation=");
+		builder.append(this.hibNotation.getName());
+		builder.append(", uid=");
+		builder.append(this.uniqueId);
+		builder.append(", classnCode=");
+		builder.append(this.classificationCode);
+		builder.append(",name=");
+		builder.append(this.getName());
+		builder.append(")");
+		return builder.toString();
 	}
 }

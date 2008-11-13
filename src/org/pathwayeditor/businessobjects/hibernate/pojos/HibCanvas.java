@@ -437,11 +437,11 @@ public class HibCanvas implements ICanvas , Serializable {
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[repoName=");
+		builder.append("(repoName=");
 		builder.append(this.getRepositoryName());
 		builder.append(", iNode=");
 		builder.append(this.getMapINode());
-		builder.append("]");
+		builder.append(")");
 		return builder.toString();
 	}
 

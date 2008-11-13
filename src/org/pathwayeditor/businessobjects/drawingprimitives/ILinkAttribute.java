@@ -6,10 +6,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Connection
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute {
+public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.
@@ -151,5 +151,5 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute {
 	
 	ILinkEdge getLinkEdge();
 
-	Iterator<IAnnotationProperty> propertyIterator();
+//	Iterator<IAnnotationProperty> propertyIterator();
 }

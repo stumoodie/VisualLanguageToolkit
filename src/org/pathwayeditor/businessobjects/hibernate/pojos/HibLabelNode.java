@@ -68,7 +68,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[model=");
+		builder.append("(model=");
 		builder.append(this.getModel());
 		builder.append(", index=");
 		builder.append(this.getIndex());
@@ -76,7 +76,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		builder.append(this.isRemoved());
 		builder.append(", attribute=");
 		builder.append(this.getAttribute());
-		builder.append("]");
+		builder.append(")");
 		return builder.toString();
 	}
 

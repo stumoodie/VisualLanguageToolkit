@@ -154,13 +154,13 @@ public class HibNotation implements INotation, Serializable {
 	
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[globalId=");
+		builder.append("(globalId=");
 		builder.append(this.globalId);
 		builder.append(", name=");
 		builder.append(this.name);
 		builder.append(", version=");
 		builder.append(version);
-		builder.append("]");
+		builder.append(")");
 		return builder.toString();
 	}
 	

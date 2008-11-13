@@ -3,7 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import java.util.Set;
+import java.util.Iterator;
+
 
 /**
  * @author smoodie
@@ -11,7 +12,7 @@ import java.util.Set;
  */
 public interface IAnnotatedObject {
 
-	Set<IAnnotationProperty> propertyIterator();
+	Iterator<IAnnotationProperty> propertyIterator();
 	
 	IAnnotationProperty getProperty(IPropertyDefinition propDefn);
 	

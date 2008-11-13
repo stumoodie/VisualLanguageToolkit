@@ -1,17 +1,15 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import java.util.Iterator;
-
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IPropertyChangeListenee {
+public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee {
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -173,5 +171,5 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IPr
 
 	IShapeNode getShapeNode();
 	
-	Iterator<IAnnotationProperty> propertyIterator();
+//	Iterator<IAnnotationProperty> propertyIterator();
 }
