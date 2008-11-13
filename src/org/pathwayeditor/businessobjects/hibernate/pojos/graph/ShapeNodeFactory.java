@@ -43,13 +43,14 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 */
 	@Override
 	protected BaseCompoundNode newNode(BaseCompoundNode parent, int nodeIndex) {
-		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(shapeObjectType);
 		HibCompoundNode hibParent = (HibCompoundNode)parent;
-		HibCanvas canvas = hibParent.getModel().getCanvas();
-		if(this.shapeAttribute == null){
-			this.shapeAttribute = new HibShapeAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
+		HibShapeAttribute newAttribute = this.shapeAttribute; 
+		if(newAttribute == null){
+			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(shapeObjectType);
+			HibCanvas canvas = hibParent.getModel().getCanvas();
+			newAttribute = new HibShapeAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
 		}
-		HibShapeNode retVal = new HibShapeNode(hibParent, nodeIndex, shapeAttribute);
+		HibShapeNode retVal = new HibShapeNode(hibParent, nodeIndex, newAttribute);
 		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
