@@ -5,14 +5,11 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 
 import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
@@ -43,7 +40,7 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 		BaseChildCompoundEdgeFactory edgeFact = edgeOwner.edgeFactory();
 		edgeFact.setPair(outNode, inNode);
 		BaseCompoundEdge retVal = edgeFact.createEdge();
-		HibSubModel subModel = (HibSubModel)retVal.getOwningChildGraph();
+//		HibSubModel subModel = (HibSubModel)retVal.getOwningChildGraph();
 		//FIXME: need to add an edge listener here!
 //		subModel.notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
@@ -66,7 +63,6 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 			HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
 			retVal = moveLabelNode(destHibParentNode, srcAttribute);
 		}
-		retVal.getChildCompoundGraph().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 	
@@ -83,9 +79,8 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 	}
 
 	private HibShapeNode moveShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
-		HibSubModel destSubModel = destHibParentNode.getChildCompoundGraph();
-		HibModel destModel = destSubModel.getModel();
-		HibShapeNode retVal = new HibShapeNode(destHibParentNode, destModel.getNodeCounter().nextIndex(), otherAttribute);
-		return retVal;
+		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().nodeFactory();
+		fact.addAttribute(otherAttribute);
+		return fact.createShapeNode();
 	}
 }

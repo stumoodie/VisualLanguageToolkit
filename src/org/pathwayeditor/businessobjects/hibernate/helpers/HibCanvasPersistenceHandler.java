@@ -133,8 +133,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	
 	private void initNodesAndEdges(HibModel model) {
 		// now go through all the nodes and edges and get them loaded from the DB
-		Hibernate.initialize(model.getNodes());
-		Hibernate.initialize(model.getEdges());
 		Iterator<IDrawingNode> nodeIter = model.drawingNodeIterator();
 		while(nodeIter.hasNext()){
 			IDrawingNode node = nodeIter.next();

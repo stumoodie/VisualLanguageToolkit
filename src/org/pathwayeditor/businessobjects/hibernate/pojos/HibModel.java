@@ -1,9 +1,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
@@ -44,8 +42,6 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private IndexCounter edgeCntr = new IndexCounter();
 	private HibCanvas canvas;
 	private IHibNotationFactory hibNotationFactory;
-	private Set<HibCompoundNode> nodes = new HashSet<HibCompoundNode>(0);
-	private Set<HibLinkEdge> edges = new HashSet<HibLinkEdge>(0);
 	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this);
 	private final transient IndexCounter momentoCntr;
 	
@@ -241,22 +237,6 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 */
 	public void setHibNotationFactory(IHibNotationFactory hibNotationFactory) {
 		this.hibNotationFactory = hibNotationFactory;
-	}
-
-	public Set<HibCompoundNode> getNodes() {
-		return this.nodes;
-	}
-
-	public void setNodes(Set<HibCompoundNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	public Set<HibLinkEdge> getEdges() {
-		return this.edges;
-	}
-
-	public void setEdges(Set<HibLinkEdge> edges) {
-		this.edges = edges;
 	}
 
 	/**

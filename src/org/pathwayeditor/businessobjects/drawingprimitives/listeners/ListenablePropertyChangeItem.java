@@ -59,6 +59,6 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 	}
 
 	public final void removeChangeListener(IPropertyChangeListener listener){
-		this.listeners.add(listener);
+		this.listeners.remove(listener);
 	}
 }

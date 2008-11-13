@@ -26,6 +26,7 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	private final IHibNotationFactory hibNotationFactory;
 	private final HibCompoundNode parent;
 	private IShapeObjectType shapeObjectType;
+	private HibShapeAttribute shapeAttribute;
 	
 	/**
 	 * @param parent
@@ -45,7 +46,9 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(shapeObjectType);
 		HibCompoundNode hibParent = (HibCompoundNode)parent;
 		HibCanvas canvas = hibParent.getModel().getCanvas();
-		HibShapeAttribute shapeAttribute = new HibShapeAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
+		if(this.shapeAttribute == null){
+			this.shapeAttribute = new HibShapeAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
+		}
 		HibShapeNode retVal = new HibShapeNode(hibParent, nodeIndex, shapeAttribute);
 		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
@@ -64,6 +67,21 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 */
 	public HibShapeNode createShapeNode() {
 		return (HibShapeNode)this.createNode();
+	}
+	
+	/**
+	 * Adds an attribute to be assigned to the newly created node.
+	 * This is designed to help with moving nodes where a new node is created and
+	 * and the old one is removed and the attribute is transferred from the old node
+	 * to the new one.  
+	 * @param attribute
+	 */
+	public void addAttribute(HibShapeAttribute attribute){
+		this.shapeAttribute = attribute;
+	}
+	
+	public HibShapeAttribute getAttribute(){
+		return this.shapeAttribute;
 	}
 
 	/* (non-Javadoc)
@@ -100,8 +118,12 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 */
 	public boolean canCreateShapeNode() {
 		boolean retVal = false;
-		if(this.shapeObjectType != null){
-			retVal = this.parent.getObjectType().getParentingRules().isValidChild(shapeObjectType);
+		IShapeObjectType testObjectType = this.shapeObjectType;
+		if(this.shapeAttribute != null){
+			testObjectType = this.shapeAttribute.getObjectType();
+		}
+		if(testObjectType != null){
+			retVal = this.parent.getObjectType().getParentingRules().isValidChild(testObjectType);
 		}
 		return retVal;
 	}
