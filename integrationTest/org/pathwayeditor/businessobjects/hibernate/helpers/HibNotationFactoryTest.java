@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
@@ -56,7 +55,7 @@ public class HibNotationFactoryTest extends PojoTester {
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibNotationFactory#initialise()}.
 	 * @throws Exception 
 	 */
-	@Ignore
+	@Test
 	public final void testInitialiseUnloaded() throws Exception {
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();

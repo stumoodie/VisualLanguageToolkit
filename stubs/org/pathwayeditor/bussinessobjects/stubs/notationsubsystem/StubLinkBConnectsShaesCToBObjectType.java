@@ -20,8 +20,8 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
 	private static final EnumSet<LinkEditableAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(LinkEditableAttributes.LINE_WIDTH);
 	public static final int UNIQUE_ID = 6;
-	public static final String DESCRIPTION = "objectDescr6";
-	public static final String NAME = "objectName6";
+	public static final String DESCRIPTION = "Link B Object Type";
+	public static final String NAME = "Link B";
 	private final INotationSyntaxService syntaxService;
 	private final ILinkAttributeDefaults linkAttributeDefaults;
 	private final ILinkConnectionRules connectionRules;
