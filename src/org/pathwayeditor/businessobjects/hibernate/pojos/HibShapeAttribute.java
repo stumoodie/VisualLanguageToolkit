@@ -101,7 +101,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineWidth = other.lineWidth;
 		this.padding = other.padding;
 		this.shapeObjectType = other.shapeObjectType;
-
+		this.shapeType=other.shapeType;
 		for (HibProperty property : other.hibProperties.values()) {
 			IPropertyDefinition defn = property.getDefinition(); 
 			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder, property));

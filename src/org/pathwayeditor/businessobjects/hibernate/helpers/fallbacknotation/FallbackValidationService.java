@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleConfig;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.businessobjects.repository.IMap;
 
 class FallbackValidationService implements INotationValidationService {
 	private INotationSubsystem serviceProvider;
@@ -19,7 +19,7 @@ class FallbackValidationService implements INotationValidationService {
 		this.serviceProvider=provider;
 	}
 
-	public IMap getMapBeingValidated() {
+	public ICanvas getMapBeingValidated() {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
@@ -47,7 +47,7 @@ class FallbackValidationService implements INotationValidationService {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
-	public void setMapToValidate(IMap mapToValidate) {
+	public void setMapToValidate(ICanvas mapToValidate) {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 

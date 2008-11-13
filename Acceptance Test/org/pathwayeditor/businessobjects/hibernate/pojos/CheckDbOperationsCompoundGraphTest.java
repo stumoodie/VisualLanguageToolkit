@@ -3,6 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.FileInputStream;
 import java.util.Iterator;
 
@@ -13,10 +15,10 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
@@ -357,7 +359,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
-	@Ignore
 	@Test
 	public void testCreateNewLabelNode () throws Exception 
 	{
@@ -453,7 +454,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testDeleteNode () throws Exception
 	{
@@ -482,7 +483,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testMoveNode () throws Exception
 	{
@@ -511,7 +512,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testCopyNode () throws Exception
 	{
@@ -541,7 +542,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testDeleteEdge () throws Exception 
 	{
@@ -571,7 +572,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testDeleteTwoConnectedShapes () throws Exception
 	{
@@ -602,7 +603,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 
 	}
 	
-	@Ignore
+	
 	@Test
 	public void testDeleteAll () throws Exception 
 	{

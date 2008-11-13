@@ -147,7 +147,7 @@
 		</row>
 		<row>
 		<!-- Position where shape node used to be ShapeAttribute8 -->
-			<value><null/></value>
+			<value>100008</value>
 		</row>
 		<row>
 			<!-- New shape node ShapeAttribute8 -->

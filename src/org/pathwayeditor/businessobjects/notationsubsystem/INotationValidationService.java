@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 
 public interface INotationValidationService extends INotationService {
 
@@ -27,7 +27,7 @@ public interface INotationValidationService extends INotationService {
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 * @throws IllegalArgumentException if <code>mapToValidate == null</code>.
 	 */
-	void setMapToValidate(IMap mapToValidate);
+	void setMapToValidate(ICanvas mapToValidate);
 	
 	/**
 	 * Provides the map that is being validated. Will return null if no map is currently being validated.
@@ -37,7 +37,7 @@ public interface INotationValidationService extends INotationService {
 	 * @return the map being validated or null if none set.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	IMap getMapBeingValidated();
+	ICanvas getMapBeingValidated();
 	
 	/**
 	 * Tests if the validator is ready to perform a validation. This requires that a validator has been implemented

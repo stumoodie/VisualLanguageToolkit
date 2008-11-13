@@ -5,12 +5,12 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
  * @author smoodie
@@ -29,7 +29,7 @@ public class StubNotationValidationService implements INotationValidationService
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getMapBeingValidated()
 	 */
-	public IMap getMapBeingValidated() {
+	public ICanvas getMapBeingValidated() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
@@ -71,7 +71,7 @@ public class StubNotationValidationService implements INotationValidationService
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#setMapToValidate(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public void setMapToValidate(IMap mapToValidate) {
+	public void setMapToValidate(ICanvas mapToValidate) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
