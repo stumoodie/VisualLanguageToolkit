@@ -10,10 +10,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 
 import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
@@ -72,19 +70,20 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	 * @return
 	 */
 	private HibCompoundNode createCopyOfLabelNode(HibCompoundNode destHibParentNode, HibLabelAttribute srcAttribute) {
-		
-		// TODO: need to do find a way of making sure the property is copied before this label is copied
-		//       and find a way to get the copied property to this label.
-		return null;
+		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
+		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
+		HibLabelAttribute destAttribute = new HibLabelAttribute(destCanvas, destCanvas.getAttributeSerialCounter().nextIndex(), srcAttribute);
+		LabelNodeFactory fact = destHibParentNode.getChildCompoundGraph().labelNodeFactory();
+		fact.setAttribute(destAttribute);
+		return fact.createLabel();
 	}
 
 	private HibShapeNode createCopyOfShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
 		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
 		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
-		HibSubModel destSubModel = destHibParentNode.getChildCompoundGraph();
-		HibModel destModel = destSubModel.getModel();
 		HibShapeAttribute destAttribute = new HibShapeAttribute(destCanvas, destCanvas.getAttributeSerialCounter().nextIndex(), otherAttribute);
-		HibShapeNode retVal = new HibShapeNode(destHibParentNode, destModel.getNodeCounter().nextIndex(), destAttribute);
-		return retVal;
+		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().shapeNodeFactory();
+		fact.setAttribute(destAttribute);
+		return fact.createShapeNode();
 	}
 }

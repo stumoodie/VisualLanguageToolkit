@@ -169,7 +169,7 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	 */
 	void setPadding ( int padding ) ;
 
-	IShapeNode getShapeNode();
+//	IShapeNode getShapeNode();
 	
 //	Iterator<IAnnotationProperty> propertyIterator();
 }

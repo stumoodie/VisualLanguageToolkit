@@ -5,7 +5,6 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
@@ -205,7 +204,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#labelNodeFactory()
 	 */
-	public ILabelNodeFactory labelNodeFactory() {
+	public LabelNodeFactory labelNodeFactory() {
 		return new LabelNodeFactory(this.getRootNode());
 	}
 

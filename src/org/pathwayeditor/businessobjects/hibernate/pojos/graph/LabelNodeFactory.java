@@ -8,6 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
@@ -22,6 +23,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
 public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelNodeFactory {
 	private HibProperty annotationProperty = null;
 	private final HibCompoundNode parent;
+	private HibLabelAttribute attribute; 
 	
 	/**
 	 * @param parent
@@ -40,7 +42,13 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	 */
 	@Override
 	protected HibCompoundNode newNode(BaseCompoundNode parent, int nodeIndex) {
-		HibLabelNode retVal = new HibLabelNode((HibCompoundNode)parent, nodeIndex, this.annotationProperty);
+		HibLabelNode retVal = null;
+		if(this.annotationProperty == null){
+			retVal = new HibLabelNode((HibCompoundNode)parent, nodeIndex, this.annotationProperty);
+		}
+		else{
+			retVal = new HibLabelNode((HibCompoundNode)parent, nodeIndex, this.attribute);
+		}
 		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
@@ -95,6 +103,20 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	 */
 	public void setProperty(IAnnotationProperty annotationProperty) {
 		this.annotationProperty = (HibProperty)annotationProperty;
+	}
+
+	/**
+	 * @return the attribute
+	 */
+	public HibLabelAttribute getAttribute() {
+		return this.attribute;
+	}
+
+	/**
+	 * @param attribute the attribute to set
+	 */
+	public void setAttribute(HibLabelAttribute attribute) {
+		this.attribute = attribute;
 	}
 
 }

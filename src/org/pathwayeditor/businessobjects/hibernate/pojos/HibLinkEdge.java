@@ -35,21 +35,22 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.inNode = inNode;
 		this.changeInEdge();
 		this.changeOutNode();
-		this.changeAttribute(linkAttribute);
-	}
-	
-	/**
-	 * @param linkAttribute
-	 */
-	public void changeAttribute(HibLinkAttribute linkAttribute) {
-		if(this.attribute != null){
-			this.attribute.setLinkEdge(null);
-		}
-		if(linkAttribute != null){
-			linkAttribute.setLinkEdge(this);
-		}
+//		this.changeAttribute(linkAttribute);
 		this.attribute = linkAttribute;
 	}
+	
+//	/**
+//	 * @param linkAttribute
+//	 */
+//	public void changeAttribute(HibLinkAttribute linkAttribute) {
+//		if(this.attribute != null){
+//			this.attribute.setLinkEdge(null);
+//		}
+//		if(linkAttribute != null){
+//			linkAttribute.setLinkEdge(this);
+//		}
+//		this.attribute = linkAttribute;
+//	}
 
 	@SuppressWarnings("unused")
 	private void setId(Long value) {

@@ -57,7 +57,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private int lineWidth = DEFAULT_LINE_WIDTH;
 	private int padding = DEFAULT_PADDING;
 	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
-	private HibShapeNode shapeNode;
+//	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
@@ -396,23 +396,23 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
   }   
 	
 	
-	public HibShapeNode getShapeNode() {
-		return this.shapeNode;
-	}
-	
-	void setShapeNode(HibShapeNode newNode){
-		this.shapeNode = newNode;
-	}
-	
-	public void changeShapeNode(HibShapeNode newNode){
-		if(this.shapeNode != null){
-			this.shapeNode.setAttribute(null);
-		}
-		if(newNode != null){
-			newNode.setAttribute(this);
-		}
-		this.shapeNode = newNode;
-	}
+//	public HibShapeNode getShapeNode() {
+//		return this.shapeNode;
+//	}
+//	
+//	void setShapeNode(HibShapeNode newNode){
+//		this.shapeNode = newNode;
+//	}
+//	
+//	public void changeShapeNode(HibShapeNode newNode){
+//		if(this.shapeNode != null){
+//			this.shapeNode.setAttribute(null);
+//		}
+//		if(newNode != null){
+//			newNode.setAttribute(this);
+//		}
+//		this.shapeNode = newNode;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getFillColour()

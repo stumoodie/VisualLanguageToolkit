@@ -36,7 +36,8 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, HibShapeAttribute shapeAttribute){
 		super(parentNode.getGraph(), parentNode, nodeIndex);
-		this.changeAttribute(shapeAttribute);
+//		this.changeAttribute(shapeAttribute);
+		this.shapeAttribute = shapeAttribute;
 	}
 	
 	/* (non-Javadoc)
@@ -53,19 +54,23 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return this.shapeAttribute;
 	}
 
-	void setAttribute(HibShapeAttribute shapeAttribute) {
+	public void setAttribute(HibShapeAttribute shapeAttribute) {
 		this.shapeAttribute = shapeAttribute;
 	}
 	
-	public void changeAttribute(HibShapeAttribute newShapeAttribute){
-		if(this.shapeAttribute != null){
-			this.shapeAttribute.setShapeNode(null);
-		}
-		if(newShapeAttribute != null){
-			newShapeAttribute.setShapeNode(this);
-		}
-		this.shapeAttribute = newShapeAttribute;
-	}
+//	public void changeAttribute(HibShapeAttribute newShapeAttribute){
+//		if(this.shapeAttribute != null){
+//			this.shapeAttribute.setShapeNode(null);
+//		}
+//		if(newShapeAttribute != null){
+//			HibShapeNode oldShape = newShapeAttribute.getShapeNode(); 
+//			if(oldShape != null){
+//				oldShape.setAttribute(null);
+//			}
+//			newShapeAttribute.setShapeNode(this);
+//		}
+//		this.shapeAttribute = newShapeAttribute;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()

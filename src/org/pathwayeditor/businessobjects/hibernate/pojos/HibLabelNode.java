@@ -28,23 +28,30 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		super(parent.getModel(), parent, index);
 		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
 		int newSerial = this.getModel().getCanvas().getAttributeSerialCounter().nextIndex();
-		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
+//		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
+		this.labelAttribute = new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults);
 	}
 	
 	
-	/**
-	 * @param hibLabelAttribute
-	 */
-	public void changeLabelAttribute(HibLabelAttribute hibLabelAttribute) {
-		if(this.labelAttribute != null){
-			this.labelAttribute.setLabelNode(null) ;
-		}
-		if(hibLabelAttribute != null){
-			hibLabelAttribute.setLabelNode(this);
-		}
-		this.labelAttribute = hibLabelAttribute;
-
+	public HibLabelNode(HibCompoundNode parent, int index, HibLabelAttribute attribute){
+		super(parent.getModel(), parent, index);
+		this.labelAttribute = attribute;
 	}
+	
+	
+//	/**
+//	 * @param hibLabelAttribute
+//	 */
+//	public void changeLabelAttribute(HibLabelAttribute hibLabelAttribute) {
+//		if(this.labelAttribute != null){
+//			this.labelAttribute.setLabelNode(null) ;
+//		}
+//		if(hibLabelAttribute != null){
+//			hibLabelAttribute.setLabelNode(this);
+//		}
+//		this.labelAttribute = hibLabelAttribute;
+//
+//	}
 
 
 	/* (non-Javadoc)

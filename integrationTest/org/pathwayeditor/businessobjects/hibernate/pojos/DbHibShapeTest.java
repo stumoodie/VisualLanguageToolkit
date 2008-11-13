@@ -116,7 +116,7 @@ public class DbHibShapeTest extends PojoTester{
 		HibShapeNode hibNode = (HibShapeNode) retreivedCompoundNode.uniqueResult() ;
 		
 		HibShapeAttribute shapeToSave = new HibShapeAttribute ( dbCanvas , CREATION_SERIAL, mockShapeObjectType, objectType) ;
-		shapeToSave.setShapeNode(hibNode);
+//		shapeToSave.setShapeNode(hibNode);
 		shapeToSave.setName(SHAPE_NAME_2) ;
 		shapeToSave.setDescription(SHAPE_DESCR_2) ;
 		shapeToSave.setDetailedDescription(DETAILED_DESCR_2) ;

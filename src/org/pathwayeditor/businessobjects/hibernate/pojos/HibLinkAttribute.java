@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
@@ -48,7 +47,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>(0);
 //	private HibLinkTerminus sourceTerminus;
 //	private HibLinkTerminus targetTerminus;
-	private HibLinkEdge edge ;
+//	private HibLinkEdge edge ;
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
@@ -133,19 +132,19 @@ s	 */
 		return this.id;
 	}
 	
-	void setLinkEdge(HibLinkEdge edge) {
-		this.edge = edge;
-	}
-	
-	public void changeLinkEdge(HibLinkEdge newEdge){
-		if(this.edge != null){
-			this.edge.setAttribute(null);
-		}
-		if(newEdge != null){
-			newEdge.setAttribute(this);
-		}
-		this.edge = newEdge;
-	}
+//	void setLinkEdge(HibLinkEdge edge) {
+//		this.edge = edge;
+//	}
+//	
+//	public void changeLinkEdge(HibLinkEdge newEdge){
+//		if(this.edge != null){
+//			this.edge.setAttribute(null);
+//		}
+//		if(newEdge != null){
+//			newEdge.setAttribute(this);
+//		}
+//		this.edge = newEdge;
+//	}
 
 	@SuppressWarnings("unused")
 	private void setId(Long id) {
@@ -457,12 +456,12 @@ s	 */
 		this.lineColour = newColor;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkEdge()
-	 */
-	public ILinkEdge getLinkEdge() {
-		return this.edge;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkEdge()
+//	 */
+//	public ILinkEdge getLinkEdge() {
+//		return this.edge;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)

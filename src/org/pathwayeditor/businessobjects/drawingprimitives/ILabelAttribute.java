@@ -37,11 +37,11 @@ public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
 	 */
 	IAnnotationProperty getProperty();
 
-	/**
-	 * Get the LabelNode of the current Label
-	 * @return The LabelNode. Cannot be null.
-	 */
-	ILabelNode getLabelNode();
+//	/**
+//	 * Get the LabelNode of the current Label
+//	 * @return The LabelNode. Cannot be null.
+//	 */
+//	ILabelNode getLabelNode();
 	
 	/**
 	 * Get the background color of this Label.

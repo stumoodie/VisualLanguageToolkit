@@ -76,7 +76,7 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 * to the new one.  
 	 * @param attribute
 	 */
-	public void addAttribute(HibShapeAttribute attribute){
+	public void setAttribute(HibShapeAttribute attribute){
 		this.shapeAttribute = attribute;
 	}
 	

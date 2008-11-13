@@ -8,6 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
@@ -26,7 +27,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private Size size = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private HibProperty visualisableProperty;
 	private RGB background;
-	private HibLabelNode labelNode;
+//	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
 	private boolean isDisplayed ;
 
@@ -46,6 +47,20 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.visualisableProperty = property;
 		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
+		this.getCanvas().getLabelAttributes().add(this) ;
+	}
+
+	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibLabelAttribute otherAttribute) {
+		this.hibCanvas = hibCanvas;
+		this.creationSerial = creationSerial;
+		PropertyBuilder propertyBuilder = new PropertyBuilder(hibCanvas);
+		IPropertyDefinition defn = otherAttribute.getProperty().getDefinition();
+		this.visualisableProperty = (HibProperty)defn.copyProperty(propertyBuilder, otherAttribute.getProperty());
+		this.position = otherAttribute.position;
+		this.size = otherAttribute.size;
+		this.background = otherAttribute.background;
+		this.objectType = otherAttribute.objectType;
+		this.isDisplayed = otherAttribute.isDisplayed;
 		this.getCanvas().getLabelAttributes().add(this) ;
 	}
 
@@ -100,13 +115,13 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		return this.position;
 	}
 
-	public HibLabelNode getLabelNode() {
-		return this.labelNode;
-	}
-
-	public void setLabelNode(HibLabelNode nodeId) {
-		this.labelNode = nodeId;
-	}
+//	public HibLabelNode getLabelNode() {
+//		return this.labelNode;
+//	}
+//
+//	public void setLabelNode(HibLabelNode nodeId) {
+//		this.labelNode = nodeId;
+//	}
 
 	public void setXPosition(int XPosition) {
 		this.position = this.position.newX(XPosition);

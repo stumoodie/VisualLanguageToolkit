@@ -149,7 +149,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	void setDetailedDescription ( String DetailedDescription) ;	
 	
 	
-	ILinkEdge getLinkEdge();
+//	ILinkEdge getLinkEdge();
 
 //	Iterator<IAnnotationProperty> propertyIterator();
 }
