@@ -1,0 +1,38 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<!--  START OF FILESYSTEM -->
+<dataset>
+<table name="Canvas">
+		<column>id</column>
+		<column>map_inode</column>
+		<column>context_id</column>
+		<column>grid_x</column>
+		<column>grid_y</column>
+		<column>grid_enabled</column>
+		<column>snap_to_grid_enabled</column>
+		<column>background_red</column> 
+		<column>background_green</column>
+		<column>background_blue</column>
+		<column>canvas_width</column>
+		<column>canvas_height</column>
+		<column>created</column>
+		<column>last_modified</column>
+		<column>repository_name</column>
+		<row>
+			<value>100001</value>
+			<value>4</value>
+			<value>100001</value>
+			<value>100</value>
+			<value>100</value>
+			<value>false</value>
+			<value>false</value>
+			<value>123</value>
+			<value>123</value>
+			<value>123</value>
+			<value>121</value>
+			<value>121</value>
+			<value>1970-01-01</value>
+			<value>1970-01-01</value>
+			<value>repo name</value>
+		</row> 
+	</table>
+</dataset>

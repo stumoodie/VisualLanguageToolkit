@@ -4,7 +4,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -324,6 +323,16 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int NUM_OF_BENDPOINTS_IN_LINK7 = 0 ;
 	private static final int NUM_OF_BENDPOINTS_IN_LINK8 = 0 ;
 	private static final int NUM_OF_BENDPOINTS_IN_LINK9 = 0 ;
+	
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE1 = 11 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE2 = 12 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE3 = 13 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE4 = 14 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE5 = 15 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE6 = 16 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE7 = 17 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE8 = 18 ;
+	private static final int LINE_WIDTH_OF_LINKATTRIBUTE9 = 19 ;
 	
 	
 	private static final RGB RGB_100 = new RGB ( 100 , 100 , 100 ) ;
@@ -1420,7 +1429,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute1 color" , RGB_101 , labelAttribute1.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute1 position" , LOCATION_51 , labelAttribute1.getLocation()) ;
 		assertEquals ( "labelAttribute1 size" , SIZE_51 , labelAttribute1.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute1.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1455,7 +1463,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute2 color" , RGB_102 , labelAttribute2.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute2 position" , LOCATION_52 , labelAttribute2.getLocation()) ;
 		assertEquals ( "labelAttribute2 size" , SIZE_52 , labelAttribute2.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute2.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1490,7 +1497,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute2 color" , RGB_103 , labelAttribute3.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute2 position" , LOCATION_53 , labelAttribute3.getLocation()) ;
 		assertEquals ( "labelAttribute2 size" , SIZE_53 , labelAttribute3.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute3.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1541,7 +1547,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute4 color" , RGB_104 , labelAttribute4.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute4 position" , LOCATION_54 , labelAttribute4.getLocation()) ;
 		assertEquals ( "labelAttribute4 size" , SIZE_54 , labelAttribute4.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute4.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1576,7 +1581,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute5 color" , RGB_105 , labelAttribute5.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute5 position" , LOCATION_55 , labelAttribute5.getLocation()) ;
 		assertEquals ( "labelAttribute5 size" , SIZE_55 , labelAttribute5.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute5.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1629,7 +1633,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute6 color" , RGB_106 , labelAttribute6.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute6 position" , LOCATION_56 , labelAttribute6.getLocation()) ;
 		assertEquals ( "labelAttribute6 size" , SIZE_56 , labelAttribute6.getSize() ) ;
-		assertTrue ( "displayed" , labelAttribute6.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1681,7 +1684,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute7 color" , RGB_107 , labelAttribute7.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute7 position" , LOCATION_57 , labelAttribute7.getLocation()) ;
 		assertEquals ( "labelAttribute7 size" , SIZE_57 , labelAttribute7.getSize() ) ;
-		assertFalse ( "displayed" , labelAttribute7.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1738,7 +1740,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute8 color" , RGB_108 , labelAttribute8.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute8 position" , LOCATION_58 , labelAttribute8.getLocation()) ;
 		assertEquals ( "labelAttribute8 size" , SIZE_58 , labelAttribute8.getSize() ) ;
-		assertFalse ( "displayed" , labelAttribute8.getIsDisplayed()) ;
 	}
 	
 	@Test
@@ -1799,6 +1800,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR1_DET_DESCR , linkAttribute1.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE1 ,linkAttribute1.getLineWidth()) ;
 		
 	}
 	
@@ -1860,6 +1862,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR2_DET_DESCR , linkAttribute2.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE2 , linkAttribute2.getLineWidth()) ;
 	}
 	
 	@Test
@@ -1929,6 +1932,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR3_DET_DESCR , linkAttribute3.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE3 , linkAttribute3.getLineWidth()) ;
 	}
 	
 	@Test
@@ -2004,6 +2008,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR4_DET_DESCR , linkAttribute4.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK4 , linkAttribute4.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE4 , linkAttribute4.getLineWidth()) ;
 	}
 	
 	@Test
@@ -2074,6 +2079,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR5_DET_DESCR , linkAttribute5.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE5 , linkAttribute5.getLineWidth()) ;
 		
 	}
 	
@@ -2144,6 +2150,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR6_DET_DESCR , linkAttribute6.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE6 , linkAttribute6.getLineWidth()) ;
 		
 	}
 	
@@ -2234,6 +2241,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR7_DET_DESCR , linkAttribute7.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE7 , linkAttribute7.getLineWidth()) ;
 		
 	}
 	
@@ -2286,6 +2294,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR8_DET_DESCR , linkAttribute8.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE8 , linkAttribute8.getLineWidth()) ;
 		
 	}
 	
@@ -2338,6 +2347,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR9_DET_DESCR , linkAttribute9.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute9.numBendPoints()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE9 , linkAttribute9.getLineWidth()) ;
 		
 	}
 	

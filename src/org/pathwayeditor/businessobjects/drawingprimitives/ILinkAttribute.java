@@ -7,6 +7,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject {
@@ -147,6 +148,18 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @param DetailedDescription the new DetailedDescription
 	 */
 	void setDetailedDescription ( String DetailedDescription) ;	
+	
+	/**
+	 * Returns the width of the line.
+	 * @return the width.
+	 */
+	int getLineWidth() ;
+	
+	/**
+	 * Sets a new width for the line of this link.
+	 * @param lineWidth the new line width.
+	 */
+	void setLineWidth ( int lineWidth) ;
 	
 	
 //	ILinkEdge getLinkEdge();

@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import static org.junit.Assert.assertNotNull;
 
 import java.io.FileInputStream;
 import java.util.Iterator;
@@ -15,19 +14,25 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.XmlDataSet;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
@@ -105,8 +110,45 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String DELETED_EDGE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedEdge.xml" ;
 	private final static String DELETED_TWO_SHAPES_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedTwoShapes.xml" ;
 	private final static String DELETED_ALL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeleteAll.xml" ;
+	private final static String CHANGED_SHAPE_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedShapeData.xml" ;
+	private final static String CHANGED_LABEL_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLabelData.xml" ;
+	private final static String CHANGED_LINK_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLinkData.xml" ;
+	private final static String CHANGED_CANVAS_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedCanvasData.xml" ;
 	
-
+	private final static String CHANGED_SHAPE_NAME = "new shape name" ;
+	private final static String CHANGED_SHAPE_DESCRIPTION = "new shape description" ;
+	private final static String CHANGED_SHAPE_DETAILED_DESCRIPTION = "new shape detailed description" ;
+	private final static RGB CHANGED_SHAPE_FILL_COLOR = new RGB ( 1 ,1 ,1 ) ;
+	private final static RGB CHANGED_SHAPE_LINE_COLOR = new RGB ( 2 ,2 ,2 ) ;
+	private final static LineStyle CHANGED_SHAPE_LINE_STYLE = LineStyle.SOLID ;
+	private final static int CHANGED_SHAPE_LINE_WIDTH = 100 ; 
+	private final static int CHANGED_SHAPE_PADDING = 150 ;
+	private final static PrimitiveShapeType CHANGED_SHAPE_PRIMITIVE_TYRE = PrimitiveShapeType.UP_CHEVRON ;
+	private final static Location CHANGED_SHAPE_LOCATION = new Location ( 500 , 500 ) ;
+	private final static Size CHANGED_SHAPE_SIZE = new Size ( 400 ,400 ) ;
+	private final static String CHANGED_SHAPE_URL = "http://www.something.co.uk" ;
+	
+	private final static RGB CHANGED_LABEL_BACKGROUND_COLOR = new RGB ( 200 , 200 , 200 ) ;
+	private final static Location CHANGED_LABEL_LOCATION = new Location ( 222 , 222 ) ;
+	private final static Size CHANGED_LABEL_SIZE = new Size ( 122 , 122 ) ;
+	
+	private final static String CHANGED_LINK_NAME = "changed link name" ;
+	private final static String CHANGED_LINK_DESCRIPTION = "changed link description" ;
+	private final static String CHANGED_LINK_DETAILED_DESCRIPTION = "changed link detailed description" ;
+	private final static RGB CHANGED_LINK_LINE_COLOUR = new RGB ( 111 , 111 ,111 ) ;
+	private final static LineStyle CHANGED_LINK_LINE_STYLE = LineStyle.SOLID ;
+	private final static int CHANGED_LINK_LINE_WIDTH = 222 ; 
+	private final static ConnectionRouter CHANGED_LINK_CONNECTION_ROUTER = ConnectionRouter.SHORTEST_PATH ;
+	private final static String CHANGED_LINK_URL = "http://www.changed.co.uk" ;
+	
+	private static final Size CHANGED_CANVAS_GRID_SIZE = new Size ( 100 , 100) ;
+	private static final boolean CHANGED_CANVAS_GRID_ENABLED = false ;
+	private static final boolean CHANGED_CANVAS_SNAP_ENABLED = false ;
+	private static final RGB CHANGED_CANVAS_BACKGROUND_COLOUR =  new RGB ( 123 , 123 ,123 ) ;
+	private static final Size CHANGED_CANVAS_SIZE = new Size ( 121 , 121 ) ;
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.integrationtestutils.GenericTester#doAdditionalSetUp()
 	 */
@@ -123,8 +165,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private void loadData () throws Exception 
 	{
 		rootFolder = repository.getRootFolder() ;
-		
-		Iterator<ISubFolder> subFolders = repository.getRootFolder().getSubFolderIterator() ;
 		
 		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
 		
@@ -387,6 +427,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //			}
 //		}
 //		
+//		newNode.getAttribute().
+//		
 //		assertNotNull ( "property is not null" , aProperty) ;
 //		
 //		ILabelNodeFactory labelFactory = newNode.getSubModel().labelNodeFactory() ;
@@ -454,7 +496,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	
 	@Test
 	public void testDeleteNode () throws Exception
 	{
@@ -483,7 +524,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testMoveNode () throws Exception
 	{
@@ -512,7 +553,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	
+	@Ignore
 	@Test
 	public void testCopyNode () throws Exception
 	{
@@ -542,7 +583,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 	}
 	
-	
 	@Test
 	public void testDeleteEdge () throws Exception 
 	{
@@ -571,7 +611,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 		
 	}
-	
 	
 	@Test
 	public void testDeleteTwoConnectedShapes () throws Exception
@@ -603,7 +642,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 
 	}
 	
-	
 	@Test
 	public void testDeleteAll () throws Exception 
 	{
@@ -632,5 +670,142 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 							.getTableMetaData()));
 		}
 	}
-
+	
+	@Test
+	public void testAlterShapeAttributeValues () throws Exception
+	{
+		loadData () ;
+		
+		IShapeAttribute shapeAttribute1 = shapeNode1.getAttribute() ;
+		
+		shapeAttribute1.setName(CHANGED_SHAPE_NAME) ;
+		shapeAttribute1.setDescription(CHANGED_SHAPE_DESCRIPTION) ;
+		shapeAttribute1.setDetailedDescription(CHANGED_SHAPE_DETAILED_DESCRIPTION) ;
+		shapeAttribute1.setFillColour(CHANGED_SHAPE_FILL_COLOR) ;
+		shapeAttribute1.setLineColour(CHANGED_SHAPE_LINE_COLOR) ;
+		shapeAttribute1.setLineStyle(CHANGED_SHAPE_LINE_STYLE) ;
+		shapeAttribute1.setLineWidth(CHANGED_SHAPE_LINE_WIDTH);
+		shapeAttribute1.setPadding(CHANGED_SHAPE_PADDING) ;
+		shapeAttribute1.setLocation(CHANGED_SHAPE_LOCATION) ;
+		shapeAttribute1.setSize(CHANGED_SHAPE_SIZE);
+		shapeAttribute1.setUrl(CHANGED_SHAPE_URL) ;
+		shapeAttribute1.setPrimitiveShape(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CHANGED_SHAPE_DATA_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testAlterLabelAttributeValues () throws Exception {
+		loadData () ;
+		
+		ILabelAttribute labelAttribute1 = shapeNode1.getSubModel().labelIterator().next().getAttribute() ;
+		
+		labelAttribute1.setBackgroundColor(CHANGED_LABEL_BACKGROUND_COLOR) ;
+		labelAttribute1.setLocation(CHANGED_LABEL_LOCATION) ;
+		labelAttribute1.setSize(CHANGED_LABEL_SIZE) ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CHANGED_LABEL_DATA_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+	}
+	
+	@Test
+	public void testAlterLinkAttributeValues () throws Exception
+	{
+		loadData() ;
+		ILinkAttribute linkAttribute1 = linkEdge1.getAttribute() ;
+		
+		linkAttribute1.setName(CHANGED_LINK_NAME) ;
+		linkAttribute1.setDescription(CHANGED_LINK_DESCRIPTION) ;
+		linkAttribute1.setDetailedDescription(CHANGED_LINK_DETAILED_DESCRIPTION) ;
+		linkAttribute1.setLineColor(CHANGED_LINK_LINE_COLOUR);
+		linkAttribute1.setLineStyle(CHANGED_LINK_LINE_STYLE) ;
+		linkAttribute1.setRouter(CHANGED_LINK_CONNECTION_ROUTER) ;
+		linkAttribute1.setUrl(CHANGED_LINK_URL) ;
+		linkAttribute1.setLineWidth(CHANGED_LINK_LINE_WIDTH) ;
+		
+		map1Manager.synchronise();
+		
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CHANGED_LINK_DATA_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testAlterCanvasValues () throws Exception
+	{
+		loadData() ;
+		
+		dbCanvas.setBackgroundColour(CHANGED_CANVAS_BACKGROUND_COLOUR) ;
+		dbCanvas.setCanvasSize(CHANGED_CANVAS_SIZE) ; 
+		dbCanvas.setGridEnabled(CHANGED_CANVAS_GRID_ENABLED) ;
+		dbCanvas.setSnapToGrid(CHANGED_CANVAS_SNAP_ENABLED) ;
+		dbCanvas.setGridSize(CHANGED_CANVAS_GRID_SIZE) ;
+		
+		map1Manager.synchronise();
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CHANGED_CANVAS_DATA_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
 }
