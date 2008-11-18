@@ -33,10 +33,6 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 		this.parent = parent;
 	}
 
-	public void setAnnotationProperty(HibProperty annotationProperty){
-		this.annotationProperty = annotationProperty;
-	}
-	
 	/* (non-Javadoc)
 	 * @see uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory#newNode(uk.ed.inf.graph.compound.base.BaseCompoundNode, int)
 	 */
