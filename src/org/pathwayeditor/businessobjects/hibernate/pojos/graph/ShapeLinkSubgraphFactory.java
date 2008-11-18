@@ -35,6 +35,10 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 		return (ShapeLinkSubgraph)super.createInducedSubgraph();
 	}
 
+	public ShapeLinkSubgraph createPermissiveInducedSubgraph(){
+		return (ShapeLinkSubgraph)super.createPermissiveInducedSubgraph();
+	}
+
 	/**
 	 * Adds a link to the factory for future selection in a subgraph.
 	 * @param selectedLink the link to add to the factory
@@ -66,7 +70,7 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory#createSelection()
 	 */
 	public IDrawingElementSelection createSelection() {
-		return this.createInducedSubgraph();
+		return this.createPermissiveInducedSubgraph();
 	}
 
 	/* (non-Javadoc)

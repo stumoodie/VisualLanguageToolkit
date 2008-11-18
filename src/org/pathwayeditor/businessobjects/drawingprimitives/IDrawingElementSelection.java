@@ -59,4 +59,18 @@ public interface IDrawingElementSelection {
 	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<ILinkEdge> linkEdgeIterator();
+
+	/**
+	 * Tests if this selection contains the given node.
+	 * @param node the node to test, which can be null.
+	 * @return true if this selection contains the node.
+	 */
+	boolean containsNode(IDrawingNode node);
+	
+	/**
+	 * Tests if this selection contains the given linkEdge
+	 * @param linkEdge the link edge to test, which can be null.
+	 * @return true if this selection contains the link edge.
+	 */
+	boolean containsEdge(ILinkEdge linkEdge);
 }

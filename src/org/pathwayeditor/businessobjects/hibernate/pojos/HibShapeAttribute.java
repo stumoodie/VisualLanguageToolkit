@@ -79,6 +79,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
 		this.propertyBuilder = new PropertyBuilder(hibCanvas);
+		this.getCanvas().getShapeAttributes().add(this) ;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 		
 	}
@@ -106,7 +107,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 			IPropertyDefinition defn = property.getDefinition(); 
 			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder, property));
 		}
-		this.getCanvas().getShapeAttributes().add(this) ;
 	}
 	
 	
@@ -120,6 +120,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineWidth = shapeDefaults.getLineWidth();
 		this.name = shapeDefaults.getName();
 		this.url = shapeDefaults.getURL();
+		this.shapeType = shapeDefaults.getShapeType();
 		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();

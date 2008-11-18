@@ -67,14 +67,14 @@ public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet
 		return edgeSet.get(edgeIdx);
 	}
 
-	public SortedSet getEdgesWith(IBasicNode node) {
+	public SortedSet getEdgesWith(IBasicNode thisNode, IBasicNode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
-		return edgeSet.getEdgesWith(node);
+		return edgeSet.getEdgesWith(thisNode, node);
 	}
 
-	public boolean hasEdgesWith(IBasicNode node) {
+	public boolean hasEdgesWith(IBasicNode thisNode, IBasicNode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
-		return edgeSet.hasEdgesWith(node);
+		return edgeSet.hasEdgesWith(thisNode, node);
 	}
 
 	public boolean contains(IDirectedNode outNode, IDirectedNode inNode) {

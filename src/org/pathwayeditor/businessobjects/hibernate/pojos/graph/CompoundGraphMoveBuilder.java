@@ -74,12 +74,15 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 	private HibCompoundNode moveLabelNode(HibCompoundNode destHibParentNode, HibLabelAttribute srcAttribute) {
 		LabelNodeFactory fact = destHibParentNode.getChildCompoundGraph().labelNodeFactory();
 		fact.setAttribute(srcAttribute);
+		fact.setProperty(null);
 		return fact.createLabel();
 	}
 
 	private HibShapeNode moveShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
 		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().shapeNodeFactory();
 		fact.setAttribute(otherAttribute);
-		return fact.createShapeNode();
+		fact.setObjectType(null);
+		HibShapeNode retVal = fact.createShapeNode();
+		return retVal;
 	}
 }

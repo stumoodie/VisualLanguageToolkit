@@ -74,4 +74,18 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.topNodeIterator());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#containsEdge(org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge)
+	 */
+	public boolean containsEdge(ILinkEdge linkEdge) {
+		return super.containsEdge((BaseCompoundEdge)linkEdge);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#containsNode(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean containsNode(IDrawingNode node) {
+		return super.containsNode((BaseCompoundNode)node);
+	}
+
 }
