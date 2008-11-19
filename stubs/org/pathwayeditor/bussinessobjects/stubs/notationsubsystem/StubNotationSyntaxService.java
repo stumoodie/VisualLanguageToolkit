@@ -9,6 +9,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackLinkObjectType;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -112,7 +115,10 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLinkObjectType(int)
 	 */
 	public ILinkObjectType getLinkObjectType(int uniqueId) {
-		return this.links.get(uniqueId);
+		ILinkObjectType retVal=this.links.get(uniqueId);
+		if(retVal==null)// for object types that are present in setup data but not used in any test...
+			return new FallbackLinkObjectType(this,new HibObjectType(uniqueId,"","",ObjectTypeClassification.LINK));
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -125,6 +131,8 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 			if(retVal == null && this.rootObjectType.getUniqueId() == uniqueId){
 				retVal = this.rootObjectType;
 			}
+			else if( retVal==null) // for object types that are present in setup data but not used in any test...
+				retVal=new FallbackObjectType();
 		}
 		return retVal;
 	}

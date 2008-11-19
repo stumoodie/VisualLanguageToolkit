@@ -33,7 +33,7 @@ public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
 	 */
 	public StubLinkBConnectsShaesCToBObjectType(INotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
-		this.linkAttributeDefaults = new StubLinkAttributeDefaults();
+		this.linkAttributeDefaults = new StubLinkAttributeDefaultsWithNumberPropertyDefn();
 		this.sourceTerminusDefn = new StubSourceLinkTerminusDefinition(this);
 		this.targetTerminusDefn = new StubTargetLinkTerminusDefinition(this);
 		this.connectionRules = new ILinkConnectionRules(){

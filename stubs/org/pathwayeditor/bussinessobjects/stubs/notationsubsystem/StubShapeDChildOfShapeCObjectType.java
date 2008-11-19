@@ -28,7 +28,7 @@ public class StubShapeDChildOfShapeCObjectType implements IShapeObjectType {
 	 */
 	public  StubShapeDChildOfShapeCObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
-		this.attributeDefaults = new StubShapeAttributeDefaults();
+		this.attributeDefaults = new StubShapeAttributeDefaultsWithListPropertyDefinition();
 	}
 
 	/* (non-Javadoc)

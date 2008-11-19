@@ -17,7 +17,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
  */
 public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
 	public static final BigDecimal DEFAULT_VALUE = new BigDecimal(2468);
-	public static final String NAME = "Number Property";
+	public static final String NAME = "NumberProperty";
 	public static final boolean IS_EDITABLE = false;
 	public static final boolean IS_VISUALISABLE = true;
 

@@ -10,7 +10,7 @@ import java.util.List;
  * @author smoodie
  *
  */
-public interface IListAnnotationProperty {
+public interface IListAnnotationProperty extends IAnnotationProperty{
 	
 	/**
 	 * Get the definition associated with this NumberProperty.

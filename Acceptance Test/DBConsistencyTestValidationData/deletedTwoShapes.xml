@@ -1237,17 +1237,17 @@
 		<row>
 			<value>100002</value>
 			<value>100004</value>
-			<value>ShapeRichTextProperty</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
 			<value>100003</value>
 			<value>100007</value>
-			<value>ShapeLinkProperty1</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 		<row>
 			<value>100004</value>
 			<value>100008</value>
-			<value>ShapeLinkProperty2</value>
+			<value>ShapeLinkProperty</value>
 		</row>				
 	</table>
 	<table name="linkAttributeProperty">
@@ -1257,12 +1257,12 @@
 		<row>
 			<value>100001</value>
 			<value>100003</value>
-			<value>LinkRichTextProperty</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
 			<value>100002</value>
 			<value>100006</value>
-			<value>LinkNumberProperty</value>
+			<value>NumberProperty</value>
 		</row>
 	</table>
 	<table name="linkterminusproperty">

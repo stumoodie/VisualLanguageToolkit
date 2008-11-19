@@ -28,7 +28,7 @@ public class StubShapeAParentOfAllObjectType implements IShapeObjectType {
 	 */
 	public StubShapeAParentOfAllObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
-		this.attributeDefaults = new StubShapeAttributeDefaults();
+		this.attributeDefaults = new StubShapeAttributeDefaultsWithPlainText();
 	}
 
 	/* (non-Javadoc)

@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -18,27 +17,19 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
  * @author smoodie
  *
  */
-public class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
-	public static final String DESCRIPTION = "description" ;
-	public static final String DETAILED_DESCRIPTION = "detailed description" ;
-	public static final RGB    FILL_COLOR = new RGB ( 100 , 100 , 100 ) ;
-	public static final RGB    LINE_COLOR = new RGB ( 150 , 150 , 150 ) ;
-	public static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
-	public static final int LINE_WIDTH = 1 ;
-	public static final String NAME = "name" ;
-	public static final PrimitiveShapeType PRIMITIVE_SHAPE_TYPE = PrimitiveShapeType.ARC ;
-	public static final Size SIZE = new Size ( 50 , 50 ) ;
-	public static final String URL = "http://www.url.com" ;
-	
-	private final Set<IPropertyDefinition> propertyDefinitionList;
+public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
+	public   String DESCRIPTION = "description" ;
+	public   String DETAILED_DESCRIPTION = "detailed description" ;
+	public   RGB    FILL_COLOR = new RGB ( 100 , 100 , 100 ) ;
+	public   RGB    LINE_COLOR = new RGB ( 150 , 150 , 150 ) ;
+	public   LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
+	public   int LINE_WIDTH = 1 ;
+	public   String NAME = "name" ;
+	public   PrimitiveShapeType PRIMITIVE_SHAPE_TYPE = PrimitiveShapeType.ARC ;
+	public   Size SIZE = new Size ( 50 , 50 ) ;
+	public   String URL = "http://www.url.com" ;
 	
 	
-	public StubShapeAttributeDefaults(){
-		this.propertyDefinitionList = new HashSet<IPropertyDefinition>();
-		this.propertyDefinitionList.add(new StubTextPropertyDefinition());
-		this.propertyDefinitionList.add(new StubNumberPropertyDefinition());
-		this.propertyDefinitionList.add(new StubHtmlPropertyDefinition());
-	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
@@ -115,7 +106,12 @@ public class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#propertyIterator()
 	 */
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		return propertyDefinitionList.iterator();
+		return getpropdefns().iterator();
 	}
+
+	/**
+	 * @return
+	 */
+	protected abstract Set<IPropertyDefinition> getpropdefns() ;
 
 }
