@@ -246,7 +246,7 @@ public class HibCanvas implements ICanvas , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#isSnapToGridOn()
 	 */
 	public boolean isSnapToGridOn() {
-		return this.gridEnabled;
+		return this.snapToGridEnabled;
 	}
 
 	/* (non-Javadoc)
@@ -265,7 +265,9 @@ public class HibCanvas implements ICanvas , Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setSnapToGrid(boolean)
 	 */
 	public void setSnapToGrid(boolean snapToGridStatus) {
+		boolean oldValue = this.snapToGridEnabled;
 		this.snapToGridEnabled = snapToGridStatus ;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SNAP_TO_GRID_ENABLED, oldValue, this.snapToGridEnabled);
 	}
 	
 	boolean getSnapToGrid(){
