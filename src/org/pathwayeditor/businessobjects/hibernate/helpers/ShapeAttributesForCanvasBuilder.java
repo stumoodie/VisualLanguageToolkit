@@ -52,11 +52,13 @@ public class ShapeAttributesForCanvasBuilder implements IAttributesForCanvasBuil
 		Iterator<IPropertyDefinition> it = ((IShapeObjectType) objectType).getDefaultAttributes().propertyDefinitionIterator();
 		while (it.hasNext()) {
 			IPropertyDefinition definition = it.next();
-			if (((HibShapeAttribute) shapeAttr).getProperties().keySet() == null
+			if ( ((HibShapeAttribute) shapeAttr).getProperties()==null||  ((HibShapeAttribute) shapeAttr).getProperties().keySet() == null
 					|| ((HibShapeAttribute) shapeAttr).getProperties().keySet().isEmpty())
 				;
 			else {
 				HibProperty property = (HibProperty) ((HibShapeAttribute) shapeAttr).getProperty(definition);
+				if(property==null)
+					throw new IllegalArgumentException("The object type has property definitions which have no matching property in this Shape Attribute");
 				property.setPropertyDefinition(definition);
 			}
 		}

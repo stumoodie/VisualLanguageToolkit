@@ -422,14 +422,14 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		return this.hibLinkProperties.get(propDefn.getName());
+		return getHibLinkProperties().get(propDefn.getName());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
 	 */
 	public IAnnotationProperty getProperty(String propName) {
-		return this.hibLinkProperties.get(propName);
+		return getHibLinkProperties().get(propName);
 	}
 
 	/* (non-Javadoc)

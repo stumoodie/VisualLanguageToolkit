@@ -31,17 +31,20 @@ public class LinkAttributesForCanvasBuilder  implements IAttributesForCanvasBuil
 			injectPropertyDefinitions(objectType, shapeAttr);
 		}
 	}
-
+	
+	
 	
 	public void injectPropertyDefinitions(IObjectType objectType, ICanvasAttribute shapeAttr) {
 		Iterator<IPropertyDefinition> it = ((ILinkObjectType) objectType).getDefaultLinkAttributes().propertyDefinitionIterator();
 		while (it.hasNext()) {
 			IPropertyDefinition definition = it.next();
-			if (((HibLinkAttribute) shapeAttr).getHibLinkProperties().keySet() == null
+			if (  ((HibLinkAttribute) shapeAttr).getHibLinkProperties()==null|| ((HibLinkAttribute) shapeAttr).getHibLinkProperties().keySet() == null
 					|| ((HibLinkAttribute) shapeAttr).getHibLinkProperties().keySet().isEmpty())
 				;
 			else {
 				HibProperty property = (HibProperty) ((HibLinkAttribute) shapeAttr).getProperty(definition);
+				if(property==null)
+					throw new IllegalArgumentException("The object type has property definitions which have no matching property in this Link Attribute");
 				property.setPropertyDefinition(definition);
 			}
 		}
