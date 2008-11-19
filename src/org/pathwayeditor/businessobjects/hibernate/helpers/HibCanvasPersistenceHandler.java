@@ -11,25 +11,19 @@ import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackNotationSubsystem;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
  * @author smoodie
@@ -40,12 +34,13 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	private final INotationSubsystemPool subsystemPool;
 	private IMap owningMap = null;
 	private ICanvas loadedCanvas = null;
+	private IAttributesForCanvasBuilder shapeAttrForCanvBuilder = new ShapeAttributesForCanvasBuilder();
+	private IAttributesForCanvasBuilder linkAtrrForCanvBuilder = new LinkAttributesForCanvasBuilder();
 
 	// private IHibNotationFactory hibNotationFactory;
 	// private INotationSubsystem defaultNotationSubsystem;
 
-	public HibCanvasPersistenceHandler(SessionFactory fact,
-			INotationSubsystemPool subsystemPool) {
+	public HibCanvasPersistenceHandler(SessionFactory fact, INotationSubsystemPool subsystemPool) {
 		this.fact = fact;
 		this.subsystemPool = subsystemPool;
 		// this.defaultNotationSubsystem = null;
@@ -54,9 +49,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#setOwningMap(
-	 * org.pathwayeditor.businessobjects.repository.IMap)
+	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#setOwningMap( org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	public void setOwningMap(IMap owningMap) {
 		this.owningMap = owningMap;
@@ -65,8 +58,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#getOwningMap()
+	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#getOwningMap()
 	 */
 	public IMap getOwningMap() {
 		return this.owningMap;
@@ -81,20 +73,16 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		this.loadedCanvas = null;
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
-		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas")
-				.setString("repo",
-						this.getOwningMap().getRepository().getName())
-				.setInteger("inode", this.getOwningMap().getINode())
+		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas").setString("repo",
+				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
 				.uniqueResult();
 		Hibernate.initialize(hibCanvas);
 		hibCanvas.setMapDiagram(this.getOwningMap());
 		INotationSubsystem notationSubsystem = null;
 		if (this.subsystemPool.hasNotationSubsystem(hibCanvas.getHibNotation())) {
-			notationSubsystem = this.subsystemPool.getSubsystem(hibCanvas
-					.getHibNotation());
+			notationSubsystem = this.subsystemPool.getSubsystem(hibCanvas.getHibNotation());
 		} else {
-			notationSubsystem = new FallbackNotationSubsystem(hibCanvas
-					.getHibNotation());
+			notationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
 		}
 		hibCanvas.setNotationSubsystem(notationSubsystem);
 		HibModel loadedModel = hibCanvas.getModel();
@@ -104,19 +92,18 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		hibCanvas.setMapDiagram(this.getOwningMap());
 		this.loadedCanvas = hibCanvas;
 	}
-
+	
 	/**
 	 * @param hibCanvas
 	 */
 	private void initialiseAttributes(HibCanvas hibCanvas) {
-		initShapeAttributes(hibCanvas);
-		initLinkAttributes(hibCanvas);
+		shapeAttrForCanvBuilder.initAttributes(hibCanvas);
+		linkAtrrForCanvBuilder.initAttributes(hibCanvas);
 		initLabelAttributes(hibCanvas);
 	}
 
 	private void initLabelAttributes(HibCanvas hibCanvas) {
-		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas
-				.getNotationSubsystem().getSyntaxService());
+		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		for (HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()) {
 			Hibernate.initialize(labelAttr);
 			labelAttr.setObjectType(labelObjectType);
@@ -124,35 +111,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-	private void initLinkAttributes(HibCanvas hibCanvas) {
-		for (HibLinkAttribute shapeAttr : hibCanvas.getLinkAttributes()) {
-			Hibernate.initialize(shapeAttr);
-			ILinkObjectType objectType = hibCanvas.getNotationSubsystem()
-					.getSyntaxService().getLinkObjectType(
-							shapeAttr.getHibObjectType().getUniqueId());
-			shapeAttr.setObjectType(objectType);
-			Hibernate.initialize(shapeAttr.getHibLinkProperties());
-			Hibernate.initialize(shapeAttr.getBendPoints());
-			Iterator<IPropertyDefinition> it = objectType
-					.getDefaultLinkAttributes().propertyDefinitionIterator();
-			while (it.hasNext()) {
-				IPropertyDefinition definition = it.next();
-				if (shapeAttr.getHibLinkProperties().keySet()==null||shapeAttr.getHibLinkProperties().keySet().isEmpty())
-					;
-				else {
-					HibProperty property = (HibProperty) shapeAttr
-							.getProperty(definition);
-					property.setPropertyDefinition(definition);
-				}
-			}
-		}
-	}
-
 	private void initialiseModel(HibModel model) {
-		INotationSubsystem notationSubsystem = model.getCanvas()
-				.getNotationSubsystem();
-		HibNotationFactory hibNotationFactory = new HibNotationFactory(
-				this.fact, notationSubsystem);
+		INotationSubsystem notationSubsystem = model.getCanvas().getNotationSubsystem();
+		HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
 		hibNotationFactory.initialise();
 		// hibNotationFactory.loadNotation();
 		model.setHibNotationFactory(hibNotationFactory);
@@ -160,8 +121,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		// set the OT required by the root node
 		HibRootNode hibRootNode = model.getRootNode();
 		Hibernate.initialize(hibRootNode);
-		hibRootNode.setObjectType(model.getCanvas().getNotationSubsystem()
-				.getSyntaxService().getRootObjectType());
+		hibRootNode.setObjectType(model.getCanvas().getNotationSubsystem().getSyntaxService().getRootObjectType());
 		initNodesAndEdges(model);
 	}
 
@@ -187,32 +147,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-	/**
-	 * 
-	 */
-	private void initShapeAttributes(HibCanvas canvas) {
-		for (HibShapeAttribute shapeAttr : canvas.getShapeAttributes()) {
-			Hibernate.initialize(shapeAttr);
-			IShapeObjectType objectType = canvas.getNotationSubsystem()
-					.getSyntaxService().getShapeObjectType(
-							shapeAttr.getHibObjectType().getUniqueId());
-			shapeAttr.setShapeObjectType(objectType);
-			Hibernate.initialize(shapeAttr.getProperties());
-			Iterator<IPropertyDefinition> it = objectType
-					.getDefaultAttributes().propertyDefinitionIterator();
-			while (it.hasNext()) {
-				IPropertyDefinition definition = it.next();
-				if (shapeAttr.getProperties().keySet()==null||shapeAttr.getProperties().keySet().isEmpty())
-					;
-				else {
-					HibProperty property = (HibProperty) shapeAttr
-							.getProperty(definition);
-					property.setPropertyDefinition(definition);
-				}
-			}
-		}
-	}
-
 	public ICanvas getLoadedCanvas() {
 		return this.loadedCanvas;
 	}
@@ -230,16 +164,13 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#synchroniseCanvas
-	 * ()
+	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#synchroniseCanvas ()
 	 */
 	public void synchroniseCanvas() {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		s.saveOrUpdate(this.loadedCanvas);
-		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel()
-				.drawingNodeIterator();
+		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
 		while (nodeIterator.hasNext()) {
 			s.saveOrUpdate(nodeIterator.next());
 		}
@@ -249,27 +180,21 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler
-	 * #createCanvas
+	 * @see org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler #createCanvas
 	 * (org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
 	 */
 	public void createCanvas(INotationSubsystem notationSubsystem) {
 		this.loadedCanvas = null;
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
-		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
-				.setString("repo",
-						this.getOwningMap().getRepository().getName())
-				.setInteger("inode", this.getOwningMap().getINode())
+		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap").setString("repo",
+				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
 				.uniqueResult();
 		HibCanvas hibCanvas = null;
 		if (canvasTest == 0) {
-			HibNotationFactory hibNotationFactory = new HibNotationFactory(
-					this.fact, notationSubsystem);
+			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
 			hibNotationFactory.initialise();
-			hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory,
-					notationSubsystem);
+			hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory, notationSubsystem);
 			s.save(hibCanvas);
 		} else {
 			throw new IllegalStateException("canvas already exists");
@@ -281,19 +206,23 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler
-	 * #doesCanvasExist()
+	 * @see org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler #doesCanvasExist()
 	 */
 	public boolean doesCanvasExist() {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
-		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap")
-				.setString("repo",
-						this.getOwningMap().getRepository().getName())
-				.setInteger("inode", this.getOwningMap().getINode())
+		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap").setString("repo",
+				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
 				.uniqueResult();
 		s.getTransaction().commit();
 		return canvasTest > 0;
+	}
+
+	public void setShapeAttrForCanvBuilder(IAttributesForCanvasBuilder shapeAttrForCanvBuilder) {
+		this.shapeAttrForCanvBuilder = shapeAttrForCanvBuilder;
+	}
+
+	public void setLinkAtrrForCanvBuilder(IAttributesForCanvasBuilder linkAtrrForCanvBuilder) {
+		this.linkAtrrForCanvBuilder = linkAtrrForCanvBuilder;
 	}
 }
