@@ -39,7 +39,7 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	@Override
 	protected HibCompoundNode newNode(BaseCompoundNode parent, int nodeIndex) {
 		HibLabelNode retVal = null;
-		if(this.annotationProperty == null){
+		if(this.annotationProperty != null){
 			retVal = new HibLabelNode((HibCompoundNode)parent, nodeIndex, this.annotationProperty);
 		}
 		else{

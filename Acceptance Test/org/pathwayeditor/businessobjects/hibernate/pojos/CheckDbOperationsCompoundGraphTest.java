@@ -4,6 +4,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.FileInputStream;
 import java.util.Iterator;
 
@@ -17,8 +19,10 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
@@ -34,6 +38,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -105,6 +110,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String CREATED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedShapeNode.xml" ;
 	private final static String CREATED_LABEL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLabelNode.xml" ;
 	private final static String DELETED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeleteShapeNode.xml" ;
+	private final static String DELETED_LABEL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeletedLabelNodeData.xml" ;
 	private final static String MOVED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/MovedNodeValidation.xml" ;
 	private final static String COPIED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/copiedShapeNode.xml" ;
 	private final static String DELETED_EDGE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedEdge.xml" ;
@@ -114,6 +120,15 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String CHANGED_LABEL_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLabelData.xml" ;
 	private final static String CHANGED_LINK_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLinkData.xml" ;
 	private final static String CHANGED_CANVAS_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedCanvasData.xml" ;
+	private final static String RESTORED_FROM_DELETED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/restoredDeletedShapeData.xml" ;
+	private final static String RESTORED_FROM_ADDED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/restoredSavedShapeData.xml" ;
+	private final static String RESTORED_FROM_MOVED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredMovedShapeData.xml" ;
+	private final static String RESTORED_FROM_COPIED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredCopiedShapeData.xml" ;
+	private final static String RESTORED_FROM_DELETED_LABEL_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredDeletedLabelData.xml" ;
+	private final static String RESTORED_FROM_DELETED_LINK_EDGE = "Acceptance Test/DBConsistencyTestValidationData/RestoredDeletedLinkData.xml" ;
+	private final static String RESTORED_FROM_ADDED_LINK_EDGE = "Acceptance Test/DBConsistencyTestValidationData/RestoredAddedLinkData.xml" ;
+	private final static String RESTORED_FROM_ADDED_LABEL_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredAddedLabelData.xml" ;
+	
 	
 	private final static String CHANGED_SHAPE_NAME = "new shape name" ;
 	private final static String CHANGED_SHAPE_DESCRIPTION = "new shape description" ;
@@ -404,56 +419,38 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	{
 		loadData () ;
 		
-		//FIXME: We cannot use Hibernate objects here! We must use the interfaces!
-//		HibCanvas ourCanvas = (HibCanvas) dbCanvas ;
-//		
-//		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
-//		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAParentOfAllObjectType.UNIQUE_ID)  ) ;
-//		
-//		newNode = nodeFactory.createShapeNode() ;
-//		
-//		Iterator<HibProperty> aPropertyIterator = ourCanvas.getProperties().iterator(); 
-//		
-//		HibProperty aProperty = null ;
-//		
-//		while ( aPropertyIterator.hasNext() )
-//		{
-//			HibProperty tempProperty = aPropertyIterator.next() ;
-//			
-//			if ( tempProperty.getCreationSerial() > 8)
-//			{
-//				aProperty = tempProperty ;
-//				break ;
-//			}
-//		}
-//		
-//		newNode.getAttribute().
-//		
-//		assertNotNull ( "property is not null" , aProperty) ;
-//		
-//		ILabelNodeFactory labelFactory = newNode.getSubModel().labelNodeFactory() ;
-//
-//		labelFactory.setProperty(aProperty) ;
-//		newLabel = labelFactory.createLabel() ;
-//		
-//		map1Manager.synchronise() ;
-//		
-//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_LABEL_VALIDATION));
-//		String testTables[] = expectedDeltas.getTableNames();
-//		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
-//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-//		for (String t : testTables) {
-//			ITable expectedTable = DefaultColumnFilter
-//					.includedColumnsTable(expectedChanges.getTable(t),
-//							expectedDeltas.getTable(t).getTableMetaData()
-//									.getColumns());
-//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-//					actualChanges.getTable(t), expectedDeltas.getTable(t)
-//							.getTableMetaData().getColumns());
-//			Assertion.assertEquals(new SortedTable(expectedTable),
-//					new SortedTable(actualTable, expectedTable
-//							.getTableMetaData()));
-//		}
+		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAParentOfAllObjectType.UNIQUE_ID)  ) ;
+		
+		newNode = nodeFactory.createShapeNode() ;
+		
+		IAnnotationProperty aProperty = newNode.getAttribute().propertyIterator().next() ;
+		
+		assertNotNull ( "property is not null" , aProperty) ;
+		
+		ILabelNodeFactory labelFactory = newNode.getSubModel().labelNodeFactory() ;
+
+		labelFactory.setProperty(aProperty) ;
+		newLabel = labelFactory.createLabel() ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_LABEL_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
 	}
 
 	@Test
@@ -466,13 +463,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 
 		newLinkEdge = linkFactory.createLinkEdge() ;
 		
-//		HibLinkTerminus sourceTerminus = (HibLinkTerminus )newLinkEdge.getAttribute().getSourceTerminus() ;
-//		assertEquals ( "source term points to att " , newLinkEdge.getAttribute() , sourceTerminus.getAttribute() ) ;
-//		
-//		HibLinkTerminus targetTerminus = (HibLinkTerminus )newLinkEdge.getAttribute().getTargetTerminus() ;
-//		assertEquals ( "target term points to att " , newLinkEdge.getAttribute() , targetTerminus.getAttribute() ) ;
-//		
-//		HibLinkAttribute anHLA = (HibLinkAttribute) newLinkEdge.getAttribute() ;
 		
 		map1Manager.synchronise() ;
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(CREATED_LINK_VALIDATION));
@@ -497,7 +487,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testDeleteNode () throws Exception
+	public void testDeleteShapeNode () throws Exception
 	{
 		loadData ();
 		
@@ -524,7 +514,37 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
+	@Test
+	public void testDeleteLabelNode () throws Exception
+	{
+		loadData ();
+		
+		ILabelNode labelNode1 = shapeNode1.getSubModel().labelIterator().next() ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		
+		objectSelection.addDrawingNode(labelNode1);
+		
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		map1Manager.synchronise() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(DELETED_LABEL_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
 	@Test
 	public void testMoveNode () throws Exception
 	{
@@ -553,7 +573,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
-	@Ignore
 	@Test
 	public void testCopyNode () throws Exception
 	{
@@ -581,6 +600,38 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 							.getTableMetaData()));
 		}
 		
+	}
+	
+	@Ignore
+	@Test
+	public void testCopyEntireGraph () throws Exception
+	{
+		loadData () ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode1) ;
+		objectSelection.addDrawingNode(shapeNode2) ;
+		
+		
+		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
+		map1Manager.synchronise() ;
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(COPIED_NODE_VALIDATION));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+
 	}
 	
 	@Test
@@ -808,4 +859,303 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 							.getTableMetaData()));
 		}
 	}
+	
+	@Test
+	public void testSaveAndRestoreStateDeletingNodes () throws Exception 
+	{
+		loadData(); 
+		
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode1) ;
+		
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise();
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_DELETED_SHAPE_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+		
+	}
+	
+	@Test
+	public void testSaveAndRestoreStateAddingShape () throws Exception 
+	{
+		loadData() ;
+		
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAParentOfAllObjectType.UNIQUE_ID)  ) ;
+		
+		newNode = nodeFactory.createShapeNode() ;
+		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
+		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		map1Manager.synchronise() ;
+		
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise();
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_ADDED_SHAPE_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+	}
+	
+	
+	@Test
+	public void testSaveAndRestoreStateMovingShape () throws Exception
+	{
+		loadData() ;
+		
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode8) ;
+		
+		dbRootNode.getSubModel().moveHere(objectSelection.createSelection()) ;
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_MOVED_SHAPE_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+		
+	}
+	
+	@Test
+	public void testSaveAndRestoreStateCopyingShape () throws Exception 
+	{
+		loadData() ;
+		
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(shapeNode8) ;
+		
+		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_COPIED_SHAPE_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testSaveAndRestoreDeleteLabel () throws Exception
+	{
+		loadData () ;
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		ILabelNode labelNode1 = shapeNode1.getSubModel().labelIterator().next() ;
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addDrawingNode(labelNode1) ;
+		
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise();
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_DELETED_LABEL_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testSaveAndRestoreDeletedLink () throws Exception
+	{
+		loadData () ;
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		objectSelection.addLink(linkEdge1) ;
+		
+		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		map1Manager.synchronise() ;
+		
+		this.dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_DELETED_LINK_EDGE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testSaveAndRestoreAddLink () throws Exception
+	{
+		loadData () ;
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		ILinkEdgeFactory linkFactory = shapeNode5.getSubModel().linkEdgeFactory() ;
+		linkFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getLinkObjectType(StubLinkBConnectsShaesCToBObjectType.UNIQUE_ID)) ;
+		linkFactory.setShapeNodePair(shapeNode5, shapeNode5) ;
+
+		newLinkEdge = linkFactory.createLinkEdge() ;
+		
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_ADDED_LINK_EDGE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
+	@Test
+	public void testSaveAndRestoreStateAddLabel () throws Exception 
+	{
+		loadData () ;
+		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
+		
+		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAParentOfAllObjectType.UNIQUE_ID)  ) ;
+		
+		newNode = nodeFactory.createShapeNode() ;
+		
+		IAnnotationProperty aProperty = newNode.getAttribute().propertyIterator().next() ;
+		
+		assertNotNull ( "property is not null" , aProperty) ;
+		
+		ILabelNodeFactory labelFactory = newNode.getSubModel().labelNodeFactory() ;
+
+		labelFactory.setProperty(aProperty) ;
+		newLabel = labelFactory.createLabel() ;
+		
+		map1Manager.synchronise() ;
+		
+		dbCanvas.getModel().restoreToState(savedOriginalState) ;
+		
+		map1Manager.synchronise() ;
+		
+		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(RESTORED_FROM_ADDED_LABEL_NODE));
+		String testTables[] = expectedDeltas.getTableNames();
+		IDataSet actualChanges = this.getDbTester().getConnection().createDataSet(testTables);
+		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+		for (String t : testTables) {
+			ITable expectedTable = DefaultColumnFilter
+					.includedColumnsTable(expectedChanges.getTable(t),
+							expectedDeltas.getTable(t).getTableMetaData()
+									.getColumns());
+			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+					actualChanges.getTable(t), expectedDeltas.getTable(t)
+							.getTableMetaData().getColumns());
+			Assertion.assertEquals(new SortedTable(expectedTable),
+					new SortedTable(actualTable, expectedTable
+							.getTableMetaData()));
+		}
+	}
+	
 }
