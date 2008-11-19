@@ -32,6 +32,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	private HibShapeNode inNode = null;
 	private ILinkObjectType objectType;
 	private IHibNotationFactory hibNotationFactory;
+	private HibLinkAttribute attribute;
 	
 	public LinkEdgeChildFactory(HibSubModel subCanvas) {
 		super();
@@ -49,7 +50,10 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
 		HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
-		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
+		HibLinkAttribute linkAttribute = this.attribute;
+		if(this.attribute == null){
+			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
+		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
@@ -89,10 +93,14 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	@Override
 	public boolean canCreateEdge() {
 		boolean retVal = false;
-		if(this.objectType != null){
+		ILinkObjectType testOt = this.objectType;
+		if(attribute != null){
+			testOt = this.attribute.getObjectType();
+		}
+		if(testOt != null){
 			IShapeObjectType outOt = this.outNode.getObjectType(); 
 			IShapeObjectType inOt = this.inNode.getObjectType(); 
-			retVal = this.objectType.getLinkConnectionRules().isValidTarget(outOt, inOt);
+			retVal = testOt.getLinkConnectionRules().isValidTarget(outOt, inOt);
 		}
 		return retVal;
 	}
@@ -193,6 +201,13 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 			retVal = outNode instanceof HibShapeNode && inNode instanceof HibShapeNode;
 		}
 		return retVal;
+	}
+
+	/**
+	 * @param attribute
+	 */
+	public void setAttribute(HibLinkAttribute attribute) {
+		this.attribute = attribute;
 	}
 
 }

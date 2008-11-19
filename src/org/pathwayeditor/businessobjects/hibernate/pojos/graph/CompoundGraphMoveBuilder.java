@@ -8,10 +8,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 
-import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -37,12 +38,10 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 	protected BaseCompoundEdge createMoveOfEdge(BaseCompoundEdge srcEdge,
 			BaseChildCompoundGraph edgeOwner, BaseCompoundNode outNode,
 			BaseCompoundNode inNode) {
-		BaseChildCompoundEdgeFactory edgeFact = edgeOwner.edgeFactory();
+		LinkEdgeChildFactory edgeFact = ((HibSubModel)edgeOwner).linkEdgeFactory();
+		edgeFact.setAttribute(((HibLinkEdge)srcEdge).getAttribute());
 		edgeFact.setPair(outNode, inNode);
 		BaseCompoundEdge retVal = edgeFact.createEdge();
-//		HibSubModel subModel = (HibSubModel)retVal.getOwningChildGraph();
-		//FIXME: need to add an edge listener here!
-//		subModel.notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 
