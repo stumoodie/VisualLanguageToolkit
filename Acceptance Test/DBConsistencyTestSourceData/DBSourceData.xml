@@ -1334,7 +1334,7 @@
 		<row>
 			<value>100001</value>
 			<value>100001</value>
-			<value>1</value>
+			<value>0</value>
 			<value>1</value>
 			<value>1</value>
 			<value>11</value>
@@ -1348,8 +1348,23 @@
 		</row>
 		<row>
 			<value>100002</value>
+			<value>100001</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>11</value>
+			<value>11</value>
+			<value>1</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>11</value>
+			<value>11</value>
+		</row>
+		<row>
+			<value>100008</value>
 			<value>100002</value>
-			<value>2</value>
+			<value>0</value>
 			<value>2</value>
 			<value>2</value>
 			<value>12</value>
@@ -1363,6 +1378,36 @@
 		</row>
 		<row>
 			<value>100003</value>
+			<value>100002</value>
+			<value>1</value>
+			<value>2</value>
+			<value>2</value>
+			<value>12</value>
+			<value>12</value>
+			<value>2</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>12</value>
+			<value>12</value>
+		</row>
+		<row>
+			<value>100004</value>
+			<value>100003</value>
+			<value>0</value>
+			<value>3</value>
+			<value>1</value>
+			<value>13</value>
+			<value>13</value>
+			<value>1</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>13</value>
+			<value>13</value>
+		</row>
+		<row>
+			<value>100005</value>
 			<value>100003</value>
 			<value>1</value>
 			<value>3</value>
@@ -1377,9 +1422,24 @@
 			<value>13</value>
 		</row>
 		<row>
+			<value>100006</value>
 			<value>100004</value>
-			<value>100004</value>
+			<value>0</value>
+			<value>4</value>
 			<value>2</value>
+			<value>14</value>
+			<value>14</value>
+			<value>2</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>14</value>
+			<value>14</value>
+		</row>
+		<row>
+			<value>100007</value>
+			<value>100004</value>
+			<value>1</value>
 			<value>4</value>
 			<value>2</value>
 			<value>14</value>

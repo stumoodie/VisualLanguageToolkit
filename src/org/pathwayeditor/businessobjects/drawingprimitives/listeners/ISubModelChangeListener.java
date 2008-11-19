@@ -11,4 +11,6 @@ public interface ISubModelChangeListener {
 
 	void nodeStructureChange(ISubModelNodeChangeEvent event);
 	
+	void edgeStructureChange(ISubModelEdgeChangeEvent event);
+	
 }

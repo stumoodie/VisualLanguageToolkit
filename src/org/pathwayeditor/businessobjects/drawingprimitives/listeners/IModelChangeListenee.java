@@ -16,19 +16,19 @@ public interface IModelChangeListenee {
 	 * @param listener the listener to be added, which cannot be null.
 	 * @throws IllegalArgumentException if <code>listener</code> is null.
 	 */
-	void addModelNodeChangeListener(IModelChangeListener listener);
+	void addModelChangeListener(IModelChangeListener listener);
 	
 	/**
 	 * Remove the property change listener.
 	 * @param listener the listener to be removed, which cannot be null.
 	 * @throws IllegalArgumentException if <code>listener</code> is null.
 	 */
-	void removeModelNodeChangeListener(IModelChangeListener listener);
+	void removeModelChangeListener(IModelChangeListener listener);
 	
 	/**
 	 * Gets an iterator of listeners.
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
-	Iterator<IModelChangeListener> modelNodeChangeListenerIterator();
+	Iterator<IModelChangeListener> modelChangeListenerIterator();
 	
 }

@@ -252,22 +252,22 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#addSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
 	 */
-	public void addModelNodeChangeListener(IModelChangeListener listener) {
-		this.listenerHandler.addModelNodeChangeListener(listener);
+	public void addModelChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.addModelChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#removeSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
 	 */
-	public void removeModelNodeChangeListener(IModelChangeListener listener) {
-		this.listenerHandler.removeModelNodeChangeListener(listener);
+	public void removeModelChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.removeModelChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#subModelNodeChangeListenerIterator()
 	 */
-	public Iterator<IModelChangeListener> modelNodeChangeListenerIterator() {
-		return this.modelNodeChangeListenerIterator();
+	public Iterator<IModelChangeListener> modelChangeListenerIterator() {
+		return this.modelChangeListenerIterator();
 	}
 	
 	@Override
@@ -277,5 +277,9 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 		builder.append(this.rootNode.getIndex());
 		builder.append(")");
 		return builder.toString();
+	}
+
+	void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
+		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
 	}
 }

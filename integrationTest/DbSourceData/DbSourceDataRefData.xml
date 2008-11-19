@@ -519,7 +519,7 @@
 		<column>term_dec_width</column>
 		<row>
 			<value>100001</value>
-			<value>1</value>
+			<value>0</value>
 			<value>10</value>
 			<value>100001</value>
 			<value>1</value>
@@ -534,7 +534,7 @@
 		</row>
 		<row>
 			<value>100002</value>
-			<value>2</value>
+			<value>1</value>
 			<value>11</value>
 			<value>100001</value>
 			<value>1</value>

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 
 /**
@@ -36,6 +37,12 @@ public final class ListenableSubModelStructureChangeItem implements ISubModelCha
 		}
 	}
 	
+	public final void fireEdgeChange(ISubModelEdgeChangeEvent evt){
+		for(ISubModelChangeListener listener : this.getListeners()){
+			listener.edgeStructureChange(evt);
+		}
+	}
+	
 	public final void notifyNodeStructureChange(final ModelStructureChangeType type, final IDrawingNode changedNode){
 		ISubModelNodeChangeEvent event = new ISubModelNodeChangeEvent(){
 
@@ -53,6 +60,25 @@ public final class ListenableSubModelStructureChangeItem implements ISubModelCha
 			
 		};
 		firePropertyChange(event);
+	}
+
+	public final void notifyEdgeStructureChange(final ModelStructureChangeType type, final ILinkEdge changedEdge){
+		ISubModelEdgeChangeEvent event = new ISubModelEdgeChangeEvent(){
+
+			public ModelStructureChangeType getChangeType() {
+				return type;
+			}
+
+			public ILinkEdge getChangedItem() {
+				return changedEdge;
+			}
+
+			public ISubModel getChangedModel() {
+				return model;
+			}
+			
+		};
+		fireEdgeChange(event);
 	}
 
 	/* (non-Javadoc)

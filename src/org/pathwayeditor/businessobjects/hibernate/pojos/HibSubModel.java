@@ -255,9 +255,14 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	 * Notify this submodel that a node has been chnged. Should be called by factories that add nodes to this
 	 * submodel.
 	 */
-	public void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode newNode) {
-		this.listenerHandler.notifyNodeStructureChange(type, newNode);
-		this.getModel().notifyNodeStructureChange(type, newNode);
+	public void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode changedNode) {
+		this.listenerHandler.notifyNodeStructureChange(type, changedNode);
+		this.getModel().notifyNodeStructureChange(type, changedNode);
+	}
+
+	public void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
+		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
+		this.getModel().notifyEdgeStructureChange(type, changedEdge);
 	}
 
 }

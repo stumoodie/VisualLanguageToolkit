@@ -38,7 +38,7 @@ public class HibLinkTerminusTest {
 	private static final short EXPECTED_OFFSET = 1 ;
 	private static final Size EXPECTED_END_SIZE = new Size(10, 20);
 	private static final Size EXPECTED_TERM_SIZE = new Size(10, 20);
-	private static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 300);
+	private static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 150);
 	private static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	private static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
 

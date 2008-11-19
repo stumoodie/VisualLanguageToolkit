@@ -24,7 +24,7 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	public static final short EXPECTED_OFFSET = 1 ;
 	public static final Size EXPECTED_END_SIZE = new Size(10, 20);
 	public static final Size EXPECTED_TERM_SIZE = new Size(10, 20);
-	public static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 300);
+	public static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 190);
 	public static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	public static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
 

@@ -6,6 +6,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -86,7 +87,9 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 		HibCanvas canvas = ((HibSubModel)owningGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
-		return new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
+		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
+		((HibSubModel)owningGraph).notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
+		return retVal;
 	}
 
 	/* (non-Javadoc)

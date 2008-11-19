@@ -127,12 +127,15 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	@Override
 	protected void removalAction(boolean removed) {
+		ModelStructureChangeType type;
 		if(removed){
-			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.DELETED, this);
+			type = ModelStructureChangeType.DELETED;
 		}
 		else{
-			this.getModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, this);
+			type = ModelStructureChangeType.ADDED;
 		}
+		this.getModel().notifyNodeStructureChange(type, this);
+		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
 	}
 
 }

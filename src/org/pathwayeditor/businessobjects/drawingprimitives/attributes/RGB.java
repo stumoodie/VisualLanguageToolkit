@@ -1,6 +1,8 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
 
 public final class RGB {
+	public static final int MAX_COLOUR_VAL = 255;
+	public static final int MIN_COLOUR_VAL = 0;
 	public static final RGB BLACK = new RGB(0, 0, 0);
 	public static final RGB WHITE = new RGB(255, 255, 255);
 	public static final RGB RED = new RGB(255, 0, 0);
@@ -12,9 +14,18 @@ public final class RGB {
 	private final int blue;
 	
 	public RGB(int red, int green, int blue){
+		if(!isValidColourComponent(red)
+				|| !isValidColourComponent(green)
+				|| !isValidColourComponent(blue)){
+			throw new IllegalArgumentException("One or more colour component(s) invalid: red=" + red + ", green=" + green + ", blue=" + blue + ".");
+		}
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
+	}
+	
+	public static boolean isValidColourComponent(int colour){
+		return colour >= MIN_COLOUR_VAL && colour <= MAX_COLOUR_VAL;
 	}
 	
 	public int getRed() {

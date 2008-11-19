@@ -51,7 +51,7 @@ public class ICanvasTest {
 //	private static final boolean SNAP_TO_GRID_NOT_ENABLED = false ;
 	private static final int BACKGROUND_RED = 100 ;
 	private static final int BACKGROUND_BLUE = 200 ;
-	private static final int BACKGROUND_GREEN = 300 ;
+	private static final int BACKGROUND_GREEN = 150 ;
 	private static final RGB BACKGROUND_COLOR = new RGB(BACKGROUND_RED, BACKGROUND_GREEN, BACKGROUND_BLUE) ;
 	private static final int CANVAS_WIDTH = 500;
 	private static final int CANVAS_HEIGHT = 600;

@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -26,7 +27,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNode;
  *
  */
 public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implements ILinkEdgeFactory {
-	private final HibSubModel subCanvas;
+	private final HibSubModel subModel;
 	private HibShapeNode outNode = null;
 	private HibShapeNode inNode = null;
 	private ILinkObjectType objectType;
@@ -34,7 +35,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	
 	public LinkEdgeChildFactory(HibSubModel subCanvas) {
 		super();
-		this.subCanvas = subCanvas;
+		this.subModel = subCanvas;
 		this.hibNotationFactory = subCanvas.getModel().getHibNotationFactory();
 		this.objectType = null;
 	}
@@ -49,7 +50,9 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 		HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
-		return new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
+		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
+		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -107,7 +110,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	 */
 	@Override
 	public HibModel getGraph() {
-		return this.subCanvas.getSuperGraph();
+		return this.subModel.getSuperGraph();
 	}
 
 	/* (non-Javadoc)
@@ -115,7 +118,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	 */
 	@Override
 	public HibSubModel getOwningChildGraph() {
-		return this.subCanvas;
+		return this.subModel;
 	}
 
 	/* (non-Javadoc)
@@ -143,7 +146,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#getOwningSubCanvas()
 	 */
 	public HibSubModel getOwningSubCanvas() {
-		return this.subCanvas;
+		return this.subModel;
 	}
 
 	/* (non-Javadoc)

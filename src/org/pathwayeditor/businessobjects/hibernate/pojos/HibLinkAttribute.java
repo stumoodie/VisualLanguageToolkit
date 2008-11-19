@@ -470,28 +470,6 @@ s	 */
 		return this.hibLinkProperties.containsKey(property.getName());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
-	 */
-//	public HibLinkTerminus getSourceTerminus() {
-//		return this.sourceTerminus;
-//	}
-//
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
-//	 */
-//	public HibLinkTerminus getTargetTerminus() {
-//		return this.targetTerminus;
-//	}
-//
-//	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
-//		this.sourceTerminus = sourceTerminus;
-//	}
-//
-//	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
-//		this.targetTerminus = targetTerminus;
-//	}
-	
 	public List<HibLinkTerminus> getLinkTermini() {
 		return this.linkTermini;
 	}
@@ -504,16 +482,14 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getSourceTerminus()
 	 */
 	public ILinkTerminus getSourceTerminus() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.linkTermini.get(LinkTermType.SOURCE.toInt());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getTargetTerminus()
 	 */
 	public ILinkTerminus getTargetTerminus() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.linkTermini.get(LinkTermType.TARGET.toInt());
 	}
 
 

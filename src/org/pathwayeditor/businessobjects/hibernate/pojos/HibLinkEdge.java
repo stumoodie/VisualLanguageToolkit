@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
@@ -228,7 +229,15 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 */
 	@Override
 	protected void removalAction(boolean removed) {
-		//TODO: need to add a notification.
+		ModelStructureChangeType type;
+		if(removed){
+			type = ModelStructureChangeType.DELETED;
+		}
+		else{
+			type = ModelStructureChangeType.ADDED;
+		}
+		this.getModel().notifyEdgeStructureChange(type, this);
+		this.owningChildGraph.notifyEdgeStructureChange(type, this);
 	}
 }
 

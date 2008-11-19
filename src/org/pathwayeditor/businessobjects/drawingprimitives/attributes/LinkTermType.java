@@ -8,10 +8,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
  *
  */
 public enum LinkTermType {
-	SOURCE(1), TARGET(2);
+	SOURCE(0), TARGET(1);
 
-	private static final int SOURCE_INT = 1;
-	private static final int TARGET_INT = 2;
+	private static final int SOURCE_INT = 0;
+	private static final int TARGET_INT = 1;
 	
 	private int code;
 	
