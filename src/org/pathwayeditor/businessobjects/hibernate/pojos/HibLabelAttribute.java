@@ -1,11 +1,15 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
@@ -30,6 +34,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 //	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
 	private boolean isDisplayed ;
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -256,8 +261,9 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		if (color == null)
 			throw new IllegalArgumentException("Color cannot be null.");
 
+		RGB oldColour = this.background;
 		this.background = color;
-
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
 	}
 	
 	public void setObjectType ( INodeObjectType nodeObjectType)
@@ -276,7 +282,9 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		if (location == null)
 			throw new IllegalArgumentException("location cannot be null.");
 
+		Location oldValue = this.position;
 		this.position = location;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldValue, this.position);
 	}
 
 	/*
@@ -290,7 +298,9 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		if (size == null)
 			throw new IllegalArgumentException("size cannot be null.");
 
+		Size oldValue = this.size;
 		this.size = size;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldValue, this.size);
 	}
 
 	/*
@@ -330,6 +340,27 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		builder.append(this.getCreationSerial());
 		builder.append(")");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void addChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
+	 */
+	public Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.listenablePropertyChangeItem.listenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void removeChangeListener(IPropertyChangeListener listener) {
+		this.removeChangeListener(listener);
 	}
 
 }

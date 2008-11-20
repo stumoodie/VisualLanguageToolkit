@@ -16,6 +16,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -51,6 +54,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>(0);
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
 	 * Default constructor to be used only by hibernate.
@@ -204,7 +208,9 @@ s	 */
 	}
 
 	public void setName(String name) {
+		String oldValue = this.name;
 		this.name = name;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldValue, this.name);
 	}
 
 	public String getDescription() {
@@ -212,7 +218,9 @@ s	 */
 	}
 
 	public void setDescription(String description) {
+		String oldValue = this.name;
 		this.description = description;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldValue, this.description);
 	}
 
 	public String getDetailedDescription() {
@@ -220,15 +228,19 @@ s	 */
 	}
 
 	public void setDetailedDescription(String detailedDescription) {
+		String oldValue = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
-	}
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldValue, this.detailedDescription);
+}
 
 	public String getUrl() {
 		return this.url;
 	}
 
 	public void setUrl(String url) {
+		String oldValue = this.url;
 		this.url = url;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldValue, this.url);
 	}
 
 	public Map<String, HibProperty> getLinkProperties() {
@@ -274,7 +286,10 @@ s	 */
 	public void setLineStyle(LineStyle lineStyle) {
 		if ( lineStyle == null )
 			throw new IllegalArgumentException ( "Line style cannot be null." ) ;
+		
+		LineStyle oldValue = this.lineStyle;
 		this.lineStyle = lineStyle;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 	}
 
 	public int getLineWidth() {
@@ -282,7 +297,9 @@ s	 */
 	}
 
 	public void setLineWidth(int lineWidth) {
+		int oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 	}
 
 	public ConnectionRouter getRouterType() {
@@ -290,7 +307,9 @@ s	 */
 	}
 
 	public void setRouterType(ConnectionRouter routerType) {
+		ConnectionRouter oldValue = this.routerType;
 		this.routerType = routerType;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ROUTER_TYPE, oldValue, this.routerType);
 	}
 
 	public List<HibBendPoint> getBendPoints() {
@@ -452,8 +471,10 @@ s	 */
 	public void setLineColor(RGB newColor) {
 		if ( newColor == null)
 			throw new IllegalArgumentException () ;
-			
+
+		RGB oldValue = this.lineColour;
 		this.lineColour = newColor;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
 	}
 
 //	/* (non-Javadoc)
@@ -502,5 +523,26 @@ s	 */
 		builder.append(this.getCreationSerial());
 		builder.append(")");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void addChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
+	 */
+	public Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.listenablePropertyChangeItem.listenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void removeChangeListener(IPropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 }

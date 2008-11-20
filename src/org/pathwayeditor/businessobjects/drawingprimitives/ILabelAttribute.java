@@ -3,9 +3,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
-public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute {
+public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute, IPropertyChangeListenee {
 	
 	/**
 	 * Get the location of this LabelAttribute.

@@ -18,7 +18,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
  *
  */
 public class StubListPropertyDefinition implements IListPropertyDefinition {
-	public static final List <String> DEFAULT_VALUE = new ArrayList(Arrays.asList(new String []{"1","2'"}));
+	public static final List <String> DEFAULT_VALUE = new ArrayList<String>(Arrays.asList(new String []{"1","2'"}));
 	public static final String NAME = "ShapeLinkProperty";
 	public static final boolean IS_EDITABLE = false;
 	public static final boolean IS_VISUALISABLE = true;
@@ -27,8 +27,7 @@ public class StubListPropertyDefinition implements IListPropertyDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#copyProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder, org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
 	 */
-	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder,
-			IAnnotationProperty otherProperty) {	
+	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty) {	
 		return propertyBuilder.copyListProperty((IListAnnotationProperty) otherProperty);
 	}
 
