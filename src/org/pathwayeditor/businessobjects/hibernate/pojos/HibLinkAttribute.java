@@ -110,6 +110,10 @@ s	 */
 			HibProperty copiedProp = (HibProperty)prop.getDefinition().copyProperty(this.propertyBuilder, prop);
 			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
 		}
+//		for(HibLinkTerminus linkTerm : otherAttribute.getLinkTermini()){
+//			HibLinkTerminus copiedTerminus = new HibLinkTerminus(this, linkTerm);
+//			this.linkTermini.add(copiedTerminus);
+//		}
 		this.getCanvas().getLinkAttributes().add(this) ;
 	}
 
@@ -441,14 +445,14 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
 	 */
 	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		return getHibLinkProperties().get(propDefn.getName());
+		return this.hibLinkProperties.get(propDefn.getName());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
 	 */
 	public IAnnotationProperty getProperty(String propName) {
-		return getHibLinkProperties().get(propName);
+		return this.hibLinkProperties.get(propName);
 	}
 
 	/* (non-Javadoc)
@@ -491,6 +495,28 @@ s	 */
 		return this.hibLinkProperties.containsKey(property.getName());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
+	 */
+//	public HibLinkTerminus getSourceTerminus() {
+//		return this.sourceTerminus;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
+//	 */
+//	public HibLinkTerminus getTargetTerminus() {
+//		return this.targetTerminus;
+//	}
+//
+//	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
+//		this.sourceTerminus = sourceTerminus;
+//	}
+//
+//	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
+//		this.targetTerminus = targetTerminus;
+//	}
+	
 	public List<HibLinkTerminus> getLinkTermini() {
 		return this.linkTermini;
 	}

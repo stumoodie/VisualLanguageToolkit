@@ -86,6 +86,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
 		this();
+		this.propertyBuilder = new PropertyBuilder(other.getCanvas());
 		this.canvas = newCanvas;
 		this.creationSerial = newCreationSerial;
 		this.canvas.getShapeAttributes().add(this);

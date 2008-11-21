@@ -10,10 +10,12 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 
-import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -39,9 +41,12 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	protected BaseCompoundEdge createCopyOfEdge(BaseCompoundEdge srcEdge,
 			BaseChildCompoundGraph edgeOwner, BaseCompoundNode outNode,
 			BaseCompoundNode inNode) {
-		BaseChildCompoundEdgeFactory edgeFact = edgeOwner.edgeFactory();
-		edgeFact.setPair(outNode, inNode);
-		return edgeFact.createEdge();
+//		BaseChildCompoundEdgeFactory edgeFact = edgeOwner.edgeFactory();
+//		edgeFact.setPair(outNode, inNode);
+//		return edgeFact.createEdge();
+			
+		return createCopyOfLinkEdge  ( ((HibLinkEdge)srcEdge).getAttribute() , (HibCompoundNode) outNode,
+				(HibCompoundNode) inNode , (HibSubModel) edgeOwner  ) ;
 	}
 
 	/* (non-Javadoc)
@@ -85,5 +90,17 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().shapeNodeFactory();
 		fact.setAttribute(destAttribute);
 		return fact.createShapeNode();
+	}
+	
+	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
+			BaseCompoundNode inNode , HibSubModel edgeOwner )
+	{
+		HibCanvas destCanvas = (HibCanvas)srcAttribute.getCanvas();
+		HibLinkAttribute destAttribute = new HibLinkAttribute ( destCanvas , destCanvas.getAttributeSerialCounter().nextIndex() , srcAttribute) ;
+		LinkEdgeChildFactory edgeFact = edgeOwner.edgeFactory() ;
+		edgeFact.setPair(outNode, inNode);
+		edgeFact.setAttribute(destAttribute) ;
+		HibLinkEdge retVal = edgeFact.createLinkEdge() ;
+		return retVal;
 	}
 }

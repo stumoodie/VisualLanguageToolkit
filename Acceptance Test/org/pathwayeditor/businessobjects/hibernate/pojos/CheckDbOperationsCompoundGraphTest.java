@@ -62,13 +62,16 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //	}};
 	
 	private IMapContentPersistenceManager map1Manager ;
+	private IMapContentPersistenceManager map2Manager ;
 	
 	private IRepository repository;
 	private IRootFolder rootFolder ;
 	private ISubFolder subFolder1 ;
 	private ISubFolder subFolder2 ;
 	private IMap mapDiagram1 ;
+	private IMap mapDiagram2 ;
 	private ICanvas dbCanvas ;
+	private ICanvas canvas2 ;
 	private IModel dbModel ;
 	private IRootNode dbRootNode ;
 	
@@ -604,7 +607,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	@Ignore
 	@Test
-	public void testCopyEntireGraph () throws Exception
+	public void testCopyEntireGraphBySelectingTheTopNodes () throws Exception
 	{
 		loadData () ;
 		
@@ -622,7 +625,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		for (String t : testTables) {
 			ITable expectedTable = DefaultColumnFilter
 					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
+							expectedDeltas.getTable(t).getTableMetaData() 
 									.getColumns());
 			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
 					actualChanges.getTable(t), expectedDeltas.getTable(t)
@@ -1158,4 +1161,22 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		}
 	}
 	
+	@Ignore
+	@Test
+	public void testMakeCopyOfGraphViaTheModelAndToAnotherMapDIagram () throws Exception
+	{
+		loadData () ;
+		
+		subFolder2 = (ISubFolder)repository.getFolderByPath( SUBFOLDER2_PATH) ;
+		
+		mapDiagram2 = subFolder2.getMapIterator().next() ;
+		map2Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram2) ;
+		map2Manager.createCanvas(dbNotationSubSystem) ;
+		canvas2 = map2Manager.getCanvas() ;
+		
+		
+		IModel copiedModel = dbCanvas.getModel().createCopy(canvas2) ;
+		
+		
+	}
 }
