@@ -67,7 +67,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 	public void inspectAllFieldsOfLoadedDataForProxiesTest(){
 		List <String> ignored = new ArrayList<String>(Arrays.asList(new String []
 		                                                                        {"linkTermini"}));
-		FieldInspector.inspectAllFields(canvas,ignored);
+		FieldInspector.inspectAllFields(canvas,null);
 	}
 
 	/*

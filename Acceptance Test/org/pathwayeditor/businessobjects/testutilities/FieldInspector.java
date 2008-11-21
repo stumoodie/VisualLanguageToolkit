@@ -268,7 +268,8 @@ public class FieldInspector {
 			throw new RuntimeException("PROXIES!!!!!!!");
 		}
 		Object testObj = extractFieldValue(field,target);
-		//if(testObj instance of)
+		if(testObj instanceof Method)// the extracted value of a proxied method is the actual method it was proxying
+			throw new RuntimeException("PROXIES");
 		if (testObj == null) 
 			return;
 		else
