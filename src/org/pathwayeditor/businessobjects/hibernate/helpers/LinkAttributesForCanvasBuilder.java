@@ -28,6 +28,7 @@ public class LinkAttributesForCanvasBuilder  implements IAttributesForCanvasBuil
 			shapeAttr.setObjectType(objectType);
 			Hibernate.initialize(shapeAttr.getHibLinkProperties());
 			Hibernate.initialize(shapeAttr.getBendPoints());
+			Hibernate.initialize(shapeAttr.getLinkTermini());
 			injectPropertyDefinitions(objectType, shapeAttr);
 		}
 	}
