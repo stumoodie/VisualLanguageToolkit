@@ -480,9 +480,9 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
 					actualChanges.getTable(t), expectedDeltas.getTable(t)
 							.getTableMetaData().getColumns());
-			SortedTable expected = new SortedTable(expectedTable);
-			SortedTable actual = new SortedTable(actualTable, expectedTable
-					.getTableMetaData());
+//			SortedTable expected = new SortedTable(expectedTable);
+//			SortedTable actual = new SortedTable(actualTable, expectedTable
+//					.getTableMetaData());
 			Assertion.assertEquals(new SortedTable(expectedTable),
 					new SortedTable(actualTable, expectedTable
 							.getTableMetaData()));

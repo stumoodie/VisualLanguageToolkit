@@ -7,6 +7,8 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableNodeStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -19,6 +21,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
  */
 public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	private HibShapeAttribute shapeAttribute ;
+	private ListenableNodeStructureChangeItem listenable = new ListenableNodeStructureChangeItem(this); 
 	
 	/**
 	 * Constructor should only be used by hiberate.
@@ -136,6 +139,39 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
+	}
+
+	public void notifySourceEdgeChange(ModelStructureChangeType type, HibLinkEdge hibLinkEdge) {
+		listenable.notifySourceNodeStructureChange(type, hibLinkEdge);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee#addNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListener)
+	 */
+	public void addNodeChangeListener(INodeChangeListener listener) {
+		this.listenable.addNodeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee#nodeChangeListenerIterator()
+	 */
+	public Iterator<INodeChangeListener> nodeChangeListenerIterator() {
+		return this.listenable.nodeChangeListenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee#removeNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListener)
+	 */
+	public void removeNodeChangeListener(INodeChangeListener listener) {
+		this.listenable.removeNodeChangeListener(listener);
+	}
+
+	/**
+	 * @param type
+	 * @param hibLinkEdge
+	 */
+	public void notifyTargetEdgeChange(ModelStructureChangeType type, HibLinkEdge hibLinkEdge) {
+		listenable.notifyTargetNodeStructureChange(type, hibLinkEdge);
 	}
 
 }

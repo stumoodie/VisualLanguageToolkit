@@ -246,6 +246,10 @@
 		<column>index_pos</column>
 		<column>x_position</column>
 		<column>y_position</column>
+		<column>first_rel_dim_x</column>
+		<column>first_rel_dim_y</column>
+		<column>second_rel_dim_x</column>
+		<column>second_rel_dim_y</column>
 	</table>
 	<!-- END OF BENDPOINTS -->
 </dataset>

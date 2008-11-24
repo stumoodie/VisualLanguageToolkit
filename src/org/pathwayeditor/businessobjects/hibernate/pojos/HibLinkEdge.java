@@ -238,6 +238,8 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		}
 		this.getModel().notifyEdgeStructureChange(type, this);
 		this.owningChildGraph.notifyEdgeStructureChange(type, this);
+		this.getSourceShape().notifySourceEdgeChange(type, this);
+		this.getTargetShape().notifyTargetEdgeChange(type, this);
 	}
 }
 

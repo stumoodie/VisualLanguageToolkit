@@ -60,11 +60,21 @@ public interface IModel extends IModelChangeListenee {
 	 * @return the new instance, and which cannot be null.
 	 */
 	ISelectionFactory newSelectionFactory();
+	
+	/**
+	 * Tests if the selection can be removed from the model.
+	 * @param selection the selection, which can be null.
+	 * @return true if the removal will succeed, false otherwise.
+	 */
+	boolean canRemoveSelection(IDrawingElementSelection selection);
+	
+	
 	/**
 	 * Remove the nodes and edges in the model specified in the given selection.
 	 * In addition to the specified nodes and edges child nodes and edges of selected nodes and 
 	 * incident edges between selected nodes and their children will also be removed.
 	 * @param selection the selection of nodes and edges to be removed.
+	 * @throws IllegalArgumentException if <code>canRemoveSelection(selection) == false</code>.
 	 */
 	void removeSubgraph(IDrawingElementSelection selection);
 	

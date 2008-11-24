@@ -63,10 +63,11 @@
 		<property name="routerType" type="ConnectionRouterType">
 			<column name="router_type" not-null="true" />
 		</property>
-		<list name="bendPoints" inverse="true" cascade="all,delete-orphan">
-			<key>
-				<column name="link_attribute_id" not-null="true" />
-			</key>
+		<property name="lastBendPointSerial" type="int">
+			<column name="last_bendpoint_serial" not-null="true"/>
+		</property>
+		<list name="bendPoints" cascade="all,delete-orphan">
+			<key column="link_attribute_id" not-null="true"/>
 			<list-index>
 				<column name="index_pos" not-null="true" />
 			</list-index>

@@ -15,6 +15,8 @@ import org.dbunit.dataset.xml.XmlDataSet;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -23,8 +25,10 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DbBendpointTest extends PojoTester{
 	
-	private static final int INDEX = 2 ;
+//	private static final int INDEX = 2 ;
 	private static final int POSITION = 45 ;
+	private static final Location BP_LOCATION = new Location(POSITION, POSITION);
+	private static final Size BP_REL_DIM = new Size(POSITION, POSITION);
 	
 	private static final String ADDED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbAddedBendPointRefData.xml" ;
 	private static final String DELETED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbDeletedBendPointRefData.xml" ;
@@ -37,30 +41,29 @@ public class DbBendpointTest extends PojoTester{
 		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100001'" ) ;
 		HibLinkAttribute dbLinkAttribute = (HibLinkAttribute) retreivedContext.uniqueResult() ;
 		
-		HibBendPoint newBendPoint = new HibBendPoint (dbLinkAttribute, INDEX, POSITION ,  POSITION) ;
-		
-		dbLinkAttribute.addBendPoint(newBendPoint) ;
+		dbLinkAttribute.createNewBendPoint(BP_LOCATION, BP_REL_DIM, BP_REL_DIM) ;
 		
 		sess.saveOrUpdate(dbLinkAttribute) ;
 		sess.getTransaction().commit() ;
 		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				ADDED_BENDPOINT_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
+		compareDatabase(ADDED_BENDPOINT_DATA);
+//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+//				ADDED_BENDPOINT_DATA));
+//		String testTables[] = expectedDeltas.getTableNames();
+//		IDataSet actualChanges = getConnection().createDataSet(testTables);
+//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+//		for (String t : testTables) {
+//			ITable expectedTable = DefaultColumnFilter
+//					.includedColumnsTable(expectedChanges.getTable(t),
+//							expectedDeltas.getTable(t).getTableMetaData()
+//									.getColumns());
+//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+//					actualChanges.getTable(t), expectedDeltas.getTable(t)
+//							.getTableMetaData().getColumns());
+//			Assertion.assertEquals(new SortedTable(expectedTable),
+//					new SortedTable(actualTable, expectedTable
+//							.getTableMetaData()));
+//		}
 	}
 	
 	@Test

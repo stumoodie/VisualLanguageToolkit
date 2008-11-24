@@ -304,6 +304,7 @@
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
+		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>source_terminus_id</column>
 		<column>target_terminus_id</column>
@@ -321,6 +322,7 @@
 			<value>100001</value>
 			<value>100001</value>
 			<value>1</value>
+			<value>0</value>
 			<value>100002</value>
 			<value>100001</value><!-- CREATE TERMINUS DECORATORS FOR ALL THE LINKS -->
 			<value>100002</value>

@@ -2,7 +2,9 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-public interface IShapeNode extends IDrawingNode, IZOrderedObject {
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee;
+
+public interface IShapeNode extends IDrawingNode, IZOrderedObject, INodeChangeListenee {
 	/**
 	 * Gets the number of the links that are sourcing from this Shape node.
 	 * @return the number of links.

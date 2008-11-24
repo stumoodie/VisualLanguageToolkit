@@ -98,8 +98,7 @@ public abstract class PojoTester {
 		if(this.getHibFactory().getCurrentSession().isOpen() && this.getHibFactory().getCurrentSession().getTransaction().isActive()){
 			String msg = "Session and transaction have not be closed properly in class: " + this.getClass().getCanonicalName();
 			System.err.println(msg);
-			this.getHibFactory().getCurrentSession().getTransaction().commit();
-			throw new RuntimeException(msg);
+			this.getHibFactory().getCurrentSession().getTransaction().rollback();
 		}
 		disableConstraints() ;
 		dbTester.onTearDown();

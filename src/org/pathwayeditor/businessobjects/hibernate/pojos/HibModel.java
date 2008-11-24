@@ -275,11 +275,22 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
 		builder.append("(rootNodeIdx=");
 		builder.append(this.rootNode.getIndex());
+		builder.append(", numNodes=");
+		builder.append(this.getNumNodes());
+		builder.append(", numEdges=");
+		builder.append(this.getNumEdges());
 		builder.append(")");
 		return builder.toString();
 	}
 
 	void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
 		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#canRemoveSelection(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection)
+	 */
+	public boolean canRemoveSelection(IDrawingElementSelection selection) {
+		return super.canRemoveSubgraph((ShapeLinkSubgraph)selection);
 	}
 }

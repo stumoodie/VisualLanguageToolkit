@@ -471,6 +471,7 @@
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
+		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>source_terminus_id</column>
 		<column>target_terminus_id</column>
@@ -488,6 +489,7 @@
 			<value>100001</value>
 			<value>100001</value>
 			<value>2</value>
+			<value>0</value>
 			<value>100001</value>
 			<value>100001</value>
 			<value>100002</value>
@@ -656,15 +658,25 @@
 	<table name="bendpoint">
 		<column>id</column>
 		<column>link_attribute_id</column>
+		<column>creation_serial</column>
 		<column>index_pos</column>
 		<column>x_position</column>
 		<column>y_position</column>
+		<column>first_rel_dim_x</column>
+		<column>first_rel_dim_y</column>
+		<column>second_rel_dim_x</column>
+		<column>second_rel_dim_y</column>
 		<row>
 			<value>100001</value>
 			<value>100001</value>
-			<value>1</value>
+			<value>0</value>
+			<value>0</value>
 			<value>25</value>
 			<value>25</value>
+			<value>5</value>
+			<value>6</value>
+			<value>7</value>
+			<value>8</value>
 		</row>
 	</table>
 </dataset>

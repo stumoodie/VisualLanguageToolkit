@@ -18,8 +18,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
@@ -53,6 +54,12 @@ public class ILinkAttributeTest {
 	private static final int POS_VALUE_1 = 20 ;
 	private static final int POS_VALUE_2 = 30 ;
 	private static final int POS_VALUE_3 = 40 ;
+	private static final Location BP_POSITION1 = new Location(POS_VALUE_1, POS_VALUE_1); 
+	private static final Location BP_POSITION2 = new Location(POS_VALUE_2, POS_VALUE_2); 
+	private static final Location BP_POSITION3 = new Location(POS_VALUE_3, POS_VALUE_3); 
+	private static final Size BP_REL_DIM1 = new Size(POS_VALUE_1, POS_VALUE_1); 
+	private static final Size BP_REL_DIM2 = new Size(POS_VALUE_2, POS_VALUE_2); 
+	private static final Size BP_REL_DIM3 = new Size(POS_VALUE_3, POS_VALUE_3); 
 	
 	private static final int NUMERIC_VALUE_3 = 3 ;
 	private static final int NUMERIC_VALUE_2 = 2 ;
@@ -112,11 +119,8 @@ public class ILinkAttributeTest {
 		
 //		tempLinkAttribute.setCreationSerial(CREATION_SERIAL) ;
 		
-		mockBendPoint1 = new HibBendPoint ((HibLinkAttribute)linkAttribute, INDEX_POS_1, POS_VALUE_1, POS_VALUE_1) ;
-		mockBendPoint2 = new HibBendPoint ((HibLinkAttribute)linkAttribute, INDEX_POS_2, POS_VALUE_2, POS_VALUE_2) ;
-		
-		linkAttribute.addBendPoint(mockBendPoint1) ;
-		linkAttribute.addBendPoint(mockBendPoint2) ;
+		mockBendPoint1 = linkAttribute.createNewBendPoint(BP_POSITION1, BP_REL_DIM1, BP_REL_DIM1) ;
+		mockBendPoint2 = linkAttribute.createNewBendPoint(BP_POSITION2, BP_REL_DIM2, BP_REL_DIM2) ;
 		
 //		linkAttribute.setUrl(URL) ;
 		
@@ -178,8 +182,7 @@ public class ILinkAttributeTest {
 	@Test
 	public void testAddBendPoins () throws Exception
 	{
-		IBendPoint newBendPoint = new HibBendPoint ((HibLinkAttribute)linkAttribute, INDEX_POS_3, POS_VALUE_3, POS_VALUE_3) ;
-		linkAttribute.addBendPoint(newBendPoint);
+		IBendPoint newBendPoint = linkAttribute.createNewBendPoint(BP_POSITION3, BP_REL_DIM3, BP_REL_DIM3);
 		assertEquals ( "two bendpoints" , NUMERIC_VALUE_3 , linkAttribute.numBendPoints()) ;
 		assertTrue ( "contains bendpoint3" , linkAttribute.containsBendPoint(newBendPoint)) ;
 	}

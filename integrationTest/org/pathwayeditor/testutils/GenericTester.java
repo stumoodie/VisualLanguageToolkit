@@ -114,26 +114,23 @@ public abstract class GenericTester {
 	@After
 	public void tearDown() throws Throwable {
 		try {
-			try {
-				doAdditionalTearDown();
+			doAdditionalTearDown();
+			if(bofac != null) {
 				bofac.closeRepository();
-				bofac = null;
-				if (dbTester.getSessionFactory().getCurrentSession().isOpen()
-						&& dbTester.getSessionFactory().getCurrentSession()
-								.getTransaction().isActive()) {
-					String msg = "Session and transaction have not be closed properly in class: "
-							+ this.getClass().getCanonicalName();
-					System.err.println(msg);
-					this.getSessionFactory().getCurrentSession()
-							.getTransaction().commit();
-					throw new RuntimeException(msg);
-				}
-			} finally {
-				disableConstraints();
-				dbTester.onTearDown();
-				this.loadFile.close();
-				enableConstraints();
 			}
+			bofac = null;
+			if (dbTester.getSessionFactory().getCurrentSession().isOpen()
+					&& dbTester.getSessionFactory().getCurrentSession()
+					.getTransaction().isActive()) {
+				String msg = "Session and transaction have not be closed properly in class: "
+					+ this.getClass().getCanonicalName();
+				System.err.println(msg);
+				this.getSessionFactory().getCurrentSession().getTransaction().rollback();
+			}
+			disableConstraints();
+			dbTester.onTearDown();
+			this.loadFile.close();
+			enableConstraints();
 		} catch (Throwable ex) {
 			ex.printStackTrace();
 			throw ex;

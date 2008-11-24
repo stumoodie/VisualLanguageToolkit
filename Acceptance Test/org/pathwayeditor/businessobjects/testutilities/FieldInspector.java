@@ -265,7 +265,7 @@ public class FieldInspector {
 		field.setAccessible(true);
 		System.out.print(" "+field.getName() +" value: ");
 		if(field.getName().toLowerCase().indexOf("cglib")!=-1){
-			throw new RuntimeException("PROXIES!!!!!!!");
+			throw new RuntimeException("Proxied found in class: " + target.getClass().getSimpleName());
 		}
 		Object testObj = extractFieldValue(field,target);
 		if(testObj instanceof Method)// the extracted value of a proxied method is the actual method it was proxying

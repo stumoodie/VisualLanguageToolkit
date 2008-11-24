@@ -5,7 +5,9 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -56,24 +58,75 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	int numBendPoints();
 	
 	/**
-	 * Adds a new bendpoint on this Link.
-	 * @throws IllegalArgumentException if bendpoint is null
-	 */
-	void addBendPoint(IBendPoint newBendPoint);
-	
-	/**
 	 * Checks if the bendpoint in question belongs to this Link.
 	 * @return true if the bendpoint is part of the Link false otherwise.
 	 */
 	boolean containsBendPoint(IBendPoint bendPoint);
 	
 	/**
+	 * Test if this attribute contains a bendpoint at the given position in the
+	 * bendpoint list.  
+	 * @param index the list poistion number.
+	 * @return true if a bendpoint exists at this position, false otherwise.
+	 */
+	boolean containsBendPoint(int index);
+	
+	/**
+	 * Get the bendpoint at the given index position.
+	 * @param index the index position.
+	 * @return the bendpoint at the given position.
+	 * @throws IllegalArgumentException if <code>containsBendPoint(index) == false</code>.
+	 */
+	IBendPoint getBendPoint(int index);
+	
+	/**
+	 * Creates a new bendpoint and adds it to the end of the bendpoint list in this atrtribute.
+	 * @param location the new location of the bendpoint.
+	 * @param firstRelativeDim the position relative to the first anchor point of the link.
+	 * @param secondRelativeDim the position relative to second anchor point of the link.
+	 * @return the newly created bendpoint which cannot be null.
+	 * throws IllegalArgumentException if any parameter is null. 
+	 */
+	IBendPoint createNewBendPoint(Location location, Size firstRelativeDim, Size secondRelativeDim);
+	
+	/**
+	 * As {@link #createNewBendPoint(Location, Size, Size)}, but also defines the index position
+	 * that the new bendpoint should be inserted into. This allows an index position that will result in an
+	 * append to the list, i.e. <code>position == numBendPoints()</code>.
+	 * @param position the index position which must be valid for the list of bendpoints
+	 * @param location the new location of the bendpoint
+	 * @param firstRelativeDim the new relative dimension to the first anchor point
+	 * @param secondRelativeDim the new relative dimension to the second anchor point of the link.
+	 * @return the newly created bendpoint
+	 * @throws IllegalArgumentException if any parameter is null.
+	 * @throws IndexOutOfBoundsException if <code>indexPos &lt; 0 || indexPos &gt; this.numBendPoints()</code>.
+	 */
+	IBendPoint createNewBendPoint(int position, Location location, Size firstRelativeDim, Size secondRelativeDim);
+	
+	/**
+	 * Adds a bendpoint to the list of bendpoints at the given position.
+	 * @param newBendPoint the new bendpoint
+	 * @param indexPos the new bendpoint position
+	 * @throws IllegalArgumentException if <code>containsBendPoint(bendpoint)==false</code>.
+	 * @throws IndexOutOfBoundsException if <code>indexPos < 0 || indexPos >= this.numBendPoints()</code>. 
+	 */
+	void changeBendPointPosition(IBendPoint newBendPoint, int indexPos);
+	
+	/**
 	 * Removes the given bendpoint from this Link.
-	 * @param bendPoint
-	 * @throws IllegalArgumentException if bendpoint is null.
+	 * @param bendPoint the bendpoint to remove which must be held by this attribute and cannot be null.
+	 * @throws IllegalArgumentException if <code>containsBendPoint(bendPoint) == false</code>.
 	 */
 	void removeBendPoint(IBendPoint bendPoint);
 	
+	/**
+	 * Removed a bendpoint at the given index position.
+	 * @param index the index position.
+	 * @throws IllegalArgumentException if <code>containsBendPoint(index) == false</code>. 
+	 */
+	
+	void removeBendPoint(int index);
+
 	/**
 	 * Gets the RGB representation of the color of the link. Cannot be null.
 	 * @return the RGB color.

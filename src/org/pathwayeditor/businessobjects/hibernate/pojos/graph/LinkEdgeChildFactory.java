@@ -47,15 +47,17 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	@Override
 	protected BaseCompoundEdge newEdge(BaseChildCompoundGraph owningChildGraph,
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
-		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
+		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType());
 		HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = this.attribute;
 		if(this.attribute == null){
-			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
+			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
+		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
+		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 
@@ -93,10 +95,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	@Override
 	public boolean canCreateEdge() {
 		boolean retVal = false;
-		ILinkObjectType testOt = this.objectType;
-		if(attribute != null){
-			testOt = this.attribute.getObjectType();
-		}
+		ILinkObjectType testOt = this.getCurrentObjectType();
 		if(testOt != null){
 			IShapeObjectType outOt = this.outNode.getObjectType(); 
 			IShapeObjectType inOt = this.inNode.getObjectType(); 
@@ -147,7 +146,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#getCurrentObjectType()
 	 */
 	public ILinkObjectType getCurrentObjectType() {
-		return this.objectType;
+		return this.attribute == null ? this.objectType : this.attribute.getObjectType();
 	}
 
 	/* (non-Javadoc)
