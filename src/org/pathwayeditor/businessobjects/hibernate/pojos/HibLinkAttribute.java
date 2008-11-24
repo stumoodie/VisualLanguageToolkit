@@ -387,11 +387,11 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#containsBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint)
 	 */
 	public boolean containsBendPoint(IBendPoint bendPoint) {
-		if ( bendPoint == null )
-			throw new IllegalArgumentException () ;
-		if ( bendPoint.getOwningLink() != this )
-			throw new IllegalArgumentException () ;
-		return this.hibBendPoints.contains((HibBendPoint) bendPoint ) ;
+		boolean retVal = false;
+		if ( bendPoint != null && bendPoint.getOwningLink() == this){
+			retVal = this.hibBendPoints.contains((HibBendPoint) bendPoint );
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -482,7 +482,11 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
 	 */
 	public boolean hasProperty(IPropertyDefinition property) {
-		return this.hibLinkProperties.containsKey(property.getName());
+		boolean retVal = false;
+		if(property != null){
+			retVal = this.hibLinkProperties.containsKey(property.getName());
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)
