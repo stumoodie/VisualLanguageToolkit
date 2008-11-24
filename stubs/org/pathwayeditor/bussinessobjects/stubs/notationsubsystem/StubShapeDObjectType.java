@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
  * @author smoodie
  *
  */
-public class StubShapeDChildOfShapeCObjectType implements IShapeObjectType {
+public class StubShapeDObjectType implements IShapeObjectType {
 	public static final int UNIQUE_ID = 4;
 	public static final String DESCN = "Shape D Test ObjectType";
 	public static final String NAME = "Shape D";
@@ -26,7 +26,7 @@ public class StubShapeDChildOfShapeCObjectType implements IShapeObjectType {
 	/**
 	 * @param stubNotationSyntaxService
 	 */
-	public  StubShapeDChildOfShapeCObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
+	public  StubShapeDObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
 		this.attributeDefaults = new StubShapeAttributeDefaultsWithListPropertyDefinition();
 	}
@@ -52,7 +52,7 @@ public class StubShapeDChildOfShapeCObjectType implements IShapeObjectType {
 		return new IShapeParentingRules(){
 
 			public IShapeObjectType getObjectType() {
-				return StubShapeDChildOfShapeCObjectType.this;
+				return StubShapeDObjectType.this;
 			}
 
 			public boolean isValidChild(IObjectType possibleChild) {

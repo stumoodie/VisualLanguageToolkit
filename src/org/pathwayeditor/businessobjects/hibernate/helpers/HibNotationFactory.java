@@ -15,6 +15,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -29,13 +30,16 @@ public class HibNotationFactory implements IHibNotationFactory {
 	private HibNotation notation = null;
 	private final Map<IObjectType, HibObjectType> objectTypeMapping; 
 	
-	public HibNotationFactory(SessionFactory factory, INotationSubsystem syntaxService){
+	public HibNotationFactory(SessionFactory factory, INotationSubsystem notationSubsystem){
+		if(factory == null || notationSubsystem == null) throw new IllegalArgumentException("Arguments cannot be null");
+		if(notationSubsystem.isFallback()) throw new IllegalArgumentException("Cannot use a fallback notation subsystem in this factory");
+		
 		this.factory = factory;
-		this.notationSubsystem = syntaxService;
+		this.notationSubsystem = notationSubsystem;
 		this.objectTypeMapping = new HashMap<IObjectType, HibObjectType>();
 	}
 
-	public void initialise(){
+	public void initialise() throws InconsistentNotationDefinitionException{
 		if(!doesNotationExist()){
 			storeNotation();
 		}
@@ -62,20 +66,41 @@ public class HibNotationFactory implements IHibNotationFactory {
 		sess.save(notation);
 	}
 
-	private void loadNotation(){
+	private void loadNotation() throws InconsistentNotationDefinitionException {
 		Session sess = factory.getCurrentSession();
-		Query qry = sess.createQuery("from HibNotation n left outer join fetch n.objectTypes where n.globalId = :globalId").setString("globalId", notationSubsystem.getNotation().getGlobalId());
+		Query qry = sess.getNamedQuery("loadNotation").setString("globalId", notationSubsystem.getNotation().getGlobalId());
 		this.notation = (HibNotation)qry.uniqueResult();
-		for(HibObjectType hibObjectType : this.notation.getObjectTypes()){
-			IObjectType objectType = this.notationSubsystem.getSyntaxService().getObjectType(hibObjectType.getUniqueId());
-			this.objectTypeMapping.put(objectType, hibObjectType);
+		if(validateLoadedNotation(this.notationSubsystem.getNotation(), this.notation)) {
+			INotationSyntaxService syntaxService = this.notationSubsystem.getSyntaxService(); 
+			for(HibObjectType hibObjectType : this.notation.getObjectTypes()){
+				if(syntaxService.containsObjectType(hibObjectType.getUniqueId())) {
+					IObjectType objectType = this.notationSubsystem.getSyntaxService().getObjectType(hibObjectType.getUniqueId());
+					this.objectTypeMapping.put(objectType, hibObjectType);
+				}
+				else {
+					throw new InconsistentNotationDefinitionException("The database and application object types are inconsistent");
+				}
+			}
+		}
+		else {
+			throw new InconsistentNotationDefinitionException("The database and application notations subsystems are inconsistent");
 		}
 	}
 	
+	/**
+	 * @param notation2
+	 * @param notation3
+	 */
+	private boolean validateLoadedNotation(INotation subsystemNotation, HibNotation hibNotation) {
+		return subsystemNotation.getName().equals(hibNotation.getName())
+			&& subsystemNotation.getVersion().equals(hibNotation.getVersion());
+		
+	}
+
 	private final boolean doesNotationExist(){
 		INotation notation = notationSubsystem.getNotation();
 		Session sess = factory.getCurrentSession();
-		Query qry = sess.createQuery("select count(*) from HibNotation where globalId = :globalId").setString("globalId", notation.getGlobalId());
+		Query qry = sess.getNamedQuery("notationExists").setString("globalId", notation.getGlobalId());
 		long numNotations = (Long)qry.uniqueResult();
 		return numNotations > 0;
 	}
@@ -92,7 +117,14 @@ public class HibNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
 	public HibObjectType getObjectType(IObjectType objectType) {
-		return this.objectTypeMapping.get(objectType);
+		HibObjectType retVal = null;
+		if(objectType != null) {
+			retVal = this.objectTypeMapping.get(objectType);
+		}
+		if(retVal == null) {
+			throw new IllegalArgumentException("No object type mapping exists for object type: " + objectType);
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -100,6 +132,24 @@ public class HibNotationFactory implements IHibNotationFactory {
 	 */
 	public INotationSubsystem getNotationSubsystem() {
 		return this.notationSubsystem;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#isFallback()
+	 */
+	public boolean isFallback() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
+	 */
+	public boolean containsObjectType(IObjectType objectType) {
+		boolean retVal = false;
+		if(objectType != null) {
+			retVal = this.objectTypeMapping.containsKey(objectType);
+		}
+		return retVal;
 	}
 
 }

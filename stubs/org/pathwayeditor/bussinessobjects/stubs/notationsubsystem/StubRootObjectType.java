@@ -81,8 +81,8 @@ public class StubRootObjectType implements IRootObjectType {
 		 */
 		public boolean isValidChild(IObjectType possibleChild) {
 			boolean retVal = false;
-			if(getObjectType().getUniqueId() == StubShapeAParentOfAllObjectType.UNIQUE_ID
-					|| getObjectType().getUniqueId() == StubShapeCParentOfShapeDObjectType.UNIQUE_ID){
+			if(getObjectType().getUniqueId() == StubShapeAObjectType.UNIQUE_ID
+					|| getObjectType().getUniqueId() == StubShapeCObjectType.UNIQUE_ID){
 				retVal = true; 
 			}
 			return retVal;

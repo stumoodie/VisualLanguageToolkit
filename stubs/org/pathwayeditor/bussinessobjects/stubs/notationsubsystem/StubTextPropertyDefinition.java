@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
  */
 public class StubTextPropertyDefinition implements IPlainTextPropertyDefinition {
 	public static final String DEFAULT_VALUE = "textPropertyValue";
-	public static final String NAME = "ShapeTextProperty";
+	public static final String NAME = "TextProperty";
 	public static final boolean IS_EDITABLE = true;
 	public static final boolean IS_VISUALISABLE = true;
 	private final ILabelAttributeDefaults labelAttributeDefaults;

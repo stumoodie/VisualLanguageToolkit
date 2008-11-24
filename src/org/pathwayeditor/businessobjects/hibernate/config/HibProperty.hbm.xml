@@ -48,7 +48,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-    		<list name="value" table="listvalue">
+    		<list name="value" table="listvalue" fetch="join" lazy="false">
     			<key>
     				<column name="list_property_id" not-null="true"/>
     			</key>

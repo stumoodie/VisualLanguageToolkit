@@ -35,4 +35,10 @@
             <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType" />
         </set>
     </class>
+    <query name="notationExists"><![CDATA[
+			select count(*) from HibNotation where globalId = :globalId
+    	]]></query>
+    <query name="loadNotation"><![CDATA[
+    		from HibNotation n join fetch n.objectTypes where n.globalId = :globalId
+    	]]></query>
 </hibernate-mapping>

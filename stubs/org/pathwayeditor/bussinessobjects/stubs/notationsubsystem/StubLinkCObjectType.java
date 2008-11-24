@@ -17,11 +17,11 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * @author smoodie
  *
  */
-public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
+public class StubLinkCObjectType implements ILinkObjectType {
 	private static final EnumSet<LinkEditableAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(LinkEditableAttributes.LINE_WIDTH);
-	public static final int UNIQUE_ID = 6;
-	public static final String DESCRIPTION = "Link B Object Type";
-	public static final String NAME = "Link B";
+	public static final int UNIQUE_ID = 7;
+	public static final String DESCRIPTION = "Link C Object Type";
+	public static final String NAME = "Link C";
 	private final INotationSyntaxService syntaxService;
 	private final ILinkAttributeDefaults linkAttributeDefaults;
 	private final ILinkConnectionRules connectionRules;
@@ -31,7 +31,7 @@ public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
 	/**
 	 * @param stubNotationSyntaxService
 	 */
-	public StubLinkBConnectsShaesCToBObjectType(INotationSyntaxService stubNotationSyntaxService) {
+	public StubLinkCObjectType(INotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
 		this.linkAttributeDefaults = new StubLinkAttributeDefaultsWithNumberPropertyDefn();
 		this.sourceTerminusDefn = new StubSourceLinkTerminusDefinition(this);
@@ -39,17 +39,17 @@ public class StubLinkBConnectsShaesCToBObjectType implements ILinkObjectType {
 		this.connectionRules = new ILinkConnectionRules(){
 
 			public ILinkObjectType getLinkObjectType() {
-				return StubLinkBConnectsShaesCToBObjectType.this;
+				return StubLinkCObjectType.this;
 			}
 
 			public boolean isValidSource(IShapeObjectType source) {
-				return source.getUniqueId() == StubShapeBChildOfAllObjectType.UNIQUE_ID;
+				return source.getUniqueId() == StubShapeBObjectType.UNIQUE_ID;
 			}
 
 			public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
 				boolean sourceOk = isValidSource(source);
-				boolean targetOk = target.getUniqueId() == StubShapeCParentOfShapeDObjectType.UNIQUE_ID
-					|| target.getUniqueId() == StubShapeDChildOfShapeCObjectType.UNIQUE_ID;
+				boolean targetOk = target.getUniqueId() == StubShapeCObjectType.UNIQUE_ID
+					|| target.getUniqueId() == StubShapeDObjectType.UNIQUE_ID;
 				return sourceOk && targetOk;
 			}
 			

@@ -3,9 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.helpers;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
  * @author nhanlon
@@ -20,12 +18,12 @@ public interface IAttributesForCanvasBuilder {
 	 */
 	public void initAttributes(HibCanvas hibCanvas);
 	
-	/**
-	 * @param objectType not null but may not have any property definition
-	 * @param shapeAttr not null but may not have any properties
-	 *  Iterate through all the property definitions for a given objectType and inject them into their corresponding properties
-	 *  which are attached to a given ICanvasAttribute.
-	 */
-	public void injectPropertyDefinitions(IObjectType objectType, ICanvasAttribute shapeAttr);
+//	/**
+//	 * @param objectType not null but may not have any property definition
+//	 * @param shapeAttr not null but may not have any properties
+//	 *  Iterate through all the property definitions for a given objectType and inject them into their corresponding properties
+//	 *  which are attached to a given ICanvasAttribute.
+//	 */
+//	public void injectPropertyDefinitions(IObjectType objectType, ICanvasAttribute shapeAttr);
 
 }

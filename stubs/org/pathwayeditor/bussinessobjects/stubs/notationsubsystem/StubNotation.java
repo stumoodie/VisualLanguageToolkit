@@ -18,8 +18,10 @@ public class StubNotation implements INotation {
 	public static final int EXPECTED_MAJOR_VERSION = 99;
 	public static final int EXPECTED_MINOR_VERSION = 19;
 	public static final int EXPECTED_PATCH_VERSION = 9;
-	public static final String EXPECTED_VERSION_STRING = "99.19.9";
+	public static final Version EXPECTED_VERSION = new Version (EXPECTED_MAJOR_VERSION , EXPECTED_MINOR_VERSION , EXPECTED_PATCH_VERSION); 
 	private String globalId = EXPECTED_GLOBAL_ID;
+	private final String name = EXPECTED_NAME;
+	private final Version version =  EXPECTED_VERSION;
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getDescription()
@@ -42,40 +44,40 @@ public class StubNotation implements INotation {
 		return EXPECTED_GLOBAL_ID;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getMajorVersion()
-	 */
-	public int getMajorVersion() {
-		return EXPECTED_MAJOR_VERSION;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getMajorVersion()
+//	 */
+//	public int getMajorVersion() {
+//		return EXPECTED_MAJOR_VERSION;
+//	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getMinorVersion()
-	 */
-	public int getMinorVersion() {
-		return EXPECTED_MINOR_VERSION;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getMinorVersion()
+//	 */
+//	public int getMinorVersion() {
+//		return EXPECTED_MINOR_VERSION;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getName()
 	 */
 	public String getName() {
-		return EXPECTED_NAME;
+		return this.name;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getPatchVersion()
-	 */
-	public int getPatchVersion() {
-		return EXPECTED_PATCH_VERSION;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getPatchVersion()
+//	 */
+//	public int getPatchVersion() {
+//		return EXPECTED_PATCH_VERSION;
+//	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getVersionString()
-	 */
-	public String getVersionString() {
-		return EXPECTED_VERSION_STRING;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getVersionString()
+//	 */
+//	public String getVersionString() {
+//		return EXPECTED_VERSION_STRING;
+//	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -88,7 +90,7 @@ public class StubNotation implements INotation {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
 	 */
 	public Version getVersion() {
-		return new Version (EXPECTED_MAJOR_VERSION , EXPECTED_MINOR_VERSION , EXPECTED_PATCH_VERSION ) ;
+		return this.version;
 	}
 
 	@Override

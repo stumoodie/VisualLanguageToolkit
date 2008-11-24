@@ -3,9 +3,8 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -27,7 +26,12 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	public static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 190);
 	public static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	public static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
+	private final HashSet<IPropertyDefinition> propertyDefinitionList;
 
+	public StubSourceTerminusDefaults() {
+		this.propertyDefinitionList = new HashSet<IPropertyDefinition>();
+		this.propertyDefinitionList.add(new StubTextPropertyDefinition());
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndDecoratorType()
@@ -75,8 +79,7 @@ public class StubSourceTerminusDefaults implements ILinkTerminusDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getPropertiesIterator()
 	 */
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		Set<IPropertyDefinition> emptySet = Collections.emptySet();
-		return emptySet.iterator();
+		return this.propertyDefinitionList.iterator();
 	}
 
 }

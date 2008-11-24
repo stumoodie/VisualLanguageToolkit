@@ -113,9 +113,17 @@
 		<column>classification_code</column>
 		<column>unique_id</column>
 		<row>
+			<value>100000</value><!-- ROOT NODE -->
+			<value>100001</value>
+			<value>Root Object Type</value>
+			<value>objectDescr</value>
+			<value>0</value>
+			<value>0</value>
+		</row>
+		<row>
 			<value>100001</value><!-- SHAPES 1 & 5 -->
 			<value>100001</value>
-			<value>objectName</value>
+			<value>Shape A</value>
 			<value>objectDescr</value>
 			<value>1</value>
 			<value>1</value>
@@ -123,7 +131,7 @@
 		<row>
 			<value>100002</value><!-- SHAPES 2 & 6 -->
 			<value>100001</value>
-			<value>objectName2</value>
+			<value>Shape B</value>
 			<value>objectDescr2</value>
 			<value>1</value>
 			<value>2</value>
@@ -131,7 +139,7 @@
 		<row>
 			<value>100003</value><!-- SHAPES 3 & 7 -->
 			<value>100001</value>
-			<value>objectName3</value>
+			<value>Shape C</value>
 			<value>objectDescr3</value>
 			<value>1</value>
 			<value>3</value>
@@ -139,7 +147,7 @@
 		<row>
 			<value>100004</value><!-- SHAPES 4 & 8 -->
 			<value>100001</value>
-			<value>objectName4</value>
+			<value>Shape D</value>
 			<value>objectDescr4</value>
 			<value>1</value>
 			<value>4</value>
@@ -147,7 +155,7 @@
 		<row>
 			<value>100005</value><!-- LINKS 1 & 5 -->
 			<value>100001</value>
-			<value>objectName5</value>
+			<value>Link A</value>
 			<value>objectDescr5</value>
 			<value>2</value>
 			<value>5</value>
@@ -155,7 +163,7 @@
 		<row>
 			<value>100006</value><!-- LINKS 2 & 6 -->
 			<value>100001</value>
-			<value>objectName6</value>
+			<value>Link B</value>
 			<value>objectDescr6</value>
 			<value>2</value>
 			<value>6</value>
@@ -163,7 +171,7 @@
 		<row>
 			<value>100007</value><!-- LINKS 3 & 7 -->
 			<value>100001</value>
-			<value>objectName7</value>
+			<value>Link C</value>
 			<value>objectDescr7</value>
 			<value>2</value>
 			<value>7</value>
@@ -171,7 +179,7 @@
 		<row>
 			<value>100008</value><!-- LINKS 4 & 8 & 9 -->
 			<value>100001</value>
-			<value>objectName8</value>
+			<value>Link D</value>
 			<value>objectDescr8</value>
 			<value>2</value>
 			<value>8</value>

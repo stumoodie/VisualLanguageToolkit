@@ -64,6 +64,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * Retrieve the object type based on it's object id.
 	 * @param uniqueId the unique identifier of the object type.
 	 * @return the object type, which cannot be null.
+	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	IShapeObjectType getShapeObjectType(int uniqueId);
 
@@ -78,6 +79,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * Retrieve the link object type based on it's object id.
 	 * @param uniqueId the unique identifier of the object type.
 	 * @return the object type, which cannot be null.
+	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	ILinkObjectType getLinkObjectType(int uniqueId);
 
@@ -92,6 +94,7 @@ public interface INotationSyntaxService extends INotationService {
 	 * Retrieve the lobject type based on it's unique id.
 	 * @param uniqueId the unique identifier of the object type.
 	 * @return the object type, which cannot be null.
+	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	IObjectType getObjectType(int uniqueId);
 

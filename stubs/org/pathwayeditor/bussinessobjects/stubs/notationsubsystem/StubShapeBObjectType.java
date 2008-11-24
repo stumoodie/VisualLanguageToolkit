@@ -15,20 +15,20 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
  * @author smoodie
  *
  */
-public class StubShapeAParentOfAllObjectType implements IShapeObjectType {
-	public static final int UNIQUE_ID = 1;
-	public static final String DESCN = "Shape A Test ObjectType";
-	public static final String NAME = "Shape A";
-	public static final EnumSet<EditableShapeAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(EditableShapeAttributes.FILL_COLOUR, EditableShapeAttributes.LINE_COLOUR);
+public class StubShapeBObjectType implements IShapeObjectType {
+	public static final int UNIQUE_ID = 2;
+	public static final String DESCN = "Shape B Test ObjectType";
+	public static final String NAME = "Shape B";
+	public static final EnumSet<EditableShapeAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(EditableShapeAttributes.LINE_WIDTH, EditableShapeAttributes.LINE_STYLE);
 	private final INotationSyntaxService syntaxService;
 	private final IShapeAttributeDefaults attributeDefaults;
 	
 	/**
 	 * @param stubNotationSyntaxService
 	 */
-	public StubShapeAParentOfAllObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
+	public  StubShapeBObjectType(StubNotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
-		this.attributeDefaults = new StubShapeAttributeDefaultsWithPlainText();
+		this.attributeDefaults = new StubShapeAttributeDefaultsWithRichText();
 	}
 
 	/* (non-Javadoc)
@@ -52,11 +52,11 @@ public class StubShapeAParentOfAllObjectType implements IShapeObjectType {
 		return new IShapeParentingRules(){
 
 			public IShapeObjectType getObjectType() {
-				return StubShapeAParentOfAllObjectType.this;
+				return StubShapeBObjectType.this;
 			}
 
 			public boolean isValidChild(IObjectType possibleChild) {
-				return false;
+				return true;
 			}
 			
 		};

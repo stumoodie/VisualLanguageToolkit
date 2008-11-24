@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -24,6 +23,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyCha
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
@@ -208,8 +208,28 @@ s	 */
 		this.hibObjectType = hibObjectType ;
 	}
 
-	public void setObjectType(ILinkObjectType objectType) {
+	public void injectLinkObjectType(ILinkObjectType objectType) throws InconsistentNotationDefinitionException {
 		this.objectType = objectType;
+		injectPropertyDefinitions();
+		this.getSourceTerminus().injectLinkTerminusDefaults(objectType.getSourceTerminusDefinition());
+		this.getTargetTerminus().injectLinkTerminusDefaults(objectType.getTargetTerminusDefinition());
+	}
+
+	private void injectPropertyDefinitions() throws InconsistentNotationDefinitionException {
+		Iterator<IPropertyDefinition> it = this.objectType.getDefaultLinkAttributes().propertyDefinitionIterator();
+		int propCntr = 0;
+		while (it.hasNext()) {
+			IPropertyDefinition definition = it.next();
+			HibProperty property = this.hibLinkProperties.get(definition.getName());
+			if(property==null) {
+					throw new InconsistentNotationDefinitionException("The object type has property definitions which have no matching property in this Shape Attribute");
+			}
+			property.setPropertyDefinition(definition);
+			propCntr++;
+		}
+		if(propCntr != this.hibLinkProperties.size()) {
+			throw new InconsistentNotationDefinitionException("Object inconsistent with object type. Cannot find definitions for some properties");
+		}
 	}
 
 	public String getName() {
@@ -522,14 +542,14 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getSourceTerminus()
 	 */
-	public ILinkTerminus getSourceTerminus() {
+	public HibLinkTerminus getSourceTerminus() {
 		return this.linkTermini.get(LinkTermType.SOURCE.toInt());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getTargetTerminus()
 	 */
-	public ILinkTerminus getTargetTerminus() {
+	public HibLinkTerminus getTargetTerminus() {
 		return this.linkTermini.get(LinkTermType.TARGET.toInt());
 	}
 

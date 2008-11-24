@@ -17,7 +17,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * @author smoodie
  *
  */
-public class StubLinkAConnectsShapesBToCAndDObjectType implements ILinkObjectType {
+public class StubLinkAObjectType implements ILinkObjectType {
 	private static final EnumSet<LinkEditableAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(LinkEditableAttributes.COLOUR);
 	public static final int UNIQUE_ID = 5;
 	public static final String DESCRIPTION = "Link A Object Type";
@@ -31,7 +31,7 @@ public class StubLinkAConnectsShapesBToCAndDObjectType implements ILinkObjectTyp
 	/**
 	 * @param stubNotationSyntaxService
 	 */
-	public StubLinkAConnectsShapesBToCAndDObjectType(INotationSyntaxService stubNotationSyntaxService) {
+	public StubLinkAObjectType(INotationSyntaxService stubNotationSyntaxService) {
 		this.syntaxService = stubNotationSyntaxService;
 		this.linkAttributeDefaults = new StubLinkAttributeDefaultsWithRichText();
 		this.sourceTerminusDefn = new StubSourceLinkTerminusDefinition(this);
@@ -39,17 +39,17 @@ public class StubLinkAConnectsShapesBToCAndDObjectType implements ILinkObjectTyp
 		this.connectionRules = new ILinkConnectionRules(){
 
 			public ILinkObjectType getLinkObjectType() {
-				return StubLinkAConnectsShapesBToCAndDObjectType.this;
+				return StubLinkAObjectType.this;
 			}
 
 			public boolean isValidSource(IShapeObjectType source) {
-				return source.getUniqueId() == StubShapeBChildOfAllObjectType.UNIQUE_ID;
+				return source.getUniqueId() == StubShapeBObjectType.UNIQUE_ID;
 			}
 
 			public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
 				boolean sourceOk = isValidSource(source);
-				boolean targetOk = target.getUniqueId() == StubShapeCParentOfShapeDObjectType.UNIQUE_ID
-					|| target.getUniqueId() == StubShapeDChildOfShapeCObjectType.UNIQUE_ID;
+				boolean targetOk = target.getUniqueId() == StubShapeCObjectType.UNIQUE_ID
+					|| target.getUniqueId() == StubShapeDObjectType.UNIQUE_ID;
 				return sourceOk && targetOk;
 			}
 			

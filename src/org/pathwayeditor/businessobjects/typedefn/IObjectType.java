@@ -8,10 +8,15 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxServic
  */
 public interface IObjectType extends Comparable<IObjectType> {
 
+	/**
+	 * Gets the notation syntax service that this object type belongs to.
+	 * @return the syntax service which cannot be null.
+	 */
 	INotationSyntaxService getSyntaxService();
 
 	/**
 	 * The identifier that uniquely identifies the object type within this notation.
+	 * This should be a positive number, i.e. <code>getUniqueId() >= 0</code>.
 	 * @return the unique object type id.
 	 */
 	int getUniqueId();
@@ -24,7 +29,7 @@ public interface IObjectType extends Comparable<IObjectType> {
 
 	/**
 	 * Description of the object type.
-	 * @return the desscription that cannot be null, but can be an empty string.
+	 * @return the description that cannot be null, but can be an empty string.
 	 */
 	String getDescription();
 

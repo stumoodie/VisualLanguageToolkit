@@ -112,6 +112,18 @@
 			<value>6</value>
 			<value>2</value>
 		</row>
+		<row>
+			<value>Link C</value>
+			<value>Link C Object Type</value>
+			<value>7</value>
+			<value>2</value>
+		</row>
+		<row>
+			<value>Link D</value>
+			<value>Link D Object Type</value>
+			<value>8</value>
+			<value>2</value>
+		</row>
 	</table>
 	<table name="CompoundNode">
 		<column>id</column>

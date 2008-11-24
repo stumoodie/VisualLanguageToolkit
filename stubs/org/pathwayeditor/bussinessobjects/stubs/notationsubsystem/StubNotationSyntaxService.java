@@ -9,9 +9,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackLinkObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -27,32 +24,38 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 public class StubNotationSyntaxService implements INotationSyntaxService {
 	private final INotationSubsystem notationSubsystem ;
 	private final IRootObjectType rootObjectType;
-	private final IShapeObjectType shapeAParentOfAllObjectType;
-	private final IShapeObjectType shapeBChildOfAllObjectType;
-	private final IShapeObjectType shapeCParentOfShapeDObjectType;
-	private final IShapeObjectType shapeDChildOfShapeCObjectType;
-	private final ILinkObjectType linkAConnectsShapesBToCAndDObjectType;
-	private final ILinkObjectType linkBConnectsShapesCToBObjectType;
+	private final IShapeObjectType shapeAObjectType;
+	private final IShapeObjectType shapeBObjectType;
+	private final IShapeObjectType shapeCObjectType;
+	private final IShapeObjectType shapeDObjectType;
+	private final ILinkObjectType linkAObjectType;
+	private final ILinkObjectType linkBObjectType;
+	private final ILinkObjectType linkCObjectType;
+	private final ILinkObjectType linkDObjectType;
 	private final Map<Integer, IShapeObjectType> shapes;
 	private final Map<Integer, ILinkObjectType> links;
 	
 	public StubNotationSyntaxService(INotationSubsystem notationSubsystem){
 		this.notationSubsystem = notationSubsystem;
 		this.rootObjectType = new StubRootObjectType(this);
-		this.shapeAParentOfAllObjectType = new StubShapeAParentOfAllObjectType(this);
-		this.shapeBChildOfAllObjectType = new StubShapeBChildOfAllObjectType(this);
-		this.shapeCParentOfShapeDObjectType = new StubShapeCParentOfShapeDObjectType(this);
-		this.shapeDChildOfShapeCObjectType = new StubShapeDChildOfShapeCObjectType(this);
-		this.linkAConnectsShapesBToCAndDObjectType = new StubLinkAConnectsShapesBToCAndDObjectType(this);
-		this.linkBConnectsShapesCToBObjectType = new StubLinkBConnectsShaesCToBObjectType(this);
+		this.shapeAObjectType = new StubShapeAObjectType(this);
+		this.shapeBObjectType = new StubShapeBObjectType(this);
+		this.shapeCObjectType = new StubShapeCObjectType(this);
+		this.shapeDObjectType = new StubShapeDObjectType(this);
+		this.linkAObjectType = new StubLinkAObjectType(this);
+		this.linkBObjectType = new StubLinkBObjectType(this);
+		this.linkCObjectType = new StubLinkCObjectType(this);
+		this.linkDObjectType = new StubLinkDObjectType(this);
 		this.shapes = new HashMap<Integer, IShapeObjectType>();
-		this.shapes.put(this.shapeAParentOfAllObjectType.getUniqueId(), this.shapeAParentOfAllObjectType);
-		this.shapes.put(this.shapeBChildOfAllObjectType.getUniqueId(), this.shapeBChildOfAllObjectType);
-		this.shapes.put(this.shapeCParentOfShapeDObjectType.getUniqueId(), this.shapeCParentOfShapeDObjectType);
-		this.shapes.put(this.shapeDChildOfShapeCObjectType.getUniqueId(), this.shapeDChildOfShapeCObjectType);
+		this.shapes.put(this.shapeAObjectType.getUniqueId(), this.shapeAObjectType);
+		this.shapes.put(this.shapeBObjectType.getUniqueId(), this.shapeBObjectType);
+		this.shapes.put(this.shapeCObjectType.getUniqueId(), this.shapeCObjectType);
+		this.shapes.put(this.shapeDObjectType.getUniqueId(), this.shapeDObjectType);
 		this.links = new HashMap<Integer, ILinkObjectType>();
-		this.links.put(this.linkAConnectsShapesBToCAndDObjectType.getUniqueId(), this.linkAConnectsShapesBToCAndDObjectType);
-		this.links.put(this.linkBConnectsShapesCToBObjectType.getUniqueId(), this.linkBConnectsShapesCToBObjectType);
+		this.links.put(this.linkAObjectType.getUniqueId(), this.linkAObjectType);
+		this.links.put(this.linkBObjectType.getUniqueId(), this.linkBObjectType);
+		this.links.put(this.linkCObjectType.getUniqueId(), this.linkCObjectType);
+		this.links.put(this.linkDObjectType.getUniqueId(), this.linkDObjectType);
 	}
 	
 	/* (non-Javadoc)
@@ -117,7 +120,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	public ILinkObjectType getLinkObjectType(int uniqueId) {
 		ILinkObjectType retVal=this.links.get(uniqueId);
 		if(retVal==null)// for object types that are present in setup data but not used in any test...
-			return new FallbackLinkObjectType(this,new HibObjectType(uniqueId,"","",ObjectTypeClassification.LINK));
+			throw new IllegalArgumentException("no object type with this uniqueId was found");
 		return retVal;
 	}
 
@@ -132,7 +135,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 				retVal = this.rootObjectType;
 			}
 			else if( retVal==null) // for object types that are present in setup data but not used in any test...
-				retVal=new FallbackObjectType();
+				throw new IllegalArgumentException("no object type with this uniqueId was found");
 		}
 		return retVal;
 	}
@@ -141,7 +144,11 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getShapeObjectType(int)
 	 */
 	public IShapeObjectType getShapeObjectType(int uniqueId) {
-		return this.shapes.get(uniqueId);
+		IShapeObjectType retVal = this.shapes.get(uniqueId);
+		if(retVal == null)
+			throw new IllegalArgumentException("no object type with this uniqueId was found");
+
+		return retVal;
 	}
 
 	/* (non-Javadoc)

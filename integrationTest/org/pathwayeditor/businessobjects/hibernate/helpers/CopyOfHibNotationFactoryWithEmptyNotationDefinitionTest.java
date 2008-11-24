@@ -30,7 +30,6 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotation;
-import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeAObjectType;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -38,18 +37,16 @@ import org.pathwayeditor.testutils.PojoTester;
  * @author smoodie
  *
  */
-public class HibNotationFactoryTest extends PojoTester {
+public class CopyOfHibNotationFactoryWithEmptyNotationDefinitionTest extends PojoTester {
 	private static final String SOURCE_DATA = "integrationTest/DbSourceData/DbSourceDataRefData.xml";
 	private static final String EXPECTED_GLOBAL_ID = "global id";
-	private static final String EXPECTED_NOTATION_NAME = "context name";
-	private static final Version EXPECTED_NOTATION_VERSION = new Version(100, 100, 100);
 	private static final String NEW_NOTATION_DATA = "integrationTest/org/pathwayeditor/businessobjects/hibernate/helpers/DbHibObjectTypeIntersionData.xml";
-	private HibNotationFactory testUnloadedInstance; 
+//	private HibNotationFactory testUnloadedInstance; 
 	private HibNotationFactory testLoadedNotationInstance; 
 	
 	@Override
 	protected void additionalSetup(){
-		this.testUnloadedInstance = new HibNotationFactory(getHibFactory(), new StubNotationSubSystem());
+//		this.testUnloadedInstance = new HibNotationFactory(getHibFactory(), new StubNotationSubSystem());
 		this.testLoadedNotationInstance = new HibNotationFactory(getHibFactory(), new StubLoadedNotationSubsystem());
 	}
 	
@@ -250,14 +247,14 @@ public class HibNotationFactoryTest extends PojoTester {
 		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getName()
 		 */
 		public String getName() {
-			return EXPECTED_NOTATION_NAME;
+			throw new UnsupportedOperationException("Not implemented");
 		}
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getVersion()
 		 */
 		public Version getVersion() {
-			return EXPECTED_NOTATION_VERSION;
+			throw new UnsupportedOperationException("Not implemented");
 		}
 
 		/* (non-Javadoc)
@@ -295,7 +292,7 @@ public class HibNotationFactoryTest extends PojoTester {
 		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#containsObjectType(int)
 		 */
 		public boolean containsObjectType(int uniqueID) {
-			return mapping.containsKey(uniqueID);
+			throw new UnsupportedOperationException("Not implemented");
 		}
 
 		/* (non-Javadoc)
@@ -372,7 +369,6 @@ public class HibNotationFactoryTest extends PojoTester {
 	
 	private static class StubObjectType1 implements IObjectType {
 		public static final int UNIQUE_ID = 1;
-		public static final String NAME = "objectName";
 		
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDescription()
@@ -385,7 +381,7 @@ public class HibNotationFactoryTest extends PojoTester {
 		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getName()
 		 */
 		public String getName() {
-			return NAME;
+			throw new UnsupportedOperationException("Not implemented");
 		}
 
 		/* (non-Javadoc)

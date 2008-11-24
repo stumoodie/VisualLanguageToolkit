@@ -17,6 +17,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
@@ -99,6 +100,27 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		}
 	}
 
+	public void injectLinkTerminusDefaults(ILinkTerminusDefinition terminusDefn) throws InconsistentNotationDefinitionException {
+		if(terminusDefn != null && !terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
+				&& terminusDefn.getLinkEndCode().equals(this.linkTermType)){
+			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
+		}
+		Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getLinkTerminusDefaults().propertyDefinitionIterator();
+		int propCntr = 0;
+		while(propDefnIter.hasNext()) {
+			IPropertyDefinition definition = propDefnIter.next();
+			HibProperty property = this.hibProperties.get(definition.getName());
+			if(property==null) {
+					throw new InconsistentNotationDefinitionException("The link terminus definition has property definitions which have no matching property in this Shape Attribute");
+			}
+			property.setPropertyDefinition(definition);
+			propCntr++;
+		}
+		if(propCntr != this.hibProperties.size()) {
+			throw new InconsistentNotationDefinitionException("Link terminus definition inconsistent with stored terminus properties. Cannot find definitions for some properties");
+		}
+	}
+	
 	public Long getId() {
 		return this.id;
 	}

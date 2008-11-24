@@ -19,6 +19,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyCha
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
@@ -197,8 +198,26 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.shapeObjectType;
 	}
 	
-	public void setShapeObjectType(IShapeObjectType shapeObjectType) {
+	public void injectShapeObjectType(IShapeObjectType shapeObjectType) throws InconsistentNotationDefinitionException {
 		this.shapeObjectType = shapeObjectType;
+		injectPropertyDefinitions();
+	}
+
+	private void injectPropertyDefinitions() throws InconsistentNotationDefinitionException {
+		Iterator<IPropertyDefinition> it = this.shapeObjectType.getDefaultAttributes().propertyDefinitionIterator();
+		int propCntr = 0;
+		while (it.hasNext()) {
+			IPropertyDefinition definition = it.next();
+			HibProperty property = this.hibProperties.get(definition.getName());
+			if(property==null) {
+					throw new InconsistentNotationDefinitionException("The object type has property definitions which have no matching property in this Shape Attribute");
+			}
+			property.setPropertyDefinition(definition);
+			propCntr++;
+		}
+		if(propCntr != this.hibProperties.size()) {
+			throw new InconsistentNotationDefinitionException("Object inconsistent with object type. Cannot find definitions for some properties");
+		}
 	}
 
 	public HibObjectType getHibObjectType () {
