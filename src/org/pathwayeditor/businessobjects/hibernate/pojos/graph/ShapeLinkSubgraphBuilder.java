@@ -45,4 +45,20 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 		this.subGraph = new ShapeLinkSubgraph(this.model);
 	}
 
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseSubCompoundGraphBuilder#addAdditionalEdges()
+	 */
+	@Override
+	protected void addAdditionalEdges() {
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseSubCompoundGraphBuilder#addAdditionalNodes()
+	 */
+	@Override
+	protected void addAdditionalNodes() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
