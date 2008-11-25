@@ -48,9 +48,9 @@ public class ILinkAttributeTest {
 	
 	private static final int LINK_INDEX = 1 ;
 	private static final int CREATION_SERIAL = 1 ;
-	private static final int INDEX_POS_1 = 1 ;
-	private static final int INDEX_POS_2 = 2 ;
-	private static final int INDEX_POS_3 = 3 ;
+//	private static final int INDEX_POS_1 = 1 ;
+//	private static final int INDEX_POS_2 = 2 ;
+//	private static final int INDEX_POS_3 = 3 ;
 	private static final int POS_VALUE_1 = 20 ;
 	private static final int POS_VALUE_2 = 30 ;
 	private static final int POS_VALUE_3 = 40 ;

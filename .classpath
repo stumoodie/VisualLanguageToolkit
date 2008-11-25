@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/pathwayeditor/businessobjects/hibernate/helpers/ShapeAttributesForCanvasBuilder.java" kind="src" path="src"/>
-	<classpathentry excluding="org/pathwayeditor/bussinessobjects/stubs/notationsubsystem/FallbackObjectType.java" kind="src" path="stubs"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="stubs"/>
 	<classpathentry kind="src" path="Acceptance Test"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry excluding="org/pathwayeditor/businessobjects/hibernate/helpers/CopyOfHibNotationFactoryWithEmptyNotationDefinitionTest.java" kind="src" path="integrationTest"/>
+	<classpathentry kind="src" path="integrationTest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit4.4/junit-4.4.jar" sourcepath="lib/junit4.4/junit-4.4-src.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/hibernate3.jar" sourcepath="lib/hibernate-3.2/src"/>

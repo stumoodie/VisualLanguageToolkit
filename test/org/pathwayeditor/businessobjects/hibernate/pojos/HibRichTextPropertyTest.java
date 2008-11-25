@@ -31,7 +31,7 @@ public class HibRichTextPropertyTest {
 	private static final int 	CREATION_SERIAL = 12345 ;
 	
 	private static final String NEW_PROPERTY_VALUE 	= "New property value" ;
-	private static final int 	NEW_CREATION_SERIAL = 54321 ;
+//	private static final int 	NEW_CREATION_SERIAL = 54321 ;
 	
 	private HibCanvas mockCanvas ;
 	private HibRichTextProperty richTextProperty ;
