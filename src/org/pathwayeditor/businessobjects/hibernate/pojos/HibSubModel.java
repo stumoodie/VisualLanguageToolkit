@@ -185,7 +185,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 
 	public int numShapeNodes() {
 		int cnt = 0;
-		Iterator<IShapeNode> iter = this.shapeIterator();
+		Iterator<IShapeNode> iter = this.shapeNodeIterator();
 		while(iter.hasNext()){
 			iter.next() ;
 			cnt++;
@@ -207,7 +207,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		super.moveHere(subgraph);
 	}
 
-	public Iterator<IShapeNode> shapeIterator() {
+	public Iterator<IShapeNode> shapeNodeIterator() {
 		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
 		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
 	}

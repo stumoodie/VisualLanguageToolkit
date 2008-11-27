@@ -109,7 +109,7 @@ public interface ISubModel extends ISubModelChangeListenee {
 	 * traversal will proceed down the tree until all nodes are traversed.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IShapeNode> shapeIterator();
+	Iterator<IShapeNode> shapeNodeIterator();
 	
 	/**
 	 * Traverses over the list of links in this sub-model.

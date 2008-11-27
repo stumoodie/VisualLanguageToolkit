@@ -64,12 +64,14 @@ public interface ICanvas extends IPropertyChangeListenee{
 	RGB getBackgroundColour();
 	
 	/**
-	 * Get the Context assosiated with this Canvas.
+	 * Get the Context associated with this Canvas.
 	 * @return the context. Cannot be null.
 	 */	
 	INotationSubsystem getNotationSubsystem();
 	
 	/**
+	 * @deprecated not updated currently and may be removed in the future. In order to monitor changes
+	 * to the model then add a listener to it or a property change listener to this canvas.
 	 * Get the date this Canvas was last modified.
 	 * @return the Date of last modification. Cannot be null.
 	 */	
@@ -99,6 +101,11 @@ public interface ICanvas extends IPropertyChangeListenee{
 	 */
 	IModel getModel();
 
+	/**
+	 * Is this canvas empty, i.e. does it contain any drawing elements?
+	 * @return true if it is, false otherwise.
+	 */
+	boolean isEmpty();
 	
 	/**
 	 * Tests if the given canvas can be copied into this one. This requires that the 

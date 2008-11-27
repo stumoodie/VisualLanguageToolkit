@@ -206,7 +206,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		dbNotationSubSystem = dbCanvas.getNotationSubsystem() ;
 		
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
+		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeNodeIterator() ;
 		
 		while ( rootNodeChildrenIterator.hasNext())
 		{
@@ -223,7 +223,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
+		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeNodeIterator() ;
 		while ( shape1ChildIterator.hasNext())
 		{
 			IShapeNode tempShapeNode = shape1ChildIterator.next();
@@ -240,7 +240,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
+		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeNodeIterator() ;
 		while ( shape2ChildIterator.hasNext())
 		{
 			IShapeNode tempShapeNode = shape2ChildIterator.next();
@@ -257,9 +257,9 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 			
 		}
 		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
+		shapeNode7 = shapeNode6.getSubModel().shapeNodeIterator().next() ;
 		
-		shapeNode8 = shapeNode7.getSubModel().shapeIterator().next() ;
+		shapeNode8 = shapeNode7.getSubModel().shapeNodeIterator().next() ;
 		
 		
 		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
@@ -430,7 +430,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		
 		objectSelection.addDrawingNode(this.shapeNode8);
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after removal", this.dbModel.isValid());
 		map1Manager.synchronise() ;
 		this.compareDatabase(DELETED_NODE_VALIDATION);
@@ -445,7 +445,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		objectSelection.addDrawingNode(labelNode1);
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after removal", this.dbModel.isValid());
 		map1Manager.synchronise() ;
 		this.compareDatabase(DELETED_LABEL_VALIDATION);
@@ -459,7 +459,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().moveHere(objectSelection.createSelection()) ;
+		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after move", dbRootNode.getModel().isValid());
 		map1Manager.synchronise() ;
 		this.compareDatabase(MOVED_NODE_VALIDATION);
@@ -480,7 +480,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
+		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after copy", dbRootNode.getModel().isValid());
 		assertEquals("root has an extra shape", NUM_ROOT_NODE_SHAPES + 1, this.dbModel.getRootNode().getSubModel().numShapeNodes());
 		assertEquals("root has an same labels", NUM_ROOT_NODE_LABELS, this.dbModel.getRootNode().getSubModel().numLabelNodes());
@@ -497,7 +497,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode1) ;
 		objectSelection.addDrawingNode(shapeNode2) ;
-		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
+		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after copy", dbRootNode.getModel().isValid());
 		IModel model = this.dbCanvas.getModel();
 		ISubModel rootModel = model.getRootNode().getSubModel();
@@ -520,7 +520,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addLink(linkEdge1) ;
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after delete", dbRootNode.getModel().isValid());
 		map1Manager.synchronise() ;
 		this.compareDatabase(DELETED_EDGE_VALIDATION);
@@ -536,7 +536,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(shapeNode3) ;
 		objectSelection.addDrawingNode(shapeNode7) ;
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise() ;
 		this.compareDatabase(DELETED_TWO_SHAPES_VALIDATION);
 	}
@@ -550,7 +550,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode1) ;
 		objectSelection.addDrawingNode(shapeNode2) ;
-		this.dbModel.removeSubgraph(objectSelection.createSelection());
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection());
 		map1Manager.synchronise() ;
 		this.compareDatabase(DELETED_ALL_VALIDATION);
 	}
@@ -640,7 +640,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode1) ;
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		
 		map1Manager.synchronise() ;
 		
@@ -684,7 +684,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().moveHere(objectSelection.createSelection()) ;
+		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise() ;
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
@@ -703,7 +703,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode8) ;
 		
-		dbRootNode.getSubModel().copyHere(objectSelection.createSelection()) ;
+		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise() ;
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
@@ -723,7 +723,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(labelNode1) ;
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		
 		map1Manager.synchronise() ;
 		
@@ -741,7 +741,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addLink(linkEdge1) ;
 		
-		this.dbModel.removeSubgraph(objectSelection.createSelection()) ;
+		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise() ;
 		
 		this.dbCanvas.getModel().restoreToState(savedOriginalState) ;

@@ -588,7 +588,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		int numOfShapeNodes = 0 ;
 		
-		Iterator <IShapeNode> shapeIterator = dbRootNode.getSubModel().shapeIterator() ;
+		Iterator <IShapeNode> shapeIterator = dbRootNode.getSubModel().shapeNodeIterator() ;
 		
 		while ( shapeIterator.hasNext())
 		{
@@ -788,7 +788,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		int numOfShapeNodes = 0 ;
 		
-		Iterator <IShapeNode> shapeIterator = shapeNode6.getSubModel().shapeIterator() ;
+		Iterator <IShapeNode> shapeIterator = shapeNode6.getSubModel().shapeNodeIterator() ;
 		
 		while ( shapeIterator.hasNext())
 		{
@@ -829,7 +829,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		int numOfShapeNodes = 0 ;
 		
-		Iterator <IShapeNode> shapeIterator = shapeNode7.getSubModel().shapeIterator() ;
+		Iterator <IShapeNode> shapeIterator = shapeNode7.getSubModel().shapeNodeIterator() ;
 		
 		while ( shapeIterator.hasNext())
 		{
@@ -870,7 +870,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		int numOfShapeNodes = 0 ;
 		
-		Iterator <IShapeNode> shapeIterator = shapeNode8.getSubModel().shapeIterator() ;
+		Iterator <IShapeNode> shapeIterator = shapeNode8.getSubModel().shapeNodeIterator() ;
 		
 		while ( shapeIterator.hasNext())
 		{

@@ -45,10 +45,19 @@ public interface ISelectionFactory {
 	
 	/**
 	 * Creates a new selection object based on the nodes and edges added to this factory.
-	 * It is effectively a "view" of the model.
+	 * It is effectively a "view" of the model. A general selection is suitable for removal operations
+	 * and can contain unattached links. It should not be used to generate a selection used in a copy or
+	 * move operation.
 	 * @return the drawing element selection object which cannot be null, but may be empty.
 	 */
-	IDrawingElementSelection createSelection();
+	IDrawingElementSelection createGeneralSelection();
+	
+//	/**
+//	 * Creates a new selection object based on the nodes and edges added to this factory.
+//	 * It is effectively a "view" of the model. This can be used for copy and move operations.
+//	 * @return the drawing element selection object which cannot be null, but may be empty.
+//	 */
+//	IDrawingElementSelection createCopiableSelection();
 	
 	/**
 	 * Gets the number of link edges added to this factory.

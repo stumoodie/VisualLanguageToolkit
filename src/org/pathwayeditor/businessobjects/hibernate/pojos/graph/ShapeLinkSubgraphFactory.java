@@ -69,7 +69,7 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory#createSelection()
 	 */
-	public IDrawingElementSelection createSelection() {
+	public IDrawingElementSelection createGeneralSelection() {
 		return this.createPermissiveInducedSubgraph();
 	}
 
