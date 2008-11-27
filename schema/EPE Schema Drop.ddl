@@ -39,8 +39,6 @@ alter table LinkAttribute drop constraint Relationship301;
 alter table ShapeAttributeProperty drop constraint Relationship141;
 alter table LinkAttributeProperty drop constraint Relationship143;
 alter table LinkAttributeProperty drop constraint Relationship142;
-alter table LinkAttribute drop constraint Relationship144;
-alter table LinkAttribute drop constraint Relationship145;
 alter table LinkTerminus drop constraint Relationship147;
 alter table Repository drop constraint Relationship63;
 alter table LabelAttribute drop constraint Relationship444;

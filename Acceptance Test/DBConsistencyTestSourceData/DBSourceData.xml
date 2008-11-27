@@ -845,8 +845,6 @@
 		<column>creation_serial</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
-		<column>source_terminus_id</column>
-		<column>target_terminus_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
 		<column>description</column>
@@ -863,8 +861,6 @@
 			<value>1</value>
 			<value>1</value>
 			<value>100005</value>
-			<value>100001</value><!-- CREATE TERMINUS DECORATORS FOR ALL THE LINKS -->
-			<value>100002</value>
 			<value>link_name1</value>
 			<value>link_detailed_descr1</value>
 			<value>link_descr1</value>
@@ -882,8 +878,6 @@
 			<value>2</value>
 			<value>1</value>
 			<value>100006</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name2</value>
 			<value>link_detailed_descr2</value>
 			<value>link_descr2</value>
@@ -901,8 +895,6 @@
 			<value>3</value>
 			<value>0</value>
 			<value>100007</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name3</value>
 			<value>link_detailed_descr3</value>
 			<value>link_descr3</value>
@@ -920,8 +912,6 @@
 			<value>4</value>
 			<value>0</value>
 			<value>100008</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name4</value>
 			<value>link_detailed_descr4</value>
 			<value>link_descr4</value>
@@ -939,8 +929,6 @@
 			<value>5</value>
 			<value>0</value>
 			<value>100005</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name5</value>
 			<value>link_detailed_descr5</value>
 			<value>link_descr5</value>
@@ -958,8 +946,6 @@
 			<value>6</value>
 			<value>0</value>
 			<value>100006</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name6</value>
 			<value>link_detailed_descr6</value>
 			<value>link_descr6</value>
@@ -977,8 +963,6 @@
 			<value>7</value>
 			<value>0</value>
 			<value>100007</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name7</value>
 			<value>link_detailed_descr7</value>
 			<value>link_descr7</value>
@@ -996,8 +980,6 @@
 			<value>8</value>
 			<value>0</value>
 			<value>100008</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name8</value>
 			<value>link_detailed_descr8</value>
 			<value>link_descr8</value>
@@ -1015,8 +997,6 @@
 			<value>9</value>
 			<value>0</value>
 			<value>100008</value>
-			<value>100001</value>
-			<value>100001</value>
 			<value>link_name9</value>
 			<value>link_detailed_descr9</value>
 			<value>link_descr9</value>

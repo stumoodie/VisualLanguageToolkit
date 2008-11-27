@@ -485,8 +485,6 @@
 		<column>creation_serial</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
-		<column>source_terminus_id</column>
-		<column>target_terminus_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
 		<column>description</column>
@@ -503,8 +501,6 @@
 			<value>2</value>
 			<value>0</value>
 			<value>100001</value>
-			<value>100001</value>
-			<value>100002</value>
 			<value>link_name</value>
 			<value>link_detailed_descr</value>
 			<value>link_descr</value>

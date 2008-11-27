@@ -154,8 +154,6 @@
 		<column>canvas_id</column>
 		<column>creation_serial</column>
 		<column>object_type_id</column>
-		<column>source_terminus_id</column>
-		<column>target_terminus_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
 		<column>description</column>
