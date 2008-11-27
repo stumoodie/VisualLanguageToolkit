@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
@@ -12,7 +13,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableP
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
@@ -31,7 +31,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private Size size = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private HibProperty visualisableProperty;
 	private RGB background;
-//	private HibLabelNode labelNode;
+	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
 	private boolean isDisplayed ;
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
@@ -55,12 +55,10 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.getCanvas().getLabelAttributes().add(this) ;
 	}
 
-	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibLabelAttribute otherAttribute) {
+	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibLabelAttribute otherAttribute, HibProperty copiedProperty) {
 		this.hibCanvas = hibCanvas;
 		this.creationSerial = creationSerial;
-		PropertyBuilder propertyBuilder = new PropertyBuilder(hibCanvas);
-		IPropertyDefinition defn = otherAttribute.getProperty().getDefinition();
-		this.visualisableProperty = (HibProperty)defn.copyProperty(propertyBuilder, otherAttribute.getProperty());
+		this.visualisableProperty = copiedProperty;
 		this.position = otherAttribute.position;
 		this.size = otherAttribute.size;
 		this.background = otherAttribute.background;
@@ -120,13 +118,13 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		return this.position;
 	}
 
-//	public HibLabelNode getLabelNode() {
-//		return this.labelNode;
-//	}
-//
-//	public void setLabelNode(HibLabelNode nodeId) {
-//		this.labelNode = nodeId;
-//	}
+	public HibLabelNode getLabelNode() {
+		return this.labelNode;
+	}
+
+	void setLabelNode(HibLabelNode node) {
+		this.labelNode = node;
+	}
 
 	public void setXPosition(int XPosition) {
 		this.position = this.position.newX(XPosition);
@@ -232,7 +230,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
 	 * getProperty()
 	 */
-	public IAnnotationProperty getProperty() {
+	public HibProperty getProperty() {
 		return this.visualisableProperty;
 	}
 
@@ -361,6 +359,20 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 */
 	public void removeChangeListener(IPropertyChangeListener listener) {
 		this.removeChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getCurrentDrawingElement()
+	 */
+	public ILabelNode getCurrentDrawingElement() {
+		return this.labelNode;
+	}
+
+	public boolean isValid() {
+		return this.objectType != null && this.labelNode != null
+			// note: check by reference below is deliberate as hibernate needs it to be the same object
+			&& this.labelNode.getAttribute() == this
+			&& this.visualisableProperty != null;
 	}
 
 }

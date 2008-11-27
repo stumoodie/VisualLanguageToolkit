@@ -40,6 +40,14 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		this.secondRelativeDimension = secondRelativeDimension;
 	}
 
+	public HibBendPoint(HibLinkAttribute newOwningLink, HibBendPoint otherBendPoint) {
+		this.owningLink = newOwningLink;
+		this.creationSerial = otherBendPoint.creationSerial;
+		this.position = otherBendPoint.position;
+		this.firstRelativeDimension = otherBendPoint.firstRelativeDimension;
+		this.secondRelativeDimension = otherBendPoint.secondRelativeDimension;
+	}
+
 	public Long getId() {
 		return this.id;
 	}

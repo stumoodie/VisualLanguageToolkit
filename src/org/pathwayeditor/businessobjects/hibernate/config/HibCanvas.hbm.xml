@@ -55,8 +55,17 @@
         <property name="modified" type="java.util.Date">
         	<column name="last_modified" not-null="true"/> 
         </property>
-        <property name="lastCreationSerial" type="int" access="property">
-        	<column name="last_creation_serial" not-null="true" />
+        <property name="lastShapeSerial" type="int" access="property">
+        	<column name="last_shape_serial" not-null="true" />
+        </property>
+        <property name="lastLinkSerial" type="int" access="property">
+        	<column name="last_link_serial" not-null="true" />
+        </property>
+        <property name="lastLabelSerial" type="int" access="property">
+        	<column name="last_label_serial" not-null="true" />
+        </property>
+        <property name="lastPropertyCreationSerial" type="int" access="property">
+        	<column name="last_prop_creation_serial" not-null="true" />
         </property>
         <set name="shapeAttributes" inverse="true" table="shapeAttribute" cascade="all,delete-orphan">
             <key>

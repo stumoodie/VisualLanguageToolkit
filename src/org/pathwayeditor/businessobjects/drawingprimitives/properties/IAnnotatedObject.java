@@ -13,7 +13,15 @@ import java.util.Iterator;
 public interface IAnnotatedObject {
 
 	Iterator<IAnnotationProperty> propertyIterator();
+
+	int numProperties();
 	
+	boolean containsProperty(IAnnotationProperty propDefn);
+
+	boolean containsProperty(IPropertyDefinition propDefn);
+	
+	boolean containsProperty(String propName);
+
 	IAnnotationProperty getProperty(IPropertyDefinition propDefn);
 	
 	IAnnotationProperty getProperty(String propName);

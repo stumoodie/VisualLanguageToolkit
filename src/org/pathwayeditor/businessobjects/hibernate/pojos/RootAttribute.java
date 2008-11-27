@@ -4,6 +4,8 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
@@ -15,6 +17,7 @@ public class RootAttribute implements ICanvasAttribute {
 	private final HibCanvas canvas;
 	private final int creationSerial;
 	private final IRootObjectType objectType;
+	private IRootNode rootNode;
 	
 	public RootAttribute(HibCanvas canvas, int creationSerial, IRootObjectType objectType) {
 		this.canvas = canvas;
@@ -59,5 +62,21 @@ public class RootAttribute implements ICanvasAttribute {
 		builder.append(this.getCreationSerial());
 		builder.append("]");
 		return builder.toString();
+	}
+
+	void setRootNode(IRootNode rootNode) {
+		this.rootNode = rootNode;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getCurrentDrawingElement()
+	 */
+	public IDrawingElement getCurrentDrawingElement() {
+		return this.rootNode;
+	}
+
+	public boolean isValid() {
+		return this.objectType != null && this.canvas != null
+			&& this.creationSerial < 0 && this.canvas.findAttribute(this.creationSerial) == null;
 	}
 }

@@ -5,9 +5,10 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +38,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnot
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
+import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -51,102 +53,7 @@ import org.pathwayeditor.testutils.GenericTester;
 public class LoadDataFromFileTest extends GenericTester{
 	
 	private IRepository repository;
-	private IRootFolder rootFolder ;
-	private ISubFolder subFolder1 ;
-	private ISubFolder subFolder2 ;
-	private IMap mapDiagram1 ;
-	private IMap mapDiagram2 ;
 	private ICanvas dbCanvas ;
-	private IModel dbModel ;
-	private IRootNode dbRootNode ;
-	
-	private IShapeNode shapeNode1 ;
-	private IShapeNode shapeNode2 ;
-	private IShapeNode shapeNode3 ;
-	private IShapeNode shapeNode4 ;
-	private IShapeNode shapeNode5 ;
-	private IShapeNode shapeNode6 ;
-	private IShapeNode shapeNode7 ;
-	private IShapeNode shapeNode8 ;
-	
-	private IShapeAttribute shapeAttribute1 ;
-	private IShapeAttribute shapeAttribute2 ;
-	private IShapeAttribute shapeAttribute3 ;
-	private IShapeAttribute shapeAttribute4 ;
-	private IShapeAttribute shapeAttribute5 ;
-	private IShapeAttribute shapeAttribute6 ;
-	private IShapeAttribute shapeAttribute7 ;
-	private IShapeAttribute shapeAttribute8 ;
-	
-	private ILabelNode labelNode1 ;
-	private ILabelNode labelNode2 ;
-	private ILabelNode labelNode3 ;
-	private ILabelNode labelNode4 ;
-	private ILabelNode labelNode5 ;
-	private ILabelNode labelNode6 ;
-	private ILabelNode labelNode7 ;
-	private ILabelNode labelNode8 ;
-	
-	private ILabelAttribute labelAttribute1 ;
-	private ILabelAttribute labelAttribute2 ;
-	private ILabelAttribute labelAttribute3 ;
-	private ILabelAttribute labelAttribute4 ;
-	private ILabelAttribute labelAttribute5 ;
-	private ILabelAttribute labelAttribute6 ;
-	private ILabelAttribute labelAttribute7 ;
-	private ILabelAttribute labelAttribute8 ;
-	
-	private ILinkEdge linkEdge1 ;
-	private ILinkEdge linkEdge2 ;
-	private ILinkEdge linkEdge3;
-	private ILinkEdge linkEdge4 ;
-	private ILinkEdge linkEdge5 ;
-	private ILinkEdge linkEdge6 ;
-	private ILinkEdge linkEdge7 ;
-	private ILinkEdge linkEdge8 ;
-	private ILinkEdge linkEdge9 ;
-	
-	private ILinkAttribute linkAttribute1 ;
-	private ILinkAttribute linkAttribute2 ;
-	private ILinkAttribute linkAttribute3 ;
-	private ILinkAttribute linkAttribute4 ;
-	private ILinkAttribute linkAttribute5 ;
-	private ILinkAttribute linkAttribute6 ;
-	private ILinkAttribute linkAttribute7 ;
-	private ILinkAttribute linkAttribute8 ;
-	private ILinkAttribute linkAttribute9 ;
-	
-	private IAnnotationProperty property1 ;
-	private IAnnotationProperty property2 ;
-	private IAnnotationProperty property3 ;
-	private IAnnotationProperty property4 ;
-	private IAnnotationProperty property5 ;
-	private IAnnotationProperty property6 ;
-	private IAnnotationProperty property7 ;
-	private IAnnotationProperty property8 ;
-	
-	private ILinkTerminus linkTerminus1 ;
-	private ILinkTerminus linkTerminus2 ;
-	private ILinkTerminus linkTerminus3 ;
-	private ILinkTerminus linkTerminus4 ;
-	private ILinkTerminus linkTerminus5 ;
-	private ILinkTerminus linkTerminus6 ;
-	private ILinkTerminus linkTerminus7 ;
-	private ILinkTerminus linkTerminus8 ;
-	private ILinkTerminus linkTerminus9 ;
-	private ILinkTerminus linkTerminus10 ;
-	private ILinkTerminus linkTerminus11 ;
-	private ILinkTerminus linkTerminus12 ;
-	private ILinkTerminus linkTerminus13 ;
-	private ILinkTerminus linkTerminus14 ;
-	private ILinkTerminus linkTerminus15 ;
-	private ILinkTerminus linkTerminus16 ;
-	private ILinkTerminus linkTerminus17 ;
-	private ILinkTerminus linkTerminus18 ;
-	
-	
-	private IBendPoint bendpoint1 ;
-	private IBendPoint bendpoint2 ;
 	
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String ROOT_FOLDER_PATH = "/" ;
@@ -236,7 +143,9 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int MAP_DIAGRAM2_INODE = 5 ;
 	private static final int DATE_CHECK =1 ;
 	private static final int MONTH_CHECK =0 ;
-	private static final int YEAR_CHECK =70 ;
+	private static final int YEAR_CHECK = 1970 ;
+	private static final int HOUR_CHECK = 0;
+	private static final int MIN_CHECK = 0;
 	
 	private static final int ROOT_NODE_INDEX = 0 ;
 	private static final int SHAPENODE1_INDEX = 1 ;
@@ -267,23 +176,23 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int NUM_OF_SHAPENODE7_SHAPE_CHILDREN = 1 ;
 	private static final int NUM_OF_SHAPENODE8_SHAPE_CHILDREN = 0 ;
 	
-	private static final int NUM_OF_ROOTNODE_LABEL_CHILDREN = 3 ;
+	private static final int NUM_OF_ROOTNODE_LABEL_CHILDREN = 4 ;
 	private static final int NUM_OF_SHAPENODE1_LABEL_CHILDREN = 1 ;
-	private static final int NUM_OF_SHAPENODE2_LABEL_CHILDREN = 2 ;
-	private static final int NUM_OF_SHAPENODE3_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE4_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE2_LABEL_CHILDREN = 1 ;
+	private static final int NUM_OF_SHAPENODE3_LABEL_CHILDREN = 1 ;
+	private static final int NUM_OF_SHAPENODE4_LABEL_CHILDREN = 1;
 	private static final int NUM_OF_SHAPENODE5_LABEL_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE6_LABEL_CHILDREN = 1 ;
-	private static final int NUM_OF_SHAPENODE7_LABEL_CHILDREN = 1 ;
+	private static final int NUM_OF_SHAPENODE6_LABEL_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE7_LABEL_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE8_LABEL_CHILDREN = 0 ;
 	
-	private static final int NUM_OF_ROOTNODE_LINK_CHILDREN = 5  ;
+	private static final int NUM_OF_ROOTNODE_LINK_CHILDREN = 4  ;
 	private static final int NUM_OF_SHAPENODE1_LINK_CHILDREN = 2 ;
-	private static final int NUM_OF_SHAPENODE2_LINK_CHILDREN = 2 ;
+	private static final int NUM_OF_SHAPENODE2_LINK_CHILDREN = 1 ;
 	private static final int NUM_OF_SHAPENODE3_LINK_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE4_LINK_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE5_LINK_CHILDREN = 0 ;
-	private static final int NUM_OF_SHAPENODE6_LINK_CHILDREN = 0 ;
+	private static final int NUM_OF_SHAPENODE6_LINK_CHILDREN = 2 ;
 	private static final int NUM_OF_SHAPENODE7_LINK_CHILDREN = 0 ;
 	private static final int NUM_OF_SHAPENODE8_LINK_CHILDREN = 0 ;
 	
@@ -295,6 +204,26 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int SHAPE_ATTRIBUTE6_CREATION_SERIAL = 6 ;
 	private static final int SHAPE_ATTRIBUTE7_CREATION_SERIAL = 7 ;
 	private static final int SHAPE_ATTRIBUTE8_CREATION_SERIAL = 8 ;
+	
+	private static final int LINK_ATTRIBUTE1_SERIAL = 1; 
+	private static final int LINK_ATTRIBUTE2_SERIAL = 2; 
+	private static final int LINK_ATTRIBUTE3_SERIAL = 3; 
+	private static final int LINK_ATTRIBUTE4_SERIAL = 4; 
+	private static final int LINK_ATTRIBUTE5_SERIAL = 5; 
+	private static final int LINK_ATTRIBUTE6_SERIAL = 6; 
+	private static final int LINK_ATTRIBUTE7_SERIAL = 7; 
+	private static final int LINK_ATTRIBUTE8_SERIAL = 8; 
+	private static final int LINK_ATTRIBUTE9_SERIAL = 9; 
+
+	private static final int LABEL_ATTRIBUTE1_CREATION_SERIAL = 1;
+	private static final int LABEL_ATTRIBUTE2_CREATION_SERIAL = 2;
+	private static final int LABEL_ATTRIBUTE3_CREATION_SERIAL = 3;
+	private static final int LABEL_ATTRIBUTE4_CREATION_SERIAL = 4;
+	private static final int LABEL_ATTRIBUTE5_CREATION_SERIAL = 5;
+	private static final int LABEL_ATTRIBUTE6_CREATION_SERIAL = 6;
+	private static final int LABEL_ATTRIBUTE7_CREATION_SERIAL = 7;
+	private static final int LABEL_ATTRIBUTE8_CREATION_SERIAL = 8;
+
 	
 	private static final int SHAPE_ATTRIBUTE1_LINE_WIDTH = 1 ;
 	private static final int SHAPE_ATTRIBUTE2_LINE_WIDTH = 2 ;
@@ -323,16 +252,6 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int LINK_EDGE7_INDEX = 6 ;
 	private static final int LINK_EDGE8_INDEX = 7 ;
 	private static final int LINK_EDGE9_INDEX = 8 ;
-	
-	private static final int LINK_ATTRIBUTE1_SERIAL = 1 ; 
-	private static final int LINK_ATTRIBUTE2_SERIAL = 2 ; 
-	private static final int LINK_ATTRIBUTE3_SERIAL = 3 ; 
-	private static final int LINK_ATTRIBUTE4_SERIAL = 4 ; 
-	private static final int LINK_ATTRIBUTE5_SERIAL = 5 ; 
-	private static final int LINK_ATTRIBUTE6_SERIAL = 6 ; 
-	private static final int LINK_ATTRIBUTE7_SERIAL = 7 ; 
-	private static final int LINK_ATTRIBUTE8_SERIAL = 8 ; 
-	private static final int LINK_ATTRIBUTE9_SERIAL = 9 ; 
 	
 	private static final int NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN = 0 ;
 	private static final int NUM_OF_ANY_LABELNODE_LABEL_CHILDREN = 0 ;
@@ -474,6 +393,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	
 	private static final LinkEndDecoratorShape END_DECORATOR_TYPE_SOURCE = LinkEndDecoratorShape.DIAMOND ;
 	private static final LinkEndDecoratorShape END_DECORATOR_TYPE_TARGET = LinkEndDecoratorShape.ARROW ;
+	private static final String MAP_PATH = "/subfolder1/Diagram name";
+
+	private static final String MAP_DIAGRAM1_PATH = "/subfolder1/Diagram name";
+
+	private static final String MAP_DIAGRAM2_PATH = "/subfolder2/Diagram name2";
+	private static final int EXPECTED_NUM_LINK1_BENDPOINTS = 1;
+	private static final int FIRST_LINK1_BENDPOINT = 0;
+	private static final int FIRST_LINK2_BENDPOINT = 0;
+	private static final int EXPECTED_NUM_LINK2_BENDPOINTS = 1;
+	private static final int NUM_MODEL_LINK_EDGES = 9;
+	private static final int NUM_MODEL_SHAPE_NODES = 8;
+	private static final int NUM_MODEL_LABEL_NODES = 8;
+	private static final int NUM_MODEL_DRAWING_NODES = NUM_MODEL_SHAPE_NODES + NUM_MODEL_LABEL_NODES;
 	
 	
 	
@@ -490,217 +422,20 @@ public class LoadDataFromFileTest extends GenericTester{
 			throw new RuntimeException(e);
 		}
 	
-		
+		loadObjects();
 		
 	}
 	
-	private void loadObjects () throws Exception
-	{
+	private void loadObjects ()	{
+		try {
+			IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
 		
-		rootFolder = repository.getRootFolder() ;
-		
-		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
-		subFolder2 = (ISubFolder)repository.getFolderByPath( SUBFOLDER2_PATH) ;
-		
-		mapDiagram1 = subFolder1.getMapIterator().next() ;
-		mapDiagram2 = subFolder2.getMapIterator().next() ;
-		
-		IMapContentPersistenceManager map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram1) ;
-		map1Manager.loadContent() ;
-		dbCanvas = map1Manager.getCanvas() ;
-		
-		dbModel = dbCanvas.getModel() ;
-		dbRootNode = dbModel.getRootNode() ;
-//		
-//		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-//		
-//		while ( rootNodeChildrenIterator.hasNext())
-//		{
-//			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-//			
-//			if ( tempShapeNode.getIndex() ==1 )
-//			{
-//				shapeNode1 = tempShapeNode ;
-//				shapeAttribute1 = tempShapeNode.getAttribute() ;
-//			}
-//			else
-//			{
-//				shapeNode2 = tempShapeNode ;
-//				shapeAttribute2 = tempShapeNode.getAttribute() ;
-//			}
-//			
-//		}
-//		
-//		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
-//		while ( shape1ChildIterator.hasNext())
-//		{
-//			IShapeNode tempShapeNode = shape1ChildIterator.next();
-//			
-//			if ( tempShapeNode.getIndex() ==3 )
-//			{
-//				shapeNode3 = tempShapeNode ;
-//				shapeAttribute3 = tempShapeNode.getAttribute() ;
-//			}
-//			else
-//			if  ( tempShapeNode.getIndex() ==4 )
-//			{
-//				shapeNode4 = tempShapeNode ;
-//				shapeAttribute4 = tempShapeNode.getAttribute() ;
-//			}
-//			
-//		}
-//		
-//		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-//		while ( shape2ChildIterator.hasNext())
-//		{
-//			IShapeNode tempShapeNode = shape2ChildIterator.next();
-//			
-//			if ( tempShapeNode.getIndex() ==5 )
-//			{
-//				shapeNode5 = tempShapeNode ;
-//				shapeAttribute5 = tempShapeNode.getAttribute() ;
-//			}
-//			else
-//			if  ( tempShapeNode.getIndex() ==6 )
-//			{
-//				shapeNode6 = tempShapeNode ;
-//				shapeAttribute6  = tempShapeNode.getAttribute() ;
-//			}
-//			
-//		}
-//		
-//		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-//		shapeAttribute7 = shapeNode7.getAttribute() ;
-//		
-//		shapeNode8 = shapeNode7.getSubModel().shapeIterator().next() ;
-//		shapeAttribute8 = shapeNode8.getAttribute() ;
-//		
-//		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-//		
-//		while ( rootNodeEdges.hasNext())
-//		{
-//			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-//			
-//			if ( tempLinkEdge.getIndex() == 0 )
-//			{
-//				linkEdge1 = tempLinkEdge ;
-//				linkAttribute1 = tempLinkEdge.getAttribute() ;
-//				bendpoint1 = linkAttribute1.bendPointIterator().next() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 1 )
-//			{
-//				linkEdge2 = tempLinkEdge ;
-//				linkAttribute2 = tempLinkEdge.getAttribute() ;
-//				bendpoint2 = linkAttribute2.bendPointIterator().next() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 2 )
-//			{
-//				linkEdge3 = tempLinkEdge ;
-//				linkAttribute3 = tempLinkEdge.getAttribute() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 3 )
-//			{
-//				linkEdge4 = tempLinkEdge ;
-//				linkAttribute4 = tempLinkEdge.getAttribute() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 6 )
-//			{
-//				linkEdge7 = tempLinkEdge ;
-//				linkAttribute7 = tempLinkEdge.getAttribute() ;
-//			}
-//		}
-//		
-//		Iterator<ILinkEdge> shapeNode1Edges = shapeNode1.getSubModel().linkIterator() ;
-//		while ( shapeNode1Edges.hasNext())
-//		{
-//			ILinkEdge tempLinkEdge = shapeNode1Edges.next() ;
-//			
-//			if ( tempLinkEdge.getIndex() == 7 )
-//			{
-//				linkEdge8 = tempLinkEdge ;
-//				linkAttribute8 = tempLinkEdge.getAttribute() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 8 )
-//			{
-//				linkEdge9 = tempLinkEdge ;
-//				linkAttribute9 = tempLinkEdge.getAttribute() ;
-//			}
-//		}
-//		
-//		Iterator<ILinkEdge> shapeNode2Edges = shapeNode2.getSubModel().linkIterator() ;
-//		while ( shapeNode2Edges.hasNext())
-//		{
-//			ILinkEdge tempLinkEdge = shapeNode2Edges.next() ;
-//			
-//			if ( tempLinkEdge.getIndex() == 4 )
-//			{
-//				linkEdge5 = tempLinkEdge ;
-//				linkAttribute5 = tempLinkEdge.getAttribute() ;
-//			}
-//			if ( tempLinkEdge.getIndex() == 5 )
-//			{
-//				linkEdge6 = tempLinkEdge ;
-//				linkAttribute6 = tempLinkEdge.getAttribute() ;
-//			}
-//		}
-//		
-//		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-//		while ( rootNodeLabels.hasNext() )
-//		{
-//			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-//			
-//			if ( tempLabelNode.getIndex() == 10 )
-//			{
-//				labelNode2 =  tempLabelNode ;
-//				labelAttribute2 = tempLabelNode.getAttribute() ;
-//				property2 = labelAttribute2.getProperty() ;
-//			}
-//			if ( tempLabelNode.getIndex() == 11 )
-//			{
-//				labelNode3 =  tempLabelNode ;
-//				labelAttribute3 = tempLabelNode.getAttribute() ;
-//				property3 = labelAttribute3.getProperty() ;
-//			}
-//			if ( tempLabelNode.getIndex() == 13 )
-//			{
-//				labelNode5 =  tempLabelNode ;
-//				labelAttribute5 = tempLabelNode.getAttribute() ;
-//				property5 = labelAttribute5.getProperty() ;
-//			}
-//		}
-//		
-//		labelNode1 = shapeNode1.getSubModel().labelIterator().next() ;
-//		labelAttribute1 = labelNode1.getAttribute() ;
-//		property1 = labelAttribute1.getProperty() ;
-//		
-//		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubModel().labelIterator() ;
-//		while ( shapeNode2Labels.hasNext() )
-//		{
-//			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
-//			
-//			if ( tempLabelNode.getIndex() == 12 )
-//			{
-//				labelNode4 =  tempLabelNode ;
-//				labelAttribute4 = tempLabelNode.getAttribute() ;
-//				property4 = labelAttribute4.getProperty() ;
-//			}
-//			if ( tempLabelNode.getIndex() == 15 )
-//			{
-//				labelNode7 =  tempLabelNode ;
-//				labelAttribute7 = tempLabelNode.getAttribute() ;
-//				property7 = labelAttribute7.getProperty() ;
-//			}
-//		}
-//		
-//		labelNode6 = shapeNode6.getSubModel().labelIterator().next() ;
-//		labelAttribute6 = labelNode6.getAttribute() ;
-//		property6 = labelAttribute6.getProperty() ;
-//		
-//		labelNode8 = shapeNode7.getSubModel().labelIterator().next() ;
-//		labelAttribute8 = labelNode8.getAttribute() ;
-//		property8 = labelAttribute8.getProperty() ;
-//		
-		
+			IMapContentPersistenceManager map1Manager = this.getRepositoryPersistenceManager().openMap(map);
+			map1Manager.loadContent() ;
+			this.dbCanvas = map1Manager.getCanvas();
+		} catch (PersistenceManagerException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -709,101 +444,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	@Override
 	protected void doAdditionalTearDown() {
 		repository = null;
-		rootFolder = null ;
-		subFolder1 = null ;
-		subFolder2 = null ;
-		mapDiagram1 = null ;
-		mapDiagram2 = null ;
-		dbCanvas = null ;
-		dbModel = null ;
-		dbRootNode = null ;
-		
-		shapeNode1 = null ;
-		shapeNode2 = null ;
-		shapeNode3 = null ;
-		shapeNode4 = null ;
-		shapeNode5 = null ;
-		shapeNode6 = null ;
-		shapeNode7 = null ;
-		shapeNode8 = null ;
-		
-		shapeAttribute1 = null ;
-		shapeAttribute2 = null ;
-		shapeAttribute3 = null ;
-		shapeAttribute4 = null ;
-		shapeAttribute5 = null ;
-		shapeAttribute6 = null ;
-		shapeAttribute7 = null ;
-		shapeAttribute8 = null ;
-		
-		labelNode1 = null;
-		labelNode2 = null;
-		labelNode3 = null;
-		labelNode4 = null;
-		labelNode5 = null;
-		labelNode6 = null;
-		labelNode7 = null;
-		labelNode8 = null;
-		
-		labelAttribute1 = null;
-		labelAttribute2 = null;
-		labelAttribute3 = null;
-		labelAttribute4 = null;
-		labelAttribute5 = null;
-		labelAttribute6 = null;
-		labelAttribute7 = null;
-		labelAttribute8 = null;
-		
-		linkEdge1 = null;
-		linkEdge2 = null;
-		linkEdge3 = null;
-		linkEdge4 = null;
-		linkEdge5 = null;
-		linkEdge6 = null;
-		linkEdge7 = null;
-		linkEdge8 = null;
-		linkEdge9 = null;
-		
-		linkAttribute1 = null;
-		linkAttribute2 = null;
-		linkAttribute3 = null;
-		linkAttribute4 = null;
-		linkAttribute5 = null;
-		linkAttribute6 = null;
-		linkAttribute7 = null;
-		linkAttribute8 = null;
-		linkAttribute9 = null;
-		
-		property1 = null;
-		property2 = null;
-		property3 = null;
-		property4 = null;
-		property5 = null;
-		property6 = null;
-		property7 = null;
-		property8 = null;
-		
-		bendpoint1 = null;
-		bendpoint2 = null;
-		
-		linkTerminus1 = null;
-		linkTerminus2 = null ;
-		linkTerminus3 = null ;
-		linkTerminus4 = null ;
-		linkTerminus5 = null ;
-		linkTerminus6 = null ;
-		linkTerminus7 = null ;
-		linkTerminus8 = null ;
-		linkTerminus9 = null ;
-		linkTerminus10 = null ;
-		linkTerminus11 = null ;
-		linkTerminus12 = null ;
-		linkTerminus13 = null ;
-		linkTerminus14 = null ;
-		linkTerminus15 = null ;
-		linkTerminus16 = null ;
-		linkTerminus17 = null ;
-		linkTerminus18 = null ;
+		this.dbCanvas = null;
 	}
 
 	/* (non-Javadoc)
@@ -823,15 +464,28 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testRepositoryIsLoadedProperly () throws Exception 
+	public void testValidity() {
+		assertTrue("Model valid", this.dbCanvas.getModel().isValid());
+	}
+	
+	@Test
+	public void testRepositoryIsLoadedProperly () 
 	{
 		assertEquals ( "correct Repository name" , REPOSITORY_NAME , repository.getName()) ;
 	}
 	
+	public void testModelStatistics() {
+		IModel model = this.dbCanvas.getModel();
+		assertEquals("correct num nodes", NUM_MODEL_DRAWING_NODES, model.numDrawingNodes());
+		assertEquals("correct num links", NUM_MODEL_LINK_EDGES, model.numLinkEdges());
+		assertEquals("correct num drawing elements", NUM_MODEL_DRAWING_NODES + NUM_MODEL_LINK_EDGES, model.numDrawingElements());
+		assertEquals("correct num shape nodes", NUM_MODEL_SHAPE_NODES, model.numShapeNodes());
+		assertEquals("correct num label nodes", NUM_MODEL_LABEL_NODES, model.numLabelNodes());
+	}
+	
 	@Test
-	public void testCheckRootFolderLoadedProperly () throws Exception 
-	{
-		loadObjects() ;
+	public void testCheckRootFolderLoadedProperly (){
+		IRootFolder rootFolder = this.repository.getRootFolder();
 		
 		assertEquals ( "belongs to repository" , repository , rootFolder.getRepository()) ;
 		assertEquals ( "No maps" , NUMBER_OF_MAPS_IN_ROOT , rootFolder.getNumMaps() ) ;
@@ -841,11 +495,11 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckSubFoldersLoadedProperly () throws Exception
-	{
-		
-		loadObjects() ;
+	public void testCheckSubFoldersLoadedProperly () {
+		IRootFolder rootFolder = this.repository.getRootFolder();
+		ISubFolder subFolder1 = (ISubFolder)this.repository.findRepositoryItemByPath(SUBFOLDER1_PATH);
 		assertNotNull ( "subfolder1 initialized" , subFolder1 ) ;
+		ISubFolder subFolder2 = (ISubFolder)this.repository.findRepositoryItemByPath(SUBFOLDER2_PATH);
 		assertNotNull ( "subfolder2 initialized" , subFolder2 ) ;
 		
 		assertEquals ( "subfolder1 name" , NAME_OF_SUBFOLDER1 , subFolder1.getName()) ;
@@ -868,9 +522,12 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckMapDiagramsLoadedProperly () throws Exception 
-	{
-		loadObjects() ;
+	public void testCheckMapDiagramsLoadedProperly () {
+		IMap mapDiagram1 = (IMap)this.repository.findRepositoryItemByPath(MAP_DIAGRAM1_PATH);
+		IMap mapDiagram2 = (IMap)this.repository.findRepositoryItemByPath(MAP_DIAGRAM2_PATH);
+		ISubFolder subFolder1 = (ISubFolder)this.repository.findRepositoryItemByPath(SUBFOLDER1_PATH);
+		ISubFolder subFolder2 = (ISubFolder)this.repository.findRepositoryItemByPath(SUBFOLDER2_PATH);
+		
 		assertNotNull ( "mapDiagram1 is null" , mapDiagram1) ;
 		assertNotNull ( "mapDiagram2 loaded" , mapDiagram2 ) ;
 		
@@ -889,29 +546,25 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfCanvas () throws Exception 
-	{
-		loadObjects() ;
+	public void testCheckIntegrityOfCanvas () {
+		IMap mapDiagram1 = (IMap)this.repository.findRepositoryItemByPath(MAP_DIAGRAM1_PATH);
+
 		assertNotNull ( "canvas is not null" , this.dbCanvas ) ;
-		
+		Calendar expectedDate = new GregorianCalendar(YEAR_CHECK, MONTH_CHECK, DATE_CHECK, HOUR_CHECK, MIN_CHECK);
 		assertEquals ( "check owning map" , mapDiagram1 , dbCanvas.getOwningMap()) ;
 		assertEquals ( "canvas size" , SIZE_10 , dbCanvas.getCanvasSize() ) ;
 		assertEquals ( "grid size" , SIZE_10 , dbCanvas.getGridSize() ) ;
-		assertEquals ( "created check day" , DATE_CHECK  , dbCanvas.getCreated().getDate() );
-		assertEquals ( "created check month" , MONTH_CHECK  , dbCanvas.getCreated().getMonth() );
-		assertEquals ( "created check year" , YEAR_CHECK  , dbCanvas.getCreated().getYear() );
-		assertEquals ( "modified check day" , DATE_CHECK  , dbCanvas.getModified().getDate() );
-		assertEquals ( "modified check month" , MONTH_CHECK  , dbCanvas.getModified().getMonth() );
-		assertEquals ( "modified check year" , YEAR_CHECK  , dbCanvas.getModified().getYear() );
+		assertEquals ( "created date" , expectedDate.getTime(), dbCanvas.getCreated() );
+		assertEquals ( "modified date" , expectedDate.getTime(), dbCanvas.getModified());
 		assertEquals ( "check color" , RGB_100 , dbCanvas.getBackgroundColour()) ;
 		assertTrue ( "grid enabled" , dbCanvas.isGridEnabled()) ;
 		assertTrue ( "snap grid enabled" , dbCanvas.isSnapToGridOn()) ;
 	}
 	
 	@Test
-	public void testCheckModelIsCorrect () throws Exception
+	public void testCheckModelIsCorrect ()
 	{
-		loadObjects() ;
+		IModel dbModel = this.dbCanvas.getModel();
 		assertNotNull ( "model is not null" , dbModel) ;
 		
 		assertEquals ( "belongs to Canvas" , dbCanvas , dbModel.getCanvas()) ;
@@ -919,18 +572,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfRootNode () throws Exception
+	public void testCheckIntegrityOfRootNode ()
 	{
-		loadObjects() ;
+		IModel dbModel = this.dbCanvas.getModel();
+		IRootNode dbRootNode = this.dbCanvas.getModel().getRootNode();
 		assertNotNull ( "is not null" , dbRootNode) ;
 		assertNotNull ("rootNode has SubModel" , dbRootNode.getSubModel()) ;
 		
 		assertEquals ( "root node index" , ROOT_NODE_INDEX , dbRootNode.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , dbRootNode.getModel()) ;
-		assertNull ( "no parent for rootNode" , dbRootNode.getParent() ) ;
-		assertEquals ( "rootnode has 2 shapes", NUM_OF_ROOTNODE_SHAPE_CHILDREN , dbRootNode.getSubModel().getNumShapes()) ;
-		assertEquals ( "rootnode has no labels", NUM_OF_ROOTNODE_LABEL_CHILDREN , dbRootNode.getSubModel().getNumLabels()) ;
-		assertEquals ( "rootnode has 5 links", NUM_OF_ROOTNODE_LINK_CHILDREN , dbRootNode.getSubModel().getNumLinks()) ;
+		assertEquals ( "rootNode is its own parent" , dbRootNode, dbRootNode.getParent() ) ;
+		assertEquals ( "rootnode has 2 shapes", NUM_OF_ROOTNODE_SHAPE_CHILDREN , dbRootNode.getSubModel().numShapeNodes()) ;
+		assertEquals ( "rootnode has no labels", NUM_OF_ROOTNODE_LABEL_CHILDREN , dbRootNode.getSubModel().numLabelNodes()) ;
+		assertEquals ( "rootnode has 5 links", NUM_OF_ROOTNODE_LINK_CHILDREN , dbRootNode.getSubModel().numLinkEdges()) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -946,26 +600,11 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode1andShapeAttribute1 () throws Exception
-	{
-		loadObjects() ;
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
+	public void testCheckIntegrityOfShapeNode1andShapeAttribute1 () {
+		IModel dbModel = dbCanvas.getModel();
+		IRootNode dbRootNode = dbModel.getRootNode();
+		IShapeAttribute shapeAttribute1 = dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE1_CREATION_SERIAL);
+		IShapeNode shapeNode1 = shapeAttribute1.getCurrentDrawingElement();
 		
 		assertNotNull ( "is not null" , shapeNode1) ;
 		assertNotNull ("shapeNode1 has SubModel" , shapeNode1.getSubModel()) ;
@@ -974,9 +613,9 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapenode1 index" , SHAPENODE1_INDEX , shapeNode1.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode1.getModel()) ;
 		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode1.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE1_SHAPE_CHILDREN , shapeNode1.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE1_LABEL_CHILDREN , shapeNode1.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE1_LINK_CHILDREN , shapeNode1.getSubModel().getNumLinks()) ;
+		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE1_SHAPE_CHILDREN , shapeNode1.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE1_LABEL_CHILDREN , shapeNode1.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE1_LINK_CHILDREN , shapeNode1.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute1 creation serial" , SHAPE_ATTRIBUTE1_CREATION_SERIAL , shapeAttribute1.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute1 description" , SHAPE_ATTR1_DESCR , shapeAttribute1.getDescription() );
@@ -990,42 +629,15 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute1 location" , LOCATION_51, shapeAttribute1.getLocation() ) ;
 		assertEquals ( "shapeAttribute1 line padding" , SIZE_51 , shapeAttribute1.getSize()) ;
 		
-		int numOfShapeNodes = 0 ;
-		
-		Iterator <IShapeNode> shapeIterator = shapeNode1.getSubModel().shapeIterator() ;
-		
-		while ( shapeIterator.hasNext())
-		{
-			shapeIterator.next();
-			numOfShapeNodes ++ ;
-		}
-		
-		assertEquals ( "2 shapeNodes" , 2 , numOfShapeNodes) ;
-				
+		assertEquals ( "2 shapeNodes" , 2 , shapeNode1.getSubModel().numShapeNodes()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode2AndShapeAttribute2 () throws Exception
-	{
-		
-		loadObjects() ;
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
+	public void testCheckIntegrityOfShapeNode2AndShapeAttribute2 () {
+		IModel dbModel = dbCanvas.getModel();
+		IRootNode dbRootNode = dbModel.getRootNode();
+		IShapeAttribute shapeAttribute2 = dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE2_CREATION_SERIAL);
+		IShapeNode shapeNode2 = shapeAttribute2.getCurrentDrawingElement();
 		assertNotNull ( "is not null" , shapeNode2) ;
 		assertNotNull ("shapeNode2 has SubModel" , shapeNode2.getSubModel()) ;
 		assertNotNull ( "is linkedtoAttribute" , shapeNode2.getAttribute() ) ;
@@ -1033,9 +645,9 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapenode2 index" , SHAPENODE2_INDEX , shapeNode2.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode2.getModel()) ;
 		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode2.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE2_SHAPE_CHILDREN , shapeNode2.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE2_LABEL_CHILDREN , shapeNode2.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE2_LINK_CHILDREN , shapeNode2.getSubModel().getNumLinks()) ;
+		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE2_SHAPE_CHILDREN , shapeNode2.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE2_LABEL_CHILDREN , shapeNode2.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE2_LINK_CHILDREN , shapeNode2.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute2 creation serial" , SHAPE_ATTRIBUTE2_CREATION_SERIAL , shapeAttribute2.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute2 description" , SHAPE_ATTR2_DESCR , shapeAttribute2.getDescription() );
@@ -1048,55 +660,15 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute2 line padding" , SHAPE_ATTRIBUTE2_LINE_PADDING , shapeAttribute2.getPadding() ) ;
 		assertEquals ( "shapeAttribute2 location" , LOCATION_52, shapeAttribute2.getLocation() ) ;
 		assertEquals ( "shapeAttribute2 line padding" , SIZE_52 , shapeAttribute2.getSize()) ;
-		
-		int numOfShapeNodes = 0 ;
-		
-		Iterator <IShapeNode> shapeIterator = shapeNode2.getSubModel().shapeIterator() ;
-		
-		while ( shapeIterator.hasNext())
-		{
-			shapeIterator.next();
-			numOfShapeNodes ++ ;
-		}
-		
-		assertEquals ( "2 shapeNodes" , 2 , numOfShapeNodes) ;
-				
+		assertEquals ( "2 shapeNodes" , 2 , shapeNode2.getSubModel().numShapeNodes()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode3AndShapeAttribute3 () throws Exception
-	{
-		
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
-		while ( shape1ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape1ChildIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==3 )
-			{
-				shapeNode3 = tempShapeNode ;
-				shapeAttribute3 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
+	public void testCheckIntegrityOfShapeNode3AndShapeAttribute3 () {
+		IShapeAttribute shapeAttribute3 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE3_CREATION_SERIAL);
+		IShapeNode shapeNode3 = shapeAttribute3.getCurrentDrawingElement();
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE1_CREATION_SERIAL).getCurrentDrawingElement();
+		IModel dbModel = dbCanvas.getModel();
 		
 		assertNotNull ( "is not null" , shapeNode3) ;
 		assertNotNull ("shapeNode3 has SubModel" , shapeNode3.getSubModel()) ;
@@ -1105,9 +677,9 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapenode3 index" , SHAPENODE3_INDEX , shapeNode3.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode3.getModel()) ;
 		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , shapeNode3.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode3 has no shapes", NUM_OF_SHAPENODE3_SHAPE_CHILDREN , shapeNode3.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode3 has no labels", NUM_OF_SHAPENODE3_LABEL_CHILDREN , shapeNode3.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode3 has no links", NUM_OF_SHAPENODE3_LINK_CHILDREN , shapeNode3.getSubModel().getNumLinks()) ;
+		assertEquals ( "shapeNode3 has no shapes", NUM_OF_SHAPENODE3_SHAPE_CHILDREN , shapeNode3.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode3 has no labels", NUM_OF_SHAPENODE3_LABEL_CHILDREN , shapeNode3.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode3 has no links", NUM_OF_SHAPENODE3_LINK_CHILDREN , shapeNode3.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute3 creation serial" , SHAPE_ATTRIBUTE3_CREATION_SERIAL , shapeAttribute3.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute3 description" , SHAPE_ATTR3_DESCR , shapeAttribute3.getDescription() );
@@ -1120,55 +692,15 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute3 line padding" , SHAPE_ATTRIBUTE3_LINE_PADDING , shapeAttribute3.getPadding() ) ;
 		assertEquals ( "shapeAttribute3 location" , LOCATION_53, shapeAttribute3.getLocation() ) ;
 		assertEquals ( "shapeAttribute3 line padding" , SIZE_53 , shapeAttribute3.getSize()) ;
-		
-		int numOfShapeNodes = 0 ;
-		
-		Iterator <IShapeNode> shapeIterator = shapeNode3.getSubModel().shapeIterator() ;
-		
-		while ( shapeIterator.hasNext())
-		{
-			shapeIterator.next();
-			numOfShapeNodes ++ ;
-		}
-		
-		assertEquals ( "0 shapeNodes" , 0 , numOfShapeNodes) ;
+		assertEquals ( "0 shapeNodes" , 0 , shapeNode3.getSubModel().numShapeNodes());
 				
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode4AndShapeAttribute4 () throws Exception
-	{
-		
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
-		while ( shape1ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape1ChildIterator.next();
-
-			if  ( tempShapeNode.getIndex() ==4 )
-			{
-				shapeNode4 = tempShapeNode ;
-				shapeAttribute4 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
+	public void testCheckIntegrityOfShapeNode4AndShapeAttribute4 () {
+		IShapeAttribute shapeAttribute4 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE4_CREATION_SERIAL);
+		IShapeNode shapeNode4 = shapeAttribute4.getCurrentDrawingElement();
+		IModel dbModel = this.dbCanvas.getModel();
 		
 		assertNotNull ( "is not null" , shapeNode4) ;
 		assertNotNull ("shapeNode4 has SubModel" , shapeNode4.getSubModel()) ;
@@ -1176,10 +708,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode4 index" , SHAPENODE4_INDEX , shapeNode4.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode4.getModel()) ;
-		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , shapeNode4.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode4 has no shapes", NUM_OF_SHAPENODE4_SHAPE_CHILDREN , shapeNode4.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode4 has no labels", NUM_OF_SHAPENODE4_LABEL_CHILDREN , shapeNode4.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode4 has no links", NUM_OF_SHAPENODE4_LINK_CHILDREN , shapeNode4.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX, shapeNode4.getParent().getIndex() ) ;
+		assertEquals ( "shapeNode4 has no shapes", NUM_OF_SHAPENODE4_SHAPE_CHILDREN , shapeNode4.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode4 has no labels", NUM_OF_SHAPENODE4_LABEL_CHILDREN , shapeNode4.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode4 has no links", NUM_OF_SHAPENODE4_LINK_CHILDREN , shapeNode4.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute4 creation serial" , SHAPE_ATTRIBUTE4_CREATION_SERIAL , shapeAttribute4.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute4 description" , SHAPE_ATTR4_DESCR , shapeAttribute4.getDescription() );
@@ -1192,54 +724,15 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute4 line padding" , SHAPE_ATTRIBUTE4_LINE_PADDING , shapeAttribute4.getPadding() ) ;
 		assertEquals ( "shapeAttribute4 location" , LOCATION_54, shapeAttribute4.getLocation() ) ;
 		assertEquals ( "shapeAttribute4 line padding" , SIZE_54 , shapeAttribute4.getSize()) ;
-		
-		int numOfShapeNodes = 0 ;
-		
-		Iterator <IShapeNode> shapeIterator = shapeNode4.getSubModel().shapeIterator() ;
-		
-		while ( shapeIterator.hasNext())
-		{
-			shapeIterator.next();
-			numOfShapeNodes ++ ;
-		}
-		
-		assertEquals ( "0 shapeNodes" , 0 , numOfShapeNodes) ;
+		assertEquals ( "0 shapeNodes" , 0 , shapeNode4.getSubModel().numShapeNodes()) ;
 				
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode5AndShapeAttribute5 () throws Exception
-	{
-		loadObjects() ;
-		
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==5 )
-			{
-				shapeNode5 = tempShapeNode ;
-				shapeAttribute5 = tempShapeNode.getAttribute() ;
-			}
-			
-		}
+	public void testCheckIntegrityOfShapeNode5AndShapeAttribute5 () {
+		IShapeAttribute shapeAttribute5 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE5_CREATION_SERIAL);
+		IShapeNode shapeNode5 = shapeAttribute5.getCurrentDrawingElement();
+		IModel dbModel = dbCanvas.getModel();
 		
 		assertNotNull ( "is not null" , shapeNode5) ;
 		assertNotNull ("shapeNode5 has SubModel" , shapeNode5.getSubModel()) ;
@@ -1247,10 +740,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode5 index" , SHAPENODE5_INDEX , shapeNode5.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode5.getModel()) ;
-		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , shapeNode5.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode5 has no shapes", NUM_OF_SHAPENODE5_SHAPE_CHILDREN , shapeNode5.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode5 has no labels", NUM_OF_SHAPENODE5_LABEL_CHILDREN , shapeNode5.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode5 has no links", NUM_OF_SHAPENODE5_LINK_CHILDREN , shapeNode5.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, shapeNode5.getParent().getIndex() ) ;
+		assertEquals ( "shapeNode5 has no shapes", NUM_OF_SHAPENODE5_SHAPE_CHILDREN , shapeNode5.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode5 has no labels", NUM_OF_SHAPENODE5_LABEL_CHILDREN , shapeNode5.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode5 has no links", NUM_OF_SHAPENODE5_LINK_CHILDREN , shapeNode5.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute5 creation serial" , SHAPE_ATTRIBUTE5_CREATION_SERIAL , shapeAttribute5.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute5 description" , SHAPE_ATTR5_DESCR , shapeAttribute5.getDescription() );
@@ -1263,64 +756,23 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute5 line padding" , SHAPE_ATTRIBUTE5_LINE_PADDING , shapeAttribute5.getPadding() ) ;
 		assertEquals ( "shapeAttribute5 location" , LOCATION_55, shapeAttribute5.getLocation() ) ;
 		assertEquals ( "shapeAttribute5 line padding" , SIZE_55 , shapeAttribute5.getSize()) ;
-		
-		int numOfShapeNodes = 0 ;
-		
-		Iterator <IShapeNode> shapeIterator = shapeNode5.getSubModel().shapeIterator() ;
-		
-		while ( shapeIterator.hasNext())
-		{
-			shapeIterator.next();
-			numOfShapeNodes ++ ;
-		}
-		
-		assertEquals ( "0 shapeNodes" , 0 , numOfShapeNodes) ;
-				
+		assertEquals ( "0 shapeNodes" , 0 , shapeNode5.getSubModel().numShapeNodes()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode6AndShapeAttribute6 () throws Exception
-	{
-		loadObjects() ;
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
+	public void testCheckIntegrityOfShapeNode6AndShapeAttribute6 (){
+		IShapeAttribute shapeAttribute6 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE6_CREATION_SERIAL);
+		IShapeNode shapeNode6 = shapeAttribute6.getCurrentDrawingElement();
 		
 		assertNotNull ( "is not null" , shapeNode6) ;
 		assertNotNull ("shapeNode6 has SubModel" , shapeNode6.getSubModel()) ;
 		assertNotNull ( "is linkedtoAttribute" , shapeNode6.getAttribute() ) ;
 		
 		assertEquals ( "shapenode6 index" , SHAPENODE6_INDEX , shapeNode6.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , shapeNode6.getModel()) ;
-		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , shapeNode6.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode6 one shapes", NUM_OF_SHAPENODE6_SHAPE_CHILDREN , shapeNode6.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode6 has no labels", NUM_OF_SHAPENODE6_LABEL_CHILDREN , shapeNode6.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode6 has no links", NUM_OF_SHAPENODE6_LINK_CHILDREN , shapeNode6.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX , shapeNode6.getParent().getIndex() ) ;
+		assertEquals ( "shapeNode6 one shapes", NUM_OF_SHAPENODE6_SHAPE_CHILDREN , shapeNode6.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode6 has no labels", NUM_OF_SHAPENODE6_LABEL_CHILDREN , shapeNode6.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode6 has no links", NUM_OF_SHAPENODE6_LINK_CHILDREN , shapeNode6.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute6 creation serial" , SHAPE_ATTRIBUTE6_CREATION_SERIAL , shapeAttribute6.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute6 description" , SHAPE_ATTR6_DESCR , shapeAttribute6.getDescription() );
@@ -1349,52 +801,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode7AndShapeAttribute7 () throws Exception
-	{
-		loadObjects() ;
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
+	public void testCheckIntegrityOfShapeNode7AndShapeAttribute7 () {
+		IShapeAttribute shapeAttribute7 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE7_CREATION_SERIAL);
+		IShapeNode shapeNode7 = shapeAttribute7.getCurrentDrawingElement();
 		
 		assertNotNull ( "is not null" , shapeNode7) ;
 		assertNotNull ("shapeNode7 has SubModel" , shapeNode7.getSubModel()) ;
 		assertNotNull ( "is linkedtoAttribute" , shapeNode7.getAttribute() ) ;
 		
 		assertEquals ( "shapenode7 index" , SHAPENODE7_INDEX , shapeNode7.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , shapeNode7.getModel()) ;
-		assertEquals ( "parent is shapeNode6" , shapeNode6.getIndex() , shapeNode7.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode7 has one shapes", NUM_OF_SHAPENODE7_SHAPE_CHILDREN , shapeNode7.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode7 has no labels", NUM_OF_SHAPENODE7_LABEL_CHILDREN , shapeNode7.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode7 has no links", NUM_OF_SHAPENODE7_LINK_CHILDREN , shapeNode7.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode6" , SHAPENODE6_INDEX , shapeNode7.getParent().getIndex() ) ;
+		assertEquals ( "shapeNode7 has one shapes", NUM_OF_SHAPENODE7_SHAPE_CHILDREN , shapeNode7.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode7 has no labels", NUM_OF_SHAPENODE7_LABEL_CHILDREN , shapeNode7.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode7 has no links", NUM_OF_SHAPENODE7_LINK_CHILDREN , shapeNode7.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute7 creation serial" , SHAPE_ATTRIBUTE7_CREATION_SERIAL , shapeAttribute7.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute7 description" , SHAPE_ATTR7_DESCR , shapeAttribute7.getDescription() );
@@ -1423,55 +842,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfShapeNode8AndShapeAttribute8 () throws Exception
-	{
-		loadObjects() ;
-		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		shapeNode8 = shapeNode7.getSubModel().shapeIterator().next() ;
-		shapeAttribute8 = shapeNode8.getAttribute() ;
+	public void testCheckIntegrityOfShapeNode8AndShapeAttribute8 () {
+		IShapeAttribute shapeAttribute8 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIBUTE8_CREATION_SERIAL);
+		IShapeNode shapeNode8 = shapeAttribute8.getCurrentDrawingElement(); 
 		
 		assertNotNull ( "is not null" , shapeNode8) ;
 		assertNotNull ("shapeNode8 has SubModel" , shapeNode8.getSubModel()) ;
 		assertNotNull ( "is linkedtoAttribute" , shapeNode8.getAttribute() ) ;
 		
 		assertEquals ( "shapenode8 index" , SHAPENODE8_INDEX , shapeNode8.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , shapeNode8.getModel()) ;
-		assertEquals ( "parent is shapeNode7" , shapeNode7.getIndex() , shapeNode8.getParent().getIndex() ) ;
-		assertEquals ( "shapeNode8 has one shapes", NUM_OF_SHAPENODE8_SHAPE_CHILDREN , shapeNode8.getSubModel().getNumShapes()) ;
-		assertEquals ( "shapeNode8 has no labels", NUM_OF_SHAPENODE8_LABEL_CHILDREN , shapeNode8.getSubModel().getNumLabels()) ;
-		assertEquals ( "shapeNode8 has no links", NUM_OF_SHAPENODE8_LINK_CHILDREN , shapeNode8.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode7" , SHAPENODE7_INDEX, shapeNode8.getParent().getIndex() ) ;
+		assertEquals ( "shapeNode8 has one shapes", NUM_OF_SHAPENODE8_SHAPE_CHILDREN , shapeNode8.getSubModel().numShapeNodes()) ;
+		assertEquals ( "shapeNode8 has no labels", NUM_OF_SHAPENODE8_LABEL_CHILDREN , shapeNode8.getSubModel().numLabelNodes()) ;
+		assertEquals ( "shapeNode8 has no links", NUM_OF_SHAPENODE8_LINK_CHILDREN , shapeNode8.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "shapeAttribute8 creation serial" , SHAPE_ATTRIBUTE8_CREATION_SERIAL , shapeAttribute8.getCreationSerial()  ) ;
 		assertEquals ( "shapeAttribute8 description" , SHAPE_ATTR8_DESCR , shapeAttribute8.getDescription() );
@@ -1500,406 +883,256 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode1AndLabelAttribute1 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		
-		labelNode1 = shapeNode1.getSubModel().labelIterator().next() ;
-		labelAttribute1 = labelNode1.getAttribute() ;
-		property1 = labelAttribute1.getProperty() ;
+	public void testCheckIntegrityOfLabelNode1AndLabelAttribute1 () {
+		ILabelAttribute labelAttribute1 = dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE1_CREATION_SERIAL);
+		ILabelNode labelNode1 = labelAttribute1.getCurrentDrawingElement();
+		IAnnotationProperty property1 = labelAttribute1.getProperty() ;
 		
 		assertNotNull ( "is not Null" , labelNode1) ;
 		assertNotNull ("labelNode1 has SubModel" , labelNode1.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode1.getAttribute()) ;
 		
 		assertEquals ( "labelNode1 index" , LABELNODE1_INDEX , labelNode1.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode1.getModel()) ;
-		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , labelNode1.getParent().getIndex() ) ;
-		assertEquals ( "labelNode1 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode1.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode1 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode1.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode1 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode1.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX , labelNode1.getParent().getIndex() ) ;
+		assertEquals ( "labelNode1 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode1.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode1 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode1.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode1 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode1.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute1 color" , RGB_101 , labelAttribute1.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute1 position" , LOCATION_51 , labelAttribute1.getLocation()) ;
 		assertEquals ( "labelAttribute1 size" , SIZE_51 , labelAttribute1.getSize() ) ;
+
+		assertNotNull ( "is not null " , property1 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property1.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property1 instanceof IPlainTextAnnotationProperty ) ;
+		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property1 ;
+		assertEquals ( "value" , PROPERTY1_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY1_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode2AndLabelAttribute2 () throws Exception 
-	{
-		loadObjects() ; 
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 10 )
-			{
-				labelNode2 =  tempLabelNode ;
-				labelAttribute2 = tempLabelNode.getAttribute() ;
-				property2 = labelAttribute2.getProperty() ;
-			}
-		}
+	public void testCheckIntegrityOfLabelNode2AndLabelAttribute2 () {
+		ILabelAttribute labelAttribute2 = this.dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE2_CREATION_SERIAL);
+		ILabelNode labelNode2 = labelAttribute2.getCurrentDrawingElement();
+		IAnnotationProperty property2 = labelAttribute2.getProperty();
 		
 		assertNotNull ( "is not Null" , labelNode2) ;
 		assertNotNull ("labelNode1 has SubModel" , labelNode2.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode2.getAttribute()) ;
 		
 		assertEquals ( "labelNode2 index" , LABELNODE2_INDEX , labelNode2.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode2.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode2.getParent().getIndex() ) ;
-		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode2.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode2.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode2.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode2.getParent().getIndex() ) ;
+		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode2.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode2.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode2.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute2 color" , RGB_102 , labelAttribute2.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute2 position" , LOCATION_52 , labelAttribute2.getLocation()) ;
 		assertEquals ( "labelAttribute2 size" , SIZE_52 , labelAttribute2.getSize() ) ;
+	
+		assertNotNull ( "is not null " , property2 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property2.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property2 instanceof IPlainTextAnnotationProperty ) ;
+		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property2 ;
+		assertEquals ( "value" , PROPERTY2_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY2_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode3AndLabelAttribute3 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 11 )
-			{
-				labelNode3 =  tempLabelNode ;
-				labelAttribute3 = tempLabelNode.getAttribute() ;
-				property3 = labelAttribute3.getProperty() ;
-			}
-		}
+	public void testCheckIntegrityOfLabelNode3AndLabelAttribute3 () {
+		ILabelAttribute labelAttribute3 = this.dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE3_CREATION_SERIAL);
+		ILabelNode labelNode3 = labelAttribute3.getCurrentDrawingElement();
+		IAnnotationProperty property3 = labelAttribute3.getProperty();
 		
 		assertNotNull ( "is not Null" , labelNode3) ;
 		assertNotNull ("labelNode3 has SubModel" , labelNode3.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode3.getAttribute()) ;
 		
 		assertEquals ( "labelNode3 index" , LABELNODE3_INDEX , labelNode3.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode3.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode3.getParent().getIndex() ) ;
-		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode3.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode3.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode3.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode3.getParent().getIndex() ) ;
+		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode3.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode3.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode3.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute2 color" , RGB_103 , labelAttribute3.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute2 position" , LOCATION_53 , labelAttribute3.getLocation()) ;
 		assertEquals ( "labelAttribute2 size" , SIZE_53 , labelAttribute3.getSize() ) ;
+
+		assertNotNull ( "is not null " , property3 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property3.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property3 instanceof IHtmlAnnotationProperty ) ;
+		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property3 ;
+		assertEquals ( "value" , PROPERTY3_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY3_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode4AndLabelAttribute4 () throws Exception 
-	{
-		loadObjects() ;
+	public void testCheckIntegrityOfLabelNode4AndLabelAttribute4 () {
+		ILabelAttribute labelAttribute4 = this.dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE4_CREATION_SERIAL);
+		ILabelNode labelNode4 = labelAttribute4.getCurrentDrawingElement();
+		IAnnotationProperty property4 = labelAttribute4.getProperty();
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-			
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubModel().labelIterator() ;
-		while ( shapeNode2Labels.hasNext() )
-		{
-			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 12 )
-			{
-				labelNode4 =  tempLabelNode ;
-				labelAttribute4 = tempLabelNode.getAttribute() ;
-				property4 = labelAttribute4.getProperty() ;
-			}
-		}
-
 		assertNotNull ( "is not Null" , labelNode4) ;
 		assertNotNull ("labelNode4 has SubModel" , labelNode4.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode4.getAttribute()) ;
 		
 		assertEquals ( "labelNode4 index" , LABELNODE4_INDEX , labelNode4.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode4.getModel()) ;
-		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , labelNode4.getParent().getIndex() ) ;
-		assertEquals ( "labelNode4 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode4.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode4 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode4.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode4 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode4.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, labelNode4.getParent().getIndex() ) ;
+		assertEquals ( "labelNode4 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode4.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode4 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode4.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode4 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode4.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute4 color" , RGB_104 , labelAttribute4.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute4 position" , LOCATION_54 , labelAttribute4.getLocation()) ;
 		assertEquals ( "labelAttribute4 size" , SIZE_54 , labelAttribute4.getSize() ) ;
-	}
+
+		assertNotNull ( "is not null " , property4 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property4.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property4 instanceof IHtmlAnnotationProperty ) ;
+		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property4 ;
+		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue()) ;
+		assertEquals ( "creation serial" , PROPERTY4_CREATION_SERIAL , theProperty.getCreationSerial()) ;
+}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode5AndLabelAttribute5 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 13 )
-			{
-				labelNode5 =  tempLabelNode ;
-				labelAttribute5 = tempLabelNode.getAttribute() ;
-				property5 = labelAttribute5.getProperty() ;
-			}
-		}
+	public void testCheckIntegrityOfLabelNode5AndLabelAttribute5 (){
+		ILabelAttribute labelAttribute5 = this.dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE5_CREATION_SERIAL);
+		ILabelNode labelNode5 = labelAttribute5.getCurrentDrawingElement();
+		IAnnotationProperty property5 = labelAttribute5.getProperty();
 		
 		assertNotNull ( "is not Null" , labelNode5) ;
 		assertNotNull ("labelNode5 has SubModel" , labelNode5.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode5.getAttribute()) ;
 		
 		assertEquals ( "labelNode5 index" , LABELNODE5_INDEX , labelNode5.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode5.getModel()) ;
-		assertEquals ( "parent is rootnode" , dbRootNode.getIndex() , labelNode5.getParent().getIndex() ) ;
-		assertEquals ( "labelNode5 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode5.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode5 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode5.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode5 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode5.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode5.getParent().getIndex() ) ;
+		assertEquals ( "labelNode5 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode5.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode5 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode5.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode5 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode5.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute5 color" , RGB_105 , labelAttribute5.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute5 position" , LOCATION_55 , labelAttribute5.getLocation()) ;
 		assertEquals ( "labelAttribute5 size" , SIZE_55 , labelAttribute5.getSize() ) ;
+	
+		assertNotNull ( "is not null " , property5 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property5.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property5 instanceof INumberAnnotationProperty ) ;
+		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property5 ;
+		assertEquals ( "value" , PROPERTY5_VALUE, theProperty.getValue().intValue()) ;
+		assertEquals ( "creation serial" , PROPERTY5_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode6AndLabelAttribute6 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		labelNode6 = shapeNode6.getSubModel().labelIterator().next() ;
-		labelAttribute6 = labelNode6.getAttribute() ;
-		property6 = labelAttribute6.getProperty() ;
+	public void testCheckIntegrityOfLabelNode6AndLabelAttribute6 ()	{
+		ILabelAttribute labelAttribute6 = dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE6_CREATION_SERIAL);
+		ILabelNode labelNode6 = labelAttribute6.getCurrentDrawingElement();
+		IAnnotationProperty property6 = labelAttribute6.getProperty() ;
 		
 		assertNotNull ( "is not Null" , labelNode6) ;
 		assertNotNull ("labelNode6 has SubModel" , labelNode6.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode6.getAttribute()) ;
 		
 		assertEquals ( "labelNode6 index" , LABELNODE6_INDEX , labelNode6.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode6.getModel()) ;
-		assertEquals ( "parent is shapeNode6" , shapeNode6.getIndex() , labelNode6.getParent().getIndex() ) ;
-		assertEquals ( "labelNode6 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode6.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode6 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode6.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode6 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode6.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode6" , ROOT_NODE_INDEX, labelNode6.getParent().getIndex() ) ;
+		assertEquals ( "labelNode6 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode6.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode6 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode6.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode6 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode6.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute6 color" , RGB_106 , labelAttribute6.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute6 position" , LOCATION_56 , labelAttribute6.getLocation()) ;
 		assertEquals ( "labelAttribute6 size" , SIZE_56 , labelAttribute6.getSize() ) ;
+
+		assertNotNull ( "is not null " , property6 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property6.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property6 instanceof INumberAnnotationProperty ) ;
+		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property6 ;
+		assertEquals ( "value" , PROPERTY6_VALUE, theProperty.getValue().intValue()) ;
+		assertEquals ( "creation serial" , PROPERTY6_CREATION_SERIAL , property6 .getCreationSerial()) ;
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode7AndLabelAttribute7 () throws Exception 
-	{
-		loadObjects() ;
-
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-			
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		
-		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubModel().labelIterator() ;
-		while ( shapeNode2Labels.hasNext() )
-		{
-			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 15 )
-			{
-				labelNode7 =  tempLabelNode ;
-				labelAttribute7 = tempLabelNode.getAttribute() ;
-				property7 = labelAttribute7.getProperty() ;
-			}
-		}
+	public void testCheckIntegrityOfLabelNode7AndLabelAttribute7 () {
+		ILabelAttribute labelAttribute7 = dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE7_CREATION_SERIAL);
+		ILabelNode labelNode7 = labelAttribute7.getCurrentDrawingElement();
+		IAnnotationProperty property7 = labelAttribute7.getProperty() ;
 		
 		assertNotNull ( "is not Null" , labelNode7) ;
 		assertNotNull ("labelNode7 has SubModel" , labelNode7.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode7.getAttribute()) ;
 		
 		assertEquals ( "labelNode7 index" , LABELNODE7_INDEX , labelNode7.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode7.getModel()) ;
-		assertEquals ( "parent is shapeNode2" , shapeNode2.getIndex() , labelNode7.getParent().getIndex() ) ;
-		assertEquals ( "labelNode7 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode7.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode7 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode7.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode7 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode7.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE3_INDEX, labelNode7.getParent().getIndex() ) ;
+		assertEquals ( "labelNode7 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode7.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode7 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode7.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode7 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode7.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute7 color" , RGB_107 , labelAttribute7.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute7 position" , LOCATION_57 , labelAttribute7.getLocation()) ;
 		assertEquals ( "labelAttribute7 size" , SIZE_57 , labelAttribute7.getSize() ) ;
-	}
+
+		assertNotNull ( "is not null " , property7 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property7.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property7 instanceof IListAnnotationProperty ) ;
+		IListAnnotationProperty theProperty = (IListAnnotationProperty) property7 ;
+		List <String> listValues = theProperty.getValue() ;
+		assertEquals ( "first element" , PROPERTY7_LIST_VALUE1 , listValues.get(0)) ;
+		assertEquals ( "second element" , PROPERTY7_LIST_VALUE2 , listValues.get(1)) ;
+		assertEquals ( "creation serial" , PROPERTY7_CREATION_SERIAL , property7 .getCreationSerial()) ;
+}
 	
 	@Test
-	public void testCheckIntegrityOfLabelNode8AndLabelAttribute8 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		labelNode8 = shapeNode7.getSubModel().labelIterator().next() ;
-		labelAttribute8 = labelNode8.getAttribute() ;
-		property8 = labelAttribute8.getProperty() ;
+	public void testCheckIntegrityOfLabelNode8AndLabelAttribute8 ()	{
+		ILabelAttribute labelAttribute8 = dbCanvas.getLabelAttribute(LABEL_ATTRIBUTE8_CREATION_SERIAL);
+		ILabelNode labelNode8 = labelAttribute8.getCurrentDrawingElement();
+		IAnnotationProperty property8 = labelAttribute8.getProperty() ;
 		
 		assertNotNull ( "is not Null" , labelNode8) ;
 		assertNotNull ("labelNode3 has SubModel" , labelNode8.getSubModel()) ;
 		assertNotNull ( "has attribute" , labelNode8.getAttribute()) ;
 		
 		assertEquals ( "labelNode8 index" , LABELNODE8_INDEX , labelNode8.getIndex() ) ;
-		assertEquals ( "model check" , dbModel , labelNode8.getModel()) ;
-		assertEquals ( "parent is shapeNode7" , shapeNode7.getIndex() , labelNode8.getParent().getIndex() ) ;
-		assertEquals ( "labelNode8 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode8.getSubModel().getNumShapes()) ;
-		assertEquals ( "labelNode8 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode8.getSubModel().getNumLabels()) ;
-		assertEquals ( "labelNode8 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode8.getSubModel().getNumLinks()) ;
+		assertEquals ( "parent is shapeNode7" , SHAPENODE4_INDEX, labelNode8.getParent().getIndex() ) ;
+		assertEquals ( "labelNode8 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode8.getSubModel().numShapeNodes()) ;
+		assertEquals ( "labelNode8 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode8.getSubModel().numLabelNodes()) ;
+		assertEquals ( "labelNode8 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode8.getSubModel().numLinkEdges()) ;
 		
 		assertEquals ( "labelAttribute8 color" , RGB_108 , labelAttribute8.getBackgroundColor() ) ;
 		assertEquals ( "labelAttribute8 position" , LOCATION_58 , labelAttribute8.getLocation()) ;
 		assertEquals ( "labelAttribute8 size" , SIZE_58 , labelAttribute8.getSize() ) ;
-	}
+
+		assertNotNull ( "is not null " , property8 ) ;
+		assertEquals ( "rigth canvas " , dbCanvas , property8.getCanvas() ) ;
+		
+		assertTrue ( "is text property" , property8 instanceof IListAnnotationProperty ) ;
+		IListAnnotationProperty theProperty = (IListAnnotationProperty) property8 ;
+		List <String> listValues =  theProperty.getValue() ;
+		assertEquals ( "first element" , PROPERTY8_LIST_VALUE1 , listValues.get(0)) ;
+		assertEquals ( "second element" , PROPERTY8_LIST_VALUE2 , listValues.get(1)) ;
+		assertEquals ( "creation serial" , PROPERTY8_CREATION_SERIAL , property8 .getCreationSerial()) ;
+}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge1AndLinkAttribute1AndTermini () throws Exception
-	{
-		loadObjects() ;
+	public void testCheckIntegrityOfLinkEdge1AndLinkAttribute1AndTermini ()	{
+		ILinkAttribute linkAttribute1 = dbCanvas.getLinkAttribute(LINK_ATTRIBUTE1_SERIAL);
+		ILinkEdge linkEdge1 = linkAttribute1.getCurrentDrawingElement();
 		
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-			else
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 0 )
-			{
-				linkEdge1 = tempLinkEdge ;
-				linkAttribute1 = tempLinkEdge.getAttribute() ;
-			}
-
-		}
-		
-		linkTerminus1 = linkAttribute1.getSourceTerminus() ;
-		linkTerminus2 = linkAttribute1.getTargetTerminus() ;
+		ILinkTerminus linkTerminus1 = linkAttribute1.getSourceTerminus() ;
+		ILinkTerminus linkTerminus2 = linkAttribute1.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge1) ;
 		assertNotNull ( "has attribute" , linkEdge1.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE1_INDEX , linkEdge1.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge1.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubModel() , linkEdge1.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode1 , linkEdge1.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode2 , linkEdge1.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , ROOT_NODE_INDEX, linkEdge1.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE1_INDEX, linkEdge1.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE2_INDEX, linkEdge1.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute1.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE1_SERIAL , linkAttribute1.getCreationSerial()) ;
@@ -1933,55 +1166,20 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge2AndLinkAttribute2AndTermini () throws Exception
-	{
-		loadObjects() ;
+	public void testCheckIntegrityOfLinkEdge2AndLinkAttribute2AndTermini () {
+		ILinkAttribute linkAttribute2 = dbCanvas.getLinkAttribute(LINK_ATTRIBUTE2_SERIAL);
+		ILinkEdge linkEdge2 = linkAttribute2.getCurrentDrawingElement();
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-			else
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 1 )
-			{
-				linkEdge2 = tempLinkEdge ;
-				linkAttribute2 = tempLinkEdge.getAttribute() ;
-				bendpoint2 = linkAttribute2.bendPointIterator().next() ;
-				break ;
-			}
-		}
-		
-		linkTerminus3 = linkAttribute2.getSourceTerminus() ;
-		linkTerminus4 = linkAttribute2.getTargetTerminus() ;
+		ILinkTerminus linkTerminus3 = linkAttribute2.getSourceTerminus() ;
+		ILinkTerminus linkTerminus4 = linkAttribute2.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge2) ;
 		assertNotNull ( "has attribute" , linkEdge2.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE2_INDEX , linkEdge2.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge2.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubModel() , linkEdge2.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode2 , linkEdge2.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode1 , linkEdge2.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , ROOT_NODE_INDEX, linkEdge2.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE2_INDEX, linkEdge2.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE1_INDEX, linkEdge2.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute2.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE2_SERIAL , linkAttribute2.getCreationSerial()) ;
@@ -2015,64 +1213,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge3AndLinkAttribute3AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 2 )
-			{
-				linkEdge3 = tempLinkEdge ;
-				linkAttribute3 = tempLinkEdge.getAttribute() ;
-				break ;
-			}
-
-		}
-		
-		linkTerminus5 = linkAttribute3.getSourceTerminus() ;
-		linkTerminus6 = linkAttribute3.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge3AndLinkAttribute3AndTermini () {
+		ILinkAttribute linkAttribute3 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE3_SERIAL);
+		ILinkEdge linkEdge3 = linkAttribute3.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus5 = linkAttribute3.getSourceTerminus() ;
+		ILinkTerminus linkTerminus6 = linkAttribute3.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge3) ;
 		assertNotNull ( "has attribute" , linkEdge3.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE3_INDEX , linkEdge3.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge3.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubModel() , linkEdge3.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode2 , linkEdge3.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge3.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , SHAPENODE2_INDEX, linkEdge3.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE2_INDEX , linkEdge3.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE6_INDEX , linkEdge3.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute3.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE3_SERIAL , linkAttribute3.getCreationSerial()) ;
@@ -2106,69 +1259,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge4AndLinkAttribute4AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-			else
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
-		while ( shape1ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape1ChildIterator.next();
-
-			if  ( tempShapeNode.getIndex() ==4 )
-			{
-				shapeNode4 = tempShapeNode ;
-				shapeAttribute4 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 3 )
-			{
-				linkEdge4 = tempLinkEdge ;
-				linkAttribute4 = tempLinkEdge.getAttribute() ;
-				break ;
-			}
-
-		}
-		
-		linkTerminus7 = linkAttribute4.getSourceTerminus() ;
-		linkTerminus8 = linkAttribute4.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge4AndLinkAttribute4AndTermini (){
+		ILinkAttribute linkAttribute4 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE4_SERIAL);
+		ILinkEdge linkEdge4 = linkAttribute4.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus7 = linkAttribute4.getSourceTerminus() ;
+		ILinkTerminus linkTerminus8 = linkAttribute4.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge4) ;
 		assertNotNull ( "has attribute" , linkEdge4.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE4_INDEX , linkEdge4.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge4.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubModel() , linkEdge4.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode2 , linkEdge4.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode4 , linkEdge4.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , ROOT_NODE_INDEX, linkEdge4.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE2_INDEX, linkEdge4.getSourceShape().getIndex()) ;
+		assertEquals ( "target shape" , SHAPENODE4_INDEX, linkEdge4.getTargetShape().getIndex()) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute4.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE4_SERIAL , linkAttribute4.getCreationSerial()) ;
@@ -2202,65 +1305,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge5AndLinkAttribute5AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<ILinkEdge> shapeNode2Edges = shapeNode2.getSubModel().linkIterator() ;
-		while ( shapeNode2Edges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = shapeNode2Edges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 4 )
-			{
-				linkEdge5 = tempLinkEdge ;
-				linkAttribute5 = tempLinkEdge.getAttribute() ;
-			}
-
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		linkTerminus9 = linkAttribute5.getSourceTerminus() ;
-		linkTerminus10 = linkAttribute5.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge5AndLinkAttribute5AndTermini () {
+		ILinkAttribute linkAttribute5 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE5_SERIAL);
+		ILinkEdge linkEdge5 = linkAttribute5.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus9 = linkAttribute5.getSourceTerminus() ;
+		ILinkTerminus linkTerminus10 = linkAttribute5.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge5) ;
 		assertNotNull ( "has attribute" , linkEdge5.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE5_INDEX , linkEdge5.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge5.getModel()) ;
-		assertEquals ( "owning subModel" , shapeNode2.getSubModel() , linkEdge5.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode7 , linkEdge5.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode6 , linkEdge5.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , SHAPENODE6_INDEX, linkEdge5.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE7_INDEX, linkEdge5.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE6_INDEX, linkEdge5.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute5.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE5_SERIAL , linkAttribute5.getCreationSerial()) ;
@@ -2295,64 +1352,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge6AndLinkAttribute6AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<ILinkEdge> shapeNode2Edges = shapeNode2.getSubModel().linkIterator() ;
-		while ( shapeNode2Edges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = shapeNode2Edges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 5 )
-			{
-				linkEdge6 = tempLinkEdge ;
-				linkAttribute6 = tempLinkEdge.getAttribute() ;
-			}
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		linkTerminus11 = linkAttribute6.getSourceTerminus() ;
-		linkTerminus12 = linkAttribute6.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge6AndLinkAttribute6AndTermini (){
+		ILinkAttribute linkAttribute6 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE6_SERIAL);
+		ILinkEdge linkEdge6 = linkAttribute6.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus11 = linkAttribute6.getSourceTerminus() ;
+		ILinkTerminus linkTerminus12 = linkAttribute6.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge6) ;
 		assertNotNull ( "has attribute" , linkEdge6.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE6_INDEX , linkEdge6.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge6.getModel()) ;
-		assertEquals ( "owning subModel" , shapeNode2.getSubModel() , linkEdge6.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode6 , linkEdge6.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode7 , linkEdge6.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , SHAPENODE6_INDEX, linkEdge6.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE6_INDEX, linkEdge6.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE7_INDEX, linkEdge6.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute6.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE6_SERIAL , linkAttribute6.getCreationSerial()) ;
@@ -2387,83 +1399,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge7AndLinkAttribute7AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-			else
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeIterator() ;
-		while ( shape1ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape1ChildIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==3 )
-			{
-				shapeNode3 = tempShapeNode ;
-				shapeAttribute3 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-
-			if ( tempLinkEdge.getIndex() == 6 )
-			{
-				linkEdge7 = tempLinkEdge ;
-				linkAttribute7 = tempLinkEdge.getAttribute() ;
-				break ;
-			}
-		}
-		
-		linkTerminus13 = linkAttribute7.getSourceTerminus() ;
-		linkTerminus14 = linkAttribute7.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge7AndLinkAttribute7AndTermini (){
+		ILinkAttribute linkAttribute7 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE7_SERIAL);
+		ILinkEdge linkEdge7 = linkAttribute7.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus13 = linkAttribute7.getSourceTerminus() ;
+		ILinkTerminus linkTerminus14 = linkAttribute7.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge7) ;
 		assertNotNull ( "has attribute" , linkEdge7.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE7_INDEX , linkEdge7.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge7.getModel()) ;
-		assertEquals ( "owning subModel" , dbRootNode.getSubModel() , linkEdge7.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode7 , linkEdge7.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode3 , linkEdge7.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , ROOT_NODE_INDEX, linkEdge7.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE7_INDEX, linkEdge7.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE3_INDEX, linkEdge7.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute7.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE7_SERIAL , linkAttribute7.getCreationSerial()) ;
@@ -2500,45 +1448,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge8AndLinkAttribute8AndTermini () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-		}
-				
-		Iterator<ILinkEdge> shapeNode1Edges = shapeNode1.getSubModel().linkIterator() ;
-		while ( shapeNode1Edges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = shapeNode1Edges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 7 )
-			{
-				linkEdge8 = tempLinkEdge ;
-				linkAttribute8 = tempLinkEdge.getAttribute() ;
-			}
-		}
-		
-		linkTerminus15 = linkAttribute8.getSourceTerminus() ;
-		linkTerminus16 = linkAttribute8.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge8AndLinkAttribute8AndTermini (){
+		ILinkAttribute linkAttribute8 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE8_SERIAL);
+		ILinkEdge linkEdge8 = linkAttribute8.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus15 = linkAttribute8.getSourceTerminus() ;
+		ILinkTerminus linkTerminus16 = linkAttribute8.getTargetTerminus() ;
 		
 		assertNotNull ( "is not Null" , linkEdge8) ;
 		assertNotNull ( "has attribute" , linkEdge8.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE8_INDEX , linkEdge8.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge8.getModel()) ;
-		assertEquals ( "owning subModel" , shapeNode1.getSubModel() , linkEdge8.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode1 , linkEdge8.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode1 , linkEdge8.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , SHAPENODE1_INDEX, linkEdge8.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE1_INDEX, linkEdge8.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE1_INDEX, linkEdge8.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute8.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE8_SERIAL , linkAttribute8.getCreationSerial()) ;
@@ -2573,46 +1495,19 @@ public class LoadDataFromFileTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCheckIntegrityOfLinkEdge9AndLinkAttribute9AndTermini () throws Exception
-	{
-		
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-			}
-		}		
-		
-		Iterator<ILinkEdge> shapeNode1Edges = shapeNode1.getSubModel().linkIterator() ;
-		while ( shapeNode1Edges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = shapeNode1Edges.next() ;
-
-			if ( tempLinkEdge.getIndex() == 8 )
-			{
-				linkEdge9 = tempLinkEdge ;
-				linkAttribute9 = tempLinkEdge.getAttribute() ;
-			}
-		}
-		
-		linkTerminus17 = linkAttribute9.getSourceTerminus() ;
-		linkTerminus18 = linkAttribute9.getTargetTerminus() ;
+	public void testCheckIntegrityOfLinkEdge9AndLinkAttribute9AndTermini () {
+		ILinkAttribute linkAttribute9 = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE9_SERIAL);
+		ILinkEdge linkEdge9 = linkAttribute9.getCurrentDrawingElement();
+		ILinkTerminus linkTerminus17 = linkAttribute9.getSourceTerminus() ;
+		ILinkTerminus linkTerminus18 = linkAttribute9.getTargetTerminus() ;
 	
 		assertNotNull ( "is not Null" , linkEdge9) ;
 		assertNotNull ( "has attribute" , linkEdge9.getAttribute()) ;
 		
 		assertEquals ( "link edge index" , LINK_EDGE9_INDEX , linkEdge9.getIndex()) ;
-		assertEquals ( "model check" , dbModel , linkEdge9.getModel()) ;
-		assertEquals ( "owning subModel" , shapeNode1.getSubModel() , linkEdge9.getOwningSubModel() ) ;
-		assertEquals ( "source shape" , shapeNode1 , linkEdge9.getSourceShape() ) ;
-		assertEquals ( "target shape" , shapeNode1 , linkEdge9.getTargetShape() ) ;
+		assertEquals ( "owning subModel" , SHAPENODE1_INDEX, linkEdge9.getOwningSubModel().getRootNode().getIndex() ) ;
+		assertEquals ( "source shape" , SHAPENODE1_INDEX, linkEdge9.getSourceShape().getIndex() ) ;
+		assertEquals ( "target shape" , SHAPENODE1_INDEX, linkEdge9.getTargetShape().getIndex() ) ;
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute9.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE9_SERIAL , linkAttribute9.getCreationSerial()) ;
@@ -2643,344 +1538,31 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus18.getTerminusDecoratorType()) ;
 		assertEquals ( "terminus colour" , TERMINUS_COLOR118 , linkTerminus18.getTerminusColor()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE28 , linkTerminus18.getTerminusSize()) ;
-		
-		
 	}
 	
 	@Test
-	public void testLoadedProperty1 () throws Exception 
-	{
-		loadObjects() ;
+	public void testCheckLinkAt1BendPoints () {
+		ILinkAttribute linkAttribute = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE1_SERIAL);
+		IBendPoint bendPoint1 = linkAttribute.getBendPoint(FIRST_LINK1_BENDPOINT);
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
+		assertEquals ( "expected num bendpoints" , EXPECTED_NUM_LINK1_BENDPOINTS, linkAttribute.numBendPoints()) ;
+		assertEquals ( "check Location" , LOCATION_51 , bendPoint1.getLocation() ) ;
+		assertEquals ( "check parent" , linkAttribute , bendPoint1.getOwningLink()) ;
 		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-				shapeAttribute1 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		
-		labelNode1 = shapeNode1.getSubModel().labelIterator().next() ;
-		labelAttribute1 = labelNode1.getAttribute() ;
-		property1 = labelAttribute1.getProperty() ;
-		
-		assertNotNull ( "is not null " , property1 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property1.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property1 instanceof IPlainTextAnnotationProperty ) ;
-		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property1 ;
-		assertEquals ( "value" , PROPERTY1_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY1_CREATION_SERIAL , theProperty.getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty2 () throws Exception 
-	{
-		loadObjects() ; 
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 10 )
-			{
-				labelNode2 =  tempLabelNode ;
-				labelAttribute2 = tempLabelNode.getAttribute() ;
-				property2 = labelAttribute2.getProperty() ;
-			}
-		}
-		
-		assertNotNull ( "is not null " , property2 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property2.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property2 instanceof IPlainTextAnnotationProperty ) ;
-		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property2 ;
-		assertEquals ( "value" , PROPERTY2_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY2_CREATION_SERIAL , theProperty.getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty3 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 11 )
-			{
-				labelNode3 =  tempLabelNode ;
-				labelAttribute3 = tempLabelNode.getAttribute() ;
-				property3 = labelAttribute3.getProperty() ;
-			}
-		}
-		
-		assertNotNull ( "is not null " , property3 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property3.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property3 instanceof IHtmlAnnotationProperty ) ;
-		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property3 ;
-		assertEquals ( "value" , PROPERTY3_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY3_CREATION_SERIAL , theProperty.getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty4 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-			
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubModel().labelIterator() ;
-		while ( shapeNode2Labels.hasNext() )
-		{
-			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 12 )
-			{
-				labelNode4 =  tempLabelNode ;
-				labelAttribute4 = tempLabelNode.getAttribute() ;
-				property4 = labelAttribute4.getProperty() ;
-			}
-		}
-		
-		assertNotNull ( "is not null " , property4 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property4.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property4 instanceof IHtmlAnnotationProperty ) ;
-		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property4 ;
-		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY4_CREATION_SERIAL , theProperty.getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty5 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<ILabelNode> rootNodeLabels = dbRootNode.getSubModel().labelIterator() ;
-		while ( rootNodeLabels.hasNext() )
-		{
-			ILabelNode tempLabelNode = rootNodeLabels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 13 )
-			{
-				labelNode5 =  tempLabelNode ;
-				labelAttribute5 = tempLabelNode.getAttribute() ;
-				property5 = labelAttribute5.getProperty() ;
-			}
-		}
-		
-		assertNotNull ( "is not null " , property5 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property5.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property5 instanceof INumberAnnotationProperty ) ;
-		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property5 ;
-		assertEquals ( "value" , PROPERTY5_VALUE, theProperty.getValue().intValue()) ;
-		assertEquals ( "creation serial" , PROPERTY5_CREATION_SERIAL , theProperty.getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty6 () throws Exception 
-	{
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		labelNode6 = shapeNode6.getSubModel().labelIterator().next() ;
-		labelAttribute6 = labelNode6.getAttribute() ;
-		property6 = labelAttribute6.getProperty() ;
-		
-		assertNotNull ( "is not null " , property6 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property6.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property6 instanceof INumberAnnotationProperty ) ;
-		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property6 ;
-		assertEquals ( "value" , PROPERTY6_VALUE, theProperty.getValue().intValue()) ;
-		assertEquals ( "creation serial" , PROPERTY6_CREATION_SERIAL , property6 .getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testLoadedProperty7 () throws Exception 
-	{
-		loadObjects() ;
+//		assertNotNull ( "is not null" , bendpoint2 ) ;
+//		assertEquals ( "check Location" , LOCATION_52 , bendpoint2.getLocation() ) ;
+//		assertEquals ( "check parent" , linkAttribute2 , bendpoint2.getOwningLink()) ;
 
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-			
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		
-		Iterator<ILabelNode> shapeNode2Labels = shapeNode2.getSubModel().labelIterator() ;
-		while ( shapeNode2Labels.hasNext() )
-		{
-			ILabelNode tempLabelNode = shapeNode2Labels.next() ;
-			
-			if ( tempLabelNode.getIndex() == 15 )
-			{
-				labelNode7 =  tempLabelNode ;
-				labelAttribute7 = tempLabelNode.getAttribute() ;
-				property7 = labelAttribute7.getProperty() ;
-			}
-		}
-		
-		assertNotNull ( "is not null " , property7 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property7.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property7 instanceof IListAnnotationProperty ) ;
-		IListAnnotationProperty theProperty = (IListAnnotationProperty) property7 ;
-		List <String> listValues = theProperty.getValue() ;
-		assertEquals ( "first element" , PROPERTY7_LIST_VALUE1 , listValues.get(0)) ;
-		assertEquals ( "second element" , PROPERTY7_LIST_VALUE2 , listValues.get(1)) ;
-		assertEquals ( "creation serial" , PROPERTY7_CREATION_SERIAL , property7 .getCreationSerial()) ;
 	}
-	
-	@Test
-	public void testLoadedProperty8 () throws Exception 
-	{
-		
-		loadObjects() ;
-		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			if ( tempShapeNode.getIndex() ==2 )
-			{
-				shapeNode2 = tempShapeNode ;
-				shapeAttribute2 = tempShapeNode.getAttribute() ;
-				break ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-				shapeAttribute6  = tempShapeNode.getAttribute() ;
-			}
-			
-		}
-		
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeIterator().next() ;
-		shapeAttribute7 = shapeNode7.getAttribute() ;
-		
-		labelNode8 = shapeNode7.getSubModel().labelIterator().next() ;
-		labelAttribute8 = labelNode8.getAttribute() ;
-		property8 = labelAttribute8.getProperty() ;
-		
-		assertNotNull ( "is not null " , property8 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property8.getCanvas() ) ;
-		
-		assertTrue ( "is text property" , property8 instanceof IListAnnotationProperty ) ;
-		IListAnnotationProperty theProperty = (IListAnnotationProperty) property8 ;
-		List <String> listValues =  theProperty.getValue() ;
-		assertEquals ( "first element" , PROPERTY8_LIST_VALUE1 , listValues.get(0)) ;
-		assertEquals ( "second element" , PROPERTY8_LIST_VALUE2 , listValues.get(1)) ;
-		assertEquals ( "creation serial" , PROPERTY8_CREATION_SERIAL , property8 .getCreationSerial()) ;
-	}
-	
-	@Test
-	public void testCheckBendPoints () throws Exception
-	{
-		loadObjects() ;
-		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 0 )
-			{
-				linkEdge1 = tempLinkEdge ;
-				linkAttribute1 = tempLinkEdge.getAttribute() ;
-				bendpoint1 = linkAttribute1.bendPointIterator().next() ;
-			}
-			if ( tempLinkEdge.getIndex() == 1 )
-			{
-				linkEdge2 = tempLinkEdge ;
-				linkAttribute2 = tempLinkEdge.getAttribute() ;
-				bendpoint2 = linkAttribute2.bendPointIterator().next() ;
-			}
 
-		}
+	@Test
+	public void testCheckLinkAt2BendPoints () {
+		ILinkAttribute linkAttribute = this.dbCanvas.getLinkAttribute(LINK_ATTRIBUTE2_SERIAL);
+		IBendPoint bendPoint1 = linkAttribute.getBendPoint(FIRST_LINK2_BENDPOINT);
 		
-		assertNotNull ( "is not null" , bendpoint1 ) ;
-		assertEquals ( "check Location" , LOCATION_51 , bendpoint1.getLocation() ) ;
-		assertEquals ( "check parent" , linkAttribute1 , bendpoint1.getOwningLink()) ;
-		
-		assertNotNull ( "is not null" , bendpoint2 ) ;
-		assertEquals ( "check Location" , LOCATION_52 , bendpoint2.getLocation() ) ;
-		assertEquals ( "check parent" , linkAttribute2 , bendpoint2.getOwningLink()) ;
-
+		assertEquals ( "expected num bendpoints" , EXPECTED_NUM_LINK2_BENDPOINTS, linkAttribute.numBendPoints()) ;
+		assertEquals ( "check Location" , LOCATION_52 , bendPoint1.getLocation() ) ;
+		assertEquals ( "check parent" , linkAttribute , bendPoint1.getOwningLink()) ;
 	}
 }
 	

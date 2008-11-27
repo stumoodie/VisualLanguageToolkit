@@ -55,8 +55,11 @@
 		<column>canvas_height</column>
 		<column>created</column>
 		<column>last_modified</column>
-		<column>last_creation_serial</column>
-		<column>repository_id</column>
+		<column>last_shape_serial</column>
+		<column>last_label_serial</column>
+		<column>last_link_serial</column>
+		<column>last_prop_creation_serial</column>
+		<column>repository_name</column>
 	</table>
 	<table name="CompoundGraph">
 		<column>id</column>

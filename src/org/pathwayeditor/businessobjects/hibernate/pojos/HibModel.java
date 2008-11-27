@@ -7,10 +7,12 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -29,7 +31,9 @@ import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
 import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
+import uk.ed.inf.graph.util.IFilterCriteria;
 import uk.ed.inf.graph.util.IndexCounter;
+import uk.ed.inf.graph.util.impl.FilteredIterator;
 import uk.ed.inf.tree.GeneralTree;
 import uk.ed.inf.tree.ITree;
 
@@ -44,6 +48,8 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	private IHibNotationFactory hibNotationFactory;
 	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this);
 	private final transient IndexCounter momentoCntr;
+	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
+	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -52,6 +58,16 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());
 		this.momentoCntr = new IndexCounter();
+		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
+			public boolean matched(BaseCompoundNode testObj) {
+				return testObj instanceof ILabelNode;
+			}
+		};
+		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
+			public boolean matched(BaseCompoundNode testObj) {
+				return testObj instanceof IShapeNode;
+			}
+		};
 	}
 	
 	public HibModel(HibCanvas newCanvas, IRootObjectType rootObjectType, IHibNotationFactory hibNotationFactory) {
@@ -66,6 +82,16 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 		super(new CompoundGraphCopyBuilder(), otherModel);
 		this.canvas = newCanvas;
 		this.momentoCntr = new IndexCounter();
+		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
+			public boolean matched(BaseCompoundNode testObj) {
+				return testObj instanceof ILabelNode;
+			}
+		};
+		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
+			public boolean matched(BaseCompoundNode testObj) {
+				return testObj instanceof IShapeNode;
+			}
+		};
 	}
 	
 	int getLastEdgeIndex() {
@@ -292,5 +318,77 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 */
 	public boolean canRemoveSelection(IDrawingElementSelection selection) {
 		return super.canRemoveSubgraph((ShapeLinkSubgraph)selection);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#hasPassedAdditionalValidation()
+	 */
+	@Override
+	protected boolean hasPassedAdditionalValidation() {
+		return this.tree != null && this.tree.getRootNode().equals(this.getRootNode())
+			&& this.getCanvas()!= null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#labelNodeIterator()
+	 */
+	public Iterator<ILabelNode> labelNodeIterator() {
+		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), labelCriteria);
+		return new IterationCaster<ILabelNode, BaseCompoundNode>(filteredIter);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#numDrawingElements()
+	 */
+	public int numDrawingElements() {
+		return this.numDrawingNodes() + this.numLinkEdges();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#numDrawingNode()
+	 */
+	public int numDrawingNodes() {
+		return super.getNumNodes();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#numLabelNodes()
+	 */
+	public int numLabelNodes() {
+		int count = 0;
+		Iterator<ILabelNode> iter = this.labelNodeIterator();
+		while(iter.hasNext()) {
+			iter.next();
+			count++;
+		}
+		return count;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#numLinkEdges()
+	 */
+	public int numLinkEdges() {
+		return super.getNumEdges();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#numShapeNodes()
+	 */
+	public int numShapeNodes() {
+		int count = 0;
+		Iterator<IShapeNode> iter = this.shapeNodeIterator();
+		while(iter.hasNext()) {
+			iter.next();
+			count++;
+		}
+		return count;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#shapeNodeIterator()
+	 */
+	public Iterator<IShapeNode> shapeNodeIterator() {
+		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
+		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
 	}
 }

@@ -25,7 +25,17 @@ public interface ICanvasAttribute {
 	 */	
 	int getCreationSerial();	
 	
+	/**
+	 * The object type associated with the drawing node
+	 * @return the object type, which cannot be null.
+	 */
 	IObjectType getObjectType();
+	
+	/**
+	 * Gets the drawing elements associated with the attribute.
+	 * @return the drawing element, which cannot be null.
+	 */
+	IDrawingElement getCurrentDrawingElement();
 	
 	/**
 	 * The business key is the combination of canvas and creation serial.

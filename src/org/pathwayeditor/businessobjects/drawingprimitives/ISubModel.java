@@ -74,22 +74,34 @@ public interface ISubModel extends ISubModelChangeListenee {
 	void moveHere(IDrawingElementSelection canvasObjectSelection); 
 	
 	/**
-	 * Number of shapes.
+	 * Returns the number of drawing elements that are owned by this submodel.
+	 * @return the number of drawing elements.
+	 */
+	int numDrawingElements();
+	
+	/**
+	 * Returns the number of drawing nodes that are owned by this submode.
+	 * @return the number of drawing nodes.
+	 */
+	int numDrawingNodes();
+	
+	/**
+	 * Number of shapes owned by this submodel.
 	 * @return the number of shapes.
 	 */
-	int getNumShapes();
+	int numShapeNodes();
 	
 	/**
 	 * Num links owned by this shape model. 
 	 * @return the number of links.
 	 */
-	int getNumLinks();
+	int numLinkEdges();
 	
 	/**
-	 * Number of labels
+	 * Number of labels owned by this submodel.
 	 * @return number of labels.
 	 */
-	int getNumLabels();
+	int numLabelNodes();
 	
 	/**
 	 * Traverses over all the shapes in the sub-model, using depth-first

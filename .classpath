@@ -13,11 +13,6 @@
 			<attribute name="javadoc_location" value="file://lib/hsqldb/doc/src/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/DbUnit/dbunit-2.2.3.jar" sourcepath="lib/DbUnit/dbunit-2.2.3-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/DbUnit/dbunit-2.2.3-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-antlr-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-3.2/lib/ant-junit-1.6.5.jar"/>
@@ -68,6 +63,11 @@
 	<classpathentry kind="lib" path="lib/compoundgraph/CompoundGraph.jar" sourcepath="lib/compoundgraph/CompoundGraph-src.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/compoundgraph/CompoundGraph-docs.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/DbUnit/dbunit-2.3.0.jar" sourcepath="lib/DbUnit/dbunit-2.3.0-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/DbUnit/dbunit-2.3.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

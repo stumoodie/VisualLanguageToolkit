@@ -7,30 +7,14 @@
 		<column>build_num</column>
 		<column>last_inode</column>
 		<column>root_folder_id</column>
-		<row>
-			<value>100001</value>
-			<value>repo name</value>
-			<value>repository description</value>
-			<value>2534</value>
-			<value>5</value>
-			<value>100001</value>
-		</row>
 	</table>
 	<table name="Folder">
 		<column>id</column>
 		<column>repository_id</column>
 		<column>inode</column>
-		<row>
-			<value>100001</value><!-- rootFolder1  -->
-			<value>100001</value>
-			<value>1</value>
-		</row>
 	</table>
 	<table name="RootFolder">
 		<column>id</column>
-		<row>
-			<value>100001</value>
-		</row>
 	</table>
 	<table name="MapDiagram">
 		<column>id</column>
@@ -39,30 +23,6 @@
 		<column>description</column>
 		<column>repository_id</column>
 		<column>inode</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>Diagram name</value>
-			<value>Diagram Description</value>
-			<value>100001</value>
-			<value>2</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>Diagram name2</value>
-			<value>Diagram Description2</value>
-			<value>100001</value>
-			<value>3</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>Diagram name3</value>
-			<value>Diagram Description3</value>
-			<value>100001</value>
-			<value>4</value>
-		</row>
 	</table>
 	<table name="Context">
 		<column>id</column>
@@ -72,24 +32,6 @@
 		<column>major_version</column>
 		<column>minor_version</column>
 		<column>patch_version</column>
-		<row>
-			<value>100001</value>
-			<value>global id</value>
-			<value>context name</value>
-			<value>context descr</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>global id2</value>
-			<value>context name2</value>
-			<value>context descr2</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-		</row>
 	</table>
 	<table name="Canvas">
 		<column>id</column>
@@ -106,62 +48,11 @@
 		<column>canvas_height</column>
 		<column>created</column>
 		<column>last_modified</column>
-		<column>last_creation_serial</column>
+		<column>last_shape_serial</column>
+		<column>last_label_serial</column>
+		<column>last_link_serial</column>
+		<column>last_prop_creation_serial</column>
 		<column>repository_name</column>
-		<row>
-			<value>100001</value>
-			<value>2</value>
-			<value>100001</value>
-			<value>10</value>
-			<value>10</value>
-			<value>true</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>10</value>
-			<value>10</value>
-			<value>1970-01-01</value>
-			<value>1970-01-01</value>
-			<value>2</value>
-			<value>repo name</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>3</value>
-			<value>100001</value>
-			<value>15</value>
-			<value>15</value>
-			<value>true</value>
-			<value>true</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>15</value>
-			<value>15</value>
-			<value>1970-01-01</value>
-			<value>1970-01-01</value>
-			<value>0</value>
-			<value>repo name</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>4</value>
-			<value>100001</value>
-			<value>16</value>
-			<value>16</value>
-			<value>true</value>
-			<value>true</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>16</value>
-			<value>16</value>
-			<value>1970-01-01</value>
-			<value>1970-01-01</value>
-			<value>0</value>
-			<value>repo name</value>
-		</row>
 	</table>
 	<table name="CompoundGraph">
 		<column>id</column>
@@ -169,20 +60,6 @@
 		<column>root_node_id</column>
 		<column>last_node_index</column>
 		<column>last_edge_index</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>100001</value>
-			<value>3</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100002</value>
-			<value>100002</value>
-			<value>4</value>
-			<value>0</value>
-		</row>
 	</table>
 	<table name="ObjectType">
 		<column>id</column>
@@ -191,22 +68,6 @@
 		<column>description</column>
 		<column>unique_id</column>
 		<column>classification_code</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>objectName</value>
-			<value>objectDescr</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100002</value>
-			<value>objectName2</value>
-			<value>objectDescr2</value>
-			<value>2</value>
-			<value>1</value>
-		</row>
 	</table>
 	<table name="CompoundNode">
 		<column>id</column>
@@ -214,190 +75,42 @@
 		<column>node_index</column>
 		<column>parent_id</column>
 		<column>is_removed</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>1</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>2</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>3</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100004</value>
-			<value>100002</value>
-			<value>1</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100005</value>
-			<value>100002</value>
-			<value>2</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100006</value>
-			<value>100002</value>
-			<value>3</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
-		<row>
-			<value>100007</value>
-			<value>100002</value>
-			<value>4</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
 	</table>
 	<table name="RootObjectNode">
 		<column>id</column>
-		<row>
-			<value>100001</value>
-		</row>
 	</table>
 	<table name="ShapeNode">
 		<column>id</column>
 		<column>shape_attribute_id</column>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100004</value>
-		</row>
 	</table>
 	<table name="LabelNode">
 		<column>id</column>
 		<column>label_attribute_id</column>
-		<row>
-			<value>100004</value>
-			<value>100004</value>
-		</row>
-		<row>
-			<value>100005</value>
-			<value>100004</value>
-		</row>
-		<row>
-			<value>100006</value>
-			<value>100004</value>
-		</row>
-		<row>
-			<value>100007</value>
-			<value>100004</value>
-		</row>
 	</table>
 	<table name="property">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>123456</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>2</value>
-		</row>
-		<row>
-			<value>100004</value>
-			<value>100001</value>
-			<value>3</value>
-		</row>
-		<row>
-			<value>100005</value>
-			<value>100001</value>
-			<value>4</value>
-		</row>
-		<row>
-			<value>100006</value>
-			<value>100001</value>
-			<value>5</value>
-		</row>
-		<row>
-			<value>100007</value>
-			<value>100001</value>
-			<value>6</value>
-		</row>
 	</table>
 	<table name="textproperty">
 		<column>id</column>
 		<column>text_value</column>
-		<row>
-			<value>100002</value>
-			<value>chips</value>
-		</row>
-		<row>
-			<value>100006</value>
-			<value>ShapeProperty</value>
-		</row>
-		<row>
-			<value>100007</value>
-			<value>LinkTerminusProperty</value>
-		</row>
 	</table>
 	<table name="numberproperty">
 		<column>id</column>
 		<column>number_value</column>
-		<row>
-			<value>100003</value>
-			<value>1</value>
-		</row>
 	</table>
 	<table name="listproperty">
 		<column>id</column>
-		<row>
-			<value>100004</value>
-		</row>
 	</table>
 	<table name="listvalue">
 		<column>list_property_id</column>
 		<column>index_pos</column>
 		<column>string_representation</column>
-		<row>
-			<value>100004</value>
-			<value>0</value>
-			<value>first in list</value>
-		</row>
-		<row>
-			<value>100004</value>
-			<value>1</value>
-			<value>second in list</value>
-		</row>
 	</table>
 	<table name="richtextProperty">
 		<column>id</column>
 		<column>rich_text_value</column>
-		<row>
-			<value>100001</value>
-			<value>richtextvalue</value>
-		</row>
-		<row>
-			<value>100005</value>
-			<value>chips</value>
-		</row>
 	</table>
 	<table name="ShapeAttribute">
 		<column>id</column>
@@ -422,30 +135,6 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>1</value>
-			<value>shapeName</value>
-			<value>100001</value>
-			<value>descr</value>
-			<value>detailed descr</value>
-			<value>http://www.shapeURL.org</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>50</value>
-			<value>50</value>
-			<value>50</value>
-			<value>50</value>
-		</row>
 	</table>
 	<table name="LinkEdge">
 		<column>id</column>
@@ -456,22 +145,11 @@
 		<column>in_node_id</column>
 		<column>link_attribute_id</column>
 		<column>is_removed</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>1</value>
-			<value>100001</value>
-			<value>100001</value>
-			<value>100002</value>
-			<value>100001</value>
-			<value>false</value>
-		</row>
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
-		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>source_terminus_id</column>
 		<column>target_terminus_id</column>
@@ -485,25 +163,6 @@
 		<column>line_width</column>
 		<column>router_type</column>
 		<column>url</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>2</value>
-			<value>1</value>
-			<value>100001</value>
-			<value>100001</value>
-			<value>100002</value>
-			<value>link_name</value>
-			<value>link_detailed_descr</value>
-			<value>link_descr</value>
-			<value>1</value>
-			<value>2</value>
-			<value>3</value>
-			<value>1</value>
-			<value>10</value>
-			<value>1</value>
-			<value>http://www.HibLink.org</value>
-		</row>
 	</table>
 	<table name="LinkTerminus">
 		<column>id</column>
@@ -519,46 +178,11 @@
 		<column>term_dec_blue</column>
 		<column>term_dec_height</column>
 		<column>term_dec_width</column>
-		<row>
-			<value>100001</value>
-			<value>0</value>
-			<value>10</value>
-			<value>100001</value>
-			<value>1</value>
-			<value>15</value>
-			<value>25</value>
-			<value>2</value>
-			<value>4</value>
-			<value>5</value>
-			<value>6</value>
-			<value>20</value>
-			<value>30</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>1</value>
-			<value>11</value>
-			<value>100001</value>
-			<value>1</value>
-			<value>15</value>
-			<value>25</value>
-			<value>2</value>
-			<value>4</value>
-			<value>5</value>
-			<value>6</value>
-			<value>20</value>
-			<value>30</value>
-		</row>
 	</table>
 	<table name="linkterminusproperty">
 		<column>link_terminus_id</column>
 		<column>property_id</column>
 		<column>name</column>
-		<row>
-			<value>100001</value>
-			<value>100007</value>
-			<value>LinkTerminusPropertyName</value>
-		</row>
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
@@ -574,86 +198,16 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>4</value>
-			<value>100002</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>5</value>
-			<value>100003</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>6</value>
-			<value>100004</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100004</value>
-			<value>100001</value>
-			<value>7</value>
-			<value>100005</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
 	</table>
 	<table name="shapeAttributeProperty">
 		<column>shape_attribute_id</column>
 		<column>property_id</column>
 		<column>name</column>
-		<row>
-			<value>100001</value>
-			<value>100006</value>
-			<value>ShapePropertyName</value>
-		</row>
 	</table>
 	<table name="linkAttributeProperty">
 		<column>link_attribute_id</column>
 		<column>property_id</column>
 		<column>name</column>
-		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>linkpropertyname</value>
-		</row>
 	</table>
 	<table name="bendpoint">
 		<column>link_attribute_id</column>
@@ -665,17 +219,6 @@
 		<column>first_rel_dim_y</column>
 		<column>second_rel_dim_x</column>
 		<column>second_rel_dim_y</column>
-		<row>
-			<value>100001</value>
-			<value>0</value>
-			<value>0</value>
-			<value>25</value>
-			<value>25</value>
-			<value>5</value>
-			<value>6</value>
-			<value>7</value>
-			<value>8</value>
-		</row>
 		<row>
 			<value>100001</value>
 			<value>1</value>

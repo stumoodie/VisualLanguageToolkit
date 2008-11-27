@@ -101,10 +101,71 @@ public interface ICanvas extends IPropertyChangeListenee{
 
 	
 	/**
-	 * Create a copy of this canvas and add it to the given map.
-	 * @param map the map that will own the copied map. This cannot be the same map that owns this model. 
-	 * @return The newly created model.
-	 * @throws IllegalArgumentException if <code>getOwningMap().equals(map)</code>.
+	 * Tests if the given canvas can be copied into this one. This requires that the 
+	 * canvas is not null, it is different to this one, it uses the same notation subsystem
+	 * and that this canvas is empty.
+	 * @param canvas the canvas to test.
+	 * @return true if <code>canvas</code> can be successfully copied here, false otherwise.
 	 */
-	ICanvas createCopy(IMap map);
+	boolean canCopyHere(ICanvas canvas);
+	
+	/**
+	 * Copy another canvas into this one. For it to succeed it must be a different
+	 * canvas, they must have the same notation subsystems and this canvas must be empty.
+	 * @param otherCanvas the other canvas to be copied here. 
+	 * @throws IllegalArgumentException if <code>canCopyHere(otherCanvas)==false</code>.
+	 */
+	void copyHere(ICanvas otherCanvas);
+	
+	/**
+	 * Find an attribute that matches the serial number.
+	 * @param attributeSerial the serial number. 
+	 * @return The canvas attribute with the serial number matching <code>attributeSerial</code> or null if no matching attribute serial can be found. 
+	 */
+	ICanvasAttribute findAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a link attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsLinkAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the link attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the link attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsLinkAttribute(attributeSerial) == false</code>.
+	 */
+	ILinkAttribute getLinkAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a shape attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsShapeAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the shape attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the shape attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsShapeAttribute(attributeSerial) == false</code>.
+	 */
+	IShapeAttribute getShapeAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a label attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsLabelAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the label attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the label attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsLabelAttribute(attributeSerial) == false</code>.
+	 */
+	ILabelAttribute getLabelAttribute(int attributeSerial);
 }

@@ -39,8 +39,8 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, HibShapeAttribute shapeAttribute){
 		super(parentNode.getGraph(), parentNode, nodeIndex);
-//		this.changeAttribute(shapeAttribute);
 		this.shapeAttribute = shapeAttribute;
+		this.shapeAttribute.setShapeNode(this);
 	}
 	
 	/* (non-Javadoc)
@@ -59,6 +59,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 
 	public void setAttribute(HibShapeAttribute shapeAttribute) {
 		this.shapeAttribute = shapeAttribute;
+		this.shapeAttribute.setShapeNode(this);
 	}
 	
 //	public void changeAttribute(HibShapeAttribute newShapeAttribute){
@@ -136,6 +137,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		}
 		else{
 			type = ModelStructureChangeType.ADDED;
+			this.shapeAttribute.setShapeNode(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
@@ -172,6 +174,19 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	public void notifyTargetEdgeChange(ModelStructureChangeType type, HibLinkEdge hibLinkEdge) {
 		listenable.notifyTargetNodeStructureChange(type, hibLinkEdge);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode#isValid()
+	 */
+	@Override
+	public boolean isValid() {
+		return this.shapeAttribute != null && this.shapeAttribute.isValid();
+	}
+	
+	@Override
+	public HibCompoundNode getParent() {
+		return this.getHibParentNode();
 	}
 
 }

@@ -27,15 +27,17 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	public HibLabelNode(HibCompoundNode parent, int index, HibProperty property){
 		super(parent.getModel(), parent, index);
 		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
-		int newSerial = this.getModel().getCanvas().getAttributeSerialCounter().nextIndex();
+		int newSerial = this.getModel().getCanvas().getLabelSerialCounter().nextIndex();
 //		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
 		this.labelAttribute = new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults);
+		this.labelAttribute.setLabelNode(this);
 	}
 	
 	
 	public HibLabelNode(HibCompoundNode parent, int index, HibLabelAttribute attribute){
 		super(parent.getModel(), parent, index);
 		this.labelAttribute = attribute;
+		this.labelAttribute.setLabelNode(this);
 	}
 	
 	
@@ -63,6 +65,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 
 	void setAttribute(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
+		this.labelAttribute.setLabelNode(this);
 	}
 
 	/* (non-Javadoc)
@@ -99,10 +102,23 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		}
 		else{
 			type = ModelStructureChangeType.ADDED;
+			this.labelAttribute.setLabelNode(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
 	}
 
-	
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode#isValid()
+	 */
+	@Override
+	public boolean isValid() {
+		return this.labelAttribute != null && this.labelAttribute.isValid();
+	}
+
+	@Override
+	public HibCompoundNode getParent() {
+		return this.getHibParentNode();
+	}
 }

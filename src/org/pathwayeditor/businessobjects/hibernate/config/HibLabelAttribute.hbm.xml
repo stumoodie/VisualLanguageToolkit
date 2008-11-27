@@ -7,17 +7,15 @@
 			<column name="id" />
 			<generator class="native" />
 		</id>
-		<properties name="xak1label" unique="true">
-			<many-to-one name="visualisableProperty" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty">
-				<column name="displayed_property_id" not-null="true" />
-			</many-to-one>
-		</properties>
         <many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
         	<column name="canvas_id" not-null="true"/>
         </many-to-one>
         <property name="creationSerial" type="int">
         	<column name="creation_serial" not-null="true" />
         </property>
+		<many-to-one name="visualisableProperty" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" cascade="all">
+			<column name="displayed_property_id" not-null="false" />
+		</many-to-one>
 		<property name="XPosition" type="int">
 			<column name="x_position" not-null="true" />
 		</property>
@@ -38,9 +36,6 @@
 		</property>
 		<property name="backgroundBlue" type="int" access="property">
 			<column name="background_blue" not-null="true" />
-		</property>
-		<property name="isDisplayed" type="boolean" access="property">
-			<column name="is_displayed" not-null="true" />
 		</property>
 	</class>
 </hibernate-mapping>

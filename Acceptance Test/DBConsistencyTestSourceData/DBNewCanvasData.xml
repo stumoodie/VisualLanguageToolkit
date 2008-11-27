@@ -64,7 +64,10 @@
 		<column>background_blue</column>
 		<column>canvas_width</column>
 		<column>canvas_height</column>
-		<column>last_creation_serial</column>
+		<column>last_shape_serial</column>
+		<column>last_label_serial</column>
+		<column>last_link_serial</column>
+		<column>last_prop_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>5</value>
@@ -78,7 +81,10 @@
 			<value>255</value>
 			<value>200</value>
 			<value>300</value>
-			<value>1</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 			<value>repo name</value>
 		</row> 
 	</table>
@@ -164,11 +170,9 @@
 	<table name="LabelAttribute">
 		<column>id</column>
 		<column>displayed_property_id</column>
-		<column>is_displayed</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
-		<column>no_fill_set</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>

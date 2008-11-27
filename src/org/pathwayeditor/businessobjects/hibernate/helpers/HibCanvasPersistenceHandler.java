@@ -192,7 +192,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			Hibernate.initialize(node.getAttribute());
 			HibCompoundNode hibNode = (HibCompoundNode) node;
 			Hibernate.initialize(hibNode.getChildren());
-			Hibernate.initialize(hibNode.getParent());
+			Hibernate.initialize(hibNode.getHibParentNode());
 			Hibernate.initialize(hibNode.getChildCompoundGraph());
 			Hibernate.initialize(hibNode.getInEdges());
 			Hibernate.initialize(hibNode.getOutEdges());

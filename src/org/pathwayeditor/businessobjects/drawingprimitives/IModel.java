@@ -68,7 +68,6 @@ public interface IModel extends IModelChangeListenee {
 	 */
 	boolean canRemoveSelection(IDrawingElementSelection selection);
 	
-	
 	/**
 	 * Remove the nodes and edges in the model specified in the given selection.
 	 * In addition to the specified nodes and edges child nodes and edges of selected nodes and 
@@ -85,8 +84,61 @@ public interface IModel extends IModelChangeListenee {
 	Iterator<IDrawingNode> drawingNodeIterator();
 	
 	/**
-	 * Returns all the link edges in this model
+	 * Returns a shape node iterator for all the shape nodes held in this model.
+	 * @return the shape node iterator, which cannot be null.
+	 */
+	Iterator<IShapeNode> shapeNodeIterator();
+	
+	
+	/**
+	 * Returns an iterator for all the label nodes held in this model.
+	 * @return the label node iterator, which cannot be null.
+	 */
+	Iterator<ILabelNode> labelNodeIterator();
+	
+	/**
+	 * Returns an iterator for all the link edges in this model
 	 * @return the link edge iterator.
 	 */
 	Iterator<ILinkEdge> linkEdgeIterator();
+	
+	/**
+	 * Tests that the model is self-consistent and correctly initialised from persistent storage (if
+	 * applicable). Once loaded from persistent storage or if created using the interface APIs, then
+	 * a model should always be valid. Therefore this method should mainly be used testing and debugging
+	 * purposes.   
+	 * @return true if the model is self-consistent and maintains referential integrity, false otherwise.
+	 */
+	boolean isValid();
+	
+	/**
+	 * Provides the number of drawing elements in this model.
+	 * @return the number of drawing elements.
+	 */
+	int numDrawingElements();
+	
+	/**
+	 * Provides the number of drawing nodes in this model.
+	 * @return the number of drawing nodes.
+	 */
+	int numDrawingNodes();
+	
+	/**
+	 * Provides the number of shape nodes in this model.
+	 * @return the number of shape nodes.
+	 */
+	int numShapeNodes();
+	
+	/**
+	 * Provides the number of label nodes in this model.
+	 * @return the number of label nodes.
+	 */
+	int numLabelNodes();
+	
+	
+	/**
+	 * Provides the number of link edges in this model.
+	 * @return the number of link edges.
+	 */
+	int numLinkEdges();
 }

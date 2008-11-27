@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
@@ -27,6 +28,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	private static final Location DEFAULT_POSITION = new Location(0,0);
 	private static final Size DEFAULT_SIZE = new Size(10,10);
@@ -58,7 +60,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private int lineWidth = DEFAULT_LINE_WIDTH;
 	private int padding = DEFAULT_PADDING;
 	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
-//	private HibShapeNode shapeNode;
+	private HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private IPropertyBuilder propertyBuilder;
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
@@ -421,9 +423,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 //		return this.shapeNode;
 //	}
 //	
-//	void setShapeNode(HibShapeNode newNode){
-//		this.shapeNode = newNode;
-//	}
+	void setShapeNode(HibShapeNode newNode){
+		this.shapeNode = newNode;
+	}
 //	
 //	public void changeShapeNode(HibShapeNode newNode){
 //		if(this.shapeNode != null){
@@ -606,5 +608,84 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		builder.append(this.getCreationSerial());
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getCurrentDrawingElement()
+	 */
+	public HibShapeNode getCurrentDrawingElement() {
+		return this.shapeNode;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean containsProperty(IPropertyDefinition propDefn) {
+		boolean retVal = false;
+		if(propDefn != null) {
+			retVal = this.hibProperties.containsKey(propDefn.getName());
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(java.lang.String)
+	 */
+	public boolean containsProperty(String propName) {
+		boolean retVal = false;
+		if(propName != null) {
+			retVal = this.hibProperties.containsKey(propName);
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#numProperties()
+	 */
+	public int numProperties() {
+		return this.hibProperties.size();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
+	 */
+	public boolean containsProperty(IAnnotationProperty property) {
+		boolean retVal = false;
+		if(property != null) {
+			IAnnotationProperty foundProp = this.hibProperties.get(property.getDefinition().getName());
+			if(foundProp != null) {
+				retVal = foundProp.equals(property);
+			}
+		}
+		return retVal;
+	}
+
+	public boolean isValid() {
+		boolean retVal = this.shapeObjectType != null && this.shapeNode.getAttribute() != null
+		// note: the check by reference below is deliberate as hibernate wants this.
+				&& this.shapeNode.getAttribute() == this;
+		if (retVal) {
+			Iterator<IPropertyDefinition> it = this.shapeObjectType.getDefaultAttributes().propertyDefinitionIterator();
+			int propCntr = 0;
+			while (it.hasNext() && retVal) {
+				IPropertyDefinition definition = it.next();
+				HibProperty property = this.hibProperties.get(definition.getName());
+				if (property == null) {
+					logger.error(
+							"The object type has property definitions which have no matching property in this Shape Attribute");
+					retVal = false;
+				}
+				else {
+					property.setPropertyDefinition(definition);
+					propCntr++;
+				}
+			}
+			if (retVal && propCntr != this.hibProperties.size()) {
+				logger.error(
+						"Object inconsistent with object type. Cannot find definitions for some properties");
+				retVal = false;
+			}
+		}
+		return retVal;
 	}
 }

@@ -47,11 +47,11 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	@Override
 	protected BaseCompoundEdge newEdge(BaseChildCompoundGraph owningChildGraph,
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
-		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType());
-		HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
-		int edgeCreationSerial = canvas.getAttributeSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = this.attribute;
-		if(this.attribute == null){
+		if(linkAttribute == null){
+			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType());
+			HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
+			int edgeCreationSerial = canvas.getLinkSerialCounter().nextIndex();
 			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);

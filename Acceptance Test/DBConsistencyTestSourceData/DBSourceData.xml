@@ -202,7 +202,10 @@
 		<column>canvas_height</column>
 		<column>created</column>
 		<column>last_modified</column>
-		<column>last_creation_serial</column>
+		<column>last_shape_serial</column>
+		<column>last_label_serial</column>
+		<column>last_link_serial</column>
+		<column>last_prop_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>100001</value>
@@ -219,7 +222,10 @@
 			<value>10</value>
 			<value>1970-01-01</value>
 			<value>1970-01-01</value>
-			<value>24</value>
+			<value>8</value>
+			<value>8</value>
+			<value>9</value>
+			<value>35</value>
 			<value>repo name</value>
 		</row> 
 	</table>
@@ -347,21 +353,21 @@
 				<value>100015</value><!-- label6 -->
 				<value>100001</value>
 				<value>14</value>
-				<value>100007</value>
+				<value>100001</value>
 				<value>false</value>
 			</row>
 			<row>
 				<value>100016</value><!-- label7 -->
 				<value>100001</value>
 				<value>15</value>
-				<value>100003</value>
+				<value>100004</value>
 				<value>false</value>
 			</row>
 			<row>
 				<value>100017</value><!-- label8 -->
 				<value>100001</value>
 				<value>16</value>
-				<value>100008</value>
+				<value>100005</value>
 				<value>false</value>
 			</row>								
 	</table>
@@ -548,7 +554,7 @@
 			<value>100003</value><!-- CONNECTS 2 =>6 -->
 			<value>100001</value>
 			<value>2</value>
-			<value>100001</value>
+			<value>100003</value>
 			<value>100003</value>
 			<value>100007</value>
 			<value>100003</value>
@@ -568,7 +574,7 @@
 			<value>100005</value><!-- CONNECTS 7 =>6 -->
 			<value>100001</value>
 			<value>4</value>
-			<value>100003</value>
+			<value>100007</value>
 			<value>100008</value>
 			<value>100007</value>
 			<value>100005</value>
@@ -578,7 +584,7 @@
 			<value>100006</value><!-- CONNECTS 6 =>7 -->
 			<value>100001</value>
 			<value>5</value>
-			<value>100003</value>
+			<value>100007</value>
 			<value>100007</value>
 			<value>100008</value>
 			<value>100006</value>
@@ -1025,137 +1031,128 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
+		<column>canvas_id</column>
+		<column>creation_serial</column>
 		<column>displayed_property_id</column>
 		<column>is_displayed</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
-		<column>no_fill_set</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<row>
 			<value>100001</value>
-			<value>100001</value>
-			<value>true</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
-			<value>true</value>
-			<value>51</value>
-			<value>51</value>
-			<value>51</value>
-			<value>51</value>
 			<value>100001</value>
 			<value>1</value>
+			<value>100001</value>
+			<value>true</value>
+			<value>101</value>
+			<value>101</value>
+			<value>101</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
+			<value>51</value>
 		</row>
 		<row>
 			<value>100002</value>
-			<value>100002</value>
-			<value>true</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>true</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
 			<value>100001</value>
 			<value>2</value>
+			<value>100002</value>
+			<value>true</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
 		</row>
 		<row>
 			<value>100003</value>
-			<value>100003</value>
-			<value>true</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>true</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
 			<value>100001</value>
 			<value>3</value>
+			<value>100003</value>
+			<value>true</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
 		</row>
 		<row>
 			<value>100004</value>
-			<value>100004</value>
-			<value>true</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>true</value>
-			<value>54</value>
-			<value>54</value>
-			<value>54</value>
-			<value>54</value>
 			<value>100001</value>
 			<value>4</value>
+			<value>100004</value>
+			<value>true</value>
+			<value>104</value>
+			<value>104</value>
+			<value>104</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
+			<value>54</value>
 		</row>
 		<row>
 			<value>100005</value>
-			<value>100005</value>
-			<value>true</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>true</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
 			<value>100001</value>
 			<value>5</value>
+			<value>100005</value>
+			<value>true</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
 		</row>
 		<row>
 			<value>100006</value>
-			<value>100006</value>
-			<value>true</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>true</value>
-			<value>56</value>
-			<value>56</value>
-			<value>56</value>
-			<value>56</value>
 			<value>100001</value>
 			<value>6</value>
+			<value>100006</value>
+			<value>true</value>
+			<value>106</value>
+			<value>106</value>
+			<value>106</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
+			<value>56</value>
 		</row>
 		<row>
 			<value>100007</value>
-			<value>100007</value>
-			<value>false</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
-			<value>true</value>
-			<value>57</value>
-			<value>57</value>
-			<value>57</value>
-			<value>57</value>
 			<value>100001</value>
 			<value>7</value>
+			<value>100007</value>
+			<value>false</value>
+			<value>107</value>
+			<value>107</value>
+			<value>107</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
+			<value>57</value>
 		</row>
 		<row>
 			<value>100008</value>
+			<value>100001</value>
+			<value>8</value>
 			<value>100008</value>
 			<value>false</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
-			<value>true</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-			<value>100001</value>
-			<value>8</value>
 		</row>
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
@@ -2032,7 +2029,7 @@
 			<row>
 				<value>100001</value>
 				<value>100001</value>
-				<value>0</value>
+				<value>1</value>
 				<value>0</value>
 				<value>51</value>
 				<value>51</value>
@@ -2044,7 +2041,7 @@
 			<row>
 				<value>100002</value>
 				<value>100002</value>
-				<value>0</value>
+				<value>1</value>
 				<value>0</value>
 				<value>52</value>
 				<value>52</value>

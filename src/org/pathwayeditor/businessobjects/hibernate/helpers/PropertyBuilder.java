@@ -34,7 +34,7 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
 	 */
 	public IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn) {
-		IHtmlAnnotationProperty anHTMLProperty = new HibRichTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn);
+		IHtmlAnnotationProperty anHTMLProperty = new HibRichTextProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), propDefn);
 		canvas.getProperties().add((HibProperty) anHTMLProperty) ;
 		return anHTMLProperty ;
 	}
@@ -43,7 +43,7 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition)
 	 */
 	public IPlainTextAnnotationProperty createPlainTextProperty(IPlainTextPropertyDefinition propDefn) {
-		IPlainTextAnnotationProperty aTextProperty = new HibTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		IPlainTextAnnotationProperty aTextProperty = new HibTextProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), propDefn); 
 		canvas.getProperties().add((HibProperty) aTextProperty) ;
 		return aTextProperty ;
 	}
@@ -52,7 +52,7 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
 	 */
 	public IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other) {
-		return new HibRichTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), (HibRichTextProperty)other);
+		return new HibRichTextProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), (HibRichTextProperty)other);
 	}
 
 
@@ -60,21 +60,21 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyNumberProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition)
 	 */
 	public INumberAnnotationProperty copyNumberProperty(INumberAnnotationProperty other) {
-		return new HibNumberProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), (HibNumberProperty)other);
+		return new HibNumberProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), (HibNumberProperty)other);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition)
 	 */
 	public IPlainTextAnnotationProperty copyPlainTextProperty(IPlainTextAnnotationProperty other) {
-		return new HibTextProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), (HibTextProperty)other);
+		return new HibTextProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), (HibTextProperty)other);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#createNumberProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition)
 	 */
 	public INumberAnnotationProperty createNumberProperty(INumberPropertyDefinition propDefn) {
-		INumberAnnotationProperty aNumberProperty =  new HibNumberProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		INumberAnnotationProperty aNumberProperty =  new HibNumberProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), propDefn); 
 		canvas.getProperties().add((HibProperty) aNumberProperty);
 		return aNumberProperty ;
 	}
@@ -83,14 +83,14 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyListProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty)
 	 */
 	public IListAnnotationProperty copyListProperty(IListAnnotationProperty other) {
-		return new HibListProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), (HibListProperty)other);
+		return new HibListProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), (HibListProperty)other);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#createListProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition)
 	 */
 	public IListAnnotationProperty createListProperty(IListPropertyDefinition propDefn) {
-		IListAnnotationProperty aListProperty =  new HibListProperty(canvas, this.canvas.getAttributeSerialCounter().nextIndex(), propDefn); 
+		IListAnnotationProperty aListProperty =  new HibListProperty(canvas, this.canvas.getPropertySerialCounter().nextIndex(), propDefn); 
 		canvas.getProperties().add((HibProperty) aListProperty) ;
 		return aListProperty ;
 	}

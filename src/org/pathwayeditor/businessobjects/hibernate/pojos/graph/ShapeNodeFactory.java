@@ -48,7 +48,7 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 		if(newAttribute == null){
 			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(shapeObjectType);
 			HibCanvas canvas = hibParent.getModel().getCanvas();
-			newAttribute = new HibShapeAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
+			newAttribute = new HibShapeAttribute(canvas, canvas.getShapeSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
 		}
 		HibShapeNode retVal = new HibShapeNode(hibParent, nodeIndex, newAttribute);
 		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);

@@ -7,6 +7,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
@@ -49,7 +53,10 @@ public class HibCanvas implements ICanvas , Serializable {
 	private int mapINode;
 	private String repository;
 	private HibModel model ;
-	private IndexCounter creationSerialCounter;
+	private IndexCounter shapeSerialCounter = new IndexCounter();
+	private IndexCounter linkSerialCounter = new IndexCounter();
+	private IndexCounter labelSerialCounter = new IndexCounter();
+	private IndexCounter propertySerialCounter = new IndexCounter();
 	private Set<HibShapeAttribute> shapeAttributes = new HashSet<HibShapeAttribute>(0);
 	private Set<HibLinkAttribute> linkAttributes = new HashSet<HibLinkAttribute>(0);
 	private Set<HibLabelAttribute> labelAttributes = new HashSet<HibLabelAttribute>(0);
@@ -71,7 +78,6 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.mapINode = map.getINode();
 		this.notation = notationSubsystem;
 		this.hibNotation = hibNotationFactory.getNotation();
-		this.creationSerialCounter = new IndexCounter();
 		IRootObjectType rootObjectType = notationSubsystem.getSyntaxService().getRootObjectType();
 		this.model = new HibModel(this, rootObjectType, hibNotationFactory);
 	}
@@ -89,7 +95,7 @@ public class HibCanvas implements ICanvas , Serializable {
 		this.canvasSize = other.getCanvasSize();
 		this.model = new HibModel(this, other.getGraph());
 		this.notation = other.notation;
-		this.creationSerialCounter = new IndexCounter();
+		this.shapeSerialCounter = new IndexCounter();
 	}
 
 	public Long getId() {
@@ -316,25 +322,61 @@ public class HibCanvas implements ICanvas , Serializable {
 	public void setGraph(HibModel graph) {
 		this.model = graph;
 	}
+	
+	void setLastShapeSerial(int lastIndexValue){
+		this.shapeSerialCounter = new IndexCounter(lastIndexValue);
+	}
+	
+	int getLastShapeSerial(){
+		return this.shapeSerialCounter.getLastIndex();
+	}
+	
+	public IndexCounter getShapeSerialCounter(){
+		return this.shapeSerialCounter;
+	}
 
-	
-	void setLastCreationSerial(int lastIndexValue){
-		this.creationSerialCounter = new IndexCounter(lastIndexValue);
+	void setLastLabelSerial(int lastIndexValue){
+		this.labelSerialCounter = new IndexCounter(lastIndexValue);
 	}
 	
-	int getLastCreationSerial(){
-		return this.creationSerialCounter.getLastIndex();
+	int getLastLabelSerial(){
+		return this.labelSerialCounter.getLastIndex();
 	}
 	
-	public IndexCounter getAttributeSerialCounter(){
-		return this.creationSerialCounter;
+	public IndexCounter getLabelSerialCounter(){
+		return this.labelSerialCounter;
+	}
+
+	void setLastLinkSerial(int lastIndexValue){
+		this.linkSerialCounter = new IndexCounter(lastIndexValue);
+	}
+	
+	int getLastLinkSerial(){
+		return this.linkSerialCounter.getLastIndex();
+	}
+	
+	public IndexCounter getLinkSerialCounter(){
+		return this.linkSerialCounter;
+	}
+
+	void setLastPropertyCreationSerial(int lastIndexValue){
+		this.propertySerialCounter = new IndexCounter(lastIndexValue);
+	}
+	
+	int getLastPropertyCreationSerial(){
+		return this.propertySerialCounter.getLastIndex();
+	}
+	
+	public IndexCounter getPropertySerialCounter(){
+		return this.propertySerialCounter;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#createCopy(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public ICanvas createCopy(IMap map) {
-		return new HibCanvas((HibMap)map, this);
+	public void copyHere(ICanvas map) {
+		//TODO implement this.
+		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	/* (non-Javadoc)
@@ -447,5 +489,90 @@ public class HibCanvas implements ICanvas , Serializable {
 		return builder.toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLabelAttribute(int)
+	 */
+	public boolean containsLabelAttribute(int attributeSerial) {
+		return findAttribute(this.labelAttributes, attributeSerial) != null;
+	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLinkAttribute(int)
+	 */
+	public boolean containsLinkAttribute(int attributeSerial) {
+		return findAttribute(this.linkAttributes, attributeSerial) != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsShapeAttribute(int)
+	 */
+	public boolean containsShapeAttribute(int attributeSerial) {
+		return findAttribute(this.shapeAttributes, attributeSerial) != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#findAttribute(int)
+	 */
+	public ICanvasAttribute findAttribute(int attributeSerial) {
+		ICanvasAttribute retVal = findAttribute(this.shapeAttributes, attributeSerial);
+		if(retVal == null) {
+			retVal = findAttribute(this.linkAttributes, attributeSerial);
+		}
+		if(retVal == null) {
+			retVal = findAttribute(this.labelAttributes, attributeSerial);
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLabelAttribute(int)
+	 */
+	public ILabelAttribute getLabelAttribute(int attributeSerial) {
+		ILabelAttribute retVal = findAttribute(this.labelAttributes, attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLinkAttribute(int)
+	 */
+	public ILinkAttribute getLinkAttribute(int attributeSerial) {
+		ILinkAttribute retVal = findAttribute(this.linkAttributes, attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getShapeAttribute(int)
+	 */
+	public IShapeAttribute getShapeAttribute(int attributeSerial) {
+		IShapeAttribute retVal = findAttribute(this.shapeAttributes, attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+
+	private static <T extends ICanvasAttribute> T findAttribute(Set<T> searchSet, int creationSerial) {
+		T retVal = null;
+		for(T attribute : searchSet) {
+			if(attribute.getCreationSerial() == creationSerial) {
+				retVal = attribute;
+			}
+		}
+		return retVal;  
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#canCopyHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public boolean canCopyHere(ICanvas canvas) {
+		// TODO implement this!
+		throw new UnsupportedOperationException("Not implemented");
+	}
 }

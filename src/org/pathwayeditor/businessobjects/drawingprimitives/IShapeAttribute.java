@@ -169,7 +169,11 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	 */
 	void setPadding ( int padding ) ;
 
-//	IShapeNode getShapeNode();
+	/**
+	 * Gets the shape node associated with the attribute.
+	 * @return the shape node, which cannot be null.
+	 */
+	IShapeNode getCurrentDrawingElement();
 	
 //	Iterator<IAnnotationProperty> propertyIterator();
 }

@@ -12,6 +12,8 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
  *
  */
 public class HibRootNode extends HibCompoundNode implements IRootNode {
+	private static final int ROOTNODE_ATTRIBUTE = -999;
+
 	private RootAttribute canvasAttribute = null;
 	
 	/**
@@ -31,13 +33,14 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	public HibRootNode(HibModel model, int nodeIdx, IRootObjectType objectType) {
 		super(model, null, nodeIdx);
 		HibCanvas canvas = model.getCanvas();
-		this.canvasAttribute = new RootAttribute(canvas, canvas.getAttributeSerialCounter().nextIndex(), objectType);
+		this.canvasAttribute = new RootAttribute(canvas, ROOTNODE_ATTRIBUTE, objectType);
+		this.canvasAttribute.setRootNode(this);
 	}
 
 	public void setObjectType(IRootObjectType objectType){
 		HibCanvas canvas = this.getModel().getCanvas();
-		int nextIndex = canvas.getAttributeSerialCounter().nextIndex();
-		this.canvasAttribute = new RootAttribute(canvas, nextIndex, objectType);
+		this.canvasAttribute = new RootAttribute(canvas, ROOTNODE_ATTRIBUTE, objectType);
+		this.canvasAttribute.setRootNode(this);
 	}
 	
 	/* (non-Javadoc)
@@ -47,6 +50,11 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		return this.canvasAttribute;
 	}
 
+	@Override
+	public HibRootNode getParent() {
+		return this;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
 	 */
@@ -75,5 +83,16 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	@Override
 	protected void removalAction(boolean removed) {
 		// will never be removed so do nothing.
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode#isValid()
+	 */
+	@Override
+	public boolean isValid() {
+		return this.canvasAttribute != null && this.canvasAttribute.isValid()
+			// althought the compound graph expects the root node to return a reference to itself
+			// the hibernate schema expects the parent to have a root that it null.
+			&& super.getHibParentNode() == null;
 	}
 }

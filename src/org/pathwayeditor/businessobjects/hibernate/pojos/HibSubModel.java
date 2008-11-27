@@ -2,6 +2,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
@@ -29,6 +30,8 @@ import uk.ed.inf.graph.util.impl.FilteredIterator;
 import uk.ed.inf.graph.util.impl.NodeSet;
 
 public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	private Long id = null;
 	private HibCompoundNode rootNode;
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
@@ -158,7 +161,15 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		return this.getSuperGraph();
 	}
 
-	public int getNumLabels() {
+	public int numDrawingElements() {
+		return this.numDrawingNodes() + this.numLinkEdges();
+	}
+	
+	public int numDrawingNodes() {
+		return super.getNumNodes();
+	}
+	
+	public int numLabelNodes() {
 		int cnt = 0;
 		Iterator<ILabelNode> iter = this.labelIterator();
 		while(iter.hasNext()){
@@ -168,11 +179,11 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		return cnt;
 	}
 
-	public int getNumLinks() {
+	public int numLinkEdges() {
 		return this.getNumEdges();
 	}
 
-	public int getNumShapes() {
+	public int numShapeNodes() {
 		int cnt = 0;
 		Iterator<IShapeNode> iter = this.shapeIterator();
 		while(iter.hasNext()){
@@ -263,6 +274,29 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	public void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
 		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
 		this.getModel().notifyEdgeStructureChange(type, changedEdge);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#hasPassedAdditionalValidation()
+	 */
+	@Override
+	protected boolean hasPassedAdditionalValidation() {
+		boolean retVal = true;
+		if(this.rootNode != null && this.edges != null && this.getRootNode().isValid()) {
+			for(BaseCompoundEdge edge : this.edges) {
+				HibLinkEdge linkEdge = (HibLinkEdge)edge;
+				if(!linkEdge.isValid()) {
+					logger.error("LinkEdge: " + edge + "is invalid.");
+					retVal = false;
+					break;
+				}
+			}
+		}
+		else {
+			logger.error("Node: " + rootNode + " is invalid.");
+			retVal = false;
+		}
+		return retVal;
 	}
 
 }

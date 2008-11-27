@@ -17,7 +17,7 @@
         	</property>
         </properties>
         <many-to-one name="attribute" unique="true" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="all">
-		       	<column name="link_attribute_id" not-null="true"/>
+		       	<column name="link_attribute_id" not-null="false"/>
         </many-to-one>
         <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all">
         	<column name="owning_child_model_id" not-null="true"/>

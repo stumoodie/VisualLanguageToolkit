@@ -4,120 +4,15 @@
 	<table name="CompoundNode">
 		<column>model_id</column>
 		<column>node_index</column>
-		<column>parent_id</column>
-			<row>
-			<!-- Root Node -->
-				<value>100001</value>
-				<value>0</value>
-				<null/>
-			</row>
 			<row>
 				<!-- node1 -->
 				<value>100001</value>
-				<value>1</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<!-- node2 -->
-				<value>100001</value>
-				<value>2</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<!-- node3 -->
-				<value>100001</value>
-				<value>3</value>
-				<value>100002</value>
-			</row>
-			<row>
-				<!-- node4 -->
-				<value>100001</value>
-				<value>4</value>
-				<value>100002</value>
-			</row>
-			<row>
-				<!-- node5 -->
-				<value>100001</value>
-				<value>5</value>
-				<value>100003</value>
-			</row>
-			<row>
-				<!-- node6 -->
-				<value>100001</value>
-				<value>6</value>
-				<value>100003</value>
-			</row>
-			<row>
-			<!-- node7 -->
-				<value>100001</value>
-				<value>7</value>
-				<value>100007</value>
-			</row>
-			<row>
-			<!-- node8 -->
-				<value>100001</value>
-				<value>8</value>
-				<value>100008</value>
-			</row>
-			<row>
-				<!-- label1 -->
-				<value>100001</value>
-				<value>9</value>
-				<value>100002</value>
-			</row>
-			<row>
-				<!-- label2 -->
-				<value>100001</value>
-				<value>10</value>
-				<value>100001</value>
-			</row>
-			<row>
-			<!-- label3 -->
-				<value>100001</value>
-				<value>11</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<!-- label4 -->
-				<value>100001</value>
-				<value>12</value>
-				<value>100003</value>
-			</row>
-			<row>
-			<!-- label5 -->
-				<value>100001</value>
-				<value>13</value>
-				<value>100001</value>
-			</row>
-			<row>
-				<!-- label6 -->
-				<value>100001</value>
-				<value>14</value>
-				<value>100007</value>
-			</row>
-			<row>
-				<!-- label7 -->
-				<value>100001</value>
-				<value>15</value>
-				<value>100003</value>
-			</row>
-			<row>
-				<!-- label8 -->
-				<value>100001</value>
-				<value>16</value>
-				<value>100008</value>
-			</row>
-			<row>
-				<!-- node9 -->
-				<value>100001</value>
 				<value>17</value>
-				<value>100001</value>
-			</row>								
+			</row>
 	</table>
-	
-	
-<table name="ShapeAttribute">
+	<table name="ShapeAttribute">
 		<column>canvas_id</column>
+		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -138,169 +33,8 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<!-- ASSIGNED TO node2 -->
 			<value>100001</value>
-			<value>shapeName1</value>
-			<value>100001</value>
-			<value>descr1</value>
-			<value>detailed descr1</value>
-			<value>http://www.shape1URL.org</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>51</value>
-			<value>51</value>
-			<value>51</value>
-			<value>51</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node3 -->
-			<value>100001</value>
-			<value>shapeName2</value>
-			<value>100002</value>
-			<value>descr2</value>
-			<value>detailed descr2</value>
-			<value>http://www.shape2URL.org</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>2</value>
-			<value>2</value>
-			<value>2</value>
-			<value>2</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node4 -->
-			<value>100001</value>
-			<value>shapeName3</value>
-			<value>100003</value>
-			<value>descr3</value>
-			<value>detailed descr3</value>
-			<value>http://www.shape3URL.org</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>3</value>
-			<value>3</value>
-			<value>3</value>
-			<value>3</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node5 -->
-			<value>100001</value>
-			<value>shapeName4</value>
-			<value>100004</value>
-			<value>descr4</value>
-			<value>detailed descr4</value>
-			<value>http://www.shape4URL.org</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>4</value>
-			<value>4</value>
-			<value>4</value>
-			<value>4</value>
-			<value>54</value>
-			<value>54</value>
-			<value>54</value>
-			<value>54</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node6 -->
-			<value>100001</value>
-			<value>shapeName5</value>
-			<value>100001</value>
-			<value>descr5</value>
-			<value>detailed descr5</value>
-			<value>http://www.shape5URL.org</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>5</value>
-			<value>5</value>
-			<value>5</value>
-			<value>5</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
-		</row>
-		<row>
-		<!-- ASSIGNED TO node7 -->
-			<value>100001</value>
-			<value>shapeName6</value>
-			<value>100002</value>
-			<value>descr6</value>
-			<value>detailed descr6</value>
-			<value>http://www.shape6URL.org</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>1</value>
-			<value>6</value>
-			<value>6</value>
-			<value>6</value>
-			<value>56</value>
-			<value>56</value>
-			<value>56</value>
-			<value>56</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node8 -->
-			<value>100001</value>
-			<value>shapeName7</value>
-			<value>100003</value>
-			<value>descr7</value>
-			<value>detailed descr7</value>
-			<value>http://www.shape7URL.org</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
-			<value>2</value>
-			<value>7</value>
-			<value>7</value>
-			<value>7</value>
-			<value>57</value>
-			<value>57</value>
-			<value>57</value>
-			<value>57</value>
-		</row>
-		<row>
-			<!-- ASSIGNED TO node9 -->
-			<value>100001</value>
+			<value>9</value>
 			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>
@@ -320,29 +54,88 @@
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-		</row>	
-			<row>
-			<!-- ASSIGNED TO node9 -->
+		</row>																
+	</table>
+	<table name="LinkEdge"><!-- REMEBER TO SETUP THE CORRECT LINK_ATTRIBUTES -->
+		<column>model_id</column>
+		<column>edge_index</column>
+		<column>is_removed</column>
+	</table>
+	<table name="LinkAttribute">
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<column>last_bendpoint_serial</column>
+		<column>object_type_id</column>
+		<column>name</column>
+		<column>detailed_description</column>
+		<column>description</column>
+		<column>line_red</column>
+		<column>line_green</column>
+		<column>line_blue</column>
+		<column>line_style</column>
+		<column>line_width</column>
+		<column>router_type</column>
+		<column>url</column>
+	</table>
+	<!-- END OF ATTRIBUTE DECLARATION -->
+	<!-- END OF ATTRIBUTE DECLARATION -->
+	<!-- PROPERTIES -->
+	<table name="property">
+		<column>canvas_id</column>
+		<column>creation_serial</column>
+		<row>
 			<value>100001</value>
-			<value>shapeName8</value>
-			<value>100004</value>
-			<value>descr8</value>
-			<value>detailed descr8</value>
-			<value>http://www.shape8URL.org</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>3</value>
-			<value>8</value>
-			<value>8</value>
-			<value>8</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
-		</row>															
+			<value>36</value>
+		</row>
+	</table>
+	<table name="textproperty">
+		<column>text_value</column>
+	</table>
+	<table name="richtextProperty">
+		<column>rich_text_value</column>
+	</table>
+	<table name="numberproperty">
+		<column>number_value</column>
+	</table>
+	<!-- END OF PROPERTIES -->
+	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
+		<table name="shapeAttributeProperty">
+		<column>name</column>
+		<row>
+			<value>ShapeLinkProperty</value>
+		</row>
+	</table>
+	<table name="linkAttributeProperty">
+		<column>name</column>
+	</table>
+	<table name="linkterminusproperty">
+		<column>name</column>
+	</table>
+	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
+	<!-- TERMINUS & DECORATORS -->
+	<table name="LinkTerminus">
+		<column>link_term_type</column>
+		<column>offset_val</column>
+		<column>end_dec_type</column>
+		<column>end_dec_width</column>
+		<column>end_dec_height</column>
+		<column>term_dec_type</column>
+		<column>term_dec_red</column>
+		<column>term_dec_green</column>
+		<column>term_dec_blue</column>
+		<column>term_dec_height</column>
+		<column>term_dec_width</column>
+	</table>
+	<!-- END OF DECORATORS -->
+	<!-- BENDPOINTS -->
+	<table name="bendpoint">
+		<column>creation_serial</column>
+		<column>index_pos</column>
+		<column>x_position</column>
+		<column>y_position</column>
+		<column>first_rel_dim_x</column>
+		<column>first_rel_dim_y</column>
+		<column>second_rel_dim_x</column>
+		<column>second_rel_dim_y</column>
 	</table>
 </dataset>

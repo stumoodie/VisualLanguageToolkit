@@ -109,21 +109,21 @@
 				<value>100015</value><!-- label6 -->
 				<value>100001</value>
 				<value>14</value>
-				<value>100007</value>
+				<value>100001</value>
 				<value>false</value>
 			</row>
 			<row>
 				<value>100016</value><!-- label7 -->
 				<value>100001</value>
 				<value>15</value>
-				<value>100003</value>
+				<value>100004</value>
 				<value>false</value>
 			</row>
 			<row>
 				<value>100017</value><!-- label8 -->
 				<value>100001</value>
 				<value>16</value>
-				<value>100008</value>
+				<value>100005</value>
 				<value>false</value>
 			</row>								
 	</table>
@@ -310,7 +310,7 @@
 			<value>100003</value><!-- CONNECTS 2 =>6 -->
 			<value>100001</value>
 			<value>2</value>
-			<value>100001</value>
+			<value>100003</value>
 			<value>100003</value>
 			<value>100007</value>
 			<value>100003</value>
@@ -330,7 +330,7 @@
 			<value>100005</value><!-- CONNECTS 7 =>6 -->
 			<value>100001</value>
 			<value>4</value>
-			<value>100003</value>
+			<value>100007</value>
 			<value>100008</value>
 			<value>100007</value>
 			<value>100005</value>
@@ -340,7 +340,7 @@
 			<value>100006</value><!-- CONNECTS 6 =>7 -->
 			<value>100001</value>
 			<value>5</value>
-			<value>100003</value>
+			<value>100007</value>
 			<value>100007</value>
 			<value>100008</value>
 			<value>100006</value>

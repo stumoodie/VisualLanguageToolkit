@@ -65,6 +65,10 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 	 */
 	@Override
 	protected void addAdditionalNodes() {
+		addLinkLabels();
+	}
+	
+	private void addLinkLabels() {
 		// go through links and add in all the label nodes associated with their properties.
 		for(BaseCompoundEdge edge : this.getEdgeList()) {
 			ILinkEdge linkEdge = (ILinkEdge)edge;
@@ -73,8 +77,16 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 			while(labelNodeIter.hasNext()) {
 				ILabelNode labelNode = labelNodeIter.next();
 				ILabelAttribute labelAttrib = labelNode.getAttribute();
-				if(linkAttribute.getProperty(labelAttrib.getProperty().getDefinition()) != null) {
+				if(linkAttribute.containsProperty(labelAttrib.getProperty())) {
 					// has the property so add label to selection nodes
+					this.getNodeList().add((BaseCompoundNode)labelNode);
+				}
+				else if(linkAttribute.getSourceTerminus().containsProperty(labelAttrib.getProperty())) {
+					// check source terminus for property
+					this.getNodeList().add((BaseCompoundNode)labelNode);
+				}
+				else if(linkAttribute.getTargetTerminus().containsProperty(labelAttrib.getProperty())) {
+					// check target terminus for property
 					this.getNodeList().add((BaseCompoundNode)labelNode);
 				}
 			}

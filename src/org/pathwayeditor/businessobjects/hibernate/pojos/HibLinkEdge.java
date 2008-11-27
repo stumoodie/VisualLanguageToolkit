@@ -17,6 +17,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private HibCompoundNode inNode;
 	private HibSubModel owningChildGraph;
 	private HibLinkAttribute attribute;
+	private boolean removed;
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -36,8 +37,8 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.inNode = inNode;
 		this.changeInEdge();
 		this.changeOutNode();
-//		this.changeAttribute(linkAttribute);
 		this.attribute = linkAttribute;
+		this.attribute.setLinkEdge(this);
 	}
 	
 //	/**
@@ -109,6 +110,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 
 	public void setAttribute(HibLinkAttribute linkAttribute) {
 		this.attribute = linkAttribute;
+		this.attribute.setLinkEdge(this);
 	}
 
 	@Override
@@ -201,12 +203,21 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 
 
 	void setIsRemoved(boolean removed){
-		this.markRemoved(removed);
+		this.removed = removed;
 	}
 	
 	boolean getIsRemoved(){
-		// need to do this because isRemoved is final and this breaks hibernate 
-		return super.isRemoved();
+		return this.removed;
+	}
+
+	@Override
+	protected void setRemoved(boolean removed){
+		this.removed = removed;
+	}
+
+	@Override
+	public boolean isRemoved() {
+		return this.removed;
 	}
 
 	@Override
@@ -240,6 +251,10 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.owningChildGraph.notifyEdgeStructureChange(type, this);
 		this.getSourceShape().notifySourceEdgeChange(type, this);
 		this.getTargetShape().notifyTargetEdgeChange(type, this);
+	}
+
+	public boolean isValid() {
+		return this.attribute != null && this.attribute.isValid();
 	}
 }
 

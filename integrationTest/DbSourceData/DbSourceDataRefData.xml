@@ -106,7 +106,10 @@
 		<column>canvas_height</column>
 		<column>created</column>
 		<column>last_modified</column>
-		<column>last_creation_serial</column>
+		<column>last_shape_serial</column>
+		<column>last_link_serial</column>
+		<column>last_label_serial</column>
+		<column>last_prop_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>100001</value>
@@ -123,7 +126,10 @@
 			<value>10</value>
 			<value>1970-01-01</value>
 			<value>1970-01-01</value>
-			<value>2</value>
+			<value>1</value>
+			<value>1</value>
+			<value>4</value>
+			<value>7</value>
 			<value>repo name</value>
 		</row>
 		<row>
@@ -142,6 +148,9 @@
 			<value>1970-01-01</value>
 			<value>1970-01-01</value>
 			<value>0</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 			<value>repo name</value>
 		</row>
 		<row>
@@ -159,6 +168,9 @@
 			<value>16</value>
 			<value>1970-01-01</value>
 			<value>1970-01-01</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 			<value>0</value>
 			<value>repo name</value>
 		</row>
@@ -309,37 +321,37 @@
 		<row>
 			<value>100001</value>
 			<value>100001</value>
-			<value>123456</value>
+			<value>1</value>
 		</row>
 		<row>
 			<value>100002</value>
 			<value>100001</value>
-			<value>1</value>
+			<value>2</value>
 		</row>
 		<row>
 			<value>100003</value>
 			<value>100001</value>
-			<value>2</value>
+			<value>3</value>
 		</row>
 		<row>
 			<value>100004</value>
 			<value>100001</value>
-			<value>3</value>
+			<value>4</value>
 		</row>
 		<row>
 			<value>100005</value>
 			<value>100001</value>
-			<value>4</value>
+			<value>5</value>
 		</row>
 		<row>
 			<value>100006</value>
 			<value>100001</value>
-			<value>5</value>
+			<value>6</value>
 		</row>
 		<row>
 			<value>100007</value>
 			<value>100001</value>
-			<value>6</value>
+			<value>7</value>
 		</row>
 	</table>
 	<table name="textproperty">
@@ -577,52 +589,52 @@
 		<row>
 			<value>100001</value>
 			<value>100001</value>
+			<value>1</value>
+			<value>100002</value>
+			<value>true</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>true</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>100002</value>
+			<value>100001</value>
+			<value>2</value>
+			<value>100003</value>
+			<value>true</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>true</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>100003</value>
+			<value>100001</value>
+			<value>3</value>
+			<value>100004</value>
+			<value>true</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
+			<value>true</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>100004</value>
+			<value>100001</value>
 			<value>4</value>
-			<value>100002</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>5</value>
-			<value>100003</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>6</value>
-			<value>100004</value>
-			<value>true</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
-			<value>true</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-			<value>1</value>
-		</row>
-		<row>
-			<value>100004</value>
-			<value>100001</value>
-			<value>7</value>
 			<value>100005</value>
 			<value>true</value>
 			<value>100</value>

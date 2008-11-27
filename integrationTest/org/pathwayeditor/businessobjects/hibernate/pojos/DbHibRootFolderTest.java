@@ -68,25 +68,25 @@ public class DbHibRootFolderTest  extends PojoTester {
 		dbRootFolder.addSubFolder(subFolderToAdd) ;
 		sess.saveOrUpdate(dbRootFolder) ;
 		sess.getTransaction().commit() ;
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				ADDED_SUBFOLDER_REF_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
+		this.compareDatabase(ADDED_SUBFOLDER_REF_DATA);
+//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
+//				ADDED_SUBFOLDER_REF_DATA));
+//		String testTables[] = expectedDeltas.getTableNames();
+//		IDataSet actualChanges = getConnection().createDataSet(testTables);
+//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
+//		
+//		for (String t : testTables) {
+//			ITable expectedTable = DefaultColumnFilter
+//					.includedColumnsTable(expectedChanges.getTable(t),
+//							expectedDeltas.getTable(t).getTableMetaData()
+//									.getColumns());
+//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
+//					actualChanges.getTable(t), expectedDeltas.getTable(t)
+//							.getTableMetaData().getColumns());
+//			Assertion.assertEquals(new SortedTable(expectedTable),
+//					new SortedTable(actualTable, expectedTable
+//							.getTableMetaData()));
+//		}
 	}
 	
 //	@Test

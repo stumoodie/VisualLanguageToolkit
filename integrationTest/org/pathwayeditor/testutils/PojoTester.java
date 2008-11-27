@@ -8,9 +8,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.dbunit.Assertion;
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.Column;
 import org.dbunit.dataset.CompositeDataSet;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -170,38 +174,40 @@ public abstract class PojoTester {
 	protected final void compareDatabase(String mainFile, String deltaFile) throws Exception{
 		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(deltaFile));
 		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
+		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
 		IDataSet expectedChanges = new CompositeDataSet(new XmlDataSet(new FileInputStream(mainFile)), expectedDeltas);
 		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
+			String[] columnNameList = getFilterColumnNames(expectedDeltas.getTable(t));
+			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
 	}
 
+	private String[] getFilterColumnNames(ITable expectedFilterTable) throws DataSetException {
+		List<String> columnList = new ArrayList<String>();
+		for(Column expectedColumn : expectedFilterTable.getTableMetaData().getColumns()) {
+			columnList.add(expectedColumn.getColumnName());
+		}
+		return columnList.toArray(new String[0]);
+	}
+	
+	private void doTableComparison(ITable rawActualTable, ITable rawExpectedTable, String[] columnNameList) throws DatabaseUnitException {
+		ITable expectedTable = DefaultColumnFilter.includedColumnsTable(rawExpectedTable, columnNameList);
+		ITable actualTable = DefaultColumnFilter.includedColumnsTable(rawActualTable, columnNameList);
+		SortedTable expectedSortTable = new SortedTable(expectedTable);
+		expectedSortTable.setUseComparable(false);
+		SortedTable actualSortTable = new SortedTable(actualTable, columnNameList);
+		actualSortTable.setUseComparable(false);
+		Assertion.assertEquals(expectedSortTable, actualSortTable);
+	}
+	
 	protected final void compareDatabase(String mainFile) throws Exception{
 		IDataSet expectedChanges = new XmlDataSet(new FileInputStream(mainFile)); 
 		String testTables[] = expectedChanges.getTableNames();
 		
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
 		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedChanges.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedChanges.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
+			String[] columnNameList = getFilterColumnNames(expectedChanges.getTable(t));
+			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
 	}
 }

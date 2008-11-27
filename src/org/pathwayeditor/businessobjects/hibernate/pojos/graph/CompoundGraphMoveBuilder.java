@@ -84,4 +84,18 @@ public class CompoundGraphMoveBuilder extends BaseGraphMoveBuilder {
 		HibShapeNode retVal = fact.createShapeNode();
 		return retVal;
 	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseGraphMoveBuilder#additionalInitialisation()
+	 */
+	@Override
+	protected void additionalInitialisation() {
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseGraphMoveBuilder#additionalMoveTasks()
+	 */
+	@Override
+	protected void additionalMoveTasks() {
+	}
 }

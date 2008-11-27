@@ -15,7 +15,8 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	private HibModel graph = null;
 	private int index;
 	private HibSubModel childCompoundGraph = null;
-	private HibCompoundNode parentNode = null;
+	private HibCompoundNode hibParentNode = null;
+	private boolean removed;
 	private INodeSet<BaseCompoundNode, BaseCompoundEdge> children = new NodeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
@@ -34,7 +35,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		super();
 		this.graph = graph;
 		this.index = nodeIndex;
-		this.parentNode = parentNode;
+		this.hibParentNode = parentNode;
 		this.childCompoundGraph = new HibSubModel(this);
 		super.createInEdgeSet(this.inEdges);
 		super.createOutEdgeSet(this.outEdges);
@@ -107,8 +108,8 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		return this.inEdges;
 	}
 	
-	void setParent(HibCompoundNode parentNode) {
-		this.parentNode = parentNode;
+	void setHibParentNode(HibCompoundNode parentNode) {
+		this.hibParentNode = parentNode;
 	}
 
 
@@ -160,30 +161,39 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	}
 
 	@Override
-	public HibCompoundNode getParent() {
-		return this.parentNode;
-	}
-
-	@Override
 	public HibRootNode getRoot(){
 		return (HibRootNode)super.getRoot();
 	}
 
-	public HibCompoundNode getParentNode() {
-		return this.parentNode;
+	public HibCompoundNode getHibParentNode() {
+		return this.hibParentNode;
 	}
-
-	public void setParentNode(HibCompoundNode parentNode) {
-		this.parentNode = parentNode;
-	}	
-
 	
+	
+	public abstract HibCompoundNode getParent();
+
 	void setIsRemoved(boolean removed){
-		this.markRemoved(removed);
+		this.removed = removed;
+	}
+
+	boolean getIsRemoved(){
+		return this.removed;
 	}
 	
-	boolean getIsRemoved(){
-		// need to do this because isRemoved is final and this breaks hibernate 
-		return super.isRemoved();
+	@Override
+	protected void setRemoved(boolean removed){
+		this.removed = removed;
 	}
+
+	@Override
+	public boolean isRemoved() {
+		return this.removed;
+	}
+
+	/**
+	 * Validates aspects of the node not associated with graph connectivity (which is already validated by the graph library)
+	 * It may delegate to associated objects, such as attribute.
+	 * @return true if the node is valid, false otherwise.
+	 */
+	public abstract boolean isValid();
 }
