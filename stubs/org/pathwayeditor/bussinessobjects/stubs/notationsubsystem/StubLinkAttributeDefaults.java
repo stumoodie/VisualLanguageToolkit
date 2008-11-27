@@ -22,18 +22,18 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
  *
  */
 public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefaults {
-	public   int EXPECTED_DEFAULT_LINE_WIDTH = 3;
-	public   String EXPECTED_DEFAULT_NAME = "link name";
-	public   PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
-	public   Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
-	public static   String EXPECTED_DEFAULT_URL = "http://www.google.com";
-	public   String EXPECTED_DEFAULT_DESCRIPTION = "descn";
-	public   String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
-	public   RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
-	public   RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
-	public   LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
-	public   Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
-	public  static  ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.SHORTEST_PATH;
+	public static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
+	public static final  String EXPECTED_DEFAULT_NAME = "link name";
+	public static final  PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
+	public static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
+	public static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
+	public static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
+	public static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
+	public static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
+	public static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
+	public static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
+	public static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+	public static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.SHORTEST_PATH;
 
 //	private  ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();
 //	private  ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();

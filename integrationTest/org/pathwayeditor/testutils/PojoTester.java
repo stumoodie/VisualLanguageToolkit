@@ -187,7 +187,7 @@ public abstract class PojoTester {
 		for(Column expectedColumn : expectedFilterTable.getTableMetaData().getColumns()) {
 			columnList.add(expectedColumn.getColumnName());
 		}
-		return columnList.toArray(new String[0]);
+		return columnList.toArray(new String[columnList.size()]);
 	}
 	
 	private void doTableComparison(ITable rawActualTable, ITable rawExpectedTable, String[] columnNameList) throws DatabaseUnitException {

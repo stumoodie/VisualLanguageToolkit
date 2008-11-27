@@ -106,58 +106,6 @@ public class DbHibLinkTest extends PojoTester{
 		
 	}
 	
-	@Ignore @Test
-	public void testAddNewLink () throws Exception 
-	{
-		Session sess = getHibFactory().getCurrentSession();
-		sess.beginTransaction();
-//		Query retreivedCompoundEdge = sess.createQuery("from HibLinkEdge where id='100001'" ) ;
-		Query retreivedCanvas = sess.createQuery("from HibCanvas where id='100001'" ) ;
-//		Query retreivedObjectType = sess.createQuery("from HibObjectType where id='100001'" ) ;
-		
-		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
-//		HibLinkEdge dbCompoundEdge = (HibLinkEdge) retreivedCompoundEdge.uniqueResult() ;
-//		HibObjectType dbObjectType = (HibObjectType) retreivedObjectType.uniqueResult() ;
-		
-//		HibLinkAttribute linkToWrite = new HibLinkAttribute () ;
-		HibLinkAttribute linkToWrite = null;
-		
-		linkToWrite.setCreationSerial(LINK_CREATION_SERIAL_2) ;
-		linkToWrite.setName(LINK_NAME_2) ;
-		linkToWrite.setDescription(LINK_DESCR_2) ; 
-		linkToWrite.setDetailedDescription(LINK_DETAILED_DESCR_2) ;
-		linkToWrite.setLineRed(LINK_COLOUR_VALUE_2) ;
-		linkToWrite.setLineBlue(LINK_COLOUR_VALUE_2) ;
-		linkToWrite.setLineGreen(LINK_COLOUR_VALUE_2) ;
-		linkToWrite.setLineStyle(LineStyle.DASHED) ;
-		linkToWrite.setLineWidth(LINK_LINE_WIDTH_2) ;
-		linkToWrite.setRouterType(ConnectionRouter.FAN) ;
-		linkToWrite.setUrl(LINK_URL_2) ;
-		
-		linkToWrite.setCanvas(dbCanvas) ;
-		
-		sess.save(linkToWrite) ;
-		sess.getTransaction().commit() ; 
-		
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-				CREATED_LINK_DATA));
-		String testTables[] = expectedDeltas.getTableNames();
-		IDataSet actualChanges = getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-		for (String t : testTables) {
-			ITable expectedTable = DefaultColumnFilter
-					.includedColumnsTable(expectedChanges.getTable(t),
-							expectedDeltas.getTable(t).getTableMetaData()
-									.getColumns());
-			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-					actualChanges.getTable(t), expectedDeltas.getTable(t)
-							.getTableMetaData().getColumns());
-			Assertion.assertEquals(new SortedTable(expectedTable),
-					new SortedTable(actualTable, expectedTable
-							.getTableMetaData()));
-		}
-		
-	}
 	
 //	@Test
 //	public void testChangeMapDiagram () throws Exception 

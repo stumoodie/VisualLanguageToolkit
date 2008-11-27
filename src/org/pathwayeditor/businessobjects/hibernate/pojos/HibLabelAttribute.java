@@ -358,7 +358,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	public void removeChangeListener(IPropertyChangeListener listener) {
-		this.removeChangeListener(listener);
+		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)

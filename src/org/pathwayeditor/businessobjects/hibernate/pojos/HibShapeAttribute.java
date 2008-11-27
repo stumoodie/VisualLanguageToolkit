@@ -28,7 +28,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private transient final Logger logger = Logger.getLogger(this.getClass());
 
 	private static final Location DEFAULT_POSITION = new Location(0,0);
 	private static final Size DEFAULT_SIZE = new Size(10,10);
@@ -46,24 +46,23 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private HibCanvas canvas;
 	private Long id;
 	private int creationSerial;
-	private Location position = DEFAULT_POSITION;
-	private Size size = DEFAULT_SIZE;
+	private transient Location position = DEFAULT_POSITION;
+	private transient Size size = DEFAULT_SIZE;
 	private HibObjectType hibObjectType;
-	private IShapeObjectType shapeObjectType;
+	private transient IShapeObjectType shapeObjectType;
 	private String name = DEFAULT_NAME;
 	private String description = DEFAULT_DESCN;
 	private String detailedDescription = DEFAULT_DETAILS;
 	private String url = DEFAULT_URL;
-	private RGB fillColour = DEFAULT_FILL;
-	private RGB lineColour = DEFAULT_LINE;
+	private transient RGB fillColour = DEFAULT_FILL;
+	private transient RGB lineColour = DEFAULT_LINE;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
 	private int lineWidth = DEFAULT_LINE_WIDTH;
 	private int padding = DEFAULT_PADDING;
 	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
-	private HibShapeNode shapeNode;
+	private transient HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
-	private IPropertyBuilder propertyBuilder;
-	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
+	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 	
 
 	/**
@@ -81,7 +80,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.canvas.getShapeAttributes().add(this);
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
-		this.propertyBuilder = new PropertyBuilder(hibCanvas);
 		this.getCanvas().getShapeAttributes().add(this) ;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 		
@@ -89,7 +87,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
 		this();
-		this.propertyBuilder = new PropertyBuilder(other.getCanvas());
+		final IPropertyBuilder propertyBuilder = new PropertyBuilder(newCanvas);
 		this.canvas = newCanvas;
 		this.creationSerial = newCreationSerial;
 		this.canvas.getShapeAttributes().add(this);
@@ -109,7 +107,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.shapeType=other.shapeType;
 		for (HibProperty property : other.hibProperties.values()) {
 			IPropertyDefinition defn = property.getDefinition(); 
-			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(this.propertyBuilder, property));
+			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(propertyBuilder, property));
 		}
 	}
 	
@@ -126,6 +124,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.url = shapeDefaults.getURL();
 		this.shapeType = shapeDefaults.getShapeType();
 		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
+		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this.getCanvas());
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));

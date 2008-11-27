@@ -1,6 +1,5 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -37,8 +36,8 @@ import uk.ed.inf.graph.util.impl.FilteredIterator;
 import uk.ed.inf.tree.GeneralTree;
 import uk.ed.inf.tree.ITree;
 
-public class HibModel extends BaseCompoundGraph implements IModel, Serializable {
-	private static final long serialVersionUID = 6646425760947242284L;
+public class HibModel extends BaseCompoundGraph implements IModel {
+//	private static final long serialVersionUID = 6646425760947242284L;
 	private ITree<BaseCompoundNode> tree = null;
 	private Long id;
 	private HibRootNode rootNode;
@@ -293,7 +292,7 @@ public class HibModel extends BaseCompoundGraph implements IModel, Serializable 
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#subModelNodeChangeListenerIterator()
 	 */
 	public Iterator<IModelChangeListener> modelChangeListenerIterator() {
-		return this.modelChangeListenerIterator();
+		return this.listenerHandler.modelChangeListenerIterator();
 	}
 	
 	@Override

@@ -34,19 +34,18 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	private final static int DEF_END_DEC_HEIGHT = 0;
 	private final static int DEFAULT_OFFSET = 0;
 	private final static RGB DEFAULT_TERM_COLOUR = new RGB(0, 0, 0);
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private transient final Logger logger = Logger.getLogger(this.getClass());
 	
 	private Long id = null;
 	private HibLinkAttribute linkAttribute = null;
 	private LinkTermType linkTermType = null;
 	private short offset = DEFAULT_OFFSET;
 	private LinkEndDecoratorShape endDecoratorType = null;
-	private Size endDecSize = new Size(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
+	private transient Size endDecSize = new Size(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
     private PrimitiveShapeType termShapeType = null;
-    private RGB terminusColour = DEFAULT_TERM_COLOUR;
-    private Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
-    private IPropertyBuilder propBuilder;
-    private ILinkTerminusDefinition terminusDefn = null;;
+    private transient RGB terminusColour = DEFAULT_TERM_COLOUR;
+    private transient Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
+    private transient ILinkTerminusDefinition terminusDefn = null;;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 
 	/**
@@ -61,7 +60,6 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
-		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 		setDefaults(terminusDefn.getLinkTerminusDefaults());
 	}
 
@@ -74,7 +72,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this();
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = other.getLinkTermType();
-		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
+		IPropertyBuilder propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 		this.endDecoratorType = other.getEndDecoratorType();
 		this.endDecSize = other.getEndSize();
 		this.offset = other.getOffset();
@@ -98,6 +96,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.termShapeType = linkTerminusDefaults.getTermDecoratorType();
 		this.terminusColour = linkTerminusDefaults.getTermColour();
 		this.terminusSize = linkTerminusDefaults.getTermSize();
+		IPropertyBuilder propBuilder = new PropertyBuilder(this.getAttribute().getCanvas());
 		Iterator<IPropertyDefinition> iter = linkTerminusDefaults.propertyDefinitionIterator();
 		while(iter.hasNext()){
 			IPropertyDefinition propDefn = iter.next();
@@ -111,7 +110,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
 		}
 		this.terminusDefn = terminusDefn;
-		Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getLinkTerminusDefaults().propertyDefinitionIterator();
+		final Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getLinkTerminusDefaults().propertyDefinitionIterator();
 		int propCntr = 0;
 		while(propDefnIter.hasNext()) {
 			IPropertyDefinition definition = propDefnIter.next();
@@ -142,7 +141,6 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 
 	void setAttribute(HibLinkAttribute hibLinkAttribute) {
 		this.linkAttribute = hibLinkAttribute;
-		this.propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 	}
 
 	public LinkTermType getLinkTermType() {
