@@ -105,7 +105,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 			this.labelAttribute.setLabelNode(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
-		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
+		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);
 	}
 
 
@@ -118,7 +118,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	}
 
 	@Override
-	public HibCompoundNode getParent() {
+	public HibCompoundNode getParentNode() {
 		return this.getHibParentNode();
 	}
 }

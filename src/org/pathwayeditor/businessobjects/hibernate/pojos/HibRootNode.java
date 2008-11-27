@@ -51,7 +51,7 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	}
 
 	@Override
-	public HibRootNode getParent() {
+	public HibRootNode getParentNode() {
 		return this;
 	}
 	

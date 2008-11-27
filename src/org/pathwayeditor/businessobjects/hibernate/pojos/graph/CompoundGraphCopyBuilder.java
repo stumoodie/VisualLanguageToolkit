@@ -95,7 +95,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 		// Now test if parent contains this property. If it does then the label is a label for the parent shape
 		// and we can add the property from the copied parent shape as the copied property that should be
 		// added to the copied label.
-		HibCompoundNode parentNode = srcLabelNode.getParent();
+		HibCompoundNode parentNode = srcLabelNode.getParentNode();
 		HibProperty copiedProperty = null;
 		if(parentNode instanceof IShapeNode) {
 			IShapeNode parentShape = (IShapeNode)parentNode;

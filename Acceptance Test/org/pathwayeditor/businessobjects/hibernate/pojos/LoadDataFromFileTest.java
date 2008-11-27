@@ -581,7 +581,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "root node index" , ROOT_NODE_INDEX , dbRootNode.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , dbRootNode.getModel()) ;
-		assertEquals ( "rootNode is its own parent" , dbRootNode, dbRootNode.getParent() ) ;
+		assertEquals ( "rootNode is its own parent" , dbRootNode, dbRootNode.getParentNode() ) ;
 		assertEquals ( "rootnode has 2 shapes", NUM_OF_ROOTNODE_SHAPE_CHILDREN , dbRootNode.getSubModel().numShapeNodes()) ;
 		assertEquals ( "rootnode has no labels", NUM_OF_ROOTNODE_LABEL_CHILDREN , dbRootNode.getSubModel().numLabelNodes()) ;
 		assertEquals ( "rootnode has 5 links", NUM_OF_ROOTNODE_LINK_CHILDREN , dbRootNode.getSubModel().numLinkEdges()) ;
@@ -612,7 +612,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode1 index" , SHAPENODE1_INDEX , shapeNode1.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode1.getModel()) ;
-		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode1.getParent().getIndex() ) ;
+		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode1.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE1_SHAPE_CHILDREN , shapeNode1.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE1_LABEL_CHILDREN , shapeNode1.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE1_LINK_CHILDREN , shapeNode1.getSubModel().numLinkEdges()) ;
@@ -644,7 +644,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode2 index" , SHAPENODE2_INDEX , shapeNode2.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode2.getModel()) ;
-		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode2.getParent().getIndex() ) ;
+		assertEquals ( "parent is rootNode" , dbRootNode.getIndex() , shapeNode2.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode1 has 2 shapes", NUM_OF_SHAPENODE2_SHAPE_CHILDREN , shapeNode2.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode1 has no labels", NUM_OF_SHAPENODE2_LABEL_CHILDREN , shapeNode2.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode1 has no links", NUM_OF_SHAPENODE2_LINK_CHILDREN , shapeNode2.getSubModel().numLinkEdges()) ;
@@ -676,7 +676,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode3 index" , SHAPENODE3_INDEX , shapeNode3.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode3.getModel()) ;
-		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , shapeNode3.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode1" , shapeNode1.getIndex() , shapeNode3.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode3 has no shapes", NUM_OF_SHAPENODE3_SHAPE_CHILDREN , shapeNode3.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode3 has no labels", NUM_OF_SHAPENODE3_LABEL_CHILDREN , shapeNode3.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode3 has no links", NUM_OF_SHAPENODE3_LINK_CHILDREN , shapeNode3.getSubModel().numLinkEdges()) ;
@@ -708,7 +708,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode4 index" , SHAPENODE4_INDEX , shapeNode4.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode4.getModel()) ;
-		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX, shapeNode4.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX, shapeNode4.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode4 has no shapes", NUM_OF_SHAPENODE4_SHAPE_CHILDREN , shapeNode4.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode4 has no labels", NUM_OF_SHAPENODE4_LABEL_CHILDREN , shapeNode4.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode4 has no links", NUM_OF_SHAPENODE4_LINK_CHILDREN , shapeNode4.getSubModel().numLinkEdges()) ;
@@ -740,7 +740,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "shapenode5 index" , SHAPENODE5_INDEX , shapeNode5.getIndex() ) ;
 		assertEquals ( "model check" , dbModel , shapeNode5.getModel()) ;
-		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, shapeNode5.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, shapeNode5.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode5 has no shapes", NUM_OF_SHAPENODE5_SHAPE_CHILDREN , shapeNode5.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode5 has no labels", NUM_OF_SHAPENODE5_LABEL_CHILDREN , shapeNode5.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode5 has no links", NUM_OF_SHAPENODE5_LINK_CHILDREN , shapeNode5.getSubModel().numLinkEdges()) ;
@@ -769,7 +769,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "is linkedtoAttribute" , shapeNode6.getAttribute() ) ;
 		
 		assertEquals ( "shapenode6 index" , SHAPENODE6_INDEX , shapeNode6.getIndex() ) ;
-		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX , shapeNode6.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX , shapeNode6.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode6 one shapes", NUM_OF_SHAPENODE6_SHAPE_CHILDREN , shapeNode6.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode6 has no labels", NUM_OF_SHAPENODE6_LABEL_CHILDREN , shapeNode6.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode6 has no links", NUM_OF_SHAPENODE6_LINK_CHILDREN , shapeNode6.getSubModel().numLinkEdges()) ;
@@ -810,7 +810,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "is linkedtoAttribute" , shapeNode7.getAttribute() ) ;
 		
 		assertEquals ( "shapenode7 index" , SHAPENODE7_INDEX , shapeNode7.getIndex() ) ;
-		assertEquals ( "parent is shapeNode6" , SHAPENODE6_INDEX , shapeNode7.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode6" , SHAPENODE6_INDEX , shapeNode7.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode7 has one shapes", NUM_OF_SHAPENODE7_SHAPE_CHILDREN , shapeNode7.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode7 has no labels", NUM_OF_SHAPENODE7_LABEL_CHILDREN , shapeNode7.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode7 has no links", NUM_OF_SHAPENODE7_LINK_CHILDREN , shapeNode7.getSubModel().numLinkEdges()) ;
@@ -851,7 +851,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "is linkedtoAttribute" , shapeNode8.getAttribute() ) ;
 		
 		assertEquals ( "shapenode8 index" , SHAPENODE8_INDEX , shapeNode8.getIndex() ) ;
-		assertEquals ( "parent is shapeNode7" , SHAPENODE7_INDEX, shapeNode8.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode7" , SHAPENODE7_INDEX, shapeNode8.getParentNode().getIndex() ) ;
 		assertEquals ( "shapeNode8 has one shapes", NUM_OF_SHAPENODE8_SHAPE_CHILDREN , shapeNode8.getSubModel().numShapeNodes()) ;
 		assertEquals ( "shapeNode8 has no labels", NUM_OF_SHAPENODE8_LABEL_CHILDREN , shapeNode8.getSubModel().numLabelNodes()) ;
 		assertEquals ( "shapeNode8 has no links", NUM_OF_SHAPENODE8_LINK_CHILDREN , shapeNode8.getSubModel().numLinkEdges()) ;
@@ -893,7 +893,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode1.getAttribute()) ;
 		
 		assertEquals ( "labelNode1 index" , LABELNODE1_INDEX , labelNode1.getIndex() ) ;
-		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX , labelNode1.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode1" , SHAPENODE1_INDEX , labelNode1.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode1 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode1.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode1 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode1.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode1 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode1.getSubModel().numLinkEdges()) ;
@@ -922,7 +922,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode2.getAttribute()) ;
 		
 		assertEquals ( "labelNode2 index" , LABELNODE2_INDEX , labelNode2.getIndex() ) ;
-		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode2.getParent().getIndex() ) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode2.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode2.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode2.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode2.getSubModel().numLinkEdges()) ;
@@ -951,7 +951,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode3.getAttribute()) ;
 		
 		assertEquals ( "labelNode3 index" , LABELNODE3_INDEX , labelNode3.getIndex() ) ;
-		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode3.getParent().getIndex() ) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode3.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode2 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode3.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode2 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode3.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode2 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode3.getSubModel().numLinkEdges()) ;
@@ -980,7 +980,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode4.getAttribute()) ;
 		
 		assertEquals ( "labelNode4 index" , LABELNODE4_INDEX , labelNode4.getIndex() ) ;
-		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, labelNode4.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE2_INDEX, labelNode4.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode4 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode4.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode4 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode4.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode4 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode4.getSubModel().numLinkEdges()) ;
@@ -1009,7 +1009,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode5.getAttribute()) ;
 		
 		assertEquals ( "labelNode5 index" , LABELNODE5_INDEX , labelNode5.getIndex() ) ;
-		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode5.getParent().getIndex() ) ;
+		assertEquals ( "parent is rootnode" , ROOT_NODE_INDEX, labelNode5.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode5 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode5.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode5 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode5.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode5 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode5.getSubModel().numLinkEdges()) ;
@@ -1038,7 +1038,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode6.getAttribute()) ;
 		
 		assertEquals ( "labelNode6 index" , LABELNODE6_INDEX , labelNode6.getIndex() ) ;
-		assertEquals ( "parent is shapeNode6" , ROOT_NODE_INDEX, labelNode6.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode6" , ROOT_NODE_INDEX, labelNode6.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode6 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode6.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode6 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode6.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode6 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode6.getSubModel().numLinkEdges()) ;
@@ -1067,7 +1067,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode7.getAttribute()) ;
 		
 		assertEquals ( "labelNode7 index" , LABELNODE7_INDEX , labelNode7.getIndex() ) ;
-		assertEquals ( "parent is shapeNode2" , SHAPENODE3_INDEX, labelNode7.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode2" , SHAPENODE3_INDEX, labelNode7.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode7 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode7.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode7 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode7.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode7 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode7.getSubModel().numLinkEdges()) ;
@@ -1098,7 +1098,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "has attribute" , labelNode8.getAttribute()) ;
 		
 		assertEquals ( "labelNode8 index" , LABELNODE8_INDEX , labelNode8.getIndex() ) ;
-		assertEquals ( "parent is shapeNode7" , SHAPENODE4_INDEX, labelNode8.getParent().getIndex() ) ;
+		assertEquals ( "parent is shapeNode7" , SHAPENODE4_INDEX, labelNode8.getParentNode().getIndex() ) ;
 		assertEquals ( "labelNode8 has one shapes", NUM_OF_ANY_LABELNODE_SHAPE_CHILDREN , labelNode8.getSubModel().numShapeNodes()) ;
 		assertEquals ( "labelNode8 has no labels", NUM_OF_ANY_LABELNODE_LABEL_CHILDREN , labelNode8.getSubModel().numLabelNodes()) ;
 		assertEquals ( "labelNode8 has no links", NUM_OF_ANY_LABELNODE_LINK_CHILDREN , labelNode8.getSubModel().numLinkEdges()) ;

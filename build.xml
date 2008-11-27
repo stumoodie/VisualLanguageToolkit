@@ -72,7 +72,7 @@
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
-		<pathelement location="${lib.dir}/DbUnit/dbunit-2.2.3.jar" />
+		<pathelement location="${lib.dir}/DbUnit/dbunit-2.3.0.jar" />
 		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
 		<pathelement location="${lib.dir}/compoundgraph/compoundgraph.jar" />
 	</path>

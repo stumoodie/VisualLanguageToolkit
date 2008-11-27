@@ -16,7 +16,7 @@ public interface IDrawingNode extends IDrawingElement {
 	
 	ISubModel getSubModel();
 	
-	IDrawingNode getParent();
+	IDrawingNode getParentNode();
 	
 	INodeObjectType getObjectType();
 	

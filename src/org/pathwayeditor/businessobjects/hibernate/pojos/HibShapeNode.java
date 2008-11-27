@@ -140,7 +140,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 			this.shapeAttribute.setShapeNode(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
-		this.getParent().getSubModel().notifyNodeStructureChange(type, this);
+		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);
 	}
 
 	public void notifySourceEdgeChange(ModelStructureChangeType type, HibLinkEdge hibLinkEdge) {
@@ -185,7 +185,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	}
 	
 	@Override
-	public HibCompoundNode getParent() {
+	public HibCompoundNode getParentNode() {
 		return this.getHibParentNode();
 	}
 
