@@ -11,7 +11,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
@@ -127,6 +126,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String RESTORED_FROM_DELETED_LINK_EDGE = "Acceptance Test/DBConsistencyTestValidationData/RestoredDeletedLinkData.xml" ;
 	private final static String RESTORED_FROM_ADDED_LINK_EDGE = "Acceptance Test/DBConsistencyTestValidationData/RestoredAddedLinkData.xml" ;
 	private final static String RESTORED_FROM_ADDED_LABEL_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredAddedLabelData.xml" ;
+	private static final String CANVAS_COPIED_FILE = "Acceptance Test/DBConsistencyTestValidationData/CanvasCopiedData.xml";
 	
 	
 	private final static String CHANGED_SHAPE_NAME = "new shape name" ;
@@ -796,9 +796,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		this.compareDatabase(RESTORED_FROM_ADDED_LABEL_NODE);
 	}
 	
-	@Ignore
 	@Test
-	public void testMakeCopyOfGraphViaTheModelAndToAnotherMapDIagram () throws PersistenceManagerException {
+	public void testMakeCopyOfGraphViaTheModelAndToAnotherMapDIagram () throws Exception {
 		IMap mapDiagram2 = (IMap)this.repository.findRepositoryItemByPath(MAP2_PATH);
 		IMapContentPersistenceManager map2Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram2) ;
 		map2Manager.loadContent();
@@ -808,6 +807,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertFalse("cannot copy from null", canvas2.canCopyHere(null));
 		assertTrue("can copy here", canvas2.canCopyHere(dbCanvas));
 		canvas2.copyHere(dbCanvas);
-		//TODO add a data comparison here too.
+		assertTrue("model is valid", canvas2.getModel().isValid());
+		assertEquals("correct num shapes", NUM_MODEL_SHAPES, canvas2.getModel().numShapeNodes());
+		assertEquals("correct num labels", NUM_MODEL_LABELS, canvas2.getModel().numLabelNodes());
+		assertEquals("correct num links", NUM_MODEL_EDGES, canvas2.getModel().numLinkEdges());
+		map2Manager.synchronise();
+		this.compareDatabase(SOURCE_DATA_FILE, CANVAS_COPIED_FILE);
 	}
 }

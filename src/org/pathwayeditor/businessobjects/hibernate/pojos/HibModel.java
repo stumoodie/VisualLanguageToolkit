@@ -38,11 +38,13 @@ import uk.ed.inf.tree.ITree;
 
 public class HibModel extends BaseCompoundGraph implements IModel {
 //	private static final long serialVersionUID = 6646425760947242284L;
+	private final static int ROOT_NODE_IDX = 0;
+	private final static int INIT_EDGE_IDX = -1;
 	private ITree<BaseCompoundNode> tree = null;
 	private Long id;
 	private HibRootNode rootNode;
-	private IndexCounter nodeCntr = new IndexCounter();
-	private IndexCounter edgeCntr = new IndexCounter();
+	private IndexCounter nodeCntr = new IndexCounter(ROOT_NODE_IDX);
+	private IndexCounter edgeCntr = new IndexCounter(INIT_EDGE_IDX);
 	private HibCanvas canvas;
 	private IHibNotationFactory hibNotationFactory;
 	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this);
@@ -73,7 +75,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		this();
 		this.canvas = newCanvas;
 		this.hibNotationFactory = hibNotationFactory;
-		this.rootNode = new HibRootNode(this, nodeCntr.getLastIndex(), rootObjectType);
+		this.rootNode = new HibRootNode(this, ROOT_NODE_IDX, rootObjectType);
 		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 	}
 	

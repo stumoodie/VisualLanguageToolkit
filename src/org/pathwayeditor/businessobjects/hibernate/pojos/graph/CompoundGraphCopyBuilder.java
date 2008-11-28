@@ -145,7 +145,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
 			BaseCompoundNode inNode , HibSubModel edgeOwner )
 	{
-		HibCanvas destCanvas = (HibCanvas)srcAttribute.getCanvas();
+		HibCanvas destCanvas = (HibCanvas)edgeOwner.getModel().getCanvas();
 		HibLinkAttribute destAttribute = new HibLinkAttribute ( destCanvas , destCanvas.getLinkSerialCounter().nextIndex() , srcAttribute) ;
 		LinkEdgeChildFactory edgeFact = edgeOwner.edgeFactory() ;
 		edgeFact.setPair(outNode, inNode);

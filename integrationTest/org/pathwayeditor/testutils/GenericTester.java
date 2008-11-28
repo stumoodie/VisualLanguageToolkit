@@ -6,6 +6,7 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -208,6 +209,7 @@ public abstract class GenericTester {
 	 * @param mainFile the main file to use in the test. This may be the original data loaded into the db.
 	 * @param deltaFile the additional changes that are added to the mainFile. If null then only the mainFile
 	 * is used for comparison.  
+	 * @throws IOException 
 	 * @throws Exception An exception is thrown by DBUnit during the comparison.
 	 */
 	protected final void compareDatabase(String mainFile, String deltaFile) throws Exception{

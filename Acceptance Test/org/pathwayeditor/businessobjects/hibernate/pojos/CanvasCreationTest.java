@@ -20,7 +20,7 @@ public class CanvasCreationTest extends GenericTester {
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String TEST_MAP_PATH = "/subfolder2/Diagram name2";
 	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
-	private static final String CANVAS_CREATION_CHANGES = "Acceptance Test/DBConsistencyTestSourceData/DBNewCanvasData.xml";
+	private static final String CANVAS_CREATION_CHANGES = "Acceptance Test/DBConsistencyTestValidationData/DBNewCanvasData.xml";
 	private IMapContentPersistenceManager mapContentManager;
 	
 	/* (non-Javadoc)

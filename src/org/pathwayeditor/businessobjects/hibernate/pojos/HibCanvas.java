@@ -42,6 +42,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	private static final int DEFAULT_GRID_WIDTH = 20;
 	private static final boolean DEFAULT_GRIB_ENABLED_VALUE = false;
 	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
+	private static final int MODEL_EMPTY_COUNT = 1; // has just root node when "empty" 
 
 	private Long id;
 	private IMap map;
@@ -589,7 +590,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	}
 
 	public boolean isEmpty(){
-		return this.model.numDrawingElements() == 0;
+		return this.model.numDrawingElements() == MODEL_EMPTY_COUNT;
 	}
 	
 	/* (non-Javadoc)
@@ -598,7 +599,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	public boolean canCopyHere(ICanvas canvas) {
 		boolean retVal = false;
 		if(canvas != null){
-			retVal = this.equals(canvas) && this.getNotationSubsystem().equals(canvas.getNotationSubsystem())
+			retVal = !this.equals(canvas) && this.getNotationSubsystem().equals(canvas.getNotationSubsystem())
 				&& this.isEmpty();
 		}
 		return retVal;

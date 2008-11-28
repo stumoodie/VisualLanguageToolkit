@@ -95,7 +95,7 @@
 		<column>last_edge_index</column>
 			<row>
 				<value>0</value>
-				<value>0</value>
+				<value>-1</value>
 			</row>
 	</table>
 	<table name="CompoundNode">
