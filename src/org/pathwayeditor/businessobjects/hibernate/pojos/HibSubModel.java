@@ -148,8 +148,14 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubMode#canCopyHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public boolean canCopyHere(IDrawingElementSelection canvasObjectSelection) {
-		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
-		return super.canCopyHere(subgraph);
+		boolean retVal = false;
+		if(canvasObjectSelection != null) {
+			ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+			retVal = this.getModel().getCanvas().getNotationSubsystem().equals(subgraph.getModel().getCanvas().getNotationSubsystem())
+				// don't need to test for dangling links as this is done by the superclass in method below. 
+				&& super.canCopyHere(subgraph);
+		}
+		return retVal;
 	}
 
 	public void copyHere(IDrawingElementSelection canvasObjectSelection) {
@@ -237,8 +243,14 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#canMoveHere(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasObjectSelection)
 	 */
 	public boolean canMoveHere(IDrawingElementSelection canvasObjectSelection) {
-		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
-		return super.canMoveHere(subgraph);
+		boolean retVal = false;
+		if(canvasObjectSelection != null) {
+			ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
+			retVal = this.getModel().equals(subgraph.getModel())
+				// don't need to test for dangling links as this is done by the superclass in method below. 
+				&& super.canMoveHere(subgraph);
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)

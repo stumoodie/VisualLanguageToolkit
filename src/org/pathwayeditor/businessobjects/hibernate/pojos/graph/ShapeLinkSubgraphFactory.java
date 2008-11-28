@@ -100,4 +100,11 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 	public int numLinkEdges() {
 		return super.numEdges();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory#createEdgeExcludedSelection()
+	 */
+	public IDrawingElementSelection createEdgeExcludedSelection() {
+		return this.createInducedSubgraph();
+	}
 }

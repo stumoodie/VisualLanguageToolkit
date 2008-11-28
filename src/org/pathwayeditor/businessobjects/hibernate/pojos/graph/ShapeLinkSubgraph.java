@@ -88,4 +88,13 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 		return super.containsNode((BaseCompoundNode)node);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#hasDanglingEdges()
+	 */
+	public boolean hasDanglingEdges() {
+		// an induced subgraph cannot have dangling edges
+		// perhaps an alternative implementation could be used. 
+		return !super.isInducedSubgraph();
+	}
+
 }

@@ -73,4 +73,11 @@ public interface IDrawingElementSelection {
 	 * @return true if this selection contains the link edge.
 	 */
 	boolean containsEdge(ILinkEdge linkEdge);
+	
+	/**
+	 * Tests if this selection has dangling links, that is links that are not connected to nodes that are included in
+	 * this selection. Note that some operations such as copy and move do not permit dangling edges in a selection.
+	 * @return true if dangling edges are present, false otherwise.
+	 */
+	boolean hasDanglingEdges();
 }

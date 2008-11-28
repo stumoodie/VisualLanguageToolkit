@@ -46,7 +46,7 @@ public interface ISubModel extends ISubModelChangeListenee {
 	/**
 	 * Is this submodel a valid destination for the copy? This requires that the sub-model is
 	 * empty and that it belongs to the same model as this one, or that the model
-	 * uses the same context adapter.  
+	 * uses the same notation subsystem. Also the selection cannot have any dangling links.
 	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
 	 * @return true if the selection can be copied here, false otherwise.
 	 */
@@ -55,13 +55,14 @@ public interface ISubModel extends ISubModelChangeListenee {
 	/**
 	 * Copy the selected objects to this.
 	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
+	 * @throws IllegalArgumentException if <code>canCopyHere(canvasObjectSelection)==false</code>.
 	 */
 	void copyHere(IDrawingElementSelection canvasObjectSelection); 
 	
 	/**
 	 * Tests if the selection can be moved to this SubModel. To no this non of the
 	 * selected objects can be owned by this subModel or its children. This will return
-	 * true only if the move will succeed.  
+	 * true only if the move will succeed. Also the selection cannot have any dangling links.
 	 * @param canvasObjectSelection
 	 * @return true if the selection can be moved here, false otherwise.
 	 */
@@ -70,6 +71,7 @@ public interface ISubModel extends ISubModelChangeListenee {
 	/**
 	 * Move this selection to the submodel provided.
 	 * @param canvasObjectSelection
+	 * @throws IllegalArgumentException if <code>canMoveHere(canvasObjectSelection)==false</code>.
 	 */
 	void moveHere(IDrawingElementSelection canvasObjectSelection); 
 	
