@@ -60,6 +60,12 @@ public interface ISubModel extends ISubModelChangeListenee {
 	void copyHere(IDrawingElementSelection canvasObjectSelection); 
 	
 	/**
+	 * Gets a selection of the elements that were created by the copy operation. 
+	 * @return the drawing selection, which will be empty if no copy operation has taken place. 
+	 */
+	IDrawingElementSelection getCopiedElements();
+	
+	/**
 	 * Tests if the selection can be moved to this SubModel. To no this non of the
 	 * selected objects can be owned by this subModel or its children. This will return
 	 * true only if the move will succeed. Also the selection cannot have any dangling links.
@@ -74,6 +80,12 @@ public interface ISubModel extends ISubModelChangeListenee {
 	 * @throws IllegalArgumentException if <code>canMoveHere(canvasObjectSelection)==false</code>.
 	 */
 	void moveHere(IDrawingElementSelection canvasObjectSelection); 
+	
+	/**
+	 * Gets a selection of the elements that were created by the move operation. 
+	 * @return the drawing selection, which will be empty if no move operation has taken place. 
+	 */
+	IDrawingElementSelection getMovedElements();
 	
 	/**
 	 * Returns the number of drawing elements that are owned by this submodel.

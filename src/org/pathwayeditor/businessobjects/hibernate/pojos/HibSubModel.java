@@ -311,5 +311,19 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 		return retVal;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#getCopiedElements()
+	 */
+	public IDrawingElementSelection getCopiedElements() {
+		return (ShapeLinkSubgraph)this.getCopiedComponents();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#getMovedElements()
+	 */
+	public IDrawingElementSelection getMovedElements() {
+		return (ShapeLinkSubgraph)this.getMovedComponents();
+	}
+
 }
 

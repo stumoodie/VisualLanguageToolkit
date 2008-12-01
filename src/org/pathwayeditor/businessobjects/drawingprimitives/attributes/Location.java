@@ -63,6 +63,14 @@ public final class Location {
 		return new Location(this.x, y);
 	}
 	
+	public Location translate(Location translation) {
+		return new Location(this.x + translation.x, this.y + translation.y);
+	}
+
+	public Location negate() {
+		return new Location(-this.x, -this.y);
+	}
+	
 	public String toString(){
 		StringBuilder retVal = new StringBuilder("Location(x=");
 		retVal.append(x);
