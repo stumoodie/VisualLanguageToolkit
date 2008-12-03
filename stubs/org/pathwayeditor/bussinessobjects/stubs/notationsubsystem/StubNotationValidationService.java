@@ -58,7 +58,7 @@ public class StubNotationValidationService implements INotationValidationService
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#isImplemented()
 	 */
 	public boolean isImplemented() {
-		return false;
+		return true;
 	}
 
 	/* (non-Javadoc)

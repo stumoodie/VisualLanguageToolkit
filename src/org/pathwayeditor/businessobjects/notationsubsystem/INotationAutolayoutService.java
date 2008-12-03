@@ -1,5 +1,7 @@
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+
 public interface INotationAutolayoutService extends INotationService {
 
 	/**
@@ -7,5 +9,10 @@ public interface INotationAutolayoutService extends INotationService {
 	 * @return true if service is implemented, false otherwise.
 	 */
 	boolean isImplemented();
+	
+	/**
+	 * @param canvas which will be laid out by this service
+	 */
+	void layout(ICanvas canvas);
 	
 }

@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -17,7 +18,7 @@ public class StubAutoLayoutService implements INotationAutolayoutService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService#isImplemented()
 	 */
 	public boolean isImplemented() {
-		return false;
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -32,6 +33,13 @@ public class StubAutoLayoutService implements INotationAutolayoutService {
 	 */
 	public INotationSubsystem getNotationSubsystem() {
 		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService#layout(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public void layout(ICanvas canvas) {
+		System.out.println("Map " + canvas.getOwningMap().getName() + " laid out.");
 	}
 
 }

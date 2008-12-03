@@ -4,6 +4,7 @@
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
@@ -25,12 +26,20 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	private final INotationAutolayoutService autolayoutService;
 	private INotationSyntaxService syntaxService;
 	private INotationValidationService validationService;
+	private Set<INotationExportService> exportServices=new HashSet<INotationExportService>();
+	private Set<INotationImportService> importServices=new HashSet<INotationImportService>();
+	private Set<INotationConversionService> conversionServices=new HashSet<INotationConversionService>();
 	
 	public StubNotationSubSystem(){
 		this.notation = new StubNotation();
 		this.autolayoutService = new StubAutoLayoutService();
 		this.syntaxService = new StubNotationSyntaxService(this);
 		this.validationService = new StubNotationValidationService(this);
+		exportServices.add(new StubSBMLExportService());
+		exportServices.add(new StubSBGNExportService());
+		importServices.add(new StubSBMLImportService());
+		importServices.add(new StubSBGNImportService());
+		conversionServices.add(new StubNotationConversionService());
 	}
 	
 	/* (non-Javadoc)
@@ -44,21 +53,21 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem#getConversionServices()
 	 */
 	public Set<INotationConversionService> getConversionServices() {
-		return Collections.emptySet();
+		return conversionServices;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem#getExportServices()
 	 */
 	public Set<INotationExportService> getExportServices() {
-		return Collections.emptySet();
+		return exportServices;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSubsystem#getImportServices()
 	 */
 	public Set<INotationImportService> getImportServices() {
-		return Collections.emptySet();
+		return importServices;
 	}
 
 	/* (non-Javadoc)
