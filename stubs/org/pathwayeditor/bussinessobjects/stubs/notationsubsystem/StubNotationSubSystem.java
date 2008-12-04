@@ -31,7 +31,14 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	private Set<INotationConversionService> conversionServices=new HashSet<INotationConversionService>();
 	
 	public StubNotationSubSystem(){
-		this.notation = new StubNotation();
+		this(null);
+	}
+	
+	public StubNotationSubSystem(String notationName){
+		if(notationName!=null)
+			this.notation = new StubNotation(notationName);
+		else
+			this.notation = new StubNotation();
 		this.autolayoutService = new StubAutoLayoutService();
 		this.syntaxService = new StubNotationSyntaxService(this);
 		this.validationService = new StubNotationValidationService(this);

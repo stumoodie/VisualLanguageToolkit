@@ -22,7 +22,20 @@ public class StubNotation implements INotation {
 	private String globalId = EXPECTED_GLOBAL_ID;
 	private final String name = EXPECTED_NAME;
 	private final Version version =  EXPECTED_VERSION;
+	private boolean newName;
+	private String notationName;
 	
+	public StubNotation() {
+		
+	}
+	/**
+	 * @param notationName
+	 */
+	public StubNotation(String notationName) {
+		newName=true;
+		this.notationName=notationName;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getDescription()
 	 */
@@ -62,6 +75,8 @@ public class StubNotation implements INotation {
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotation#getName()
 	 */
 	public String getName() {
+		if(newName)
+			return this.notationName;
 		return this.name;
 	}
 

@@ -35,7 +35,7 @@ import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
-import org.pathwayeditor.bussinessobjects.stubs.StubNotationSubsystemPool;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
 
 /**
  * @author nhanlon
