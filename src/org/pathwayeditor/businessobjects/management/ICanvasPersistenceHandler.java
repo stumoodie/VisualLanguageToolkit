@@ -22,7 +22,17 @@ public interface ICanvasPersistenceHandler {
 	void synchroniseCanvas();
 
 	public ICanvas getLoadedCanvas();
-
+	
+	/**
+	 * Creates a copy ( persisted in the database ) of the currently loaded canvas (which must not be null) and attaches the copy map as its owner
+	 * 
+	 * @param newMapForCopy a copy of the owning map of the loaded canvas - will be set as owning map of the loaded canvas' copy
+	 * newMapForCopy must not be null
+	 * 
+	 * @return a copy of the loaded canvas
+	 */
+	public ICanvas createCopyOfCurrentlyLoadedCanvas(IMap newMapForCopy);
+	
 	/**
 	 * Sets the hibernate notation factory, the owning map and loaded canvas to null. This helps avoid memeory leaks
 	 * since this object will not hold on to state object references and puts the object in a pristine state as if it

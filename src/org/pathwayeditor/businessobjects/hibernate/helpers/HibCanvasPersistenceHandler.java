@@ -37,14 +37,14 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * 
  */
 public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
-	private final Logger logger = Logger.getLogger(this.getClass()); 
+	private final Logger logger = Logger.getLogger(this.getClass());
 	private final SessionFactory fact;
 	private final INotationSubsystemPool subsystemPool;
 	private IMap owningMap = null;
 	private ICanvas loadedCanvas = null;
-//	private IAttributesForCanvasBuilder shapeAttrForCanvBuilder = new ShapeAttributesForCanvasBuilder();
-//	private IAttributesForCanvasBuilder linkAtrrForCanvBuilder = new LinkAttributesForCanvasBuilder();
-
+	// private IAttributesForCanvasBuilder shapeAttrForCanvBuilder = new ShapeAttributesForCanvasBuilder();
+	// private IAttributesForCanvasBuilder linkAtrrForCanvBuilder = new LinkAttributesForCanvasBuilder();
+	
 	// private IHibNotationFactory hibNotationFactory;
 	// private INotationSubsystem defaultNotationSubsystem;
 
@@ -82,27 +82,30 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas").setString("repo",
-				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode()).uniqueResult();
+				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
+				.uniqueResult();
+		this.loadedCanvas = hibCanvas;
 		Hibernate.initialize(hibCanvas);
 		hibCanvas.setMapDiagram(this.getOwningMap());
-		INotationSubsystem notationSubsystem = null;
+		INotationSubsystem loadedNotationSubsystem = null;
 		IHibNotationFactory hibNotationFactory = null;
 		if (this.subsystemPool.hasNotationSubsystem(hibCanvas.getHibNotation())) {
-			notationSubsystem = this.subsystemPool.getSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
+			loadedNotationSubsystem = this.subsystemPool.getSubsystem(hibCanvas.getHibNotation());
+			hibNotationFactory = new HibNotationFactory(this.fact, loadedNotationSubsystem);
 		} else {
-			logger.warn("Notation subsystem: " + notationSubsystem + " was not provided by application using fallback notation subsystem instead.");
-			notationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new FallbackHibNotationFactory(notationSubsystem, hibCanvas.getHibNotation());
+			logger.warn("Notation subsystem: " + loadedNotationSubsystem
+					+ " was not provided by application using fallback notation subsystem instead.");
+			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
+			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
 		}
 		try {
 			hibNotationFactory.initialise();
 		} catch (InconsistentNotationDefinitionException e) {
 			logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.", e);
-			notationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new FallbackHibNotationFactory(notationSubsystem, hibCanvas.getHibNotation());
+			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
+			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
 		}
-		hibCanvas.setNotationSubsystem(notationSubsystem);
+		hibCanvas.setNotationSubsystem(loadedNotationSubsystem);
 		HibModel loadedModel = hibCanvas.getModel();
 		loadedModel.setHibNotationFactory(hibNotationFactory);
 		initialiseNotation(hibCanvas.getHibNotation());
@@ -110,18 +113,16 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		initialiseModel(loadedModel);
 		s.getTransaction().commit();
 		hibCanvas.setMapDiagram(this.getOwningMap());
-		this.loadedCanvas = hibCanvas;
 	}
-	
-	
-	private void initialiseNotation(HibNotation notation){
+
+	private void initialiseNotation(HibNotation notation) {
 		Hibernate.initialize(notation);
 		Hibernate.initialize(notation.getObjectTypes());
-		for(HibObjectType objectType : notation.getObjectTypes()){
+		for (HibObjectType objectType : notation.getObjectTypes()) {
 			Hibernate.initialize(objectType);
 		}
 	}
-	
+
 	/**
 	 * @param hibCanvas
 	 */
@@ -173,6 +174,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			throw new IllegalStateException(e);
 		}
 	}
+
 	private void initialiseModel(HibModel model) {
 		Hibernate.initialize(model);
 		// set the OT required by the root node
@@ -241,7 +243,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * (org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
 	 */
 	public void createCanvas(INotationSubsystem notationSubsystem) {
-			this.loadedCanvas = null;
+		this.loadedCanvas = null;
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		long canvasTest = (Long) s.getNamedQuery("canvasExistsForMap").setString("repo",
@@ -255,7 +257,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory, notationSubsystem);
 				s.save(hibCanvas);
 			} else {
-				IllegalStateException e = new IllegalStateException("canvas already exists");  
+				IllegalStateException e = new IllegalStateException("canvas already exists");
 				logger.error("cannot create canvs", e);
 				throw e;
 			}
@@ -265,6 +267,23 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			s.getTransaction().rollback();
 			throw new IllegalStateException(e);
 		}
+	}
+
+	public ICanvas createCopyOfCurrentlyLoadedCanvas(IMap newMapForCopy) {
+		HibCanvas hibCanvas = null;
+		loadedCanvas = null;
+		Session s = this.fact.getCurrentSession();
+		s.getTransaction().begin();
+		if (loadedCanvas == null) {
+			IllegalStateException e = new IllegalStateException("canvas did not exist to copy");
+			logger.error("cannot copy canvs", e);
+			throw e;
+		} else {
+			hibCanvas = new HibCanvas(newMapForCopy, (HibCanvas) loadedCanvas);
+			s.save(hibCanvas);
+		}
+		s.getTransaction().commit();
+		return hibCanvas;
 	}
 
 	/*
@@ -282,11 +301,11 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		return canvasTest > 0;
 	}
 
-//	public void setShapeAttrForCanvBuilder(IAttributesForCanvasBuilder shapeAttrForCanvBuilder) {
-//		this.shapeAttrForCanvBuilder = shapeAttrForCanvBuilder;
-//	}
+	// public void setShapeAttrForCanvBuilder(IAttributesForCanvasBuilder shapeAttrForCanvBuilder) {
+	// this.shapeAttrForCanvBuilder = shapeAttrForCanvBuilder;
+	// }
 
-//	public void setLinkAtrrForCanvBuilder(IAttributesForCanvasBuilder linkAtrrForCanvBuilder) {
-//		this.linkAtrrForCanvBuilder = linkAtrrForCanvBuilder;
-//	}
+	// public void setLinkAtrrForCanvBuilder(IAttributesForCanvasBuilder linkAtrrForCanvBuilder) {
+	// this.linkAtrrForCanvBuilder = linkAtrrForCanvBuilder;
+	// }
 }
