@@ -39,8 +39,13 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 */
 	public HibShapeNode(HibCompoundNode parentNode, int nodeIndex, HibShapeAttribute shapeAttribute){
 		super(parentNode.getGraph(), parentNode, nodeIndex);
+		if(parentNode == null || shapeAttribute == null) throw new IllegalArgumentException("parentNode and shapeAttribute cannot be null");
 		this.shapeAttribute = shapeAttribute;
 		this.shapeAttribute.setShapeNode(this);
+		if(!parentNode.getObjectType().getParentingRules().isValidChild(this.getObjectType())) {
+			// root node has null parent
+			throw new IllegalArgumentException("This not is not a valid child of it's parent: " + parentNode);
+		}
 	}
 	
 	/* (non-Javadoc)

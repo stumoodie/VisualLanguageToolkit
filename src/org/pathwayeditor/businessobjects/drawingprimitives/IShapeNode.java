@@ -3,6 +3,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public interface IShapeNode extends IDrawingNode, IZOrderedObject, INodeChangeListenee {
 	/**
@@ -34,4 +35,6 @@ public interface IShapeNode extends IDrawingNode, IZOrderedObject, INodeChangeLi
 	 * @return the ShapeAttribute.
 	 */
 	IShapeAttribute getAttribute();
+	
+	IShapeObjectType getObjectType();
 }

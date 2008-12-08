@@ -67,6 +67,7 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory#createShapeNode()
 	 */
 	public HibShapeNode createShapeNode() {
+		if(!this.canCreateShapeNode()) throw new IllegalStateException("canCreateShapeNode() == false");
 		return (HibShapeNode)this.createNode();
 	}
 	

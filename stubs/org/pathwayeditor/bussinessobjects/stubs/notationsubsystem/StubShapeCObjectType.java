@@ -56,7 +56,7 @@ public class StubShapeCObjectType implements IShapeObjectType {
 			}
 
 			public boolean isValidChild(IObjectType possibleChild) {
-				return getUniqueId() == StubShapeDObjectType.UNIQUE_ID;
+				return true;
 			}
 			
 		};

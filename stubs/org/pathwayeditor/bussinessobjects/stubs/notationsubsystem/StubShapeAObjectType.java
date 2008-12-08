@@ -56,7 +56,7 @@ public class StubShapeAObjectType implements IShapeObjectType {
 			}
 
 			public boolean isValidChild(IObjectType possibleChild) {
-				return false;
+				return true;
 			}
 			
 		};

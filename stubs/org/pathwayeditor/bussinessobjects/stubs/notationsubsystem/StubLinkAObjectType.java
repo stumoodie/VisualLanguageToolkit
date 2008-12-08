@@ -43,14 +43,11 @@ public class StubLinkAObjectType implements ILinkObjectType {
 			}
 
 			public boolean isValidSource(IShapeObjectType source) {
-				return source.getUniqueId() == StubShapeBObjectType.UNIQUE_ID;
+				return true;
 			}
 
 			public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
-				boolean sourceOk = isValidSource(source);
-				boolean targetOk = target.getUniqueId() == StubShapeCObjectType.UNIQUE_ID
-					|| target.getUniqueId() == StubShapeDObjectType.UNIQUE_ID;
-				return sourceOk && targetOk;
+				return true;
 			}
 			
 		};

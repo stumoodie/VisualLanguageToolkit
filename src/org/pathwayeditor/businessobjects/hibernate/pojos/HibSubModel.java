@@ -72,6 +72,16 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	}
 	
 	@Override
+	protected void addNewNode(BaseCompoundNode node) {
+		super.addNewNode(node);
+	}
+	
+	@Override
+	protected void addNewEdge(BaseCompoundEdge edge) {
+		super.addNewEdge(edge);
+	}
+	
+	@Override
 	public HibLinkEdge getEdge(int index){
 		return (HibLinkEdge)super.getEdge(index);
 	}
@@ -154,11 +164,18 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 			retVal = this.getModel().getCanvas().getNotationSubsystem().equals(subgraph.getModel().getCanvas().getNotationSubsystem())
 				// don't need to test for dangling links as this is done by the superclass in method below. 
 				&& super.canCopyHere(subgraph);
+			// now check object types of top nodes
+			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
+			while(iter.hasNext() && retVal) {
+				IDrawingNode node = iter.next();
+				retVal = this.getRootNode().getObjectType().getParentingRules().isValidChild(node.getObjectType());
+			}
 		}
 		return retVal;
 	}
 
 	public void copyHere(IDrawingElementSelection canvasObjectSelection) {
+		if(!canCopyHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be copied to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.copyHere(subgraph);
 	}
@@ -209,6 +226,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 	}
 
 	public void moveHere(IDrawingElementSelection canvasObjectSelection) {
+		if(!canMoveHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be moved to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.moveHere(subgraph);
 	}
@@ -249,6 +267,12 @@ public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
 			retVal = this.getModel().equals(subgraph.getModel())
 				// don't need to test for dangling links as this is done by the superclass in method below. 
 				&& super.canMoveHere(subgraph);
+			// now check object types of top nodes
+			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
+			while(iter.hasNext() && retVal) {
+				IDrawingNode node = iter.next();
+				retVal = this.getRootNode().getObjectType().getParentingRules().isValidChild(node.getObjectType());
+			}
 		}
 		return retVal;
 	}

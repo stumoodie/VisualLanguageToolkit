@@ -112,6 +112,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#createLinkEdge()
 	 */
 	public HibLinkEdge createLinkEdge() {
+		if(!this.canCreateLink()) throw new IllegalStateException("canCreateLink() == false");
 		return (HibLinkEdge)this.createEdge();
 	}
 
@@ -149,6 +150,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#setNodePair(org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode, org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode)
 	 */
 	public void setShapeNodePair(IShapeNode source, IShapeNode target) {
+		if(!this.isValidShapeNodePair(source, target)) throw new IllegalArgumentException("shape node pair is invalid");
 		this.setPair((HibShapeNode)source, (HibShapeNode)target);
 	}
 
@@ -188,7 +190,10 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory#canCreateLink()
 	 */
 	public boolean canCreateLink() {
-		return this.canCreateEdge();
+		return this.objectType != null
+		&& this.objectType.getLinkConnectionRules().isValidTarget(this.getOutNode().getObjectType(), this.getInNode().getObjectType())
+		&& this.isValidShapeNodePair(this.getOutNode(), this.getInNode())
+		&& this.canCreateEdge();
 	}
 
 }

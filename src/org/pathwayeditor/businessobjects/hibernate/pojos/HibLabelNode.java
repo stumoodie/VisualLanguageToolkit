@@ -26,6 +26,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	
 	public HibLabelNode(HibCompoundNode parent, int index, HibProperty property){
 		super(parent.getModel(), parent, index);
+		if(parent == null || property == null) throw new IllegalArgumentException("parameters parent and property cannot be null");
 		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
 		int newSerial = this.getModel().getCanvas().getLabelSerialCounter().nextIndex();
 //		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
@@ -36,6 +37,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	
 	public HibLabelNode(HibCompoundNode parent, int index, HibLabelAttribute attribute){
 		super(parent.getModel(), parent, index);
+		if(parent == null || attribute == null) throw new IllegalArgumentException("parameters parent and attribute cannot be null");
 		this.labelAttribute = attribute;
 		this.labelAttribute.setLabelNode(this);
 	}

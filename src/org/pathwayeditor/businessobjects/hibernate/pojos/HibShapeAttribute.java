@@ -662,8 +662,11 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public boolean isValid() {
 		boolean retVal = this.shapeObjectType != null && this.shapeNode.getAttribute() != null
 		// note: the check by reference below is deliberate as hibernate wants this.
-				&& this.shapeNode.getAttribute() == this;
+				&& this.shapeNode.getAttribute() == this
+				//check syntax rules correctly applied
+				&& this.shapeNode.getParent().getObjectType().getParentingRules().isValidChild(this.shapeObjectType);
 		if (retVal) {
+			// check properties initialised
 			Iterator<IPropertyDefinition> it = this.shapeObjectType.getDefaultAttributes().propertyDefinitionIterator();
 			int propCntr = 0;
 			while (it.hasNext() && retVal) {
@@ -684,6 +687,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 						"Object inconsistent with object type. Cannot find definitions for some properties");
 				retVal = false;
 			}
+		}
+		else {
+			logger.error("Attribute invalid, may be objecttypes or incompletely formed relationship with node");
 		}
 		return retVal;
 	}

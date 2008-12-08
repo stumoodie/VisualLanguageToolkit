@@ -39,6 +39,9 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		this.childCompoundGraph = new HibSubModel(this);
 		super.createInEdgeSet(this.inEdges);
 		super.createOutEdgeSet(this.outEdges);
+		if(this.hibParentNode != null) {
+			this.hibParentNode.getSubModel().addNewNode(this);
+		}
 	}
 	
 	void setOwningChildGraph(HibSubModel childCompoundGraph){
@@ -199,4 +202,13 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	 * @return true if the node is valid, false otherwise.
 	 */
 	public abstract boolean isValid();
+	
+	
+	public boolean isDescendent(IDrawingNode testNode) {
+		boolean retVal = false;
+		if(testNode != null && testNode instanceof HibCompoundNode) {
+			retVal = super.isDescendent((HibCompoundNode)testNode);
+		}
+		return retVal;
+	}
 }

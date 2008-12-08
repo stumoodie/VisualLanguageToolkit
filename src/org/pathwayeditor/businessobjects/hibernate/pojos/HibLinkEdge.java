@@ -27,11 +27,11 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		super();
 	}
 	
-	public HibLinkEdge(HibSubModel child, int edgeIndex, HibShapeNode outNode, HibShapeNode inNode,
+	public HibLinkEdge(HibSubModel owningSubmodel, int edgeIndex, HibShapeNode outNode, HibShapeNode inNode,
 						HibLinkAttribute linkAttribute) {
 		super();
-		this.graph = child.getSuperGraph();
-		this.owningChildGraph = child;
+		this.graph = owningSubmodel.getSuperGraph();
+		this.owningChildGraph = owningSubmodel;
 		this.index = edgeIndex;
 		this.outNode = outNode;
 		this.inNode = inNode;
@@ -39,6 +39,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.changeOutNode();
 		this.attribute = linkAttribute;
 		this.attribute.setLinkEdge(this);
+		this.owningChildGraph.addNewEdge(this);
 	}
 	
 //	/**

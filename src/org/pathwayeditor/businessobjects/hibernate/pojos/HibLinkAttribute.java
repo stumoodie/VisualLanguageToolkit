@@ -713,7 +713,10 @@ s	 */
 	public boolean isValid() {
 		boolean retVal = true;
 		if(this.objectType != null && this.linkTermini.size() == VALID_NUM_LINK_TERMINI
-				&& this.getSourceTerminus() != null && this.getTargetTerminus() != null) {
+				&& this.getSourceTerminus() != null && this.getTargetTerminus() != null
+				// check property
+				&& this.objectType.getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getObjectType(),
+								this.getCurrentDrawingElement().getTargetShape().getObjectType())){
 			// now check properties
 			Iterator<IPropertyDefinition> it = this.objectType.getDefaultLinkAttributes().propertyDefinitionIterator();
 			int propCntr = 0;

@@ -49,6 +49,18 @@ public interface IDrawingElementSelection {
 	Iterator<IDrawingNode> drawingNodeIterator();
 	
 	/**
+	 * Iterates over all the shape nodes in this selection.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<IShapeNode> shapeNodeIterator();
+	
+	/**
+	 * Iterates over all the label nodes in this selection.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<ILabelNode> labelNodeIterator();
+	
+	/**
 	 * Get the number of edges in the graph.
 	 * @return The number of edges.
 	 */

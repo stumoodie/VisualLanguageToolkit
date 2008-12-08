@@ -350,6 +350,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	protected String getTestRepositoryName() {
 		return REPOSITORY_NAME ;
 	}
+
+	@Test
+	public void testLoadedModelIsValid() {
+		assertTrue("model valid", this.dbModel.isValid());
+	}
 	
 	@Test
 	public void testCreateNewShapeNode () throws Exception
@@ -458,7 +463,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode8) ;
-		
+		assertTrue("model is valid before move", dbRootNode.getModel().isValid());
 		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after move", dbRootNode.getModel().isValid());
 		map1Manager.synchronise() ;

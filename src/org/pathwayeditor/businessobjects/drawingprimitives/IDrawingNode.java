@@ -18,6 +18,8 @@ public interface IDrawingNode extends IDrawingElement {
 	
 	IDrawingNode getParentNode();
 	
+	boolean isDescendent(IDrawingNode testNode);
+	
 	INodeObjectType getObjectType();
 	
 //	Iterator<IDrawingNode> levelOrderIterator();
