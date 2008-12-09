@@ -34,8 +34,6 @@ public interface IMapContentPersistenceManager extends IPersistenceManager {
 	 */
 	void createCanvas(INotationSubsystem notationSubsystem) throws PersistenceManagerNotOpenException;
 	
-	public ICanvas createCopyOfCurrentlyLoadedCanvas(IMap copyMap)throws PersistenceManagerNotOpenException;
-	
 	/**
 	 * Loads the content from the persistent storage and opens this manager.
 	 * @throws PersistenceManagerAlreadyOpenException if this manager has already been opened. 

@@ -138,17 +138,6 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 		}
 	}
 
-	public ICanvas createCopyOfCurrentlyLoadedCanvas(IMap copyMap) throws PersistenceManagerNotOpenException {
-		if (copyMap == null)
-			throw new IllegalArgumentException("map cannot be null");
-		synchronized (myLock) {
-			if (!this.isOpen()) {
-				throw new PersistenceManagerNotOpenException(this);
-			}
-			return this.canvasPersistenceHandler.createCopyOfCurrentlyLoadedCanvas(copyMap);
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

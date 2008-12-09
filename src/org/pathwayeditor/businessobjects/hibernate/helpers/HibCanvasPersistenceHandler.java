@@ -269,23 +269,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-	public ICanvas createCopyOfCurrentlyLoadedCanvas(IMap newMapForCopy) {
-		HibCanvas hibCanvas = null;
-		loadedCanvas = null;
-		Session s = this.fact.getCurrentSession();
-		s.getTransaction().begin();
-		if (loadedCanvas == null) {
-			IllegalStateException e = new IllegalStateException("canvas did not exist to copy");
-			logger.error("cannot copy canvs", e);
-			throw e;
-		} else {
-			hibCanvas = new HibCanvas(newMapForCopy, (HibCanvas) loadedCanvas);
-			s.save(hibCanvas);
-		}
-		s.getTransaction().commit();
-		return hibCanvas;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
