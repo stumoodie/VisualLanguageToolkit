@@ -8,6 +8,8 @@ package org.pathwayeditor.businessobjects.management;
  *
  */
 public interface IConnectionInfo {
+	
+	String DEFAULT_REPOSITORY_NAME="Local";
 	/**
 	 * The database user name
 	 * @return the database user name, which cannot be null.

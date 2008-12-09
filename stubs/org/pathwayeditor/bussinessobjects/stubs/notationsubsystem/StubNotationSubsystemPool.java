@@ -29,11 +29,11 @@ public class StubNotationSubsystemPool implements INotationSubsystemPool {
 	public StubNotationSubsystemPool () 
 	{
 		subSystemIterator.add(notationSubSystem) ;
-		subSystemIterator.add(notationSubSystem1) ;
-		subSystemIterator.add(notationSubSystem2) ;
-		subSystemIterator.add(notationSubSystem3) ;
-		subSystemIterator.add(notationSubSystem4) ;
-		subSystemIterator.add(notationSubSystem5) ;
+//		subSystemIterator.add(notationSubSystem1) ; //only added for testing scrolling of GUI boxes. Do not add back
+//		subSystemIterator.add(notationSubSystem2) ;
+//		subSystemIterator.add(notationSubSystem3) ;
+//		subSystemIterator.add(notationSubSystem4) ;
+//		subSystemIterator.add(notationSubSystem5) ;
 	}
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.INotationSubsystemPool#getSubsystem(org.pathwayeditor.businessobjects.notationsubsystem.INotation)

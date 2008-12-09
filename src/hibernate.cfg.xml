@@ -8,7 +8,7 @@
         <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
         <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
         <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/testdb</property-->
-        <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property-->
+        <!--  <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property>-->
         <!--  <property name="hibernate.connection.url">jdbc:hsqldb:mem:dev</property>-->
 		<property name="c3p0.idle_test_period">0</property> <!-- seconds --> 
 		<property name="c3p0.max_size">3</property> 

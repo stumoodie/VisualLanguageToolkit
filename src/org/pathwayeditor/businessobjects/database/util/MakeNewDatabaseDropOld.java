@@ -12,8 +12,8 @@ import java.sql.SQLException;
  * @author nhanlon A ddl file is used for schema creation/destruction.
  */
 public class MakeNewDatabaseDropOld {
-	// public static final String CONNECTION_URL="jdbc:hsqldb:mem:dev";
-	public static final String CONNECTION_URL = "jdbc:hsqldb:hsql://localhost/epeDev";
+	 public static final String CONNECTION_URL="jdbc:hsqldb:file:./DB/EmbeddedDb;ifexists=true";
+	//public static final String CONNECTION_URL = "jdbc:hsqldb:hsql://localhost/epeDev";
 	private static final String PASSWORD = "";
 	private static final String USERNAME = "sa";
 	private static Connection conn;
