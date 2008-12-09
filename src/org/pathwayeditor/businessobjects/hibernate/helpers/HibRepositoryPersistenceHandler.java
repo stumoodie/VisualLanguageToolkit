@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 
@@ -50,11 +51,22 @@ public class HibRepositoryPersistenceHandler implements	IRepositoryPersistenceHa
 		s.getTransaction().begin();
 		HibRepository hibRep = (HibRepository) s.getNamedQuery("loadRepository")
 				.setString("name", this.repoName).uniqueResult();
+		if(hibRep==null)
+			hibRep=createAndSaveADefaultRepository(s);
 		initialiseRepository(hibRep);
 		s.getTransaction().commit();
 		rep = hibRep;
 	}
 	
+	/**
+	 * 
+	 */
+	private HibRepository createAndSaveADefaultRepository(Session s) {
+		HibRepository defaultRepository = new HibRepository(IConnectionInfo.DEFAULT_REPOSITORY_NAME,"Local repository",0);
+		s.save(defaultRepository);
+		return defaultRepository;
+	}
+
 	private void initialiseRepository(HibRepository hibRep){
 		Hibernate.initialize(hibRep);
 		Hibernate.initialize(hibRep.getMaps());
