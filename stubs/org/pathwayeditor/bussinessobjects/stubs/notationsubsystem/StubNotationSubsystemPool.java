@@ -19,11 +19,11 @@ public class StubNotationSubsystemPool implements INotationSubsystemPool {
 	
 	private Set <INotationSubsystem> subSystemIterator = new HashSet<INotationSubsystem> ();
 	private INotationSubsystem notationSubSystem= new StubNotationSubSystem(); 
-	private INotationSubsystem notationSubSystem1= new StubNotationSubSystem("a");
-	private INotationSubsystem notationSubSystem2= new StubNotationSubSystem("b");
-	private INotationSubsystem notationSubSystem3= new StubNotationSubSystem("c");
-	private INotationSubsystem notationSubSystem4= new StubNotationSubSystem("d");
-	private INotationSubsystem notationSubSystem5= new StubNotationSubSystem("e");
+//	private INotationSubsystem notationSubSystem1= new StubNotationSubSystem("a");
+//	private INotationSubsystem notationSubSystem2= new StubNotationSubSystem("b");
+//	private INotationSubsystem notationSubSystem3= new StubNotationSubSystem("c");
+//	private INotationSubsystem notationSubSystem4= new StubNotationSubSystem("d");
+//	private INotationSubsystem notationSubSystem5= new StubNotationSubSystem("e");
 
 	
 	public StubNotationSubsystemPool () 
@@ -46,7 +46,6 @@ public class StubNotationSubsystemPool implements INotationSubsystemPool {
 	 * @see org.pathwayeditor.businessobjects.bolayer.INotationSubsystemPool#hasNotationSubsystem(org.pathwayeditor.businessobjects.notationsubsystem.INotation)
 	 */
 	public boolean hasNotationSubsystem(INotation notation) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
