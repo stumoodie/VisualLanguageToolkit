@@ -8,12 +8,9 @@
             <column name="id" />
             <generator class="native" />
         </id>
-        <property name="globalId" type="string">
-            <column name="global_id" length="256" not-null="true" unique="true" />
-        </property>
         <properties name="xak1context" unique="true">
-        	<property name="name" type="string">
-            	<column name="name" length="128" not-null="true" />
+	        <property name="qualifiedName" type="string">
+    	        <column name="global_id" length="256" not-null="true" />
         	</property>
         	<property name="majorVersion" type="int">
             	<column name="major_version" not-null="true" />
@@ -25,6 +22,9 @@
             	<column name="patch_version" not-null="true" />
         	</property>
         </properties>
+	   	<property name="displayName" type="string">
+           	<column name="name" length="128" not-null="true" />
+       	</property>
         <property name="description" type="string">
             <column name="description" length="2048" not-null="true" />
         </property>
@@ -36,9 +36,13 @@
         </set>
     </class>
     <query name="notationExists"><![CDATA[
-			select count(*) from HibNotation where globalId = :globalId
+			select count(*) from HibNotation
+			where qualifiedName = :qualifiedName AND majorVersion = :majorVersion AND minorVersion = :minorVersion
+				AND patchVersion = :patchVersion
     	]]></query>
     <query name="loadNotation"><![CDATA[
-    		from HibNotation n join fetch n.objectTypes where n.globalId = :globalId
+    		from HibNotation n join fetch n.objectTypes
+			where n.qualifiedName = :qualifiedName AND n.majorVersion = :majorVersion AND n.minorVersion = :minorVersion
+				AND n.patchVersion = :patchVersion
     	]]></query>
 </hibernate-mapping>

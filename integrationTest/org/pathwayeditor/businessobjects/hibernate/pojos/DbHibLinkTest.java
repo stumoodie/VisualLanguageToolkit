@@ -29,7 +29,7 @@ import org.pathwayeditor.testutils.PojoTester;
 public class DbHibLinkTest extends PojoTester{
 	
 	private static final String DELETED_LINK_DATA = "integrationTest/DbLinkTestData/DbDeletedLinkRefData.xml";
-	private static final String CREATED_LINK_DATA = "integrationTest/DbLinkTestData/DbCreatedLinkRefData.xml";
+//	private static final String CREATED_LINK_DATA = "integrationTest/DbLinkTestData/DbCreatedLinkRefData.xml";
 //	private static final String CHANGED_CANVAS_DATA = "integrationTest/DbLinkTestData/DbChangedCanvasRefData.xml";
 	
 	
@@ -42,14 +42,14 @@ public class DbHibLinkTest extends PojoTester{
 	private static final int LINK_LINE_WIDTH = 10 ;
 	private static final String LINK_URL = "http://www.HibLink.org" ;
 	
-	private static final int LINK_CREATION_SERIAL_2 = 76543 ;
-	private static final String LINK_NAME_2 = "link_name2" ;
-	private static final String LINK_DESCR_2 = "link_descr2" ;
-	private static final String LINK_DETAILED_DESCR_2 = "link_detailed_descr2" ;
-	private static final int LINK_COLOUR_VALUE_2 = 102 ;
+//	private static final int LINK_CREATION_SERIAL_2 = 76543 ;
+//	private static final String LINK_NAME_2 = "link_name2" ;
+//	private static final String LINK_DESCR_2 = "link_descr2" ;
+//	private static final String LINK_DETAILED_DESCR_2 = "link_detailed_descr2" ;
+//	private static final int LINK_COLOUR_VALUE_2 = 102 ;
 //	private static final int NUMERIC_VALUE_TWO = 2 ;
-	private static final int LINK_LINE_WIDTH_2 = 12 ;
-	private static final String LINK_URL_2 = "http://www.HibLink2.org" ;
+//	private static final int LINK_LINE_WIDTH_2 = 12 ;
+//	private static final String LINK_URL_2 = "http://www.HibLink2.org" ;
 	
 	@Ignore @Test
 	public void testLoadLabel () throws Exception

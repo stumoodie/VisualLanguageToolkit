@@ -32,8 +32,8 @@
 		<column>minor_version</column>
 		<column>patch_version</column>
 		<row>
-			<value>17326252</value>
-			<value>StubNotation1</value>
+			<value>org.pathwayeditor.stub.notation</value>
+			<value>Stub Notation</value>
 			<value>Stub notation description</value>
 			<value>99</value>
 			<value>19</value>

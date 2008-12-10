@@ -10,6 +10,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
@@ -53,7 +54,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 	private void storeNotation() {
 		Session sess = factory.getCurrentSession();
 		INotation subSystemNotation = this.notationSubsystem.getNotation();
-		HibNotation notation = new HibNotation(subSystemNotation.getGlobalId(), subSystemNotation.getName(),
+		HibNotation notation = new HibNotation(subSystemNotation.getQualifiedName(), subSystemNotation.getDisplayName(),
 				subSystemNotation.getDescription(),	subSystemNotation.getVersion());
 		Iterator<IObjectType> iter = this.notationSubsystem.getSyntaxService().objectTypeIterator();
 		while(iter.hasNext()){
@@ -66,9 +67,18 @@ public class HibNotationFactory implements IHibNotationFactory {
 		sess.save(notation);
 	}
 
-	private void loadNotation() throws InconsistentNotationDefinitionException {
+	private Query createNotationQuery(String queryName, INotation notation) {
 		Session sess = factory.getCurrentSession();
-		Query qry = sess.getNamedQuery("loadNotation").setString("globalId", notationSubsystem.getNotation().getGlobalId());
+		final Version version = notationSubsystem.getNotation().getVersion();
+		Query qry = sess.getNamedQuery(queryName).setString("qualifiedName", notationSubsystem.getNotation().getQualifiedName())
+			.setInteger("majorVersion", version.getMajorVersion())
+			.setInteger("minorVersion", version.getMinorVersion())
+			.setInteger("patchVersion", version.getPatchVersion());
+		return qry;
+	}
+	
+	private void loadNotation() throws InconsistentNotationDefinitionException {
+		final Query qry = createNotationQuery("loadNotation", this.notationSubsystem.getNotation());
 		this.notation = (HibNotation)qry.uniqueResult();
 		if(validateLoadedNotation(this.notationSubsystem.getNotation(), this.notation)) {
 			INotationSyntaxService syntaxService = this.notationSubsystem.getSyntaxService(); 
@@ -92,15 +102,14 @@ public class HibNotationFactory implements IHibNotationFactory {
 	 * @param notation3
 	 */
 	private boolean validateLoadedNotation(INotation subsystemNotation, HibNotation hibNotation) {
-		return subsystemNotation.getName().equals(hibNotation.getName())
+		return subsystemNotation.getQualifiedName().equals(hibNotation.getQualifiedName())
 			&& subsystemNotation.getVersion().equals(hibNotation.getVersion());
 		
 	}
 
 	private final boolean doesNotationExist(){
 		INotation notation = notationSubsystem.getNotation();
-		Session sess = factory.getCurrentSession();
-		Query qry = sess.getNamedQuery("notationExists").setString("globalId", notation.getGlobalId());
+		final Query qry = createNotationQuery("notationExists", notation);
 		long numNotations = (Long)qry.uniqueResult();
 		return numNotations > 0;
 	}

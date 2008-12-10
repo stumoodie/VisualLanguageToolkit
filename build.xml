@@ -213,7 +213,7 @@
 		</jar>
 	</target>
 	
-	<target name="jar-docs" depends="buildSrc">
+	<target name="jar-docs" depends="api-docs">
 		<mkdir dir="${jar.dir}" />
 		<jar destfile="${jar.dir}/${jar.name.doc}">
 			<fileset dir="${docs.build.dir}" />

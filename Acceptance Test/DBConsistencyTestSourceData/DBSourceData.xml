@@ -97,7 +97,7 @@
 		<column>patch_version</column>
 			<row>
 				<value>100001</value>
-				<value>17326252</value>
+				<value>org.pathwayeditor.stub.notation</value>
 				<value>StubNotation1</value>
 				<value>Stub notation description</value>
 				<value>99</value>

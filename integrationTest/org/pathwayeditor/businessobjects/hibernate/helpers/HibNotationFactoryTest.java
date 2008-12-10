@@ -40,8 +40,8 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class HibNotationFactoryTest extends PojoTester {
 	private static final String SOURCE_DATA = "integrationTest/DbSourceData/DbSourceDataRefData.xml";
-	private static final String EXPECTED_GLOBAL_ID = "global id";
-	private static final String EXPECTED_NOTATION_NAME = "context name";
+	private static final String EXPECTED_QUALIFIED_NAME = "org.pathwayeditor.stub.notation";
+	private static final String EXPECTED_NOTATION_NAME = "notation name";
 	private static final Version EXPECTED_NOTATION_VERSION = new Version(100, 100, 100);
 	private static final String NEW_NOTATION_DATA = "integrationTest/org/pathwayeditor/businessobjects/hibernate/helpers/DbHibObjectTypeIntersionData.xml";
 	private HibNotationFactory testUnloadedInstance; 
@@ -85,7 +85,7 @@ public class HibNotationFactoryTest extends PojoTester {
 		sess.beginTransaction();
 		this.testUnloadedInstance.initialise();
 		HibNotation notation = this.testUnloadedInstance.getNotation();
-		assertEquals("Notation id correct", StubNotation.EXPECTED_GLOBAL_ID, notation.getGlobalId());
+		assertEquals("Notation id correct", StubNotation.EXPECTED_QUALIFIED_NAME, notation.getQualifiedName());
 		sess.getTransaction().commit();
 	}
 
@@ -99,9 +99,9 @@ public class HibNotationFactoryTest extends PojoTester {
 		sess.beginTransaction();
 		this.testUnloadedInstance.initialise();
 		HibNotation notation = this.testUnloadedInstance.getNotation();
-		String expectedId = StubNotation.EXPECTED_GLOBAL_ID;
+		String expectedId = StubNotation.EXPECTED_QUALIFIED_NAME;
 		sess.getTransaction().commit();
-		assertEquals("Notation id correct", expectedId, notation.getGlobalId());
+		assertEquals("Notation id correct", expectedId, notation.getQualifiedName());
 	}
 
 	/**
@@ -236,21 +236,14 @@ public class HibNotationFactoryTest extends PojoTester {
 		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getDisplayName()
 		 */
 		public String getDisplayName() {
-			throw new UnsupportedOperationException("Not implemented");
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getGlobalId()
-		 */
-		public String getGlobalId() {
-			return EXPECTED_GLOBAL_ID;
+			return EXPECTED_NOTATION_NAME;
 		}
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotation#getName()
 		 */
-		public String getName() {
-			return EXPECTED_NOTATION_NAME;
+		public String getQualifiedName() {
+			return EXPECTED_QUALIFIED_NAME;
 		}
 
 		/* (non-Javadoc)
@@ -264,7 +257,8 @@ public class HibNotationFactoryTest extends PojoTester {
 		 * @see java.lang.Comparable#compareTo(java.lang.Object)
 		 */
 		public int compareTo(INotation o) {
-			return this.getGlobalId().compareTo(o.getGlobalId());
+			int retVal = this.getQualifiedName().compareTo(o.getQualifiedName());
+			return retVal == 0 ? this.getVersion().compareTo(o.getVersion()) : retVal;
 		}
 
 	}

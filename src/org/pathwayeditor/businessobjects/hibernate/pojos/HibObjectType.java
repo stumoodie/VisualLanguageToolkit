@@ -132,7 +132,7 @@ public class HibObjectType implements Serializable {
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
 		builder.append("(notation=");
-		builder.append(this.hibNotation.getName());
+		builder.append(this.hibNotation.getQualifiedName());
 		builder.append(", uid=");
 		builder.append(this.uniqueId);
 		builder.append(", classnCode=");

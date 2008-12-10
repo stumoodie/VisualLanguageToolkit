@@ -13,10 +13,11 @@ public interface INotation extends Comparable<INotation> {
 
 	/**
 	 * The name used to globally identify this class of notation. A notation of the same class can have
-	 * multiple versions.
-	 * @return the name
+	 * multiple versions. The recommendation is to use a package name as in Java that is based on an
+	 * Internet domain name that you own. 
+	 * @return a qualified name, which cannot be null.
 	 */
-	String getName();
+	String getQualifiedName();
 	
 	/**
 	 * Gets the name of the notation. This name can be used by clients to display to users. 
@@ -32,27 +33,22 @@ public interface INotation extends Comparable<INotation> {
 	
 	/**
 	 * Gets the version of the notation. 
-	 * @return  the notation version, cannot be null.
+	 * @return the notation version, cannot be null.
 	 */
 	Version getVersion();
 	
 	/**
-	 * Tests the equality of this notation with another notation base on their globals identifiers. Otherwise follows the
+	 * Tests the equality of this notation with another notation base on the qualified name and the version number. Otherwise follows the
 	 * standard equals contract.  
 	 * @param other the other object to test.
-	 * @return true if the global ids of both notations are the same, false otherwise.
+	 * @return true if the qualified names and version numbers of both notations are the same, false otherwise.
 	 */
 	boolean equals(Object other);
 	
 	/**
-	 * Return the hash code using the identiy rules that applies to {@link #equals(Object)}
-	 * @return the hascode.
+	 * Return the hash code using the identity rules that applies to {@link #equals(Object)}
+	 * @return the hash code.
 	 */
 	int hashCode();
 
-	/**
-	 * Gets the global identifier for this version of the notation. This uniquely identifies the notation.
-	 * @return the global id that globally uniquely identifies this version of the notation.
-	 */
-	String getGlobalId();
 }

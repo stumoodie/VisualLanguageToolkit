@@ -24,7 +24,7 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getNotation(org.pathwayeditor.businessobjects.notationsubsystem.INotation)
 	 */
 	public HibNotation getNotation() {
-		return new HibNotation(StubNotation.EXPECTED_GLOBAL_ID, StubNotation.EXPECTED_NAME, StubNotation.EXPECTED_DESCRIPTION,
+		return new HibNotation(StubNotation.EXPECTED_QUALIFIED_NAME, StubNotation.EXPECTED_DISPLAY_NAME, StubNotation.EXPECTED_DESCRIPTION,
 				new Version(StubNotation.EXPECTED_MAJOR_VERSION, StubNotation.EXPECTED_MINOR_VERSION, StubNotation.EXPECTED_PATCH_VERSION));
 	}
 

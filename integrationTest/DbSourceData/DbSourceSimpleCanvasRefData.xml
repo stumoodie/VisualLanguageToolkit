@@ -58,7 +58,7 @@
 		<column>patch_version</column>
 			<row>
 				<value>100001</value>
-				<value>global id</value>
+				<value>org.pathwayeditor.stub.notation</value>
 				<value>context name</value>
 				<value>context descr</value>
 				<value>100</value>
