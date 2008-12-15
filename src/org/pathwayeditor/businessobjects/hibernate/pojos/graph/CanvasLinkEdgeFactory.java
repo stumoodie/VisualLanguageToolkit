@@ -89,6 +89,8 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 		((HibSubModel)owningGraph).notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
+		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
+		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 

@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
  *
  */
 public interface ILinkTerminusDefinition {
-	public static enum LinkTermEditableAttributes{ OFFSET, END_COLOUR, END_SIZE, END_DECORATOR_TYPE,
+	public static enum LinkTermEditableAttributes{ OFFSET, END_SIZE, END_DECORATOR_TYPE,
 		TERM_COLOUR, TERM_SIZE, TERM_DECORATOR_TYPE };
 	
 	/**

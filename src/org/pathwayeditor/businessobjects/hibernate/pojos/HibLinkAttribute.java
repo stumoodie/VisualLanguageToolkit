@@ -80,8 +80,11 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		this.creationSerial = linkIndex;
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
-		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+		// the ordering here is important as the code expects the SOURCe to be first. Not satisfactory
+		// FIXME: the following is very fragile. The LinkTermType is used later on to lookup the correct terminus.
+		// This is a bug waiting to happen and needs fixing.
 		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
+		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
 		addDefaults(objectType.getDefaultLinkAttributes());
 		this.getCanvas().getLinkAttributes().add(this) ;
 	}
