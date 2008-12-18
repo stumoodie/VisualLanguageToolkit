@@ -84,7 +84,7 @@ public class HibLinkTerminusTest {
 		assertEquals ("expected end size" , EXPECTED_END_SIZE , linkTerminus.getEndSize()) ;
 		assertEquals ("expected term size" , EXPECTED_TERM_SIZE , linkTerminus.getTerminusSize()) ;
 		assertEquals ("expected term dec" , EXPECTED_TERM_DEC , linkTerminus.getTerminusDecoratorType()) ;
-		assertEquals ("expected offset" , EXPECTED_TERM_COLOUR , linkTerminus.getTerminusColor()) ;
+		assertEquals ("expected offset" , EXPECTED_TERM_COLOUR , linkTerminus.getTerminusColour()) ;
 		assertEquals ("expected offset" , EXPECTED_END_DEC , linkTerminus.getEndDecoratorType()) ;
 		assertFalse( "expected properties" , linkTerminus.propertyIterator().hasNext()) ;
 		

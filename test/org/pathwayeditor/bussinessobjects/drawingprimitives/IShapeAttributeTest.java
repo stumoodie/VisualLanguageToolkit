@@ -66,7 +66,7 @@ public class IShapeAttributeTest {
 	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
 	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
 
-	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 0;
+	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 1;
 	private static final String EXPECTED_DEFAULT_NAME = SHAPE_NAME;
 	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
 	private static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);

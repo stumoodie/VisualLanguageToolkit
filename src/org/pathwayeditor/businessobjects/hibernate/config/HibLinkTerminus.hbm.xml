@@ -9,14 +9,14 @@
             <generator class="native" />
         </id>
         <properties name="xak1linkterminus" unique="true">
-        	<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
+        	<many-to-one name="owningLink" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute">
             	<column name="owning_link_id" not-null="true" />
         	</many-to-one>
         	<property name="linkTermType" type="LinkTermType">
             	<column name="link_term_type" not-null="true" />
         	</property>
         </properties>
-        <property name="offset" type="short">
+        <property name="gap" type="short">
             <column name="offset_val" not-null="true" />
         </property>
         <property name="endDecoratorType" type="ArrowHeadStyleType">

@@ -72,7 +72,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IPlainTextPropertyDefinition defn = null;
 		
-		HibTextProperty textProperty = new HibTextProperty (dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , defn) ;
+		HibTextProperty textProperty = new HibTextProperty (dbLinkTerminus.getOwningLink().getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLinkTerminus.addProperty(TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -109,7 +109,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		IHtmlPropertyDefinition defn = null;
 		
-		HibRichTextProperty textProperty = new HibRichTextProperty ((HibCanvas)dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , defn) ;
+		HibRichTextProperty textProperty = new HibRichTextProperty ((HibCanvas)dbLinkTerminus.getOwningLink().getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLinkTerminus.addProperty(RICH_TEXT_PROPERTY_NAME , textProperty ) ;
 		
@@ -146,7 +146,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		HibLinkTerminus dbLinkTerminus = (HibLinkTerminus) retreivedLinkTerminus.uniqueResult() ;
 		INumberPropertyDefinition defn = null;
 		
-		HibNumberProperty textProperty = new HibNumberProperty ( (HibCanvas) dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , defn) ;
+		HibNumberProperty textProperty = new HibNumberProperty ( (HibCanvas) dbLinkTerminus.getOwningLink().getCanvas() , CREATION_SERIAL , defn) ;
 		
 		dbLinkTerminus.addProperty(NUMBER_PROPERTY_NAME , textProperty ) ;
 		
@@ -187,7 +187,7 @@ public class DbLibkTerminusPropertyTest extends PojoTester{
 		valuesToEnter.add(VALUE_TO_ENTER_1);
 		valuesToEnter.add(VALUE_TO_ENTER_2);
 		
-		HibListProperty listProperty = new HibListProperty ( (HibCanvas) dbLinkTerminus.getAttribute().getCanvas() , CREATION_SERIAL , defn) ;
+		HibListProperty listProperty = new HibListProperty ( (HibCanvas) dbLinkTerminus.getOwningLink().getCanvas() , CREATION_SERIAL , defn) ;
 
 		
 		dbLinkTerminus.addProperty(LIST_PROPERTY_NAME , listProperty ) ;

@@ -10,6 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee {
+	public static final int MIN_LINE_WIDTH = 1;
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -78,14 +79,14 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	
 	/**
 	 * Returns a {@link Location} representation of the coordinates of this Shape.
-	 * @return the locatioln. Cannot be null.
+	 * @return the location. Cannot be null.
 	 */
 	Location getLocation();
 	
 	/**
 	 * Sets the new size for this Shape.
 	 * @param size the new size. Cannot be null
-	 * @throws IllegalArgumentException if URL is null.
+	 * @throws IllegalArgumentException if size is null.
 	 */
 	void setSize(Size size);
 	
@@ -103,6 +104,10 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	void setPrimitiveShape(PrimitiveShapeType primitiveShape);
 	
 	
+	/**
+	 * Gets the primitive shape type, which cannot be null.
+	 * @return the primitive shape type.
+	 */
 	PrimitiveShapeType getPrimitiveShape();
 	
 	/**
@@ -120,14 +125,14 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	
 	/**
 	 * Returns the numerical value representing the thickness of the border line of the shape. 
-	 * @return the line width. Cannot be less than zero.
+	 * @return the line width. Cannot be less than <code>MIN_LINE_WIDTH</code>.
 	 */
 	int getLineWidth();
 	
 	/**
 	 * Sets the line width for this Shape.
-	 * @param lineWidth the new fill color. Cannot be null
-	 * @throws IllegalArgumentException if lineWidth is less than zero.
+	 * @param lineWidth the new fill color. Must be at least <code>MIN_LINE_WIDTH</code>.
+	 * @throws IllegalArgumentException if lineWidth is less than MIN_LINE_WIDTH.
 	 */
 	void setLineWidth(int lineWidth);
 
@@ -158,12 +163,14 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	void setLineStyle(LineStyle lineStyle);
 	
 	/**
+	 * @deprecated This is no longer used and will be removed soon.
 	 * Returns the padding for this Shape.
 	 * @return the padding of this Shape.
 	 */
 	int getPadding () ;
 	
 	/**
+	 * @deprecated this is no longer used and will be removed soon.
 	 * Sets the padding for this Shape
 	 * @param padding the new padding.
 	 */
@@ -174,6 +181,4 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	 * @return the shape node, which cannot be null.
 	 */
 	IShapeNode getCurrentDrawingElement();
-	
-//	Iterator<IAnnotationProperty> propertyIterator();
 }

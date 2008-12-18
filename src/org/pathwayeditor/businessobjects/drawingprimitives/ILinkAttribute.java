@@ -36,13 +36,14 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * Get the Connector router of the link. Cannot be null.
 	 * @return the connection router.
 	 */
-	ConnectionRouter getRouter();
+	ConnectionRouter getRouterType();
 
 	/**
 	 * Sets the Connector router of the link.
+	 * @param router the router type to set, which cannot be null.
 	 * @throws IllegalArgumentException if router is null.
 	 */
-	void setRouter(ConnectionRouter router);
+	void setRouterType(ConnectionRouter router);
 	
 	
 	/**
@@ -135,7 +136,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets a new Color for this link.
-	 * @param newColor
+	 * @param newColor the new colour for the line, which cannot be null.
 	 * @throws IllegalArgumentException if newColor is null.
 	 */
 	void setLineColor ( RGB newColor ) ;
@@ -148,7 +149,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets a new line style for this link.
-	 * @param style
+	 * @param style the new line style, which cannot be null.
 	 * @throws IllegalArgumentException if style is null.
 	 */
 	void setLineStyle ( LineStyle style );
@@ -161,7 +162,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets the URL related with this link.
-	 * @param url
+	 * @param url the url, which cannot be null, but can be malformed or an empty string.
 	 * @throws IllegalArgumentException if url is null.
 	 */
 	void setUrl ( String url) ;
@@ -174,19 +175,21 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets the Name that is related with this link.
-	 * @param newName the new Name
+	 * @param newName the new Name, which cannot be null, but can be an empty string.
+	 * @throws IllegalArgumentException if <code>newName</code> is null.
 	 */
 	void setName ( String newName) ;
 	
 	/**
-	 * Gets the Name that is related with this link.
-	 * @return the description of the link.
+	 * Gets the description of this link.
+	 * @return the description of the link, which cannot be null.
 	 */	
 	String getDescription () ;
 	
 	/**
 	 * Sets the Description that is related with this link.
-	 * @param newDescription the new Description
+	 * @param newDescription the new Description, which cannot be null.
+	 * @throws IllegalArgumentException if <code>description</code> is null.
 	 */
 	void setDescription ( String newDescription) ;	
 	
@@ -198,7 +201,8 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets the DetailedDescription that is related with this link.
-	 * @param DetailedDescription the new DetailedDescription
+	 * @param DetailedDescription the new DetailedDescription, which cannot be null.
+	 * @throws IllegalArgumentException if <code>detailedDescription</code> is null.
 	 */
 	void setDetailedDescription ( String DetailedDescription) ;	
 	
@@ -210,7 +214,8 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	
 	/**
 	 * Sets a new width for the line of this link.
-	 * @param lineWidth the new line width.
+	 * @param lineWidth the new line width, which must be a positive integer greater than zero.
+	 * @throws IllegalArgumentException if the line width is invalid.
 	 */
 	void setLineWidth ( int lineWidth) ;
 	

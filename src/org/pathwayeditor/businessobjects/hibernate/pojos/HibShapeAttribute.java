@@ -113,18 +113,18 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	
 	
 	private void populateDefaults(IShapeAttributeDefaults shapeDefaults){
-		this.description = shapeDefaults.getDescription();
-		this.detailedDescription = shapeDefaults.getDetailedDescription();
+		this.setDescription(shapeDefaults.getDescription());
+		this.setDetailedDescription(shapeDefaults.getDetailedDescription());
 		this.setFillColour(shapeDefaults.getFillColour());
 		this.setSize(shapeDefaults.getSize());
 		this.setLineColour(shapeDefaults.getLineColour());
-		this.lineStyle = shapeDefaults.getLineStyle();
-		this.lineWidth = shapeDefaults.getLineWidth();
-		this.name = shapeDefaults.getName();
-		this.url = shapeDefaults.getURL();
-		this.shapeType = shapeDefaults.getShapeType();
-		Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
+		this.setLineStyle(shapeDefaults.getLineStyle());
+		this.setLineWidth(shapeDefaults.getLineWidth());
+		this.setName(shapeDefaults.getName());
+		this.setUrl(shapeDefaults.getURL());
+		this.setPrimitiveShape(shapeDefaults.getShapeType());
 		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this.getCanvas());
+		final Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();
 			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
@@ -234,6 +234,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setName(String name) {
+		if(name == null)
+			throw new IllegalArgumentException("name cannot be null");
+		
 		String oldName = this.name;
 		this.name = name;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldName, this.name);
@@ -244,6 +247,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setDescription(String description) {
+		if(description == null)
+			throw new IllegalArgumentException("description cannot be null");
+		
 		String oldDescription = this.description;
 		this.description = description;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldDescription, this.description);
@@ -254,6 +260,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setDetailedDescription(String detailedDescription) {
+		if(detailedDescription == null)
+			throw new IllegalArgumentException("detailedDescription cannot be null");
+		
 		String oldDetailedDescription = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldDetailedDescription, this.detailedDescription);
@@ -264,6 +273,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setUrl(String url) {
+		if(url == null) throw new IllegalArgumentException("The url cannot be null");
+		
 		String oldUrl = this.url;
 		this.url = url;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldUrl, this.url);
@@ -330,8 +341,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	public void setLineWidth(int lineWidth) {
-		if ( lineWidth < 0 )
-			throw new IllegalArgumentException () ;
+		if ( lineWidth < MIN_LINE_WIDTH )
+			throw new IllegalArgumentException ("Line width cannot be less than " + MIN_LINE_WIDTH) ;
 
 		int oldLineWidth = this.lineWidth;
 		this.lineWidth = lineWidth;
@@ -479,18 +490,11 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#hasProperty(java.lang.String)
-	 */
-	public boolean hasProperty(String propertyName) {
-		return this.hibProperties.containsKey(propertyName);
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	public void setFillColour(RGB fillColour) {
 		if ( fillColour == null )
-			throw new IllegalArgumentException () ;
+			throw new IllegalArgumentException ("Fill colour cannot be null") ;
 
 		RGB oldFillColour = this.fillColour;
 		this.fillColour = fillColour;
@@ -502,7 +506,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setLineColour(RGB lineColour) {
 		if ( lineColour == null )
-			throw new IllegalArgumentException () ;
+			throw new IllegalArgumentException ("Line colour cannot be null") ;
 
 		RGB oldLineColour = this.lineColour;
 		this.lineColour = lineColour;
@@ -526,7 +530,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setLocation(Location newLocation) {
 		if ( newLocation == null )
-			throw new IllegalArgumentException () ;
+			throw new IllegalArgumentException ("the new location cannot be null") ;
 
 		Location oldLocation = this.position;
 		this.position = newLocation;
@@ -549,7 +553,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setSize(Size size) {
 		if ( size == null )
-			throw new IllegalArgumentException () ;
+			throw new IllegalArgumentException ("Size cannot be null") ;
 
 		Size oldSize = this.size;
 		this.size = size;
@@ -568,13 +572,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public Iterator<IAnnotationProperty> propertyIterator() {
 		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public boolean hasProperty(IPropertyDefinition property) {
-		return this.hibProperties.containsKey(property.getName());
 	}
 
 	/* (non-Javadoc)

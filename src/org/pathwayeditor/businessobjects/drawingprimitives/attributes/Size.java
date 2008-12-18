@@ -5,6 +5,9 @@ public final class Size {
 	private final int height;
 
 	public Size(int width, int height){
+		if(width < 0 || height < 0)
+			throw new IllegalArgumentException("Size must have non-negative dimensions");
+		
 		this.width = width;
 		this.height = height;
 	}

@@ -153,9 +153,9 @@ public class ILinkAttributeTest {
 	@Test
 	public void testSetRouter() throws Exception
 	{
-		assertEquals ( "null router" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouter() ) ;
-		linkAttribute.setRouter(ROUTER_TYPE) ;
-		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouter() );
+		assertEquals ( "null router" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouterType() ) ;
+		linkAttribute.setRouterType(ROUTER_TYPE) ;
+		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouterType() );
 	}
 	
 	@Test

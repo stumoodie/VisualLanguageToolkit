@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-// Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +35,10 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private static final long serialVersionUID = 8124494867402957446L;
 	private static final int VALID_NUM_LINK_TERMINI = 2;
 	private static final RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
+	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
+	private static final int DEFAULT_LINE_WIDTH = 1;
+	private static final ConnectionRouter DEFAULT_ROUTER_TYPE = ConnectionRouter.FAN;
+	private static final int MIN_LINE_WIDTH = 1;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	private Long id;
@@ -44,14 +46,14 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private int creationSerial;
 	private HibObjectType hibObjectType;
 	private ILinkObjectType objectType;
-	private String name;
-	private String description;
-	private String detailedDescription;
-	private String url;
+	private String name = "";
+	private String description = "";
+	private String detailedDescription = "";
+	private String url = "";
 	private RGB lineColour = DEFAULT_LINE_COLOUR;
-	private LineStyle lineStyle;
-	private int lineWidth;
-	private ConnectionRouter routerType;
+	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
+	private int lineWidth = DEFAULT_LINE_WIDTH;
+	private ConnectionRouter routerType = DEFAULT_ROUTER_TYPE;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>();
 	private HibLinkEdge edge ;
 	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>();
@@ -108,7 +110,7 @@ s	 */
 		this.description = otherAttribute.getDescription();
 		this.detailedDescription = otherAttribute.getDetailedDescription();
 		this.url = otherAttribute.getUrl();
-		this.routerType = otherAttribute.getRouter();
+		this.routerType = otherAttribute.getRouterType();
 		for(HibProperty prop : otherAttribute.hibLinkProperties.values()){
 			HibProperty copiedProp = (HibProperty)prop.getDefinition().copyProperty(this.propertyBuilder, prop);
 			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
@@ -128,14 +130,14 @@ s	 */
 	 * @param linkAttributeDefaults
 	 */
 	private void addDefaults(ILinkAttributeDefaults linkAttributeDefaults) {
-		this.lineColour = linkAttributeDefaults.getLineColour();
-		this.lineStyle = linkAttributeDefaults.getLineStyle();
-		this.lineWidth = linkAttributeDefaults.getLineWidth();
-		this.name = linkAttributeDefaults.getName();
-		this.description = linkAttributeDefaults.getDescription();
-		this.detailedDescription = linkAttributeDefaults.getDetailedDescription();
-		this.url = linkAttributeDefaults.getUrl();
-		this.routerType = linkAttributeDefaults.getRouter();
+		this.setLineColor(linkAttributeDefaults.getLineColour());
+		this.setLineStyle(linkAttributeDefaults.getLineStyle());
+		this.setLineWidth(linkAttributeDefaults.getLineWidth());
+		this.setName(linkAttributeDefaults.getName());
+		this.setDescription(linkAttributeDefaults.getDescription());
+		this.setDetailedDescription(linkAttributeDefaults.getDetailedDescription());
+		this.setUrl(linkAttributeDefaults.getUrl());
+		this.setRouterType(linkAttributeDefaults.getRouter());
 		Iterator<IPropertyDefinition> propIter = linkAttributeDefaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
 			IPropertyDefinition propDefn = propIter.next();
@@ -229,6 +231,9 @@ s	 */
 	}
 
 	public void setName(String name) {
+		if ( name == null)
+			throw new IllegalArgumentException ( "Name cannot be null." ) ;
+		
 		String oldValue = this.name;
 		this.name = name;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldValue, this.name);
@@ -239,6 +244,9 @@ s	 */
 	}
 
 	public void setDescription(String description) {
+		if ( description == null )
+			throw new IllegalArgumentException ( "Description cannot be null." ) ;
+		
 		String oldValue = this.name;
 		this.description = description;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldValue, this.description);
@@ -249,6 +257,9 @@ s	 */
 	}
 
 	public void setDetailedDescription(String detailedDescription) {
+		if ( detailedDescription == null )
+			throw new IllegalArgumentException ( "DetailedDescription cannot be null." ) ;
+		
 		String oldValue = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldValue, this.detailedDescription);
@@ -259,6 +270,9 @@ s	 */
 	}
 
 	public void setUrl(String url) {
+		if ( url == null )
+			throw new IllegalArgumentException ( "URL cannot be null." ) ;
+		
 		String oldValue = this.url;
 		this.url = url;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldValue, this.url);
@@ -318,6 +332,9 @@ s	 */
 	}
 
 	public void setLineWidth(int lineWidth) {
+		if ( lineWidth < MIN_LINE_WIDTH)
+			throw new IllegalArgumentException ( "Line width cannot be less than " + MIN_LINE_WIDTH) ;
+		
 		int oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
@@ -328,6 +345,9 @@ s	 */
 	}
 
 	public void setRouterType(ConnectionRouter routerType) {
+		if ( routerType == null )
+			throw new IllegalArgumentException ( "Router type cannot be null." ) ;
+		
 		ConnectionRouter oldValue = this.routerType;
 		this.routerType = routerType;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ROUTER_TYPE, oldValue, this.routerType);
@@ -370,23 +390,6 @@ s	 */
 		return true;
 	}
 
-//	void addLinkProperty ( String name , HibProperty toAdd ) 
-//	{
-//		if (toAdd == null)
-//			throw new IllegalArgumentException("property cannot be null");
-//		this.hibLinkProperties.put(name ,toAdd);
-//	}
-//	
-//	void removeLinkProperty(String toRemove) {
-//		if (toRemove == null)
-//			throw new IllegalArgumentException("id cannot be null");
-//		HibProperty propertyToRemove = hibLinkProperties.get(toRemove) ;
-//		if  (propertyToRemove == null)
-//			throw new IllegalStateException("property cannot be null");
-//		
-//		this.hibLinkProperties.remove(toRemove) ;
-//	}
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#bendPointIterator()
 	 */
@@ -407,13 +410,6 @@ s	 */
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#getRouter()
-	 */
-	public ConnectionRouter getRouter() {
-		return this.routerType ;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#numBendPoints()
 	 */
 	public int numBendPoints() {
@@ -431,16 +427,6 @@ s	 */
 		// break link to this attribute so it will be deleted.
 		hibBendPoint.setOwningLink(null);
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, null, null);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#setRouter(org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter)
-	 */
-	public void setRouter(ConnectionRouter router) {
-		if ( router == null)
-			throw new IllegalArgumentException("Router cannot be null.");
-		this.routerType = router ;
-		
 	}
 
 	/* (non-Javadoc)
@@ -476,7 +462,7 @@ s	 */
 	 */
 	public void setLineColor(RGB newColor) {
 		if ( newColor == null)
-			throw new IllegalArgumentException () ;
+			throw new IllegalArgumentException ("Line colour cannot be null") ;
 
 		RGB oldValue = this.lineColour;
 		this.lineColour = newColor;
@@ -501,28 +487,6 @@ s	 */
 		return retVal;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkSourceDecoration()
-	 */
-//	public HibLinkTerminus getSourceTerminus() {
-//		return this.sourceTerminus;
-//	}
-//
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkTargetDecoration()
-//	 */
-//	public HibLinkTerminus getTargetTerminus() {
-//		return this.targetTerminus;
-//	}
-//
-//	public void setSourceTerminus(HibLinkTerminus sourceTerminus) {
-//		this.sourceTerminus = sourceTerminus;
-//	}
-//
-//	public void setTargetTerminus(HibLinkTerminus targetTerminus) {
-//		this.targetTerminus = targetTerminus;
-//	}
-	
 	public List<HibLinkTerminus> getLinkTermini() {
 		return this.linkTermini;
 	}

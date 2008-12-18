@@ -45,8 +45,8 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		HibLinkAttribute dbLink = (HibLinkAttribute) retreivedLink.uniqueResult() ;
 		
 		LinkTermType actualTermType = dbLinkTerminus.getLinkTermType(); 
-		int actualOffset = dbLinkTerminus.getOffset();
-		int termHashCode = dbLinkTerminus.getAttribute().hashCode();
+		int actualOffset = dbLinkTerminus.getGap();
+		int termHashCode = dbLinkTerminus.getOwningLink().hashCode();
 		int linkHashCode = dbLink.hashCode(); 
 		sess.getTransaction().commit();
 		
@@ -65,7 +65,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		ILinkTerminusDefinition defn = null;
 		
 		HibLinkTerminus newLinkTerminus = new HibLinkTerminus (dbLink, LinkTermType.TARGET, defn);
-		newLinkTerminus.setOffset((short) 5  );
+		newLinkTerminus.setGap((short) 5  );
 		
 //		dbLink.setTargetTerminus(newLinkTerminus) ;
 		

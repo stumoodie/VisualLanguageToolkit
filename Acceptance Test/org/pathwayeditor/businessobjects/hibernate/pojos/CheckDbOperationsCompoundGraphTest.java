@@ -611,7 +611,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		linkAttribute1.setDetailedDescription(CHANGED_LINK_DETAILED_DESCRIPTION) ;
 		linkAttribute1.setLineColor(CHANGED_LINK_LINE_COLOUR);
 		linkAttribute1.setLineStyle(CHANGED_LINK_LINE_STYLE) ;
-		linkAttribute1.setRouter(CHANGED_LINK_CONNECTION_ROUTER) ;
+		linkAttribute1.setRouterType(CHANGED_LINK_CONNECTION_ROUTER) ;
 		linkAttribute1.setUrl(CHANGED_LINK_URL) ;
 		linkAttribute1.setLineWidth(CHANGED_LINK_LINE_WIDTH) ;
 		

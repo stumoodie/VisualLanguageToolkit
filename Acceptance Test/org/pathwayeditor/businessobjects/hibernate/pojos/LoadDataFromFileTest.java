@@ -1138,7 +1138,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE1_SERIAL , linkAttribute1.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_101 , linkAttribute1.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute1.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute1.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute1.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR1_URL , linkAttribute1.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR1_NAME , linkAttribute1.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
@@ -1152,7 +1152,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus1.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE11 , linkTerminus1.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus1.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR101 , linkTerminus1.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR101 , linkTerminus1.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE11 , linkTerminus1.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute1 , linkTerminus2.getOwningLink()) ;
@@ -1161,7 +1161,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus2.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE12 , linkTerminus2.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus2.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR102 , linkTerminus2.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR102 , linkTerminus2.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE12 , linkTerminus2.getTerminusSize()) ;
 	}
 	
@@ -1185,7 +1185,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE2_SERIAL , linkAttribute2.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_102 , linkAttribute2.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute2.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute2.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute2.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR2_URL , linkAttribute2.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR2_NAME , linkAttribute2.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
@@ -1199,7 +1199,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus3.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE13 , linkTerminus3.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus3.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR103 , linkTerminus3.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR103 , linkTerminus3.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE13 , linkTerminus3.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute2 , linkTerminus4.getOwningLink()) ;
@@ -1208,7 +1208,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus4.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE14 , linkTerminus4.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus4.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR104 , linkTerminus4.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR104 , linkTerminus4.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE14 , linkTerminus4.getTerminusSize()) ;
 	}
 	
@@ -1231,7 +1231,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE3_SERIAL , linkAttribute3.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_103 , linkAttribute3.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute3.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute3.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute3.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR3_URL , linkAttribute3.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR3_NAME , linkAttribute3.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
@@ -1245,7 +1245,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus5.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE15 , linkTerminus5.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus5.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR105 , linkTerminus5.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR105 , linkTerminus5.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE15 , linkTerminus5.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute3 , linkTerminus6.getOwningLink()) ;
@@ -1254,7 +1254,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus6.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE16 , linkTerminus6.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus6.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR106 , linkTerminus6.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR106 , linkTerminus6.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE16 , linkTerminus6.getTerminusSize()) ;
 	}
 	
@@ -1277,7 +1277,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE4_SERIAL , linkAttribute4.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_104 , linkAttribute4.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute4.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute4.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute4.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR4_URL , linkAttribute4.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR4_NAME , linkAttribute4.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
@@ -1291,7 +1291,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus7.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE17 , linkTerminus7.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus7.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR107 , linkTerminus7.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR107 , linkTerminus7.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE17 , linkTerminus7.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute4 , linkTerminus8.getOwningLink()) ;
@@ -1300,7 +1300,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus8.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE18 , linkTerminus8.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus8.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR108 , linkTerminus8.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR108 , linkTerminus8.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE18 , linkTerminus8.getTerminusSize()) ;
 	}
 	
@@ -1323,7 +1323,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE5_SERIAL , linkAttribute5.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_105 , linkAttribute5.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DOT , linkAttribute5.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute5.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute5.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR5_URL , linkAttribute5.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR5_NAME , linkAttribute5.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
@@ -1337,7 +1337,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus9.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE19 , linkTerminus9.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus9.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR109 , linkTerminus9.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR109 , linkTerminus9.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE19 , linkTerminus9.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute5 , linkTerminus10.getOwningLink()) ;
@@ -1346,7 +1346,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus10.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE20 , linkTerminus10.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus10.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR110 , linkTerminus10.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR110 , linkTerminus10.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE20 , linkTerminus10.getTerminusSize()) ;
 		
 	}
@@ -1370,7 +1370,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE6_SERIAL , linkAttribute6.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_106 , linkAttribute6.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute6.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute6.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute6.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR6_URL , linkAttribute6.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR6_NAME , linkAttribute6.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
@@ -1384,7 +1384,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus11.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE21 , linkTerminus11.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus11.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR111 , linkTerminus11.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR111 , linkTerminus11.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE21 , linkTerminus11.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute6 , linkTerminus12.getOwningLink()) ;
@@ -1393,7 +1393,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus12.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE22 , linkTerminus12.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus12.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR112 , linkTerminus12.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR112 , linkTerminus12.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE22 , linkTerminus12.getTerminusSize()) ;
 		
 	}
@@ -1417,7 +1417,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE7_SERIAL , linkAttribute7.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_107 , linkAttribute7.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute7.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute7.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute7.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR7_URL , linkAttribute7.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR7_NAME , linkAttribute7.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
@@ -1431,7 +1431,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus13.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE23 , linkTerminus13.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus13.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR113 , linkTerminus13.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR113 , linkTerminus13.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE23 , linkTerminus13.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute7 , linkTerminus14.getOwningLink()) ;
@@ -1440,7 +1440,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus14.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE24 , linkTerminus14.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus14.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR114 , linkTerminus14.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR114 , linkTerminus14.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE24 , linkTerminus14.getTerminusSize()) ;
 		
 		
@@ -1466,7 +1466,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE8_SERIAL , linkAttribute8.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_108 , linkAttribute8.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute8.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute8.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.FAN , linkAttribute8.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR8_URL , linkAttribute8.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR8_NAME , linkAttribute8.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
@@ -1480,7 +1480,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus15.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE25 , linkTerminus15.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus15.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR115 , linkTerminus15.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR115 , linkTerminus15.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE25 , linkTerminus15.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute8 , linkTerminus16.getOwningLink()) ;
@@ -1489,7 +1489,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus16.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE26 , linkTerminus16.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus16.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR116 , linkTerminus16.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR116 , linkTerminus16.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE26 , linkTerminus16.getTerminusSize()) ;
 		
 	}
@@ -1513,7 +1513,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE9_SERIAL , linkAttribute9.getCreationSerial()) ;
 		assertEquals ( "check line color" , RGB_109 , linkAttribute9.getLineColor() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute9.getLineStyle() ) ;
-		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute9.getRouter() ) ;
+		assertEquals ( "check routertype" , ConnectionRouter.SHORTEST_PATH , linkAttribute9.getRouterType() ) ;
 		assertEquals ( "check URL" , LINK_ATTR9_URL , linkAttribute9.getUrl()) ;
 		assertEquals ( "check name" , LINK_ATTR9_NAME , linkAttribute9.getName()) ;
 		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
@@ -1527,7 +1527,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus17.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE27 , linkTerminus17.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus17.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR117 , linkTerminus17.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR117 , linkTerminus17.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE27 , linkTerminus17.getTerminusSize()) ;
 		
 		assertEquals ( "owning link "  , linkAttribute9 , linkTerminus18.getOwningLink()) ;
@@ -1536,7 +1536,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus18.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE28 , linkTerminus18.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus18.getTerminusDecoratorType()) ;
-		assertEquals ( "terminus colour" , TERMINUS_COLOR118 , linkTerminus18.getTerminusColor()) ;
+		assertEquals ( "terminus colour" , TERMINUS_COLOR118 , linkTerminus18.getTerminusColour()) ;
 		assertEquals ( "terminus size" , END_DECORATOR_SIZE28 , linkTerminus18.getTerminusSize()) ;
 	}
 	
