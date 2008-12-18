@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB;
-import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
 
@@ -54,7 +54,7 @@ public class RepositoryManagerBuilderTest {
 		}
 		this.databaseManager = new HsqlDatabaseManager(connInfo);
 		this.databaseManager.startup();
-		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(
+		ICanvasPersistenceHandlerFactory canvasPersistenceHandler = new HibCanvasPersistenceHandlerFactory(
 				dataSource.getSessionFactory(), new StubNotationSubsystemPool());
 		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(
 				dataSource.getSessionFactory(), connInfo.getRepositoryName());

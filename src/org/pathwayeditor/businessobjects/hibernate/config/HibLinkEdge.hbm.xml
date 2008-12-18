@@ -22,10 +22,10 @@
         <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all">
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
+        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all" lazy="false">
         	<column name="out_node_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all">
+        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all" lazy="false">
         	<column name="in_node_id" not-null="true"/>
         </many-to-one>
 

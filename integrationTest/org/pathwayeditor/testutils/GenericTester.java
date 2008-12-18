@@ -29,9 +29,9 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
-import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
@@ -84,7 +84,7 @@ public abstract class GenericTester {
 			dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 			dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 			doSetup();
-			ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(
+			ICanvasPersistenceHandlerFactory canvasPersistenceHandler = new HibCanvasPersistenceHandlerFactory(
 					dbTester.getSessionFactory(),
 					new StubNotationSubsystemPool());
 			IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(

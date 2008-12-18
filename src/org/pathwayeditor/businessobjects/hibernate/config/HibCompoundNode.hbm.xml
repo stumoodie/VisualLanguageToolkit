@@ -32,12 +32,12 @@
 			<column name="is_removed" not-null="true"/>
 		</property>
 
-		<set name="inEdges" inverse="true" cascade="none" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
+		<set name="inEdges" inverse="true" cascade="none" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType" lazy="false">
 			<key column="in_node_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>
 		
-		<set name="outEdges" inverse="true" cascade="none" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
+		<set name="outEdges" inverse="true" cascade="none" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType" lazy="false">
 			<key column="out_node_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>

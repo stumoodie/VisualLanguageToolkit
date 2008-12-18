@@ -19,13 +19,11 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 	private static final boolean INITIAL_STATE = false;
 	private final Object myLock = new Object();
 	private final ICanvasPersistenceHandler canvasPersistenceHandler;
-	private final IMap owningMap;
 	private final AtomicBoolean open;
 	private final List<IMapContentManagerStatusListener> listeners;
 
-	public MapContentPersistenceManager(IMap owningMap, ICanvasPersistenceHandler canvasPersistenceHandler) {
+	public MapContentPersistenceManager(ICanvasPersistenceHandler canvasPersistenceHandler) {
 		// this.repoManager = repoManager;
-		this.owningMap = owningMap;
 		this.canvasPersistenceHandler = canvasPersistenceHandler;
 		this.open = new AtomicBoolean(INITIAL_STATE);
 		this.listeners = new CopyOnWriteArrayList<IMapContentManagerStatusListener>();
@@ -49,7 +47,6 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 		synchronized (myLock) {
 			if (this.isOpen())
 				throw new PersistenceManagerAlreadyOpenException(this);
-			this.canvasPersistenceHandler.setOwningMap(this.owningMap);
 			if (this.canvasPersistenceHandler.doesCanvasExist()) {
 				this.canvasPersistenceHandler.loadCanvas();
 			}
@@ -82,7 +79,7 @@ public class MapContentPersistenceManager implements IMapContentPersistenceManag
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#getOwningMap()
 	 */
 	public IMap getOwningMap() {
-		return this.owningMap;
+		return this.canvasPersistenceHandler.getOwningMap();
 	}
 
 	/*

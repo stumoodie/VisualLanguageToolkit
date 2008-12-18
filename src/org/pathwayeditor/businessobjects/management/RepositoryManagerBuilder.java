@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.management;
 
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
-import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
 
 /**
@@ -36,7 +36,7 @@ public class RepositoryManagerBuilder implements IRepositoryManagerBuilder {
 		
 		this.hibdataSource.setConnectionInfo(this.getConnectionInfo());
 		SessionFactory factory = this.hibdataSource.getSessionFactory(); 
-		ICanvasPersistenceHandler canvasPersistenceHandler = new HibCanvasPersistenceHandler(factory, this.getNotationSubsystemPool());
+		ICanvasPersistenceHandlerFactory canvasPersistenceHandler = new HibCanvasPersistenceHandlerFactory(factory, this.getNotationSubsystemPool());
 		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(factory, this.getConnectionInfo().getRepositoryName());  
 		return new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
 	}

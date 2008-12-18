@@ -10,7 +10,7 @@
 		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" not-null="false" cascade="all">
 		</many-to-one>
 		
-		<set name="edges" cascade="all,delete-orphan" inverse="true" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType">
+		<set name="edges" cascade="all,delete-orphan" inverse="true" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.EdgeSetType" lazy="false">
 			<key column="owning_child_model_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>

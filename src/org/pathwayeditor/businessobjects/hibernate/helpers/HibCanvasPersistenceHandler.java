@@ -40,27 +40,14 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final SessionFactory fact;
 	private final INotationSubsystemPool subsystemPool;
-	private IMap owningMap = null;
+	private final IMap owningMap;
 	private ICanvas loadedCanvas = null;
-	// private IAttributesForCanvasBuilder shapeAttrForCanvBuilder = new ShapeAttributesForCanvasBuilder();
-	// private IAttributesForCanvasBuilder linkAtrrForCanvBuilder = new LinkAttributesForCanvasBuilder();
-	
-	// private IHibNotationFactory hibNotationFactory;
-	// private INotationSubsystem defaultNotationSubsystem;
 
-	public HibCanvasPersistenceHandler(SessionFactory fact, INotationSubsystemPool subsystemPool) {
+
+	public HibCanvasPersistenceHandler(SessionFactory fact, INotationSubsystemPool subsystemPool, IMap map) {
 		this.fact = fact;
 		this.subsystemPool = subsystemPool;
-		// this.defaultNotationSubsystem = null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#setOwningMap( org.pathwayeditor.businessobjects.repository.IMap)
-	 */
-	public void setOwningMap(IMap owningMap) {
-		this.owningMap = owningMap;
+		this.owningMap = map;
 	}
 
 	/*
@@ -111,6 +98,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		initialiseNotation(hibCanvas.getHibNotation());
 		initialiseAttributes(hibCanvas);
 		initialiseModel(loadedModel);
+		if(!loadedModel.isValid()) {
+			throw new IllegalStateException("The loaded model is invalid.");
+		}
 		s.getTransaction().commit();
 		hibCanvas.setMapDiagram(this.getOwningMap());
 	}
@@ -217,7 +207,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 */
 	public void reset() {
 		this.loadedCanvas = null;
-		this.owningMap = null;
 	}
 
 	/*
@@ -226,14 +215,19 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#synchroniseCanvas ()
 	 */
 	public void synchroniseCanvas() {
-		Session s = this.fact.getCurrentSession();
-		s.getTransaction().begin();
-		s.saveOrUpdate(this.loadedCanvas);
-		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
-		while (nodeIterator.hasNext()) {
-			s.saveOrUpdate(nodeIterator.next());
+		if(this.loadedCanvas.getModel().isValid()) {
+			Session s = this.fact.getCurrentSession();
+			s.getTransaction().begin();
+			s.saveOrUpdate(this.loadedCanvas);
+//		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
+//		while (nodeIterator.hasNext()) {
+//			s.saveOrUpdate(nodeIterator.next());
+//		}
+			s.getTransaction().commit();
 		}
-		s.getTransaction().commit();
+		else {
+			throw new IllegalStateException("The loaded model is invalid and cannot be syncronised.");
+		}
 	}
 
 	/*

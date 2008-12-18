@@ -13,8 +13,6 @@ import org.pathwayeditor.businessobjects.repository.IMap;
  */
 public interface ICanvasPersistenceHandler {
 
-	void setOwningMap(IMap owningMap);
-
 	IMap getOwningMap();
 
 	void loadCanvas();

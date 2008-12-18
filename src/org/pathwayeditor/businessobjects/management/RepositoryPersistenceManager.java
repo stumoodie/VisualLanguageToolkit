@@ -18,12 +18,12 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
 public class RepositoryPersistenceManager implements IRepositoryPersistenceManager {
 	private final Object myLock = new Object();
 	private final Map<IMap, IMapContentPersistenceManager> openMaps;
-	private final ICanvasPersistenceHandler canvasPersistenceHandler;
+	private final ICanvasPersistenceHandlerFactory canvasPersistenceHandlerFactory;
 	private final IRepositoryPersistenceHandler repoPersistenceHandler;
 	private final AtomicBoolean open;
 
-	public RepositoryPersistenceManager(IRepositoryPersistenceHandler repoPersistenceHandler, ICanvasPersistenceHandler canvasPersistenceHandler) {
-		this.canvasPersistenceHandler = canvasPersistenceHandler;
+	public RepositoryPersistenceManager(IRepositoryPersistenceHandler repoPersistenceHandler, ICanvasPersistenceHandlerFactory canvasPersistenceHandlerFactory) {
+		this.canvasPersistenceHandlerFactory = canvasPersistenceHandlerFactory;
 		this.repoPersistenceHandler = repoPersistenceHandler;
 		this.openMaps = new ConcurrentHashMap<IMap, IMapContentPersistenceManager>();
 		this.open = new AtomicBoolean(false);
@@ -119,7 +119,9 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 		if(map == null) throw new IllegalArgumentException("map cannot be null");
 		synchronized(myLock){
 			if(!this.isRepositoryOpen()) throw new PersistenceManagerNotOpenException(this);
-			IMapContentPersistenceManager retVal = new MapContentPersistenceManager(map, this.canvasPersistenceHandler);
+			this.canvasPersistenceHandlerFactory.setMap(map);
+			ICanvasPersistenceHandler persistenceHandler = this.canvasPersistenceHandlerFactory.createPersistenceHandler();
+			IMapContentPersistenceManager retVal = new MapContentPersistenceManager(persistenceHandler);
 			retVal.addListener(new MapContentListener());
 			return retVal;
 		}
