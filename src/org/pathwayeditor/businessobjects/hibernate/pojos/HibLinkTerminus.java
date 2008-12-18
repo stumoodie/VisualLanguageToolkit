@@ -12,6 +12,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
@@ -483,6 +484,27 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 			retVal = false;
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void addChangeListener(IPropertyChangeListener listener) {
+		this.eventHandler.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
+	 */
+	public Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.eventHandler.listenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
+	 */
+	public void removeChangeListener(IPropertyChangeListener listener) {
+		this.eventHandler.removeChangeListener(listener);
 	}
 
 }

@@ -5,10 +5,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
-public interface ILinkTerminus extends IAnnotatedObject {
+public interface ILinkTerminus extends IAnnotatedObject, IPropertyChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 

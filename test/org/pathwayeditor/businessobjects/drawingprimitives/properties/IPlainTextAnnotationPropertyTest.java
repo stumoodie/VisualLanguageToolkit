@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.bussinessobjects.drawingprimitives.properties;
+package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import static org.junit.Assert.assertEquals;
 
