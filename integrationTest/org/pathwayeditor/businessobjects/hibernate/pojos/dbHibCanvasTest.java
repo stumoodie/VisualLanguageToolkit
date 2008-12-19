@@ -109,7 +109,7 @@ public class dbHibCanvasTest extends  PojoTester {
 		Query retreivedCanvas = sess.createQuery( "from HibCanvas where id ='100001'" ) ;
 		HibCanvas dbCanvas = (HibCanvas) retreivedCanvas.uniqueResult() ;
 		
-		HibCanvas toWrite= new HibCanvas (parentMapDiagram, dbCanvas) ;
+		HibCanvas toWrite= new HibCanvas (parentMapDiagram.getRepository().getName(), parentMapDiagram.getINode(), dbCanvas) ;
 		
 		sess.save(toWrite) ;
 		sess.getTransaction().commit() ;

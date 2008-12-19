@@ -64,10 +64,10 @@ public class HibCanvasTest {
 		notationSubsystem = new StubNotationSubSystem();
 		this.map1.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map1.setINode(EXPECTED_INODE);
-		this.testInstance = new HibCanvas(map1, hibNotationFactory, notationSubsystem);
+		this.testInstance = new HibCanvas(map1.getRepository().getName(), map1.getINode(), hibNotationFactory, notationSubsystem);
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
 	}
 
 	@After
@@ -84,18 +84,18 @@ public class HibCanvasTest {
 	public void testEquals() {
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
 		assertTrue("same instance", this.testInstance.equals(this.testInstance));
 		assertFalse("false if null", this.testInstance.equals(null));
 		assertFalse("false if node same", this.testInstance.equals(null));
 		assertTrue("same instance", this.testInstance.equals(this.otherTestInstance));
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertFalse("same instance", this.testInstance.equals(this.otherTestInstance));
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertFalse("same instance", this.testInstance.equals(this.otherTestInstance));
 	}
 
@@ -103,16 +103,16 @@ public class HibCanvasTest {
 	public void testHashCode() {
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
 		assertEquals("same instance", this.testInstance.hashCode(), this.testInstance.hashCode());
 		assertTrue("hashes equal when equal", this.testInstance.hashCode() == this.otherTestInstance.hashCode());
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertTrue("hashes not same when not equal", this.testInstance.hashCode() != this.otherTestInstance.hashCode());
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertTrue("hashes not same when not equal", this.testInstance.hashCode() != this.otherTestInstance.hashCode());
 	}
 
@@ -138,7 +138,7 @@ public class HibCanvasTest {
 
 	@Test
 	public void testCanCopyHereWithEmptyCorrectCanvas() {
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertTrue("can copy here", this.otherTestInstance.canCopyHere(this.testInstance));
 	}
 
@@ -154,7 +154,7 @@ public class HibCanvasTest {
 		linkFact.setObjectType(syntaxService.getLinkObjectType(StubLinkAObjectType.UNIQUE_ID));
 		linkFact.setShapeNodePair(node1, node2);
 		linkFact.canCreateLink();
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		assertTrue("can copy here", this.otherTestInstance.canCopyHere(this.testInstance));
 	}
 
@@ -180,7 +180,7 @@ public class HibCanvasTest {
 
 	@Test
 	public void testCopyHereWithEmptyCorrectCanvas() {
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		this.otherTestInstance.copyHere(this.testInstance);
 		assertTrue("still empty after copy", this.otherTestInstance.isEmpty());
 	}
@@ -199,7 +199,7 @@ public class HibCanvasTest {
 		linkFact.canCreateLink();
 		int expectedNodes = this.testInstance.getModel().numDrawingNodes();
 		int expectedLinks = this.testInstance.getModel().numLinkEdges();
-		this.otherTestInstance = new HibCanvas(map2, hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
 		this.otherTestInstance.copyHere(this.testInstance);
 		assertEquals("expected nodes copied", expectedNodes, this.otherTestInstance.getModel().numDrawingNodes());
 		assertEquals("expected links copied", expectedLinks, this.otherTestInstance.getModel().numLinkEdges());

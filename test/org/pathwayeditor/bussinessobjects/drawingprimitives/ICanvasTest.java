@@ -74,7 +74,7 @@ public class ICanvasTest {
 		folder = new HibRootFolder (repository) ;
 		mapDiagram = new HibMap (folder, MAP_DIAGRAM_NAME) ;
 		IHibNotationFactory mockNotationSubsystem = this.mockery.mock(IHibNotationFactory.class, "HibNotation"); 
-		canvas = new HibCanvas (  mapDiagram, mockNotationSubsystem, mockContext);
+		canvas = new HibCanvas (mapDiagram.getRepository().getName(), mapDiagram.getINode(), mockNotationSubsystem, mockContext);
 		this.canvas.setGridSize(GRID_SIZE);
 		this.canvas.setGridEnabled(GRID_ENABLED);
 		this.canvas.setSnapToGrid(SNAP_TO_GRID_ENABLED);
@@ -90,7 +90,8 @@ public class ICanvasTest {
 	@Ignore @Test
 	public void testCanvasCreated () throws Exception 
 	{
-		assertEquals ( "Map diagram " , mapDiagram , canvas.getOwningMap()) ;
+		assertEquals ( "Map diagram " , mapDiagram.getRepository().getName() , canvas.getRepositoryName()) ;
+		assertEquals ( "Map diagram " , mapDiagram.getINode() , canvas.getINode()) ;
 		assertEquals ( "context" , mockContext , canvas.getNotationSubsystem()) ;
 		assertEquals ( "grid" , GRID_SIZE , canvas.getGridSize()) ;
 		assertEquals ( "backgroundColor" , BACKGROUND_COLOR, canvas.getBackgroundColour()) ;

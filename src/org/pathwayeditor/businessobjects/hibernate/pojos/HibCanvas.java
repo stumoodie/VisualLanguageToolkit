@@ -22,7 +22,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableP
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ed.inf.graph.util.IndexCounter;
@@ -45,7 +44,6 @@ public class HibCanvas implements ICanvas, Serializable {
 	private static final int MODEL_EMPTY_COUNT = 1; // has just root node when "empty" 
 
 	private Long id;
-	private IMap map;
 	private HibNotation hibNotation;
 	private INotationSubsystem notation;
 	private Size gridSize = new Size(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
@@ -76,22 +74,20 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
-	public HibCanvas(IMap map, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
+	public HibCanvas(String repoName, int iNode, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
 		this();
-		this.map = map;
-		this.repository = map.getRepository().getName();
-		this.mapINode = map.getINode();
+		this.repository = repoName;
+		this.mapINode = iNode;
 		this.notation = notationSubsystem;
 		this.hibNotation = hibNotationFactory.getNotation();
 		IRootObjectType rootObjectType = notationSubsystem.getSyntaxService().getRootObjectType();
 		this.model = new HibModel(this, rootObjectType, hibNotationFactory);
 	}
 	
-	public HibCanvas(IMap newMap, HibCanvas other) {
+	public HibCanvas(String newRepoName, int newINode, HibCanvas other) {
 		this();
-		this.repository = newMap.getRepository().getName();
-		this.mapINode = newMap.getINode();
-		this.map = newMap;
+		this.repository = newRepoName;
+		this.mapINode = newINode;
 		this.hibNotation = other.hibNotation;
 		this.gridSize = other.getGridSize();
 		this.gridEnabled = other.gridEnabled;
@@ -110,14 +106,6 @@ public class HibCanvas implements ICanvas, Serializable {
 	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
-	}
-
-	public IMap getMapDiagram() {
-		return this.map;
-	}
-
-	public void setMapDiagram(IMap hibMapDiagram) {
-		this.map = hibMapDiagram;
 	}
 
 	public INotationSubsystem getNotationSubsystem() {
@@ -244,13 +232,6 @@ public class HibCanvas implements ICanvas, Serializable {
 	 */
 	public RGB getBackgroundColour() {
 		return this.backgroundColour;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMap()
-	 */
-	public IMap getOwningMap() {
-		return this.getMapDiagram() ;
 	}
 
 	/* (non-Javadoc)
@@ -603,5 +584,12 @@ public class HibCanvas implements ICanvas, Serializable {
 				&& this.isEmpty();
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getINode()
+	 */
+	public int getINode() {
+		return this.mapINode;
 	}
 }

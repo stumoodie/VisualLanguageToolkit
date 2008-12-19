@@ -551,7 +551,8 @@ public class LoadDataFromFileTest extends GenericTester{
 
 		assertNotNull ( "canvas is not null" , this.dbCanvas ) ;
 		Calendar expectedDate = new GregorianCalendar(YEAR_CHECK, MONTH_CHECK, DATE_CHECK, HOUR_CHECK, MIN_CHECK);
-		assertEquals ( "check owning map" , mapDiagram1 , dbCanvas.getOwningMap()) ;
+		assertEquals ( "check owning map repo name" , mapDiagram1.getRepository().getName() , dbCanvas.getRepositoryName()) ;
+		assertEquals ( "check owning map inode" , mapDiagram1.getINode() , dbCanvas.getINode()) ;
 		assertEquals ( "canvas size" , SIZE_10 , dbCanvas.getCanvasSize() ) ;
 		assertEquals ( "grid size" , SIZE_10 , dbCanvas.getGridSize() ) ;
 		assertEquals ( "created date" , expectedDate.getTime(), dbCanvas.getCreated() );

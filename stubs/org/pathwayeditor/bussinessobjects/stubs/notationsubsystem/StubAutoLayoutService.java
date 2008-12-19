@@ -39,7 +39,7 @@ public class StubAutoLayoutService implements INotationAutolayoutService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService#layout(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	public void layout(ICanvas canvas) {
-		System.out.println("Map " + canvas.getOwningMap().getName() + " laid out.");
+		System.out.println("Canvas " + canvas + " laid out.");
 	}
 
 }

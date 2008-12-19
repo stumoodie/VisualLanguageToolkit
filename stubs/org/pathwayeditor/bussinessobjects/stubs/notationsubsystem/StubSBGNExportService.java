@@ -26,7 +26,7 @@ public class StubSBGNExportService implements INotationExportService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService#exportMap(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas, java.io.File)
 	 */
 	public void exportMap(ICanvas map, File exportFile) throws ExportServiceException {
-		System.out.println("Map " + map.getOwningMap().getName() + " was exported to " + exportFile.getAbsolutePath());
+		System.out.println("Map " + map + " was exported to " + exportFile.getAbsolutePath());
 	}
 
 	/* (non-Javadoc)

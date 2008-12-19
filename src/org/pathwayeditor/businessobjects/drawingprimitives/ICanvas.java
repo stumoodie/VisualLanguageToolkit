@@ -6,19 +6,24 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.repository.IMap;
 
 
 public interface ICanvas extends IPropertyChangeListenee{
 	
 	/**
-	 * Get the map associated with this Canvas.
-	 * @return The map . Cannot be null.
+	 * Name of repository that holds this canvas.
+	 * @return the canvas name.
 	 */
-	IMap getOwningMap();
+	String getRepositoryName();
 	
 	/**
-	 * Enable or disable the Snap to Grid funcionality.
+	 * The unique identifier within the above repository.
+	 * @return the inode.
+	 */
+	int getINode();
+	
+	/**
+	 * Enable or disable the Snap to Grid functionality.
 	 */	
 	void setSnapToGrid(boolean snapToGridStatus);
 	

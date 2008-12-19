@@ -73,7 +73,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				.uniqueResult();
 		this.loadedCanvas = hibCanvas;
 		Hibernate.initialize(hibCanvas);
-		hibCanvas.setMapDiagram(this.getOwningMap());
 		INotationSubsystem loadedNotationSubsystem = null;
 		IHibNotationFactory hibNotationFactory = null;
 		if (this.subsystemPool.hasNotationSubsystem(hibCanvas.getHibNotation())) {
@@ -102,7 +101,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			throw new IllegalStateException("The loaded model is invalid.");
 		}
 		s.getTransaction().commit();
-		hibCanvas.setMapDiagram(this.getOwningMap());
 	}
 
 	private void initialiseNotation(HibNotation notation) {
@@ -248,7 +246,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			if (canvasTest == 0) {
 				HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
 				hibNotationFactory.initialise();
-				hibCanvas = new HibCanvas(this.owningMap, hibNotationFactory, notationSubsystem);
+				String repoName = this.owningMap.getRepository().getName();
+				int iNode = this.owningMap.getINode();
+				hibCanvas = new HibCanvas(repoName, iNode, hibNotationFactory, notationSubsystem);
 				s.save(hibCanvas);
 			} else {
 				IllegalStateException e = new IllegalStateException("canvas already exists");
