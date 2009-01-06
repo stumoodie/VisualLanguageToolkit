@@ -13,16 +13,32 @@ import org.pathwayeditor.businessobjects.repository.IMap;
  */
 public interface ICanvasPersistenceHandler {
 
+	/**
+	 * Gets the map that contains this canvas. 
+	 * @return the owning map.
+	 */
 	IMap getOwningMap();
 
+	/**
+	 * Loads the canvas from persistent storage. The canvas must exists for this to succeed.
+	 * @throws IllegalStateException if <code>doesCanvasExist() == false</code>. 
+	 */
 	void loadCanvas();
 	
+	/**
+	 * Synchronises the canvas held in persistent storage with the canvas help by this handler.
+//	 * @throws IllegalStateException if <code>getLoadedCanvas() == null</code>.
+	 */
 	void synchroniseCanvas();
 
-	public ICanvas getLoadedCanvas();
+	/**
+	 * Gets the currently loaded canvas, which can be null if no canvas has been loaded by this handler.
+	 * @return the loaded canvas or null if none has been loaded or created.
+	 */
+	ICanvas getLoadedCanvas();
 	
 	/**
-	 * Sets the hibernate notation factory, the owning map and loaded canvas to null. This helps avoid memeory leaks
+	 * Sets the hibernate notation factory, the owning map and loaded canvas to null. This helps avoid memory leaks
 	 * since this object will not hold on to state object references and puts the object in a pristine state as if it
 	 * were just initialised.
 	 */
@@ -41,5 +57,13 @@ public interface ICanvasPersistenceHandler {
 	 * @return true if it does, false otherwise.
 	 */
 	boolean doesCanvasExist();
+
+	/**
+	 * Deletes the current canvas. This assumes that a canvas has already been loaded or
+	 * created.
+	 * @throws IllegalStateException if <code>getLoadedCanvas() == null</code>.
+	 * @throws IllegalStateException if <code>doesCanvasExist() == false</code>.
+	 */
+	void deleteCanvas();
 
 }

@@ -4,7 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.junit.Test;
-import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
+import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -21,7 +21,7 @@ public class CanvasCreationTest extends GenericTester {
 	private static final String TEST_MAP_PATH = "/subfolder2/Diagram name2";
 	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
 	private static final String CANVAS_CREATION_CHANGES = "Acceptance Test/DBConsistencyTestValidationData/DBNewCanvasData.xml";
-	private IMapContentPersistenceManager mapContentManager;
+	private IMapPersistenceManager mapContentManager;
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.testutils.GenericTester#doAdditionalSetUp()
@@ -32,8 +32,8 @@ public class CanvasCreationTest extends GenericTester {
 			IRepositoryPersistenceManager repoManager = this.getRepositoryPersistenceManager();
 			IMap map;
 			map = (IMap)repoManager.getRepository().findRepositoryItemByPath(TEST_MAP_PATH);
-			this.mapContentManager = repoManager.openMap(map);
-			this.mapContentManager.loadContent();
+			this.mapContentManager = repoManager.getMapPersistenceManager(map);
+			this.mapContentManager.open();
 		} catch (PersistenceManagerException e) {
 			throw new RuntimeException(e);
 		}
@@ -45,7 +45,7 @@ public class CanvasCreationTest extends GenericTester {
 	@Override
 	protected void doAdditionalTearDown() {
 		if(mapContentManager != null){
-			mapContentManager.close();
+			mapContentManager.close(true);
 		}
 	}
 

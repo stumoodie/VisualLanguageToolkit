@@ -81,7 +81,7 @@ public class RepositoryManagerBuilderTest {
 	@After
 	public void tearDown() throws Exception {
 		if(bofac != null)
-			bofac.closeRepository();
+			bofac.close(true);
 		
 		bofac = null;
 		this.dataSource.getSessionFactory().close();
@@ -104,9 +104,9 @@ public class RepositoryManagerBuilderTest {
 	@Test
 	public void testRepoInitialisation()
 			throws PersistenceManagerAlreadyOpenException {
-		assertFalse("repo not open", bofac.isRepositoryOpen());
-		bofac.openRepository();
-		assertTrue("repo open", bofac.isRepositoryOpen());
+		assertFalse("repo not open", bofac.isOpen());
+		bofac.open();
+		assertTrue("repo open", bofac.isOpen());
 	}
 
 //	@SuppressWarnings("deprecation")

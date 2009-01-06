@@ -91,7 +91,7 @@ public abstract class GenericTester {
 					dbTester.getSessionFactory(), getTestRepositoryName());
 			bofac = new RepositoryPersistenceManager(repoHandler,
 					canvasPersistenceHandler);
-			bofac.openRepository();
+			bofac.open();
 			doAdditionalSetUp();
 		} catch (Throwable exc) {
 			exc.printStackTrace();
@@ -120,7 +120,7 @@ public abstract class GenericTester {
 		try {
 			doAdditionalTearDown();
 			if(bofac != null) {
-				bofac.closeRepository();
+				bofac.close(true);
 			}
 			bofac = null;
 			if (dbTester.getSessionFactory().getCurrentSession().isOpen()

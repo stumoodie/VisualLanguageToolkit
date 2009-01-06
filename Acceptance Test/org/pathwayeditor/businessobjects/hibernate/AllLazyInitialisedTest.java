@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
+import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerAlreadyOpenException;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -31,7 +31,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 	private static final String SUBFOLDER1_PATH = "/subfolder1/" ;
 	private IRepository repository;
 	private ICanvas canvas;
-	private IMapContentPersistenceManager map1Manager;
+	private IMapPersistenceManager map1Manager;
 	
 
 	@Before
@@ -42,8 +42,8 @@ public class AllLazyInitialisedTest extends GenericTester {
 	private ICanvas loadCanvasFromDB() throws PersistenceManagerNotOpenException, PersistenceManagerAlreadyOpenException {
 		ISubFolder subFolder1 = (ISubFolder) repository.getFolderByPath(SUBFOLDER1_PATH);
 		IMap mapDiagram1 = subFolder1.getMapIterator().next();
-		map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram1);
-		map1Manager.loadContent();
+		map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(mapDiagram1);
+		map1Manager.open();
 		ICanvas dbCanvas = map1Manager.getCanvas();
 		return dbCanvas;
 	}

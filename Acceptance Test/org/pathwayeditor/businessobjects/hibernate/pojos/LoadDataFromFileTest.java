@@ -37,7 +37,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnot
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
-import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
+import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -430,8 +430,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		try {
 			IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
 		
-			IMapContentPersistenceManager map1Manager = this.getRepositoryPersistenceManager().openMap(map);
-			map1Manager.loadContent() ;
+			IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
+			map1Manager.open() ;
 			this.dbCanvas = map1Manager.getCanvas();
 		} catch (PersistenceManagerException e) {
 			throw new RuntimeException(e);

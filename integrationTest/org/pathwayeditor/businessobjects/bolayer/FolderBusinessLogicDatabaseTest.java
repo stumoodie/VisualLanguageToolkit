@@ -56,7 +56,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		{
 			IRootFolder actualRootFolder = rep.getRootFolder();
 			actualRootFolder.createSubfolder(JIMMY_KRANKIE);
-			this.getRepositoryPersistenceManager().synchroniseRepository();
+			this.getRepositoryPersistenceManager().synchronise();
 		}
 		{
 			IRepository actualRepo = rep;
@@ -95,7 +95,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertEquals(0, test.size());
 		IRootFolder f = rep.getRootFolder();
 		f.createSubfolder("two");
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		test = runQuery(
 				"from HibSubFolder f where f.name='two'");
 		assertEquals(1, test.size());
@@ -107,7 +107,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IRootFolder r = rep.getRootFolder();
 		IFolder sub = (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/"); 
 		r.moveSubfolder((ISubFolder) sub);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		List test =runQuery(
 						"from HibSubFolder sub where sub.id = '100005' and sub.parentFolder.id='100003'");
 		assertEquals(0, test.size());
@@ -119,7 +119,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IRootFolder r = rep.getRootFolder();
 		IFolder sub = rep.getFolderByPath("/subfolder2/subfolder4/");
 		r.moveSubfolder((ISubFolder) sub);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(subFolderExistsCalled(r, "subfolder4"));
 		List test = runQuery(
 						"from HibSubFolder sub where sub.name = 'subfolder4' and sub.parentFolder.id='100001'");
@@ -170,7 +170,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		ISubFolder sub1 = (ISubFolder) rep.getFolderByPath("/subfolder2/subfolder4/");
 		assertFalse(subFolderExistsCalled(r, sub1.getName()));
 		r.createCopyOfSubfolder(sub1);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(subFolderExistsCalled(r, sub1.getName()));
 		Session sess = getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
@@ -188,7 +188,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder1/");
 		assertTrue(r.containsSubfolder(sub1));
 		r.removeSubfolder(sub1);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertFalse(r.containsSubfolder(sub1));
 		assertNull(runUniqueQuery("from HibSubFolder r where r.id = '100002'"));
 	}
@@ -202,7 +202,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		int iNode = map.getINode();
 		sub1.removeMap(map);
 		assertEquals(0,sub1.getNumMaps());
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		Session sess = getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
 		IMap mapResult = (IMap)sess.createQuery("from HibMap m where m.INode = ?").setInteger(0, iNode).uniqueResult();
@@ -223,7 +223,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertEquals(1,sub1.getNumMaps());
 		sub1.removeMap(map);
 		assertEquals(0,sub1.getNumMaps());
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertNull(runUniqueQuery("from HibMap m where m.id = '100001'"));
 	}
 	
@@ -237,11 +237,11 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			if(search.getName().equals("Diagram name"))
 				map=search;
 		}
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertEquals(1,sub1.getNumMaps());
 		sub1.removeMap(map);
 		assertEquals(0,sub1.getNumMaps());
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertNull(runUniqueQuery(
 		"from HibMap m where m.id = '100001'"));
 	}
@@ -260,7 +260,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder1/");
 		assertFalse(subFolderExistsCalled(r, JIMMY_KRANKIE));
 		r.renameSubfolder(sub1, JIMMY_KRANKIE);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(subFolderExistsCalled(r, JIMMY_KRANKIE));
 	}
 
@@ -310,7 +310,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IRootFolder r = rep.getRootFolder();
 		assertFalse(mapExistsCalled( r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(mapExistsCalled( r, JIMMY_KRANKIE));
 	}
 
@@ -320,7 +320,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IRootFolder r = rep.getRootFolder();
 		assertFalse(mapExistsCalled( r, JIMMY_KRANKIE));
 		r.createMap(JIMMY_KRANKIE);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		r.createMap(JIMMY_KRANKIE);
 	}
 
@@ -359,7 +359,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		}
 		r.createCopyOfMap(map);
 		{
-			this.getRepositoryPersistenceManager().synchroniseRepository();
+			this.getRepositoryPersistenceManager().synchronise();
 			assertTrue(mapExistsCalled(r, map.getName()));
 			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
@@ -380,7 +380,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertFalse(mapExistsCalled(r, map.getName()));
 		assertTrue(mapExistsCalled(sub1, map.getName()));
 		r.moveMap(map);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(mapExistsCalled(r, map.getName()));
 		assertFalse(mapExistsCalled(sub1, map.getName()));
 		{
@@ -422,7 +422,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			assertEquals(1, actualSize);
 		}
 		r.moveMap(map);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		{
 			Session sess = getSessionFactory().getCurrentSession();
 			sess.beginTransaction();
@@ -459,7 +459,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			assertEquals(0, actualSize);
 		}
 		sub1.renameMap(map, JIMMY_KRANKIE);
-		this.getRepositoryPersistenceManager().synchroniseRepository();
+		this.getRepositoryPersistenceManager().synchronise();
 		assertTrue(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		{
 			Session sess = getSessionFactory().getCurrentSession();

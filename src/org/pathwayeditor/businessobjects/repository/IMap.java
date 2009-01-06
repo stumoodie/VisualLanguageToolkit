@@ -24,13 +24,15 @@ public interface IMap extends IRepositoryItem {
 	 */
 	String getName();
 	
+	/**
+	 * A description of the map and what it contains.
+	 * @return the map description, which can be null.
+	 */
 	String getDescription();
 	
-	void setDescription(String description);
-	
 	/**
-	 * The path of the map.
-	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem  
+	 * Sets the map desctiption.
+	 * @param description the description to set, which can be null.
 	 */
-	String getPath();
+	void setDescription(String description);
 }

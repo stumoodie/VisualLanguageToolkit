@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
  * @author ntsorman
@@ -75,13 +76,14 @@ public class HibShapeAttributeTest {
 	@Ignore @Test
 	public void testEquals () throws Exception 
 	{
-		shape = new HibShapeAttribute ();
-		this.populateShapeData(shape, 1) ;
-		shape2 = new HibShapeAttribute () ;
-		this.populateShapeData(shape2, 2) ;
-		
 		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
 		HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
+		IShapeObjectType mockShapeObjectType = mockery.mock(IShapeObjectType.class, "mockShapeObjectType");
+		shape = new HibShapeAttribute (mockCanvas, CREATION_SERIAL+1, mockShapeObjectType, mockObjectType);
+		this.populateShapeData(shape, 1) ;
+		shape2 = new HibShapeAttribute (mockCanvas, CREATION_SERIAL+2, mockShapeObjectType, mockObjectType) ;
+		this.populateShapeData(shape2, 2) ;
+		
 		
 		shape.setCanvas(mockCanvas) ;
 		shape2.setCanvas(mockCanvas) ;

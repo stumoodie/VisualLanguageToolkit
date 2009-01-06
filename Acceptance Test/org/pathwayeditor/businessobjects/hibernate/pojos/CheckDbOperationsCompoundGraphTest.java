@@ -34,7 +34,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveS
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.management.IMapContentPersistenceManager;
+import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
@@ -56,8 +56,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //		 setImposteriser(ClassImposteriser.INSTANCE);
 //	}};
 	
-	private IMapContentPersistenceManager map1Manager ;
-//	private IMapContentPersistenceManager map2Manager ;
+	private IMapPersistenceManager map1Manager ;
+//	private IMapPersistenceManager map2Manager ;
 	
 	private IRepository repository;
 	private IRootFolder rootFolder ;
@@ -194,8 +194,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		
 		
-		map1Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram1) ;
-		map1Manager.loadContent() ;
+		map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(mapDiagram1) ;
+		map1Manager.open() ;
 		dbCanvas = map1Manager.getCanvas() ;
 		
 		
@@ -804,8 +804,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	@Test
 	public void testMakeCopyOfGraphViaTheModelAndToAnotherMapDIagram () throws Exception {
 		IMap mapDiagram2 = (IMap)this.repository.findRepositoryItemByPath(MAP2_PATH);
-		IMapContentPersistenceManager map2Manager = this.getRepositoryPersistenceManager().openMap(mapDiagram2) ;
-		map2Manager.loadContent();
+		IMapPersistenceManager map2Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(mapDiagram2) ;
+		map2Manager.open();
 		map2Manager.createCanvas(dbNotationSubSystem) ;
 		ICanvas canvas2 = map2Manager.getCanvas() ;
 		assertFalse("cannot copy to yourself", canvas2.canCopyHere(canvas2));

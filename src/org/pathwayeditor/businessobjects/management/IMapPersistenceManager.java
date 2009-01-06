@@ -8,16 +8,19 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
+ * Defines a manager of map content persistence. It deals with the life-cycle of the 
+ * map's contents, currently just a canvas. Implementations of this class are intended to be
+ * thread-safe, which is why the types exceptions are provided.
  * @author smoodie
  *
  */
-public interface IMapContentPersistenceManager extends IPersistenceManager {
+public interface IMapPersistenceManager extends IPersistenceManager {
 	/**
-	 * Tests if the map is open so that its content can be access.
-	 * @return true if the map is open, false otherwise.
+	 * Gets the map that owns the content managed here.
+	 * @return the map that owns this content, which cannot be null.
 	 */
-	boolean isOpen();
-	
+	IMap getMap();
+		
 	/**
 	 * Tests if this map has a canvas.
 	 * @return true if it does, false otherwise.
@@ -35,12 +38,6 @@ public interface IMapContentPersistenceManager extends IPersistenceManager {
 	void createCanvas(INotationSubsystem notationSubsystem) throws PersistenceManagerNotOpenException;
 	
 	/**
-	 * Loads the content from the persistent storage and opens this manager.
-	 * @throws PersistenceManagerAlreadyOpenException if this manager has already been opened. 
-	 */
-	void loadContent() throws PersistenceManagerAlreadyOpenException;
-
-	/**
 	 * Get the canvas associated with the map.
 	 * @return a canvas belonging to the owning map, cannot be null.
 	 * @throws PersistenceManagerNotOpenException if <code>isOpen() == false</code>.
@@ -49,25 +46,8 @@ public interface IMapContentPersistenceManager extends IPersistenceManager {
 	ICanvas getCanvas() throws PersistenceManagerNotOpenException;
 	
 	/**
-	 * Gets the map that owns the content managed here.
-	 * @return the map that owns this content, which cannot be null.
+	 * Deletes the canvas from this map.
+	 * @throws PersistenceManagerNotOpenException
 	 */
-	IMap getOwningMap();
-	
-	/**
-	 * Synchronised the canvas with persistent storage. Note that the canvas must be open.
-	 * @throws PersistenceManagerNotOpenException if <code>isOpen() == false</code>. 
-	 */
-	void synchronise() throws PersistenceManagerNotOpenException;
-	
-	/**
-	 * Close the canvas. If the canvas or repository is already closed, then do nothing.
-	 */
-	void close();
-	
-	/**
-	 * Adds a new listener to this manager 
-	 * @param listener 
-	 */
-	void addListener(IMapContentManagerStatusListener listener);
+	void deleteCanvas() throws PersistenceManagerNotOpenException;
 }

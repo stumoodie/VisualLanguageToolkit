@@ -278,11 +278,19 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		return canvasTest > 0;
 	}
 
-	// public void setShapeAttrForCanvBuilder(IAttributesForCanvasBuilder shapeAttrForCanvBuilder) {
-	// this.shapeAttrForCanvBuilder = shapeAttrForCanvBuilder;
-	// }
-
-	// public void setLinkAtrrForCanvBuilder(IAttributesForCanvasBuilder linkAtrrForCanvBuilder) {
-	// this.linkAtrrForCanvBuilder = linkAtrrForCanvBuilder;
-	// }
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler#deleteCanvas()
+	 */
+	public void deleteCanvas() {
+		if(this.loadedCanvas != null) {
+			Session s = this.fact.getCurrentSession();
+			s.getTransaction().begin();
+			s.delete(this.loadedCanvas);
+			s.getTransaction().commit();
+			this.loadedCanvas = null;
+		}
+		else {
+			throw new IllegalStateException("No canvas was loaded.");
+		}
+	}
 }
