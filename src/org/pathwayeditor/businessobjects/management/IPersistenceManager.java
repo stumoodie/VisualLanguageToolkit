@@ -8,9 +8,8 @@ import java.util.Iterator;
 /**
  * Defines a persistence manager that can be used to access objects from persistence storage. It has a status of
  * opened and closed. Once opened its contents can be synchronised with the persistent storage. Currently opening
- * the manager creates an exclusive lock on the object it is managing, preventing other managers from manipulating
- * the same object. In future it is planned to implement a more sophisticated locking scheme, with read-only and read-write
- * locks.
+ * the manager effectively creates an exclusive lock on the object it is managing. In future it is planned to implement
+ * a more sophisticated locking scheme, with read-only and read-write locks.
  * @author smoodie
  *
  */
@@ -24,9 +23,9 @@ public interface IPersistenceManager {
 	
 	/**
 	 * Loads the content from the persistent storage and opens this manager.
-	 * @throws PersistenceManagerAlreadyOpenException if this manager has already been opened. 
+	 * @throws IllegalStateException if this manager has already been opened. 
 	 */
-	void open() throws PersistenceManagerAlreadyOpenException;
+	void open();
 
 	/**
 	 * Close this manager. If the manager is already closed, then do nothing.
@@ -39,9 +38,9 @@ public interface IPersistenceManager {
 
 	/**
 	 * Synchronised the content of this manager with persistent storage. Note that the manager must be open.
-	 * @throws PersistenceManagerNotOpenException if <code>isOpen() == false</code>. 
+	 * @throws IllegalStateException if <code>isOpen() == false</code>. 
 	 */
-	void synchronise() throws PersistenceManagerNotOpenException;
+	void synchronise();
 
 	/**
 	 * Adds a new listener to this manager 

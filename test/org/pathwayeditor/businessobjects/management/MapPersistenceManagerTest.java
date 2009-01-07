@@ -140,10 +140,9 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#open()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testOpen() throws PersistenceManagerException {
+	public final void testOpen() {
 		assertFalse("not open", this.testInstance.isOpen());
 		this.testInstance.open();
 		assertTrue("is open", this.testInstance.isOpen());
@@ -152,10 +151,9 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testGetCanvasWhenClosed() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testGetCanvasWhenClosed() {
 		this.testInstance.getCanvas();
 	}
 
@@ -163,7 +161,7 @@ public class MapPersistenceManagerTest {
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
 	 */
 	@Test
-	public final void testGetCanvasWhenOpenAndCanvasPresent() throws PersistenceManagerException {
+	public final void testGetCanvasWhenOpenAndCanvasPresent() {
 		this.testInstance.open();
 		assertEquals("expected canvas", this.mockCanvas, this.testInstance.getCanvas());
 	}
@@ -172,7 +170,7 @@ public class MapPersistenceManagerTest {
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
 	 */
 	@Test(expected=IllegalStateException.class)
-	public final void testGetCanvasWhenOpenAndCanvasAbsent() throws PersistenceManagerException {
+	public final void testGetCanvasWhenOpenAndCanvasAbsent() {
 		this.canvasExistenceState.startsAs(CANVAS_ABSENT);
 		this.testInstance.open();
 		this.testInstance.getCanvas();
@@ -196,39 +194,35 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#isOpen()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testIsOpenWhenOpen() throws PersistenceManagerException {
+	public final void testIsOpenWhenOpen() {
 		this.testInstance.open();
 		assertTrue("open", this.testInstance.isOpen());
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testSynchroniseWhenClosed() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testSynchroniseWhenClosed() {
 		this.testInstance.synchronise();
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testSynchroniseWhenOpenAndCanvasPresent() throws PersistenceManagerException {
+	public final void testSynchroniseWhenOpenAndCanvasPresent() {
 		this.testInstance.open();
 		this.testInstance.synchronise();
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
 	@Test(expected=IllegalStateException.class)
-	public final void testSynchroniseWhenOpenAndCanvasAbsent() throws PersistenceManagerException {
+	public final void testSynchroniseWhenOpenAndCanvasAbsent() {
 		this.canvasExistenceState.startsAs(CANVAS_ABSENT);
 		this.testInstance.open();
 		this.testInstance.synchronise();
@@ -244,29 +238,26 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testCreateCanvasWhenNotOpen() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testCreateCanvasWhenNotOpen() {
 		this.testInstance.createCanvas(this.mockNotationSubsystem);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test(expected=IllegalStateException.class)
-	public final void testCreateCanvasWhenOpenAndCanvasPresent() throws PersistenceManagerException {
+	public final void testCreateCanvasWhenOpenAndCanvasPresent() {
 		this.testInstance.open();
 		this.testInstance.createCanvas(this.mockNotationSubsystem);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testCreateCanvasWhenOpenAndCanvasAbsent() throws PersistenceManagerException {
+	public final void testCreateCanvasWhenOpenAndCanvasAbsent() {
 		this.canvasExistenceState.startsAs(CANVAS_ABSENT);
 		this.testInstance.open();
 		this.testInstance.createCanvas(this.mockNotationSubsystem);
@@ -276,20 +267,18 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testDoesCanvasExistWhenOpenAndCanvasPresent() throws PersistenceManagerException {
+	public final void testDoesCanvasExistWhenOpenAndCanvasPresent() {
 		this.testInstance.open();
 		assertTrue("canvasExists", this.testInstance.doesCanvasExist());
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testDoesCanvasExistWhenOpenAndCanvasAbsent() throws PersistenceManagerException {
+	public final void testDoesCanvasExistWhenOpenAndCanvasAbsent() {
 		this.canvasExistenceState.startsAs(CANVAS_ABSENT);
 		this.testInstance.open();
 		assertFalse("canvas does not Exist", this.testInstance.doesCanvasExist());
@@ -297,28 +286,25 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testDoesCanvasExistWhenClosed() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testDoesCanvasExistWhenClosed() {
 		this.testInstance.doesCanvasExist();
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testDeleteCanvasWhenClosed() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testDeleteCanvasWhenClosed() {
 		this.testInstance.deleteCanvas();
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
 	@Test
-	public final void testDeleteCanvasWhenOpenAndPresent() throws PersistenceManagerException {
+	public final void testDeleteCanvasWhenOpenAndPresent() {
 		this.testInstance.open();
 		this.testInstance.deleteCanvas();
 		assertFalse("canvas deleted", this.testInstance.doesCanvasExist());
@@ -327,10 +313,9 @@ public class MapPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
 	@Test(expected=IllegalStateException.class)
-	public final void testDeleteCanvasWhenOpenAndAbsent() throws PersistenceManagerException {
+	public final void testDeleteCanvasWhenOpenAndAbsent() {
 		this.canvasExistenceState.startsAs(CANVAS_ABSENT);
 		this.testInstance.open();
 		this.testInstance.deleteCanvas();
@@ -369,7 +354,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	@Test
-	public final void testListeningForOpenStateChange() throws PersistenceManagerException {
+	public final void testListeningForOpenStateChange() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -389,7 +374,7 @@ public class MapPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForForcedCloseStateChange() throws PersistenceManagerException {
+	public final void testListeningForForcedCloseStateChange() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -410,7 +395,7 @@ public class MapPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForForcedCloseStateChangeWhenCancelRequested() throws PersistenceManagerException {
+	public final void testListeningForForcedCloseStateChangeWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -431,7 +416,7 @@ public class MapPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForCloseStateChangeWhenCancelRequested() throws PersistenceManagerException {
+	public final void testListeningForCloseStateChangeWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -452,7 +437,7 @@ public class MapPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testForcedCloseWhenCancelRequested() throws PersistenceManagerException {
+	public final void testForcedCloseWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -474,7 +459,7 @@ public class MapPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testNonForcedCloseWhenCancelRequested() throws PersistenceManagerException {
+	public final void testNonForcedCloseWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 

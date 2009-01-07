@@ -4,10 +4,10 @@
 package org.pathwayeditor.businessobjects.management;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange;
@@ -19,7 +19,14 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
  * 
  */
 public class RepositoryPersistenceManager implements IRepositoryPersistenceManager {
-	private final Object myLock = new Object();
+	/**
+	 * 
+	 */
+	private static final String MANAGER_IS_ALREADY_OPEN = "Manager is already open";
+	/**
+	 * 
+	 */
+	private static final String MANAGER_NOT_OPEN = "Manager not open";
 	private final Map<IMap, IMapPersistenceManager> openMaps;
 	private final ICanvasPersistenceHandlerFactory canvasPersistenceHandlerFactory;
 	private final IRepositoryPersistenceHandler repoPersistenceHandler;
@@ -33,7 +40,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 		this.repoPersistenceHandler = repoPersistenceHandler;
 		this.openMaps = new ConcurrentHashMap<IMap, IMapPersistenceManager>();
 		this.open = new AtomicBoolean(false);
-		this.listeners = new CopyOnWriteArrayList<IPersistenceManagerStatusListener>();
+		this.listeners = new LinkedList<IPersistenceManagerStatusListener>();
 	}
 
 	/*
@@ -41,11 +48,10 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#getRepository()
 	 */
-	public IRepository getRepository() throws PersistenceManagerNotOpenException {
-		synchronized(myLock){
-			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
-			return this.repoPersistenceHandler.getLoadedRepository();
-		}
+	public IRepository getRepository() {
+		if(!this.isOpen()) throw new IllegalStateException(MANAGER_NOT_OPEN);
+		
+		return this.repoPersistenceHandler.getLoadedRepository();
 	}
 
 	/* (non-Javadoc)
@@ -58,13 +64,12 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#openRepository()
 	 */
-	public void open() throws PersistenceManagerAlreadyOpenException {
-		synchronized(myLock){
-			if(isOpen()) throw new PersistenceManagerAlreadyOpenException(this);
-			this.repoPersistenceHandler.loadRepository();
-			this.open.set(true);
-			this.fireStateChange(StateChange.OPENED);
-		}
+	public void open()  {
+		if(isOpen()) throw new IllegalStateException(MANAGER_IS_ALREADY_OPEN);
+	
+		this.repoPersistenceHandler.loadRepository();
+		this.open.set(true);
+		this.fireStateChange(StateChange.OPENED);
 	}
 
 	private void fireStateChange(StateChange status) {
@@ -77,12 +82,10 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#closeRepository()
 	 */
 	public void close(boolean forceClose) {
-		synchronized(myLock){
-			if(forceClose || !requestCancelStateChange(StateChange.CLOSED)) {
-				this.repoPersistenceHandler.reset();
-				this.open.set(false);
-				this.fireStateChange(StateChange.CLOSED);
-			}
+		if(forceClose || !requestCancelStateChange(StateChange.CLOSED)) {
+			this.repoPersistenceHandler.reset();
+			this.open.set(false);
+			this.fireStateChange(StateChange.CLOSED);
 		}
 	}
 
@@ -101,105 +104,43 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
-	public void synchronise() throws PersistenceManagerNotOpenException {
-		synchronized(myLock){
-			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
+	public void synchronise() {
+		if(!this.isOpen()) throw new IllegalStateException(MANAGER_NOT_OPEN);
 
-			this.repoPersistenceHandler.synchroniseRepository();
-		}
+		this.repoPersistenceHandler.synchroniseRepository();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#canOpenCanvas(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public boolean isValidMap(IMap map) throws PersistenceManagerNotOpenException {
-		synchronized(myLock){
-			return map != null && map.getRepository().equals(this.getRepository()) && this.isOpen();
-		}
+	public boolean isValidMap(IMap map)  {
+		return map != null && map.getRepository().equals(this.getRepository());
 	}
-
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#openCanvasIterator()
-//	 */
-//	public Iterator<IMap> openMapIterator() throws PersistenceManagerNotOpenException {
-//		synchronized(myLock){
-//			if(this.isOpen() == false) throw new PersistenceManagerNotOpenException(this);
-//			return this.openMaps.keySet().iterator();
-//		}
-//	}
-
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isCanvasOpen(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
-//	 */
-//	public boolean isMapOpen(IMap map) {
-//		synchronized(myLock){
-//			return this.isOpen() && this.openMaps.containsKey(map);
-//		}
-//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IRepositoryManager#openMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public IMapPersistenceManager getMapPersistenceManager(IMap map) throws PersistenceManagerNotOpenException {
-		synchronized(myLock){
-			if(!this.isOpen()) throw new PersistenceManagerNotOpenException(this);
-			if(!this.isValidMap(map)) throw new IllegalArgumentException("Invalid map provided as an argument");
-			
-			IMapPersistenceManager retVal = null;
-			// if this manager has already created a map manager then return that one. This ensure that in
-			// the absence of a lock manager on the DB that clients of this repo will always see the same
-			// state information about the map and see the same map contents.
-			if(this.openMaps.containsKey(map)) {
-				retVal = this.openMaps.get(map);
-			}
-			else {
-				this.canvasPersistenceHandlerFactory.setMap(map);
-				ICanvasPersistenceHandler persistenceHandler = this.canvasPersistenceHandlerFactory.createPersistenceHandler();
-				retVal = new MapPersistenceManager(persistenceHandler);
-//				retVal.addListener(new MapContentListener());
-				this.openMaps.put(map, retVal);
-			}
-			return retVal;
-		}
-	}
+	public IMapPersistenceManager getMapPersistenceManager(IMap map) {
+		if (!this.isOpen())
+			throw new IllegalStateException(MANAGER_NOT_OPEN);
 
-//	private void updateStatus(IMapPersistenceManager mapContentPersistenceManager) {
-//		IMap map = mapContentPersistenceManager.getMap();
-//		synchronized (myLock) {
-//			if (this.openMaps.containsKey(map)) {
-//				// we have the map stored so we think it is open.
-//				if (!mapContentPersistenceManager.isOpen()) {
-//					// if the map is not open then remove it.
-//					this.openMaps.remove(map);
-//				}
-//			} else {
-//				// it is not stored so we think it is closed
-//				if (mapContentPersistenceManager.isOpen()) {
-//					// it is not closed so we should added to the collection of
-//					// open maps
-//					this.openMaps.put(map, mapContentPersistenceManager);
-//				}
-//			}
-//		}
-//	}
-	
-//	private class MapContentListener implements IPersistenceManagerStatusListener {
-//
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener#requestCancelStateChange(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange, org.pathwayeditor.businessobjects.management.IPersistenceManager)
-//		 */
-//		public boolean requestCancelStateChange(StateChange stateChange, IPersistenceManager changeManager) {
-//			return false;
-//		}
-//
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener#stateChanged(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange, org.pathwayeditor.businessobjects.management.IPersistenceManager)
-//		 */
-//		public void stateChanged(StateChange stateChange, IPersistenceManager changedManager) {
-////			updateStatus((IMapPersistenceManager)changedManager);
-//		}
-//		
-//	}
+		if (!this.isValidMap(map))
+			throw new IllegalArgumentException("Invalid map provided as an argument");
+
+		IMapPersistenceManager retVal = null;
+		// if this manager has already created a map manager then return that one. This ensure that in
+		// the absence of a lock manager on the DB that clients of this repo will always see the same
+		// state information about the map and see the same map contents.
+		if (this.openMaps.containsKey(map)) {
+			retVal = this.openMaps.get(map);
+		} else {
+			this.canvasPersistenceHandlerFactory.setMap(map);
+			ICanvasPersistenceHandler persistenceHandler = this.canvasPersistenceHandlerFactory.createPersistenceHandler();
+			retVal = new MapPersistenceManager(persistenceHandler);
+			this.openMaps.put(map, retVal);
+		}
+		return retVal;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)

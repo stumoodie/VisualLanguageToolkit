@@ -4,8 +4,8 @@
 package org.pathwayeditor.businessobjects.management;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -18,8 +18,15 @@ import org.pathwayeditor.businessobjects.repository.IMap;
  * 
  */
 public class MapPersistenceManager implements IMapPersistenceManager {
+	/**
+	 * 
+	 */
+	private static final String MANAGER_ALREADY_OPEN = "Manager already open";
+	/**
+	 * 
+	 */
+	private static final String MANAGER_IS_NOT_OPEN = "Manager is not open";
 	private static final boolean INITIAL_STATE = false;
-	private final Object myLock = new Object();
 	private final ICanvasPersistenceHandler canvasPersistenceHandler;
 	private final AtomicBoolean open;
 	private final List<IPersistenceManagerStatusListener> listeners;
@@ -29,7 +36,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 		
 		this.canvasPersistenceHandler = canvasPersistenceHandler;
 		this.open = new AtomicBoolean(INITIAL_STATE);
-		this.listeners = new CopyOnWriteArrayList<IPersistenceManagerStatusListener>();
+		this.listeners = new LinkedList<IPersistenceManagerStatusListener>();
 	}
 
 	/*
@@ -38,25 +45,22 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#close()
 	 */
 	public void close(boolean force) {
-		synchronized (myLock) {
-			if(force || !requestCancelStateChange(StateChange.CLOSED)) {
-				this.open.set(false);
-				this.canvasPersistenceHandler.reset();
-				this.fireStateChange(StateChange.CLOSED);
-			}
+		if(force || !requestCancelStateChange(StateChange.CLOSED)) {
+			this.open.set(false);
+			this.canvasPersistenceHandler.reset();
+			this.fireStateChange(StateChange.CLOSED);
 		}
 	}
 
-	public void open() throws PersistenceManagerAlreadyOpenException {
-		synchronized (myLock) {
-			if (this.isOpen())
-				throw new PersistenceManagerAlreadyOpenException(this);
-			if (this.canvasPersistenceHandler.doesCanvasExist()) {
-				this.canvasPersistenceHandler.loadCanvas();
-			}
-			this.open.set(true);
-			this.fireStateChange(StateChange.OPENED);
+	public void open() {
+		if (this.isOpen())
+			throw new IllegalStateException(MANAGER_ALREADY_OPEN);
+		
+		if (this.canvasPersistenceHandler.doesCanvasExist()) {
+			this.canvasPersistenceHandler.loadCanvas();
 		}
+		this.open.set(true);
+		this.fireStateChange(StateChange.OPENED);
 	}
 
 	/*
@@ -64,17 +68,15 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#getCanvas()
 	 */
-	public ICanvas getCanvas() throws PersistenceManagerNotOpenException {
-		synchronized (myLock) {
-			if (!this.isOpen())
-				throw new PersistenceManagerNotOpenException(this);
+	public ICanvas getCanvas() {
+		if (!this.isOpen())
+			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
 
-			ICanvas retVal = this.canvasPersistenceHandler.getLoadedCanvas();
-			if (retVal == null) {
-				throw new IllegalStateException("canvas does not exists or was not loaded");
-			}
-			return retVal;
+		ICanvas retVal = this.canvasPersistenceHandler.getLoadedCanvas();
+		if (retVal == null) {
+			throw new IllegalStateException("canvas does not exists or was not loaded");
 		}
+		return retVal;
 	}
 
 	/*
@@ -100,12 +102,11 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#synchronise()
 	 */
-	public void synchronise() throws PersistenceManagerNotOpenException {
-		synchronized (myLock) {
-			if (!this.isOpen())
-				throw new PersistenceManagerNotOpenException(this);
-			this.canvasPersistenceHandler.synchroniseCanvas();
-		}
+	public void synchronise() {
+		if (!this.isOpen())
+			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
+		
+		this.canvasPersistenceHandler.synchroniseCanvas();
 	}
 
 	/*
@@ -141,15 +142,15 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * @seeorg.pathwayeditor.businessobjects.management.IMapContentPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.
 	 * INotationSubsystem)
 	 */
-	public void createCanvas(INotationSubsystem notationSubsystem) throws PersistenceManagerNotOpenException {
+	public void createCanvas(INotationSubsystem notationSubsystem) {
 		if (notationSubsystem == null)
 			throw new IllegalArgumentException("notationSubsystem cannot be null");
-		synchronized (myLock) {
-			if (!this.isOpen())
-				throw new PersistenceManagerNotOpenException(this);
-			this.canvasPersistenceHandler.createCanvas(notationSubsystem);
-			this.fireStateChange(StateChange.CANVAS_CREATED);
-		}
+		
+		if (!this.isOpen())
+				throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
+		
+		this.canvasPersistenceHandler.createCanvas(notationSubsystem);
+		this.fireStateChange(StateChange.CANVAS_CREATED);
 	}
 
 	/*
@@ -157,25 +158,22 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.management.IMapPersistenceManager#doesCanvasExit()
 	 */
-	public boolean doesCanvasExist() throws PersistenceManagerNotOpenException {
-		synchronized (myLock) {
-			if (!this.isOpen())
-				throw new PersistenceManagerNotOpenException(this);
-			return this.canvasPersistenceHandler.doesCanvasExist();
-		}
+	public boolean doesCanvasExist() {
+		if (!this.isOpen())
+				throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
+		
+		return this.canvasPersistenceHandler.doesCanvasExist();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IMapPersistenceManager#deleteCanvas()
 	 */
-	public void deleteCanvas() throws PersistenceManagerNotOpenException {
-		synchronized (myLock) {
-			if(!this.isOpen())
-				throw new PersistenceManagerNotOpenException(this);
+	public void deleteCanvas() {
+		if(!this.isOpen())
+			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
 			
-			this.canvasPersistenceHandler.deleteCanvas();
-			this.fireStateChange(StateChange.CANVAS_DESTROYED);
-		}
+		this.canvasPersistenceHandler.deleteCanvas();
+		this.fireStateChange(StateChange.CANVAS_DESTROYED);
 	}
 
 	/* (non-Javadoc)

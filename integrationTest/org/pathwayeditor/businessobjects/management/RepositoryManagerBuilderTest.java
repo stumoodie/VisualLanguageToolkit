@@ -102,8 +102,7 @@ public class RepositoryManagerBuilderTest {
 	}
 
 	@Test
-	public void testRepoInitialisation()
-			throws PersistenceManagerAlreadyOpenException {
+	public void testRepoInitialisation() {
 		assertFalse("repo not open", bofac.isOpen());
 		bofac.open();
 		assertTrue("repo open", bofac.isOpen());

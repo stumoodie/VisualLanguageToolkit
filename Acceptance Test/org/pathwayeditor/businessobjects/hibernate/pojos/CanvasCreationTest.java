@@ -6,7 +6,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.testutils.GenericTester;
@@ -28,15 +27,11 @@ public class CanvasCreationTest extends GenericTester {
 	 */
 	@Override
 	protected void doAdditionalSetUp() {
-		try {
-			IRepositoryPersistenceManager repoManager = this.getRepositoryPersistenceManager();
-			IMap map;
-			map = (IMap)repoManager.getRepository().findRepositoryItemByPath(TEST_MAP_PATH);
-			this.mapContentManager = repoManager.getMapPersistenceManager(map);
-			this.mapContentManager.open();
-		} catch (PersistenceManagerException e) {
-			throw new RuntimeException(e);
-		}
+		IRepositoryPersistenceManager repoManager = this.getRepositoryPersistenceManager();
+		IMap map;
+		map = (IMap)repoManager.getRepository().findRepositoryItemByPath(TEST_MAP_PATH);
+		this.mapContentManager = repoManager.getMapPersistenceManager(map);
+		this.mapContentManager.open();
 	}
 
 	/* (non-Javadoc)

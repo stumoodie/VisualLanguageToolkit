@@ -35,7 +35,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -176,15 +175,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	 */
 	@Override
 	protected void doAdditionalSetUp() {
-		try {
-			repository = this.getRepositoryPersistenceManager().getRepository();
-			loadData();
-		} catch (PersistenceManagerException e) {
-			throw new RuntimeException(e);
-		}
+		repository = this.getRepositoryPersistenceManager().getRepository();
+		loadData();
 	}
 	
-	private void loadData () throws PersistenceManagerException 
+	private void loadData ()
 	{
 		rootFolder = repository.getRootFolder() ;
 		

@@ -14,8 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerAlreadyOpenException;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
@@ -35,11 +33,11 @@ public class AllLazyInitialisedTest extends GenericTester {
 	
 
 	@Before
-	public void setup() throws PersistenceManagerNotOpenException, PersistenceManagerAlreadyOpenException {
+	public void setup() {
 		canvas=loadCanvasFromDB();
 	}
 
-	private ICanvas loadCanvasFromDB() throws PersistenceManagerNotOpenException, PersistenceManagerAlreadyOpenException {
+	private ICanvas loadCanvasFromDB() {
 		ISubFolder subFolder1 = (ISubFolder) repository.getFolderByPath(SUBFOLDER1_PATH);
 		IMap mapDiagram1 = subFolder1.getMapIterator().next();
 		map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(mapDiagram1);
@@ -49,7 +47,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 	}
 
 	@Test @Ignore //FIXME NH cant do this test for now as there are entities that do not implement comparable
-	public void compareDataBeforeAndAfterSaveLoadForIdenticalValuesTest() throws PersistenceManagerNotOpenException, PersistenceManagerAlreadyOpenException {
+	public void compareDataBeforeAndAfterSaveLoadForIdenticalValuesTest() {
 		map1Manager.synchronise();
 		ICanvas compare = loadCanvasFromDB();
 		List <String> ignored = new ArrayList<String>(Arrays.asList(new String []
@@ -74,11 +72,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 	 */
 	@Override
 	protected void doAdditionalSetUp() {
-		try {
-			repository = this.getRepositoryPersistenceManager().getRepository();
-		} catch (PersistenceManagerNotOpenException e) {
-			throw new RuntimeException(e);
-		}
+		repository = this.getRepositoryPersistenceManager().getRepository();
 	}
 
 	/*

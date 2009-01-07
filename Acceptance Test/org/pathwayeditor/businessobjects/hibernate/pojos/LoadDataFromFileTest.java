@@ -38,8 +38,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnot
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerException;
-import org.pathwayeditor.businessobjects.management.PersistenceManagerNotOpenException;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
@@ -414,28 +412,18 @@ public class LoadDataFromFileTest extends GenericTester{
 	 */
 	@Override
 	protected void doAdditionalSetUp() {
-		
-
-		try {
-			repository = this.getRepositoryPersistenceManager().getRepository();
-		} catch (PersistenceManagerNotOpenException e) {
-			throw new RuntimeException(e);
-		}
+		repository = this.getRepositoryPersistenceManager().getRepository();
 	
 		loadObjects();
 		
 	}
 	
 	private void loadObjects ()	{
-		try {
-			IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
-		
-			IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
-			map1Manager.open() ;
-			this.dbCanvas = map1Manager.getCanvas();
-		} catch (PersistenceManagerException e) {
-			throw new RuntimeException(e);
-		}
+		IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
+			
+		IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
+		map1Manager.open() ;
+		this.dbCanvas = map1Manager.getCanvas();
 	}
 
 	/* (non-Javadoc)

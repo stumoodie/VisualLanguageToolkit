@@ -141,10 +141,9 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getRepository()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testGetRepository() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testGetRepository() {
 		this.testInstance.getRepository();
 	}
 
@@ -158,10 +157,9 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#open()}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testOpen() throws PersistenceManagerException {
+	public final void testOpen() {
 		this.testInstance.open();
 		assertTrue("manager is open", this.testInstance.isOpen());
 		assertEquals("expected repo", this.mockRepository, this.testInstance.getRepository());
@@ -184,28 +182,25 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#synchronise()}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testSynchronise() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testSynchronise() {
 		this.testInstance.synchronise();
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testIsValidMapWhenNotOpen() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testIsValidMapWhenNotOpen() {
 		this.testInstance.isValidMap(this.mockMap);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testIsValidMapWhenOpen() throws PersistenceManagerException {
+	public final void testIsValidMapWhenOpen() {
 		this.testInstance.open();
 		assertTrue("valid map", this.testInstance.isValidMap(this.mockMap));
 		assertFalse("valid map", this.testInstance.isValidMap(null));
@@ -213,10 +208,9 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testIsValidMapWhenOpenAndDiffRepo() throws PersistenceManagerException {
+	public final void testIsValidMapWhenOpenAndDiffRepo() {
 		this.testInstance.open();
 		final IRepository mockOtherRepo = this.mockery.mock(IRepository.class, "mockOtherRepo");
 		final IMap mockInvalidMap = this.mockery.mock(IMap.class, "mockInvalidMap");
@@ -230,19 +224,17 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerNotOpenException 
 	 */
-	@Test(expected=PersistenceManagerNotOpenException.class)
-	public final void testGetMapPersistenceManagerWhenNotOpen() throws PersistenceManagerNotOpenException {
+	@Test(expected=IllegalStateException.class)
+	public final void testGetMapPersistenceManagerWhenNotOpen() {
 		this.testInstance.getMapPersistenceManager(this.mockMap);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test
-	public final void testGetMapPersistenceManagerWhenOpen() throws PersistenceManagerException {
+	public final void testGetMapPersistenceManagerWhenOpen() {
 		this.testInstance.open();
 		IMapPersistenceManager mapManager = this.testInstance.getMapPersistenceManager(this.mockMap);
 		assertNotNull("mapmanager not null", mapManager);
@@ -251,20 +243,18 @@ public class RepositoryPersistenceManagerTest {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public final void testGetMapPersistenceManagerWhenOpenAndMapNull() throws PersistenceManagerException {
+	public final void testGetMapPersistenceManagerWhenOpenAndMapNull() {
 		this.testInstance.open();
 		this.testInstance.getMapPersistenceManager(null);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
-	 * @throws PersistenceManagerException 
 	 */
 	@Test(expected=IllegalArgumentException.class)
-	public final void testGetMapPersistenceManagerWhenOpenAndMapFromAnotherRepo() throws PersistenceManagerException {
+	public final void testGetMapPersistenceManagerWhenOpenAndMapFromAnotherRepo() {
 		this.testInstance.open();
 		final IRepository mockOtherRepo = this.mockery.mock(IRepository.class, "mockOtherRepo");
 		final IMap mockInvalidMap = this.mockery.mock(IMap.class, "mockInvalidMap");
@@ -277,7 +267,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	@Test
-	public final void testListeningForOpenStateChange() throws PersistenceManagerException {
+	public final void testListeningForOpenStateChange() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -297,7 +287,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForForcedCloseStateChange() throws PersistenceManagerException {
+	public final void testListeningForForcedCloseStateChange() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -318,7 +308,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForForcedCloseStateChangeWhenCancelRequested() throws PersistenceManagerException {
+	public final void testListeningForForcedCloseStateChangeWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -339,7 +329,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testListeningForCloseStateChangeWhenCancelRequested() throws PersistenceManagerException {
+	public final void testListeningForCloseStateChangeWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -360,7 +350,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testForcedCloseWhenCancelRequested() throws PersistenceManagerException {
+	public final void testForcedCloseWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
@@ -382,7 +372,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	@Test
-	public final void testNonForcedCloseWhenCancelRequested() throws PersistenceManagerException {
+	public final void testNonForcedCloseWhenCancelRequested() {
 		this.expectedStateChangeCalled = false;
 		this.testInstance.addListener(new IPersistenceManagerStatusListener() {
 
