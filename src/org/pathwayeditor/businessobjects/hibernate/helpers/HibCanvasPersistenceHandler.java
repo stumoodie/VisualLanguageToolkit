@@ -124,7 +124,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		initLabelAttributes(hibCanvas);
 	}
 
-	public void initLinkAttributes(HibCanvas hibCanvas) {
+	private void initLinkAttributes(HibCanvas hibCanvas) {
 		try {
 			for (HibLinkAttribute linkAttr : hibCanvas.getLinkAttributes()) {
 				Hibernate.initialize(linkAttr);
@@ -149,7 +149,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-	public void initShapeAttributes(HibCanvas canvas) {
+	private void initShapeAttributes(HibCanvas canvas) {
 		try {
 			for (HibShapeAttribute shapeAttr : canvas.getShapeAttributes()) {
 				Hibernate.initialize(shapeAttr);
