@@ -95,6 +95,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String SUBFOLDER1_PATH = "/subfolder1/" ;
 	private static final String SUBFOLDER2_PATH = "/subfolder2/" ;
+	private static final String MAP1_PATH = "/subfolder1/Diagram name" ;
 	private static final String MAP2_PATH = "/subfolder2/Diagram name2" ;
 	
 	private static final Location NEW_NODE_LOCATION = new Location ( 75 , 75 ) ;
@@ -167,6 +168,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final int NUM_MODEL_EDGES = 9;
 	private static final int NUM_ROOT_NODE_EDGES = 4;
 	private static final int EXPECTED_NUM_PROPS_PER_SHAPE = 1;
+
+	private static final String DELETED_CANVAS_DATA_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/DeletedCanvasExpectedData.xml";
 	
 	
 	
@@ -813,5 +816,18 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertEquals("correct num links", NUM_MODEL_EDGES, canvas2.getModel().numLinkEdges());
 		map2Manager.synchronise();
 		this.compareDatabase(SOURCE_DATA_FILE, CANVAS_COPIED_FILE);
+	}
+	
+	@Test
+	public void testDeleteCanvas() throws Exception {
+		IMap map = (IMap)this.repository.findRepositoryItemByPath(MAP1_PATH);
+		IMapPersistenceManager mapManager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
+		if(!mapManager.isOpen()) {
+			mapManager.open();
+		}
+		assertTrue("canvas exists", mapManager.doesCanvasExist());
+		mapManager.deleteCanvas();
+		mapManager.close(true);
+		this.compareDatabase(DELETED_CANVAS_DATA_FILE);
 	}
 }

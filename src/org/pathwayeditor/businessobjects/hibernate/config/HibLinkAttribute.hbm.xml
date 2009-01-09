@@ -32,7 +32,7 @@
 		<property name="url" type="string">
 			<column name="url" length="2048" not-null="true" />
 		</property>
-		<map name="hibLinkProperties" table="linkAttributeProperty" cascade="all,delete-orphan">
+		<map name="hibLinkProperties" table="linkAttributeProperty" cascade="all">
    	    	<meta attribute="use-in-equals">true</meta>
 			<key>
 				<column name="link_attribute_id" not-null="true" />

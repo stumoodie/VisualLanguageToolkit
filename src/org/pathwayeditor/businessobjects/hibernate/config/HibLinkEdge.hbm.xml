@@ -9,24 +9,24 @@
             <generator class="native" />
         </id>
         <properties name="xak1compoundedge" unique="true">
-        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="none">
             	<column name="model_id" not-null="true" />
         	</many-to-one>
         	<property name="index" type="int" >
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="attribute" unique="true" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="all">
+        <many-to-one name="attribute" unique="true" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="none">
 		       	<column name="link_attribute_id" not-null="false"/>
         </many-to-one>
-        <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all">
+        <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="none">
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
-        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all" lazy="false">
-        	<column name="out_node_id" not-null="true"/>
+        <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="none" lazy="false">
+        	<column name="out_node_id" not-null="false"/>
         </many-to-one>
-        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="all" lazy="false">
-        	<column name="in_node_id" not-null="true"/>
+        <many-to-one name="inNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="none" lazy="false">
+        	<column name="in_node_id" not-null="false"/>
         </many-to-one>
 
 		<property name="isRemoved" type="boolean">

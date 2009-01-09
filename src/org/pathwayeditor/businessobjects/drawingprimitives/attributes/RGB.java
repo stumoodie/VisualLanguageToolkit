@@ -80,5 +80,16 @@ public final class RGB {
 		return true;
 	}
 	
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("(");
+		builder.append(this.getRed());
+		builder.append(',');
+		builder.append(this.getGreen());
+		builder.append(',');
+		builder.append(this.getBlue());
+		builder.append(")");
+		return builder.toString();
+	}
 }

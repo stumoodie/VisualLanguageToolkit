@@ -12,6 +12,7 @@ import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackNotationSubsystem;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
@@ -216,6 +217,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		if(this.loadedCanvas.getModel().isValid()) {
 			Session s = this.fact.getCurrentSession();
 			s.getTransaction().begin();
+			s.saveOrUpdate(this.getLoadedCanvas().getModel().getRootNode());
 			s.saveOrUpdate(this.loadedCanvas);
 //		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
 //		while (nodeIterator.hasNext()) {
@@ -250,6 +252,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				int iNode = this.owningMap.getINode();
 				hibCanvas = new HibCanvas(repoName, iNode, hibNotationFactory, notationSubsystem);
 				s.save(hibCanvas);
+				// due to the mappings we must explicitly save the root node
+				// and this saves the rest of the graph tree
+				s.save(hibCanvas.getModel().getRootNode());
 			} else {
 				IllegalStateException e = new IllegalStateException("canvas already exists");
 				logger.error("cannot create canvs", e);
@@ -285,6 +290,11 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		if(this.loadedCanvas != null) {
 			Session s = this.fact.getCurrentSession();
 			s.getTransaction().begin();
+			IModel model = this.loadedCanvas.getModel();
+			// due to the mapping we must explicitly delete the root node
+			// this will remove the nodes and edges before the model is deleted.
+			s.delete(model.getRootNode());
+			s.delete(model);
 			s.delete(this.loadedCanvas);
 			s.getTransaction().commit();
 			this.loadedCanvas = null;

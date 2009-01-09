@@ -4,22 +4,23 @@
 package org.pathwayeditor.businessobjects.hibernate.helpers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
 import org.pathwayeditor.testutils.PojoTester;
 
@@ -34,8 +35,16 @@ public class HibCanvasPersistenceHandlerTest extends PojoTester {
 	private static final String EXPECTED_REPOSITORY_NAME = "repo name";
 	private static final int EXPECTED_NUM_DRAWING_ELEMENTS = 26;
 	private static final String SOURCE_DATA_FILE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+	private static final String EXPECTED_CANVAS_DATA_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/PostSynchroniseExpectedData.xml";
+	private static final RGB EXPECTED_COLOUR = new RGB(100, 100, 100);
+	private static final String EXPECTED_NEW_MAP = "Diagram name2";
+	private static final int EXPECTED_NEW_INODE = 5;
+	private static final String NEW_CANVAS_DATA_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/NewCanvasExpectedData.xml";
+	private static final String DELETED_CANVAS_DATA_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/DeletedCanvasExpectedData.xml";
 	private ICanvasPersistenceHandler testInstance;
+	private ICanvasPersistenceHandler testEmptyInstance;
 	private IMap mockMap;
+	private IMap mockNewMap;
 	private IRepository mockRepository;
 	private Mockery mockery = new JUnit4Mockery();
 	
@@ -50,6 +59,7 @@ public class HibCanvasPersistenceHandlerTest extends PojoTester {
 	@Override
 	protected void additionalSetup(){
 		this.mockMap = this.mockery.mock(IMap.class, "mockMap");
+		this.mockNewMap = this.mockery.mock(IMap.class, "mockNewMap");
 		this.mockRepository = this.mockery.mock(IRepository.class, "mockRepostory");
 		
 		this.mockery.checking(new Expectations(){{
@@ -58,14 +68,27 @@ public class HibCanvasPersistenceHandlerTest extends PojoTester {
 			allowing(mockMap).getName(); will(returnValue(EXPECTED_MAP));
 			allowing(mockMap).getINode(); will(returnValue(EXPECTED_INODE));
 			allowing(mockMap).getRepository(); will(returnValue(mockRepository));
+
+			allowing(mockNewMap).getName(); will(returnValue(EXPECTED_NEW_MAP));
+			allowing(mockNewMap).getINode(); will(returnValue(EXPECTED_NEW_INODE));
+			allowing(mockNewMap).getRepository(); will(returnValue(mockRepository));
 		}});
 		
 		this.testInstance = new HibCanvasPersistenceHandler(this.getHibFactory(), new StubNotationSubsystemPool(), this.mockMap);
+		this.testEmptyInstance = new HibCanvasPersistenceHandler(this.getHibFactory(), new StubNotationSubsystemPool(), this.mockNewMap);
 	}
 	
 	@Override
 	protected void additionalTeardown(){
 		this.testInstance = null;
+		this.testEmptyInstance = null;
+	}
+	
+	@Test
+	public void testLoadedCanvasIsValid() {
+		this.testInstance.loadCanvas();
+		ICanvas canvas = this.testInstance.getLoadedCanvas();
+		assertTrue("modelValid", canvas.getModel().isValid());
 	}
 	
 	/**
@@ -109,34 +132,51 @@ public class HibCanvasPersistenceHandlerTest extends PojoTester {
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#synchroniseCanvas()}.
+	 * @throws Exception 
 	 */
-	@Ignore @Test
-	public void testSynchroniseCanvas() {
-		fail("Not yet implemented");
+	@Test
+	public void testSynchroniseCanvas() throws Exception {
+		this.testInstance.loadCanvas();
+		ICanvas actualCanvas = this.testInstance.getLoadedCanvas();
+		assertEquals("expected background", EXPECTED_COLOUR, actualCanvas.getBackgroundColour());
+		actualCanvas.setBackgroundColour(RGB.BLUE);
+		this.testInstance.synchroniseCanvas();
+		this.compareDatabase(EXPECTED_CANVAS_DATA_FILE_NAME);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
+	 * @throws Exception 
 	 */
-	@Ignore @Test
-	public void testCreateCanvas() {
-		fail("Not yet implemented");
+	@Test
+	public void testCreateCanvas() throws Exception {
+		this.testEmptyInstance.createCanvas(new StubNotationSubSystem());
+		ICanvas actualCanvas = this.testEmptyInstance.getLoadedCanvas();
+		assertNotNull("Canvas created", actualCanvas);
+		assertEquals("expected inode", EXPECTED_NEW_INODE, actualCanvas.getINode());
+		assertEquals("expected repo name", EXPECTED_REPOSITORY_NAME, actualCanvas.getRepositoryName());
+		this.testEmptyInstance.synchroniseCanvas();
+		this.compareDatabase(SOURCE_DATA_FILE_NAME, NEW_CANVAS_DATA_FILE_NAME);
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#doesCanvasExist()}.
 	 */
-	@Ignore @Test
+	@Test
 	public void testDoesCanvasExist() {
-		fail("Not yet implemented");
+		assertTrue("canvas exists", this.testInstance.doesCanvasExist());
+		assertFalse("canvas missing", this.testEmptyInstance.doesCanvasExist());
 	}
 
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#deleteCanvas()}.
+	 * @throws Exception 
 	 */
-	@Ignore @Test
-	public void testDeleteCanvas() {
-		fail("Not yet implemented");
+	@Test
+	public void testDeleteCanvas() throws Exception {
+		this.testInstance.loadCanvas();
+		this.testInstance.deleteCanvas();
+		this.compareDatabase(DELETED_CANVAS_DATA_FILE_NAME);
 	}
 
 }

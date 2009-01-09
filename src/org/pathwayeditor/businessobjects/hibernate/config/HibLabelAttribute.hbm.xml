@@ -13,7 +13,7 @@
         <property name="creationSerial" type="int">
         	<column name="creation_serial" not-null="true" />
         </property>
-		<many-to-one name="visualisableProperty" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" cascade="all">
+		<many-to-one name="visualisableProperty" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" cascade="none">
 			<column name="displayed_property_id" not-null="false" />
 		</many-to-one>
 		<property name="XPosition" type="int">
