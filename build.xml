@@ -220,7 +220,7 @@
 		</jar>
 	</target>
 				
-	<target name="jar-and-export" depends="jar-bin">
+	<target name="jar-and-export" depends="jarAll">
 		<copy todir="${application.lib.bo.dir}">
 			<fileset dir="${jar.dir}" />
 		</copy>

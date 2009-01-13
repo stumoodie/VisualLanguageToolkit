@@ -58,7 +58,7 @@ public class StubSBMLImportService implements INotationImportService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#getRecommendedSuffix()
 	 */
 	public String getRecommendedSuffix() {
-		return "xml";
+		return "txt";
 	}
 
 	/* (non-Javadoc)
