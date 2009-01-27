@@ -42,6 +42,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private static final int DEFAULT_PADDING = 0;
 	private static final PrimitiveShapeType DEFAULT_SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
+	private static final boolean DEFAULT_NAME_VISIBLE = true ;
 
 	private HibCanvas canvas;
 	private Long id;
@@ -63,6 +64,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private transient HibShapeNode shapeNode;
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
+	private boolean nameVisible = DEFAULT_NAME_VISIBLE ;
 	
 
 	/**
@@ -689,5 +691,19 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 			logger.error("Attribute invalid, may be objecttypes or incompletely formed relationship with node");
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#isNameVisible()
+	 */
+	public boolean isNameVisible() {
+		return this.nameVisible;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setNameVisible(boolean)
+	 */
+	public void setNameVisible(boolean value) {
+		this.nameVisible = value ;
 	}
 }

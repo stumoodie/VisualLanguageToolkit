@@ -183,6 +183,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>name_visible</column>
 		<row>
 			<value>100001</value>
 			<value>9</value>
@@ -205,6 +206,7 @@
 			<value>51</value>
 			<value>51</value>
 			<value>51</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -228,6 +230,7 @@
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -251,6 +254,7 @@
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -274,6 +278,7 @@
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -297,6 +302,7 @@
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -320,6 +326,7 @@
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -343,6 +350,7 @@
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100001</value>
@@ -366,6 +374,7 @@
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
+			<value>true</value>
 		</row>																
 	</table>
 	<table name="LinkAttribute">

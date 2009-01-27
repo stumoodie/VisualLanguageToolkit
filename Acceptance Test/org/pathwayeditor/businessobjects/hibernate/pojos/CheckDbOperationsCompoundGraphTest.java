@@ -141,6 +141,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static Location CHANGED_SHAPE_LOCATION = new Location ( 500 , 500 ) ;
 	private final static Size CHANGED_SHAPE_SIZE = new Size ( 400 ,400 ) ;
 	private final static String CHANGED_SHAPE_URL = "http://www.something.co.uk" ;
+	private final static boolean CHANGED_SHAPE_NAME_VISIB = false ;
 	
 	private final static RGB CHANGED_LABEL_BACKGROUND_COLOR = new RGB ( 200 , 200 , 200 ) ;
 	private final static Location CHANGED_LABEL_LOCATION = new Location ( 222 , 222 ) ;
@@ -577,6 +578,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		shapeAttribute1.setSize(CHANGED_SHAPE_SIZE);
 		shapeAttribute1.setUrl(CHANGED_SHAPE_URL) ;
 		shapeAttribute1.setPrimitiveShape(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
+		shapeAttribute1.setNameVisible(CHANGED_SHAPE_NAME_VISIB) ;
 		
 		map1Manager.synchronise() ;
 		

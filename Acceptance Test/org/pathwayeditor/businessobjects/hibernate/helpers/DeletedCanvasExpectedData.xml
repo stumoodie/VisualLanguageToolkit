@@ -274,6 +274,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>name_visible</column>
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>

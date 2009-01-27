@@ -181,4 +181,17 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	 * @return the shape node, which cannot be null.
 	 */
 	IShapeNode getCurrentDrawingElement();
+	
+	
+	/**
+	 * Returns the visibility of the name for this Shape. 
+	 * @return the visibility status. 
+	 */
+	boolean isNameVisible () ;
+	
+	/** 
+	 * Sets the visibility of the name for this Shape.
+	 * @param value the visibility of the name.
+	 */
+	void setNameVisible ( boolean value ) ;
 }

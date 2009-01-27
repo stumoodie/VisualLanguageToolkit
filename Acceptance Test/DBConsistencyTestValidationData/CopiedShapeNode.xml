@@ -32,6 +32,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>name_visible</column>
 		<row>
 			<value>100001</value>
 			<value>9</value>
@@ -54,6 +55,7 @@
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
+			<value>true</value>
 		</row>																
 	</table>
 	<table name="LinkEdge"><!-- REMEBER TO SETUP THE CORRECT LINK_ATTRIBUTES -->

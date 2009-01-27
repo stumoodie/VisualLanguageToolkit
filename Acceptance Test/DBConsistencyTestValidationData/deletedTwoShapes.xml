@@ -605,6 +605,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>name_visible</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
 			<value>100001</value>
@@ -628,6 +629,7 @@
 			<value>51</value>
 			<value>51</value>
 			<value>51</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
@@ -652,6 +654,7 @@
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
@@ -676,6 +679,7 @@
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
@@ -700,6 +704,7 @@
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
@@ -724,6 +729,7 @@
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
@@ -748,6 +754,7 @@
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
@@ -772,6 +779,7 @@
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
+			<value>true</value>
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
@@ -796,6 +804,7 @@
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
+			<value>true</value>
 		</row>																
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->

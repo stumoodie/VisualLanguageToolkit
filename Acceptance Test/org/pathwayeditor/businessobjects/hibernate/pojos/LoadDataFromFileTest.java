@@ -90,6 +90,8 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String SHAPE_ATTR8_DETAIL_DESCR = "detailed descr8" ;
 	private static final String SHAPE_ATTR8_URL = "http://www.shape8URL.org" ;
 	
+	private static final boolean SHAPE_ATTR_NAME_VISIBLE = true ;
+	
 	private static final String LINK_ATTR1_URL = "http://www.HibLink1.org" ;
 	private static final String LINK_ATTR2_URL = "http://www.HibLink2.org" ;
 	private static final String LINK_ATTR3_URL = "http://www.HibLink3.org" ;
@@ -617,6 +619,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute1 line padding" , SHAPE_ATTRIBUTE1_LINE_PADDING , shapeAttribute1.getPadding() ) ;
 		assertEquals ( "shapeAttribute1 location" , LOCATION_51, shapeAttribute1.getLocation() ) ;
 		assertEquals ( "shapeAttribute1 line padding" , SIZE_51 , shapeAttribute1.getSize()) ;
+		assertTrue 	 ( "shapeAttribute1 name visible" , shapeAttribute1.isNameVisible()) ;
 		
 		assertEquals ( "2 shapeNodes" , 2 , shapeNode1.getSubModel().numShapeNodes()) ;
 	}
@@ -649,7 +652,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute2 line padding" , SHAPE_ATTRIBUTE2_LINE_PADDING , shapeAttribute2.getPadding() ) ;
 		assertEquals ( "shapeAttribute2 location" , LOCATION_52, shapeAttribute2.getLocation() ) ;
 		assertEquals ( "shapeAttribute2 line padding" , SIZE_52 , shapeAttribute2.getSize()) ;
+		assertTrue 	 ( "shapeAttribute2 name visible" , shapeAttribute2.isNameVisible()) ;
+		
 		assertEquals ( "2 shapeNodes" , 2 , shapeNode2.getSubModel().numShapeNodes()) ;
+		
 	}
 	
 	@Test
@@ -681,6 +687,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute3 line padding" , SHAPE_ATTRIBUTE3_LINE_PADDING , shapeAttribute3.getPadding() ) ;
 		assertEquals ( "shapeAttribute3 location" , LOCATION_53, shapeAttribute3.getLocation() ) ;
 		assertEquals ( "shapeAttribute3 line padding" , SIZE_53 , shapeAttribute3.getSize()) ;
+		assertTrue 	 ( "shapeAttribute3 name visible" , shapeAttribute3.isNameVisible()) ;
+		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode3.getSubModel().numShapeNodes());
 				
 	}
@@ -713,6 +721,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute4 line padding" , SHAPE_ATTRIBUTE4_LINE_PADDING , shapeAttribute4.getPadding() ) ;
 		assertEquals ( "shapeAttribute4 location" , LOCATION_54, shapeAttribute4.getLocation() ) ;
 		assertEquals ( "shapeAttribute4 line padding" , SIZE_54 , shapeAttribute4.getSize()) ;
+		assertTrue 	 ( "shapeAttribute4 name visible" , shapeAttribute4.isNameVisible()) ;
+		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode4.getSubModel().numShapeNodes()) ;
 				
 	}
@@ -745,6 +755,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute5 line padding" , SHAPE_ATTRIBUTE5_LINE_PADDING , shapeAttribute5.getPadding() ) ;
 		assertEquals ( "shapeAttribute5 location" , LOCATION_55, shapeAttribute5.getLocation() ) ;
 		assertEquals ( "shapeAttribute5 line padding" , SIZE_55 , shapeAttribute5.getSize()) ;
+		assertTrue 	 ( "shapeAttribute5 name visible" , shapeAttribute5.isNameVisible()) ;
+		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode5.getSubModel().numShapeNodes()) ;
 	}
 	
@@ -774,6 +786,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute6 line padding" , SHAPE_ATTRIBUTE6_LINE_PADDING , shapeAttribute6.getPadding() ) ;
 		assertEquals ( "shapeAttribute6 location" , LOCATION_56, shapeAttribute6.getLocation() ) ;
 		assertEquals ( "shapeAttribute6 line padding" , SIZE_56 , shapeAttribute6.getSize()) ;
+		assertTrue 	 ( "shapeAttribute6 name visible" , shapeAttribute6.isNameVisible()) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -815,6 +828,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute7 line padding" , SHAPE_ATTRIBUTE7_LINE_PADDING , shapeAttribute7.getPadding() ) ;
 		assertEquals ( "shapeAttribute7 location" , LOCATION_57, shapeAttribute7.getLocation() ) ;
 		assertEquals ( "shapeAttribute7 line padding" , SIZE_57 , shapeAttribute7.getSize()) ;
+		assertTrue 	 ( "shapeAttribute7 name visible" , shapeAttribute7.isNameVisible()) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -856,6 +870,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute8 line padding" , SHAPE_ATTRIBUTE8_LINE_PADDING , shapeAttribute8.getPadding() ) ;
 		assertEquals ( "shapeAttribute8 location" , LOCATION_58, shapeAttribute8.getLocation() ) ;
 		assertEquals ( "shapeAttribute8 line padding" , SIZE_58 , shapeAttribute8.getSize()) ;
+		assertTrue 	 ( "shapeAttribute8 name visible" , shapeAttribute8.isNameVisible()) ;
 		
 		int numOfShapeNodes = 0 ;
 		

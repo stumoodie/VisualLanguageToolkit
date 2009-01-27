@@ -31,6 +31,7 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
+		<column>name_visible</column>
 		<row>
 			<value>100001</value>
 			<value>9</value>
@@ -53,6 +54,7 @@
 			<value>75</value>
 			<value>50</value>
 			<value>50</value>
+			<value>true</value>
 		</row>
 	</table>
 </dataset>

@@ -72,6 +72,9 @@
        	<property name="padding" type="int" access="property">
            	<column name="padding" not-null="true" />
        	</property>
+       	<property name="nameVisible" type="boolean" access="property">
+           	<column name="name_visible" not-null="true" />
+       	</property>
        	<property name="primitiveShape" type="PrimitiveShapeType" access="property">
            	<column name="shape_type" not-null="true" />
        	</property>
