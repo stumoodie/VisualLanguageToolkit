@@ -705,5 +705,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public void setNameVisible(boolean value) {
 		this.nameVisible = value ;
+		
+		boolean oldNameVisible = this.nameVisible;
+		this.nameVisible = value;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME_VISIBLE, oldNameVisible, this.nameVisible);
 	}
 }
