@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -43,6 +44,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final int DEFAULT_PADDING = 0;
 	private static final PrimitiveShapeType DEFAULT_SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
 	private static final boolean DEFAULT_NAME_VISIBLE = true ;
+	private static final Alignment DEFAULT_ALIGNMENT = Alignment.CENTER ;
 
 	private HibCanvas canvas;
 	private Long id;
@@ -65,6 +67,8 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 	private boolean nameVisible = DEFAULT_NAME_VISIBLE ;
+	private Alignment horizontalAlignment = DEFAULT_ALIGNMENT;
+	private Alignment verticalAlignment = DEFAULT_ALIGNMENT;
 	
 
 	/**
@@ -334,8 +338,26 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.lineStyle ;
 	}
 	
+	public Alignment getHorizontalAlignment () 
+	{
+		return this.horizontalAlignment ;
+	}
+	
+	public Alignment getVerticalAlignment () 
+	{
+		return this.verticalAlignment ;
+	}
+	
 	public void setHibLineStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
+	}
+	
+	public void setHibHorizontalAlignment ( Alignment alignment) {
+		this.horizontalAlignment = alignment ;
+	}
+	
+	public void setHibVerticalAlignment ( Alignment alignment) {
+		this.verticalAlignment = alignment ;
 	}
 
 	public int getLineWidth() {
@@ -525,6 +547,30 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		LineStyle oldLineStyle = this.lineStyle;
 		this.lineStyle = lineStyle ;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setHorizontalAlignment(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment)
+	 */
+	public void setHorizontalAlignment(Alignment alignment) {
+		if ( alignment == null )
+			throw new IllegalArgumentException ( "Alignment cannot be null") ;
+
+		Alignment oldHorizontalAlignment = this.horizontalAlignment;
+		this.horizontalAlignment = alignment ;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ALIGNMENT, oldHorizontalAlignment, this.horizontalAlignment);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setHorizontalAlignment(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment)
+	 */
+	public void setVerticalAlignment(Alignment alignment) {
+		if ( alignment == null )
+			throw new IllegalArgumentException ( "Alignment cannot be null") ;
+
+		Alignment oldVerticalAlignment = this.verticalAlignment;
+		this.verticalAlignment = alignment ;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ALIGNMENT, oldVerticalAlignment, this.verticalAlignment);
 	}
 
 	/* (non-Javadoc)

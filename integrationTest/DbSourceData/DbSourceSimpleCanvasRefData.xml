@@ -184,6 +184,9 @@
 		<column>width</column>
 		<column>height</column>
 		<column>node_id</column>
+		<column>name_visible</column>
+		<column>horizontal_alignment</column>
+		<column>vertical_alignment</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
@@ -208,6 +211,9 @@
 				<value>50</value>
 				<value>50</value>
 				<value>100002</value>
+				<value>true</value>
+				<value>3</value>
+				<value>3</value>
 			</row>
 	</table>
 	<table name="LinkEdge">

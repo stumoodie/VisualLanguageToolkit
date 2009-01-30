@@ -66,6 +66,12 @@
        	<property name="lineStyle" type="LineStyleType" access="property">
            	<column name="line_style" not-null="true" />
        	</property>
+       	<property name="horizontalAlignment" type="AlignmentType" access="property">
+           	<column name="horizontal_alignment" not-null="true" />
+       	</property>
+       	<property name="verticalAlignment" type="AlignmentType" access="property">
+           	<column name="vertical_alignment" not-null="true" />
+       	</property>
        	<property name="lineWidth" type="int" access="property">
            	<column name="line_width" not-null="true" />
        	</property>

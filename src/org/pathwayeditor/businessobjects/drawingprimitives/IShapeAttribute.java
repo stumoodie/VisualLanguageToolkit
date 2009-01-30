@@ -1,5 +1,6 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -156,11 +157,37 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	LineStyle getLineStyle();
 	
 	/**
+	 * Returns the horizontal alignment of the text. 
+	 * @return the horizontal alignment. Cannot be null.
+	 */
+	Alignment getHorizontalAlignment();
+	
+	/**
+	 * Returns the vertical alignment of the text. 
+	 * @return the vertical alignment. Cannot be null.
+	 */
+	Alignment getVerticalAlignment();
+	
+	/**
 	 * Sets the line style for this Shape.
 	 * @param lineStyle the new line style. Cannot be null
 	 * @throws IllegalArgumentException if lineStyle is null.
 	 */
 	void setLineStyle(LineStyle lineStyle);
+	
+	/**
+	 * Sets the horizontal alignment for this Shape's text.
+	 * @param alignment the new alignment. Cannot be null
+	 * @throws IllegalArgumentException if alignment is null.
+	 */
+	void setHorizontalAlignment(Alignment lineStyle);
+	
+	/**
+	 * Sets the vertical alignment for this Shape's text.
+	 * @param alignment the new alignment. Cannot be null
+	 * @throws IllegalArgumentException if alignment is null.
+	 */
+	void setVerticalAlignment(Alignment lineStyle);
 	
 	/**
 	 * @deprecated This is no longer used and will be removed soon.
