@@ -84,6 +84,15 @@
        	<property name="primitiveShape" type="PrimitiveShapeType" access="property">
            	<column name="shape_type" not-null="true" />
        	</property>
+       	<property name="textRed" type="int" access="property">
+           	<column name="text_red" not-null="true" />
+       	</property>
+       	<property name="textGreen" type="int" access="property">
+           	<column name="text_green" not-null="true" />
+       	</property>
+       	<property name="textBlue" type="int" access="property">
+           	<column name="text_blue" not-null="true" />
+       	</property>
        	<map name="properties" table="ShapeAttributeProperty" cascade="all">
            	<key>
                	<column name="shape_attribute_id" not-null="true" />

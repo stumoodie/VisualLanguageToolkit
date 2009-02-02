@@ -649,6 +649,9 @@
 		<column>name_visible</column>
 		<column>horizontal_alignment</column>
 		<column>vertical_alignment</column>
+		<column>text_red</column>
+		<column>text_green</column>
+		<column>text_blue</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
 			<value>100001</value>
@@ -675,6 +678,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
@@ -702,6 +708,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
@@ -729,6 +738,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
@@ -756,6 +768,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
@@ -783,6 +798,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
@@ -810,6 +828,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
@@ -837,6 +858,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
@@ -864,6 +888,9 @@
 			<value>true</value>
 			<value>3</value>
 			<value>3</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>																
 	</table>
 	<table name="LinkAttribute">

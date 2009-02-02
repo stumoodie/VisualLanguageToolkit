@@ -278,6 +278,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int LINE_WIDTH_OF_LINKATTRIBUTE9 = 19 ;
 	
 	
+	private static final RGB RGB_000 = new RGB ( 0 , 0 , 0 ) ;
 	private static final RGB RGB_100 = new RGB ( 100 , 100 , 100 ) ;
 	private static final RGB RGB_101 = new RGB ( 101 , 101 , 101 ) ;
 	private static final RGB RGB_102 = new RGB ( 102 , 102 , 102 ) ;
@@ -620,6 +621,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute1 location" , LOCATION_51, shapeAttribute1.getLocation() ) ;
 		assertEquals ( "shapeAttribute1 line padding" , SIZE_51 , shapeAttribute1.getSize()) ;
 		assertTrue 	 ( "shapeAttribute1 name visible" , shapeAttribute1.isNameVisible()) ;
+		assertEquals ( "shapeAttribute1 text colour" , RGB_000 , shapeAttribute1.getTextColour() ) ;
 		
 		assertEquals ( "2 shapeNodes" , 2 , shapeNode1.getSubModel().numShapeNodes()) ;
 	}
@@ -653,6 +655,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute2 location" , LOCATION_52, shapeAttribute2.getLocation() ) ;
 		assertEquals ( "shapeAttribute2 line padding" , SIZE_52 , shapeAttribute2.getSize()) ;
 		assertTrue 	 ( "shapeAttribute2 name visible" , shapeAttribute2.isNameVisible()) ;
+		assertEquals ( "shapeAttribute2 text colour" , RGB_000 , shapeAttribute2.getTextColour() ) ;
 		
 		assertEquals ( "2 shapeNodes" , 2 , shapeNode2.getSubModel().numShapeNodes()) ;
 		
@@ -688,6 +691,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute3 location" , LOCATION_53, shapeAttribute3.getLocation() ) ;
 		assertEquals ( "shapeAttribute3 line padding" , SIZE_53 , shapeAttribute3.getSize()) ;
 		assertTrue 	 ( "shapeAttribute3 name visible" , shapeAttribute3.isNameVisible()) ;
+		assertEquals ( "shapeAttribute3 text colour" , RGB_000 , shapeAttribute3.getTextColour() ) ;
 		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode3.getSubModel().numShapeNodes());
 				
@@ -722,6 +726,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute4 location" , LOCATION_54, shapeAttribute4.getLocation() ) ;
 		assertEquals ( "shapeAttribute4 line padding" , SIZE_54 , shapeAttribute4.getSize()) ;
 		assertTrue 	 ( "shapeAttribute4 name visible" , shapeAttribute4.isNameVisible()) ;
+		assertEquals ( "shapeAttribute4 text colour" , RGB_000 , shapeAttribute4.getTextColour() ) ;
 		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode4.getSubModel().numShapeNodes()) ;
 				
@@ -756,6 +761,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute5 location" , LOCATION_55, shapeAttribute5.getLocation() ) ;
 		assertEquals ( "shapeAttribute5 line padding" , SIZE_55 , shapeAttribute5.getSize()) ;
 		assertTrue 	 ( "shapeAttribute5 name visible" , shapeAttribute5.isNameVisible()) ;
+		assertEquals ( "shapeAttribute5 text colour" , RGB_000 , shapeAttribute5.getTextColour() ) ;
 		
 		assertEquals ( "0 shapeNodes" , 0 , shapeNode5.getSubModel().numShapeNodes()) ;
 	}
@@ -787,6 +793,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute6 location" , LOCATION_56, shapeAttribute6.getLocation() ) ;
 		assertEquals ( "shapeAttribute6 line padding" , SIZE_56 , shapeAttribute6.getSize()) ;
 		assertTrue 	 ( "shapeAttribute6 name visible" , shapeAttribute6.isNameVisible()) ;
+		assertEquals ( "shapeAttribute6 text colour" , RGB_000 , shapeAttribute6.getTextColour() ) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -829,6 +836,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute7 location" , LOCATION_57, shapeAttribute7.getLocation() ) ;
 		assertEquals ( "shapeAttribute7 line padding" , SIZE_57 , shapeAttribute7.getSize()) ;
 		assertTrue 	 ( "shapeAttribute7 name visible" , shapeAttribute7.isNameVisible()) ;
+		assertEquals ( "shapeAttribute7 text colour" , RGB_000 , shapeAttribute7.getTextColour() ) ;
 		
 		int numOfShapeNodes = 0 ;
 		
@@ -871,6 +879,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute8 location" , LOCATION_58, shapeAttribute8.getLocation() ) ;
 		assertEquals ( "shapeAttribute8 line padding" , SIZE_58 , shapeAttribute8.getSize()) ;
 		assertTrue 	 ( "shapeAttribute8 name visible" , shapeAttribute8.isNameVisible()) ;
+		assertEquals ( "shapeAttribute8 text colour" , RGB_000 , shapeAttribute8.getTextColour() ) ;
 		
 		int numOfShapeNodes = 0 ;
 		

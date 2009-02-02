@@ -39,6 +39,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final String DEFAULT_URL = "";
 	private static final RGB DEFAULT_FILL = RGB.WHITE;
 	private static final RGB DEFAULT_LINE = RGB.BLACK;
+	private static final RGB DEFAULT_TEXT = RGB.BLACK;
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private static final int DEFAULT_PADDING = 0;
@@ -69,6 +70,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private boolean nameVisible = DEFAULT_NAME_VISIBLE ;
 	private Alignment horizontalAlignment = DEFAULT_ALIGNMENT;
 	private Alignment verticalAlignment = DEFAULT_ALIGNMENT;
+	private transient RGB textColour = DEFAULT_TEXT ;  
 	
 
 	/**
@@ -108,6 +110,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.lineColour = other.lineColour;
 		this.lineStyle = other.lineStyle;
 		this.lineWidth = other.lineWidth;
+		this.textColour = other.textColour ;
+		this.nameVisible = other.nameVisible ;
+		this.horizontalAlignment = other.horizontalAlignment;
+		this.verticalAlignment = other.verticalAlignment ;
 		this.padding = other.padding;
 		this.shapeObjectType = other.shapeObjectType;
 		this.shapeType=other.shapeType;
@@ -297,6 +303,30 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public int getFillGreen() {
 		return this.fillColour.getGreen();
 	}
+	
+	public int getTextRed() {
+		return this.textColour.getRed();
+	}
+
+	public void setTextRed(int textRed) {
+		this.textColour = this.textColour.newRed(textRed);
+	}
+
+	public int getTextGreen() {
+		return this.textColour.getGreen();
+	}
+	
+	public void setTextGreen(int textGreen) {
+		this.textColour = this.textColour.newGreen(textGreen);
+	}
+	
+	public int getTextBlue() {
+		return this.textColour.getBlue();
+	}
+	
+	public void setTextBlue(int textBlue) {
+		this.textColour = this.textColour.newBlue(textBlue);
+	}
 
 	public void setFillGreen(int fillGreen) {
 		this.fillColour = this.fillColour.newGreen(fillGreen);
@@ -484,6 +514,13 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	public RGB getLineColour() {
 		return this.lineColour;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getTextColour()
+	 */
+	public RGB getTextColour() {
+		return this.textColour;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLocation()
@@ -525,6 +562,18 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setTextColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 */
+	public void setTextColour(RGB textColour) {
+		if ( textColour == null )
+			throw new IllegalArgumentException ("Text colour cannot be null") ;
+
+		RGB oldTextColour = this.textColour;
+		this.textColour = textColour;
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.FILL_COLOUR, oldTextColour, this.textColour);
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */

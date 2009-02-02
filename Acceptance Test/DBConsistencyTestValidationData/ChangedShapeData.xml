@@ -25,6 +25,9 @@
 		<column>width</column>
 		<column>height</column>
 		<column>name_visible</column>
+		<column>text_red</column>
+		<column>text_green</column>
+		<column>text_blue</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
 			<value>100001</value>
@@ -49,6 +52,9 @@
 			<value>400</value>
 			<value>400</value>
 			<value>false</value>
+			<value>100</value>
+			<value>100</value>
+			<value>100</value>
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
@@ -74,6 +80,9 @@
 			<value>52</value>
 			<value>52</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
@@ -99,6 +108,9 @@
 			<value>53</value>
 			<value>53</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
@@ -124,6 +136,9 @@
 			<value>54</value>
 			<value>54</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
@@ -149,6 +164,9 @@
 			<value>55</value>
 			<value>55</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
@@ -174,6 +192,9 @@
 			<value>56</value>
 			<value>56</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
@@ -199,6 +220,9 @@
 			<value>57</value>
 			<value>57</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
@@ -224,6 +248,9 @@
 			<value>58</value>
 			<value>58</value>
 			<value>true</value>
+			<value>0</value>
+			<value>0</value>
+			<value>0</value>
 		</row>																
 	</table>
 </dataset>

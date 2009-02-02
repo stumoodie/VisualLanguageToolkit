@@ -123,6 +123,19 @@ public interface IShapeAttribute extends  IZOrderedObject, ICanvasAttribute, IAn
 	 * @throws IllegalArgumentException if fillColour is null.
 	 */
 	void setFillColour(RGB fillColour);
+
+	/**
+	 * Returns a {@link RGB} representation for the text color of this Shape
+	 * @return the text color. Cannot be null.
+	 */	
+	RGB getTextColour();
+
+	/**
+	 * Sets the text color for this Shape.
+	 * @param textColour the new text color. Cannot be null
+	 * @throws IllegalArgumentException if textColour is null.
+	 */
+	void setTextColour(RGB textColour);
 	
 	/**
 	 * Returns the numerical value representing the thickness of the border line of the shape. 
