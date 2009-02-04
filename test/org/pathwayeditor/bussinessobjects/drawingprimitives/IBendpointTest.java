@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 
@@ -37,8 +36,8 @@ public class IBendpointTest {
 	private static final int Y_POSITION_OTHER = 200 ;
 	private static final Location POSITION = new Location(X_POSITION, Y_POSITION);
 	private static final Location POSITION_OTHER = new Location(X_POSITION_OTHER, Y_POSITION_OTHER);
-	private static final Size FIRST_REL_DIM = new Size(101, 102);
-	private static final Size SECOND_REL_DIM = new Size(103, 104);
+	private static final Location FIRST_REL_DIM = new Location(101, 102);
+	private static final Location SECOND_REL_DIM = new Location(103, 104);
 	
 	@Before
 	public void setUp() throws Exception {

@@ -16,7 +16,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
@@ -612,14 +611,14 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#createNewBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public IBendPoint createNewBendPoint(Location location, Size firstRelativeDim, Size secondRelativeDim) {
+	public IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
 		this.hibBendPoints.add(retVal);
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
 		return retVal;
 	}
 
-	public IBendPoint createNewBendPoint(int position, Location location, Size firstRelativeDim, Size secondRelativeDim) {
+	public IBendPoint createNewBendPoint(int position, Location location, Location firstRelativeDim, Location secondRelativeDim) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
 		if(position < 0 || position > this.hibBendPoints.size()) {
 			throw new IndexOutOfBoundsException("list size= " + this.hibBendPoints.size() + ", no bendpoint can be added at position: " + position);

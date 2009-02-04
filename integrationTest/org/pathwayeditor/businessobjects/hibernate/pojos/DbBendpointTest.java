@@ -7,7 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -19,7 +18,7 @@ public class DbBendpointTest extends PojoTester{
 //	private static final int INDEX = 2 ;
 	private static final int POSITION = 45 ;
 	private static final Location BP_LOCATION = new Location(POSITION, POSITION);
-	private static final Size BP_REL_DIM = new Size(POSITION, POSITION);
+	private static final Location BP_REL_DIM = new Location(POSITION, POSITION);
 	
 	private static final String ADDED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbAddedBendPointRefData.xml" ;
 	private static final String DELETED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbDeletedBendPointRefData.xml" ;

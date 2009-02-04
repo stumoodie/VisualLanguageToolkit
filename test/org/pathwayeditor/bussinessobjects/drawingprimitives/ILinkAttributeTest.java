@@ -19,7 +19,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Connection
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -57,9 +56,9 @@ public class ILinkAttributeTest {
 	private static final Location BP_POSITION1 = new Location(POS_VALUE_1, POS_VALUE_1); 
 	private static final Location BP_POSITION2 = new Location(POS_VALUE_2, POS_VALUE_2); 
 	private static final Location BP_POSITION3 = new Location(POS_VALUE_3, POS_VALUE_3); 
-	private static final Size BP_REL_DIM1 = new Size(POS_VALUE_1, POS_VALUE_1); 
-	private static final Size BP_REL_DIM2 = new Size(POS_VALUE_2, POS_VALUE_2); 
-	private static final Size BP_REL_DIM3 = new Size(POS_VALUE_3, POS_VALUE_3); 
+	private static final Location BP_REL_DIM1 = new Location(POS_VALUE_1, POS_VALUE_1); 
+	private static final Location BP_REL_DIM2 = new Location(POS_VALUE_2, POS_VALUE_2); 
+	private static final Location BP_REL_DIM3 = new Location(POS_VALUE_3, POS_VALUE_3); 
 	
 	private static final int NUMERIC_VALUE_3 = 3 ;
 	private static final int NUMERIC_VALUE_2 = 2 ;

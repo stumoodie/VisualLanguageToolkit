@@ -88,7 +88,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @return the newly created bendpoint which cannot be null.
 	 * throws IllegalArgumentException if any parameter is null. 
 	 */
-	IBendPoint createNewBendPoint(Location location, Size firstRelativeDim, Size secondRelativeDim);
+	IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim);
 	
 	/**
 	 * As {@link #createNewBendPoint(Location, Size, Size)}, but also defines the index position
@@ -102,7 +102,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @throws IllegalArgumentException if any parameter is null.
 	 * @throws IndexOutOfBoundsException if <code>indexPos &lt; 0 || indexPos &gt; this.numBendPoints()</code>.
 	 */
-	IBendPoint createNewBendPoint(int position, Location location, Size firstRelativeDim, Size secondRelativeDim);
+	IBendPoint createNewBendPoint(int position, Location location, Location firstRelativeDim, Location secondRelativeDim);
 	
 	/**
 	 * Adds a bendpoint to the list of bendpoints at the given position.

@@ -12,11 +12,11 @@ public interface IBendPoint {
 	
 	void setLocation ( Location location ) ;
 	
-	Size getFirstRelativeDimension();
+	Location getFirstRelativeDimension();
 	
-	void setFirstRelativeDimension(Size newDimension);
+	void setFirstRelativeDimension(Location newDimension);
 
-	Size getSecondRelativeDimension();
+	Location getSecondRelativeDimension();
 	
-	void setSecondRelativeDimension(Size newDimension);
+	void setSecondRelativeDimension(Location newDimension);
 }
