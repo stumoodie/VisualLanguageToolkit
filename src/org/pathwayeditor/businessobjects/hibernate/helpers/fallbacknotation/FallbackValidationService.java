@@ -1,7 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -19,7 +18,7 @@ class FallbackValidationService implements INotationValidationService {
 		this.serviceProvider=provider;
 	}
 
-	public ICanvas getMapBeingValidated() {
+	public ICanvas getCanvasBeingValidated() {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
@@ -27,7 +26,7 @@ class FallbackValidationService implements INotationValidationService {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
-	public boolean hasMapBeenValidated() {
+	public boolean hasBeenValidated() {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
@@ -47,11 +46,11 @@ class FallbackValidationService implements INotationValidationService {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
-	public void setMapToValidate(ICanvas mapToValidate) {
+	public void setCanvasToValidate(ICanvas mapToValidate) {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
-	public void validateMap() {
+	public void validate() {
 		throw new UnsupportedOperationException("This validation service is not validated");
 	}
 
@@ -67,8 +66,8 @@ class FallbackValidationService implements INotationValidationService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getRules()
 	 */
-	public List<IValidationRuleDefinition> getRules() {
-		return Collections.emptyList();
+	public Set<IValidationRuleDefinition> getRules() {
+		return Collections.emptySet();
 	}
 
 	/* (non-Javadoc)

@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
-import java.util.List;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
@@ -29,14 +29,14 @@ public class StubNotationValidationService implements INotationValidationService
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getMapBeingValidated()
 	 */
-	public ICanvas getMapBeingValidated() {
+	public ICanvas getCanvasBeingValidated() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getRules()
 	 */
-	public List<IValidationRuleDefinition> getRules() {
+	public Set<IValidationRuleDefinition> getRules() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
@@ -50,7 +50,7 @@ public class StubNotationValidationService implements INotationValidationService
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#hasMapBeenValidated()
 	 */
-	public boolean hasMapBeenValidated() {
+	public boolean hasBeenValidated() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
@@ -71,14 +71,14 @@ public class StubNotationValidationService implements INotationValidationService
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#setMapToValidate(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
-	public void setMapToValidate(ICanvas mapToValidate) {
+	public void setCanvasToValidate(ICanvas mapToValidate) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#validateMap()
 	 */
-	public void validateMap() {
+	public void validate() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 

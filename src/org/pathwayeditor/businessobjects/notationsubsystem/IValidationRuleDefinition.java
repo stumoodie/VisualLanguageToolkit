@@ -23,10 +23,9 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 		ERROR, WARNING, IGNORE
 	}
 
-	INotationValidationService getValidationService();
 	/**
-	 * 
-	 * @return A unique numerical identifier for this validation rule
+	 * A Numerical value that uniquely identifies a rule definition.
+	 * @return the id, which should be a number > 0.
 	 */
 	int getRuleNumber();
 	
@@ -81,4 +80,16 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 	 */
     RuleLevel getRuleLevel();
 
+    /**
+     * Equivalence is based on the rule number, otherwise follows the standard contract of equals.
+     * @param other the other object to compare, which can be null.
+     * @return true if the objects are equal with the same id, false otherwise.
+     */
+    boolean equals(Object other);
+    
+    /**
+     * Provides a hash code that matches the object equivalence defined in equals(). 
+     * @return the hash code.
+     */
+    int hashCode();
 }

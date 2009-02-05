@@ -76,7 +76,7 @@
 		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
 		<pathelement location="${lib.dir}/DbUnit/dbunit-2.3.0.jar" />
 		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
-		<pathelement location="${lib.dir}/compoundgraph/compoundgraph.jar" />
+		<pathelement location="${lib.dir}/compoundgraph/CompoundGraph.jar" />
 	</path>
 
 	<path id="test.classpath">

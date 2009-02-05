@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
-import java.util.List;
+import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 
@@ -21,23 +21,23 @@ public interface INotationValidationService extends INotationService {
 	 * <p>
 	 *  <code>hasBeenValidated() == false</code>
 	 *  <code>getValidationReport().isEmpty()</code>
-	 *  <code>getMapBeingValidated().equals(mapToValidate)</code>
+	 *  <code>getCanvasBeingValidated().equals(canvasToValidate)</code>
 	 *  
-	 * @param mapToValidate the map to be validate, which cannot be null.
+	 * @param canvasToValidate the canvas to be validate, which cannot be null.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 * @throws IllegalArgumentException if <code>mapToValidate == null</code>.
 	 */
-	void setMapToValidate(ICanvas mapToValidate);
+	void setCanvasToValidate(ICanvas canvasToValidate);
 	
 	/**
 	 * Provides the map that is being validated. Will return null if no map is currently being validated.
 	 * <p>
 	 * Postconditions:
-	 * <code>(isImplemented() == false) implies (getMapBeingBalidated() == null)</code>
-	 * @return the map being validated or null if none set.
+	 * <code>(isImplemented() == false) implies (getCanvasBeingValidated() == null)</code>
+	 * @return the canvas being validated or null if none set.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	ICanvas getMapBeingValidated();
+	ICanvas getCanvasBeingValidated();
 	
 	/**
 	 * Tests if the validator is ready to perform a validation. This requires that a validator has been implemented
@@ -56,19 +56,14 @@ public interface INotationValidationService extends INotationService {
 	 * <code>isReadyToValidate() == true</code>
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	void validateMap();
+	void validate();
 	
 	/**
-	 * Reports if the currently set map has been validated. This implies that a validation report should be available and that
-	 * isMapValid will provide a meaningful result. 
+	 * Reports if the currently set canvas has been validated. This implies that a validation report should be available. 
 	 * @return true if the map has been validated, false otherwise.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	boolean hasMapBeenValidated();
-	
-	
-	
-	
+	boolean hasBeenValidated();
 	
 	/**
 	 * Provides a human readable report of the outcome of the validation. Error messages and warnings should be obtained here. Each separate
@@ -78,7 +73,7 @@ public interface INotationValidationService extends INotationService {
 	 * <p>
 	 * Preconditions:
 	 * <p>
-	 * <code>hasMapBeenValidated() == true</code>
+	 * <code>hasBeenValidated() == true</code>
 	 * <code>isImplemented() == true</code>
 	 * <p>
 
@@ -89,9 +84,9 @@ public interface INotationValidationService extends INotationService {
 	IValidationReport getValidationReport();
 	
 	/**
-	 * Returns an immutable <code>List</code> of <em>all </em> rules defined for this context.
-	 * @return  An immutable  <code>List</code> of {@link IValidationRuleDefinition}. If no rules are defined
+	 * Returns an immutable <code>Set</code> of <em>all </em> rules defined for this context.
+	 * @return  An immutable  <code>Set</code> of {@link IValidationRuleDefinition}. If no rules are defined
 	 * will return an empty list.
 	 */
-	List<IValidationRuleDefinition> getRules();
+	Set<IValidationRuleDefinition> getRules();
 }
