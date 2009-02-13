@@ -834,4 +834,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		mapManager.close(true);
 		this.compareDatabase(DELETED_CANVAS_DATA_FILE);
 	}
+	
+	@Test
+	public void testDeleteBendPoint () throws Exception {
+		
+		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		assertEquals ( "has  1 bendpoint" , 1 , linkEdge1.getAttribute().numBendPoints() );
+		linkEdge1.getAttribute().removeBendPoint(linkEdge1.getAttribute().getBendPoint(0));
+		assertEquals ( "has 0 bendpoint" , 0 , linkEdge1.getAttribute().numBendPoints() );
+		map1Manager.synchronise() ;
+	}
 }

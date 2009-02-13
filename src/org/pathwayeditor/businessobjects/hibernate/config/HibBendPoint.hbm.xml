@@ -10,7 +10,7 @@
         <properties name="xak1bendpoint" unique="true">
         	<many-to-one name="owningLink" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"
         			insert="false" update="false">
-            	<column name="link_attribute_id" not-null="true" />
+            	<column name="link_attribute_id" not-null="false" />
         	</many-to-one>
         	<property name="creationSerial" type="int">
             	<column name="creation_serial" not-null="true" />
