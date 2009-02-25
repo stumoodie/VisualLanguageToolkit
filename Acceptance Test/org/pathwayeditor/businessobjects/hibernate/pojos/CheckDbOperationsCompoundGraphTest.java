@@ -102,7 +102,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final Size NEW_NODE_SIZE = new Size (25 , 25) ;
 	
 
-	private final static String CREATED_LINK_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLinkEdge.xml" ;
+	private final static String CREATED_LINK_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/createdLinkEdge.xml" ;
 	private final static String CREATED_TWO_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedTwoShapeNode.xml" ;
 	private final static String CREATED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedShapeNode.xml" ;
 	private final static String CREATED_LABEL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CreatedLabelNode.xml" ;
@@ -112,14 +112,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static String COPIED_NODE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CopiedShapeNode.xml" ;
 	private final static String COPY_WHOLE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/CopyWholeGraphData.xml" ;
 	private final static String DELETED_EDGE_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeletedEdge.xml" ;
-	private final static String DELETED_TWO_SHAPES_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeletedTwoShapes.xml" ;
+	private final static String DELETED_TWO_SHAPES_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/deletedTwoShapes.xml" ;
 	private final static String DELETED_ALL_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/DeleteAll.xml" ;
 	private final static String CHANGED_SHAPE_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedShapeData.xml" ;
 	private final static String CHANGED_LABEL_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLabelData.xml" ;
 	private final static String CHANGED_LINK_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedLinkData.xml" ;
 	private final static String CHANGED_CANVAS_DATA_VALIDATION = "Acceptance Test/DBConsistencyTestValidationData/ChangedCanvasData.xml" ;
-	private final static String RESTORED_FROM_DELETED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredDeletedShapeData.xml" ;
-	private final static String RESTORED_FROM_ADDED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredSavedShapeData.xml" ;
+	private final static String RESTORED_FROM_DELETED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/restoredDeletedShapeData.xml" ;
+	private final static String RESTORED_FROM_ADDED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/restoredSavedShapeData.xml" ;
 	private final static String RESTORED_FROM_MOVED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredMovedShapeData.xml" ;
 	private final static String RESTORED_FROM_COPIED_SHAPE_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredCopiedShapeData.xml" ;
 	private final static String RESTORED_FROM_DELETED_LABEL_NODE = "Acceptance Test/DBConsistencyTestValidationData/RestoredDeletedLabelData.xml" ;

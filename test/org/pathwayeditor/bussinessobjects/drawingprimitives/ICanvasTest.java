@@ -74,7 +74,7 @@ public class ICanvasTest {
 		folder = new HibRootFolder (repository) ;
 		mapDiagram = new HibMap (folder, MAP_DIAGRAM_NAME) ;
 		IHibNotationFactory mockNotationSubsystem = this.mockery.mock(IHibNotationFactory.class, "HibNotation"); 
-		canvas = new HibCanvas (mapDiagram.getRepository().getName(), mapDiagram.getINode(), mockNotationSubsystem, mockContext);
+		canvas = new HibCanvas (mapDiagram.getRepository().getName(), mapDiagram.getINode(), mockNotationSubsystem, mockContext, mapDiagram.getName());
 		this.canvas.setGridSize(GRID_SIZE);
 		this.canvas.setGridEnabled(GRID_ENABLED);
 		this.canvas.setSnapToGrid(SNAP_TO_GRID_ENABLED);

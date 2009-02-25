@@ -23,7 +23,7 @@ public interface INotationExportService extends INotationService {
 	 * Returns the recommended suffix. This  information is for the client so that it knows
      * what extension might be preferred and so it can display it in a file dialogue. The
      * export(IMap, File ) method will take the file as it comes and need not append the suffix.
-	 * @return A <code>String</code>. Must not be null.
+	 * @return A <code>String</code>. Must not be null and should not contain a period character.
 	 */
 	String getRecommendedSuffix();
 	
@@ -35,6 +35,6 @@ public interface INotationExportService extends INotationService {
 	 * @param exportFile A {@link File}
 	 * @throws ExportServiceException
 	 */
-	void exportMap(ICanvas map, File exportFile) throws ExportServiceException;
+	void exportMap(ICanvas canvas, File exportFile) throws ExportServiceException;
 	
 }

@@ -11,6 +11,26 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 public interface ICanvas extends IPropertyChangeListenee{
 	
 	/**
+	 * Gets the name of the canvas, which cannot be null.
+	 * @return the name of the canvas, which cannot be null or an empty string.
+	 */
+	String getName();
+	
+	/**
+	 * Tests if the name can be used as a valid canvas name.
+	 * @param name the name to be tested, can be null.
+	 * @return true if the name is valid, false otherwise.
+	 */
+	boolean isValidName(String name);
+	
+	/**
+	 * Sets the canvas name.
+	 * @param name the new name for the canvas, which must be valid.
+	 * @throws IllegalArgumentException if <code>isValidName(name) == false</code>
+	 */
+	void setName(String name);
+	
+	/**
 	 * Name of repository that holds this canvas.
 	 * @return the canvas name.
 	 */

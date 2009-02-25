@@ -19,6 +19,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -111,7 +112,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#MapPersistenceManager(org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#MapPersistenceManager(org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testMapPersistenceManagerNullParam() {
@@ -119,7 +120,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#close(boolean)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#close(boolean)}.
 	 */
 	@Test
 	public final void testForceCloseWhenAlreadyClosed() {
@@ -129,7 +130,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#close(boolean)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#close(boolean)}.
 	 */
 	@Test
 	public final void testNonForceCloseWhenAlreadyClosed() {
@@ -139,7 +140,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#open()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#open()}.
 	 */
 	@Test
 	public final void testOpen() {
@@ -150,7 +151,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#getCanvas()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testGetCanvasWhenClosed() {
@@ -158,7 +159,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#getCanvas()}.
 	 */
 	@Test
 	public final void testGetCanvasWhenOpenAndCanvasPresent() {
@@ -167,7 +168,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#getCanvas()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testGetCanvasWhenOpenAndCanvasAbsent() {
@@ -177,7 +178,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#getMap()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#getMap()}.
 	 */
 	@Test
 	public final void testGetMap() {
@@ -185,7 +186,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#isOpen()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#isOpen()}.
 	 */
 	@Test
 	public final void testIsOpenWhenClosed() {
@@ -193,7 +194,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#isOpen()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#isOpen()}.
 	 */
 	@Test
 	public final void testIsOpenWhenOpen() {
@@ -202,7 +203,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#synchronise()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testSynchroniseWhenClosed() {
@@ -210,7 +211,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#synchronise()}.
 	 */
 	@Test
 	public final void testSynchroniseWhenOpenAndCanvasPresent() {
@@ -219,7 +220,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#synchronise()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#synchronise()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testSynchroniseWhenOpenAndCanvasAbsent() {
@@ -229,7 +230,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testAddListenerWithNullListener() {
@@ -237,7 +238,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testCreateCanvasWhenNotOpen() {
@@ -245,7 +246,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testCreateCanvasWhenOpenAndCanvasPresent() {
@@ -254,7 +255,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)}.
 	 */
 	@Test
 	public final void testCreateCanvasWhenOpenAndCanvasAbsent() {
@@ -266,7 +267,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#doesCanvasExist()}.
 	 */
 	@Test
 	public final void testDoesCanvasExistWhenOpenAndCanvasPresent() {
@@ -275,7 +276,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#doesCanvasExist()}.
 	 */
 	@Test
 	public final void testDoesCanvasExistWhenOpenAndCanvasAbsent() {
@@ -285,7 +286,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#doesCanvasExist()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#doesCanvasExist()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testDoesCanvasExistWhenClosed() {
@@ -293,7 +294,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#deleteCanvas()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testDeleteCanvasWhenClosed() {
@@ -301,7 +302,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#deleteCanvas()}.
 	 */
 	@Test
 	public final void testDeleteCanvasWhenOpenAndPresent() {
@@ -312,7 +313,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#deleteCanvas()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#deleteCanvas()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testDeleteCanvasWhenOpenAndAbsent() {
@@ -322,7 +323,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#listenerIterator()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#listenerIterator()}.
 	 */
 	@Test
 	public final void testListenerIterator() {
@@ -330,7 +331,7 @@ public class MapPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.MapPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.MapPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testRemoveListenerWithNullParameter() {

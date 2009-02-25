@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -127,7 +128,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#RepositoryPersistenceManager(org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler, org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#RepositoryPersistenceManager(org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler, org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testRepositoryPersistenceManagerWithNullRepoHandler() {
@@ -140,7 +141,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getRepository()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#getRepository()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testGetRepository() {
@@ -148,7 +149,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isOpen()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#isOpen()}.
 	 */
 	@Test
 	public final void testIsOpen() {
@@ -156,7 +157,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#open()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#open()}.
 	 */
 	@Test
 	public final void testOpen() {
@@ -166,7 +167,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#close(boolean)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#close(boolean)}.
 	 */
 	@Test
 	public final void testCloseForced() {
@@ -181,7 +182,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#synchronise()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#synchronise()}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testSynchronise() {
@@ -189,7 +190,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testIsValidMapWhenNotOpen() {
@@ -197,7 +198,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test
 	public final void testIsValidMapWhenOpen() {
@@ -207,7 +208,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#isValidMap(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test
 	public final void testIsValidMapWhenOpenAndDiffRepo() {
@@ -223,7 +224,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test(expected=IllegalStateException.class)
 	public final void testGetMapPersistenceManagerWhenNotOpen() {
@@ -231,7 +232,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test
 	public final void testGetMapPersistenceManagerWhenOpen() {
@@ -242,7 +243,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testGetMapPersistenceManagerWhenOpenAndMapNull() {
@@ -251,7 +252,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#getMapPersistenceManager(org.pathwayeditor.businessobjects.repository.IMap)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testGetMapPersistenceManagerWhenOpenAndMapFromAnotherRepo() {
@@ -394,7 +395,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testAddListenerNull() {
@@ -402,7 +403,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#listenerIterator()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#listenerIterator()}.
 	 */
 	@Test
 	public final void testListenerIteratorWhenNone() {
@@ -411,7 +412,7 @@ public class RepositoryPersistenceManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testRemoveListenerNullParam() {

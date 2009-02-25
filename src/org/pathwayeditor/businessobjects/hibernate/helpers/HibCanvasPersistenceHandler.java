@@ -85,10 +85,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
 			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
 		}
-		try {
 			hibNotationFactory.initialise();
-		} catch (InconsistentNotationDefinitionException e) {
-			logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.", e);
+		if(hibNotationFactory.hasInitialisationFailed()) {
+			logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.");
 			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
 			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
 		}
@@ -244,28 +243,23 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
 				.uniqueResult();
 		HibCanvas hibCanvas = null;
-		try {
-			if (canvasTest == 0) {
-				HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
-				hibNotationFactory.initialise();
-				String repoName = this.owningMap.getRepository().getName();
-				int iNode = this.owningMap.getINode();
-				hibCanvas = new HibCanvas(repoName, iNode, hibNotationFactory, notationSubsystem);
-				s.save(hibCanvas);
-				// due to the mappings we must explicitly save the root node
-				// and this saves the rest of the graph tree
-				s.save(hibCanvas.getModel().getRootNode());
-			} else {
-				IllegalStateException e = new IllegalStateException("canvas already exists");
-				logger.error("cannot create canvs", e);
-				throw e;
-			}
-			s.getTransaction().commit();
-			this.loadedCanvas = hibCanvas;
-		} catch (InconsistentNotationDefinitionException e) {
-			s.getTransaction().rollback();
-			throw new IllegalStateException(e);
+		if (canvasTest == 0) {
+			HibNotationFactory hibNotationFactory = new HibNotationFactory(this.fact, notationSubsystem);
+			hibNotationFactory.initialise();
+			String repoName = this.owningMap.getRepository().getName();
+			int iNode = this.owningMap.getINode();
+			hibCanvas = new HibCanvas(repoName, iNode, hibNotationFactory, notationSubsystem, this.getOwningMap().getName());
+			s.save(hibCanvas);
+			// due to the mappings we must explicitly save the root node
+			// and this saves the rest of the graph tree
+			s.save(hibCanvas.getModel().getRootNode());
+		} else {
+			IllegalStateException e = new IllegalStateException("canvas already exists");
+			logger.error("cannot create canvs", e);
+			throw e;
 		}
+		s.getTransaction().commit();
+		this.loadedCanvas = hibCanvas;
 	}
 
 	/*

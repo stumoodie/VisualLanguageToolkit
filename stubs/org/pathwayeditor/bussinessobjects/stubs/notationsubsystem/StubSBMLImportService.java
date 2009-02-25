@@ -4,13 +4,11 @@
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.io.File;
-import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.repository.IFolder;
-import org.pathwayeditor.businessobjects.repository.IMap;
 
 /**
  * @author nhanlon
@@ -39,22 +37,6 @@ public class StubSBMLImportService implements INotationImportService {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#getErrorReports()
-	 */
-	public List<String> getErrorReports() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#getImportedMap()
-	 */
-	public IMap getImportedMap() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#getRecommendedSuffix()
 	 */
 	public String getRecommendedSuffix() {
@@ -64,16 +46,8 @@ public class StubSBMLImportService implements INotationImportService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#importMap(java.io.File, org.pathwayeditor.businessobjects.repository.IFolder)
 	 */
-	public void importMap(File importFile, IFolder saveLocation) {
+	public void importToCanvas(File importFile, ICanvas saveLocation) {
 		System.out.println("File " + importFile.getAbsolutePath() + " was imported");
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#wasImportSuccessful()
-	 */
-	public boolean wasImportSuccessful() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	/* (non-Javadoc)

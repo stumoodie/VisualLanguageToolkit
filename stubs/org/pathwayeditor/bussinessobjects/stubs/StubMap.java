@@ -16,6 +16,7 @@ import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListene
  */
 public class StubMap implements IMap {
 	public static final int INODE = 77;
+	public static final String MAP_NAME = "Test Map";
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getDescription()
@@ -28,7 +29,7 @@ public class StubMap implements IMap {
 	 * @see org.pathwayeditor.businessobjects.repository.IMap#getName()
 	 */
 	public String getName() {
-		throw new UnsupportedOperationException("not implemented!");
+		return MAP_NAME;
 	}
 
 	/* (non-Javadoc)

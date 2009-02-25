@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager;
 
 /**
  * @author smoodie

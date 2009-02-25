@@ -7,7 +7,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -91,7 +90,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim);
 	
 	/**
-	 * As {@link #createNewBendPoint(Location, Size, Size)}, but also defines the index position
+	 * As {@link #createNewBendPoint(Location, Location, Location)}, but also defines the index position
 	 * that the new bendpoint should be inserted into. This allows an index position that will result in an
 	 * append to the list, i.e. <code>position == numBendPoints()</code>.
 	 * @param position the index position which must be valid for the list of bendpoints

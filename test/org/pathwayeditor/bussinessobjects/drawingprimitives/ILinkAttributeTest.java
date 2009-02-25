@@ -108,7 +108,7 @@ public class ILinkAttributeTest {
 		INotationSubsystem stubNotationSubSystem = new StubNotationSubSystem();
 		IMap stubMap = new StubMap();
 		IHibNotationFactory notationFact = new StubHibNotationFactory();
-		mockCanvas = new HibCanvas(stubMap.getRepository().getName(), stubMap.getINode(), notationFact, stubNotationSubSystem);
+		mockCanvas = new HibCanvas(stubMap.getRepository().getName(), stubMap.getINode(), notationFact, stubNotationSubSystem, stubMap.getName());
 		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION, ObjectTypeClassification.SHAPE);
 		HibNotation notation = notationFact.getNotation();
 		notation.addObjectType(objectType);

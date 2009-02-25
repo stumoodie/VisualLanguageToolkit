@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
@@ -42,7 +44,9 @@ public class HibCanvas implements ICanvas, Serializable {
 	private static final boolean DEFAULT_GRIB_ENABLED_VALUE = false;
 	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
 	private static final int MODEL_EMPTY_COUNT = 1; // has just root node when "empty" 
-
+	private static final int MIN_NAME_LEN = 0;
+	private static final Pattern NAME_REGEXP = Pattern.compile("\\w.*\\w");
+	
 	private Long id;
 	private HibNotation hibNotation;
 	private INotationSubsystem notation;
@@ -53,6 +57,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	private Size canvasSize = new Size(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 	private Date created = new Date();
 	private Date modified = new Date();
+	private String canvasName;
 	private int mapINode;
 	private String repository;
 	private HibModel model ;
@@ -74,14 +79,20 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
-	public HibCanvas(String repoName, int iNode, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem) {
+	public HibCanvas(String repoName, int iNode, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem,
+			String canvasName) {
 		this();
+		if(repoName == null || hibNotationFactory == null || notationSubsystem == null) throw new IllegalArgumentException("One or more parameters is null");
+		
+		if(!checkValidName(canvasName)) throw new IllegalArgumentException("Name invalid: " + canvasName);
+		
 		this.repository = repoName;
 		this.mapINode = iNode;
 		this.notation = notationSubsystem;
 		this.hibNotation = hibNotationFactory.getNotation();
 		IRootObjectType rootObjectType = notationSubsystem.getSyntaxService().getRootObjectType();
 		this.model = new HibModel(this, rootObjectType, hibNotationFactory);
+		this.canvasName = canvasName;
 	}
 	
 	public HibCanvas(String newRepoName, int newINode, HibCanvas other) {
@@ -91,6 +102,7 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.hibNotation = other.hibNotation;
 		this.gridSize = other.getGridSize();
 		this.gridEnabled = other.gridEnabled;
+		this.canvasName = other.canvasName;
 		this.snapToGridEnabled = other.snapToGridEnabled;
 		this.backgroundColour = other.getBackgroundColour();
 		this.canvasSize = other.getCanvasSize();
@@ -591,5 +603,32 @@ public class HibCanvas implements ICanvas, Serializable {
 	 */
 	public int getINode() {
 		return this.mapINode;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getName()
+	 */
+	public String getName() {
+		return this.canvasName;
+	}
+	
+	public boolean isValidName(String name){
+		return checkValidName(name);
+	}
+	
+	public static boolean checkValidName(String name){
+		boolean retVal = false;
+		if(name != null && name.length() > MIN_NAME_LEN){
+			// string not null and not empty
+			final Matcher matcher = NAME_REGEXP.matcher(name);
+			retVal = matcher.matches();
+		}
+		return retVal;
+	}
+	
+	public void setName(String name){
+		if(!isValidName(name)) throw new IllegalArgumentException("Invalid name: " + name);
+		
+		this.canvasName = name;
 	}
 }

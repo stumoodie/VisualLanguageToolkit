@@ -19,6 +19,7 @@ public class FallbackHibNotationFactory implements IHibNotationFactory {
 	private final HibNotation hibNotation;
 	private final Map<Integer, HibObjectType> objectTypeLookup;
 	private final INotationSubsystem notationSubsystem;
+	private boolean initialised = false;
 	
 	/**
 	 * @param hibNotation
@@ -62,10 +63,12 @@ public class FallbackHibNotationFactory implements IHibNotationFactory {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#initialise()
 	 */
-	public void initialise() throws InconsistentNotationDefinitionException {
+	public void initialise() {
+		this.initialised = false;
 		for(HibObjectType objectType : this.hibNotation.getObjectTypes()) {
 			this.objectTypeLookup.put(objectType.getUniqueId(), objectType);
 		}
+		this.initialised = true;
 	}
 
 	/* (non-Javadoc)
@@ -84,6 +87,21 @@ public class FallbackHibNotationFactory implements IHibNotationFactory {
 			retVal = this.objectTypeLookup.containsKey(objectType.getUniqueId());
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#hasInitialisationFailed()
+	 */
+	public boolean hasInitialisationFailed() {
+		// this can never fail in normal operation (i.e. ignoring bugs)
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#isInitialised()
+	 */
+	public boolean isInitialised() {
+		return this.initialised;
 	}
 
 }

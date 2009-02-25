@@ -189,6 +189,7 @@
 	<!-- CANVAS -->
 	<table name="Canvas">
 		<column>id</column>
+		<column>name</column>
 		<column>map_inode</column>
 		<column>context_id</column>
 		<column>grid_x</column>
@@ -209,6 +210,7 @@
 		<column>repository_name</column>
 		<row>
 			<value>100001</value>
+			<value>name</value>
 			<value>4</value>
 			<value>100001</value>
 			<value>10</value>

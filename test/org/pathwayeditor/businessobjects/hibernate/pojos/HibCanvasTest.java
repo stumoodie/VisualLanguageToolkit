@@ -19,7 +19,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationConversionService;
@@ -48,6 +47,12 @@ public class HibCanvasTest {
 	private static final String EXPECTED_ALT_REPO_NAME = "altRepo";
 	private static final int EXPECTED_INODE = 99;
 	private static final int EXPECTED_ALT_INODE = 1;
+	private static final String VALID_MAP_NAME1 = "Test Map";
+	private static final String VALID_MAP_NAME2 = "1Test Map2";
+	private static final String INVALID_MAP_NAME1 = "Test Map ";
+	private static final String INVALID_MAP_NAME2 = " Test Map";
+	private static final String INVALID_MAP_NAME3 = "  ";
+//	private static final String EMPTY_MAP_NAME = "";
 
 	private ICanvas testInstance;
 	private ICanvas otherTestInstance;
@@ -64,10 +69,10 @@ public class HibCanvasTest {
 		notationSubsystem = new StubNotationSubSystem();
 		this.map1.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map1.setINode(EXPECTED_INODE);
-		this.testInstance = new HibCanvas(map1.getRepository().getName(), map1.getINode(), hibNotationFactory, notationSubsystem);
+		this.testInstance = new HibCanvas(map1.getRepository().getName(), map1.getINode(), hibNotationFactory, notationSubsystem, map1.getName());
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem(), map2.getName());
 	}
 
 	@After
@@ -84,18 +89,18 @@ public class HibCanvasTest {
 	public void testEquals() {
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem(), map2.getName());
 		assertTrue("same instance", this.testInstance.equals(this.testInstance));
 		assertFalse("false if null", this.testInstance.equals(null));
 		assertFalse("false if node same", this.testInstance.equals(null));
 		assertTrue("same instance", this.testInstance.equals(this.otherTestInstance));
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertFalse("same instance", this.testInstance.equals(this.otherTestInstance));
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertFalse("same instance", this.testInstance.equals(this.otherTestInstance));
 	}
 
@@ -103,19 +108,63 @@ public class HibCanvasTest {
 	public void testHashCode() {
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem());
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem(), map2.getName());
 		assertEquals("same instance", this.testInstance.hashCode(), this.testInstance.hashCode());
 		assertTrue("hashes equal when equal", this.testInstance.hashCode() == this.otherTestInstance.hashCode());
 		this.map2.setRepositoryName(EXPECTED_ALT_REPO_NAME);
 		this.map2.setINode(EXPECTED_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertTrue("hashes not same when not equal", this.testInstance.hashCode() != this.otherTestInstance.hashCode());
 		this.map2.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map2.setINode(EXPECTED_ALT_INODE);
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertTrue("hashes not same when not equal", this.testInstance.hashCode() != this.otherTestInstance.hashCode());
 	}
 
+	@Test(expected=IllegalArgumentException.class)
+	public void testInvalidNameInConstructor(){
+		map2.setName(INVALID_MAP_NAME1);
+		new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem(), map2.getName());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testNullNameInConstructor(){
+		map2.setName(null);
+		new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, new InnerStubNotationSubsystem(), map2.getName());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNameWithInvalidName1(){
+		this.testInstance.setName(INVALID_MAP_NAME1);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNameWithInvalidName2(){
+		this.testInstance.setName(INVALID_MAP_NAME2);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNameWithInvalidName3(){
+		this.testInstance.setName(INVALID_MAP_NAME3);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNameWithNull(){
+		this.testInstance.setName(null);
+	}
+	
+	@Test
+	public void testSetNameWithValidName1(){
+		this.testInstance.setName(VALID_MAP_NAME1);
+		assertEquals("valid name", VALID_MAP_NAME1, this.testInstance.getName());
+	}
+	
+	@Test
+	public void testSetNameWithValidName2(){
+		this.testInstance.setName(VALID_MAP_NAME2);
+		assertEquals("valid name", VALID_MAP_NAME2, this.testInstance.getName());
+	}
+	
 	@Test
 	public void testCanCopyHereWithNull() {
 		assertFalse("can't copy here if null", this.testInstance.canCopyHere(null));
@@ -138,7 +187,7 @@ public class HibCanvasTest {
 
 	@Test
 	public void testCanCopyHereWithEmptyCorrectCanvas() {
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertTrue("can copy here", this.otherTestInstance.canCopyHere(this.testInstance));
 	}
 
@@ -154,7 +203,7 @@ public class HibCanvasTest {
 		linkFact.setObjectType(syntaxService.getLinkObjectType(StubLinkAObjectType.UNIQUE_ID));
 		linkFact.setShapeNodePair(node1, node2);
 		linkFact.canCreateLink();
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		assertTrue("can copy here", this.otherTestInstance.canCopyHere(this.testInstance));
 	}
 
@@ -180,7 +229,7 @@ public class HibCanvasTest {
 
 	@Test
 	public void testCopyHereWithEmptyCorrectCanvas() {
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		this.otherTestInstance.copyHere(this.testInstance);
 		assertTrue("still empty after copy", this.otherTestInstance.isEmpty());
 	}
@@ -199,7 +248,7 @@ public class HibCanvasTest {
 		linkFact.canCreateLink();
 		int expectedNodes = this.testInstance.getModel().numDrawingNodes();
 		int expectedLinks = this.testInstance.getModel().numLinkEdges();
-		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem);
+		this.otherTestInstance = new HibCanvas(map2.getRepository().getName(), map2.getINode(), hibNotationFactory, notationSubsystem, map2.getName());
 		this.otherTestInstance.copyHere(this.testInstance);
 		assertEquals("expected nodes copied", expectedNodes, this.otherTestInstance.getModel().numDrawingNodes());
 		assertEquals("expected links copied", expectedLinks, this.otherTestInstance.getModel().numLinkEdges());
@@ -213,6 +262,7 @@ public class HibCanvasTest {
 	private class InnerStubMap implements IMap {
 		protected int stubINode;
 		protected String stubRepositoryName;
+		private String name = VALID_MAP_NAME1;
 
 		public void setINode(int iNode) {
 			this.stubINode = iNode;
@@ -239,9 +289,14 @@ public class HibCanvasTest {
 		 */
 		public String getName() {
 
-			return null;
+			return this.name;
 		}
 
+		public void setName(String name){
+			this.name = name;
+		}
+		
+		
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -429,7 +484,7 @@ public class HibCanvasTest {
 		 * 
 		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#initialise()
 		 */
-		public void initialise() throws InconsistentNotationDefinitionException {
+		public void initialise() {
 
 		}
 
@@ -441,6 +496,20 @@ public class HibCanvasTest {
 		public boolean isFallback() {
 
 			return false;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#hasInitialisationFailed()
+		 */
+		public boolean hasInitialisationFailed() {
+			return false;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#isInitialised()
+		 */
+		public boolean isInitialised() {
+			return true;
 		}
 
 	}

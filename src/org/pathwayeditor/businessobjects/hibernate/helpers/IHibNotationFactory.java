@@ -9,6 +9,11 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
+ * The hibernate notatation factory provides a mapping between the object type supplied by the notation subsystem
+ * and a persistent copy that is stored and can be used to populate a fall-back notation subsystem. The notation subsystem has
+ * 3 states, Uninitialised, Initialised, Failed. The latter occurs when an error occurs matching the Notation Subsystem with the
+ * persistent version. This shoudln't happen and will only occur if releases of a notation susbsystem are not named and versioned
+ * appropriately.   
  * @author smoodie
  *
  */
@@ -16,10 +21,22 @@ public interface IHibNotationFactory {
 
 	/**
 	 * Initialises the notation factory and reconciles the persisted notation definition
-	 * with that supplied by the application.
-	 * @throws InconsistentNotationDefinitionException if the application and persisted notation definitions cannot be reconciled.
+	 * with that supplied by the application. This will result in <code>isInitialised()==true</code> after completion.
+	 * If there were errors during initialisation, then <code>hasInitialisationFailed()==true</code>. 
 	 */
-	void initialise() throws InconsistentNotationDefinitionException;
+	void initialise();
+	
+	/**
+	 * Tests if the factory has been initialised.
+	 * @return true if it has, false otherwise.
+	 */
+	boolean isInitialised();
+	
+	/**
+	 * Tests if initialisation has been attempted and failed.
+	 * @return true if initialisation has failed, false otherwise.
+	 */
+	boolean hasInitialisationFailed();
 	
 	/**
 	 * Gets the the notation subsystem that this mapping corresponds to. 

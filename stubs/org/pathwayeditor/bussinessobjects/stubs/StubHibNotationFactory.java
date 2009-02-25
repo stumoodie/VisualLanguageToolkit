@@ -5,7 +5,6 @@ package org.pathwayeditor.bussinessobjects.stubs;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -53,7 +52,7 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#initialise()
 	 */
-	public void initialise() throws InconsistentNotationDefinitionException {
+	public void initialise() {
 		
 	}
 
@@ -62,6 +61,20 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	 */
 	public boolean isFallback() {
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#hasInitialisationFailed()
+	 */
+	public boolean hasInitialisationFailed() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#isInitialised()
+	 */
+	public boolean isInitialised() {
+		return true;
 	}
 
 }

@@ -34,7 +34,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersiste
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.businessobjects.management.RepositoryPersistenceManager;
+import org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
 
 /**

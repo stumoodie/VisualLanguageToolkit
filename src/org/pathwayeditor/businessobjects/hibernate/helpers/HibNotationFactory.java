@@ -29,7 +29,9 @@ public class HibNotationFactory implements IHibNotationFactory {
 	private final INotationSubsystem notationSubsystem;
 	private final SessionFactory factory;
 	private HibNotation notation = null;
-	private final Map<IObjectType, HibObjectType> objectTypeMapping; 
+	private final Map<IObjectType, HibObjectType> objectTypeMapping;
+	private boolean initialised = false;
+	private boolean initialisationfailed = false;
 	
 	public HibNotationFactory(SessionFactory factory, INotationSubsystem notationSubsystem){
 		if(factory == null || notationSubsystem == null) throw new IllegalArgumentException("Arguments cannot be null");
@@ -40,11 +42,14 @@ public class HibNotationFactory implements IHibNotationFactory {
 		this.objectTypeMapping = new HashMap<IObjectType, HibObjectType>();
 	}
 
-	public void initialise() throws InconsistentNotationDefinitionException{
+	public void initialise() {
+		this.initialisationfailed = false;
+		this.initialised = false;
 		if(!doesNotationExist()){
 			storeNotation();
 		}
 		loadNotation();
+		this.initialised = true;
 	}
 	
 	
@@ -77,7 +82,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 		return qry;
 	}
 	
-	private void loadNotation() throws InconsistentNotationDefinitionException {
+	private void loadNotation() {
 		final Query qry = createNotationQuery("loadNotation", this.notationSubsystem.getNotation());
 		this.notation = (HibNotation)qry.uniqueResult();
 		if(validateLoadedNotation(this.notationSubsystem.getNotation(), this.notation)) {
@@ -88,12 +93,12 @@ public class HibNotationFactory implements IHibNotationFactory {
 					this.objectTypeMapping.put(objectType, hibObjectType);
 				}
 				else {
-					throw new InconsistentNotationDefinitionException("The database and application object types are inconsistent");
+					this.initialisationfailed = true;
 				}
 			}
 		}
 		else {
-			throw new InconsistentNotationDefinitionException("The database and application notations subsystems are inconsistent");
+			this.initialisationfailed = true;
 		}
 	}
 	
@@ -159,6 +164,20 @@ public class HibNotationFactory implements IHibNotationFactory {
 			retVal = this.objectTypeMapping.containsKey(objectType);
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#hasInitialisationFailed()
+	 */
+	public boolean hasInitialisationFailed() {
+		return this.initialisationfailed;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#isInitialised()
+	 */
+	public boolean isInitialised() {
+		return this.initialised;
 	}
 
 }

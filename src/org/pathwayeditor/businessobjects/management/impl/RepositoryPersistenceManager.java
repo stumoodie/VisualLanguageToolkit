@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.management;
+package org.pathwayeditor.businessobjects.management.impl;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory;
+import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
+import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;

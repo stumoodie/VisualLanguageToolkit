@@ -22,6 +22,10 @@
             <column name="context_id" not-null="true" />
         </many-to-one>
 
+		<property name="name" type="string" access="property">
+			<column name="name" not-null="true"/>
+		</property>
+
         <property name="gridX" type="int" access="property">
             <column name="grid_x" not-null="true" />
         </property>
