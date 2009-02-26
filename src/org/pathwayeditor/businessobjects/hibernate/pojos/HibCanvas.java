@@ -45,7 +45,8 @@ public class HibCanvas implements ICanvas, Serializable {
 	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
 	private static final int MODEL_EMPTY_COUNT = 1; // has just root node when "empty" 
 	private static final int MIN_NAME_LEN = 0;
-	private static final Pattern NAME_REGEXP = Pattern.compile("\\w.*");
+	private static final Pattern NAME_REGEXP = Pattern.compile("\\w.*\\w");
+	private static final Pattern ONE_CHAR_NAME_REGEXP = Pattern.compile("\\w.*");
 	
 	private Long id;
 	private HibNotation hibNotation;
@@ -618,7 +619,11 @@ public class HibCanvas implements ICanvas, Serializable {
 	
 	public static boolean checkValidName(String name){
 		boolean retVal = false;
-		if(name != null && name.length() > MIN_NAME_LEN){
+		if(name!=null&&name.length()==1){
+			final Matcher matcher = ONE_CHAR_NAME_REGEXP.matcher(name);
+			retVal = matcher.matches();
+		}
+		else if(name != null && name.length() > MIN_NAME_LEN){
 			// string not null and not empty
 			final Matcher matcher = NAME_REGEXP.matcher(name);
 			retVal = matcher.matches();

@@ -49,6 +49,7 @@ public class HibCanvasTest {
 	private static final int EXPECTED_ALT_INODE = 1;
 	private static final String VALID_MAP_NAME1 = "Test Map";
 	private static final String VALID_MAP_NAME2 = "1Test Map2";
+	private static final String VALID_MAP_NAME3 = "A";
 	private static final String INVALID_MAP_NAME1 = "Test Map ";
 	private static final String INVALID_MAP_NAME2 = " Test Map";
 	private static final String INVALID_MAP_NAME3 = "  ";
@@ -163,6 +164,11 @@ public class HibCanvasTest {
 	public void testSetNameWithValidName2(){
 		this.testInstance.setName(VALID_MAP_NAME2);
 		assertEquals("valid name", VALID_MAP_NAME2, this.testInstance.getName());
+	}
+	@Test
+	public void testSetNameWithSingleCharNameIsValid(){
+		this.testInstance.setName(VALID_MAP_NAME3);
+		assertEquals("valid name", VALID_MAP_NAME3, this.testInstance.getName());
 	}
 	
 	@Test
