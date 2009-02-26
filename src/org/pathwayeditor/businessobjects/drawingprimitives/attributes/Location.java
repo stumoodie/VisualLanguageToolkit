@@ -67,6 +67,10 @@ public final class Location {
 		return new Location(this.x + translation.x, this.y + translation.y);
 	}
 
+	public Location difference(Location otherLocation){
+		return new Location(this.x - otherLocation.getX(), this.y - otherLocation.getY());
+	}
+	
 	public Location negate() {
 		return new Location(-this.x, -this.y);
 	}

@@ -57,6 +57,15 @@ public interface ILinkEdge extends IDrawingElement {
 	 */
 	ILinkAttribute getAttribute();
 	
-	
+	/**
+	 * Get submodel that owns this linkedge.
+	 * @return the submodel, which cannot be null
+	 */
 	ISubModel getOwningSubModel();
+	
+	/**
+	 * Does this link have the same node as its source and target?
+	 * @return true if the source and target are the same, false otherwise.
+	 */
+	boolean isSelfEdge();
 }
