@@ -45,7 +45,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	private static final boolean DEFAULT_SNAP_TO_GRID_VALUE = false;
 	private static final int MODEL_EMPTY_COUNT = 1; // has just root node when "empty" 
 	private static final int MIN_NAME_LEN = 0;
-	private static final Pattern NAME_REGEXP = Pattern.compile("\\w.*\\w");
+	private static final Pattern NAME_REGEXP = Pattern.compile("\\w.*");
 	
 	private Long id;
 	private HibNotation hibNotation;
