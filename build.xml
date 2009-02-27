@@ -18,7 +18,10 @@
 	<property name="lib.dir" value="./lib" />
 	<property name="application.lib.bo.dir" value="../EPE2/libs/businessObjects" />
 	<property name="application.dir" value="../EPE2/" />
+	<property name="epefeature.dir" value="../EPE_Feature" />
 	<property name="application.db.dir" value="${application.dir}/DB" />
+	<property name="epefeature.db1.dir" value="${epefeature.dir}/Database/DB" />
+	<property name="epefeature.db2.dir" value="${epefeature.dir}/Database/EPE2.app/Contents/MacOS/DB" />
 	<property name="target" value="1.5" />
 	<property name="source" value="1.5" />
 	<property name="bo.db.dir" value="DB" />
@@ -237,6 +240,12 @@
 	</target>
 	<target name = "copydb">
 		<copy todir="${application.db.dir}" overwrite="true">
+			<fileset dir="${bo.db.dir}"/>
+		</copy>
+		<copy todir="${epefeature.db1.dir}" overwrite="true">
+			<fileset dir="${bo.db.dir}"/>
+		</copy>
+		<copy todir="${epefeature.db2.dir}" overwrite="true">
 			<fileset dir="${bo.db.dir}"/>
 		</copy>
 	</target>
