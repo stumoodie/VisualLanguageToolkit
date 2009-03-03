@@ -132,7 +132,7 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.setLineColour(shapeDefaults.getLineColour());
 		this.setLineStyle(shapeDefaults.getLineStyle());
 		this.setLineWidth(shapeDefaults.getLineWidth());
-		this.setName(shapeDefaults.getName());
+		this.setName(shapeDefaults.getName() + this.creationSerial);
 		this.setUrl(shapeDefaults.getURL());
 		this.setPrimitiveShape(shapeDefaults.getShapeType());
 		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this.getCanvas());

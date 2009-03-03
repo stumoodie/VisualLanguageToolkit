@@ -132,7 +132,7 @@ s	 */
 		this.setLineColor(linkAttributeDefaults.getLineColour());
 		this.setLineStyle(linkAttributeDefaults.getLineStyle());
 		this.setLineWidth(linkAttributeDefaults.getLineWidth());
-		this.setName(linkAttributeDefaults.getName());
+		this.setName(linkAttributeDefaults.getName() + this.creationSerial);
 		this.setDescription(linkAttributeDefaults.getDescription());
 		this.setDetailedDescription(linkAttributeDefaults.getDetailedDescription());
 		this.setUrl(linkAttributeDefaults.getUrl());

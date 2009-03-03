@@ -113,7 +113,7 @@ public class IShapeAttributeTest {
 	@Test
 	public void testGetName () throws Exception 
 	{
-		assertEquals ( "correctName" , SHAPE_NAME , shapeAttribute.getName()) ;
+		assertEquals ( "correctName" , SHAPE_NAME + CREATION_SERIAL , shapeAttribute.getName()) ;
 	}
 	
 	@Test

@@ -103,7 +103,6 @@
 	</table>
 <table name="ShapeAttribute">
 		<column>canvas_id</column>
-		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
 		<column>detailed_description</column>
@@ -125,7 +124,6 @@
 		<column>name_visible</column>
 		<row>
 			<value>100001</value>
-			<value>shapeName1</value>
 			<value>100001</value>
 			<value>descr1</value>
 			<value>detailed descr1</value>
@@ -148,7 +146,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName2</value>
 			<value>100002</value>
 			<value>descr2</value>
 			<value>detailed descr2</value>
@@ -171,7 +168,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName3</value>
 			<value>100003</value>
 			<value>descr3</value>
 			<value>detailed descr3</value>
@@ -194,7 +190,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName4</value>
 			<value>100004</value>
 			<value>descr4</value>
 			<value>detailed descr4</value>
@@ -217,7 +212,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName5</value>
 			<value>100001</value>
 			<value>descr5</value>
 			<value>detailed descr5</value>
@@ -240,7 +234,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName6</value>
 			<value>100002</value>
 			<value>descr6</value>
 			<value>detailed descr6</value>
@@ -263,7 +256,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName7</value>
 			<value>100003</value>
 			<value>descr7</value>
 			<value>detailed descr7</value>
@@ -286,7 +278,6 @@
 		</row>
 		<row>
 			<value>100001</value>
-			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>
 			<value>detailed descr8</value>
@@ -309,7 +300,6 @@
 		</row>	
 		<row>
 			<value>100001</value>
-			<value>name</value>
 			<value>100001</value>
 			<value>description</value>
 			<value>detailed description</value>
@@ -332,7 +322,6 @@
 		</row>	
 		<row>
 			<value>100001</value>
-			<value>name</value>
 			<value>100001</value>
 			<value>description</value>
 			<value>detailed description</value>
