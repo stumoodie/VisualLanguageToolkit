@@ -34,6 +34,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 */
 	private static final String MANAGER_NOT_OPEN = "Manager not open";
 	private final Map<IMap, IMapPersistenceManager> openMaps;
+	private final Map<Integer, IMapPersistenceManager> openPersistenceManagers;
 	private final ICanvasPersistenceHandlerFactory canvasPersistenceHandlerFactory;
 	private final IRepositoryPersistenceHandler repoPersistenceHandler;
 	private final AtomicBoolean open;
@@ -45,6 +46,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 		this.canvasPersistenceHandlerFactory = canvasPersistenceHandlerFactory;
 		this.repoPersistenceHandler = repoPersistenceHandler;
 		this.openMaps = new ConcurrentHashMap<IMap, IMapPersistenceManager>();
+		this.openPersistenceManagers = new ConcurrentHashMap<Integer, IMapPersistenceManager>();
 		this.open = new AtomicBoolean(false);
 		this.listeners = new LinkedList<IPersistenceManagerStatusListener>();
 	}
@@ -144,6 +146,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 			ICanvasPersistenceHandler persistenceHandler = this.canvasPersistenceHandlerFactory.createPersistenceHandler();
 			retVal = new MapPersistenceManager(persistenceHandler);
 			this.openMaps.put(map, retVal);
+			this.openPersistenceManagers.put(map.getINode(), retVal);
 		}
 		return retVal;
 	}
@@ -171,5 +174,14 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 		if(listener == null) throw new IllegalArgumentException("listener cannot be null");
 
 		this.listeners.remove(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager#getMapPersistenceManager(java.lang.Long)
+	 */
+	public IMapPersistenceManager getMapPersistenceManager(int inode) {
+		if(openPersistenceManagers.get(new Integer(inode))==null)
+			throw new IllegalArgumentException("No Map Open with this ID");
+		return openPersistenceManagers.get(new Integer(inode));
 	}
 }

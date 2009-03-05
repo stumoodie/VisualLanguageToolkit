@@ -39,4 +39,12 @@ public interface IRepositoryPersistenceManager extends IPersistenceManager {
 	 * @throws IllegalArgumentException if <code>isValidMap(map) == false</code>.
 	 */
 	IMapPersistenceManager getMapPersistenceManager(IMap map);
+	
+	
+	/**
+	 * @param iNode the inode which matches that given to both the map and the canvas managed by this MapPersistenceManager
+	 * @return a MapPersistenceManager from the Map of open MapPersistenceManagers. Never returns null
+	 * @throws IllegalArgumentException if <code>getMapPersistenceManager(Long iNode)==null</code>.
+	 */
+	IMapPersistenceManager getMapPersistenceManager(int iNode);
 }
