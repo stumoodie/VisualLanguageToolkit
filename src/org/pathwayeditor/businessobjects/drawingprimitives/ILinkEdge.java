@@ -4,6 +4,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 public interface ILinkEdge extends IDrawingElement {
 	
 	/**
+	 *  Makes a set of bendpoints which symbolises that a linkedge links a node to itself
+	 */
+	void makeSelfBendPoints();
+	/**
 	 * Gets the index number that Label has on the graph.
 	 * @return the number of links.
 	 */

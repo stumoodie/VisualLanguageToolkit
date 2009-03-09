@@ -40,14 +40,6 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.changeOutNode();
 		this.attribute = linkAttribute;
 		this.attribute.setLinkEdge(this);
-		if(inNode==outNode){//selfLink
-			Location start=this.getSourceShape().getAttribute().getLocation();
-			int startHeight=this.getSourceShape().getAttribute().getHeight();
-			int startWidth = this.getSourceShape().getAttribute().getWidth();
-			attribute.createNewBendPoint(start,new Location(startWidth,-1*startHeight*2/3),new Location(0,0));
-			attribute.createNewBendPoint(start,new Location(startWidth*2,0),new Location(0,startHeight*2/3));
-			//attribute.createNewBendPoint(start,new Location(start.getX()+20,start.getY()),new Location(start.getX(),start.getY()+20));
-		}
 		this.owningChildGraph.addNewEdge(this);
 	}
 	
@@ -264,6 +256,18 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 
 	public boolean isValid() {
 		return this.attribute != null && this.attribute.isValid();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#makeSelfBendPoints()
+	 */
+	public void makeSelfBendPoints() {
+		Location start=this.getSourceShape().getAttribute().getLocation();
+		int startHeight=this.getSourceShape().getAttribute().getHeight();
+		int startWidth = this.getSourceShape().getAttribute().getWidth();
+		attribute.createNewBendPoint(start,new Location(startWidth,-1*startHeight*2/3),new Location(0,0));
+		attribute.createNewBendPoint(start,new Location(startWidth*2,0),new Location(0,startHeight*2/3));
+		//attribute.createNewBendPoint(start,new Location(start.getX()+20,start.getY()),new Location(start.getX(),start.getY()+20));
 	}
 }
 
