@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
@@ -39,6 +40,14 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.changeOutNode();
 		this.attribute = linkAttribute;
 		this.attribute.setLinkEdge(this);
+		if(inNode==outNode){//selfLink
+			Location start=this.getSourceShape().getAttribute().getLocation();
+			int startHeight=this.getSourceShape().getAttribute().getHeight();
+			int startWidth = this.getSourceShape().getAttribute().getWidth();
+			attribute.createNewBendPoint(start,new Location(startWidth,-1*startHeight*2/3),new Location(0,0));
+			attribute.createNewBendPoint(start,new Location(startWidth*2,0),new Location(0,startHeight*2/3));
+			//attribute.createNewBendPoint(start,new Location(start.getX()+20,start.getY()),new Location(start.getX(),start.getY()+20));
+		}
 		this.owningChildGraph.addNewEdge(this);
 	}
 	
