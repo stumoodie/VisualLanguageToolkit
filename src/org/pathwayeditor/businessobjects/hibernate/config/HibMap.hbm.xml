@@ -19,7 +19,7 @@
         <property name="description" type="string">
             <column name="description" length="2048" not-null="true" />
         </property>
-        <many-to-one name="repository" class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+        <many-to-one name="repository" class = "org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository" cascade="all">
 			<column name="repository_id" not-null="false" />
 		</many-to-one>
 		<property name="INode" type="int" access="property">
