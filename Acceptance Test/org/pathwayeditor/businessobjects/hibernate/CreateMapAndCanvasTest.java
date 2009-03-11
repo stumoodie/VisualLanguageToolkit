@@ -4,6 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
@@ -40,6 +41,7 @@ public class CreateMapAndCanvasTest extends GenericTester {
 		return dbCanvas;
 	}
 	
+	@Ignore
 	@Test
 	public void testCreateAndDeleteMapInOneGo () throws Exception
 	{
