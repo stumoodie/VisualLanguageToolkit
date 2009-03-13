@@ -47,4 +47,13 @@ public interface IRepositoryPersistenceManager extends IPersistenceManager {
 	 * @throws IllegalArgumentException if <code>getMapPersistenceManager(Long iNode)==null</code>.
 	 */
 	IMapPersistenceManager getMapPersistenceManager(int iNode);
+
+
+	/**
+	 * Given a map, its being deleted from the repository. In order for this to be allowed it means that
+	 * the map has no ties with the repository whatsoever and there is no Canvas associated with the map.
+	 * @param mapToDelete
+	 * @throws IllegalArgumentException if the map is associated with a folder or a repository and a canvas exists.
+	 */
+	void removeMapFromRepository ( IMap mapToDelete);
 }

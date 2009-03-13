@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.management;
 
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 
 /**
@@ -40,4 +41,10 @@ public interface IRepositoryPersistenceHandler {
 	 * Unloads the repository so that <code>getLoadedRepository() == null</code>.
 	 */
 	void reset();
+
+	/**
+	 * Deletes the given map from the database.
+	 * @param mapToDelete
+	 */
+	void deleteMap(IMap mapToDelete);
 }
