@@ -79,7 +79,7 @@ public abstract class GenericTester {
 	protected abstract void doAdditionalTearDown();
 
 	@Before
-	public void setUp() throws Throwable {
+	public final void setUp() throws Throwable {
 		try {
 			dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 			dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
@@ -116,7 +116,7 @@ public abstract class GenericTester {
 	 * @throws java.lang.Exception
 	 */
 	@After
-	public void tearDown() throws Throwable {
+	public final void tearDown() throws Throwable {
 		try {
 			doAdditionalTearDown();
 			if(bofac != null) {

@@ -213,12 +213,11 @@ public interface IFolder extends IRepositoryItem {
 	boolean canMoveMap(IMap origMap);
 	
 	/**
-	 * Adds a copy of the map to the new folder and orphans the original map.
-	 * copy.equals(original) returns true.
-	 *  Requires that the folder does not already contain the map. 
+	 * Moves the map to this location within the repository. 
+	 *  Requires that the folder does not already contain this map name. 
 	 * @param newMap The new map to add. Cannot be null.
 	 * @return the copy of the original map 
-	 * @throws IllegalArgumentException if <code>containsMap(newMap) == true</code> or if
+	 * @throws IllegalArgumentException if <code>coanMoveMap(newMap.getName()) == true</code> or if
 	 * <code>newMap</code> is null.
 	 */
 	IMap moveMap(IMap newMap);

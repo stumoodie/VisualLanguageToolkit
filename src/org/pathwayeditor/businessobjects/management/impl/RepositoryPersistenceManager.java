@@ -184,23 +184,4 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 			throw new IllegalArgumentException("No Map Open with this ID");
 		return openPersistenceManagers.get(new Integer(inode));
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager#removeMapFromRepository(org.pathwayeditor.businessobjects.repository.IMap)
-	 */
-	public void removeMapFromRepository(IMap mapToDelete) {
-		if ( mapToDelete.getOwner()!= null || mapToDelete.getRepository()!=null)
-			throw new IllegalArgumentException("This map is still assosiated with a folder or the repository.");
-			
-		//Looks like there is no way to open a map unassociated with a folder. I could not find one at least.
-		//Given that this method is being called only from RepoDeletehandler which deletes the canvas first, 
-		//and that this is a temporarily solution, I think for the time being this we can live without this check. NT
-//		IMapPersistenceManager mapManager = this.getMapPersistenceManager(mapToDelete) ;
-//		if ( mapManager.doesCanvasExist() )
-//			throw new IllegalArgumentException("This map is still has a canvas associated with.");
-		
-		this.repoPersistenceHandler.deleteMap(mapToDelete);
-		
-			
-	}
 }

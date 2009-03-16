@@ -12,7 +12,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
 import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
-import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 
 /**
@@ -111,18 +110,5 @@ public class HibRepositoryPersistenceHandler implements	IRepositoryPersistenceHa
 		s.saveOrUpdate(this.rep);
 		initialiseRepository(hibRep);
 		s.getTransaction().commit();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler#deleteMap(org.pathwayeditor.businessobjects.repository.IMap)
-	 */
-	public void deleteMap(IMap mapToDelete) {
-		Session s = this.fact.getCurrentSession();
-		s.getTransaction().begin();
-		HibRepository hibRep = (HibRepository)this.rep; 
-		s.delete(mapToDelete);
-		initialiseRepository(hibRep);
-		s.getTransaction().commit();
-		
 	}
 }
