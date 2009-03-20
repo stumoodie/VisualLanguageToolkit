@@ -58,7 +58,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
-		setDefaults(terminusDefn.getLinkTerminusDefaults());
+		setDefaults(terminusDefn.getDefaultAttributes());
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
 		}
 		this.terminusDefn = terminusDefn;
-		final Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getLinkTerminusDefaults().propertyDefinitionIterator();
+		final Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getDefaultAttributes().propertyDefinitionIterator();
 		int propCntr = 0;
 		while(propDefnIter.hasNext()) {
 			IPropertyDefinition definition = propDefnIter.next();
@@ -462,7 +462,7 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		boolean retVal = true;
 		if(this.linkAttribute != null && this.terminusDefn != null && terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
 					&& terminusDefn.getLinkEndCode().equals(this.linkTermType)){
-			Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getLinkTerminusDefaults().propertyDefinitionIterator();
+			Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getDefaultAttributes().propertyDefinitionIterator();
 			int propCntr = 0;
 			while(propDefnIter.hasNext()) {
 				IPropertyDefinition definition = propDefnIter.next();

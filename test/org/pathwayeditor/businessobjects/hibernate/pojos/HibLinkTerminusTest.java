@@ -56,7 +56,7 @@ public class HibLinkTerminusTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(mockHibLink).getCanvas();
 			
-			allowing(mockTermDefn).getLinkTerminusDefaults(); will(returnValue(mockDefaults));
+			allowing(mockTermDefn).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
 			allowing(mockDefaults).getEndDecoratorType(); will(returnValue(EXPECTED_END_DEC));
 			allowing(mockDefaults).getEndSize(); will(returnValue(EXPECTED_END_SIZE));

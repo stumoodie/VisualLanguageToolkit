@@ -22,7 +22,7 @@ public interface ILinkObjectType extends IObjectType {
 	 * Gets the default attributes for the link.
 	 * @return the default attributes class, which cannot be null.
 	 */
-	ILinkAttributeDefaults getDefaultLinkAttributes();
+	ILinkAttributeDefaults getDefaultAttributes();
 	
 	/**
 	 * Get the source terminus definition.
@@ -40,5 +40,5 @@ public interface ILinkObjectType extends IObjectType {
 	 * Get the editable attributes for this type.
 	 * @return the set of editable attributes, which cannot be null, but can be empty.
 	 */
-	EnumSet<LinkEditableAttributes> getEditiableAttributes();
+	EnumSet<LinkEditableAttributes> getEditableAttributes();
 }

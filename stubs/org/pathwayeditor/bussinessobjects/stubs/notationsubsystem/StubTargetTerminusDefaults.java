@@ -83,4 +83,37 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 		return this.propertyDefinitionList.iterator();
 	}
 
+	/**
+	 * @return
+	 */
+	private HashSet<IPropertyDefinition> getpropdefns() {
+		return this.propertyDefinitionList;
+	}
+
+	public boolean containsPropertyDefinition(String name) {
+		return findPropDefn(name) != null;
+	}
+
+	IPropertyDefinition findPropDefn(String name){
+		IPropertyDefinition retVal = null;
+		for(IPropertyDefinition propDefn : this.getpropdefns()){
+			if(propDefn.getName().equals(name)){
+				retVal = propDefn;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
+	}
+
+	public int numPropertyDefinitions() {
+		return this.getpropdefns().size();
+	}
+
+	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
+		return propDefn != null && this.getpropdefns().contains(propDefn);
+	}
 }

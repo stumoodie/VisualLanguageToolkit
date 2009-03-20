@@ -31,14 +31,14 @@ public class StubLinkObjectType implements ILinkObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
-	public ILinkAttributeDefaults getDefaultLinkAttributes() {
+	public ILinkAttributeDefaults getDefaultAttributes() {
 		return new StubLinkAttributeDefaultsWithRichText();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getEditiableAttributes()
 	 */
-	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
+	public EnumSet<LinkEditableAttributes> getEditableAttributes() {
 		return EnumSet.noneOf(LinkEditableAttributes.class);
 	}
 

@@ -39,7 +39,7 @@ class FallbackLinkTerminusDefinition implements ILinkTerminusDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition#getLinkTerminusDefaults()
 	 */
-	public ILinkTerminusDefaults getLinkTerminusDefaults() {
+	public ILinkTerminusDefaults getDefaultAttributes() {
 		return TERMINUS_DEFAULTS;
 	}
 

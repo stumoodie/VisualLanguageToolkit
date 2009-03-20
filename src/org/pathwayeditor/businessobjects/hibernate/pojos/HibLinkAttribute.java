@@ -86,7 +86,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 		// This is a bug waiting to happen and needs fixing.
 		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
 		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
-		addDefaults(objectType.getDefaultLinkAttributes());
+		addDefaults(objectType.getDefaultAttributes());
 		this.getCanvas().getLinkAttributes().add(this) ;
 	}
 
@@ -209,7 +209,7 @@ s	 */
 	}
 
 	private void injectPropertyDefinitions() throws InconsistentNotationDefinitionException {
-		Iterator<IPropertyDefinition> it = this.objectType.getDefaultLinkAttributes().propertyDefinitionIterator();
+		Iterator<IPropertyDefinition> it = this.objectType.getDefaultAttributes().propertyDefinitionIterator();
 		int propCntr = 0;
 		while (it.hasNext()) {
 			IPropertyDefinition definition = it.next();
@@ -684,7 +684,7 @@ s	 */
 				&& this.objectType.getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getObjectType(),
 								this.getCurrentDrawingElement().getTargetShape().getObjectType())){
 			// now check properties
-			Iterator<IPropertyDefinition> it = this.objectType.getDefaultLinkAttributes().propertyDefinitionIterator();
+			Iterator<IPropertyDefinition> it = this.objectType.getDefaultAttributes().propertyDefinitionIterator();
 			int propCntr = 0;
 			while (it.hasNext()) {
 				IPropertyDefinition definition = it.next();

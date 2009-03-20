@@ -29,4 +29,5 @@ public final Set<IPropertyDefinition> propertyDefinitionList;
 	protected Set<IPropertyDefinition> getpropdefns() {
 		return propertyDefinitionList;
 	}
+
 }

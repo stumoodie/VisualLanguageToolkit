@@ -1,5 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,6 +20,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 
 class FallbackSyntaxService implements INotationSyntaxService {
+	private static final int NUM_ROOT_OTS = 1;
 	private final INotationSubsystem notationSubsystem;
 	private final IRootObjectType rootObjectType;
 	private final Map<Integer, IShapeObjectType> shapeTypes;
@@ -164,4 +166,48 @@ class FallbackSyntaxService implements INotationSyntaxService {
 		return true;
 	}
 
+	
+	private <T extends IObjectType> T findObjectTypeByName(Collection<? extends T> otSet, String name){
+		T retVal = null;
+		for(T val : otSet){
+			if(val.getName().equals(name)){
+				retVal = val;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findLinkObjectTypeByName(java.lang.String)
+	 */
+	public ILinkObjectType findLinkObjectTypeByName(String name) {
+		return findObjectTypeByName(this.linkTypes.values(), name);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findShapeObjectTypeByName(java.lang.String)
+	 */
+	public IShapeObjectType findShapeObjectTypeByName(String name) {
+		return findObjectTypeByName(this.shapeTypes.values(), name);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numLinkObjectTypes()
+	 */
+	public int numLinkObjectTypes() {
+		return this.linkTypes.size();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numShapeObjectTypes()
+	 */
+	public int numShapeObjectTypes() {
+		return this.shapeTypes.size();
+	}
+
+
+	public int numObjectTypes(){
+		return this.numLinkObjectTypes() + this.numShapeObjectTypes() + NUM_ROOT_OTS;
+	}
 }

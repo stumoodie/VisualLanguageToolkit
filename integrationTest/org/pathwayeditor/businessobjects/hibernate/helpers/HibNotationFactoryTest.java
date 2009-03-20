@@ -361,6 +361,41 @@ public class HibNotationFactoryTest extends PojoTester {
 		public INotationSubsystem getNotationSubsystem() {
 			throw new UnsupportedOperationException("Not implemented");
 		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findLinkObjectTypeByName(java.lang.String)
+		 */
+		public ILinkObjectType findLinkObjectTypeByName(String name) {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findShapeObjectTypeByName(java.lang.String)
+		 */
+		public IShapeObjectType findShapeObjectTypeByName(String name) {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numLinkObjectTypes()
+		 */
+		public int numLinkObjectTypes() {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numObjectTypes()
+		 */
+		public int numObjectTypes() {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numShapeObjectTypes()
+		 */
+		public int numShapeObjectTypes() {
+			throw new UnsupportedOperationException("Not implemented");
+		}
 		
 	}
 	

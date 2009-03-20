@@ -30,7 +30,7 @@ public interface ILinkTerminusDefinition {
 	 */
 	LinkTermType getLinkEndCode();
 			
-	ILinkTerminusDefaults getLinkTerminusDefaults();
+	ILinkTerminusDefaults getDefaultAttributes();
 	
 	EnumSet<LinkTermEditableAttributes> getEditableAttributes();
 }

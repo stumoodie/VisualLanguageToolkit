@@ -3,18 +3,15 @@
  */
 package org.pathwayeditor.businessobjects.typedefn;
 
-import java.util.Iterator;
-
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 /**
  * @author smoodie
  *
  */
-public interface ILinkAttributeDefaults {
+public interface ILinkAttributeDefaults extends IPropertyDefinitionContainer {
 	String getName();
 	
 	String getDescription();
@@ -47,9 +44,4 @@ public interface ILinkAttributeDefaults {
 	 */
 	ConnectionRouter getRouter();
 	
-	/**
-	 * Provides an iterator for the set of all property definitions.
-	 * @return an iterator, that cannot be null, but may iterator over an empry collection.
-	 */
-	Iterator<IPropertyDefinition> propertyDefinitionIterator();
 }

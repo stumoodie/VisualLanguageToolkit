@@ -1,12 +1,9 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
-import java.util.Iterator;
-
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 
 /**
@@ -18,19 +15,13 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
  * @author smoodie
  *
  */
-public interface ILinkTerminusDefaults {
+public interface ILinkTerminusDefaults extends IPropertyDefinitionContainer {
 	/**
 	 * Get the offset value. The default is zero.
 	 * @return the gap size, which cannot be negative: <code>getGap() >= 0</code>.
 	 */
 	short getGap();
 	
-	/**
-	 * Get the property filter to access the properties.
-	 * @return Returns a property filter. Guaranteed to be not null.
-	 */
-	Iterator<IPropertyDefinition> propertyDefinitionIterator();
-
 	/**
 	 * get the shape type of the decorator.
 	 * @return the shape type.

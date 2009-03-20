@@ -128,4 +128,39 @@ public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefault
 	 */
 	protected abstract Set<IPropertyDefinition> getpropdefns() ;
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(java.lang.String)
+	 */
+	public boolean containsPropertyDefinition(String name) {
+		return findPropDefn(name) != null;
+	}
+
+	IPropertyDefinition findPropDefn(String name){
+		IPropertyDefinition retVal = null;
+		for(IPropertyDefinition propDefn : this.getpropdefns()){
+			if(propDefn.getName().equals(name)){
+				retVal = propDefn;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#getPropertyDefinition(java.lang.String)
+	 */
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#numPropertyDefinitions()
+	 */
+	public int numPropertyDefinitions() {
+		return this.getpropdefns().size();
+	}
+	
+	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
+		return propDefn != null && this.getpropdefns().contains(propDefn);
+	}
 }

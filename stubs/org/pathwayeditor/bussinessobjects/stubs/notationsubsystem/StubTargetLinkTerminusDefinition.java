@@ -39,7 +39,7 @@ public class StubTargetLinkTerminusDefinition implements ILinkTerminusDefinition
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition#getLinkTerminusDefaults()
 	 */
-	public ILinkTerminusDefaults getLinkTerminusDefaults() {
+	public ILinkTerminusDefaults getDefaultAttributes() {
 		return this.sourceTermDefaults ;
 	}
 

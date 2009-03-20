@@ -116,5 +116,33 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 		Collection<IPropertyDefinition> collection = Collections.emptySet();
 		return collection.iterator();
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(java.lang.String)
+	 */
+	public boolean containsPropertyDefinition(String name) {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#getPropertyDefinition(java.lang.String)
+	 */
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		throw new IllegalArgumentException();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#numPropertyDefinitions()
+	 */
+	public int numPropertyDefinitions() {
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean containsPropertyDefinition(IPropertyDefinition name) {
+		return false;
+	}
 	
 }

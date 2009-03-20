@@ -100,4 +100,32 @@ public class FallbackLinkAttributeDefaults implements ILinkAttributeDefaults {
 		return URL;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(java.lang.String)
+	 */
+	public boolean containsPropertyDefinition(String name) {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#getPropertyDefinition(java.lang.String)
+	 */
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		throw new IllegalArgumentException("No property definition of this name exists");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#numPropertyDefinitions()
+	 */
+	public int numPropertyDefinitions() {
+		return PROP_SET.size();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean containsPropertyDefinition(IPropertyDefinition name) {
+		return false;
+	}
+
 }

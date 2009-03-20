@@ -97,5 +97,14 @@ public interface INotationSyntaxService extends INotationService {
 	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	IObjectType getObjectType(int uniqueId);
-
+	
+	int numShapeObjectTypes();
+	
+	int numLinkObjectTypes();
+	
+	int numObjectTypes();
+	
+	IShapeObjectType findShapeObjectTypeByName(String name);
+	
+	ILinkObjectType findLinkObjectTypeByName(String name);
 }

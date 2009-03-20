@@ -49,7 +49,6 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getFillColour()
 	 */
 	public RGB getFillColour() {
-		// TODO Auto-generated method stub
 		return FILL_COLOR;
 	}
 
@@ -109,9 +108,35 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 		return getpropdefns().iterator();
 	}
 
+	public boolean containsPropertyDefinition(String name) {
+		return findPropDefn(name) != null;
+	}
+
+	IPropertyDefinition findPropDefn(String name){
+		IPropertyDefinition retVal = null;
+		for(IPropertyDefinition propDefn : this.getpropdefns()){
+			if(propDefn.getName().equals(name)){
+				retVal = propDefn;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
+	}
+
+	public int numPropertyDefinitions() {
+		return this.getpropdefns().size();
+	}
+
 	/**
 	 * @return
 	 */
 	protected abstract Set<IPropertyDefinition> getpropdefns() ;
 
+	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
+		return propDefn != null && this.getpropdefns().contains(propDefn);
+	}
 }

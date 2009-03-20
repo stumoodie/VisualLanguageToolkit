@@ -56,14 +56,14 @@ public class StubLinkCObjectType implements ILinkObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
-	public ILinkAttributeDefaults getDefaultLinkAttributes() {
+	public ILinkAttributeDefaults getDefaultAttributes() {
 		return this.linkAttributeDefaults;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getEditiableAttributes()
 	 */
-	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
+	public EnumSet<LinkEditableAttributes> getEditableAttributes() {
 		return EDITABLE_ATTRIBUTES;
 	}
 

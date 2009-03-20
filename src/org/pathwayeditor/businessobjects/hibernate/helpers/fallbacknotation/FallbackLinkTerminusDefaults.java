@@ -92,4 +92,41 @@ public class FallbackLinkTerminusDefaults implements ILinkTerminusDefaults {
 		return collection.iterator();
 	}
 
+	/**
+	 * @return
+	 */
+	private Set<IPropertyDefinition> getpropdefns() {
+		return Collections.emptySet();
+	}
+
+	public boolean containsPropertyDefinition(String name) {
+		return findPropDefn(name) != null;
+	}
+
+	IPropertyDefinition findPropDefn(String name){
+		IPropertyDefinition retVal = null;
+		for(IPropertyDefinition propDefn : this.getpropdefns()){
+			if(propDefn.getName().equals(name)){
+				retVal = propDefn;
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
+	}
+
+	public int numPropertyDefinitions() {
+		return this.getpropdefns().size();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#containsPropertyDefinition(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	public boolean containsPropertyDefinition(IPropertyDefinition name) {
+		return false;
+	}
 }

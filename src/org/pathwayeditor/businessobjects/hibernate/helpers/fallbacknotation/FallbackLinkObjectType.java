@@ -52,14 +52,14 @@ public class FallbackLinkObjectType implements ILinkObjectType {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getDefaultLinkAttributes()
 	 */
-	public ILinkAttributeDefaults getDefaultLinkAttributes() {
+	public ILinkAttributeDefaults getDefaultAttributes() {
 		return DEFAULT_ATTRIBUTES;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getEditiableAttributes()
 	 */
-	public EnumSet<LinkEditableAttributes> getEditiableAttributes() {
+	public EnumSet<LinkEditableAttributes> getEditableAttributes() {
 		return EnumSet.noneOf(LinkEditableAttributes.class);
 	}
 
