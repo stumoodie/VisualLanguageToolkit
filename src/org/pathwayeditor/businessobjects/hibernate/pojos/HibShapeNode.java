@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableNodeStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -192,6 +193,13 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	@Override
 	public HibCompoundNode getParentNode() {
 		return this.getHibParentNode();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getLabelSubModel()
+	 */
+	public ISubModel getLabelSubModel() {
+		return this.getSubModel();
 	}
 
 }

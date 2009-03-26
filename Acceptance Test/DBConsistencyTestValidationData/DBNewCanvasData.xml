@@ -33,9 +33,9 @@
 	</table>
 	<!-- END OF FILESYSTEM -->
 	<!-- START OF CONTEXT DEFINITIONS -->
-	<table name="Context">
+	<table name="Notation">
 		<column>id</column>
-		<column>global_id</column>
+		<column>qualified_name</column>
 		<column>name</column>
 		<column>description</column>
 		<column>major_version</column>
@@ -44,7 +44,7 @@
 	</table>
 	<table name="ObjectType">
 		<column>id</column>
-		<column>context_id</column>
+		<column>notation_id</column>
 		<column>name</column>
 		<column>description</column>
 		<column>classification_code</column>
@@ -54,7 +54,7 @@
 	<!-- CANVAS -->
 	<table name="Canvas">
 		<column>map_inode</column>
-		<column>context_id</column>
+		<column>notation_id</column>
 		<column>grid_x</column>
 		<column>grid_y</column>
 		<column>grid_enabled</column>
@@ -64,10 +64,7 @@
 		<column>background_blue</column>
 		<column>canvas_width</column>
 		<column>canvas_height</column>
-		<column>last_shape_serial</column>
-		<column>last_label_serial</column>
-		<column>last_link_serial</column>
-		<column>last_prop_creation_serial</column>
+		<column>last_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>5</value>
@@ -81,10 +78,7 @@
 			<value>255</value>
 			<value>200</value>
 			<value>300</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
+			<value>1</value>
 			<value>repo name</value>
 		</row> 
 	</table>
@@ -125,10 +119,20 @@
 	</table>
 	<!-- END OF GRAPH STRUCTURE -->
 	<!-- ATTRIBUTES DECLARATION -->
+	<table name="CanvasAttribute">
+		<column>creation_serial</column>
+		<row>
+			<value>1</value>
+		</row>
+	</table>
+	<table name="RootAttribute">
+		<column>object_type_id</column>
+		<row>
+			<value>100000</value>
+		</row>
+	</table>
 	<table name="ShapeAttribute">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -152,8 +156,6 @@
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
@@ -168,7 +170,7 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
-		<column>displayed_property_id</column>
+		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -176,16 +178,13 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- PROPERTIES -->
 	<table name="property">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
+		<column>name</column>
 	</table>
 	<table name="textproperty">
 		<column>id</column>
@@ -208,23 +207,6 @@
 		<column>string_representation</column>
 	</table>
 	<!-- END OF PROPERTIES -->
-	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-		<table name="shapeAttributeProperty">
-		<column>shape_attribute_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<table name="linkAttributeProperty">
-		<column>link_attribute_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<table name="linkterminusproperty">
-		<column>link_terminus_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
 	<!-- TERMINUS & DECORATORS -->
 	<table name="LinkTerminus">
 		<column>id</column>

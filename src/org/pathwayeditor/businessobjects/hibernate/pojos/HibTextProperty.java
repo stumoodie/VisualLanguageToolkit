@@ -20,14 +20,14 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 	HibTextProperty() {
 	}
 
-	public HibTextProperty(HibCanvas hibCanvas, int creationSerial, IPlainTextPropertyDefinition defn) {
-		super(hibCanvas, creationSerial);
+	public HibTextProperty(HibAnnotatedCanvasAttribute owner,IPlainTextPropertyDefinition defn) {
+		super(owner, defn);
 		this.propertyDefinition = defn;
 		this.textValue = defn.getDefaultValue();
 	}
 
-	public HibTextProperty(HibCanvas newCanvas, int newCreationSerial, HibTextProperty other) {
-		super(newCanvas, newCreationSerial, other);
+	public HibTextProperty(HibAnnotatedCanvasAttribute newOwner, HibTextProperty other) {
+		super(newOwner, other);
 		this.propertyDefinition = other.propertyDefinition;
 		this.textValue = other.textValue;
 	}
@@ -59,8 +59,7 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		return textValue;
 	}
 
-	public void setPropertyDefinition(
-			IPropertyDefinition propertyDefinition) {
+	public void setPropertyDefinition(IPropertyDefinition propertyDefinition) {
 		this.propertyDefinition = (IPlainTextPropertyDefinition) propertyDefinition;
 	}
 }

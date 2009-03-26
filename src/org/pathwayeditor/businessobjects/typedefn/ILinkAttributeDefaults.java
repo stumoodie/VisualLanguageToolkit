@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
  * @author smoodie
  *
  */
-public interface ILinkAttributeDefaults extends IPropertyDefinitionContainer {
+public interface ILinkAttributeDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer  {
 	String getName();
 	
 	String getDescription();

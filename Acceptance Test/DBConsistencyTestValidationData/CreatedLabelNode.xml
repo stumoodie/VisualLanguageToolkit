@@ -17,8 +17,6 @@
 			</row>						
 	</table>
 <table name="ShapeAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -40,9 +38,7 @@
 		<column>height</column>
 		<column>name_visible</column>
 		<row>
-			<value>100001</value>
-			<value>9</value>
-			<value>name9</value>
+			<value>name45</value>
 			<value>100001</value>
 			<value>description</value>
 			<value>detailed description</value>
@@ -72,8 +68,6 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<row>
 			<value>255</value>
 			<value>255</value>
@@ -87,11 +81,9 @@
 		</row>
 	</table>
 	<table name="property">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
+		<column>name</column>
 		<row>
-			<value>100001</value>
-			<value>36</value>
+			<value>TextProperty</value>
 		</row>
 	</table>
 </dataset>

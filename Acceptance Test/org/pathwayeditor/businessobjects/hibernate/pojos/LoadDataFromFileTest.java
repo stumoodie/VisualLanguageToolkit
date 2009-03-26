@@ -205,24 +205,24 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int SHAPE_ATTRIBUTE7_CREATION_SERIAL = 7 ;
 	private static final int SHAPE_ATTRIBUTE8_CREATION_SERIAL = 8 ;
 	
-	private static final int LINK_ATTRIBUTE1_SERIAL = 1; 
-	private static final int LINK_ATTRIBUTE2_SERIAL = 2; 
-	private static final int LINK_ATTRIBUTE3_SERIAL = 3; 
-	private static final int LINK_ATTRIBUTE4_SERIAL = 4; 
-	private static final int LINK_ATTRIBUTE5_SERIAL = 5; 
-	private static final int LINK_ATTRIBUTE6_SERIAL = 6; 
-	private static final int LINK_ATTRIBUTE7_SERIAL = 7; 
-	private static final int LINK_ATTRIBUTE8_SERIAL = 8; 
-	private static final int LINK_ATTRIBUTE9_SERIAL = 9; 
+	private static final int LINK_ATTRIBUTE1_SERIAL = 9; 
+	private static final int LINK_ATTRIBUTE2_SERIAL = 10; 
+	private static final int LINK_ATTRIBUTE3_SERIAL = 11; 
+	private static final int LINK_ATTRIBUTE4_SERIAL = 12; 
+	private static final int LINK_ATTRIBUTE5_SERIAL = 13; 
+	private static final int LINK_ATTRIBUTE6_SERIAL = 14; 
+	private static final int LINK_ATTRIBUTE7_SERIAL = 15; 
+	private static final int LINK_ATTRIBUTE8_SERIAL = 16; 
+	private static final int LINK_ATTRIBUTE9_SERIAL = 17; 
 
-	private static final int LABEL_ATTRIBUTE1_CREATION_SERIAL = 1;
-	private static final int LABEL_ATTRIBUTE2_CREATION_SERIAL = 2;
-	private static final int LABEL_ATTRIBUTE3_CREATION_SERIAL = 3;
-	private static final int LABEL_ATTRIBUTE4_CREATION_SERIAL = 4;
-	private static final int LABEL_ATTRIBUTE5_CREATION_SERIAL = 5;
-	private static final int LABEL_ATTRIBUTE6_CREATION_SERIAL = 6;
-	private static final int LABEL_ATTRIBUTE7_CREATION_SERIAL = 7;
-	private static final int LABEL_ATTRIBUTE8_CREATION_SERIAL = 8;
+	private static final int LABEL_ATTRIBUTE1_CREATION_SERIAL = 18;
+	private static final int LABEL_ATTRIBUTE2_CREATION_SERIAL = 19;
+	private static final int LABEL_ATTRIBUTE3_CREATION_SERIAL = 20;
+	private static final int LABEL_ATTRIBUTE4_CREATION_SERIAL = 21;
+	private static final int LABEL_ATTRIBUTE5_CREATION_SERIAL = 22;
+	private static final int LABEL_ATTRIBUTE6_CREATION_SERIAL = 23;
+	private static final int LABEL_ATTRIBUTE7_CREATION_SERIAL = 24;
+	private static final int LABEL_ATTRIBUTE8_CREATION_SERIAL = 25;
 
 	
 	private static final int SHAPE_ATTRIBUTE1_LINE_WIDTH = 1 ;
@@ -546,8 +546,6 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check owning map inode" , mapDiagram1.getINode() , dbCanvas.getINode()) ;
 		assertEquals ( "canvas size" , SIZE_10 , dbCanvas.getCanvasSize() ) ;
 		assertEquals ( "grid size" , SIZE_10 , dbCanvas.getGridSize() ) ;
-		assertEquals ( "created date" , expectedDate.getTime(), dbCanvas.getCreated() );
-		assertEquals ( "modified date" , expectedDate.getTime(), dbCanvas.getModified());
 		assertEquals ( "check color" , RGB_100 , dbCanvas.getBackgroundColour()) ;
 		assertTrue ( "grid enabled" , dbCanvas.isGridEnabled()) ;
 		assertTrue ( "snap grid enabled" , dbCanvas.isSnapToGridOn()) ;
@@ -916,12 +914,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute1 size" , SIZE_51 , labelAttribute1.getSize() ) ;
 
 		assertNotNull ( "is not null " , property1 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property1.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property1 instanceof IPlainTextAnnotationProperty ) ;
 		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property1 ;
 		assertEquals ( "value" , PROPERTY1_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY1_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
@@ -945,12 +941,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute2 size" , SIZE_52 , labelAttribute2.getSize() ) ;
 	
 		assertNotNull ( "is not null " , property2 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property2.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property2 instanceof IPlainTextAnnotationProperty ) ;
 		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property2 ;
 		assertEquals ( "value" , PROPERTY2_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY2_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
@@ -974,12 +968,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute2 size" , SIZE_53 , labelAttribute3.getSize() ) ;
 
 		assertNotNull ( "is not null " , property3 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property3.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property3 instanceof IHtmlAnnotationProperty ) ;
 		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property3 ;
 		assertEquals ( "value" , PROPERTY3_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY3_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
@@ -1003,12 +995,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute4 size" , SIZE_54 , labelAttribute4.getSize() ) ;
 
 		assertNotNull ( "is not null " , property4 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property4.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property4 instanceof IHtmlAnnotationProperty ) ;
 		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property4 ;
 		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue()) ;
-		assertEquals ( "creation serial" , PROPERTY4_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 }
 	
 	@Test
@@ -1032,12 +1022,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute5 size" , SIZE_55 , labelAttribute5.getSize() ) ;
 	
 		assertNotNull ( "is not null " , property5 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property5.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property5 instanceof INumberAnnotationProperty ) ;
 		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property5 ;
 		assertEquals ( "value" , PROPERTY5_VALUE, theProperty.getValue().intValue()) ;
-		assertEquals ( "creation serial" , PROPERTY5_CREATION_SERIAL , theProperty.getCreationSerial()) ;
 	}
 	
 	@Test
@@ -1061,12 +1049,10 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute6 size" , SIZE_56 , labelAttribute6.getSize() ) ;
 
 		assertNotNull ( "is not null " , property6 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property6.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property6 instanceof INumberAnnotationProperty ) ;
 		INumberAnnotationProperty theProperty = (INumberAnnotationProperty) property6 ;
 		assertEquals ( "value" , PROPERTY6_VALUE, theProperty.getValue().intValue()) ;
-		assertEquals ( "creation serial" , PROPERTY6_CREATION_SERIAL , property6 .getCreationSerial()) ;
 	}
 	
 	@Test
@@ -1090,14 +1076,12 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute7 size" , SIZE_57 , labelAttribute7.getSize() ) ;
 
 		assertNotNull ( "is not null " , property7 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property7.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property7 instanceof IListAnnotationProperty ) ;
 		IListAnnotationProperty theProperty = (IListAnnotationProperty) property7 ;
 		List <String> listValues = theProperty.getValue() ;
 		assertEquals ( "first element" , PROPERTY7_LIST_VALUE1 , listValues.get(0)) ;
 		assertEquals ( "second element" , PROPERTY7_LIST_VALUE2 , listValues.get(1)) ;
-		assertEquals ( "creation serial" , PROPERTY7_CREATION_SERIAL , property7 .getCreationSerial()) ;
 }
 	
 	@Test
@@ -1121,14 +1105,12 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "labelAttribute8 size" , SIZE_58 , labelAttribute8.getSize() ) ;
 
 		assertNotNull ( "is not null " , property8 ) ;
-		assertEquals ( "rigth canvas " , dbCanvas , property8.getCanvas() ) ;
 		
 		assertTrue ( "is text property" , property8 instanceof IListAnnotationProperty ) ;
 		IListAnnotationProperty theProperty = (IListAnnotationProperty) property8 ;
 		List <String> listValues =  theProperty.getValue() ;
 		assertEquals ( "first element" , PROPERTY8_LIST_VALUE1 , listValues.get(0)) ;
 		assertEquals ( "second element" , PROPERTY8_LIST_VALUE2 , listValues.get(1)) ;
-		assertEquals ( "creation serial" , PROPERTY8_CREATION_SERIAL , property8 .getCreationSerial()) ;
 }
 	
 	@Test

@@ -123,7 +123,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 		}
 		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
 		HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
-		HibLabelAttribute destAttribute = new HibLabelAttribute(destCanvas, destCanvas.getLabelSerialCounter().nextIndex(), srcAttribute, copiedProperty);
+		HibLabelAttribute destAttribute = new HibLabelAttribute(destCanvas, destCanvas.getCreationSerialCounter().nextIndex(), srcAttribute, copiedProperty);
 		LabelNodeFactory fact = destHibParentNode.getChildCompoundGraph().labelNodeFactory();
 		fact.setAttribute(destAttribute);
 		HibCompoundNode retVal = fact.createLabel();
@@ -136,7 +136,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	private HibShapeNode createCopyOfShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
 		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
 		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
-		HibShapeAttribute destAttribute = new HibShapeAttribute(destCanvas, destCanvas.getShapeSerialCounter().nextIndex(), otherAttribute);
+		HibShapeAttribute destAttribute = new HibShapeAttribute(destCanvas, destCanvas.getCreationSerialCounter().nextIndex(), otherAttribute);
 		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().shapeNodeFactory();
 		fact.setAttribute(destAttribute);
 		return fact.createShapeNode();
@@ -145,8 +145,10 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
 			BaseCompoundNode inNode , HibSubModel edgeOwner )
 	{
+		// FIXME: This will nee to be refactored one the labels are reorganised.
+		// This should make label copying much more efficient.
 		HibCanvas destCanvas = (HibCanvas)edgeOwner.getModel().getCanvas();
-		HibLinkAttribute destAttribute = new HibLinkAttribute ( destCanvas , destCanvas.getLinkSerialCounter().nextIndex() , srcAttribute) ;
+		HibLinkAttribute destAttribute = new HibLinkAttribute ( destCanvas , destCanvas.getCreationSerialCounter().nextIndex() , srcAttribute) ;
 		LinkEdgeChildFactory edgeFact = edgeOwner.edgeFactory() ;
 		edgeFact.setPair(outNode, inNode);
 		edgeFact.setAttribute(destAttribute) ;

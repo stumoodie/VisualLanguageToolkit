@@ -3,13 +3,13 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" table="compoundnode" abstract="true">
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" table="compoundnode" abstract="true" lazy="false">
         <id name="id" type="java.lang.Long">
             <column name="id" />
             <generator class="native" />
         </id>
         <properties name="xak1compoundnode" unique="true">
-        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="none">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="none" lazy="false" >
             	<column name="model_id" not-null="true" />
         	</many-to-one>
         	<property name="index" type="int" >
@@ -17,14 +17,14 @@
         	</property>
         </properties>
 		
-		<one-to-one name="childCompoundGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all" property-ref="rootNode"/>
+		<one-to-one name="childCompoundGraph" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="all" property-ref="rootNode" lazy="false"/>
 		
 		<set name="children" inverse="true" cascade="all,delete-orphan" collection-type="org.pathwayeditor.businessobjects.hibernate.customtypes.NodeSetType" lazy="false">
 			<key column="parent_id"/>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" />
 		</set>
 		
-		<many-to-one name="hibParentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="none">
+		<many-to-one name="hibParentNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="none" lazy="false" >
 	       	<column name="parent_id" not-null="false"/>
         </many-to-one>
 
@@ -42,28 +42,31 @@
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" />
 		</set>
 
-        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" table="RootObjectNode">
+        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" table="RootObjectNode" lazy="false" >
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
+			<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute" cascade="none" lazy="false">
+		       	<column name="root_attribute_id" not-null="false"/>
+        	</many-to-one>
 		</joined-subclass>
         
         <joined-subclass
 			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode"
-			table="ShapeNode">
+			table="ShapeNode" lazy="false" >
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-			<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute" cascade="none">
+			<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute" cascade="none" lazy="false" >
 		       	<column name="shape_attribute_id" not-null="false"/>
         	</many-to-one>
 		</joined-subclass>
 		
-        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode" table="LabelNode">
+        <joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode" table="LabelNode" lazy="false" >
 			<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-			<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" cascade="none">
+			<many-to-one name="attribute" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" cascade="none" lazy="false" >
 		       	<column name="label_attribute_id" not-null="false"/>
         	</many-to-one>
 		</joined-subclass>

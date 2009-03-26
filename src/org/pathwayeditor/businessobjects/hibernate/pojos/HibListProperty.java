@@ -16,7 +16,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 public class HibListProperty extends HibProperty implements IListAnnotationProperty {
 	private static final long serialVersionUID = 3772272140640145846L;
 
-	private List<String> values = new ArrayList<String>(0);
+	private List<String> values;
 	private IListPropertyDefinition propertyDefinition;
 	
 	/**
@@ -24,15 +24,18 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	 * @deprecated Application code should not use this constructor. Use one of the other constructors instead.
 	 */
 	HibListProperty() {
+		this.values = new ArrayList<String>(0);
 	}
 
-	public HibListProperty(HibCanvas hibCanvas, int creationSerial, IListPropertyDefinition propDefn) {
-		super(hibCanvas, creationSerial);
+	public HibListProperty(HibAnnotatedCanvasAttribute owner, IListPropertyDefinition propDefn) {
+		super(owner, propDefn);
+		this.values = new ArrayList<String>();
 		this.propertyDefinition = propDefn;
 	}
 
-	public HibListProperty(HibCanvas hibCanvas, int creationSerial, HibListProperty other) {
-		super(hibCanvas, creationSerial, other);
+	public HibListProperty(HibAnnotatedCanvasAttribute owner, HibListProperty other) {
+		super(owner, other);
+		this.propertyDefinition = other.propertyDefinition;
 		this.values = new ArrayList<String>(other.values);
 	}
 

@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
  * @author smoodie
  *
  */
-public interface ILinkTerminusDefaults extends IPropertyDefinitionContainer {
+public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer {
 	/**
 	 * Get the offset value. The default is zero.
 	 * @return the gap size, which cannot be negative: <code>getGap() >= 0</code>.

@@ -4,7 +4,7 @@
 	<!-- CANVAS -->
 	<table name="Canvas">
 		<column>map_inode</column>
-		<column>context_id</column>
+		<column>notation_id</column>
 		<column>grid_x</column>
 		<column>grid_y</column>
 		<column>grid_enabled</column>
@@ -14,10 +14,7 @@
 		<column>background_blue</column>
 		<column>canvas_width</column>
 		<column>canvas_height</column>
-		<column>last_shape_serial</column>
-		<column>last_label_serial</column>
-		<column>last_link_serial</column>
-		<column>last_prop_creation_serial</column>
+		<column>last_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>5</value>
@@ -31,10 +28,7 @@
 			<value>255</value>
 			<value>200</value>
 			<value>300</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
+			<value>1</value>
 			<value>repo name</value>
 		</row> 
 	</table>
@@ -78,136 +72,25 @@
 	</table>
 	<!-- END OF GRAPH STRUCTURE -->
 	<!-- ATTRIBUTES DECLARATION -->
-	<table name="ShapeAttribute">
-		<column>id</column>
-		<column>canvas_id</column>
+	<table name="CanvasAttribute">
 		<column>creation_serial</column>
-		<column>name</column>
-		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
-		<column>fill_red</column>
-		<column>fill_green</column>
-		<column>fill_blue</column>
-		<column>line_red</column>
-		<column>line_green</column>
-		<column>line_blue</column>
-		<column>line_style</column>
-		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
-		<column>x_position</column>
-		<column>y_position</column>
-		<column>width</column>
-		<column>height</column>
+		<row>
+			<value>1</value>
+		</row>		
 	</table>
-	<table name="LinkAttribute">
-		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
-		<column>last_bendpoint_serial</column>
+	<table name="RootAttribute">
 		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
-		<column>line_red</column>
-		<column>line_green</column>
-		<column>line_blue</column>
-		<column>line_style</column>
-		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
-	</table>
-	<table name="LabelAttribute">
-		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
-		<column>displayed_property_id</column>
-		<column>is_displayed</column>
-		<column>background_red</column>
-		<column>background_green</column>
-		<column>background_blue</column>
-		<column>x_position</column>
-		<column>y_position</column>
-		<column>width</column>
-		<column>height</column>
+		<row>
+			<value>100000</value>
+		</row>
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- PROPERTIES -->
 	<table name="property">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
-	</table>
-	<table name="textproperty">
-		<column>id</column>
-		<column>text_value</column>
-	</table>
-	<table name="richtextProperty">
-		<column>id</column>
-		<column>rich_text_value</column>
-	</table>
-	<table name="numberproperty">
-		<column>id</column>
-		<column>number_value</column>
-	</table>
-	<table name="listproperty">
-		<column>id</column>
-	</table>
-	<table name="listvalue">
-		<column>list_property_id</column>
-		<column>index_pos</column>
-		<column>string_representation</column>
+		<column>canvas_attribute_id</column>
+		<column>name</column>
 	</table>
 	<!-- END OF PROPERTIES -->
-	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-		<table name="shapeAttributeProperty">
-		<column>shape_attribute_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<table name="linkAttributeProperty">
-		<column>link_attribute_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<table name="linkterminusproperty">
-		<column>link_terminus_id</column>
-		<column>property_id</column>
-		<column>name</column>
-	</table>
-	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-	<!-- TERMINUS & DECORATORS -->
-	<table name="LinkTerminus">
-		<column>id</column>
-		<column>owning_link_id</column>
-		<column>link_term_type</column>
-		<column>offset_val</column>
-		<column>end_dec_type</column>
-		<column>end_dec_width</column>
-		<column>end_dec_height</column>
-		<column>term_dec_type</column>
-		<column>term_dec_red</column>
-		<column>term_dec_green</column>
-		<column>term_dec_blue</column>
-		<column>term_dec_height</column>
-		<column>term_dec_width</column>
-	</table>
-	<!-- END OF DECORATORS -->
-	<!-- BENDPOINTS -->
-	<table name="bendpoint">
-		<column>id</column>
-		<column>link_attribute_id</column>
-		<column>creation_serial</column>
-		<column>index_pos</column>
-		<column>x_position</column>
-		<column>y_position</column>
-		<column>first_rel_dim_x</column>
-		<column>first_rel_dim_y</column>
-		<column>second_rel_dim_x</column>
-		<column>second_rel_dim_y</column>
-	</table>
-	<!-- END OF BENDPOINTS -->
 </dataset>

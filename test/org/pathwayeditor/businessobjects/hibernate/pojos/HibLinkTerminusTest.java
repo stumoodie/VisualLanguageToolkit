@@ -6,6 +6,9 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -24,6 +27,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
+import uk.ed.inf.graph.util.IndexCounter;
+
 /**
  * @author ntsorman
  *
@@ -41,20 +46,30 @@ public class HibLinkTerminusTest {
 	private static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 150);
 	private static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	private static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
+	private static final int EXPECTED_CREATION_SERIAL = 2;
+	private static final IndexCounter EXPECTED_CREATION_SERIAL_CNTR = new IndexCounter(EXPECTED_CREATION_SERIAL); 
 
+	private HibCanvas mockCanvas;
 	private HibLinkAttribute mockHibLink;
 	private ILinkTerminusDefinition mockTermDefn;
 	private ILinkTerminus linkTerminus;
 	private ILinkTerminusDefaults mockDefaults;
+	private Set<HibCanvasAttribute> attributes;
 	
 	@Before
 	public void setUp() throws Exception {
 		mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
 		mockTermDefn = mockery.mock(ILinkTerminusDefinition.class, "mockTermDefn");
 		mockDefaults = mockery.mock(ILinkTerminusDefaults.class, "mockDefaults");
+		mockCanvas = mockery.mock(HibCanvas.class, "mockCanvas");
+		
+		this.attributes = new HashSet<HibCanvasAttribute>();
 		
 		this.mockery.checking(new Expectations(){{
-			allowing(mockHibLink).getCanvas();
+			allowing(mockCanvas).getCreationSerialCounter(); will(returnValue(EXPECTED_CREATION_SERIAL_CNTR));
+			allowing(mockCanvas).getCanvasAttributes().add(with(any(HibCanvasAttribute.class))); will(returnValue(attributes));
+			
+			allowing(mockHibLink).getCanvas(); will(returnValue(mockCanvas));
 			
 			allowing(mockTermDefn).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
@@ -67,8 +82,7 @@ public class HibLinkTerminusTest {
 			allowing(mockDefaults).propertyDefinitionIterator(); will(returnIterator());
 		}});
 		
-		linkTerminus = new HibLinkTerminus ( mockHibLink, LINK_END_TYPE, mockTermDefn) ;
-		this.mockery.assertIsSatisfied();
+		linkTerminus = new HibLinkTerminus ( mockCanvas, EXPECTED_CREATION_SERIAL, mockHibLink, LINK_END_TYPE, mockTermDefn) ;
 	}
 
 	@After

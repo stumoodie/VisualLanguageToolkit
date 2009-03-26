@@ -6,10 +6,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveS
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
-public interface ILinkTerminus extends IAnnotatedObject, IPropertyChangeListenee {
+public interface ILinkTerminus extends IAnnotatedCanvasAttribute, IPropertyChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 

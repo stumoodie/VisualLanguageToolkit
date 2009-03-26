@@ -5,6 +5,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 
@@ -259,8 +260,12 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge#makeSelfBendPoints()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getLabelSubModel()
 	 */
+	public ISubModel getLabelSubModel() {
+		return this.getOwningSubModel();
+	}
+
 	public void makeSelfBendPoints() {
 		Location start=this.getSourceShape().getAttribute().getLocation();
 		int startHeight=this.getSourceShape().getAttribute().getHeight();

@@ -3,10 +3,14 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
+import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotation;
@@ -17,7 +21,16 @@ import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSu
  *
  */
 public class StubHibNotationFactory implements IHibNotationFactory {
+	private static final int ROOT_UID = 0;
+
 	private final INotationSubsystem notationSubsystem =  new StubNotationSubSystem();
+	
+	private Map<Integer, HibObjectType> otLookup = new HashMap<Integer, HibObjectType>();
+	
+	public StubHibNotationFactory() {
+		HibObjectType rootOt = new HibObjectType(ROOT_UID, "ROOT_OT", "", ObjectTypeClassification.ROOTOBJECT);
+		this.otLookup.put(rootOt.getUniqueId(), rootOt);
+	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getNotation(org.pathwayeditor.businessobjects.notationsubsystem.INotation)
@@ -31,8 +44,7 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
 	public HibObjectType getObjectType(IObjectType objectType) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented");
+		return this.otLookup.get(objectType.getUniqueId());
 	}
 
 	/* (non-Javadoc)
@@ -46,7 +58,7 @@ public class StubHibNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
 	public boolean containsObjectType(IObjectType objectType) {
-		return false;
+		return this.otLookup.containsKey(objectType.getUniqueId());
 	}
 
 	/* (non-Javadoc)

@@ -265,15 +265,18 @@ public class HibNotationFactoryTest extends PojoTester {
 	
 	private static class StubLoadedNotationSyntaxService implements INotationSyntaxService {
 		private final INotation notation;
+		private final IObjectType objectType0;
 		private final IObjectType objectType1;
 		private final IObjectType objectType2;
 		private final Map<Integer, IObjectType> mapping;
 		
 		public StubLoadedNotationSyntaxService(INotation notation){
 			this.notation = notation;
+			this.objectType0 = new StubObjectType0();
 			this.objectType1 = new StubObjectType1();
 			this.objectType2 = new StubObjectType2();
 			this.mapping = new HashMap<Integer, IObjectType>();
+			this.mapping.put(objectType0.getUniqueId(), objectType0);
 			this.mapping.put(objectType1.getUniqueId(), objectType1);
 			this.mapping.put(objectType2.getUniqueId(), objectType2);
 		}
@@ -399,6 +402,47 @@ public class HibNotationFactoryTest extends PojoTester {
 		
 	}
 	
+	private static class StubObjectType0 implements IObjectType {
+		public static final int UNIQUE_ID = 0;
+		public static final String NAME = "rootOT";
+		
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getDescription()
+		 */
+		public String getDescription() {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getName()
+		 */
+		public String getName() {
+			return NAME;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getSyntaxService()
+		 */
+		public INotationSyntaxService getSyntaxService() {
+			throw new UnsupportedOperationException("Not implemented");
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getUniqueId()
+		 */
+		public int getUniqueId() {
+			return UNIQUE_ID;
+		}
+
+		/* (non-Javadoc)
+		 * @see java.lang.Comparable#compareTo(java.lang.Object)
+		 */
+		public int compareTo(IObjectType o) {
+			return this.getUniqueId() < o.getUniqueId() ? -1 : this.getUniqueId() > o.getUniqueId() ? 1 : 0;
+		}
+		
+	}
+
 	private static class StubObjectType1 implements IObjectType {
 		public static final int UNIQUE_ID = 1;
 		public static final String NAME = "objectName";

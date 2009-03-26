@@ -12,10 +12,9 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
 /**
@@ -30,47 +29,44 @@ public class IPlainTextAnnotationPropertyTest {
 	}};
 	
 	private IPlainTextAnnotationProperty textProperty ;
+	private IPlainTextPropertyDefinition mockPropDefn;
+	private HibAnnotatedCanvasAttribute mockCanvasAttribute;
 	
-	private static final int CREATION_SERIAL = 100 ;
+	private static final String PROP_NAME = "propName";
 	private static final String TEXT_VALUE = "text value" ;
-	
 	private static final String OTHER_TEXT_VALUE = "other text value" ;
 	
 	@Before
 	public void setUp() throws Exception {
-		HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
-		IPlainTextPropertyDefinition mockPropDefn = this.mockery.mock(IPlainTextPropertyDefinition.class, "mockpropDefn");
+		mockPropDefn = this.mockery.mock(IPlainTextPropertyDefinition.class, "mockpropDefn");
 		
-		this.mockery.checking(new Expectations(){{}});
+		this.mockery.checking(new Expectations(){{
+			allowing(mockPropDefn).getName(); will(returnValue(PROP_NAME));
+			allowing(mockPropDefn).getDefaultValue(); will(returnValue(TEXT_VALUE));
+		}});
 		
-		textProperty = new HibTextProperty ( mockCanvas, CREATION_SERIAL, mockPropDefn) ;
-		this.mockery.assertIsSatisfied();
+		textProperty = new HibTextProperty (mockCanvasAttribute, mockPropDefn) ;
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 	
-	@Ignore @Test
-	public void testCreatedPlainTextProperty () throws Exception
-	{
-		assertEquals ( "creation serial" , CREATION_SERIAL , textProperty.getCreationSerial()) ;
+	@Test
+	public void testCreatedPlainTextProperty () throws Exception {
+		assertEquals("expected definition", this.mockPropDefn, textProperty.getDefinition());
 		assertEquals ( "text value" , TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
-	@Ignore @Test
-	public void testChangeTextPropertyValue () throws Exception
-	{
+	@Test
+	public void testChangeTextPropertyValue () throws Exception	{
 		textProperty.setValue(OTHER_TEXT_VALUE) ;
 		assertEquals ( "text value" , OTHER_TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
-	@Ignore @Test
-	public void testChangeTextPropertyValueToNull () throws Exception
-	{
+	@Test(expected=IllegalArgumentException.class)
+	public void testChangeTextPropertyValueToNull () throws Exception {
 		textProperty.setValue(null) ;
-		assertEquals ( "text value" , TEXT_VALUE , textProperty.getValue() ) ;
 	}
 	
-
 }

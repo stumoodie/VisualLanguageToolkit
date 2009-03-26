@@ -132,35 +132,35 @@
 		<column>label_attribute_id</column>
 		<row>
 			<value>100010</value>
-			<value>100001</value>
+			<value>100018</value>
 		</row>
 		<row>
 			<value>100011</value>
-			<value>100002</value>
+			<value>100019</value>
 		</row>
 		<row>
 			<value>100012</value>
-			<value>100003</value>
+			<value>100020</value>
 		</row>
 		<row>
 			<value>100013</value>
-			<value>100004</value>
+			<value>100021</value>
 		</row>
 		<row>
 			<value>100014</value>
-			<value>100005</value>
+			<value>100022</value>
 		</row>
 		<row>
 			<value>100015</value>
-			<value>100006</value>
+			<value>100023</value>
 		</row>
 		<row>
 			<value>100016</value>
-			<value>100007</value>
+			<value>100024</value>
 		</row>
 		<row>
 			<value>100017</value>
-			<value>100008</value>
+			<value>100025</value>
 		</row>
 	</table>
 </dataset>

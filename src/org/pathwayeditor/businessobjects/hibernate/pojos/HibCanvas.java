@@ -1,7 +1,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -56,20 +55,12 @@ public class HibCanvas implements ICanvas, Serializable {
 	private boolean snapToGridEnabled = DEFAULT_SNAP_TO_GRID_VALUE;
 	private RGB backgroundColour = new RGB(DEFAULT_BGD_RED, DEFAULT_BGD_GREEN, DEFAULT_BGD_BLUE);
 	private Size canvasSize = new Size(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
-	private Date created = new Date();
-	private Date modified = new Date();
 	private String canvasName;
 	private int mapINode;
 	private String repository;
 	private HibModel model ;
-	private IndexCounter shapeSerialCounter = new IndexCounter();
-	private IndexCounter linkSerialCounter = new IndexCounter();
-	private IndexCounter labelSerialCounter = new IndexCounter();
-	private IndexCounter propertySerialCounter = new IndexCounter();
-	private Set<HibShapeAttribute> shapeAttributes = new HashSet<HibShapeAttribute>(0);
-	private Set<HibLinkAttribute> linkAttributes = new HashSet<HibLinkAttribute>(0);
-	private Set<HibLabelAttribute> labelAttributes = new HashSet<HibLabelAttribute>(0);
-	private Set<HibProperty> properties = new HashSet<HibProperty>(0);
+	private IndexCounter creationSerialCounter = new IndexCounter();
+	private Set<HibCanvasAttribute> canvasAttributes = new HashSet<HibCanvasAttribute>(0);
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem;
 
 	/**
@@ -109,7 +100,7 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.canvasSize = other.getCanvasSize();
 		this.model = new HibModel(this, other.getGraph());
 		this.notation = other.notation;
-		this.shapeSerialCounter = new IndexCounter();
+		this.creationSerialCounter = new IndexCounter();
 	}
 
 	public Long getId() {
@@ -137,22 +128,6 @@ public class HibCanvas implements ICanvas, Serializable {
 		return this.hibNotation;
 	}
 	
-	public Date getCreated() {
-		return new Date(this.created.getTime());
-	}
-
-	public void setCreated(Date created) {
-		this.created = new Date(created.getTime());
-	}
-
-	public Date getModified() {
-		return new Date(this.modified.getTime());
-	}
-
-	public void setModified(Date modified) {
-		this.modified = new Date(modified.getTime());
-	}
-
 	int getGridX() {
 		return this.gridSize.getWidth();
 	}
@@ -322,52 +297,16 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.model = graph;
 	}
 	
-	void setLastShapeSerial(int lastIndexValue){
-		this.shapeSerialCounter = new IndexCounter(lastIndexValue);
+	void setLastCreationSerial(int lastIndexValue){
+		this.creationSerialCounter = new IndexCounter(lastIndexValue);
 	}
 	
-	int getLastShapeSerial(){
-		return this.shapeSerialCounter.getLastIndex();
+	int getLastCreationSerial(){
+		return this.creationSerialCounter.getLastIndex();
 	}
 	
-	public IndexCounter getShapeSerialCounter(){
-		return this.shapeSerialCounter;
-	}
-
-	void setLastLabelSerial(int lastIndexValue){
-		this.labelSerialCounter = new IndexCounter(lastIndexValue);
-	}
-	
-	int getLastLabelSerial(){
-		return this.labelSerialCounter.getLastIndex();
-	}
-	
-	public IndexCounter getLabelSerialCounter(){
-		return this.labelSerialCounter;
-	}
-
-	void setLastLinkSerial(int lastIndexValue){
-		this.linkSerialCounter = new IndexCounter(lastIndexValue);
-	}
-	
-	int getLastLinkSerial(){
-		return this.linkSerialCounter.getLastIndex();
-	}
-	
-	public IndexCounter getLinkSerialCounter(){
-		return this.linkSerialCounter;
-	}
-
-	void setLastPropertyCreationSerial(int lastIndexValue){
-		this.propertySerialCounter = new IndexCounter(lastIndexValue);
-	}
-	
-	int getLastPropertyCreationSerial(){
-		return this.propertySerialCounter.getLastIndex();
-	}
-	
-	public IndexCounter getPropertySerialCounter(){
-		return this.propertySerialCounter;
+	public IndexCounter getCreationSerialCounter(){
+		return this.creationSerialCounter;
 	}
 
 	/* (non-Javadoc)
@@ -405,28 +344,12 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.model = model;
 	}
 
-	public Set<HibShapeAttribute> getShapeAttributes() {
-		return this.shapeAttributes;
+	public Set<HibCanvasAttribute> getCanvasAttributes() {
+		return this.canvasAttributes;
 	}
 
-	public void setShapeAttributes(Set<HibShapeAttribute> shapeAttributes) {
-		this.shapeAttributes = shapeAttributes;
-	}
-
-	public Set<HibLinkAttribute> getLinkAttributes() {
-		return this.linkAttributes;
-	}
-
-	public void setLinkAttributes(Set<HibLinkAttribute> linkAttributes) {
-		this.linkAttributes = linkAttributes;
-	}
-
-	public Set<HibLabelAttribute> getLabelAttributes() {
-		return this.labelAttributes;
-	}
-
-	public void setLabelAttributes(Set<HibLabelAttribute> labelAttributes) {
-		this.labelAttributes = labelAttributes;
+	public void setCanvasAttributes(Set<HibCanvasAttribute> shapeAttributes) {
+		this.canvasAttributes = shapeAttributes;
 	}
 
 	/* (non-Javadoc)
@@ -462,14 +385,6 @@ public class HibCanvas implements ICanvas, Serializable {
 		} else if (!this.repository.equals(other.getRepositoryName()))
 			return false;
 		return true;
-	}
-
-	public Set<HibProperty> getProperties() {
-		return this.properties;
-	}
-
-	public void setProperties(Set<HibProperty> properties) {
-		this.properties = properties;
 	}
 
 	/* (non-Javadoc)
@@ -508,34 +423,28 @@ public class HibCanvas implements ICanvas, Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLabelAttribute(int)
 	 */
 	public boolean containsLabelAttribute(int attributeSerial) {
-		return findAttribute(this.labelAttributes, attributeSerial) != null;
+		return findAttribute(this.canvasAttributes, attributeSerial) != null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLinkAttribute(int)
 	 */
 	public boolean containsLinkAttribute(int attributeSerial) {
-		return findAttribute(this.linkAttributes, attributeSerial) != null;
+		return findAttribute(this.canvasAttributes, attributeSerial) != null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsShapeAttribute(int)
 	 */
 	public boolean containsShapeAttribute(int attributeSerial) {
-		return findAttribute(this.shapeAttributes, attributeSerial) != null;
+		return findAttribute(this.canvasAttributes, attributeSerial) != null;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#findAttribute(int)
 	 */
 	public ICanvasAttribute findAttribute(int attributeSerial) {
-		ICanvasAttribute retVal = findAttribute(this.shapeAttributes, attributeSerial);
-		if(retVal == null) {
-			retVal = findAttribute(this.linkAttributes, attributeSerial);
-		}
-		if(retVal == null) {
-			retVal = findAttribute(this.labelAttributes, attributeSerial);
-		}
+		ICanvasAttribute retVal = findAttribute(this.canvasAttributes, attributeSerial);
 		return retVal;
 	}
 
@@ -543,7 +452,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLabelAttribute(int)
 	 */
 	public ILabelAttribute getLabelAttribute(int attributeSerial) {
-		ILabelAttribute retVal = findAttribute(this.labelAttributes, attributeSerial);
+		ILabelAttribute retVal = (ILabelAttribute)findAttribute(this.canvasAttributes, attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}
@@ -554,7 +463,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLinkAttribute(int)
 	 */
 	public ILinkAttribute getLinkAttribute(int attributeSerial) {
-		ILinkAttribute retVal = findAttribute(this.linkAttributes, attributeSerial);
+		ILinkAttribute retVal = (ILinkAttribute)findAttribute(this.canvasAttributes, attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}
@@ -565,13 +474,12 @@ public class HibCanvas implements ICanvas, Serializable {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getShapeAttribute(int)
 	 */
 	public IShapeAttribute getShapeAttribute(int attributeSerial) {
-		IShapeAttribute retVal = findAttribute(this.shapeAttributes, attributeSerial);
+		IShapeAttribute retVal = (IShapeAttribute)findAttribute(this.canvasAttributes, attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}
 		return retVal;
 	}
-
 
 	private static <T extends ICanvasAttribute> T findAttribute(Set<T> searchSet, int creationSerial) {
 		T retVal = null;

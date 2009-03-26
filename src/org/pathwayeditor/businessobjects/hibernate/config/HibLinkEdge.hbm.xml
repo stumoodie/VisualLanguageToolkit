@@ -3,23 +3,23 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" table="LinkEdge">
+    <class name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge" table="LinkEdge" lazy="false">
         <id name="id" type="java.lang.Long">
             <column name="id" />
             <generator class="native" />
         </id>
         <properties name="xak1compoundedge" unique="true">
-        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="none">
+        	<many-to-one name="model" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="none" lazy="false" >
             	<column name="model_id" not-null="true" />
         	</many-to-one>
         	<property name="index" type="int" >
         		<column name="edge_index" not-null="true"/>
         	</property>
         </properties>
-        <many-to-one name="attribute" unique="true" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="none">
+        <many-to-one name="attribute" unique="true" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" cascade="none" lazy="false" >
 		       	<column name="link_attribute_id" not-null="false"/>
         </many-to-one>
-        <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="none">
+        <many-to-one name="owningSubModel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel" cascade="none" lazy="false" >
         	<column name="owning_child_model_id" not-null="true"/>
         </many-to-one>
         <many-to-one name="outNode" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode" cascade="none" lazy="false">

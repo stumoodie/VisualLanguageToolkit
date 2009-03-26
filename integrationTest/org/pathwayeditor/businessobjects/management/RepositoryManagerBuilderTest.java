@@ -59,8 +59,7 @@ public class RepositoryManagerBuilderTest {
 				dataSource.getSessionFactory(), new StubNotationSubsystemPool());
 		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(
 				dataSource.getSessionFactory(), connInfo.getRepositoryName());
-		bofac = new RepositoryPersistenceManager(repoHandler,
-				canvasPersistenceHandler);
+		bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
 	}
 
 //	private void deleteDir(File directory) {

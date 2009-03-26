@@ -2,12 +2,9 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
@@ -19,18 +16,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
-import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
-public class HibLinkAttribute implements ILinkAttribute , Serializable {
+public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILinkAttribute , Serializable {
 	private static final long serialVersionUID = 8124494867402957446L;
 	private static final int VALID_NUM_LINK_TERMINI = 2;
 	private static final RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
@@ -38,11 +31,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private static final ConnectionRouter DEFAULT_ROUTER_TYPE = ConnectionRouter.FAN;
 	private static final int MIN_LINE_WIDTH = 1;
-	private final Logger logger = Logger.getLogger(this.getClass());
 	
-	private Long id;
-	private HibCanvas hibCanvas;
-	private int creationSerial;
 	private HibObjectType hibObjectType;
 	private ILinkObjectType objectType;
 	private String name = "";
@@ -55,8 +44,6 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	private ConnectionRouter routerType = DEFAULT_ROUTER_TYPE;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>();
 	private HibLinkEdge edge ;
-	private Map<String, HibProperty> hibLinkProperties = new HashMap<String, HibProperty>();
-	private IPropertyBuilder propertyBuilder;
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>();
 	private IndexCounter bendPointCounter = new IndexCounter();
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
@@ -66,6 +53,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibLinkAttribute() {
+		super();
 	}
 
 	/**
@@ -76,18 +64,15 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @param hibObjectType
 	 */
 	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, ILinkObjectType objectType, HibObjectType hibObjectType) {
-		this.hibCanvas = hibCanvas;
-		this.propertyBuilder = new PropertyBuilder(hibCanvas);
-		this.creationSerial = linkIndex;
+		super(hibCanvas, linkIndex, objectType.getDefaultAttributes());
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
 		// the ordering here is important as the code expects the SOURCe to be first. Not satisfactory
 		// FIXME: the following is very fragile. The LinkTermType is used later on to lookup the correct terminus.
 		// This is a bug waiting to happen and needs fixing.
-		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
-		this.linkTermini.add(new HibLinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
+		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
 		addDefaults(objectType.getDefaultAttributes());
-		this.getCanvas().getLinkAttributes().add(this) ;
 	}
 
 	/**
@@ -97,9 +82,7 @@ public class HibLinkAttribute implements ILinkAttribute , Serializable {
 	 * @param otherAttribute
 s	 */
 	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, HibLinkAttribute otherAttribute) {
-		this.hibCanvas = hibCanvas;
-		this.propertyBuilder = new PropertyBuilder(hibCanvas);
-		this.creationSerial = linkIndex;
+		super(hibCanvas, linkIndex, otherAttribute);
 		this.objectType = otherAttribute.objectType;
 		this.hibObjectType = otherAttribute.hibObjectType;
 		this.lineColour = otherAttribute.getLineColor();
@@ -110,15 +93,10 @@ s	 */
 		this.detailedDescription = otherAttribute.getDetailedDescription();
 		this.url = otherAttribute.getUrl();
 		this.routerType = otherAttribute.getRouterType();
-		for(HibProperty prop : otherAttribute.hibLinkProperties.values()){
-			HibProperty copiedProp = (HibProperty)prop.getDefinition().copyProperty(this.propertyBuilder, prop);
-			this.hibLinkProperties.put(copiedProp.getDefinition().getName(), copiedProp);
-		}
 		for(HibLinkTerminus linkTerm : otherAttribute.getLinkTermini()){
-			HibLinkTerminus copiedTerminus = new HibLinkTerminus(this, linkTerm);
+			HibLinkTerminus copiedTerminus = new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, linkTerm);
 			this.linkTermini.add(copiedTerminus);
 		}
-		this.getCanvas().getLinkAttributes().add(this) ;
 		this.bendPointCounter = new IndexCounter(otherAttribute.bendPointCounter.getLastIndex());
 		for(HibBendPoint bendPoint : otherAttribute.hibBendPoints) {
 			this.hibBendPoints.add(new HibBendPoint(this, bendPoint));
@@ -132,63 +110,17 @@ s	 */
 		this.setLineColor(linkAttributeDefaults.getLineColour());
 		this.setLineStyle(linkAttributeDefaults.getLineStyle());
 		this.setLineWidth(linkAttributeDefaults.getLineWidth());
-		this.setName(linkAttributeDefaults.getName() + this.creationSerial);
+		this.setName(linkAttributeDefaults.getName());
 		this.setDescription(linkAttributeDefaults.getDescription());
 		this.setDetailedDescription(linkAttributeDefaults.getDetailedDescription());
 		this.setUrl(linkAttributeDefaults.getUrl());
 		this.setRouterType(linkAttributeDefaults.getRouter());
-		Iterator<IPropertyDefinition> propIter = linkAttributeDefaults.propertyDefinitionIterator();
-		while(propIter.hasNext()){
-			IPropertyDefinition propDefn = propIter.next();
-			this.hibLinkProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
-		}
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-	
 	void setLinkEdge(HibLinkEdge edge) {
 		this.edge = edge;
 	}
 	
-	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
-	}
-
-	public HibCanvas getCanvas() {
-		return this.hibCanvas;
-	}
-
-	public void setCanvas(HibCanvas hibCanvas) {
-		if(hibCanvas != null){
-			this.propertyBuilder = new PropertyBuilder(hibCanvas);
-		}
-		else{
-			this.propertyBuilder = null;
-		}
-		this.hibCanvas = hibCanvas;
-	}
-
-	public void changeHibCanvas(HibCanvas canvas){
-		if(this.hibCanvas != null){
-			this.hibCanvas.getLinkAttributes().remove(this);
-		}
-		if(canvas != null){
-			canvas.getLinkAttributes().add(this);
-		}
-		this.setCanvas(canvas);
-	}
-	
-	public int getCreationSerial() {
-		return this.creationSerial;
-	}
-
-	public void setCreationSerial(int link_index) {
-		this.creationSerial = link_index;
-	}
-
 	public ILinkObjectType getObjectType() {
 		return this.objectType;
 	}
@@ -201,28 +133,11 @@ s	 */
 		this.hibObjectType = hibObjectType ;
 	}
 
-	public void injectLinkObjectType(ILinkObjectType objectType) throws InconsistentNotationDefinitionException {
-		this.objectType = objectType;
-		injectPropertyDefinitions();
-		this.getSourceTerminus().injectLinkTerminusDefaults(objectType.getSourceTerminusDefinition());
-		this.getTargetTerminus().injectLinkTerminusDefaults(objectType.getTargetTerminusDefinition());
-	}
-
-	private void injectPropertyDefinitions() throws InconsistentNotationDefinitionException {
-		Iterator<IPropertyDefinition> it = this.objectType.getDefaultAttributes().propertyDefinitionIterator();
-		int propCntr = 0;
-		while (it.hasNext()) {
-			IPropertyDefinition definition = it.next();
-			HibProperty property = this.hibLinkProperties.get(definition.getName());
-			if(property==null) {
-					throw new InconsistentNotationDefinitionException("The object type has property definitions which have no matching property in this Shape Attribute");
-			}
-			property.setPropertyDefinition(definition);
-			propCntr++;
-		}
-		if(propCntr != this.hibLinkProperties.size()) {
-			throw new InconsistentNotationDefinitionException("Object inconsistent with object type. Cannot find definitions for some properties");
-		}
+	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+		this.objectType = (ILinkObjectType)objectType;
+		injectPropertyDefinitions(this.objectType.getDefaultAttributes());
+		this.getSourceTerminus().injectLinkTerminusDefaults(this.objectType.getSourceTerminusDefinition());
+		this.getTargetTerminus().injectLinkTerminusDefaults(this.objectType.getTargetTerminusDefinition());
 	}
 
 	public String getName() {
@@ -277,24 +192,12 @@ s	 */
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldValue, this.url);
 	}
 
-	public Map<String, HibProperty> getLinkProperties() {
-		return this.hibLinkProperties;
-	}
-
-	public void setHibLinkProperties(Map<String, HibProperty> hibProperties) {
-		this.hibLinkProperties = hibProperties;
-	}
-
 	public int getLineRed() {
 		return this.lineColour.getRed();
 	}
 
 	public void setLineRed(int lineRed) {
 		this.lineColour = this.lineColour.newRed(lineRed);
-	}
-
-	public Map<String, ? extends IAnnotationProperty> getHibLinkProperties() {
-		return this.hibLinkProperties;
 	}
 
 	public int getLineGreen() {
@@ -360,35 +263,6 @@ s	 */
 		this.hibBendPoints = hibBendPoints;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((this.hibCanvas == null) ? 0 : this.hibCanvas.hashCode());
-		result = prime * result + this.creationSerial;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final HibLinkAttribute other = (HibLinkAttribute) obj;
-		if (this.hibCanvas == null) {
-			if (other.hibCanvas != null)
-				return false;
-		} else if (!this.hibCanvas.equals(other.hibCanvas))
-			return false;
-		if (this.creationSerial != other.creationSerial)
-			return false;
-		return true;
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILink#bendPointIterator()
 	 */
@@ -429,27 +303,6 @@ s	 */
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
-	 */
-	public HibProperty getProperty(IPropertyDefinition propDefn) {
-		return this.hibLinkProperties.get(propDefn.getName());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
-	 */
-	public HibProperty getProperty(String propName) {
-		return this.hibLinkProperties.get(propName);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
-	 */
-	public Iterator<IAnnotationProperty> propertyIterator() {
-		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibLinkProperties.values().iterator());
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLineColor()
 	 */
 	public RGB getLineColor() {
@@ -473,17 +326,6 @@ s	 */
 	 */
 	public ILinkEdge getCurrentDrawingElement() {
 		return this.edge;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public boolean hasProperty(IPropertyDefinition property) {
-		boolean retVal = false;
-		if(property != null){
-			retVal = this.hibLinkProperties.containsKey(property.getName());
-		}
-		return retVal;
 	}
 
 	public List<HibLinkTerminus> getLinkTermini() {
@@ -518,17 +360,6 @@ s	 */
 		return this.bendPointCounter.getLastIndex();
 	}
 	
-
-	@Override
-	public String toString(){
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(canvas=");
-		builder.append(this.getCanvas());
-		builder.append(", serial=");
-		builder.append(this.getCreationSerial());
-		builder.append(")");
-		return builder.toString();
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
@@ -633,76 +464,19 @@ s	 */
 		return retVal;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public boolean containsProperty(IPropertyDefinition propDefn) {
-		boolean retVal = false;
-		if(propDefn != null) {
-			retVal = this.hibLinkProperties.containsKey(propDefn.getName());
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(java.lang.String)
-	 */
-	public boolean containsProperty(String propName) {
-		boolean retVal = false;
-		if(propName != null) {
-			retVal = this.hibLinkProperties.containsKey(propName);
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#numProperties()
-	 */
-	public int numProperties() {
-		return this.hibLinkProperties.size();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
-	 */
-	public boolean containsProperty(IAnnotationProperty property) {
-		boolean retVal = false;
-		if(property != null) {
-			IAnnotationProperty foundProp = this.hibLinkProperties.get(property.getDefinition().getName());
-			if(foundProp != null) {
-				retVal = foundProp.equals(property);
-			}
-		}
-		return retVal;
-	}
-
 	public boolean isValid() {
 		boolean retVal = true;
-		if(this.objectType != null && this.linkTermini.size() == VALID_NUM_LINK_TERMINI
+		if(this.getObjectType() != null && this.getLinkTermini().size() == VALID_NUM_LINK_TERMINI
 				&& this.getSourceTerminus() != null && this.getTargetTerminus() != null
+				// check edge points to this node
+				&& this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getAttribute().equals(this)
 				// check property
-				&& this.objectType.getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getObjectType(),
+				&& this.getObjectType().getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getObjectType(),
 								this.getCurrentDrawingElement().getTargetShape().getObjectType())){
 			// now check properties
-			Iterator<IPropertyDefinition> it = this.objectType.getDefaultAttributes().propertyDefinitionIterator();
-			int propCntr = 0;
-			while (it.hasNext()) {
-				IPropertyDefinition definition = it.next();
-				HibProperty property = this.hibLinkProperties.get(definition.getName());
-				if(property==null) {
-					logger.error("Attribute invalid: attribute = " + this + ". The object type has property definitions which have no matching property in this Shape Attribute. Objecttype=" + this.objectType);
-					retVal = false;
-					break;
-				}
-				property.setPropertyDefinition(definition);
-				propCntr++;
-			}
-			if(retVal && propCntr != this.hibLinkProperties.size()) {
-				logger.error("Attribute invalid: attribute= " + this + ". Cannot find definitions for some properties stroed in attribute");
-				retVal = false;
-			}
+			retVal = this.arePropertiesValid(this.getObjectType().getDefaultAttributes());
 			if(retVal) {
-				// validate terminit
+				// validate termini
 				retVal = this.getSourceTerminus().isValid() && this.getTargetTerminus().isValid();
 			}
 		}

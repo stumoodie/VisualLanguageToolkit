@@ -3,7 +3,7 @@
 <dataset>
 <table name="LabelAttribute">
 		<column>id</column>
-		<column>displayed_property_id</column>
+		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -11,10 +11,8 @@
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<row>
-			<value>100001</value>
+			<value>100018</value>
 			<value>100001</value>
 			<value>200</value>
 			<value>200</value>
@@ -23,11 +21,9 @@
 			<value>222</value>
 			<value>122</value>
 			<value>122</value>
-			<value>100001</value>
-			<value>1</value>
 		</row>
 		<row>
-			<value>100002</value>
+			<value>100019</value>
 			<value>100002</value>
 			<value>102</value>
 			<value>102</value>
@@ -36,11 +32,9 @@
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
-			<value>100001</value>
-			<value>2</value>
 		</row>
 		<row>
-			<value>100003</value>
+			<value>100020</value>
 			<value>100003</value>
 			<value>103</value>
 			<value>103</value>
@@ -49,11 +43,9 @@
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
-			<value>100001</value>
-			<value>3</value>
 		</row>
 		<row>
-			<value>100004</value>
+			<value>100021</value>
 			<value>100004</value>
 			<value>104</value>
 			<value>104</value>
@@ -62,11 +54,9 @@
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
-			<value>100001</value>
-			<value>4</value>
 		</row>
 		<row>
-			<value>100005</value>
+			<value>100022</value>
 			<value>100005</value>
 			<value>105</value>
 			<value>105</value>
@@ -75,11 +65,9 @@
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
-			<value>100001</value>
-			<value>5</value>
 		</row>
 		<row>
-			<value>100006</value>
+			<value>100023</value>
 			<value>100006</value>
 			<value>106</value>
 			<value>106</value>
@@ -88,11 +76,9 @@
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
-			<value>100001</value>
-			<value>6</value>
 		</row>
 		<row>
-			<value>100007</value>
+			<value>100024</value>
 			<value>100007</value>
 			<value>107</value>
 			<value>107</value>
@@ -101,12 +87,10 @@
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
-			<value>100001</value>
-			<value>7</value>
 		</row>
 		<row>
+			<value>100025</value>
 			<value>100008</value>
-			<value>100008</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -114,8 +98,6 @@
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-			<value>100001</value>
-			<value>8</value>
 		</row>
 	</table>
 </dataset>

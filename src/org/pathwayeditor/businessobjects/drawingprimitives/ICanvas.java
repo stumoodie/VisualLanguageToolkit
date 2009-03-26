@@ -1,7 +1,5 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import java.util.Date;
-
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
@@ -93,20 +91,6 @@ public interface ICanvas extends IPropertyChangeListenee{
 	 * @return the context. Cannot be null.
 	 */	
 	INotationSubsystem getNotationSubsystem();
-	
-	/**
-	 * @deprecated not updated currently and may be removed in the future. In order to monitor changes
-	 * to the model then add a listener to it or a property change listener to this canvas.
-	 * Get the date this Canvas was last modified.
-	 * @return the Date of last modification. Cannot be null.
-	 */	
-	Date getModified () ;
-
-	/**
-	 * Get the date this Canvas was last created.
-	 * @return the Date of creation. Cannot be null.
-	 */	
-	Date getCreated () ;
 	
 	/**
 	 * Get the size of this map

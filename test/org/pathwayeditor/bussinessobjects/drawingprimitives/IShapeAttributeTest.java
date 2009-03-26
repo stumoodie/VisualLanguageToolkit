@@ -96,7 +96,7 @@ public class IShapeAttributeTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(mockObjectType).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
-			allowing(mockCanvas).getShapeAttributes(); will(returnValue(mockAttributeSet));
+			allowing(mockCanvas).getCanvasAttributes(); will(returnValue(mockAttributeSet));
 			
 			allowing(mockAttributeSet).add(with(any(HibShapeAttribute.class)));
 		}});
@@ -117,47 +117,40 @@ public class IShapeAttributeTest {
 	}
 	
 	@Test
-	public void testChangeName () throws Exception 
-	{
+	public void testChangeName () throws Exception {
 		shapeAttribute.setName(NEW_SHAPE_NAME) ;
 		assertEquals ( "correct changed Name" , NEW_SHAPE_NAME , shapeAttribute.getName()) ;
 	}
 	
 	@Test
-	public void testGetDescription () throws Exception 
-	{
+	public void testGetDescription () throws Exception {
 		assertEquals ( "correct Description" , SHAPE_DESCR , shapeAttribute.getDescription()) ;
 	}
 	
 	@Test
-	public void testChangeDescription () throws Exception 
-	{
+	public void testChangeDescription () throws Exception {
 		shapeAttribute.setDescription(NEW_SHAPE_DESCR) ;
 		assertEquals ( "correct changed Description" , NEW_SHAPE_DESCR , shapeAttribute.getDescription()) ;
 	}
 	
 	@Test
-	public void testGetDetailedDescription () throws Exception 
-	{
+	public void testGetDetailedDescription () throws Exception {
 		assertEquals ( "correct DetailedDescription" , DETAILED_DESCR , shapeAttribute.getDetailedDescription()) ;
 	}
 	
 	@Test
-	public void testChangeDetailedDescription () throws Exception 
-	{
+	public void testChangeDetailedDescription () throws Exception {
 		shapeAttribute.setDetailedDescription(NEW_DETAILED_DESCR) ;
 		assertEquals ( "correct changed DetailedDescription" , NEW_DETAILED_DESCR , shapeAttribute.getDetailedDescription()) ;
 	}
 	
 	@Test
-	public void testGetURL () throws Exception
-	{
+	public void testGetURL () throws Exception {
 		assertEquals ("correct URL" , URL_VALUE , shapeAttribute.getUrl()) ;
 	}
 	
 	@Test
-	public void testChangeURL () throws Exception
-	{
+	public void testChangeURL () throws Exception {
 		shapeAttribute.setUrl(NEW_URL_VALUE) ;
 		assertEquals ("correct changed URL" , NEW_URL_VALUE , shapeAttribute.getUrl()) ;
 	}

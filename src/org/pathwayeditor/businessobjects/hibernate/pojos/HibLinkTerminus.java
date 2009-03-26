@@ -1,11 +1,11 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -15,16 +15,12 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
-import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
-public class HibLinkTerminus implements ILinkTerminus, Serializable {
+public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILinkTerminus, Serializable {
 	private transient final Logger logger = Logger.getLogger(this.getClass());
 	private final static int DEF_TERM_DEC_WIDTH = 0;
 	private final static int DEF_TERM_DEC_HEIGHT = 0;
@@ -33,7 +29,6 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	private final static int DEFAULT_OFFSET = 0;
 	private final static RGB DEFAULT_TERM_COLOUR = new RGB(0, 0, 0);
 	
-	private Long id = null;
 	private HibLinkAttribute linkAttribute = null;
 	private LinkTermType linkTermType = null;
 	private short offset = DEFAULT_OFFSET;
@@ -43,7 +38,6 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
     private transient RGB terminusColour = DEFAULT_TERM_COLOUR;
     private transient Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
     private transient ILinkTerminusDefinition terminusDefn = null;;
-	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private final ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
 
 	/**
@@ -51,10 +45,11 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	 * @deprecated use another constructor to initialise this class in application code.
 	 */
 	HibLinkTerminus() {
+		super();
 	}
 
-	public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
-		this();
+	public HibLinkTerminus(HibCanvas canvas, int creationSerial, HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
+		super(canvas, creationSerial, terminusDefn.getDefaultAttributes());
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
@@ -66,11 +61,10 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 	 * @param hibLinkAttribute
 	 * @param other
 	 */
-	public HibLinkTerminus(HibLinkAttribute hibLinkAttribute, HibLinkTerminus other) {
-		this();
+	public HibLinkTerminus(HibCanvas canvas, int creationSerial, HibLinkAttribute hibLinkAttribute, HibLinkTerminus other) {
+		super(canvas, creationSerial, other);
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = other.getLinkTermType();
-		IPropertyBuilder propBuilder = new PropertyBuilder(hibLinkAttribute.getCanvas());
 		this.endDecoratorType = other.getEndDecoratorType();
 		this.endDecSize = other.getEndSize();
 		this.offset = other.getGap();
@@ -78,10 +72,6 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.terminusSize = other.getTerminusSize();
 		this.terminusDefn = other.terminusDefn;
 		this.termShapeType = other.getTerminusDecoratorType();
-		for(HibProperty otherHibProp : other.getProperties().values()){
-			HibProperty copiedHibProp = (HibProperty)otherHibProp.getDefinition().copyProperty(propBuilder, otherHibProp);
-			this.hibProperties.put(copiedHibProp.getDefinition().getName(), copiedHibProp);
-		}
 	}
 
 	/**
@@ -94,45 +84,17 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.setTerminusDecoratorType(linkTerminusDefaults.getTermDecoratorType());
 		this.setTerminusColour(linkTerminusDefaults.getTermColour());
 		this.setTerminusSize(linkTerminusDefaults.getTermSize());
-		IPropertyBuilder propBuilder = new PropertyBuilder(this.getOwningLink().getCanvas());
-		Iterator<IPropertyDefinition> iter = linkTerminusDefaults.propertyDefinitionIterator();
-		while(iter.hasNext()){
-			IPropertyDefinition propDefn = iter.next();
-			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propBuilder));
-		}
 	}
 
 	public void injectLinkTerminusDefaults(ILinkTerminusDefinition terminusDefn) throws InconsistentNotationDefinitionException {
+		super.injectPropertyDefinitions(terminusDefn.getDefaultAttributes());
 		if(terminusDefn != null && (!terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
 				|| !terminusDefn.getLinkEndCode().equals(this.linkTermType))){
 			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
 		}
 		this.terminusDefn = terminusDefn;
-		final Iterator<IPropertyDefinition> propDefnIter = terminusDefn.getDefaultAttributes().propertyDefinitionIterator();
-		int propCntr = 0;
-		while(propDefnIter.hasNext()) {
-			IPropertyDefinition definition = propDefnIter.next();
-			HibProperty property = this.hibProperties.get(definition.getName());
-			if(property==null) {
-					throw new InconsistentNotationDefinitionException("The link terminus definition has property definitions which have no matching property in this Shape Attribute");
-			}
-			property.setPropertyDefinition(definition);
-			propCntr++;
-		}
-		if(propCntr != this.hibProperties.size()) {
-			throw new InconsistentNotationDefinitionException("Link terminus definition inconsistent with stored terminus properties. Cannot find definitions for some properties");
-		}
 	}
 	
-	public Long getId() {
-		return this.id;
-	}
-
-	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
-	}
-
 	void setOwningLink(HibLinkAttribute hibLinkAttribute) {
 		this.linkAttribute = hibLinkAttribute;
 	}
@@ -216,58 +178,10 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
         this.terminusSize = this.terminusSize.newHeight(height);
     }
 
-	public Map<String, HibProperty> getProperties() {
-		return this.hibProperties;
-	}
-
-	public void setProperties(Map<String, HibProperty> hibProperties) {
-		this.hibProperties = hibProperties;
-	}
-
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof HibLinkTerminus))
-			return false;
-		HibLinkTerminus castOther = (HibLinkTerminus) other;
-
-		return ((this.getOwningLink() == castOther.getOwningLink()) || (this.getOwningLink() != null
-				&& castOther.getOwningLink() != null && this.getOwningLink().equals(
-				castOther.getOwningLink())))
-				&& (this.getLinkTermType() == castOther.getLinkTermType());
-	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result
-				+ (this.getOwningLink() == null ? 0 : this.getOwningLink().hashCode());
-		result = 37 * result + this.getLinkTermType().hashCode();
-
-		return result;
-	}
-
 	// The following is extra code specified in the hbm.xml files
 
 	private static final long serialVersionUID = -4462637156010353035L;
 
-	public void addProperty(String name, HibProperty toAdd) {
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		this.hibProperties.put(name, toAdd);
-	}
-
-	void removeProperty(String toRemove) {
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		HibProperty propertyToRemove = hibProperties.get(toRemove);
-		if (propertyToRemove == null)
-			throw new IllegalStateException("property cannot be null");
-
-		this.hibProperties.remove(toRemove);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -383,82 +297,20 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		return retVal;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#propertyIterator()
-	 */
-	public Iterator<IAnnotationProperty> propertyIterator() {
-		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		return this.getProperty(propDefn.getName());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(java.lang.String)
-	 */
-	public IAnnotationProperty getProperty(String propName) {
-		return this.hibProperties.get(propName);
-	}
-	
-	@Override
-	public String toString(){
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(linkatt=");
-		builder.append(this.linkAttribute);
-		builder.append(", termType=");
-		builder.append(this.termShapeType.name());
-		builder.append(")");
-		return builder.toString();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public boolean containsProperty(IPropertyDefinition propDefn) {
-		boolean retVal = false;
-		if(propDefn != null) {
-			this.hibProperties.get(propDefn.getName());
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(java.lang.String)
-	 */
-	public boolean containsProperty(String propName) {
-		boolean retVal = false;
-		if(propName != null) {
-			this.hibProperties.get(propName);
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#numProperties()
-	 */
-	public int numProperties() {
-		return this.hibProperties.size();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
-	 */
-	public boolean containsProperty(IAnnotationProperty property) {
-		boolean retVal = false;
-		if(property != null) {
-			IAnnotationProperty foundProp = this.hibProperties.get(property.getDefinition().getName());
-			if(foundProp != null) {
-				retVal = foundProp.equals(property);
-			}
-		}
-		return retVal;
-	}
-
 	public boolean isValid() {
+		ILinkAttribute owningLink = this.getOwningLink(); 
+		boolean owningLinkValid = owningLink != null;
+		ILinkTerminusDefinition defn = this.getDefinition();
+		LinkTermType termType = this.getLinkTermType();
+		boolean definitionValid = defn != null && owningLink != null && defn.getOwningObjectType().equals(this.getOwningLink().getObjectType())
+			&& defn.getLinkEndCode().equals(termType);
+		boolean validProperties = this.arePropertiesValid(defn.getDefaultAttributes());
+		boolean retVal = owningLinkValid && definitionValid && validProperties;
+		if(!retVal) {
+			logger.error("Terminus invalid: terminus=" + this + "terminusDefn is null or does not belong to the same object type as the link owning this terminus or is not of the correct link terminus type.");
+		}
+		return retVal;
+/*	public boolean isValid() {
 		boolean retVal = true;
 		if(this.linkAttribute != null && this.terminusDefn != null && terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
 					&& terminusDefn.getLinkEndCode().equals(this.linkTermType)){
@@ -484,6 +336,8 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 			retVal = false;
 		}
 		return retVal;
+	}*/
+
 	}
 
 	/* (non-Javadoc)
@@ -507,4 +361,34 @@ public class HibLinkTerminus implements ILinkTerminus, Serializable {
 		this.eventHandler.removeChangeListener(listener);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getCurrentDrawingElement()
+	 */
+	public IDrawingElement getCurrentDrawingElement() {
+		return this.linkAttribute.getCurrentDrawingElement();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getObjectType()
+	 */
+	public IObjectType getObjectType() {
+		return this.linkAttribute.getObjectType();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#getHibObjectType()
+	 */
+	@Override
+	public HibObjectType getHibObjectType() {
+		// no persisted object type
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
+	 */
+	@Override
+	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+		// do nothing
+	}
 }

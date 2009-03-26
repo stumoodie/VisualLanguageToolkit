@@ -3,8 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 /**
@@ -12,9 +12,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
  *
  */
 public class HibRootNode extends HibCompoundNode implements IRootNode {
-	private static final int ROOTNODE_ATTRIBUTE = -999;
-
-	private RootAttribute canvasAttribute = null;
+	private HibRootAttribute canvasAttribute = null;
 	
 	/**
 	 * Constructor should only be used by hiberate.
@@ -28,28 +26,24 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	 * Constructor that creates a new instance of the root node. 
 	 * @param model
 	 * @param nodeIdx
-	 * @param objectType
 	 */
-	public HibRootNode(HibModel model, int nodeIdx, IRootObjectType objectType) {
+	public HibRootNode(HibModel model, int nodeIdx, HibRootAttribute rootAttribute) {
 		super(model, null, nodeIdx);
-		HibCanvas canvas = model.getCanvas();
-		this.canvasAttribute = new RootAttribute(canvas, ROOTNODE_ATTRIBUTE, objectType);
+		this.canvasAttribute = rootAttribute;
 		this.canvasAttribute.setRootNode(this);
 	}
 
-	public void setObjectType(IRootObjectType objectType){
-		HibCanvas canvas = this.getModel().getCanvas();
-		this.canvasAttribute = new RootAttribute(canvas, ROOTNODE_ATTRIBUTE, objectType);
-		this.canvasAttribute.setRootNode(this);
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getAttribute()
 	 */
-	public ICanvasAttribute getAttribute() {
+	public HibRootAttribute getAttribute() {
 		return this.canvasAttribute;
 	}
 
+	void setAttribute(HibRootAttribute rootAttribute) {
+		this.canvasAttribute = rootAttribute;
+	}
+	
 	@Override
 	public HibRootNode getParentNode() {
 		return this;
@@ -94,5 +88,12 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 			// althought the compound graph expects the root node to return a reference to itself
 			// the hibernate schema expects the parent to have a root that it null.
 			&& super.getHibParentNode() == null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getLabelSubModel()
+	 */
+	public ISubModel getLabelSubModel() {
+		return this.getSubModel();
 	}
 }

@@ -2,22 +2,11 @@
 <!--  START OF FILESYSTEM -->
 <dataset>
 	<!-- START OF CONTEXT DEFINITIONS -->
-	<table name="Context">
+	<table name="Notation">
 		<column>id</column>
-		<column>global_id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>major_version</column>
-		<column>minor_version</column>
-		<column>patch_version</column>
 	</table>
 	<table name="ObjectType">
 		<column>id</column>
-		<column>context_id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>classification_code</column>
-		<column>unique_id</column>
 	</table>
 	<!-- END OF CONTEXT DEFINITIONS -->
 	<!-- START OF GRAPH STRUCTURE -->
@@ -162,8 +151,6 @@
 	<!-- END OF GRAPH STRUCTURE -->
 	<!-- ATTRIBUTES DECLARATION -->
 	<table name="ShapeAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -185,8 +172,6 @@
 		<column>height</column>
 		<column>name_visible</column>
 		<row>
-			<value>100001</value>
-			<value>9</value>
 			<value>shapeName1</value>
 			<value>100001</value>
 			<value>descr1</value>
@@ -209,8 +194,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>12</value>
 			<value>shapeName2</value>
 			<value>100002</value>
 			<value>descr2</value>
@@ -233,8 +216,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>10</value>
 			<value>shapeName3</value>
 			<value>100003</value>
 			<value>descr3</value>
@@ -257,8 +238,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>11</value>
 			<value>shapeName4</value>
 			<value>100004</value>
 			<value>descr4</value>
@@ -281,8 +260,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>13</value>
 			<value>shapeName5</value>
 			<value>100001</value>
 			<value>descr5</value>
@@ -305,8 +282,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>14</value>
 			<value>shapeName6</value>
 			<value>100002</value>
 			<value>descr6</value>
@@ -329,8 +304,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>15</value>
 			<value>shapeName7</value>
 			<value>100003</value>
 			<value>descr7</value>
@@ -353,8 +326,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>16</value>
 			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>
@@ -378,8 +349,6 @@
 		</row>																
 	</table>
 	<table name="LinkAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
@@ -393,8 +362,6 @@
 		<column>router_type</column>
 		<column>url</column>
 		<row>
-			<value>100001</value>
-			<value>10</value>
 			<value>1</value>
 			<value>100005</value>
 			<value>link_name1</value>
@@ -409,8 +376,6 @@
 			<value>http://www.HibLink1.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>11</value>
 			<value>1</value>
 			<value>100006</value>
 			<value>link_name2</value>
@@ -425,8 +390,6 @@
 			<value>http://www.HibLink2.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>12</value>
 			<value>0</value>
 			<value>100007</value>
 			<value>link_name3</value>
@@ -441,8 +404,6 @@
 			<value>http://www.HibLink3.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>13</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name4</value>
@@ -457,8 +418,6 @@
 			<value>http://www.HibLink4.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>14</value>
 			<value>0</value>
 			<value>100005</value>
 			<value>link_name5</value>
@@ -473,8 +432,6 @@
 			<value>http://www.HibLink5.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>15</value>
 			<value>0</value>
 			<value>100006</value>
 			<value>link_name6</value>
@@ -489,8 +446,6 @@
 			<value>http://www.HibLink6.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>16</value>
 			<value>0</value>
 			<value>100007</value>
 			<value>link_name7</value>
@@ -505,8 +460,6 @@
 			<value>http://www.HibLink7.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>17</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name8</value>
@@ -521,8 +474,6 @@
 			<value>http://www.HibLink8.org</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>18</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name9</value>
@@ -538,8 +489,6 @@
 		</row>
 	</table>
 	<table name="LabelAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -548,8 +497,6 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<value>100001</value>
-			<value>11</value>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -559,8 +506,6 @@
 			<value>51</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>13</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -570,8 +515,6 @@
 			<value>52</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>14</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -581,8 +524,6 @@
 			<value>53</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>12</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -592,8 +533,6 @@
 			<value>54</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>15</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -603,8 +542,6 @@
 			<value>55</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>16</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -614,8 +551,6 @@
 			<value>56</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>9</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -625,8 +560,6 @@
 			<value>57</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>10</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -640,147 +573,111 @@
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- PROPERTIES -->
 	<table name="property">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
+		<column>name</column>
 		<row>
-			<value>100001</value>
-			<value>36</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>37</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>38</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>39</value>
+			<value>ShapeLinkProperty</value>
+		</row>				
+		<row>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>40</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>41</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>42</value>
+			<value>ShapeLinkProperty</value>
+		</row>				
+		<row>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>43</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>44</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>45</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>46</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>47</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>48</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>49</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>50</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>51</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>52</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>53</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>54</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>55</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>56</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>57</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>58</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>59</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>60</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>61</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>62</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>63</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>64</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>65</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>66</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>67</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>100001</value>
-			<value>68</value>
-		</row>
-		<row>
-			<value>100001</value>
-			<value>69</value>
-		</row>
-		<row>
-			<value>100001</value>
-			<value>70</value>
+			<value>NumberProperty</value>
 		</row>
 	</table>
 	<table name="textproperty">
@@ -923,7 +820,7 @@
 	</table>
 	<!-- END OF PROPERTIES -->
 	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-		<table name="shapeAttributeProperty">
+		<!-- table name="shapeAttributeProperty">
 		<column>name</column>
 		<row>
 			<value>TextProperty</value>
@@ -1036,7 +933,7 @@
 		<row>
 			<value>NumberProperty</value>
 		</row>
-	</table>
+	</table-->
 	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
 	<!-- TERMINUS & DECORATORS -->
 	<table name="LinkTerminus">

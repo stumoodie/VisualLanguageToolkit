@@ -18,8 +18,6 @@
 		</row>
 	</table>
 <table name="LinkAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
@@ -32,10 +30,8 @@
 		<column>router_type</column>
 		<column>url</column>
 		<row>
-			<value>100001</value>
-			<value>10</value>
 			<value>100006</value>
-			<value>link name10</value>
+			<value>link name</value>
 			<value>detailed descn</value>
 			<value>descn</value>
 			<value>4</value>

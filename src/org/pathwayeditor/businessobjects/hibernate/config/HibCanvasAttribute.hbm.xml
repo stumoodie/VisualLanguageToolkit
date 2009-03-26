@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class
+		name="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute"
+		table="CanvasAttribute" abstract="true" lazy="false">
+		<id name="id" type="java.lang.Long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+
+		<many-to-one name="canvas"
+			class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" lazy="false" >
+			<column name="canvas_id" not-null="false" />
+		</many-to-one>
+		<property name="creationSerial" type="int" access="property">
+			<column name="creation_serial" not-null="true" />
+		</property>
+
+		<joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute"
+			table="RootAttribute" lazy="false" >
+			<key>
+				<column name="id" not-null="true" unique="true" />
+			</key>
+			<many-to-one name="hibObjectType"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType"
+				cascade="none" lazy="false">
+				<column name="object_type_id" not-null="true" />
+			</many-to-one>
+		</joined-subclass>
+
+		<joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute"
+			table="LabelAttribute" lazy="false">
+			<key>
+				<column name="id" not-null="true" unique="true" />
+			</key>
+			<many-to-one name="visualisableProperty"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"
+				cascade="none" lazy="false">
+				<column name="property_id" not-null="false" />
+			</many-to-one>
+			<property name="XPosition" type="int">
+				<column name="x_position" not-null="true" />
+			</property>
+			<property name="YPosition" type="int" access="property">
+				<column name="y_position" not-null="true" />
+			</property>
+			<property name="width" type="int" access="property">
+				<column name="width" not-null="true" />
+			</property>
+			<property name="height" type="int" access="property">
+				<column name="height" not-null="true" />
+			</property>
+			<property name="backgroundRed" type="int" access="property">
+				<column name="background_red" not-null="true" />
+			</property>
+			<property name="backgroundGreen" type="int" access="property">
+				<column name="background_green" not-null="true" />
+			</property>
+			<property name="backgroundBlue" type="int" access="property">
+				<column name="background_blue" not-null="true" />
+			</property>
+		</joined-subclass>
+
+		<joined-subclass
+			name="org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute"
+			table="AnnotatedCanvasAttribute" abstract="true">
+			<key>
+				<column name="id" not-null="true" unique="true" />
+			</key>
+			<set name="properties" table="CanvasAttribute" cascade="all"
+				inverse="true" lazy="false">
+				<key>
+					<column name="canvas_attribute_id" not-null="true" />
+				</key>
+				<one-to-many
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" />
+			</set>
+
+			<joined-subclass
+				name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"
+				table="LinkAttribute" lazy="false">
+				<key>
+					<column name="id" not-null="true" unique="true" />
+				</key>
+				<many-to-one name="hibObjectType"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType"
+					cascade="none" lazy="false" >
+					<column name="object_type_id" not-null="true" />
+				</many-to-one>
+				<property name="name" type="string">
+					<column name="name" length="128" not-null="true" />
+				</property>
+				<property name="description" type="string">
+					<column name="description" length="2048" not-null="true" />
+				</property>
+				<property name="detailedDescription" type="string">
+					<column name="detailed_description" not-null="true" />
+				</property>
+				<property name="url" type="string">
+					<column name="url" length="2048" not-null="true" />
+				</property>
+				<property name="lineRed" type="int">
+					<column name="line_red" not-null="true" />
+				</property>
+				<property name="lineGreen" type="int">
+					<column name="line_green" not-null="true" />
+				</property>
+				<property name="lineBlue" type="int">
+					<column name="line_blue" not-null="true" />
+				</property>
+				<property name="lineStyle" type="LineStyleType">
+					<column name="line_style" not-null="true" />
+				</property>
+				<property name="lineWidth" type="int">
+					<column name="line_width" not-null="true" />
+				</property>
+				<property name="routerType" type="ConnectionRouterType">
+					<column name="router_type" not-null="true" />
+				</property>
+				<property name="lastBendPointSerial" type="int">
+					<column name="last_bendpoint_serial" not-null="true" />
+				</property>
+				<list name="bendPoints" cascade="all,delete-orphan" lazy="false">
+					<key column="link_attribute_id" not-null="true" />
+					<list-index>
+						<column name="index_pos" not-null="true" />
+					</list-index>
+					<one-to-many
+						class="org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint" />
+				</list>
+
+				<list name="linkTermini" cascade="all,delete-orphan" inverse="true" lazy="false">
+					<key>
+						<column name="owning_link_id" not-null="true" />
+					</key>
+					<list-index>
+						<column name="link_term_type" not-null="true" />
+					</list-index>
+					<one-to-many
+						class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus" />
+				</list>
+			</joined-subclass>
+
+			<joined-subclass
+				name="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"
+				table="ShapeAttribute" lazy="false" >
+				<key>
+					<column name="id" not-null="true" unique="true" />
+				</key>
+				<property name="XPosition" type="int" access="property">
+					<column name="x_position" not-null="true" />
+				</property>
+				<property name="YPosition" type="int" access="property">
+					<column name="y_position" not-null="true" />
+				</property>
+				<property name="width" type="int" access="property">
+					<column name="width" not-null="true" />
+				</property>
+				<property name="height" type="int" access="property">
+					<column name="height" not-null="true" />
+				</property>
+				<many-to-one name="hibObjectType"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType"
+					cascade="none" lazy="false" >
+					<column name="object_type_id" not-null="true" />
+				</many-to-one>
+				<property name="name" type="string" access="property">
+					<column name="name" length="128" not-null="true" />
+				</property>
+				<property name="nameVisible" type="boolean" access="property">
+					<column name="name_visible" not-null="true" />
+				</property>
+		       	<property name="horizontalAlignment" type="AlignmentType" access="property">
+        		   	<column name="name_horiz_align" not-null="true" />
+       			</property>
+       			<property name="verticalAlignment" type="AlignmentType" access="property">
+           			<column name="name_vert_align" not-null="true" />
+       			</property>
+		       	<property name="textRed" type="int" access="property">
+        		   	<column name="name_red" not-null="true" />
+       			</property>
+       			<property name="textGreen" type="int" access="property">
+           			<column name="name_green" not-null="true" />
+       			</property>
+       			<property name="textBlue" type="int" access="property">
+           			<column name="name_blue" not-null="true" />
+       			</property>
+				<property name="description" type="string" access="property">
+					<column name="description" length="2048" not-null="true" />
+				</property>
+				<property name="detailedDescription" type="string" access="property">
+					<column name="detailed_description" not-null="true" />
+				</property>
+				<property name="url" type="string" access="property">
+					<column name="url" length="2048" not-null="true" />
+				</property>
+				<property name="fillRed" type="int" access="property">
+					<column name="fill_red" not-null="true" />
+				</property>
+				<property name="fillGreen" type="int" access="property">
+					<column name="fill_green" not-null="true" />
+				</property>
+				<property name="fillBlue" type="int" access="property">
+					<column name="fill_blue" not-null="true" />
+				</property>
+				<property name="lineRed" type="int">
+					<column name="line_red" not-null="true" />
+				</property>
+				<property name="lineGreen" type="int" access="property">
+					<column name="line_green" not-null="true" />
+				</property>
+				<property name="lineBlue" type="int" access="property">
+					<column name="line_blue" not-null="true" />
+				</property>
+				<property name="lineStyle" type="LineStyleType" access="property">
+					<column name="line_style" not-null="true" />
+				</property>
+				<property name="lineWidth" type="int" access="property">
+					<column name="line_width" not-null="true" />
+				</property>
+				<property name="padding" type="int" access="property">
+					<column name="padding" not-null="true" />
+				</property>
+				<property name="primitiveShape" type="PrimitiveShapeType" access="property">
+					<column name="shape_type" not-null="true" />
+				</property>
+			</joined-subclass>
+
+			<joined-subclass
+				name="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus"
+				table="LinkTerminus" lazy="false" >
+				<key>
+					<column name="id" not-null="true" unique="true" />
+				</key>
+				<many-to-one name="owningLink"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute" lazy="false" >
+					<column name="owning_link_id" not-null="false" />
+				</many-to-one>
+				<property name="linkTermType" type="LinkTermType">
+					<column name="link_term_type" not-null="true" />
+				</property>
+				<property name="gap" type="short">
+					<column name="offset_val" not-null="true" />
+				</property>
+				<property name="endDecoratorType" type="ArrowHeadStyleType">
+					<column name="end_dec_type" not-null="true" />
+				</property>
+				<property name="endDecWidth" type="int">
+					<column name="end_dec_width" not-null="true" />
+				</property>
+				<property name="endDecHeight" type="int">
+					<column name="end_dec_height" not-null="true" />
+				</property>
+				<property name="terminusDecoratorType" type="PrimitiveShapeType">
+					<column name="term_dec_type" not-null="true" />
+				</property>
+				<property name="termDecRed" type="int">
+					<column name="term_dec_red" not-null="true" />
+				</property>
+				<property name="termDecGreen" type="int">
+					<column name="term_dec_green" not-null="true" />
+				</property>
+				<property name="termDecBlue" type="int">
+					<column name="term_dec_blue" not-null="true" />
+				</property>
+				<property name="termDecWidth" type="int">
+					<column name="term_dec_width" not-null="true" />
+				</property>
+				<property name="termDecHeight" type="int">
+					<column name="term_dec_height" not-null="true" />
+				</property>
+			</joined-subclass>
+
+		</joined-subclass>
+
+
+	</class>
+</hibernate-mapping>

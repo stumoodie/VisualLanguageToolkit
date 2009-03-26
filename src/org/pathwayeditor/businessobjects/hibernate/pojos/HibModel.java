@@ -75,7 +75,9 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		this();
 		this.canvas = newCanvas;
 		this.hibNotationFactory = hibNotationFactory;
-		this.rootNode = new HibRootNode(this, ROOT_NODE_IDX, rootObjectType);
+		HibObjectType hibRootObjectType = hibNotationFactory.getObjectType(rootObjectType);
+		this.rootNode = new HibRootNode(this, ROOT_NODE_IDX, new HibRootAttribute(this.canvas, this.canvas.getCreationSerialCounter().nextIndex(),
+				rootObjectType, hibRootObjectType));
 		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 	}
 	
@@ -204,7 +206,8 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	@Override
 	protected void createCopyOfRootNode(int newIndexValue, BaseCompoundNode otherRootNode) {
 		HibRootNode otherHibRootNode = (HibRootNode)otherRootNode;
-		this.rootNode = new HibRootNode(this, newIndexValue, otherHibRootNode.getObjectType());
+		HibRootAttribute copiedAttribute = new HibRootAttribute(this.getCanvas(), this.getCanvas().getCreationSerialCounter().nextIndex(), otherHibRootNode.getAttribute());
+		this.rootNode = new HibRootNode(this, newIndexValue, copiedAttribute);
 		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
 	}
 

@@ -10,28 +10,30 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackNotationSubsystem;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
  * @author smoodie
@@ -66,6 +68,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * @see org.pathwayeditor.businessobjects.bolayer.ICanvasLoader#loadCanvas()
 	 */
 	public void loadCanvas() {
+		try {
 		this.loadedCanvas = null;
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
@@ -94,105 +97,201 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		hibCanvas.setNotationSubsystem(loadedNotationSubsystem);
 		HibModel loadedModel = hibCanvas.getModel();
 		loadedModel.setHibNotationFactory(hibNotationFactory);
-		initialiseNotation(hibCanvas.getHibNotation());
-		initialiseAttributes(hibCanvas);
-		initialiseModel(loadedModel);
+//		initialiseNotation(hibCanvas.getHibNotation());
+		initialiseCanvas(hibCanvas);
+//		initialiseModel(loadedModel);
 		if(!loadedModel.isValid()) {
 			throw new IllegalStateException("The loaded model is invalid.");
 		}
 		s.getTransaction().commit();
-	}
-
-	private void initialiseNotation(HibNotation notation) {
-		Hibernate.initialize(notation);
-		Hibernate.initialize(notation.getObjectTypes());
-		for (HibObjectType objectType : notation.getObjectTypes()) {
-			Hibernate.initialize(objectType);
+		} catch (InconsistentNotationDefinitionException e) {
+			this.fact.getCurrentSession().getTransaction().rollback();
+			this.loadedCanvas = null;
+			throw new IllegalStateException("The loaded model is invalid and cannot be syncronised.");
 		}
 	}
+
+//	private void initialiseNotation(HibNotation notation) {
+//		Hibernate.initialize(notation);
+//		Hibernate.initialize(notation.getObjectTypes());
+//		for (HibObjectType objectType : notation.getObjectTypes()) {
+//			Hibernate.initialize(objectType);
+//		}
+//	}
 
 	/**
 	 * @param hibCanvas
 	 */
-	private void initialiseAttributes(HibCanvas hibCanvas) {
-		Hibernate.initialize(hibCanvas.getLinkAttributes());
-		Hibernate.initialize(hibCanvas.getShapeAttributes());
-		Hibernate.initialize(hibCanvas.getLabelAttributes());
-		Hibernate.initialize(hibCanvas.getProperties());
-		initShapeAttributes(hibCanvas);
-		initLinkAttributes(hibCanvas);
-		initLabelAttributes(hibCanvas);
-	}
+//	private void initialiseAttributes(HibCanvas hibCanvas) {
+//		Hibernate.initialize(hibCanvas.getCanvasAttributes());
+////		initShapeAttributes(hibCanvas);
+//		initCanvasAttributes(hibCanvas);
+////		initLabelAttributes(hibCanvas);
+//	}
 
-	private void initLinkAttributes(HibCanvas hibCanvas) {
-		try {
-			for (HibLinkAttribute linkAttr : hibCanvas.getLinkAttributes()) {
-				Hibernate.initialize(linkAttr);
-				ILinkObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getLinkObjectType(
-						linkAttr.getHibObjectType().getUniqueId());
-				linkAttr.injectLinkObjectType(objectType);
-				Hibernate.initialize(linkAttr.getHibLinkProperties());
-				Hibernate.initialize(linkAttr.getBendPoints());
-				Hibernate.initialize(linkAttr.getLinkTermini());
-			}
-		} catch (InconsistentNotationDefinitionException e) {
-			throw new IllegalStateException(e);
+	private void initialiseCanvas(HibCanvas hibCanvas) throws InconsistentNotationDefinitionException {
+//		Hibernate.initialize(hibCanvas.getCanvasAttributes());
+		HibModel model = hibCanvas.getModel();
+		HibRootAttribute rootAttribute = model.getRootNode().getAttribute();
+//		Hibernate.initialize(rootAttribute);
+		injectObjectType(hibCanvas, rootAttribute);
+		ISubModel rootsSubmodel = model.getRootNode().getSubModel();
+		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
+		while(shapeIter.hasNext()) {
+			visitShapeNode(hibCanvas, (HibShapeNode)shapeIter.next());
+		}
+		Iterator<ILinkEdge> linkIter = rootsSubmodel.linkIterator();
+		while(linkIter.hasNext()) {
+			visitLinkEdge(hibCanvas, (HibLinkEdge)linkIter.next());
+		}
+		Iterator<ILabelNode> labelIter = rootsSubmodel.labelIterator();
+		while(labelIter.hasNext()) {
+			visitLabelNode(hibCanvas, (HibLabelNode)labelIter.next());
 		}
 	}
 
-	private void initLabelAttributes(HibCanvas hibCanvas) {
-		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
-		for (HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()) {
-			Hibernate.initialize(labelAttr);
-			labelAttr.setObjectType(labelObjectType);
-			Hibernate.initialize(labelAttr.getProperty().getValue());
+	private void injectObjectType(HibCanvas hibCanvas, HibCanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {
+		HibObjectType hibObjectType = canvasAttribute.getHibObjectType();
+		if(hibObjectType != null) {
+			IObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getObjectType(
+					hibObjectType.getUniqueId());
+			canvasAttribute.injectObjectType(objectType);
+		}
+		else if(canvasAttribute instanceof ILabelAttribute) {
+			// insert a dummy label object type.
+			canvasAttribute.injectObjectType(new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService()));
 		}
 	}
 
-	private void initShapeAttributes(HibCanvas canvas) {
-		try {
-			for (HibShapeAttribute shapeAttr : canvas.getShapeAttributes()) {
-				Hibernate.initialize(shapeAttr);
-				IShapeObjectType objectType = canvas.getNotationSubsystem().getSyntaxService().getShapeObjectType(
-						shapeAttr.getHibObjectType().getUniqueId());
-				shapeAttr.injectShapeObjectType(objectType);
-				Hibernate.initialize(shapeAttr.getProperties());
-			}
-		} catch (InconsistentNotationDefinitionException e) {
-			throw new IllegalStateException(e);
+	/**
+	 * @param canvas 
+	 * @param next
+	 * @throws InconsistentNotationDefinitionException 
+	 */
+	private void visitLabelNode(HibCanvas canvas, HibLabelNode labelNode) throws InconsistentNotationDefinitionException {
+//		Hibernate.initialize(labelNode);
+		HibLabelAttribute attribute = labelNode.getAttribute();
+//		Hibernate.initialize(attribute);
+		injectObjectType(canvas, attribute);
+//		Hibernate.initialize(attribute.getCurrentDrawingElement());
+//		HibProperty property = (HibProperty)attribute.getVisualisableProperty();
+//		property.getDisplayedLabel();
+	}
+
+	/**
+	 * @param canvas 
+	 * @param next
+	 * @throws InconsistentNotationDefinitionException 
+	 */
+	private void visitLinkEdge(HibCanvas canvas, HibLinkEdge linkEdge) throws InconsistentNotationDefinitionException {
+//		Hibernate.initialize(linkEdge);
+		HibLinkAttribute attribute = linkEdge.getAttribute();
+//		Hibernate.initialize(attribute);
+//		Hibernate.initialize(attribute.getCurrentDrawingElement());
+//		Hibernate.initialize(attribute.getBendPoints());
+//		visitProperties(attribute);
+		injectObjectType(canvas, attribute);
+//		linkEdge.getOutNode();
+//		linkEdge.getInNode();
+//		linkEdge.getOwningSubModel();
+//		visitLinkTermini(canvas, attribute);
+	}
+	
+//	private void visitLinkTermini(HibCanvas canvas, HibLinkAttribute linkAttribute) {
+//		Hibernate.initialize(linkAttribute.getLinkTermini());
+//		for(HibLinkTerminus term : linkAttribute.getLinkTermini()) {
+//			Hibernate.initialize(term.getOwningLink());
+//			visitProperties(term);
+//		}
+//	}
+//
+//	private void visitProperties(HibAnnotatedCanvasAttribute attribute) {
+//		Hibernate.initialize(attribute.getProperties());
+//		for(HibProperty property : attribute.getProperties()) {
+//			Hibernate.initialize(property);
+//			Hibernate.initialize(property.getValue());
+//		}
+//	}
+	
+	
+	/**
+	 * @param next
+	 * @throws InconsistentNotationDefinitionException 
+	 */
+	private void visitShapeNode(HibCanvas canvas, HibShapeNode shapeNode) throws InconsistentNotationDefinitionException {
+//		Hibernate.initialize(shapeNode);
+		HibShapeAttribute attribute = shapeNode.getAttribute();
+//		Hibernate.initialize(attribute.getCurrentDrawingElement());
+//		visitProperties(attribute);
+		injectObjectType(canvas, attribute);
+		ISubModel rootsSubmodel = shapeNode.getSubModel();
+		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
+		while(shapeIter.hasNext()) {
+			visitShapeNode(canvas, (HibShapeNode)shapeIter.next());
+		}
+		Iterator<ILinkEdge> linkIter = rootsSubmodel.linkIterator();
+		while(linkIter.hasNext()) {
+			visitLinkEdge(canvas, (HibLinkEdge)linkIter.next());
+		}
+		Iterator<ILabelNode> labelIter = rootsSubmodel.labelIterator();
+		while(labelIter.hasNext()) {
+			visitLabelNode(canvas, (HibLabelNode)labelIter.next());
 		}
 	}
 
-	private void initialiseModel(HibModel model) {
-		Hibernate.initialize(model);
-		// set the OT required by the root node
-		HibRootNode hibRootNode = model.getRootNode();
-		Hibernate.initialize(hibRootNode);
-		hibRootNode.setObjectType(model.getCanvas().getNotationSubsystem().getSyntaxService().getRootObjectType());
-		initNodesAndEdges(model);
-	}
+//	private void initLabelAttributes(HibCanvas hibCanvas) {
+//		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
+//		for (HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()) {
+//			Hibernate.initialize(labelAttr);
+//			labelAttr.setObjectType(labelObjectType);
+//			Hibernate.initialize(labelAttr.getProperty().getValue());
+//		}
+//	}
 
-	private void initNodesAndEdges(HibModel model) {
-		// now go through all the nodes and edges and get them loaded from the
-		// DB
-		Iterator<IDrawingNode> nodeIter = model.drawingNodeIterator();
-		while (nodeIter.hasNext()) {
-			IDrawingNode node = nodeIter.next();
-			Hibernate.initialize((HibCompoundNode) node);
-			Hibernate.initialize(node.getAttribute());
-			HibCompoundNode hibNode = (HibCompoundNode) node;
-			Hibernate.initialize(hibNode.getChildren());
-			Hibernate.initialize(hibNode.getHibParentNode());
-			Hibernate.initialize(hibNode.getChildCompoundGraph());
-			Hibernate.initialize(hibNode.getInEdges());
-			Hibernate.initialize(hibNode.getOutEdges());
-			Iterator<ILinkEdge> edgeIter = node.getSubModel().linkIterator();
-			while (edgeIter.hasNext()) {
-				HibLinkEdge link = (HibLinkEdge) edgeIter.next();
-				Hibernate.initialize(link);
-			}
-		}
-	}
+//	private void initShapeAttributes(HibCanvas canvas) {
+//		try {
+//			for (HibShapeAttribute shapeAttr : canvas.getShapeAttributes()) {
+//				Hibernate.initialize(shapeAttr);
+//				IShapeObjectType objectType = canvas.getNotationSubsystem().getSyntaxService().getShapeObjectType(
+//						shapeAttr.getHibObjectType().getUniqueId());
+//				shapeAttr.injectShapeObjectType(objectType);
+//				Hibernate.initialize(shapeAttr.getProperties());
+//			}
+//		} catch (InconsistentNotationDefinitionException e) {
+//			throw new IllegalStateException(e);
+//		}
+//	}
+
+//	private void initialiseModel(HibModel model) {
+//		Hibernate.initialize(model);
+//		// set the OT required by the root node
+//		HibRootNode hibRootNode = model.getRootNode();
+//		Hibernate.initialize(hibRootNode);
+////		hibRootNode.setObjectType(model.getCanvas().getNotationSubsystem().getSyntaxService().getRootObjectType());
+//		initNodesAndEdges(model);
+//	}
+
+//	private void initNodesAndEdges(HibModel model) {
+//		// now go through all the nodes and edges and get them loaded from the
+//		// DB
+//		Iterator<IDrawingNode> nodeIter = model.drawingNodeIterator();
+//		while (nodeIter.hasNext()) {
+//			IDrawingNode node = nodeIter.next();
+//			Hibernate.initialize((HibCompoundNode) node);
+//			Hibernate.initialize(node.getAttribute());
+//			HibCompoundNode hibNode = (HibCompoundNode) node;
+//			Hibernate.initialize(hibNode.getChildren());
+//			Hibernate.initialize(hibNode.getHibParentNode());
+//			Hibernate.initialize(hibNode.getChildCompoundGraph());
+//			Hibernate.initialize(hibNode.getInEdges());
+//			Hibernate.initialize(hibNode.getOutEdges());
+//			Iterator<ILinkEdge> edgeIter = node.getSubModel().linkIterator();
+//			while (edgeIter.hasNext()) {
+//				HibLinkEdge link = (HibLinkEdge) edgeIter.next();
+//				Hibernate.initialize(link);
+//			}
+//		}
+//	}
 
 	public ICanvas getLoadedCanvas() {
 		return this.loadedCanvas;

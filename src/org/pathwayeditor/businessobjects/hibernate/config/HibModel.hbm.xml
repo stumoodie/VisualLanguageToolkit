@@ -8,11 +8,11 @@
 			</generator>
 		</id>
 		
-        <many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas">
+        <many-to-one name="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas" lazy="false">
             <column name="canvas_id" not-null="true" />
         </many-to-one>
 
-		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" cascade="none" not-null="false">
+		<many-to-one name="rootNode" column="root_node_id" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode" cascade="none" not-null="false" lazy="false" >
 		</many-to-one> 
 		
 		<property name="lastNodeIndex" type="int">
@@ -22,14 +22,5 @@
 		<property name="lastEdgeIndex" type="int">
 			<column name="last_edge_index" not-null="true"/>
 		</property>
-		
-        <!-- set name="edges" inverse="true" cascade="all,delete-orphan">
-        	<key column="model_id" not-null="true"/>
-        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge"/> 
-        </set>
-        <set name="nodes" inverse="true" cascade="all,delete-orphan">
-        	<key column="model_id" not-null="true"/>
-        	<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode"/> 
-        </set-->
 	</class>
 </hibernate-mapping>

@@ -47,6 +47,7 @@ public class HibCanvasTest {
 	private static final String EXPECTED_ALT_REPO_NAME = "altRepo";
 	private static final int EXPECTED_INODE = 99;
 	private static final int EXPECTED_ALT_INODE = 1;
+	private static final int EXPECTED_SERIAL_COUNT = 3;
 	private static final String VALID_MAP_NAME1 = "Test Map";
 	private static final String VALID_MAP_NAME2 = "1Test Map2";
 	private static final String VALID_MAP_NAME3 = "A";
@@ -260,9 +261,7 @@ public class HibCanvasTest {
 		assertEquals("expected links copied", expectedLinks, this.otherTestInstance.getModel().numLinkEdges());
 		// test serial counter are incremented
 		HibCanvas hibCanvas = (HibCanvas)this.otherTestInstance;
-		assertEquals("expected link serial", expectedLinks, hibCanvas.getLinkSerialCounter().getLastIndex());
-		assertEquals("expected shape serial", model.numShapeNodes(), hibCanvas.getShapeSerialCounter().getLastIndex());
-		assertEquals("expected label serial", model.numLabelNodes(), hibCanvas.getLabelSerialCounter().getLastIndex());
+		assertEquals("expected serial count", EXPECTED_SERIAL_COUNT, hibCanvas.getCreationSerialCounter().getLastIndex());
 	}
 
 	private class InnerStubMap implements IMap {

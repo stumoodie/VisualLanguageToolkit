@@ -1,5 +1,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+
 
 
 /**
@@ -29,4 +31,10 @@ public interface IVisualisableAnnotationProperty {
 	 * @throws IllegalStateException if <code>displayed == true && (getSize() == null || getLocation() == null)</code>.  
 	 */
 	void setDisplayed(boolean displayed);
+	
+	/**
+	 * Get the label that is being used to display this property.
+	 * @return the displayed label, which must be not null if <code>isDisplayed() == true</code>.
+	 */
+	ILabelAttribute getDisplayedLabel();
 }

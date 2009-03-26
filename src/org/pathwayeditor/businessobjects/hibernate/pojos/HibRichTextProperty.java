@@ -20,14 +20,14 @@ public class HibRichTextProperty extends HibProperty implements IHtmlAnnotationP
 	HibRichTextProperty() {
 	}
 
-	public HibRichTextProperty(HibCanvas hibCanvas, int creationSerial,	IHtmlPropertyDefinition defn) {
-		super(hibCanvas, creationSerial);
+	public HibRichTextProperty(HibAnnotatedCanvasAttribute owner, IHtmlPropertyDefinition defn) {
+		super(owner, defn);
 		this.propertyDefinition = defn;
 		this.richTextValue = defn.getDefaultValue();
 	}
 
-	public HibRichTextProperty(HibCanvas newCanvas, int newCreationSerial, HibRichTextProperty other) {
-		super(newCanvas, newCreationSerial, other);
+	public HibRichTextProperty(HibAnnotatedCanvasAttribute owner, HibRichTextProperty other) {
+		super(owner, other);
 		this.propertyDefinition = other.getDefinition();
 		this.richTextValue = other.richTextValue;
 	}

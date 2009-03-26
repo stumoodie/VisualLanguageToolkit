@@ -23,13 +23,14 @@ public class DbBendpointTest extends PojoTester{
 	private static final String ADDED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbAddedBendPointRefData.xml" ;
 	private static final String DELETED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbDeletedBendPointRefData.xml" ;
 	private static final String SOURCE_DATA_FILE = "integrationTest/DbSourceData/DbSourceDataRefData.xml";
+	private static final int EXPECTED_BP_IDX = 0;
 	
 	@Test
 	public void testAddBendPoint () throws Exception 
 	{
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
-		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100001'" ) ;
+		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100004'" ) ;
 		HibLinkAttribute dbLinkAttribute = (HibLinkAttribute) retreivedContext.uniqueResult() ;
 		
 		dbLinkAttribute.createNewBendPoint(BP_LOCATION, BP_REL_DIM, BP_REL_DIM) ;
@@ -45,29 +46,11 @@ public class DbBendpointTest extends PojoTester{
 	{
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
-		Query retreivedContext = sess.createQuery("from HibBendPoint where id = '100001'" ) ;
-		HibBendPoint dbHibBendPoint = (HibBendPoint) retreivedContext.uniqueResult() ;
-		
-		sess.delete(dbHibBendPoint) ;
+		Query retreivedAtt = sess.createQuery("from HibLinkAttribute where id = '100004'" ) ;
+		HibLinkAttribute dbLinkAttribute = (HibLinkAttribute) retreivedAtt.uniqueResult() ;
+		dbLinkAttribute.removeBendPoint(EXPECTED_BP_IDX);
 		sess.getTransaction().commit() ;
 		this.compareDatabase(DELETED_BENDPOINT_DATA);
-//		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(
-//				DELETED_BENDPOINT_DATA));
-//		String testTables[] = expectedDeltas.getTableNames();
-//		IDataSet actualChanges = getConnection().createDataSet(testTables);
-//		IDataSet expectedChanges = new CompositeDataSet(expectedDeltas);
-//		for (String t : testTables) {
-//			ITable expectedTable = DefaultColumnFilter
-//					.includedColumnsTable(expectedChanges.getTable(t),
-//							expectedDeltas.getTable(t).getTableMetaData()
-//									.getColumns());
-//			ITable actualTable = DefaultColumnFilter.includedColumnsTable(
-//					actualChanges.getTable(t), expectedDeltas.getTable(t)
-//							.getTableMetaData().getColumns());
-//			Assertion.assertEquals(new SortedTable(expectedTable),
-//					new SortedTable(actualTable, expectedTable
-//							.getTableMetaData()));
-//		}
 	}
 	
 	@Override

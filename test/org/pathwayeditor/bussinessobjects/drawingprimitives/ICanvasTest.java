@@ -4,7 +4,6 @@
 package org.pathwayeditor.bussinessobjects.drawingprimitives;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -95,8 +94,6 @@ public class ICanvasTest {
 		assertEquals ( "context" , mockContext , canvas.getNotationSubsystem()) ;
 		assertEquals ( "grid" , GRID_SIZE , canvas.getGridSize()) ;
 		assertEquals ( "backgroundColor" , BACKGROUND_COLOR, canvas.getBackgroundColour()) ;
-		assertTrue ( "created " , canvas.getCreated() != null ) ;
-		assertTrue ( "modified " , canvas.getModified() != null ) ;
 		assertEquals ( "map size" , CANVAS_SIZE , canvas.getCanvasSize()) ;
 		
 	}

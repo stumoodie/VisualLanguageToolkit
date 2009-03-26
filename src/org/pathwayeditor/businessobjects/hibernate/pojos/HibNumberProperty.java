@@ -24,14 +24,14 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
      HibNumberProperty() {
     }
 
-    public HibNumberProperty(HibCanvas hibCanvas, int creationSerial, INumberPropertyDefinition propDefn) {
-        super(hibCanvas, creationSerial);        
-        this.propertyDefinition = propDefn;
-       this.numberValue = propDefn.getDefaultValue();
+    public HibNumberProperty(HibAnnotatedCanvasAttribute owner, INumberPropertyDefinition propDefn) {
+    	super(owner, propDefn);        
+    	this.propertyDefinition = propDefn;
+    	this.numberValue = propDefn.getDefaultValue();
     }
    
-    public HibNumberProperty(HibCanvas newCanvas, int newCreationSerial, HibNumberProperty other){
-    	super(newCanvas, newCreationSerial, other);
+    public HibNumberProperty(HibAnnotatedCanvasAttribute newOwner, HibNumberProperty other){
+    	super(newOwner, other);
     	numberValue = other.numberValue;
     	this.propertyDefinition = other.propertyDefinition;
     }

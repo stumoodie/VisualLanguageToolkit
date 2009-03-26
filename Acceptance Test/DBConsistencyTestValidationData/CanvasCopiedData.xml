@@ -33,28 +33,18 @@
 	</table>
 	<!-- END OF FILESYSTEM -->
 	<!-- START OF CONTEXT DEFINITIONS -->
-	<table name="Context">
+	<table name="Notation">
 		<column>id</column>
-		<column>global_id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>major_version</column>
-		<column>minor_version</column>
-		<column>patch_version</column>
 	</table>
 	<table name="ObjectType">
 		<column>id</column>
-		<column>context_id</column>
-		<column>name</column>
-		<column>description</column>
-		<column>classification_code</column>
-		<column>unique_id</column>
 	</table>
 	<!-- END OF CONTEXT DEFINITIONS -->
 	<!-- CANVAS -->
 	<table name="Canvas">
 		<column>map_inode</column>
-		<column>context_id</column>
+		<column>name</column>
+		<column>notation_id</column>
 		<column>grid_x</column>
 		<column>grid_y</column>
 		<column>grid_enabled</column>
@@ -64,13 +54,11 @@
 		<column>background_blue</column>
 		<column>canvas_width</column>
 		<column>canvas_height</column>
-		<column>last_shape_serial</column>
-		<column>last_label_serial</column>
-		<column>last_link_serial</column>
-		<column>last_prop_creation_serial</column>
+		<column>last_creation_serial</column>
 		<column>repository_name</column>
 		<row>
 			<value>5</value>
+			<value>Diagram name2</value>
 			<value>100001</value>
 			<value>10</value>
 			<value>10</value>
@@ -81,10 +69,7 @@
 			<value>100</value>
 			<value>10</value>
 			<value>10</value>
-			<value>8</value>
-			<value>8</value>
-			<value>9</value>
-			<value>35</value>
+			<value>44</value>
 			<value>repo name</value>
 		</row> 
 	</table>
@@ -213,7 +198,6 @@
 	<!-- END OF GRAPH STRUCTURE -->
 	<!-- ATTRIBUTES DECLARATION -->
 	<table name="ShapeAttribute">
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -235,7 +219,6 @@
 		<column>height</column>
 		<column>name_visible</column>
 		<row>
-			<value>1</value>
 			<value>shapeName1</value>
 			<value>100001</value>
 			<value>descr1</value>
@@ -258,7 +241,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>4</value>
 			<value>shapeName2</value>
 			<value>100002</value>
 			<value>descr2</value>
@@ -281,7 +263,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>2</value>
 			<value>shapeName3</value>
 			<value>100003</value>
 			<value>descr3</value>
@@ -304,7 +285,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>3</value>
 			<value>shapeName4</value>
 			<value>100004</value>
 			<value>descr4</value>
@@ -327,7 +307,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>5</value>
 			<value>shapeName5</value>
 			<value>100001</value>
 			<value>descr5</value>
@@ -350,7 +329,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>6</value>
 			<value>shapeName6</value>
 			<value>100002</value>
 			<value>descr6</value>
@@ -373,7 +351,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>7</value>
 			<value>shapeName7</value>
 			<value>100003</value>
 			<value>descr7</value>
@@ -396,7 +373,6 @@
 			<value>true</value>
 		</row>
 		<row>
-			<value>8</value>
 			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>
@@ -420,7 +396,6 @@
 		</row>																
 	</table>
 	<table name="LinkAttribute">
-		<column>creation_serial</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
@@ -435,7 +410,6 @@
 		<column>url</column>
 		<row>
 			<value>1</value>
-			<value>1</value>
 			<value>100005</value>
 			<value>link_name1</value>
 			<value>link_detailed_descr1</value>
@@ -449,7 +423,6 @@
 			<value>http://www.HibLink1.org</value>
 		</row>
 		<row>
-			<value>2</value>
 			<value>1</value>
 			<value>100006</value>
 			<value>link_name2</value>
@@ -464,7 +437,6 @@
 			<value>http://www.HibLink2.org</value>
 		</row>
 		<row>
-			<value>3</value>
 			<value>0</value>
 			<value>100007</value>
 			<value>link_name3</value>
@@ -479,7 +451,6 @@
 			<value>http://www.HibLink3.org</value>
 		</row>
 		<row>
-			<value>4</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name4</value>
@@ -494,7 +465,6 @@
 			<value>http://www.HibLink4.org</value>
 		</row>
 		<row>
-			<value>5</value>
 			<value>0</value>
 			<value>100005</value>
 			<value>link_name5</value>
@@ -509,7 +479,6 @@
 			<value>http://www.HibLink5.org</value>
 		</row>
 		<row>
-			<value>6</value>
 			<value>0</value>
 			<value>100006</value>
 			<value>link_name6</value>
@@ -524,7 +493,6 @@
 			<value>http://www.HibLink6.org</value>
 		</row>
 		<row>
-			<value>7</value>
 			<value>0</value>
 			<value>100007</value>
 			<value>link_name7</value>
@@ -539,7 +507,6 @@
 			<value>http://www.HibLink7.org</value>
 		</row>
 		<row>
-			<value>8</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name8</value>
@@ -554,7 +521,6 @@
 			<value>http://www.HibLink8.org</value>
 		</row>
 		<row>
-			<value>9</value>
 			<value>0</value>
 			<value>100008</value>
 			<value>link_name9</value>
@@ -570,7 +536,6 @@
 		</row>
 	</table>
 	<table name="LabelAttribute">
-		<column>creation_serial</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -579,7 +544,6 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<value>3</value>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -589,7 +553,6 @@
 			<value>51</value>
 		</row>
 		<row>
-			<value>5</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -599,7 +562,6 @@
 			<value>52</value>
 		</row>
 		<row>
-			<value>6</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -609,7 +571,6 @@
 			<value>53</value>
 		</row>
 		<row>
-			<value>4</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -619,7 +580,6 @@
 			<value>54</value>
 		</row>
 		<row>
-			<value>7</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -629,7 +589,6 @@
 			<value>55</value>
 		</row>
 		<row>
-			<value>8</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -639,7 +598,6 @@
 			<value>56</value>
 		</row>
 		<row>
-			<value>1</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -649,7 +607,6 @@
 			<value>57</value>
 		</row>
 		<row>
-			<value>2</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -663,111 +620,111 @@
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- PROPERTIES -->
 	<table name="property">
-		<column>creation_serial</column>
+		<column>name</column>
 		<row>
-			<value>1</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>2</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>3</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 		<row>
-			<value>4</value>
+			<value>ShapeLinkProperty</value>
+		</row>				
+		<row>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>5</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>6</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 		<row>
-			<value>7</value>
+			<value>ShapeLinkProperty</value>
+		</row>				
+		<row>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>8</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>9</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>10</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>11</value>
+			<value>RichTextProperty</value>
 		</row>
 		<row>
-			<value>12</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>13</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>14</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>15</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>16</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>17</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>18</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>19</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>20</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>21</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>22</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>23</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>24</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>25</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>26</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>27</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>28</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>29</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>30</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>31</value>
+			<value>NumberProperty</value>
 		</row>
 		<row>
-			<value>32</value>
+			<value>TextProperty</value>
 		</row>
 		<row>
-			<value>33</value>
-		</row>
-		<row>
-			<value>34</value>
-		</row>
-		<row>
-			<value>35</value>
+			<value>NumberProperty</value>
 		</row>
 	</table>
 	<table name="textproperty">
@@ -909,122 +866,6 @@
 		</row>
 	</table>
 	<!-- END OF PROPERTIES -->
-	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-		<table name="shapeAttributeProperty">
-		<column>name</column>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>				
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>				
-	</table>
-	<table name="linkAttributeProperty">
-		<column>name</column>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-	</table>
-	<table name="linkterminusproperty">
-		<column>name</column>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-	</table>
-	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
 	<!-- TERMINUS & DECORATORS -->
 	<table name="LinkTerminus">
 		<column>link_term_type</column>

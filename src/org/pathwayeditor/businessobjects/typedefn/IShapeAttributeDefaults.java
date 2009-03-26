@@ -12,7 +12,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
  * @author smoodie
  *
  */
-public interface IShapeAttributeDefaults extends IPropertyDefinitionContainer  {
+public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer  {
 	String getName();
 
 	String getDescription();

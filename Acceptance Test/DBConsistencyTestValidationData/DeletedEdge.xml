@@ -17,7 +17,7 @@
 			<value>100001</value>
 			<value>100002</value>
 			<value>100003</value>
-			<value>100001</value>
+			<value>100009</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -27,7 +27,7 @@
 			<value>100001</value>
 			<value>100003</value>
 			<value>100002</value>
-			<value>100002</value>
+			<value>100010</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -37,7 +37,7 @@
 			<value>100003</value>
 			<value>100003</value>
 			<value>100007</value>
-			<value>100003</value>
+			<value>100011</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -47,7 +47,7 @@
 			<value>100001</value>
 			<value>100003</value>
 			<value>100005</value>
-			<value>100004</value>
+			<value>100012</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -57,7 +57,7 @@
 			<value>100007</value>
 			<value>100008</value>
 			<value>100007</value>
-			<value>100005</value>
+			<value>100013</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -67,7 +67,7 @@
 			<value>100007</value>
 			<value>100007</value>
 			<value>100008</value>
-			<value>100006</value>
+			<value>100014</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -77,7 +77,7 @@
 			<value>100001</value>
 			<value>100008</value>
 			<value>100004</value>
-			<value>100007</value>
+			<value>100015</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -87,7 +87,7 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100008</value>
+			<value>100016</value>
 			<value>false</value>
 		</row>
 		<row>
@@ -97,14 +97,12 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100009</value>
+			<value>100017</value>
 			<value>false</value>
 		</row>
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
 		<column>detailed_description</column>
@@ -117,9 +115,7 @@
 		<column>router_type</column>
 		<column>url</column>
 		<row>
-			<value>100001</value>
-			<value>100001</value>
-			<value>1</value>
+			<value>100009</value>
 			<value>100005</value>
 			<value>link_name1</value>
 			<value>link_detailed_descr1</value>
@@ -133,9 +129,7 @@
 			<value>http://www.HibLink1.org</value>
 		</row>
 		<row>
-			<value>100002</value>
-			<value>100001</value>
-			<value>2</value>
+			<value>100010</value>
 			<value>100006</value>
 			<value>link_name2</value>
 			<value>link_detailed_descr2</value>
@@ -149,9 +143,7 @@
 			<value>http://www.HibLink2.org</value>
 		</row>
 		<row>
-			<value>100003</value>
-			<value>100001</value>
-			<value>3</value>
+			<value>100011</value>
 			<value>100007</value>
 			<value>link_name3</value>
 			<value>link_detailed_descr3</value>
@@ -165,9 +157,7 @@
 			<value>http://www.HibLink3.org</value>
 		</row>
 		<row>
-			<value>100004</value>
-			<value>100001</value>
-			<value>4</value>
+			<value>100012</value>
 			<value>100008</value>
 			<value>link_name4</value>
 			<value>link_detailed_descr4</value>
@@ -181,9 +171,7 @@
 			<value>http://www.HibLink4.org</value>
 		</row>
 		<row>
-			<value>100005</value>
-			<value>100001</value>
-			<value>5</value>
+			<value>100013</value>
 			<value>100005</value>
 			<value>link_name5</value>
 			<value>link_detailed_descr5</value>
@@ -197,9 +185,7 @@
 			<value>http://www.HibLink5.org</value>
 		</row>
 		<row>
-			<value>100006</value>
-			<value>100001</value>
-			<value>6</value>
+			<value>100014</value>
 			<value>100006</value>
 			<value>link_name6</value>
 			<value>link_detailed_descr6</value>
@@ -213,9 +199,7 @@
 			<value>http://www.HibLink6.org</value>
 		</row>
 		<row>
-			<value>100007</value>
-			<value>100001</value>
-			<value>7</value>
+			<value>100015</value>
 			<value>100007</value>
 			<value>link_name7</value>
 			<value>link_detailed_descr7</value>
@@ -229,9 +213,7 @@
 			<value>http://www.HibLink7.org</value>
 		</row>
 		<row>
-			<value>100008</value>
-			<value>100001</value>
-			<value>8</value>
+			<value>100016</value>
 			<value>100008</value>
 			<value>link_name8</value>
 			<value>link_detailed_descr8</value>
@@ -245,9 +227,7 @@
 			<value>http://www.HibLink8.org</value>
 		</row>
 		<row>
-			<value>100009</value>
-			<value>100001</value>
-			<value>9</value>
+			<value>100017</value>
 			<value>100008</value>
 			<value>link_name9</value>
 			<value>link_detailed_descr9</value>
@@ -277,8 +257,8 @@
 		<column>term_dec_height</column>
 		<column>term_dec_width</column>
 		<row>
-			<value>100001</value>
-			<value>100001</value>
+			<value>100026</value>
+			<value>100009</value>
 			<value>0</value>
 			<value>1</value>
 			<value>1</value>
@@ -292,8 +272,8 @@
 			<value>11</value>
 		</row>
 		<row>
-			<value>100002</value>
-			<value>100001</value>
+			<value>100027</value>
+			<value>100009</value>
 			<value>1</value>
 			<value>2</value>
 			<value>2</value>
@@ -307,8 +287,8 @@
 			<value>12</value>
 		</row>
 		<row>
-			<value>100003</value>
-			<value>100002</value>
+			<value>100028</value>
+			<value>100010</value>
 			<value>0</value>
 			<value>3</value>
 			<value>1</value>
@@ -322,8 +302,8 @@
 			<value>13</value>
 		</row>
 		<row>
-			<value>100004</value>
-			<value>100002</value>
+			<value>100029</value>
+			<value>100010</value>
 			<value>1</value>
 			<value>4</value>
 			<value>2</value>
@@ -337,8 +317,8 @@
 			<value>14</value>
 		</row>
 		<row>
-			<value>100005</value>
-			<value>100003</value>
+			<value>100030</value>
+			<value>100011</value>
 			<value>0</value>
 			<value>5</value>
 			<value>1</value>
@@ -352,8 +332,8 @@
 			<value>15</value>
 		</row>
 		<row>
-			<value>100006</value>
-			<value>100003</value>
+			<value>100031</value>
+			<value>100011</value>
 			<value>1</value>
 			<value>6</value>
 			<value>2</value>
@@ -367,8 +347,8 @@
 			<value>16</value>
 		</row>
 		<row>
-			<value>100007</value>
-			<value>100004</value>
+			<value>100032</value>
+			<value>100012</value>
 			<value>0</value>
 			<value>7</value>
 			<value>1</value>
@@ -382,8 +362,8 @@
 			<value>17</value>
 		</row>		
 		<row>
-			<value>100008</value>
-			<value>100004</value>
+			<value>100033</value>
+			<value>100012</value>
 			<value>1</value>
 			<value>8</value>
 			<value>2</value>
@@ -397,8 +377,8 @@
 			<value>18</value>
 		</row>
 		<row>
-			<value>100009</value>
-			<value>100005</value>
+			<value>100034</value>
+			<value>100013</value>
 			<value>0</value>
 			<value>9</value>
 			<value>1</value>
@@ -412,8 +392,8 @@
 			<value>19</value>
 		</row>
 		<row>
-			<value>100010</value>
-			<value>100005</value>
+			<value>100035</value>
+			<value>100013</value>
 			<value>1</value>
 			<value>10</value>
 			<value>2</value>
@@ -427,8 +407,8 @@
 			<value>20</value>
 		</row>
 		<row>
-			<value>100011</value>
-			<value>100006</value>
+			<value>100036</value>
+			<value>100014</value>
 			<value>0</value>
 			<value>11</value>
 			<value>1</value>
@@ -442,8 +422,8 @@
 			<value>21</value>
 		</row>
 		<row>
-			<value>100012</value>
-			<value>100006</value>
+			<value>100037</value>
+			<value>100014</value>
 			<value>1</value>
 			<value>12</value>
 			<value>2</value>
@@ -457,8 +437,8 @@
 			<value>22</value>
 		</row>
 		<row>
-			<value>100013</value>
-			<value>100007</value>
+			<value>100038</value>
+			<value>100015</value>
 			<value>0</value>
 			<value>13</value>
 			<value>1</value>
@@ -472,8 +452,8 @@
 			<value>23</value>
 		</row>
 		<row>
-			<value>100014</value>
-			<value>100007</value>
+			<value>100039</value>
+			<value>100015</value>
 			<value>1</value>
 			<value>14</value>
 			<value>2</value>
@@ -487,8 +467,8 @@
 			<value>24</value>
 		</row>
 		<row>
-			<value>100015</value>
-			<value>100008</value>
+			<value>100040</value>
+			<value>100016</value>
 			<value>0</value>
 			<value>15</value>
 			<value>1</value>
@@ -502,8 +482,8 @@
 			<value>25</value>
 		</row>
 		<row>
+			<value>100041</value>
 			<value>100016</value>
-			<value>100008</value>
 			<value>1</value>
 			<value>16</value>
 			<value>2</value>
@@ -517,8 +497,8 @@
 			<value>26</value>
 		</row>
 		<row>
+			<value>100042</value>
 			<value>100017</value>
-			<value>100009</value>
 			<value>0</value>
 			<value>17</value>
 			<value>1</value>
@@ -532,8 +512,8 @@
 			<value>27</value>
 		</row>
 		<row>
-			<value>100018</value>
-			<value>100009</value>
+			<value>100043</value>
+			<value>100017</value>
 			<value>1</value>
 			<value>18</value>
 			<value>2</value>
@@ -557,14 +537,14 @@
 		<column>y_position</column>
 			<row>
 				<value>100001</value>
-				<value>100001</value>
+				<value>100009</value>
 				<value>0</value>
 				<value>51</value>
 				<value>51</value>
 			</row>
 			<row>
 				<value>100002</value>
-				<value>100002</value>
+				<value>100010</value>
 				<value>0</value>
 				<value>52</value>
 				<value>52</value>

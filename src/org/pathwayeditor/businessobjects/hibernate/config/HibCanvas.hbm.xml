@@ -16,10 +16,10 @@
         	</property>
         </properties>
 
-        <one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all"/>
+        <one-to-one name="model" property-ref="canvas" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibModel" cascade="all" lazy="false" />
 
-        <many-to-one name="hibNotation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation">
-            <column name="context_id" not-null="true" />
+        <many-to-one name="hibNotation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation" lazy="false" >
+            <column name="notation_id" not-null="true" />
         </many-to-one>
 
 		<property name="name" type="string" access="property">
@@ -53,55 +53,22 @@
         <property name="canvasHeight" type="int" access="property">
             <column name="canvas_height" not-null="true" />
         </property>
-        <property name="created" type="java.util.Date">
-        	<column name="created" not-null="true"/> 
+        <property name="lastCreationSerial" type="int" access="property">
+        	<column name="last_creation_serial" not-null="true" />
         </property>
-        <property name="modified" type="java.util.Date">
-        	<column name="last_modified" not-null="true"/> 
-        </property>
-        <property name="lastShapeSerial" type="int" access="property">
-        	<column name="last_shape_serial" not-null="true" />
-        </property>
-        <property name="lastLinkSerial" type="int" access="property">
-        	<column name="last_link_serial" not-null="true" />
-        </property>
-        <property name="lastLabelSerial" type="int" access="property">
-        	<column name="last_label_serial" not-null="true" />
-        </property>
-        <property name="lastPropertyCreationSerial" type="int" access="property">
-        	<column name="last_prop_creation_serial" not-null="true" />
-        </property>
-        <set name="shapeAttributes" inverse="true" table="shapeAttribute" cascade="all,delete-orphan">
+        <set name="canvasAttributes" inverse="true" table="canvasAttribute" cascade="all,delete-orphan" lazy="false">
             <key>
                 <column name="canvas_id" not-null="true" />
             </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute"/> 
+            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute"/> 
         </set>
-        <set name="labelAttributes" inverse="true" table="labelAttribute" cascade="all,delete-orphan">
-            <key>
-                <column name="canvas_id" not-null="true" />
-            </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute"/> 
-        </set>
-        <set name="linkAttributes" inverse="true" table="linkAttribute" cascade="all,delete-orphan">
-            <key>
-                <column name="canvas_id" not-null="true" />
-            </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute"/>
-        </set>
-        <set name="properties" inverse="true" table="properties" cascade="all,delete-orphan">
-            <key>
-                <column name="canvas_id" not-null="true" />
-            </key>
-            <one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"/>
-        </set>      
     </class>
     
     <query name="canvasExistsForMap"><![CDATA[
     		select count(*) from HibCanvas c  where c.mapINode = :inode and c.repositoryName = :repo
         ]]></query>
     <query name="loadCanvas"><![CDATA[
-    		from HibCanvas c inner join fetch c.model m inner join fetch m.rootNode left outer join fetch c.shapeAttributes left outer join fetch c.linkAttributes lnkA left outer	join fetch c.labelAttributes 
-    		left outer join fetch c.properties where c.repositoryName = :repo and c.mapINode = :inode
+    		from HibCanvas c inner join fetch c.model m inner join fetch m.rootNode 
+    		where c.repositoryName = :repo and c.mapINode = :inode
     	]]></query>
 </hibernate-mapping>

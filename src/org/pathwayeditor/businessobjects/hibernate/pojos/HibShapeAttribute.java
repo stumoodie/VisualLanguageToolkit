@@ -3,9 +3,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 // Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
@@ -18,16 +16,12 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.hibernate.helpers.PropertyBuilder;
-import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public class HibShapeAttribute implements IShapeAttribute,  Serializable {
+public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
 	private transient final Logger logger = Logger.getLogger(this.getClass());
 
@@ -47,9 +41,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private static final boolean DEFAULT_NAME_VISIBLE = true ;
 	private static final Alignment DEFAULT_ALIGNMENT = Alignment.CENTER ;
 
-	private HibCanvas canvas;
-	private Long id;
-	private int creationSerial;
 	private transient Location position = DEFAULT_POSITION;
 	private transient Size size = DEFAULT_SIZE;
 	private HibObjectType hibObjectType;
@@ -65,7 +56,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	private int padding = DEFAULT_PADDING;
 	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
 	private transient HibShapeNode shapeNode;
-	private Map<String, HibProperty> hibProperties = new HashMap<String, HibProperty>(0);
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 	private boolean nameVisible = DEFAULT_NAME_VISIBLE ;
 	private Alignment horizontalAlignment = DEFAULT_ALIGNMENT;
@@ -78,27 +68,21 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibShapeAttribute() {
+		super();
 		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
-		this();
-		this.canvas = hibCanvas;
-		this.creationSerial = creationSerial;
-		this.canvas.getShapeAttributes().add(this);
+		super(hibCanvas, creationSerial, shapeObjectType.getDefaultAttributes());
+		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
-		this.getCanvas().getShapeAttributes().add(this) ;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
-		
 	}
 	
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
-		this();
-		final IPropertyBuilder propertyBuilder = new PropertyBuilder(newCanvas);
-		this.canvas = newCanvas;
-		this.creationSerial = newCreationSerial;
-		this.canvas.getShapeAttributes().add(this);
+		super(newCanvas, newCreationSerial, other);
+		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.position = other.position;
 		this.size = other.size;
 		this.hibObjectType = other.hibObjectType;
@@ -117,10 +101,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.padding = other.padding;
 		this.shapeObjectType = other.shapeObjectType;
 		this.shapeType=other.shapeType;
-		for (HibProperty property : other.hibProperties.values()) {
-			IPropertyDefinition defn = property.getDefinition(); 
-			this.hibProperties.put(defn.getName(), (HibProperty)defn.copyProperty(propertyBuilder, property));
-		}
 	}
 	
 	
@@ -132,35 +112,11 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.setLineColour(shapeDefaults.getLineColour());
 		this.setLineStyle(shapeDefaults.getLineStyle());
 		this.setLineWidth(shapeDefaults.getLineWidth());
-		this.setName(shapeDefaults.getName() + this.creationSerial);
+		this.setName(shapeDefaults.getName() + this.getCreationSerial());
 		this.setUrl(shapeDefaults.getURL());
 		this.setPrimitiveShape(shapeDefaults.getShapeType());
-		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this.getCanvas());
-		final Iterator<IPropertyDefinition> propIter = shapeDefaults.propertyDefinitionIterator();
-		while(propIter.hasNext()){
-			IPropertyDefinition propDefn = propIter.next();
-			this.hibProperties.put(propDefn.getName(), (HibProperty)propDefn.createProperty(propertyBuilder));
-		}
-		this.getCanvas().getShapeAttributes().add(this) ;
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
-	}
-
-	void setCreationSerial(int creationSerial){
-		this.creationSerial = creationSerial;
-	}
-	
-	public int getCreationSerial(){
-		return this.creationSerial;
-	}
-	
 	public int getXPosition() {
 		return this.position.getX();
 	}
@@ -181,20 +137,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.size.getWidth();
 	}
 	
-	void setCanvas(HibCanvas canvas) {
-		this.canvas = canvas;
-	}
-	
-	public void changeHibCanvas(HibCanvas canvas){
-		if(this.canvas != null){
-			this.canvas.getShapeAttributes().remove(this);
-		}
-		if(canvas != null){
-			canvas.getShapeAttributes().add(this);
-		}
-		this.setCanvas(canvas);
-	}
-	
 	public void setWidth(int width) {
 		this.size = this.size.newWidth(width);
 	}
@@ -211,26 +153,10 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.shapeObjectType;
 	}
 	
-	public void injectShapeObjectType(IShapeObjectType shapeObjectType) throws InconsistentNotationDefinitionException {
-		this.shapeObjectType = shapeObjectType;
-		injectPropertyDefinitions();
-	}
-
-	private void injectPropertyDefinitions() throws InconsistentNotationDefinitionException {
-		Iterator<IPropertyDefinition> it = this.shapeObjectType.getDefaultAttributes().propertyDefinitionIterator();
-		int propCntr = 0;
-		while (it.hasNext()) {
-			IPropertyDefinition definition = it.next();
-			HibProperty property = this.hibProperties.get(definition.getName());
-			if(property==null) {
-					throw new InconsistentNotationDefinitionException("The object type has property definitions which have no matching property in this Shape Attribute");
-			}
-			property.setPropertyDefinition(definition);
-			propCntr++;
-		}
-		if(propCntr != this.hibProperties.size()) {
-			throw new InconsistentNotationDefinitionException("Object inconsistent with object type. Cannot find definitions for some properties");
-		}
+	@Override
+	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+		this.shapeObjectType = (IShapeObjectType)objectType;
+		super.injectPropertyDefinitions(shapeObjectType.getDefaultAttributes());
 	}
 
 	public HibObjectType getHibObjectType () {
@@ -413,93 +339,9 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.PADDING, oldPadding, this.padding);
 	}
 
-	public Map<String, HibProperty> getProperties() {
-		return this.hibProperties;
-	}
-
-	public void setProperties(Map<String, HibProperty> hibProperties) {
-		this.hibProperties = hibProperties;
-	}
-
-	public HibCanvas getCanvas() {
-		return this.canvas;
-	}
-	
-	
-
-//	public void changeCanvas(HibCanvas newCanvas) {
-//		HibCanvas oldCanvas = this.canvas ;
-//		this.canvas = newCanvas;
-//		if (oldCanvas != null) {
-//			oldCanvas.getHibShapeAttributes().remove(this);
-//		}
-//		if (this.canvas != null) {
-//			this.canvas.getHibShapeAttributes().add(this);
-//		}
-//		
-//	}
-
-	public void addProperty ( String name , HibProperty toAdd ) 
-	{
-		if (toAdd == null)
-			throw new IllegalArgumentException("property cannot be null");
-		this.hibProperties.put(name ,toAdd);
-	}
-	
-	void removeProperty(String toRemove) {
-		if (toRemove == null)
-			throw new IllegalArgumentException("id cannot be null");
-		HibProperty propertyToRemove = hibProperties.get(toRemove) ;
-		if  (propertyToRemove == null)
-			throw new IllegalStateException("property cannot be null");
-		this.hibProperties.remove(toRemove) ;
-	}
-	
-	public boolean equals (Object other) 
-	{
-        if ( (this == other ) ) return true;
-		 if ( (other == null ) ) return false;
-		 if ( !(other instanceof HibShapeAttribute) ) return false;
-		 HibShapeAttribute castOther = ( HibShapeAttribute ) other; 
-		 
-		
-		 if ( this.canvas ==null || castOther.getCanvas() == null )
-				return false ;
-		 if ( this.canvas != castOther.getCanvas() )
-				return false ;
-		 if ( this.creationSerial != castOther.getCreationSerial() )
-			 return false ;
-		 
-		 return true ;
-	}
-	
-	public int hashCode() {
-        int result = 17;
-    	
-        result = 37 * result + ( getCanvas() == null ? 0 : this.getCanvas().hashCode() );
-        result = 37 * result + this.getCreationSerial();
-        
-        return result;
-  }   
-	
-	
-//	public HibShapeNode getShapeNode() {
-//		return this.shapeNode;
-//	}
-//	
 	void setShapeNode(HibShapeNode newNode){
 		this.shapeNode = newNode;
 	}
-//	
-//	public void changeShapeNode(HibShapeNode newNode){
-//		if(this.shapeNode != null){
-//			this.shapeNode.setAttribute(null);
-//		}
-//		if(newNode != null){
-//			newNode.setAttribute(this);
-//		}
-//		this.shapeNode = newNode;
-//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getFillColour()
@@ -534,13 +376,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	 */
 	public PrimitiveShapeType getPrimitiveShape() {
 		return this.shapeType;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getProperty(java.lang.String)
-	 */
-	public IAnnotationProperty getProperty(String propertyName) {
-		return this.hibProperties.get(propertyName) ;
 	}
 
 	/* (non-Javadoc)
@@ -658,20 +493,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getProperty(org.pathwayeditor.businessobjects.typedefn.IPropertyDefinition)
-	 */
-	public IAnnotationProperty getProperty(IPropertyDefinition propDefn) {
-		return this.hibProperties.get(propDefn.getName());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#propertyIterator()
-	 */
-	public Iterator<IAnnotationProperty> propertyIterator() {
-		return new IterationCaster<IAnnotationProperty, HibProperty>(this.hibProperties.values().iterator());
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	public void addChangeListener(IPropertyChangeListener listener) {
@@ -692,17 +513,6 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
 
-	@Override
-	public String toString(){
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[canvas=");
-		builder.append(this.getCanvas());
-		builder.append(", serial=");
-		builder.append(this.getCreationSerial());
-		builder.append("]");
-		return builder.toString();
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getCurrentDrawingElement()
 	 */
@@ -710,84 +520,18 @@ public class HibShapeAttribute implements IShapeAttribute,  Serializable {
 		return this.shapeNode;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
-	 */
-	public boolean containsProperty(IPropertyDefinition propDefn) {
-		boolean retVal = false;
-		if(propDefn != null) {
-			retVal = this.hibProperties.containsKey(propDefn.getName());
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(java.lang.String)
-	 */
-	public boolean containsProperty(String propName) {
-		boolean retVal = false;
-		if(propName != null) {
-			retVal = this.hibProperties.containsKey(propName);
-		}
-		return retVal;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#numProperties()
-	 */
-	public int numProperties() {
-		return this.hibProperties.size();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#containsProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
-	 */
-	public boolean containsProperty(IAnnotationProperty property) {
-		boolean retVal = false;
-		if(property != null) {
-			IAnnotationProperty foundProp = this.hibProperties.get(property.getDefinition().getName());
-			if(foundProp != null) {
-				retVal = foundProp.equals(property);
-			}
-		}
-		return retVal;
-	}
-
 	public boolean isValid() {
-		boolean retVal = this.shapeObjectType != null && this.shapeNode.getAttribute() != null
-		// note: the check by reference below is deliberate as hibernate wants this.
-				&& this.shapeNode.getAttribute() == this
-				//check syntax rules correctly applied
-				&& this.shapeNode.getParent().getObjectType().getParentingRules().isValidChild(this.shapeObjectType);
-		if (retVal) {
-			// check properties initialised
-			Iterator<IPropertyDefinition> it = this.shapeObjectType.getDefaultAttributes().propertyDefinitionIterator();
-			int propCntr = 0;
-			while (it.hasNext() && retVal) {
-				IPropertyDefinition definition = it.next();
-				HibProperty property = this.hibProperties.get(definition.getName());
-				if (property == null) {
-					logger.error(
-							"The object type has property definitions which have no matching property in this Shape Attribute");
-					retVal = false;
-				}
-				else {
-					property.setPropertyDefinition(definition);
-					propCntr++;
-				}
-			}
-			if (retVal && propCntr != this.hibProperties.size()) {
-				logger.error(
-						"Object inconsistent with object type. Cannot find definitions for some properties");
-				retVal = false;
-			}
-		}
-		else {
+		boolean objectTypeSet = this.getObjectType() != null;
+		boolean reciprocalAttributeSet = this.getCurrentDrawingElement().getAttribute() != null
+				&& this.getCurrentDrawingElement().getAttribute().equals(this);
+		boolean syntaxRulesCorrect = this.getCurrentDrawingElement().getParent().getObjectType() != null
+			&& this.getCurrentDrawingElement().getParent().getObjectType().getParentingRules().isValidChild(this.getObjectType());
+		boolean propertiesValid = super.arePropertiesValid(this.getObjectType().getDefaultAttributes());
+		if (!objectTypeSet || !reciprocalAttributeSet || !syntaxRulesCorrect || !propertiesValid) {
 			logger.error("Attribute invalid, may be objecttypes or incompletely formed relationship with node");
 		}
-		return retVal;
+		return objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid;
 	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#isNameVisible()
 	 */

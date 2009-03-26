@@ -11,8 +11,6 @@
 			</row>
 	</table>
 	<table name="ShapeAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -34,8 +32,6 @@
 		<column>height</column>
 		<column>name_visible</column>
 		<row>
-			<value>100001</value>
-			<value>9</value>
 			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>
@@ -64,8 +60,6 @@
 		<column>is_removed</column>
 	</table>
 	<table name="LinkAttribute">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
 		<column>name</column>
@@ -83,11 +77,9 @@
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- PROPERTIES -->
 	<table name="property">
-		<column>canvas_id</column>
-		<column>creation_serial</column>
+		<column>name</column>
 		<row>
-			<value>100001</value>
-			<value>36</value>
+			<value>ShapeLinkProperty</value>
 		</row>
 	</table>
 	<table name="textproperty">
@@ -100,44 +92,4 @@
 		<column>number_value</column>
 	</table>
 	<!-- END OF PROPERTIES -->
-	<!-- CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-		<table name="shapeAttributeProperty">
-		<column>name</column>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>
-	</table>
-	<table name="linkAttributeProperty">
-		<column>name</column>
-	</table>
-	<table name="linkterminusproperty">
-		<column>name</column>
-	</table>
-	<!-- END OF CONNECTION OF PROPERTIES TO ATTRIBUTES -->
-	<!-- TERMINUS & DECORATORS -->
-	<table name="LinkTerminus">
-		<column>link_term_type</column>
-		<column>offset_val</column>
-		<column>end_dec_type</column>
-		<column>end_dec_width</column>
-		<column>end_dec_height</column>
-		<column>term_dec_type</column>
-		<column>term_dec_red</column>
-		<column>term_dec_green</column>
-		<column>term_dec_blue</column>
-		<column>term_dec_height</column>
-		<column>term_dec_width</column>
-	</table>
-	<!-- END OF DECORATORS -->
-	<!-- BENDPOINTS -->
-	<table name="bendpoint">
-		<column>creation_serial</column>
-		<column>index_pos</column>
-		<column>x_position</column>
-		<column>y_position</column>
-		<column>first_rel_dim_x</column>
-		<column>first_rel_dim_y</column>
-		<column>second_rel_dim_x</column>
-		<column>second_rel_dim_y</column>
-	</table>
 </dataset>

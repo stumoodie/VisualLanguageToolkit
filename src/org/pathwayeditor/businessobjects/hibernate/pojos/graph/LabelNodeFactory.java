@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -91,7 +92,7 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	 */
 	public boolean isValidProperty(IAnnotationProperty annotationProperty) {
 		return annotationProperty != null &&
-			this.annotationProperty.getCanvas().getModel().equals(this.getGraph());
+			((IDrawingElement)this.annotationProperty.getOwner()).getModel().equals(this.getGraph());
 	}
 
 	/* (non-Javadoc)

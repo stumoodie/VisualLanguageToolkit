@@ -51,7 +51,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 		if(linkAttribute == null){
 			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType());
 			HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
-			int edgeCreationSerial = canvas.getLinkSerialCounter().nextIndex();
+			int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
 			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);

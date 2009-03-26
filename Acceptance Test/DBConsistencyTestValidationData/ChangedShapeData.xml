@@ -3,8 +3,6 @@
 <dataset>
 <table name="ShapeAttribute">
 		<column>id</column>
-		<column>canvas_id</column>
-		<column>creation_serial</column>
 		<column>name</column>
 		<column>object_type_id</column>
 		<column>description</column>
@@ -25,13 +23,11 @@
 		<column>width</column>
 		<column>height</column>
 		<column>name_visible</column>
-		<column>text_red</column>
-		<column>text_green</column>
-		<column>text_blue</column>
+		<column>name_red</column>
+		<column>name_green</column>
+		<column>name_blue</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
-			<value>100001</value>
-			<value>1</value>
 			<value>new shape name</value>
 			<value>100001</value>
 			<value>new shape description</value>
@@ -58,8 +54,6 @@
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
-			<value>100001</value>
-			<value>2</value>
 			<value>shapeName2</value>
 			<value>100002</value>
 			<value>descr2</value>
@@ -86,8 +80,6 @@
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
-			<value>100001</value>
-			<value>3</value>
 			<value>shapeName3</value>
 			<value>100003</value>
 			<value>descr3</value>
@@ -114,8 +106,6 @@
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
-			<value>100001</value>
-			<value>4</value>
 			<value>shapeName4</value>
 			<value>100004</value>
 			<value>descr4</value>
@@ -142,8 +132,6 @@
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
-			<value>100001</value>
-			<value>5</value>
 			<value>shapeName5</value>
 			<value>100001</value>
 			<value>descr5</value>
@@ -170,8 +158,6 @@
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
-			<value>100001</value>
-			<value>6</value>
 			<value>shapeName6</value>
 			<value>100002</value>
 			<value>descr6</value>
@@ -198,8 +184,6 @@
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
-			<value>100001</value>
-			<value>7</value>
 			<value>shapeName7</value>
 			<value>100003</value>
 			<value>descr7</value>
@@ -226,8 +210,6 @@
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
-			<value>100001</value>
-			<value>8</value>
 			<value>shapeName8</value>
 			<value>100004</value>
 			<value>descr8</value>

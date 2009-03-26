@@ -3,6 +3,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import java.io.Serializable;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
@@ -11,12 +12,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
-public class HibLabelAttribute implements Serializable, ILabelAttribute {
+public class HibLabelAttribute extends HibCanvasAttribute implements Serializable, ILabelAttribute {
+	private final Logger logger = Logger.getLogger(this.getClass()); 
 	private static final long serialVersionUID = -2354270083525870259L;
 
 	private static final int DEFAULT_X = 0;
@@ -24,16 +27,12 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	private static final int DEFAULT_HEIGHT = 0;
 	private static final int DEFAULT_WIDTH = 0;
 
-	private Long id;
-	private HibCanvas hibCanvas;
-	private int creationSerial;
 	private Location position = new Location(DEFAULT_X, DEFAULT_Y);
 	private Size size = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private HibProperty visualisableProperty;
 	private RGB background;
 	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
-	private boolean isDisplayed ;
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
@@ -47,24 +46,21 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	}
 
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
-		this.hibCanvas = hibCanvas;
-		this.creationSerial = creationSerial;
+		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
+		this.visualisableProperty.setDisplayedLabel(this);
 		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
-		this.getCanvas().getLabelAttributes().add(this) ;
 	}
 
-	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibLabelAttribute otherAttribute, HibProperty copiedProperty) {
-		this.hibCanvas = hibCanvas;
-		this.creationSerial = creationSerial;
+	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, ILabelAttribute otherAttribute, HibProperty copiedProperty) {
+		super(hibCanvas, creationSerial);
 		this.visualisableProperty = copiedProperty;
-		this.position = otherAttribute.position;
-		this.size = otherAttribute.size;
-		this.background = otherAttribute.background;
-		this.objectType = otherAttribute.objectType;
-		this.isDisplayed = otherAttribute.isDisplayed;
-		this.getCanvas().getLabelAttributes().add(this) ;
+		this.visualisableProperty.setDisplayedLabel(this);
+		this.position = otherAttribute.getLocation();
+		this.size = otherAttribute.getSize();
+		this.background = otherAttribute.getBackgroundColor();
+		this.objectType = otherAttribute.getObjectType();
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
@@ -72,57 +68,15 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.setBackgroundColor(labelDefaults.getFillColour());
 	}
 
-	public Long getId() {
-		return this.id;
-	}
-
-	@SuppressWarnings("unused")
-	private void setId(Long id) {
-		this.id = id;
-	}
-
-	public HibCanvas getCanvas() {
-		return this.hibCanvas;
-	}
-
-	void setCanvas(HibCanvas hibCanvas) {
-		this.hibCanvas = hibCanvas;
-	}
-
-	public void changeHibCanvas(HibCanvas canvas){
-		if(this.hibCanvas != null){
-			this.hibCanvas.getLabelAttributes().remove(this);
-		}
-		if(canvas != null){
-			canvas.getLabelAttributes().add(this);
-		}
-		this.setCanvas(canvas);
-	}
-	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ICanvasObject#
-	 * getCreationSerial()
-	 */
-
-	public int getCreationSerial() {
-		return this.creationSerial;
-	}
-
-	public void setCreationSerial(int label_index) {
-		this.creationSerial = label_index;
-	}
-
 	public Location getPosition() {
 		return this.position;
 	}
 
-	public HibLabelNode getLabelNode() {
-		return this.labelNode;
-	}
+//	public HibLabelNode getLabelNode() {
+//		return this.labelNode;
+//	}
 
-	void setLabelNode(HibLabelNode node) {
+	void setCurrentDrawingElement(HibLabelNode node) {
 		this.labelNode = node;
 	}
 
@@ -158,7 +112,7 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		this.size = this.size.newHeight(height);
 	}
 
-	public IAnnotationProperty getVisualisableProperty() {
+	public HibProperty getVisualisableProperty() {
 		return this.visualisableProperty;
 	}
 
@@ -188,30 +142,6 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 
 	public void setBackgroundBlue(int backgroundBlue) {
 		this.background = this.background.newBlue(backgroundBlue);
-	}
-
-	public boolean equals(Object other) {
-		if ((this == other))
-			return true;
-		if ((other == null))
-			return false;
-		if (!(other instanceof HibLabelAttribute))
-			return false;
-		HibLabelAttribute castOther = (HibLabelAttribute) other;
-
-		return ((this.getCanvas() == castOther.getCanvas()) || (this
-				.getCanvas() != null
-				&& castOther.getCanvas() != null && this.getCanvas().equals(
-				castOther.getCanvas())))
-				&& (this.getCreationSerial() == castOther.getCreationSerial());
-	}
-
-	public int hashCode() {
-		int result = 17;
-		result = 37 * result
-				+ (getCanvas() == null ? 0 : this.getCanvas().hashCode());
-		result = 37 * result + this.getCreationSerial();
-		return result;
 	}
 
 	/*
@@ -319,27 +249,6 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 		return this.visualisableProperty.getDefinition().equals(property);
 	}
 
-	public boolean getIsDisplayed() {
-		return this.isDisplayed;
-	}
-
-	public void setIsDisplayed(boolean isDisplayed) {
-		this.isDisplayed = isDisplayed;
-	}
-	
-	
-	
-	@Override
-	public String toString(){
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(canvas=");
-		builder.append(this.getCanvas());
-		builder.append(", serial=");
-		builder.append(this.getCreationSerial());
-		builder.append(")");
-		return builder.toString();
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
@@ -369,10 +278,33 @@ public class HibLabelAttribute implements Serializable, ILabelAttribute {
 	}
 
 	public boolean isValid() {
-		return this.objectType != null && this.labelNode != null
-			// note: check by reference below is deliberate as hibernate needs it to be the same object
-			&& this.labelNode.getAttribute() == this
-			&& this.visualisableProperty != null;
+		boolean objectTypeTest = this.getObjectType() != null;
+		boolean labelNodeTest = this.getCurrentDrawingElement() != null
+			&& this.getCurrentDrawingElement().getAttribute().equals(this);
+		boolean propertySetTest = this.getVisualisableProperty() != null;
+		if(!objectTypeTest || !labelNodeTest || !propertySetTest) {
+			logger.error("attribute=" + this + " objectType set=" + objectTypeTest
+					+ ", labelnode set and points to this attribute=" + labelNodeTest
+					+ ", propertySet=" + propertySetTest);
+		}
+		return propertySetTest && labelNodeTest && propertySetTest;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
+	 */
+	@Override
+	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+		this.objectType = (INodeObjectType)objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#getHibObjectType()
+	 */
+	// no persisted object type so return null
+	@Override
+	public HibObjectType getHibObjectType() {
+		return null;
 	}
 
 }

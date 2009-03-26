@@ -9,8 +9,8 @@
             <generator class="native" />
         </id>
         <properties name="xak1objecttype" unique="true">
-        	<many-to-one name="notation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation">
-            	<column name="context_id" not-null="true" />
+        	<many-to-one name="notation" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation" lazy="false">
+            	<column name="notation_id" not-null="true" />
         	</many-to-one>
 	        <property name="uniqueId" type="int">
     	        <column name="unique_id" not-null="true" />

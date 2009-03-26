@@ -10,6 +10,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  */
 public interface IPropertyBuilder {
 
+	/**
+	 * The owner of objects that are to be created.
+	 * @return the owner of the properties buing built, which cannot be null.
+	 */
+	IAnnotatedObject getOwner();
+	
 	IPlainTextAnnotationProperty createPlainTextProperty(IPlainTextPropertyDefinition propDefn);
 
 	IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn);

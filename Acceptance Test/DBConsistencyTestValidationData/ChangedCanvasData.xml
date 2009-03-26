@@ -4,7 +4,7 @@
 <table name="Canvas">
 		<column>id</column>
 		<column>map_inode</column>
-		<column>context_id</column>
+		<column>notation_id</column>
 		<column>grid_x</column>
 		<column>grid_y</column>
 		<column>grid_enabled</column>
@@ -14,8 +14,6 @@
 		<column>background_blue</column>
 		<column>canvas_width</column>
 		<column>canvas_height</column>
-		<column>created</column>
-		<column>last_modified</column>
 		<column>repository_name</column>
 		<row>
 			<value>100001</value>
@@ -30,8 +28,6 @@
 			<value>123</value>
 			<value>121</value>
 			<value>121</value>
-			<value>1970-01-01</value>
-			<value>1970-01-01</value>
 			<value>repo name</value>
 		</row> 
 	</table>

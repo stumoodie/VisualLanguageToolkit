@@ -4,6 +4,7 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -28,10 +29,10 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		super(parent.getModel(), parent, index);
 		if(parent == null || property == null) throw new IllegalArgumentException("parameters parent and property cannot be null");
 		ILabelAttributeDefaults labelAttributeDefaults = property.getDefinition().getLabelDefaults(); 
-		int newSerial = this.getModel().getCanvas().getLabelSerialCounter().nextIndex();
+		int newSerial = this.getModel().getCanvas().getCreationSerialCounter().nextIndex();
 //		this.changeLabelAttribute(new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults));
 		this.labelAttribute = new HibLabelAttribute(this.getModel().getCanvas(), newSerial, property, labelAttributeDefaults);
-		this.labelAttribute.setLabelNode(this);
+		this.labelAttribute.setCurrentDrawingElement(this);
 	}
 	
 	
@@ -39,7 +40,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		super(parent.getModel(), parent, index);
 		if(parent == null || attribute == null) throw new IllegalArgumentException("parameters parent and attribute cannot be null");
 		this.labelAttribute = attribute;
-		this.labelAttribute.setLabelNode(this);
+		this.labelAttribute.setCurrentDrawingElement(this);
 	}
 	
 	
@@ -67,7 +68,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 
 	void setAttribute(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
-		this.labelAttribute.setLabelNode(this);
+		this.labelAttribute.setCurrentDrawingElement(this);
 	}
 
 	/* (non-Javadoc)
@@ -104,7 +105,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		}
 		else{
 			type = ModelStructureChangeType.ADDED;
-			this.labelAttribute.setLabelNode(this);
+			this.labelAttribute.setCurrentDrawingElement(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);
@@ -122,5 +123,11 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	@Override
 	public HibCompoundNode getParentNode() {
 		return this.getHibParentNode();
+	}
+
+
+	// This method should not be used as one cannot have a label of a label. 
+	public ISubModel getLabelSubModel() {
+		throw new UnsupportedOperationException("Cannot have a label of a label");
 	}
 }

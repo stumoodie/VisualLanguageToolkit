@@ -85,7 +85,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType);
 		HibCanvas canvas = ((HibSubModel)owningGraph).getModel().getCanvas();
-		int edgeCreationSerial = canvas.getLinkSerialCounter().nextIndex();
+		int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 		((HibSubModel)owningGraph).notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);

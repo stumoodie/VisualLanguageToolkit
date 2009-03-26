@@ -246,35 +246,35 @@
 		<column>label_attribute_id</column>
 		<row>
 			<value>100010</value>
-			<value>100001</value>
+			<value>100018</value>
 		</row>
 		<row>
 			<value>100011</value>
-			<value>100002</value>
+			<value>100019</value>
 		</row>
 		<row>
 			<value>100012</value>
-			<value>100003</value>
+			<value>100020</value>
 		</row>
 		<row>
 			<value>100013</value>
-			<value>100004</value>
+			<value>100021</value>
 		</row>
 		<row>
 			<value>100014</value>
-			<value>100005</value>
+			<value>100022</value>
 		</row>
 		<row>
 			<value>100015</value>
-			<value>100006</value>
+			<value>100023</value>
 		</row>
 		<row>
 			<value>100016</value>
-			<value>100007</value>
+			<value>100024</value>
 		</row>
 		<row>
 			<value>100017</value>
-			<value>100008</value>
+			<value>100025</value>
 		</row>
 	</table>
 <table name="LinkEdge"><!-- REMEBER TO SETUP THE CORRECT LINK_ATTRIBUTES -->
@@ -293,7 +293,7 @@
 			<value>100001</value>
 			<value>100002</value>
 			<value>100003</value>
-			<value>100001</value>
+			<value>100009</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -303,7 +303,7 @@
 			<value>100001</value>
 			<value>100003</value>
 			<value>100002</value>
-			<value>100002</value>
+			<value>100010</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -313,7 +313,7 @@
 			<value>100003</value>
 			<value>100003</value>
 			<value>100007</value>
-			<value>100003</value>
+			<value>100011</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -323,7 +323,7 @@
 			<value>100001</value>
 			<value>100003</value>
 			<value>100005</value>
-			<value>100004</value>
+			<value>100012</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -333,7 +333,7 @@
 			<value>100007</value>
 			<value>100008</value>
 			<value>100007</value>
-			<value>100005</value>
+			<value>100013</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -343,7 +343,7 @@
 			<value>100007</value>
 			<value>100007</value>
 			<value>100008</value>
-			<value>100006</value>
+			<value>100014</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -353,7 +353,7 @@
 			<value>100001</value>
 			<value>100008</value>
 			<value>100004</value>
-			<value>100007</value>
+			<value>100015</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -363,7 +363,7 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100008</value>
+			<value>100016</value>
 			<value>true</value>
 		</row>
 		<row>
@@ -373,13 +373,13 @@
 			<value>100002</value>
 			<value>100002</value>
 			<value>100002</value>
-			<value>100009</value>
+			<value>100017</value>
 			<value>true</value>
 		</row>
 	</table>
 	<!-- END OF GRAPH STRUCTURE -->
 	<!-- TERMINUS & DECORATORS -->
-<table name="LinkTerminus">
+	<table name="LinkTerminus">
 		<column>id</column>
 		<column>owning_link_id</column>
 		<column>link_term_type</column>
@@ -394,8 +394,8 @@
 		<column>term_dec_height</column>
 		<column>term_dec_width</column>
 		<row>
-			<value>100001</value>
-			<value>100001</value>
+			<value>100026</value>
+			<value>100009</value>
 			<value>0</value>
 			<value>1</value>
 			<value>1</value>
@@ -409,8 +409,8 @@
 			<value>11</value>
 		</row>
 		<row>
-			<value>100002</value>
-			<value>100001</value>
+			<value>100027</value>
+			<value>100009</value>
 			<value>1</value>
 			<value>2</value>
 			<value>2</value>
@@ -424,8 +424,8 @@
 			<value>12</value>
 		</row>
 		<row>
-			<value>100003</value>
-			<value>100002</value>
+			<value>100028</value>
+			<value>100010</value>
 			<value>0</value>
 			<value>3</value>
 			<value>1</value>
@@ -439,8 +439,8 @@
 			<value>13</value>
 		</row>
 		<row>
-			<value>100004</value>
-			<value>100002</value>
+			<value>100029</value>
+			<value>100010</value>
 			<value>1</value>
 			<value>4</value>
 			<value>2</value>
@@ -454,8 +454,8 @@
 			<value>14</value>
 		</row>
 		<row>
-			<value>100005</value>
-			<value>100003</value>
+			<value>100030</value>
+			<value>100011</value>
 			<value>0</value>
 			<value>5</value>
 			<value>1</value>
@@ -469,8 +469,8 @@
 			<value>15</value>
 		</row>
 		<row>
-			<value>100006</value>
-			<value>100003</value>
+			<value>100031</value>
+			<value>100011</value>
 			<value>1</value>
 			<value>6</value>
 			<value>2</value>
@@ -484,8 +484,8 @@
 			<value>16</value>
 		</row>
 		<row>
-			<value>100007</value>
-			<value>100004</value>
+			<value>100032</value>
+			<value>100012</value>
 			<value>0</value>
 			<value>7</value>
 			<value>1</value>
@@ -499,8 +499,8 @@
 			<value>17</value>
 		</row>		
 		<row>
-			<value>100008</value>
-			<value>100004</value>
+			<value>100033</value>
+			<value>100012</value>
 			<value>1</value>
 			<value>8</value>
 			<value>2</value>
@@ -514,8 +514,8 @@
 			<value>18</value>
 		</row>
 		<row>
-			<value>100009</value>
-			<value>100005</value>
+			<value>100034</value>
+			<value>100013</value>
 			<value>0</value>
 			<value>9</value>
 			<value>1</value>
@@ -529,8 +529,8 @@
 			<value>19</value>
 		</row>
 		<row>
-			<value>100010</value>
-			<value>100005</value>
+			<value>100035</value>
+			<value>100013</value>
 			<value>1</value>
 			<value>10</value>
 			<value>2</value>
@@ -544,8 +544,8 @@
 			<value>20</value>
 		</row>
 		<row>
-			<value>100011</value>
-			<value>100006</value>
+			<value>100036</value>
+			<value>100014</value>
 			<value>0</value>
 			<value>11</value>
 			<value>1</value>
@@ -559,8 +559,8 @@
 			<value>21</value>
 		</row>
 		<row>
-			<value>100012</value>
-			<value>100006</value>
+			<value>100037</value>
+			<value>100014</value>
 			<value>1</value>
 			<value>12</value>
 			<value>2</value>
@@ -574,8 +574,8 @@
 			<value>22</value>
 		</row>
 		<row>
-			<value>100013</value>
-			<value>100007</value>
+			<value>100038</value>
+			<value>100015</value>
 			<value>0</value>
 			<value>13</value>
 			<value>1</value>
@@ -589,8 +589,8 @@
 			<value>23</value>
 		</row>
 		<row>
-			<value>100014</value>
-			<value>100007</value>
+			<value>100039</value>
+			<value>100015</value>
 			<value>1</value>
 			<value>14</value>
 			<value>2</value>
@@ -604,8 +604,8 @@
 			<value>24</value>
 		</row>
 		<row>
-			<value>100015</value>
-			<value>100008</value>
+			<value>100040</value>
+			<value>100016</value>
 			<value>0</value>
 			<value>15</value>
 			<value>1</value>
@@ -619,8 +619,8 @@
 			<value>25</value>
 		</row>
 		<row>
+			<value>100041</value>
 			<value>100016</value>
-			<value>100008</value>
 			<value>1</value>
 			<value>16</value>
 			<value>2</value>
@@ -634,8 +634,8 @@
 			<value>26</value>
 		</row>
 		<row>
+			<value>100042</value>
 			<value>100017</value>
-			<value>100009</value>
 			<value>0</value>
 			<value>17</value>
 			<value>1</value>
@@ -649,8 +649,8 @@
 			<value>27</value>
 		</row>
 		<row>
-			<value>100018</value>
-			<value>100009</value>
+			<value>100043</value>
+			<value>100017</value>
 			<value>1</value>
 			<value>18</value>
 			<value>2</value>
@@ -664,28 +664,4 @@
 			<value>28</value>
 		</row>
 	</table>
-	<!-- END OF DECORATORS -->
-	<!-- BENDPOINTS -->
-	<table name="bendpoint">
-		<column>id</column>
-		<column>link_attribute_id</column>
-		<column>index_pos</column>
-		<column>x_position</column>
-		<column>y_position</column>
-			<row>
-				<value>100001</value>
-				<value>100001</value>
-				<value>0</value>
-				<value>51</value>
-				<value>51</value>
-			</row>
-			<row>
-				<value>100002</value>
-				<value>100002</value>
-				<value>0</value>
-				<value>52</value>
-				<value>52</value>
-			</row>
-	</table>
-	<!-- END OF BENDPOINTS -->
 </dataset>
