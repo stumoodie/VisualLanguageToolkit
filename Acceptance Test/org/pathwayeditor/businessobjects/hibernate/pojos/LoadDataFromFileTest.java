@@ -479,8 +479,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		IRootFolder rootFolder = this.repository.getRootFolder();
 		
 		assertEquals ( "belongs to repository" , repository , rootFolder.getRepository()) ;
-		assertEquals ( "No maps" , NUMBER_OF_MAPS_IN_ROOT , rootFolder.getNumMaps() ) ;
-		assertEquals ( "two subfolders" , NUMBER_OF_SUBFOLDERS_IN_ROOT , rootFolder.getNumSubFolders() ) ;
+		assertEquals ( "No maps" , NUMBER_OF_MAPS_IN_ROOT , rootFolder.numMaps() ) ;
+		assertEquals ( "two subfolders" , NUMBER_OF_SUBFOLDERS_IN_ROOT , rootFolder.numSubFolders() ) ;
 		assertEquals ( "path of root" , ROOT_FOLDER_PATH , rootFolder.getPath()) ;
 		assertEquals ( "root inode" , ROOT_FOLDER_INODE , rootFolder.getINode()) ;
 	}
@@ -494,8 +494,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertNotNull ( "subfolder2 initialized" , subFolder2 ) ;
 		
 		assertEquals ( "subfolder1 name" , NAME_OF_SUBFOLDER1 , subFolder1.getName()) ;
-		assertEquals ( "one map inside" , NUMBER_OF_MAPS_IN_SUBFOLDERS , subFolder1.getNumMaps()) ;
-		assertEquals ( "no subfolders" , NUMBER_OF_SUBFOLDERS_IN_SUBFOLDER , subFolder1.getNumSubFolders()) ;
+		assertEquals ( "one map inside" , NUMBER_OF_MAPS_IN_SUBFOLDERS , subFolder1.numMaps()) ;
+		assertEquals ( "no subfolders" , NUMBER_OF_SUBFOLDERS_IN_SUBFOLDER , subFolder1.numSubFolders()) ;
 		assertEquals ( "description check" , SUBFOLDER1_DESCRIPTION , subFolder1.getDescription()) ;
 		assertEquals ( "subfolder1 inode" , SUBFOLDER1_INODE , subFolder1.getINode()) ;
 		assertEquals ( "parent check" , rootFolder , subFolder1.getParent()) ;
@@ -503,8 +503,8 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "repository check" , repository , subFolder1.getRepository() );
 		
 		assertEquals ( "subfolder2 name" , NAME_OF_SUBFOLDER2 , subFolder2.getName()) ;
-		assertEquals ( "one map inside" , NUMBER_OF_MAPS_IN_SUBFOLDERS , subFolder2.getNumMaps()) ;
-		assertEquals ( "no subfolders" , NUMBER_OF_SUBFOLDERS_IN_SUBFOLDER , subFolder2.getNumSubFolders()) ;
+		assertEquals ( "one map inside" , NUMBER_OF_MAPS_IN_SUBFOLDERS , subFolder2.numMaps()) ;
+		assertEquals ( "no subfolders" , NUMBER_OF_SUBFOLDERS_IN_SUBFOLDER , subFolder2.numSubFolders()) ;
 		assertEquals ( "description check" , SUBFOLDER2_DESCRIPTION , subFolder2.getDescription()) ;
 		assertEquals ( "subfolder2 inode" , SUBFOLDER2_INODE , subFolder2.getINode()) ;
 		assertEquals ( "parent check" , rootFolder , subFolder2.getParent()) ;

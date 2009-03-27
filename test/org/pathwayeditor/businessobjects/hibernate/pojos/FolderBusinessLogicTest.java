@@ -152,30 +152,30 @@ public class FolderBusinessLogicTest {
 	@Test
 	public void testCreateSubFolderSetsName() {
 		childFour.createSubfolder(TEST_CHILD_NAME);
-		assertTrue(childFour.getSubFolderIterator().next().getName().equals(TEST_CHILD_NAME));
+		assertTrue(childFour.subFolderIterator().next().getName().equals(TEST_CHILD_NAME));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateSubFolderChecksNameUnique() {
 		ISubFolder testFolder = root.createSubfolder(CHILD_TWO_NAME);
 		root.createSubfolder(CHILD_THREE_NAME);
-		assertEquals("expected num folder", INITIAL_NUM_ROOT_SUBFOLDERS+2, root.getNumSubFolders());
+		assertEquals("expected num folder", INITIAL_NUM_ROOT_SUBFOLDERS+2, root.numSubFolders());
 		assertTrue("has child two subfolder", root.containsSubfolder(testFolder));
 		root.createSubfolder(CHILD_TWO_NAME);
 	}
 
 	@Test
 	public void testMoveSubFolderAddsSubFolder() {
-		assertTrue(root.getNumSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
+		assertTrue(root.numSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		childFour.moveSubfolder(child);
-		assertTrue(childFour.getNumSubFolders() == INITIAL_NUM_CHILDFOUR_SUBFOLDERS+1);
-		assertEquals(child, childFour.getSubFolderIterator().next());
+		assertTrue(childFour.numSubFolders() == INITIAL_NUM_CHILDFOUR_SUBFOLDERS+1);
+		assertEquals(child, childFour.subFolderIterator().next());
 	}
 
 	@Test
 	public void testMoveSubFolderAddsParentToSubFolderCopy() {
-		assertTrue(root.getNumSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
+		assertTrue(root.numSubFolders() == INITIAL_NUM_ROOT_SUBFOLDERS);
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		ISubFolder copy = childFour.moveSubfolder(child);
 		assertEquals(childFour, copy.getParent());
@@ -186,20 +186,20 @@ public class FolderBusinessLogicTest {
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		IMap d = child.createMap(TEST_MAP_NAME);
 		childFour.moveSubfolder(child);
-		assertEquals(d, childFour.getSubFolderIterator().next()
-				.getMapIterator().next());
+		assertEquals(d, childFour.subFolderIterator().next()
+				.mapIterator().next());
 	}
 
 	@Test
 	public void testCopySubFolderCopiesWholeSubTree() {
 		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		folder.createCopyOfSubfolder(childOne);
-		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
+		Iterator<ISubFolder> iter = folder.subFolderIterator(); 
 		ISubFolder sub = iter.next();
 		assertTrue(sub.getName().equals(CHILD_ONE_NAME));
-		sub = sub.getSubFolderIterator().next();
+		sub = sub.subFolderIterator().next();
 		assertTrue(sub.getName().equals(CHILD_TWO_NAME));
-		sub = sub.getSubFolderIterator().next();
+		sub = sub.subFolderIterator().next();
 		assertTrue(sub.getName().equals(CHILD_THREE_NAME));
 	}
 
@@ -207,12 +207,12 @@ public class FolderBusinessLogicTest {
 	public void testCopySubFolderMakesCopyWhichIsNotEqualToOriginal() {
 		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		folder.createCopyOfSubfolder(childOne);
-		Iterator<ISubFolder> iter = folder.getSubFolderIterator(); 
+		Iterator<ISubFolder> iter = folder.subFolderIterator(); 
 		ISubFolder sub = iter.next();
 		assertFalse(sub.equals(childOne));
-		sub = sub.getSubFolderIterator().next();
+		sub = sub.subFolderIterator().next();
 		assertFalse(sub.equals(childTwo));
-		sub = sub.getSubFolderIterator().next();
+		sub = sub.subFolderIterator().next();
 		assertFalse(sub.equals(childThree));
 	}
 
@@ -221,12 +221,12 @@ public class FolderBusinessLogicTest {
 		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		ISubFolder child = root.createSubfolder(TEST_CHILD_NAME);
 		IMap d = child.createMap(TEST_MAP_NAME);
-		assertEquals(d, child.getMapIterator().next());
+		assertEquals(d, child.mapIterator().next());
 		folder.createCopyOfSubfolder(child);
 		assertTrue(d.getDescription().equals(
-				folder.getSubFolderIterator().next().getMapIterator().next().getDescription()));
-		assertFalse(d.equals(folder.getSubFolderIterator().next()
-				.getMapIterator().next()));
+				folder.subFolderIterator().next().mapIterator().next().getDescription()));
+		assertFalse(d.equals(folder.subFolderIterator().next()
+				.mapIterator().next()));
 	}
 
 	@Ignore @Test
@@ -234,12 +234,12 @@ public class FolderBusinessLogicTest {
 		ISubFolder folder = root.createSubfolder(TEST_FOLDER_NAME);
 		ISubFolder child = folder.createSubfolder(TEST_CHILD_NAME);
 		folder.removeSubfolder(child);
-		assertEquals(0, folder.getNumSubFolders());
+		assertEquals(0, folder.numSubFolders());
 	}
 
 	@Test(expected=IllegalArgumentException.class)
 	public void testRemoveSubFolderRemovesSubFolderAsInDirectChild() {
-		ISubFolder sub = childTwo.getSubFolderIterator().next();
+		ISubFolder sub = childTwo.subFolderIterator().next();
 		assertTrue(sub.getName().equals(CHILD_THREE_NAME));
 		root.removeSubfolder(sub);
 	}
@@ -247,10 +247,10 @@ public class FolderBusinessLogicTest {
 	@Ignore @Test
 	public void testRemoveMapHappyCase() {
 		IMap m = childOne.createMap(TEST_MAP_NAME);
-		assertEquals(1,childOne.getNumMaps());
+		assertEquals(1,childOne.numMaps());
 		assertTrue(childOne.containsMap(m));
 		childOne.removeMap(m);
-		assertEquals(0, childOne.getNumMaps());
+		assertEquals(0, childOne.numMaps());
 		assertFalse(childOne.containsMap(m));
 	}
 
@@ -363,9 +363,9 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testNumMaps() {
-		assertEquals(0, childOne.getNumMaps());
+		assertEquals(0, childOne.numMaps());
 		childOne.createMap(TEST_MAP_NAME);
-		assertEquals(1, childOne.getNumMaps());
+		assertEquals(1, childOne.numMaps());
 	}
 
 	@Test
@@ -376,14 +376,14 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testGetMapIteratorCannotBeNull() {
-		assertNotNull(childOne.getMapIterator());
+		assertNotNull(childOne.mapIterator());
 	}
 
 	@Test
 	public void testGetMapIteratorIteratesOverMaps() {
 		childOne.createMap(JIMMY_KRANKIE);
 		childOne.createMap(FANDABIDOSI);
-		Iterator<IMap> it = childOne.getMapIterator();
+		Iterator<IMap> it = childOne.mapIterator();
 		{
 			String nextFolderName = it.next().getName();
 			assertTrue(nextFolderName.equals(JIMMY_KRANKIE) ? true : nextFolderName.equals(FANDABIDOSI));
@@ -610,14 +610,14 @@ public class FolderBusinessLogicTest {
 
 	@Test
 	public void testGetSubFolderIteratorWhenSubFoldersDoNotExistGivesEmptyIterator() {
-		Iterator<? extends ISubFolder> it = childFour.getSubFolderIterator();
+		Iterator<? extends ISubFolder> it = childFour.subFolderIterator();
 		assertNotNull(it);
 		assertFalse(it.hasNext());
 	}
 
 	@Test
 	public void testGetSubFolderIteratorIteratesOverFolders() {
-		Iterator<? extends ISubFolder> it = childOne.getSubFolderIterator();
+		Iterator<? extends ISubFolder> it = childOne.subFolderIterator();
 		assertEquals(childTwo, it.next());
 	}
 
@@ -634,7 +634,7 @@ public class FolderBusinessLogicTest {
 	}
 
 	private IMap getMapInFolderCalled(IFolder r, String name) {
-		Iterator<IMap> mapIter = r.getMapIterator();
+		Iterator<IMap> mapIter = r.mapIterator();
 		while(mapIter.hasNext()) {
 			IMap map = mapIter.next();
 			if (map.getName().equals(name))
@@ -644,7 +644,7 @@ public class FolderBusinessLogicTest {
 	}
 
 	private boolean mapExistsCalled(IFolder r, String name) {
-		Iterator<IMap> mapIter = r.getMapIterator();
+		Iterator<IMap> mapIter = r.mapIterator();
 		while(mapIter.hasNext()) {
 			IMap map = mapIter.next();
 			if (map.getName().equals(name))

@@ -144,23 +144,21 @@ public interface IFolder extends IRepositoryItem {
 	 * the number of maps belonging to this folder.
 	 * @return the number of maps.
 	 */
-	int getNumMaps();
+	int numMaps();
 
 	/**
 	 * Provide an iterator that iterates throw the maps belonging to this folder. It cannot be
-	 * null, but can be empty.
+	 * null, but can be empty. The iterator returns the map in its comparator order.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IMap> getMapIterator();
+	Iterator<IMap> mapIterator();
 	
 	/**
 	 * Provide an iterator that iterates through the immediate children of this folder. It cannot be
-	 * null, but can be empty.
+	 * null, but can be empty. The iterator returns the sub-folders in comparator order.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<ISubFolder> getSubFolderIterator();
-	
-	int getNumSubFolders();
+	Iterator<ISubFolder> subFolderIterator();
 	
 	/**
 	 * Can the name be used for a map in this folder. This tests that the name

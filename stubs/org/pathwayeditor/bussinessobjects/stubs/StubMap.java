@@ -3,11 +3,13 @@
  */
 package org.pathwayeditor.bussinessobjects.stubs;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
 
 /**
@@ -88,4 +90,14 @@ public class StubMap implements IMap {
 		throw new UnsupportedOperationException("not implemented!");
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
+	public int compareTo(IRepositoryItem o2) {
+		return Integer.valueOf(this.getINode()).compareTo(Integer.valueOf(o2.getINode())); 
+	}
+	
+	public Iterator<IRepositoryItem> levelOrderIterator(){
+		throw new UnsupportedOperationException("Not implmented");
+	}
 }

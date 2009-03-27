@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -437,6 +438,19 @@ public class HibCanvasTest {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
+		public int compareTo(IRepositoryItem o2) {
+			return Integer.valueOf(this.getINode()).compareTo(Integer.valueOf(o2.getINode())); 
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#levelOrderIterator()
+		 */
+		public Iterator<IRepositoryItem> levelOrderIterator() {
+			throw new UnsupportedOperationException("Not implemented yet!");
+		}
 	}
 
 	private class InnerStubHibNotationFactory implements IHibNotationFactory {

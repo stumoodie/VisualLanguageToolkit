@@ -39,7 +39,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 
 	private ICanvas loadCanvasFromDB() {
 		ISubFolder subFolder1 = (ISubFolder) repository.getFolderByPath(SUBFOLDER1_PATH);
-		IMap mapDiagram1 = subFolder1.getMapIterator().next();
+		IMap mapDiagram1 = subFolder1.mapIterator().next();
 		map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(mapDiagram1);
 		map1Manager.open();
 		ICanvas dbCanvas = map1Manager.getCanvas();

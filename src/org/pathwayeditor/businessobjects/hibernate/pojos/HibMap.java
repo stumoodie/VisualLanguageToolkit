@@ -1,16 +1,21 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
 import org.pathwayeditor.businessobjects.repository.ListenableMap;
 import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent.PropertyType;
 
 public class HibMap implements IMap, Serializable {
 	private static final long serialVersionUID = -7566323206185334088L;
+
+	private static final int LIST_SIZE = 1;
 
 	private Long id;
 	private HibFolder folder;
@@ -212,5 +217,21 @@ public class HibMap implements IMap, Serializable {
 	public void removeChangeListener(
 			IRepositoryItemChangeListener changeListener) {
 		this.listenable.removeListener(changeListener);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IRepositoryItem o) {
+		return Integer.valueOf(this.iNode).compareTo(Integer.valueOf(o.getINode()));
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepositoryItem#levelOrderIterator()
+	 */
+	public Iterator<IRepositoryItem> levelOrderIterator() {
+		List<IRepositoryItem> list = new ArrayList<IRepositoryItem>(LIST_SIZE);
+		list.add(this);
+		return list.iterator();
 	}
 }

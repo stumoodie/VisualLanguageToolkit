@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.repository.IFolder;
 import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListener;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.businessobjects.repository.ListenableFolder;
@@ -392,8 +394,12 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getMapIterator()
 	 */
-	public Iterator<IMap> getMapIterator() {
-		return new IterationCaster<IMap, HibMap>(hibMaps.iterator());
+	public Iterator<IMap> mapIterator() {
+		final SortedSet<IMap> set = new TreeSet<IMap>();
+		for(HibMap map : this.hibMaps){
+			set.add(map);
+		}
+		return set.iterator();
 	}
 
 	public boolean canMoveMap(IMap origMap){
@@ -442,11 +448,8 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#numMaps()
 	 */
-	public int getNumMaps() {
-		if (hibMaps == null)
-			return 0;
-		int nummaps = hibMaps.size();
-		return nummaps;
+	public int numMaps() {
+		return hibMaps.size();
 	}
 
 	/*
@@ -455,10 +458,7 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#numSubFolders()
 	 */
 	public int numSubFolders() {
-		if (subFolders == null)
-			return 0;
-		int numsubfolders = getSubFolders().size();
-		return numsubfolders;
+		return this.subFolders.size();
 	}
 
 	/*
@@ -526,14 +526,14 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.repository.IFolder#getSubFolderIterator()
 	 */
-	public Iterator<ISubFolder> getSubFolderIterator() {
-		return new IterationCaster<ISubFolder, HibSubFolder>(subFolders.iterator());
+	public Iterator<ISubFolder> subFolderIterator() {
+		final SortedSet<ISubFolder> set = new TreeSet<ISubFolder>();
+		for(ISubFolder subFolder : subFolders){
+			set.add(subFolder);
+		}
+		return set.iterator();
 	}
 
-	public int getNumSubFolders(){
-		return this.subFolders.size();
-	}
-	
 	protected final ListenableFolder getListenable(){
 		return this.listenable;
 	}
@@ -556,5 +556,16 @@ public abstract class HibFolder implements Serializable, IFolder {
 	 */
 	public final void removeChangeListener(IRepositoryItemChangeListener changeListener) {
 		this.listenable.removeListener(changeListener);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+	 */
+	public int compareTo(IRepositoryItem o2) {
+		return Integer.valueOf(this.getINode()).compareTo(Integer.valueOf(o2.getINode())); 
+	}
+	
+	public Iterator<IRepositoryItem> levelOrderIterator(){
+		return new LevelOrderTreeIterator(this);
 	}
 }

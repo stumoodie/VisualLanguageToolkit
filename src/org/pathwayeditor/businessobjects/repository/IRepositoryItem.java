@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.repository;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @author smoodie
  *
  */
-public interface IRepositoryItem {
+public interface IRepositoryItem extends Comparable<IRepositoryItem> {
 
 	/**
 	 * The repository that owns this item.
@@ -61,4 +62,12 @@ public interface IRepositoryItem {
 	 * @return the list of listeners.
 	 */
 	List<IRepositoryItemChangeListener> getChangeListeners();
+	
+	/**
+	 * Provides a level order iterator for the tree potentially represented by this 
+	 * repository item. The first node in the tree is this node, so the iterator will
+	 * always have 1 node.
+	 * @return the iterator, which starts with this node.
+	 */
+	Iterator<IRepositoryItem> levelOrderIterator();
 }

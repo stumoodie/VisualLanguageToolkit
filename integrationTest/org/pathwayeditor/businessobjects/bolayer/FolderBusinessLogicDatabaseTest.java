@@ -46,7 +46,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		assertEquals("root id", TEST_ROOT_INODE, actualRoot.getINode());
 		assertNotNull("has repository set", actualRoot.getRepository());
 		assertEquals("has correct repository", actualRepo, actualRoot.getRepository());
-		assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS, actualRoot.getNumSubFolders());
+		assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS, actualRoot.numSubFolders());
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 			assertEquals("root id", TEST_ROOT_INODE, actualRoot.getINode());
 			assertNotNull("has repository set", actualRoot.getRepository());
 			assertEquals("has correct repository", actualRepo, actualRoot.getRepository());
-			assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS+1, actualRoot.getNumSubFolders());
+			assertEquals("num subfolders", EXPECTED_NUM_ROOT_SUBFOLDERS+1, actualRoot.numSubFolders());
 			assertTrue("has new subfolder", actualRepo.pathExists("/" + JIMMY_KRANKIE + "/"));
 		}
 	}
@@ -129,17 +129,17 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		IRootFolder r = rep.getRootFolder();
 		ISubFolder sub1 = null;
 		sub1 = getSubFolderThatHasChildren(r, sub1);
-		ISubFolder sub2 = sub1.getSubFolderIterator().next();
+		ISubFolder sub2 = sub1.subFolderIterator().next();
 		assertFalse(r.canMoveSubfolder(sub1));
 		assertTrue(r.canMoveSubfolder(sub2));
 	}
 
 	private ISubFolder getSubFolderThatHasChildren(IRootFolder r,
 			ISubFolder sub1) {
-		Iterator<? extends ISubFolder> it = r.getSubFolderIterator();
+		Iterator<? extends ISubFolder> it = r.subFolderIterator();
 		while (it.hasNext()) {
 			sub1 = it.next();
-			if (sub1.getSubFolderIterator().hasNext())
+			if (sub1.subFolderIterator().hasNext())
 				break;
 		}
 		return sub1;
@@ -196,10 +196,10 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 //		IMap map = (IMap) runQuery("from HibMap m where m.id = '100001'").uniqueResult();
 //		assertEquals(1,sub1.getNumMaps());
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		int iNode = map.getINode();
 		sub1.removeMap(map);
-		assertEquals(0,sub1.getNumMaps());
+		assertEquals(0,sub1.numMaps());
 		this.getRepositoryPersistenceManager().synchronise();
 		Session sess = getSessionFactory().getCurrentSession();
 		sess.beginTransaction();
@@ -212,15 +212,15 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void removeMapWhenMapFromFolderLookupTest(){
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IMap map=null;
-		Iterator<IMap> mapIter = sub1.getMapIterator();
+		Iterator<IMap> mapIter = sub1.mapIterator();
 		while(mapIter.hasNext()){
 			IMap search = mapIter.next();
 			if(search.getName().equals("Diagram name"))
 				map=search;
 		}
-		assertEquals(1,sub1.getNumMaps());
+		assertEquals(1,sub1.numMaps());
 		sub1.removeMap(map);
-		assertEquals(0,sub1.getNumMaps());
+		assertEquals(0,sub1.numMaps());
 		this.getRepositoryPersistenceManager().synchronise();
 		assertNull(runUniqueQuery("from HibMap m where m.id = '100001'"));
 	}
@@ -229,16 +229,16 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void removeMapWhenMapBoSynchroniseCalledTwiceTest(){
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IMap map=null;
-		Iterator<IMap> mapIter = sub1.getMapIterator();
+		Iterator<IMap> mapIter = sub1.mapIterator();
 		while(mapIter.hasNext()){
 			IMap search = mapIter.next();
 			if(search.getName().equals("Diagram name"))
 				map=search;
 		}
 		this.getRepositoryPersistenceManager().synchronise();
-		assertEquals(1,sub1.getNumMaps());
+		assertEquals(1,sub1.numMaps());
 		sub1.removeMap(map);
-		assertEquals(0,sub1.getNumMaps());
+		assertEquals(0,sub1.numMaps());
 		this.getRepositoryPersistenceManager().synchronise();
 		assertNull(runUniqueQuery(
 		"from HibMap m where m.id = '100001'"));
@@ -266,8 +266,8 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testNumMaps() {
 		IRootFolder r = rep.getRootFolder();
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
-		assertEquals(0, r.getNumMaps());
-		assertEquals(1, sub1.getNumMaps());
+		assertEquals(0, r.numMaps());
+		assertEquals(1, sub1.numMaps());
 	}
 
 	@Test
@@ -279,13 +279,13 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testGetMapIteratorCannotBeNull() {
 		IRootFolder r = rep.getRootFolder();
-		assertNotNull(r.getMapIterator());
+		assertNotNull(r.mapIterator());
 	}
 
 	@Test
 	public void testGetMapIteratorIteratesOverMaps() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
-		Iterator<? extends IMap> it = sub1.getMapIterator();
+		Iterator<? extends IMap> it = sub1.mapIterator();
 		String name = it.next().getName();
 		assertTrue(name.equals("Diagram name")||name.equals("Diagram name2"));
 	}
@@ -325,7 +325,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testContainsMapHappyCase() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertTrue(sub1.containsMap(map));
 	}
 
@@ -333,7 +333,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testContainsMapFalse() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertTrue(sub1.containsMap(map));
 		assertFalse(r.containsMap(map));
 	}
@@ -343,7 +343,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 		ISubFolder sub1 = (ISubFolder) rep
 				.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertFalse(mapExistsCalled( r, map.getName()));
 		{
 			Session sess = getSessionFactory().getCurrentSession();
@@ -374,7 +374,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testMoveMapHappyCaseAddsMapToNewParent() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertFalse(mapExistsCalled(r, map.getName()));
 		assertTrue(mapExistsCalled(sub1, map.getName()));
 		r.moveMap(map);
@@ -407,7 +407,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	public void testMoveMapHappyCaseRemovesMapFromOldParent() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
 		IRootFolder r = rep.getRootFolder();
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertFalse(mapExistsCalled( r, map.getName()));
 		{
 			Session sess = getSessionFactory().getCurrentSession();
@@ -436,7 +436,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testCanRenameMapHappyCase() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertTrue(sub1.canRenameMap(map, JIMMY_KRANKIE));
 		assertFalse(sub1.canRenameMap(map, map.getName()));
 	}
@@ -444,7 +444,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testRenameMapHappyCase() {
 		ISubFolder sub1 =  (ISubFolder)rep.getFolderByPath("/subfolder2/subfolder4/");
-		IMap map = sub1.getMapIterator().next();
+		IMap map = sub1.mapIterator().next();
 		assertFalse(mapExistsCalled(sub1, JIMMY_KRANKIE));
 		{
 			Session sess = getSessionFactory().getCurrentSession();
@@ -474,14 +474,14 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	@Test
 	public void testSubFolderIterator() {
 		IRootFolder r = rep.getRootFolder();
-		Iterator<? extends ISubFolder> it = r.getSubFolderIterator();
+		Iterator<? extends ISubFolder> it = r.subFolderIterator();
 		assertTrue(it.next().getName().equals("subfolder1") ? it.next()
 				.getName().equals("subfolder2") : it.next().getName().equals(
 				"subfolder1"));
 	}
 
 	private boolean subFolderExistsCalled(IRootFolder r, String name) {
-		Iterator<ISubFolder> iter = r.getSubFolderIterator();
+		Iterator<ISubFolder> iter = r.subFolderIterator();
 		while (iter.hasNext()) {
 			ISubFolder sub = iter.next();
 			if (sub.getName().equals(name))
@@ -491,7 +491,7 @@ public class FolderBusinessLogicDatabaseTest extends GenericTester {
 	}
 
 	private boolean mapExistsCalled(IFolder r, String name) {
-		Iterator<IMap> mapIterator = r.getMapIterator();
+		Iterator<IMap> mapIterator = r.mapIterator();
 		while(mapIterator.hasNext()){
 			IMap map = mapIterator.next();
 			if (map.getName().equals(name))

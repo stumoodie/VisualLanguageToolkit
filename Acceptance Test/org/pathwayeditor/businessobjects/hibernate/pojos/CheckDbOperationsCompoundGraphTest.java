@@ -190,7 +190,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		subFolder1 = (ISubFolder)repository.getFolderByPath( SUBFOLDER1_PATH) ;
 		
-		mapDiagram1 = subFolder1.getMapIterator().next() ;
+		mapDiagram1 = subFolder1.mapIterator().next() ;
 		
 		
 		

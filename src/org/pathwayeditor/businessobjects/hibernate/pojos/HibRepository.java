@@ -216,7 +216,7 @@ public class HibRepository implements Serializable, IRepository {
 
 	private List<ISubFolder> getChildrenOfFolderCalled(HibFolder folder , String name) {
 		List <ISubFolder> found = new ArrayList<ISubFolder>();
-		for (Iterator<? extends ISubFolder> it = folder.getSubFolderIterator(); it.hasNext();) {
+		for (Iterator<? extends ISubFolder> it = folder.subFolderIterator(); it.hasNext();) {
 			HibSubFolder sub = (HibSubFolder) it.next();
 			if(sub.getName().equals(name))
 				found.add(sub);
@@ -306,7 +306,7 @@ public class HibRepository implements Serializable, IRepository {
 			repoItem = folder;
 		}
 		else{
-			Iterator<IMap> mapIter = folder.getMapIterator();
+			Iterator<IMap> mapIter = folder.mapIterator();
 			while(mapIter.hasNext() && repoItem == null){
 				IMap map = mapIter.next();
 				if(map.getPath().equals(path)){
@@ -314,7 +314,7 @@ public class HibRepository implements Serializable, IRepository {
 				}
 			}
 			if(repoItem == null){
-				Iterator<ISubFolder> iter = folder.getSubFolderIterator();
+				Iterator<ISubFolder> iter = folder.subFolderIterator();
 				while(iter.hasNext() && repoItem == null){
 					repoItem = fetchItem(iter.next(), path);
 				}
