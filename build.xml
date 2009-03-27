@@ -174,7 +174,7 @@
 			run test cases. All test class names should end in 'Test' to avoid
 			inclusion of inner classes.
 		-->
-		<junit printsummary="yes" haltonfailure="no" fork="yes">
+		<junit printsummary="yes" haltonfailure="no" fork="yes" forkmode="perBatch">
 			<classpath>
 				<path refid="test.classpath" />
 			</classpath>
@@ -236,17 +236,6 @@
 				<path refid="classpath" />
 			</classpath>
 		</java>
-		<antcall target="copydb"/>
 	</target>
-	<target name = "copydb">
-		<copy todir="${application.db.dir}" overwrite="true">
-			<fileset dir="${bo.db.dir}"/>
-		</copy>
-		<copy todir="${epefeature.db1.dir}" overwrite="true">
-			<fileset dir="${bo.db.dir}"/>
-		</copy>
-		<copy todir="${epefeature.db2.dir}" overwrite="true">
-			<fileset dir="${bo.db.dir}"/>
-		</copy>
-	</target>
+	
 </project>

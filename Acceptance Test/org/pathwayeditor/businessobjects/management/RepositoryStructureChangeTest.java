@@ -23,6 +23,8 @@ public class RepositoryStructureChangeTest extends GenericTester {
 	private static final String SUBFOLDER1_PATH = "/subfolder1/" ;
 	private static final String SUBFOLDER2_PATH = "/subfolder2/" ;
 	private static final String MAP1_PATH = "/subfolder2/Diagram name2";
+	private static final String NEW_MAP_NAME = "map3";
+	private static final String NEW_FOLDER_NAME = "folder4";
 	private IRepository repository;
 	private ISubFolder subFolder2;
 	private IMap map2;
@@ -39,6 +41,20 @@ public class RepositoryStructureChangeTest extends GenericTester {
 		this.getRepositoryPersistenceManager().synchronise();
 		
 		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedDeletedMapData.xml");
+	}
+
+	@Test
+	public void testDeleteMap1 () throws Exception {
+		IMap map1 = (IMap)this.repository.findRepositoryItemByPath("/subfolder1/Diagram name");
+		subFolder1.removeMap(map1);
+
+		assertNull("Not attached to repo", map1.getRepository());
+		assertNull("Not attached to parent folder", map1.getOwner());
+		assertFalse("Missing from orginal parent", subFolder1.containsMap(map1));
+		
+		this.getRepositoryPersistenceManager().synchronise();
+		
+		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedDeletedMap1Data.xml");
 	}
 
 	@Test
@@ -65,6 +81,44 @@ public class RepositoryStructureChangeTest extends GenericTester {
 		this.getRepositoryPersistenceManager().synchronise();
 		
 		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedCopiedMapData.xml");
+	}
+
+	@Test
+	public void testCreateAndDeleteMap () throws Exception {
+		IMap newMap = subFolder1.createMap(NEW_MAP_NAME);
+		assertEquals("Same repo", this.repository, newMap.getRepository());
+		assertTrue("Contained in folder1", this.subFolder1.containsMap(newMap));
+		this.getRepositoryPersistenceManager().synchronise();
+		this.subFolder1.removeMap(newMap);
+		assertNull("Null repo", newMap.getRepository());
+		assertFalse("Contained in folder1", this.subFolder1.containsMap(newMap));
+		this.getRepositoryPersistenceManager().synchronise();
+		
+		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedRecreatedMapData.xml");
+	}
+
+	@Test
+	public void testCreateAndDeleteFolder () throws Exception {
+		ISubFolder newSubfolder = subFolder1.createSubfolder(NEW_FOLDER_NAME);
+		assertEquals("Same repo", this.repository, newSubfolder.getRepository());
+		assertTrue("Contained in folder1", this.subFolder1.containsSubfolder(newSubfolder));
+		this.getRepositoryPersistenceManager().synchronise();
+		this.subFolder1.removeSubfolder(newSubfolder);
+		assertNull("Null repo", newSubfolder.getRepository());
+		assertFalse("Contained in folder1", this.subFolder1.containsSubfolder(newSubfolder));
+		this.getRepositoryPersistenceManager().synchronise();
+		
+		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedRecreatedFolderData.xml");
+	}
+
+	@Test
+	public void testCreateMap () throws Exception {
+		IMap newMap = subFolder1.createMap(NEW_MAP_NAME);
+		assertEquals("Same repo", this.repository, newMap.getRepository());
+		assertTrue("Contained in folder1", this.subFolder1.containsMap(newMap));
+		this.getRepositoryPersistenceManager().synchronise();
+		
+		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedCreatedMapData.xml");
 	}
 
 	/*

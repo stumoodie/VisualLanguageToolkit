@@ -3,6 +3,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jmock.Expectations;
@@ -87,12 +89,16 @@ public class HibRootFolderTest {
 		final Set<HibSubFolder> mockSubFolderSet = mockery.mock( Set.class , "mockSubFolderSet") ;
 		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 		final IndexCounter indexCounter = new IndexCounter();
-				
+		final Set<HibFolder> repoFolders = new HashSet<HibFolder>(Arrays.asList(new HibFolder[] {mockBORootFolder, mockSubFolder}));
+		final Set<HibMap> repoMaps = new HashSet<HibMap>(Arrays.asList(new HibMap[] {mockMapDiagram}));
+		
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockBORootFolder).getMapDiagrams();
 			atLeast(1).of(mockBORootFolder).getSubFolders();
 
 			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+			allowing(mockRepository).getFolders(); will(returnValue(repoFolders));
+			allowing(mockRepository).getMaps(); will(returnValue(repoMaps));
 		}});
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
 		this.mockery.assertIsSatisfied();
@@ -139,18 +145,23 @@ public class HibRootFolderTest {
 	 	
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final IndexCounter indexCounter = new IndexCounter();
+		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
 		mockery.checking( new Expectations () {{
 			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+			allowing(mockRepository).getFolders(); will(returnValue(new HashSet<HibFolder>()));
+			allowing(mockRepository).getMaps(); will(returnValue(new HashSet<HibFolder>()));
 		}} ) ;
 		HibRootFolder mockBORootFolder = new HibRootFolder(mockRepository);
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
-		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
+		final Set<HibFolder> repoFolders = new HashSet<HibFolder>(Arrays.asList(new HibFolder[] {mockBORootFolder, mockSubfolder}));
+		final Set<HibMap> repoMaps = new HashSet<HibMap>();
 		mockery.checking( new Expectations () {{
+			allowing(mockRepository).getFolders(); will(returnValue(repoFolders));
+			allowing(mockRepository).getMaps(); will(returnValue(repoMaps));
 			allowing(mockSubfolder).setRepository(mockRepository);
 			allowing(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
 			allowing(mockSubfolder).setParentFolder(testRootFolder1); 
 
-			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}} ) ;
 		testRootFolder1.addSubFolder(mockSubfolder) ;
 		assertEquals ( 1 , testRootFolder1.getSubFolders().size() );
@@ -161,13 +172,19 @@ public class HibRootFolderTest {
 	{
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final IndexCounter indexCounter = new IndexCounter();
+		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
 		mockery.checking( new Expectations () {{
 			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
+			allowing(mockRepository).getFolders(); will(returnValue(new HashSet<HibFolder>()));
+			allowing(mockRepository).getMaps(); will(returnValue(new HashSet<HibFolder>()));
 		}} ) ;
 		HibRootFolder mockBORootFolder = new HibRootFolder(mockRepository);
 		testRootFolder1 = new HibRootFolder( mockRepository,mockBORootFolder );
-		final HibSubFolder mockSubfolder = mockery.mock(HibSubFolder.class , "mockSubfolder") ;
+		final Set<HibFolder> repoFolders = new HashSet<HibFolder>(Arrays.asList(new HibFolder[] {mockBORootFolder, mockSubfolder}));
+		final Set<HibMap> repoMaps = new HashSet<HibMap>();
 		mockery.checking( new Expectations () {{
+			allowing(mockRepository).getFolders(); will(returnValue(repoFolders));
+			allowing(mockRepository).getMaps(); will(returnValue(repoMaps));
 			allowing(mockSubfolder).setRepository(mockRepository);
 			one(mockSubfolder).getParentFolder(); will(returnValue(null)) ;
 			allowing(mockSubfolder).setParentFolder(testRootFolder1); 
@@ -190,10 +207,14 @@ public class HibRootFolderTest {
 		final HibRepository mockRepository = mockery.mock(HibRepository.class , "mockRepository") ;
 		final HibRootFolder mockBORootFolder = mockery.mock(HibRootFolder.class , "mockBORootFolder") ;
 		final IndexCounter indexCounter = new IndexCounter();
+		final Set<HibFolder> repoFolders = new HashSet<HibFolder>(Arrays.asList(new HibFolder[] {mockBORootFolder}));
+		final Set<HibMap> repoMaps = new HashSet<HibMap>();
 		mockery.checking( new Expectations () {{
 			atLeast(1).of(mockBORootFolder).getMapDiagrams();
 			atLeast(1).of(mockBORootFolder).getSubFolders();
 
+			allowing(mockRepository).getFolders(); will(returnValue(repoFolders));
+			allowing(mockRepository).getMaps(); will(returnValue(repoMaps));
 			allowing(mockRepository).getINodeCounter(); will(returnValue(indexCounter));
 		}});
 		testRootFolder1 = new HibRootFolder(mockRepository, mockBORootFolder );

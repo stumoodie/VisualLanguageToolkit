@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder;
@@ -107,8 +108,11 @@ public class HibRepositoryPersistenceHandler implements	IRepositoryPersistenceHa
 		Session s = this.fact.getCurrentSession();
 		s.getTransaction().begin();
 		HibRepository hibRep = (HibRepository)this.rep; 
-		s.saveOrUpdate(this.rep);
-		initialiseRepository(hibRep);
+		s.saveOrUpdate(hibRep);
+		for(HibMap map : hibRep.getMaps()){
+			s.saveOrUpdate(map);
+		}
+//		initialiseRepository(hibRep);
 		s.getTransaction().commit();
 	}
 }

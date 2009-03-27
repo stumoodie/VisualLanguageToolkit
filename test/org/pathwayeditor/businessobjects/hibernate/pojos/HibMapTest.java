@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jmock.Expectations;
@@ -46,9 +47,11 @@ public class HibMapTest {
 		final IndexCounter cntr = new IndexCounter();
 		mockFolder = mockery.mock(HibFolder.class , "mockFolder") ;
 		mockRepository = mockery.mock(HibRepository.class, "mockRepository");
+		final Set<HibMap> mapList = new HashSet<HibMap>();
 		mockery.checking( new Expectations () {{
 			allowing(mockFolder).getRepository(); will(returnValue(mockRepository));
 			
+			allowing(mockRepository).getMaps(); will(returnValue(mapList));
 			allowing(mockRepository).getINodeCounter(); will(returnValue(cntr));
 			
 		}});

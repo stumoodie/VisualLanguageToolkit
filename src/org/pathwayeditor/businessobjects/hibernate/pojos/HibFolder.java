@@ -39,11 +39,13 @@ public abstract class HibFolder implements Serializable, IFolder {
 		this();
 		this.repository = repository;
 		this.iNode = repository.getINodeCounter().nextIndex();
+		this.repository.getFolders().add(this);
 	}
 	
 	protected HibFolder(HibRepository repository, HibFolder other) {
 		this.repository = repository;
 		this.iNode = repository.getINodeCounter().nextIndex();
+		this.repository.getFolders().add(this);
 		for (HibMap diagram : other.getMapDiagrams()) {
 			this.hibMaps.add(new HibMap(this, diagram));
 		}

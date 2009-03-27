@@ -9,18 +9,18 @@
 			<column name="id" />
 			<generator class="native" />
 		</id>
-		<set name="mapDiagrams" inverse="true" cascade="all">
+		<set name="mapDiagrams" inverse="true" cascade="none">
 			<key>
-				<column name="folder_id" not-null="true" />
+				<column name="folder_id" not-null="false" />
 			</key>
 			<one-to-many class="org.pathwayeditor.businessobjects.hibernate.pojos.HibMap" />
 		</set>
-		<many-to-one name="repository"  cascade="all" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
+		<many-to-one name="repository" class ="org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository">
 			<column name="repository_id" not-null="false" />
 		</many-to-one>
-		<set name="subFolders" inverse="true" cascade="all">
+		<set name="subFolders" inverse="true" cascade="none">
 			<key>
-				<column name="parent_folder_id" not-null="true" />
+				<column name="parent_folder_id" not-null="false" />
 			</key>
 			<one-to-many
 				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibSubFolder" />
@@ -42,7 +42,6 @@
 			<key>
 				<column name="id" not-null="true" unique="true" />
 			</key>
-			<properties name="xak1subfolder" unique="true">
 				<many-to-one name="parentFolder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder">
 					<column name="parent_folder_id" not-null="false" />
 				</many-to-one>
@@ -52,7 +51,6 @@
 				<property name="description" type="string">
 					<column name="description" length="2048" not-null="true" />
 				</property>
-			</properties>
 		</joined-subclass>
 	</class>
 </hibernate-mapping>

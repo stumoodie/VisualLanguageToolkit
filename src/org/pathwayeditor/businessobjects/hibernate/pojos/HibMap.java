@@ -34,20 +34,16 @@ public class HibMap implements IMap, Serializable {
 		this.name = name;
 		this.repository = hibFolder.getRepository();
 		this.iNode = this.repository.getINodeCounter().nextIndex();
+		this.repository.getMaps().add(this);
 	}
 
 	public HibMap(HibFolder newParent, HibMap other) {
-		this(newParent,other,false);
-		this.iNode = this.repository.getINodeCounter().nextIndex();
-	}
-
-	private HibMap(HibFolder newParent, HibMap other, boolean isCompleteCopy) {
 		this.folder = newParent;
 		this.name = other.name;
 		this.description = other.description;
 		this.repository = newParent.getRepository();
-		if(isCompleteCopy)
-			this.iNode=other.iNode;
+		this.iNode = this.repository.getINodeCounter().nextIndex();
+		this.repository.getMaps().add(this);
 	}
 	
 	public Long getId() {

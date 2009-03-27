@@ -22,7 +22,7 @@
         <property name="lastINode" type="integer">
         	<column name="last_inode" not-null="true" />
         </property>
-        <many-to-one name="rootFolder" cascade="all" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder">
+        <many-to-one name="rootFolder" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder">
         	<column name="root_folder_id" not-null="false"/>
         </many-to-one>
         <set name="folders" inverse="true" cascade="all,delete-orphan">

@@ -80,14 +80,6 @@
 		<column>repository_id</column>
 		<column>inode</column>
 			<row>
-				<value>100001</value>
-				<value>100002</value>
-				<value>Diagram name</value>
-				<value>Diagram Description</value>
-				<value>100001</value>
-				<value>4</value>
-			</row>
-			<row>
 				<value>100002</value>
 				<value>100003</value>
 				<value>Diagram name2</value>
