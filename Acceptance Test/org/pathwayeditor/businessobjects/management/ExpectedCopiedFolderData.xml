@@ -1,0 +1,130 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd" >
+<!--  START OF FILESYSTEM -->
+<dataset>
+	<table name="Repository">
+		<column>id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>build_num</column>
+		<column>last_inode</column>
+		<column>root_folder_id</column>
+		<row>
+			<value>100001</value>
+			<value>repo name</value>
+			<value>repository description</value>
+			<value>2534</value>
+			<value>9</value>
+			<value>100001</value>
+		</row>
+	</table>
+	<table name="Folder" >
+		<column>id</column>
+		<column>repository_id</column>
+		<column>inode</column>
+			<row>
+				<value>100001</value><!-- rootFolder1  -->
+				<value>100001</value>
+				<value>1</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100001</value>
+				<value>2</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+				<value>3</value>
+			</row>
+			<row>
+				<value>100004</value>
+				<value>100001</value>
+				<value>6</value>
+			</row>
+			<row>
+				<value>100005</value>
+				<value>100001</value>
+				<value>7</value>
+			</row>
+			<row>
+				<value>100006</value>
+				<value>100001</value>
+				<value>9</value>
+			</row>
+	</table>
+	<table name="RootFolder" >
+		<column>id</column>
+			<row>
+				<value>100001</value>
+			</row>
+	</table>
+	<table name="SubFolder" >
+		<column>id</column>
+		<column>parent_folder_id</column>
+		<column>name</column>
+		<column>description</column>
+			<row>
+				<value>100002</value>
+				<value>100001</value>
+				<value>subfolder1</value>
+				<value>description1</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100001</value>
+				<value>subfolder2</value>
+				<value>description2</value>
+			</row>
+			<row>
+				<value>100004</value>
+				<value>100002</value>
+				<value>subfolder3</value>
+				<value>description3</value>
+			</row>
+			<row>
+				<value>100005</value>
+				<value>100003</value>
+				<value>subfolder1</value>
+				<value>description1</value>
+			</row>
+			<row>
+				<value>100006</value>
+				<value>100005</value>
+				<value>subfolder3</value>
+				<value>description3</value>
+			</row>
+	</table>
+	<table name="MapDiagram">
+		<column>id</column>
+		<column>folder_id</column>
+		<column>name</column>
+		<column>description</column>
+		<column>repository_id</column>
+		<column>inode</column>
+			<row>
+				<value>100001</value>
+				<value>100002</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+				<value>100001</value>
+				<value>4</value>
+			</row>
+			<row>
+				<value>100002</value>
+				<value>100003</value>
+				<value>Diagram name2</value>
+				<value>Diagram Description2</value>
+				<value>100001</value>
+				<value>5</value>
+			</row>
+			<row>
+				<value>100003</value>
+				<value>100005</value>
+				<value>Diagram name</value>
+				<value>Diagram Description</value>
+				<value>100001</value>
+				<value>8</value>
+			</row>
+	</table>
+	<!-- END OF FILESYSTEM -->
+</dataset>

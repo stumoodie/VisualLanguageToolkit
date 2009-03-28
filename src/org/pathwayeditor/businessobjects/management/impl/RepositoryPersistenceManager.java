@@ -19,6 +19,7 @@ import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManage
 import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 
 /**
  * @author smoodie
@@ -34,7 +35,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 */
 	private static final String MANAGER_NOT_OPEN = "Manager not open";
 	private final Map<IMap, IMapPersistenceManager> openMaps;
-	private final Map<Integer, IMapPersistenceManager> openPersistenceManagers;
+//	private final Map<Integer, IMapPersistenceManager> openPersistenceManagers;
 	private final ICanvasPersistenceHandlerFactory canvasPersistenceHandlerFactory;
 	private final IRepositoryPersistenceHandler repoPersistenceHandler;
 	private final AtomicBoolean open;
@@ -46,7 +47,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 		this.canvasPersistenceHandlerFactory = canvasPersistenceHandlerFactory;
 		this.repoPersistenceHandler = repoPersistenceHandler;
 		this.openMaps = new ConcurrentHashMap<IMap, IMapPersistenceManager>();
-		this.openPersistenceManagers = new ConcurrentHashMap<Integer, IMapPersistenceManager>();
+//		this.openPersistenceManagers = new ConcurrentHashMap<Integer, IMapPersistenceManager>();
 		this.open = new AtomicBoolean(false);
 		this.listeners = new LinkedList<IPersistenceManagerStatusListener>();
 	}
@@ -136,7 +137,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 			throw new IllegalArgumentException("Invalid map provided as an argument");
 
 		IMapPersistenceManager retVal = null;
-		// if this manager has already created a map manager then return that one. This ensure that in
+		// if this manager has already created a map manager then return that one. This ensures that in
 		// the absence of a lock manager on the DB that clients of this repo will always see the same
 		// state information about the map and see the same map contents.
 		if (this.openMaps.containsKey(map)) {
@@ -146,7 +147,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 			ICanvasPersistenceHandler persistenceHandler = this.canvasPersistenceHandlerFactory.createPersistenceHandler();
 			retVal = new MapPersistenceManager(persistenceHandler);
 			this.openMaps.put(map, retVal);
-			this.openPersistenceManagers.put(map.getINode(), retVal);
+//			this.openPersistenceManagers.put(map.getINode(), retVal);
 		}
 		return retVal;
 	}
@@ -180,8 +181,11 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * @see org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager#getMapPersistenceManager(java.lang.Long)
 	 */
 	public IMapPersistenceManager getMapPersistenceManager(int inode) {
-		if(openPersistenceManagers.get(new Integer(inode))==null)
-			throw new IllegalArgumentException("No Map Open with this ID");
-		return openPersistenceManagers.get(new Integer(inode));
+		IRepository repo = this.repoPersistenceHandler.getLoadedRepository();
+		IRepositoryItem item = repo.findRepositoryItemByINode(inode);
+		if(item == null || !(item instanceof IMap)){
+			throw new IllegalArgumentException("The inode must be of a map help within this repository");
+		}
+		return this.getMapPersistenceManager((IMap)item);
 	}
 }

@@ -37,6 +37,7 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 //		setSubFolderRepositoriesAndMapDiagramRepositories();
 		this.parentFolder = newParent;
 		this.name = other.name;
+		this.description = other.description;
 	}
 
 //	public HibSubFolder(HibFolder newParent, HibSubFolder other,boolean isCompleteCopy) {
@@ -194,4 +195,14 @@ public class HibSubFolder extends HibFolder implements ISubFolder {
 		&& !origSubFolder.isDescendent(this);
 	}
 
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getName());
+		builder.append("(");
+		builder.append("inode=");
+		builder.append(this.getINode());
+		builder.append(", name=");
+		builder.append(this.name);
+		builder.append(')');
+		return builder.toString();
+	}
 }

@@ -322,4 +322,19 @@ public class HibRepository implements Serializable, IRepository {
 		}
 		return repoItem;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#findRepositoryItemByINode(int)
+	 */
+	public IRepositoryItem findRepositoryItemByINode(int node) {
+		IRepositoryItem retVal = null;
+		Iterator<IRepositoryItem> iter = this.rootFolder.levelOrderIterator();
+		while(iter.hasNext() && retVal == null){
+			IRepositoryItem item = iter.next();
+			if(item.getINode() == node){
+				retVal = item;
+			}
+		}
+		return retVal;
+	}
 }

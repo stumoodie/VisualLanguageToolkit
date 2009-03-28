@@ -425,6 +425,10 @@ public class HibCanvasTest {
 
 				}
 
+				public IRepositoryItem findRepositoryItemByINode(int node) {
+					throw new UnsupportedOperationException("Not implemented");
+				}
+
 			};
 		}
 

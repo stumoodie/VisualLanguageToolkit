@@ -234,4 +234,15 @@ public class HibMap implements IMap, Serializable {
 		list.add(this);
 		return list.iterator();
 	}
+
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getName());
+		builder.append("(");
+		builder.append("inode=");
+		builder.append(this.getINode());
+		builder.append(", name=");
+		builder.append(this.name);
+		builder.append(')');
+		return builder.toString();
+	}
 }

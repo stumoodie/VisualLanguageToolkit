@@ -85,4 +85,12 @@ public class HibRootFolder extends HibFolder implements IRootFolder {
 		return subFolder != null && !subFolder.getParent().equals(this) && this.canUseSubfolderName(subFolder.getName()) && this.getRepository().equals(subFolder.getRepository());
 	}
 
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getName());
+		builder.append("(");
+		builder.append("inode=");
+		builder.append(this.getINode());
+		builder.append(')');
+		return builder.toString();
+	}
 }

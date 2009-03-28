@@ -49,6 +49,13 @@ public interface IRepository {
 	IRepositoryItem findRepositoryItemByPath(String path);
 	
 	/**
+	 * Finds the repository item that matches the given inode. 
+	 * @param iNode the iNode in the repository to search for.
+	 * @return the repository item that has the given inode, or null if it cannot be found.
+	 */
+	IRepositoryItem findRepositoryItemByINode(int iNode);
+	
+	/**
 	 * @param path
 	 *            a path to look for in the subfolder tree of this folder
 	 * @return true if the path exists, false if it does not

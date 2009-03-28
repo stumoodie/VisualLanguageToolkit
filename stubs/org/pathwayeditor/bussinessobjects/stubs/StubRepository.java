@@ -102,7 +102,14 @@ public class StubRepository implements IRepository {
 	 * @see org.pathwayeditor.businessobjects.repository.IRepository#setDescription(java.lang.String)
 	 */
 	public void setDescription(String description) {
-		throw new IllegalArgumentException("Not implemented");
+		throw new UnsupportedOperationException("Not implemented");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.repository.IRepository#findRepositoryItemByINode(int)
+	 */
+	public IRepositoryItem findRepositoryItemByINode(int node) {
+		throw new UnsupportedOperationException("Not implemented");
 	}
 
 }

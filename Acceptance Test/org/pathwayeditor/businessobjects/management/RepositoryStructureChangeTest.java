@@ -30,6 +30,12 @@ public class RepositoryStructureChangeTest extends GenericTester {
 	private IMap map2;
 	private ISubFolder subFolder1;
 	
+	@Test
+	public void copyFolder() throws Exception {
+		this.subFolder2.createCopyOfSubfolder(subFolder1);
+		this.getRepositoryPersistenceManager().synchronise();
+		this.compareDatabase("Acceptance Test/org/pathwayeditor/businessobjects/management/ExpectedCopiedFolderData.xml");
+	}
 
 	@Test
 	public void testDeleteMap () throws Exception {

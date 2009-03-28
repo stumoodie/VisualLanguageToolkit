@@ -6,15 +6,18 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
+import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 
@@ -33,12 +36,23 @@ public class RepositoryBusinessLogicTest {
 	private static final String REPOSITORY_DESCRIPTION2 ="testDescription2" ;
 	private static final int EXPECTED_BUILD_NUM = 9999;
 	private static final int EXPECTED_ALT_BUILD_NUM = 222;
+	private static final String CHILD_FIVE_NAME = "childFive";
+	private static final String CHILD_SIX_NAME = "childSix";
+	private static final String MAP_ONE_NAME = "map1";
+	private static final String MAP_TWO_NAME = "map2";
+	private static final String MAP_THREE_NAME = "map3";
+	private static final int MISSING_INODE = 999999;
 	private IRepository testInstance1;
 	private IRepository testInstance2;
 	private ISubFolder childOne;
 	private ISubFolder childTwo;
 	private ISubFolder childThree;
 	private ISubFolder childFour;
+	private ISubFolder childFive;
+	private ISubFolder childSix;
+	private IMap mapOne;
+	private IMap mapTwo;
+	private IMap mapThree;
 	private IRootFolder root;
 	
 	@Before
@@ -49,7 +63,72 @@ public class RepositoryBusinessLogicTest {
 		childTwo = childOne.createSubfolder(CHILD_TWO_NAME);
 		childThree = childTwo.createSubfolder(CHILD_THREE_NAME);
 		childFour = childThree.createSubfolder(CHILD_FOUR_NAME);
+		this.childFive = root.createSubfolder(CHILD_FIVE_NAME);
+		this.childSix = childOne.createSubfolder(CHILD_SIX_NAME);
+		this.mapOne = root.createMap(MAP_ONE_NAME);
+		this.mapTwo = childThree.createMap(MAP_TWO_NAME);
+		this.mapThree = childThree.createMap(MAP_THREE_NAME);
+		
 		this.testInstance2 = new HibRepository(REPOSITORY_NAME2, REPOSITORY_DESCRIPTION2, EXPECTED_BUILD_NUM);
+	}
+	
+	@Test
+	public void testIteratorFromRoot(){
+		Iterator<IRepositoryItem> iterRepoItem = this.testInstance1.getRootFolder().levelOrderIterator();
+		IRepositoryItem expectedArr[] = new IRepositoryItem[] { root, childOne, childFive, mapOne, childTwo, childSix,
+								childThree, childFour, mapTwo, mapThree };
+		for(IRepositoryItem expectedItem : expectedArr){
+			assertTrue("next item available for:" + expectedItem, iterRepoItem.hasNext());
+			assertEquals("next item expected", expectedItem, iterRepoItem.next());
+		}
+	}
+	
+	@Test
+	public void testIteratorFromMap(){
+		Iterator<IRepositoryItem> iterRepoItem = this.mapOne.levelOrderIterator();
+		IRepositoryItem expectedArr[] = new IRepositoryItem[] { mapOne };
+		for(IRepositoryItem expectedItem : expectedArr){
+			assertTrue("next item available for:" + expectedItem, iterRepoItem.hasNext());
+			assertEquals("next item expected", expectedItem, iterRepoItem.next());
+		}
+	}
+	
+	@Test
+	public void testIteratorFromPopulatedSubDir(){
+		Iterator<IRepositoryItem> iterRepoItem = this.childThree.levelOrderIterator();
+		IRepositoryItem expectedArr[] = new IRepositoryItem[] { childThree, childFour, mapTwo, mapThree };
+		for(IRepositoryItem expectedItem : expectedArr){
+			assertTrue("next item available for:" + expectedItem, iterRepoItem.hasNext());
+			assertEquals("next item expected", expectedItem, iterRepoItem.next());
+		}
+	}
+	
+	@Test
+	public void testIteratorFromEmptySubDir(){
+		Iterator<IRepositoryItem> iterRepoItem = this.childFive.levelOrderIterator();
+		IRepositoryItem expectedArr[] = new IRepositoryItem[] { childFive };
+		for(IRepositoryItem expectedItem : expectedArr){
+			assertTrue("next item available for:" + expectedItem, iterRepoItem.hasNext());
+			assertEquals("next item expected", expectedItem, iterRepoItem.next());
+		}
+	}
+	
+	@Test
+	public void findMapFromMapINode(){
+		IRepositoryItem actualItem = this.testInstance1.findRepositoryItemByINode(this.mapTwo.getINode());
+		assertEquals("expected rpo item", this.mapTwo, actualItem);
+	}
+	
+	@Test
+	public void findMapFromMissingINode(){
+		IRepositoryItem actualItem = this.testInstance1.findRepositoryItemByINode(MISSING_INODE);
+		assertNull("no rpo item", actualItem);
+	}
+	
+	@Test
+	public void findMapFromFolderINode(){
+		IRepositoryItem actualItem = this.testInstance1.findRepositoryItemByINode(this.childSix.getINode());
+		assertEquals("expected rpo item", this.childSix, actualItem);
 	}
 	
 	@Test
@@ -146,10 +225,10 @@ public class RepositoryBusinessLogicTest {
 		assertTrue(testInstance1.pathExists("/"));
 	}
 	
-	@Ignore @Test
+	@Test
 	public void testPathExistsHappyCaseSubFolder(){
-		assertTrue(testInstance1.pathExists("/one"));
-		assertTrue(testInstance1.pathExists("/one/two"));
+		assertTrue(testInstance1.pathExists("/one/"));
+		assertTrue(testInstance1.pathExists("/one/two/"));
 	}
 	
 	@Test
@@ -157,11 +236,11 @@ public class RepositoryBusinessLogicTest {
 		assertEquals(root,testInstance1.getFolderByPath("/"));
 	}
 	
-	@Ignore @Test
+	@Test
 	public void testGetFolderByPathHappyCaseSubFolder(){
-		assertEquals(childOne,testInstance1.getFolderByPath("/one"));
-		assertEquals(childTwo,testInstance1.getFolderByPath("/one/two"));
-		assertEquals(childFour,testInstance1.getFolderByPath("/one/two/three/four"));
+		assertEquals(childOne,testInstance1.getFolderByPath("/one/"));
+		assertEquals(childTwo,testInstance1.getFolderByPath("/one/two/"));
+		assertEquals(childFour,testInstance1.getFolderByPath("/one/two/three/four/"));
 	}
 	
 	@Test (expected=IllegalArgumentException.class)
