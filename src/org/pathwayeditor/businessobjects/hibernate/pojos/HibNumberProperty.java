@@ -60,6 +60,13 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 		this.propertyDefinition = (INumberPropertyDefinition) propertyDefinition;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
+	 */
+	public boolean canVisualiseProperty() {
+		return this.propertyDefinition.isVisualisable();
+	}
+
 }
 
 

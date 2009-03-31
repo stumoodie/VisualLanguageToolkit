@@ -8,9 +8,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends IZOrderedObject, IAnnotatedCanvasAttribute, IPropertyChangeListenee {
+public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.

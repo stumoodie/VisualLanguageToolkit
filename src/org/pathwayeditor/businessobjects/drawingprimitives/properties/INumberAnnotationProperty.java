@@ -2,7 +2,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.math.BigDecimal;
 
-public interface INumberAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
+public interface INumberAnnotationProperty extends IAnnotationProperty {
 	
 	/**
 	 * Get the definition associated with this NumberProperty.

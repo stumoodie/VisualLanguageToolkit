@@ -22,5 +22,7 @@ public interface IDrawingNode extends IDrawingElement {
 	
 	INodeObjectType getObjectType();
 	
+	IDrawingNodeAttribute getAttribute();
+	
 //	Iterator<IDrawingNode> levelOrderIterator();
 }

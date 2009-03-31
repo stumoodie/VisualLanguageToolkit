@@ -39,12 +39,17 @@ public interface ILabelNodeFactory {
 	 */
 	void setProperty(IAnnotationProperty annotationProperty);
 	
+	/** Tests if this factory is correctly initialised to create a label node.
+	 * @return true if it is, false otherwise.
+	 */
+	boolean canCreateLabelNode();
+	
 	/**
 	 * Creates the label.
 	 * @return the newly created label which is associated
 	 *  with the owning SubCanvas returned by <code>getOwningSubCanvas()</code>.
 	 *  Cannot be null.
-	 * @throws IllegalStateException if <code>getOwningProperty() == null</code>.  
+	 * @throws IllegalStateException if <code>canCreateLabelNode() == null</code>.  
 	 */
 	ILabelNode createLabel();
 }

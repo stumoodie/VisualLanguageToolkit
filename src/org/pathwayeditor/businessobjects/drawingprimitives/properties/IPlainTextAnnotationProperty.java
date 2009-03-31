@@ -5,7 +5,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  * @author smoodie
  *
  */
-public interface IPlainTextAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
+public interface IPlainTextAnnotationProperty extends IAnnotationProperty {
 	
 	/**
 	 * Get the definition associated with this PlainTextProperty.

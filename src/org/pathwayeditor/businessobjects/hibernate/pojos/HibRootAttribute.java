@@ -4,7 +4,10 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -13,7 +16,8 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
  * @author smoodie
  *
  */
-public class HibRootAttribute extends HibCanvasAttribute {
+public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNodeAttribute {
+	private static final Size EMPTY_SIZE = new Size(0, 0);
 	private HibObjectType hibObjectType;
 	private IRootObjectType objectType;
 	private IRootNode rootNode;
@@ -80,6 +84,34 @@ public class HibRootAttribute extends HibCanvasAttribute {
 	 */
 	public HibObjectType getHibObjectType() {
 		return hibObjectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLocation()
+	 */
+	public Location getLocation() {
+		return Location.ORIGIN;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getSize()
+	 */
+	public Size getSize() {
+		return EMPTY_SIZE;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
+	 */
+	public void setLocation(Location newLocation) {
+		// not used
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
+	 */
+	public void setSize(Size newSize) {
+		// not used
 	}
 
 }

@@ -43,16 +43,16 @@
 				cascade="none" lazy="false">
 				<column name="property_id" not-null="false" />
 			</many-to-one>
-			<property name="XPosition" type="int">
+			<property name="XPosition" type="int" access="property" >
 				<column name="x_position" not-null="true" />
 			</property>
-			<property name="YPosition" type="int" access="property">
+			<property name="YPosition" type="int" access="property" >
 				<column name="y_position" not-null="true" />
 			</property>
-			<property name="width" type="int" access="property">
+			<property name="width" type="int" access="property" >
 				<column name="width" not-null="true" />
 			</property>
-			<property name="height" type="int" access="property">
+			<property name="height" type="int" access="property" >
 				<column name="height" not-null="true" />
 			</property>
 			<property name="backgroundRed" type="int" access="property">
@@ -273,6 +273,12 @@
 				</property>
 				<property name="termDecHeight" type="int">
 					<column name="term_dec_height" not-null="true" />
+				</property>
+				<property name="XPosition" type="int" access="property">
+					<column name="x_position" not-null="true" />
+				</property>
+				<property name="YPosition" type="int" access="property">
+					<column name="y_position" not-null="true" />
 				</property>
 			</joined-subclass>
 

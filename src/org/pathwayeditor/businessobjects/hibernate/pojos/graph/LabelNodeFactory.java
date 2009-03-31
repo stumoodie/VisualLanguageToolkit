@@ -24,7 +24,7 @@ import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
 public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelNodeFactory {
 	private HibProperty annotationProperty = null;
 	private final HibCompoundNode parent;
-	private HibLabelAttribute attribute; 
+	private HibLabelAttribute attribute;
 	
 	/**
 	 * @param parent
@@ -70,6 +70,8 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory#createLabel()
 	 */
 	public HibLabelNode createLabel() {
+		if(!canCreateLabelNode()) throw new IllegalStateException("Factory not initialised correctly");
+		
 		return (HibLabelNode)super.createNode();
 	}
 
@@ -114,6 +116,13 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 	 */
 	public void setAttribute(HibLabelAttribute attribute) {
 		this.attribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory#canCreateLabelNode()
+	 */
+	public boolean canCreateLabelNode() {
+		return !(this.annotationProperty == null && this.attribute == null);
 	}
 
 }

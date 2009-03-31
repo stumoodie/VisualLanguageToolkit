@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -21,7 +21,7 @@ import org.pathwayeditor.businessobjects.typedefn.IAnnotatedCanvasAttributeDefau
  * @author smoodie
  *
  */
-public abstract class HibAnnotatedCanvasAttribute extends HibCanvasAttribute implements IAnnotatedCanvasAttribute {
+public abstract class HibAnnotatedCanvasAttribute extends HibCanvasAttribute implements IAnnotatedObject {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private Set<HibProperty> hibProperties = new HashSet<HibProperty>(0);
 

@@ -48,21 +48,15 @@ public class IShapeAttributeTest {
 	private static final int CREATION_SERIAL = 123456 ;
 	private static final String SHAPE_NAME = "shapeName" ;
 	private static final String NEW_SHAPE_NAME = "newShapeName" ;
-//	private static final int COLOR_VALUE = 100 ;
 	private static final int NEW_COLOR_VALUE = 100 ;
-//	private static final int SIZE_VALUE = 50 ;
 	private static final int NEW_SIZE_VALUE = 60 ;
 	private static final String URL_VALUE = "http://www.shapeURL.org" ;
 	private static final String NEW_URL_VALUE = "http://www.newShapeURL.org" ;
-//	private static final int POSITION_VALUE = 50 ;
 	private static final int NEW_POSITION_VALUE = 150 ;
 	private static final String SHAPE_DESCR = "descr";
 	private static final String NEW_SHAPE_DESCR = "newdescr";
 	private static final String DETAILED_DESCR = "detailed descr";
 	private static final String NEW_DETAILED_DESCR = "newdetailed descr";
-//	private static final int NUMERIC_VALUE_ONE = 1;
-//	private static final int NUMERIC_VALUE_ZERO = 0;
-//	private static final String PROPERTY_ID = "property_id" ;
 	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
 	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
 
@@ -81,7 +75,6 @@ public class IShapeAttributeTest {
 	private static final int INVALID_LINE_WIDTH = -99;
 	
 	private IShapeAttribute shapeAttribute ;
-//	private IAnnotationProperty mockProperty ;
 	
 	@SuppressWarnings("unchecked")
 	@Before

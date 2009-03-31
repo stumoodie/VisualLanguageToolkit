@@ -33,7 +33,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private RGB background;
 	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
-	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
+	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
 	 * Default constructor that should only be used by hibernate.

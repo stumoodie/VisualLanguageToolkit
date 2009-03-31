@@ -7,7 +7,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyCh
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
-public interface ILabelAttribute extends IZOrderedObject, ICanvasAttribute, IPropertyChangeListenee {
+public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	
 	/**
 	 * Get the location of this LabelAttribute.

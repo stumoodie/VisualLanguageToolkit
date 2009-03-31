@@ -16,6 +16,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
+import org.pathwayeditor.businessobjects.graphics.LinkLabelLocationPolicy;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -47,13 +49,15 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>();
 	private IndexCounter bendPointCounter = new IndexCounter();
 	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
-
+	private ILabelLocationPolicy labelLocationPolicy;
+	
 	/**
 	 * Default constructor to be used only by hibernate.
 	 * @deprecated use any of the other constructors to construct this class in application code.
 	 */
 	HibLinkAttribute() {
 		super();
+		this.labelLocationPolicy = new LinkLabelLocationPolicy(this);
 	}
 
 	/**
@@ -72,6 +76,7 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 		// This is a bug waiting to happen and needs fixing.
 		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
 		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+		this.labelLocationPolicy = new LinkLabelLocationPolicy(this);
 		addDefaults(objectType.getDefaultAttributes());
 	}
 
@@ -93,6 +98,7 @@ s	 */
 		this.detailedDescription = otherAttribute.getDetailedDescription();
 		this.url = otherAttribute.getUrl();
 		this.routerType = otherAttribute.getRouterType();
+		this.labelLocationPolicy = new LinkLabelLocationPolicy(this);
 		for(HibLinkTerminus linkTerm : otherAttribute.getLinkTermini()){
 			HibLinkTerminus copiedTerminus = new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, linkTerm);
 			this.linkTermini.add(copiedTerminus);
@@ -484,5 +490,19 @@ s	 */
 			retVal = false;
 		}
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#getLabelLocationPolicy()
+	 */
+	public ILabelLocationPolicy getLabelLocationPolicy() {
+		return this.labelLocationPolicy;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#setLabelLocationPolicy(org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy)
+	 */
+	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
+		this.labelLocationPolicy = labelLocationPolicy;
 	}
 }

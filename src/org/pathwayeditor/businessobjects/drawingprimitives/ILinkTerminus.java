@@ -2,13 +2,15 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
-public interface ILinkTerminus extends IAnnotatedCanvasAttribute, IPropertyChangeListenee {
+public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IPropertyChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 
@@ -106,6 +108,20 @@ public interface ILinkTerminus extends IAnnotatedCanvasAttribute, IPropertyChang
 	 */
 	void setEndDecoratorType(LinkEndDecoratorShape linkEndDecoratorShape);
 
+	/**
+	 * Gets the location of the terminus, which is the point at which the link is attached to the
+	 * shape.
+	 * @return the location, which cannot be null;
+	 */
+	Location getLocation();
+	
+	/**
+	 * Sets the location of the terminus.
+	 * @param location the location, which cannot be null.
+	 * throws IllegalArgumentExtension if <code>location == null</code>.
+	 */
+	void setLocation(Location location);
+	
 	/**
 	 * Identity is based on the owningLink and the link end type.
 	 * @param other the other object to test.

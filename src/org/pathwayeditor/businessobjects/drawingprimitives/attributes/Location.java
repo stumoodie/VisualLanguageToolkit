@@ -5,6 +5,8 @@ package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
  *
  */
 public final class Location {
+	public static final Location ORIGIN = new Location(0, 0);
+	
 	private final int x;
 	private final int y;
 	
@@ -83,4 +85,40 @@ public final class Location {
 		retVal.append(")");
 		return retVal.toString();
 	}
+
+	public Location translate(int i, int j) {
+		return new Location(i, j);
+	}
+
+	/**
+	 * Gets the difference between this location and the parameter location expressed as a <code>Size</code object.
+	 * E..g., <code> new Location(20,20).getDifference (new Location(10,0))</code><br>
+	 * will return a Size object width 10, height 20.
+	 * @param loc2 
+	 * @return A {@link Size}object
+	 */
+	public Size getDifference (Location loc2) {
+		return new Size(getX() - loc2.getX(), getY() - loc2.getY());
+	}
+	
+	/**
+	 * Calculates the Euclidian distance between this object and the argument <code>Location</code>
+	 * @param loc2 A {@link Location} object
+	 * @return a <code>double</code> of the distance in the coordinate system.
+	 */
+	public double getDistance(Location loc2) {
+		return Math.sqrt(Math.pow((getX() - loc2.getX()),2) + Math.pow((getY() - loc2.getY()),2));
+	}
+	
+	/**
+	 * Returns the midpoint of this Location and the Location argument. This method is transitive.
+	 * I.e., loc2.getMidpoint(loc1) will return the same result as loc1.getMidpoint(loc2);
+	 * @param loc2 A {@link Location} objects
+	 * @return A new {@link Location} representing the midpoint.
+	 */
+	public Location getMidPoint (Location loc2) {
+		return new Location((int)((getX() + loc2.getX()) /2),(int)((getY() + loc2.getY()) /2));
+				               
+	}
+	
 }

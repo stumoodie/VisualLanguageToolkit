@@ -16,6 +16,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.graphics.CompassLabelPositionPolicy;
+import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
@@ -25,7 +27,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private static final long serialVersionUID = -8557015458835029042L;
 	private transient final Logger logger = Logger.getLogger(this.getClass());
 
-	private static final Location DEFAULT_POSITION = new Location(0,0);
+	private static final Location DEFAULT_POSITION = Location.ORIGIN;
 	private static final Size DEFAULT_SIZE = new Size(10,10);
 	private static final String DEFAULT_NAME = "";
 	private static final String DEFAULT_DESCN = "";
@@ -60,7 +62,8 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private boolean nameVisible = DEFAULT_NAME_VISIBLE ;
 	private Alignment horizontalAlignment = DEFAULT_ALIGNMENT;
 	private Alignment verticalAlignment = DEFAULT_ALIGNMENT;
-	private transient RGB textColour = DEFAULT_TEXT ;  
+	private transient RGB textColour = DEFAULT_TEXT;
+	private transient ILabelLocationPolicy labelLocationPolicy;
 	
 
 	/**
@@ -70,6 +73,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	HibShapeAttribute() {
 		super();
 		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
+		this.labelLocationPolicy = new CompassLabelPositionPolicy(this);
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
@@ -77,6 +81,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
+		this.labelLocationPolicy = new CompassLabelPositionPolicy(this);
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 	}
 	
@@ -101,6 +106,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.padding = other.padding;
 		this.shapeObjectType = other.shapeObjectType;
 		this.shapeType=other.shapeType;
+		this.labelLocationPolicy = new CompassLabelPositionPolicy(this);
 	}
 	
 	
@@ -115,6 +121,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.setName(shapeDefaults.getName() + this.getCreationSerial());
 		this.setUrl(shapeDefaults.getURL());
 		this.setPrimitiveShape(shapeDefaults.getShapeType());
+		this.setLabelLocationPolicy(new CompassLabelPositionPolicy(this));
 	}
 
 	public int getXPosition() {
@@ -548,5 +555,19 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		boolean oldNameVisible = this.nameVisible;
 		this.nameVisible = value;
 		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME_VISIBLE, oldNameVisible, this.nameVisible);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#getLabelLocationPolicy()
+	 */
+	public ILabelLocationPolicy getLabelLocationPolicy() {
+		return this.labelLocationPolicy;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#setLabelLocationPolicy(org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy)
+	 */
+	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
+		this.labelLocationPolicy = labelLocationPolicy;
 	}
 }

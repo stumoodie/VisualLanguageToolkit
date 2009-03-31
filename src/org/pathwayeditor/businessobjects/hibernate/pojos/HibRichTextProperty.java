@@ -68,4 +68,11 @@ public class HibRichTextProperty extends HibProperty implements IHtmlAnnotationP
 		return this.richTextValue;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
+	 */
+	public boolean canVisualiseProperty() {
+		return this.propertyDefinition.isVisualisable();
+	}
+
 }

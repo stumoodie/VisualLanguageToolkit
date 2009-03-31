@@ -9,12 +9,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
+import org.pathwayeditor.businessobjects.graphics.TerminatorLabelLocationPolicy;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -37,8 +40,10 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
     private PrimitiveShapeType termShapeType = null;
     private transient RGB terminusColour = DEFAULT_TERM_COLOUR;
     private transient Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
-    private transient ILinkTerminusDefinition terminusDefn = null;;
-	private final ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
+    private transient ILinkTerminusDefinition terminusDefn = null;
+    private transient Location location = Location.ORIGIN;
+	private final transient ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
+	private transient ILabelLocationPolicy labelLocationPolicy; 
 
 	/**
 	 * Default constructor to only be used by hibernate.
@@ -46,6 +51,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 */
 	HibLinkTerminus() {
 		super();
+		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 	}
 
 	public HibLinkTerminus(HibCanvas canvas, int creationSerial, HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
@@ -53,6 +59,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
+		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 		setDefaults(terminusDefn.getDefaultAttributes());
 	}
 
@@ -72,6 +79,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.terminusSize = other.getTerminusSize();
 		this.terminusDefn = other.terminusDefn;
 		this.termShapeType = other.getTerminusDecoratorType();
+		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 	}
 
 	/**
@@ -390,5 +398,50 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	@Override
 	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
 		// do nothing
+	}
+	
+	
+	int getXPosition(){
+		return this.location.getX();
+	}
+	
+	void setXPosition(int newX){
+		this.location = this.location.newX(newX);
+	}
+	
+	int getYPosition(){
+		return this.location.getY();
+	}
+	
+	void setYPosition(int newY){
+		this.location = this.location.newY(newY);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#getLocation()
+	 */
+	public Location getLocation() {
+		return this.location;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#getLabelLocationPolicy()
+	 */
+	public ILabelLocationPolicy getLabelLocationPolicy() {
+		return this.labelLocationPolicy;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#setLabelLocationPolicy(org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy)
+	 */
+	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
+		this.labelLocationPolicy = labelLocationPolicy;
 	}
 }

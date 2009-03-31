@@ -10,7 +10,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyCh
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedCanvasAttribute,  ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee {
+public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
 	
 	/**

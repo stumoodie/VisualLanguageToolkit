@@ -1,6 +1,6 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-public interface IHtmlAnnotationProperty extends IVisualisableAnnotationProperty, IAnnotationProperty {
+public interface IHtmlAnnotationProperty extends IAnnotationProperty {
 	
 	/**
 	 * Get the definition associated with this HtmlProperty.
