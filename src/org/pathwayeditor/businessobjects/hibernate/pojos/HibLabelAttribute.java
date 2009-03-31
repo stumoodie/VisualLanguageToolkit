@@ -281,7 +281,9 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		boolean objectTypeTest = this.getObjectType() != null;
 		boolean labelNodeTest = this.getCurrentDrawingElement() != null
 			&& this.getCurrentDrawingElement().getAttribute().equals(this);
-		boolean propertySetTest = this.getVisualisableProperty() != null;
+		// valid to have no visualisable label set if the label node has been removed
+		boolean propertySetTest = this.getVisualisableProperty() != null
+			|| (this.getVisualisableProperty() == null && ((HibLabelNode)this.getCurrentDrawingElement()).isRemoved());
 		if(!objectTypeTest || !labelNodeTest || !propertySetTest) {
 			logger.error("attribute=" + this + " objectType set=" + objectTypeTest
 					+ ", labelnode set and points to this attribute=" + labelNodeTest
