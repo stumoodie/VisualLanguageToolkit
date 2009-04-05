@@ -16,11 +16,11 @@ public interface IDrawingElement {
 	 */
 	IModel getModel();
 	
-	/**
-	 * Get the model that a label should be added to for this drawing element.
-	 * @return the appropriate sub-model, which cannot be null.
-	 */
-	ISubModel getLabelSubModel();
+//	/**
+//	 * Get the model that a label should be added to for this drawing element.
+//	 * @return the appropriate sub-model, which cannot be null.
+//	 */
+//	ISubModel getLabelSubModel();
 	
 	/**
 	 * Get the attribute of the drawing element.

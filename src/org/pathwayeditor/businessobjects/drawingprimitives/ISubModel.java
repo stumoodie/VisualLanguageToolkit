@@ -31,11 +31,11 @@ public interface ISubModel extends ISubModelChangeListenee {
 	 */
 	IShapeNodeFactory shapeNodeFactory();
 	
-	/**
-	 * A new instance of the label node factory for this submodel.
-	 * @return a new shape node instance, which cannot be null.
-	 */
-	ILabelNodeFactory labelNodeFactory();
+//	/**
+//	 * A new instance of the label node factory for this submodel.
+//	 * @return a new shape node instance, which cannot be null.
+//	 */
+//	ILabelNodeFactory labelNodeFactory();
 	
 	/**
 	 * A new instance of the link edge factory for this submodel.
@@ -112,7 +112,7 @@ public interface ISubModel extends ISubModelChangeListenee {
 	int numLinkEdges();
 	
 	/**
-	 * Number of labels owned by this submodel.
+	 * Number of labels owned by the shape that owns this submodel.
 	 * @return number of labels.
 	 */
 	int numLabelNodes();
@@ -132,8 +132,9 @@ public interface ISubModel extends ISubModelChangeListenee {
 	Iterator<ILinkEdge> linkIterator();
 
 	/**
-	 * Traverses over the list of links in this sub-model.
+	 * Traverses over the labels in this sub-model.
 	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<ILabelNode> labelIterator();
+
 }

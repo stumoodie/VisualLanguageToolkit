@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
@@ -443,5 +444,12 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 */
 	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
 		this.labelLocationPolicy = labelLocationPolicy;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getLabelSubModel()
+	 */
+	public ILabelSubModel getLabelSubModel() {
+		return this.getOwningLink().getLabelSubModel();
 	}
 }

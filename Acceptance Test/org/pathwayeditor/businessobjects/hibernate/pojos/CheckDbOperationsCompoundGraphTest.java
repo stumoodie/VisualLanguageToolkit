@@ -17,7 +17,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
@@ -793,10 +792,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		assertNotNull ( "property is not null" , aProperty) ;
 		
-		ILabelNodeFactory labelFactory = newNode.getSubModel().labelNodeFactory() ;
-
-		labelFactory.setProperty(aProperty) ;
-		newLabel = labelFactory.createLabel() ;
+		aProperty.setDisplayed(true);
+		newLabel = aProperty.getDisplayedLabel().getCurrentDrawingElement();
 		
 		map1Manager.synchronise() ;
 		

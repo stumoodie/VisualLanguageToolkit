@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -330,7 +330,7 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLinkEdge()
 	 */
-	public ILinkEdge getCurrentDrawingElement() {
+	public HibLinkEdge getCurrentDrawingElement() {
 		return this.edge;
 	}
 
@@ -504,5 +504,12 @@ s	 */
 	 */
 	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
 		this.labelLocationPolicy = labelLocationPolicy;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getLabelSubModel()
+	 */
+	public ILabelSubModel getLabelSubModel() {
+		return this.getCurrentDrawingElement().getOwningSubModel();
 	}
 }

@@ -4,7 +4,6 @@
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -127,7 +126,7 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 
 
 	// This method should not be used as one cannot have a label of a label. 
-	public ISubModel getLabelSubModel() {
+	public HibSubModel getLabelSubModel() {
 		throw new UnsupportedOperationException("Cannot have a label of a label");
 	}
 }

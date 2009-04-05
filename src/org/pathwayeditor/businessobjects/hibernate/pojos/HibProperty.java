@@ -2,7 +2,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
@@ -82,11 +81,10 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	}
 
 	private void createNewLabel() {
-		IDrawingElement owningElement = this.owner.getCurrentDrawingElement();
 		// get new label location before add label as this may confuse calculations
 		// since the algorithms may look at labels associated with the owning attribute
 		Location newLabelLocation = this.getLabelLocationPolicy().nextLabelLocation();
-		ILabelNodeFactory fact = owningElement.getLabelSubModel().labelNodeFactory();
+		ILabelNodeFactory fact = this.owner.getLabelSubModel().labelNodeFactory();
 		fact.setProperty(this);
 		ILabelNode newLabelNode = fact.createLabel();
 		ILabelAttribute newLabelAttribute = newLabelNode.getAttribute();

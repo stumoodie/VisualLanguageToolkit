@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableSubModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -29,7 +29,7 @@ import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
 import uk.ed.inf.graph.util.impl.FilteredIterator;
 import uk.ed.inf.graph.util.impl.NodeSet;
 
-public class HibSubModel extends BaseChildCompoundGraph implements ISubModel {
+public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubModel {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	private Long id = null;
