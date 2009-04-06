@@ -134,7 +134,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.setLineColour(shapeDefaults.getLineColour());
 		this.setLineStyle(shapeDefaults.getLineStyle());
 		this.setLineWidth(shapeDefaults.getLineWidth());
-		this.setName(shapeDefaults.getName() + this.getCreationSerial());
+		this.setName(shapeDefaults.getName());
 		this.setUrl(shapeDefaults.getURL());
 		this.setPrimitiveShape(shapeDefaults.getShapeType());
 		this.setLabelLocationPolicy(new CompassLabelPositionPolicy(this));
