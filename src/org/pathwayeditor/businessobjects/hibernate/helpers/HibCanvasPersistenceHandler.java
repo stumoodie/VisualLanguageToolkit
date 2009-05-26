@@ -41,6 +41,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
@@ -49,6 +50,9 @@ import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+
+import uk.ed.inf.graph.compound.base.BaseCompoundNode;
+import uk.ed.inf.graph.compound.base.UnfilteredTreeIterator;
 
 /**
  * @author smoodie
@@ -150,19 +154,50 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		HibRootAttribute rootAttribute = model.getRootNode().getAttribute();
 //		Hibernate.initialize(rootAttribute);
 		injectObjectType(hibCanvas, rootAttribute);
-		ISubModel rootsSubmodel = model.getRootNode().getSubModel();
-		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
-		while(shapeIter.hasNext()) {
-			visitShapeNode(hibCanvas, (HibShapeNode)shapeIter.next());
+		// need to do this because we need to traverse the removed nodes to make sure they behave correctly
+		// if not then they will throw up a validation error.
+		// FIXME: We need to purge deleted nodes and edges on closure of manager
+		Iterator<BaseCompoundNode> treeIter = new UnfilteredTreeIterator(model.getRootNode());
+		// skip first node which is root and which has been dealt with above
+		while(treeIter.hasNext()){
+			BaseCompoundNode node = treeIter.next();
+			if(node instanceof HibShapeNode){
+				HibShapeNode shapeNode = (HibShapeNode)node;
+				visitShapeNode(hibCanvas, shapeNode);
+				Iterator<HibLinkEdge> edgeIter = shapeNode.getChildCompoundGraph().allEdgesIterator();
+				while(edgeIter.hasNext()){
+					HibLinkEdge edge = edgeIter.next();
+					visitLinkEdge(hibCanvas, edge);
+				}
+			}
+			else if(node instanceof HibLabelNode){
+				visitLabelNode(hibCanvas, (HibLabelNode)node);
+			}
+			else if(node instanceof HibRootNode){
+				HibRootNode rootNode = (HibRootNode)node;
+				Iterator<HibLinkEdge> edgeIter = rootNode.getChildCompoundGraph().allEdgesIterator();
+				while(edgeIter.hasNext()){
+					HibLinkEdge edge = edgeIter.next();
+					visitLinkEdge(hibCanvas, edge);
+				}
+			}
+			else{
+				throw new IllegalStateException("Unknown node type");
+			}
 		}
-		Iterator<ILinkEdge> linkIter = rootsSubmodel.linkIterator();
-		while(linkIter.hasNext()) {
-			visitLinkEdge(hibCanvas, (HibLinkEdge)linkIter.next());
-		}
-		Iterator<ILabelNode> labelIter = rootsSubmodel.labelIterator();
-		while(labelIter.hasNext()) {
-			visitLabelNode(hibCanvas, (HibLabelNode)labelIter.next());
-		}
+//		ISubModel rootsSubmodel = model.getRootNode().getSubModel();
+//		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
+//		while(shapeIter.hasNext()) {
+//			visitShapeNode(hibCanvas, (HibShapeNode)shapeIter.next());
+//		}
+//		Iterator<ILinkEdge> linkIter = rootsSubmodel.linkIterator();
+//		while(linkIter.hasNext()) {
+//			visitLinkEdge(hibCanvas, (HibLinkEdge)linkIter.next());
+//		}
+//		Iterator<ILabelNode> labelIter = rootsSubmodel.labelIterator();
+//		while(labelIter.hasNext()) {
+//			visitLabelNode(hibCanvas, (HibLabelNode)labelIter.next());
+//		}
 	}
 
 	private void injectObjectType(HibCanvas hibCanvas, HibCanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {

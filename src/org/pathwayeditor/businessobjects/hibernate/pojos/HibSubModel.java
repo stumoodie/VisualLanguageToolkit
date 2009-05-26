@@ -363,6 +363,13 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	public IDrawingElementSelection getMovedElements() {
 		return (ShapeLinkSubgraph)this.getMovedComponents();
 	}
+	
+	public Iterator<HibCompoundNode> allNodesIterator(){
+		return new IterationCaster<HibCompoundNode, BaseCompoundNode>(super.unfilteredNodeIterator());
+	}
 
+	public Iterator<HibLinkEdge> allEdgesIterator(){
+		return new IterationCaster<HibLinkEdge, BaseCompoundEdge>(super.unfilteredEdgeIterator());
+	}
 }
 
