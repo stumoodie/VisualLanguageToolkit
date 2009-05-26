@@ -380,7 +380,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_NODE_VALIDATION);
 	}
 	
@@ -401,7 +401,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		newNode2.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode2.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(CREATED_TWO_NODE_VALIDATION);
 	}
 	
@@ -427,7 +427,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		aProperty.getDisplayedLabel().setSize(testLabelSize);
 		assertNotNull("label created", aProperty.getDisplayedLabel());
 		assertEquals("expected label location", expectedLabelLocation, aProperty.getDisplayedLabel().getLocation());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_LABEL_VALIDATION);
 	}
 
@@ -442,7 +442,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		linkFactory.createLinkEdge() ;
 		
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_LINK_VALIDATION);
 	}
 	
@@ -454,7 +454,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(this.shapeNode8);
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after removal", this.dbModel.isValid());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_NODE_VALIDATION);
 	}
 	
@@ -469,7 +469,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertFalse("not displayed", testProp.isDisplayed());
 		assertNull("no label", testProp.getDisplayedLabel());
 		assertTrue("model is valid after removal", this.dbModel.isValid());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_LABEL_VALIDATION);
 	}
 	
@@ -483,7 +483,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertTrue("model is valid before move", dbRootNode.getModel().isValid());
 		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after move", dbRootNode.getModel().isValid());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(MOVED_NODE_VALIDATION);
 	}
 	
@@ -509,7 +509,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertEquals("model extra shape", NUM_MODEL_SHAPES + 1, this.dbModel.numShapeNodes());
 		assertEquals("model has same labels", NUM_MODEL_LABELS, this.dbModel.numLabelNodes());
 		assertEquals("model has same edges", NUM_MODEL_EDGES, this.dbModel.numLinkEdges());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(SOURCE_DATA_FILE, COPIED_NODE_VALIDATION);
 	}
 	
@@ -530,7 +530,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertEquals("root has additional labels", NUM_ROOT_NODE_LABELS + 4, rootModel.numLabelNodes());
 		assertEquals("root has additional edges", NUM_ROOT_NODE_EDGES + 4, rootModel.numLinkEdges());
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(SOURCE_DATA_FILE, COPY_WHOLE_VALIDATION);
 	}
 	
@@ -544,7 +544,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after delete", dbRootNode.getModel().isValid());
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_EDGE_VALIDATION);
 	}
 	
@@ -559,7 +559,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(shapeNode7) ;
 		
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_TWO_SHAPES_VALIDATION);
 	}
 	
@@ -574,6 +574,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(shapeNode2) ;
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection());
 		map1Manager.synchronise() ;
+		map1Manager.close(true);
 		this.compareDatabase(DELETED_ALL_VALIDATION);
 	}
 	
@@ -599,7 +600,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		shapeAttribute1.setNameVisible(CHANGED_SHAPE_NAME_VISIB) ;
 		shapeAttribute1.setTextColour(CHANGED_SHAPE_TEXT_COLOUR) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		
 		this.compareDatabase(CHANGED_SHAPE_DATA_VALIDATION);
 	}
@@ -614,7 +615,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		labelAttribute1.setLocation(CHANGED_LABEL_LOCATION) ;
 		labelAttribute1.setSize(CHANGED_LABEL_SIZE) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		
 		this.compareDatabase(CHANGED_LABEL_DATA_VALIDATION);
 	}
@@ -634,7 +635,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		linkAttribute1.setUrl(CHANGED_LINK_URL) ;
 		linkAttribute1.setLineWidth(CHANGED_LINK_LINE_WIDTH) ;
 		
-		map1Manager.synchronise();
+		map1Manager.synchronise();map1Manager.close(true);
 		
 		this.compareDatabase(CHANGED_LINK_DATA_VALIDATION);
 	}
@@ -650,7 +651,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		dbCanvas.setSnapToGrid(CHANGED_CANVAS_SNAP_ENABLED) ;
 		dbCanvas.setGridSize(CHANGED_CANVAS_GRID_SIZE) ;
 		
-		map1Manager.synchronise();
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(CHANGED_CANVAS_DATA_VALIDATION);
 	}
 	
@@ -670,7 +671,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise();
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_DELETED_SHAPE_NODE);
 	}
 	
@@ -693,7 +694,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise();
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_ADDED_SHAPE_NODE);
 	}
 	
@@ -713,7 +714,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_MOVED_SHAPE_NODE);
 	}
 	
@@ -728,11 +729,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(shapeNode8) ;
 		
 		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_COPIED_SHAPE_NODE);
 	}
 	
@@ -749,11 +750,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertFalse("not displayed", testProp.isDisplayed());
 		assertNull("no label", testProp.getDisplayedLabel());
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise();
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_DELETED_LABEL_NODE);
 	}
 	
@@ -766,10 +767,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addLink(linkEdge1) ;
 		
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();
 		
 		this.dbCanvas.getModel().restoreToState(savedOriginalState) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_DELETED_LINK_EDGE);
 	}
 	
@@ -785,10 +786,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 
 		linkFactory.createLinkEdge() ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_ADDED_LINK_EDGE);
 	}
 	
@@ -814,7 +815,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
 		
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(RESTORED_FROM_ADDED_LABEL_NODE);
 	}
 	
@@ -856,6 +857,6 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertEquals ( "has  1 bendpoint" , 1 , linkEdge1.getAttribute().numBendPoints() );
 		linkEdge1.getAttribute().removeBendPoint(linkEdge1.getAttribute().getBendPoint(0));
 		assertEquals ( "has 0 bendpoint" , 0 , linkEdge1.getAttribute().numBendPoints() );
-		map1Manager.synchronise() ;
+		map1Manager.synchronise();map1Manager.close(true);
 	}
 }
