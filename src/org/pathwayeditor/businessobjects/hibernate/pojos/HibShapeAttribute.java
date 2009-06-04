@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
@@ -38,6 +39,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
@@ -80,6 +82,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private Alignment verticalAlignment = DEFAULT_ALIGNMENT;
 	private transient RGB textColour = DEFAULT_TEXT;
 	private transient ILabelLocationPolicy labelLocationPolicy;
+	private transient IConvexHull hull = null;
 	
 
 	/**
@@ -487,9 +490,11 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if ( newLocation == null )
 			throw new IllegalArgumentException ("the new location cannot be null") ;
 
-		Location oldLocation = this.position;
-		this.position = newLocation;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.position);
+		if(!this.position.equals(newLocation)){
+			Location oldLocation = this.position;
+			this.position = newLocation;
+			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.position);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -510,9 +515,11 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if ( size == null )
 			throw new IllegalArgumentException ("Size cannot be null") ;
 
-		Size oldSize = this.size;
-		this.size = size;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, this.size);
+		if(!this.size.equals(size)){
+			Size oldSize = this.size;
+			this.size = size;
+			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, this.size);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -593,4 +600,31 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	public ILabelSubModel getLabelSubModel() {
 		return this.getCurrentDrawingElement().getSubModel();
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
+	 */
+	public Bounds getBounds() {
+		return new Bounds(this.position, this.size);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
+	 */
+	public void setBounds(Bounds newBounds) {
+		this.setLocation(newBounds.getOrigin());
+		this.setSize(newBounds.getSize());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getConvexHull()
+	 */
+	public IConvexHull getConvexHull() {
+		return this.hull;
+	}
+	
+	public void setConvexHull(IConvexHull hull){
+		this.hull = hull;
+	}
+
 }

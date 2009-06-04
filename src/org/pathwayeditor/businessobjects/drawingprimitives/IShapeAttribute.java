@@ -24,9 +24,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
+	
+	IConvexHull getConvexHull();
+	
+	void setConvexHull(IConvexHull newHull);
+	
 	
 	/**
 	 * Gets the object type that is related with this shape.

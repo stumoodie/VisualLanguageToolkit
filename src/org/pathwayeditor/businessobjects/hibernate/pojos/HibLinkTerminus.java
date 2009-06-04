@@ -443,8 +443,12 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setLocation(Location newLocation) {
+		if(!this.location.equals(newLocation)){
+			Location oldLocation = this.location;
+			this.location = newLocation;
+			this.eventHandler.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.location);
+		}
 	}
 
 	/* (non-Javadoc)

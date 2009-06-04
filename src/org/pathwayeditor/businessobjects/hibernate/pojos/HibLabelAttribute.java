@@ -21,6 +21,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
@@ -214,36 +215,26 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.objectType = nodeObjectType ;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
-	 * setLocation
-	 * (org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
-	 */
 	public void setLocation(Location location) {
 		if (location == null)
 			throw new IllegalArgumentException("location cannot be null.");
 
-		Location oldValue = this.position;
-		this.position = location;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldValue, this.position);
+		if(!this.position.equals(location)){
+			Location oldValue = this.position;
+			this.position = location;
+			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldValue, this.position);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setSize
-	 * (org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
-	 */
 	public void setSize(Size size) {
 		if (size == null)
 			throw new IllegalArgumentException("size cannot be null.");
 
-		Size oldValue = this.size;
-		this.size = size;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldValue, this.size);
+		if(!this.size.equals(size)){
+			Size oldValue = this.size;
+			this.size = size;
+			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldValue, this.size);
+		}
 	}
 
 	/*
@@ -322,6 +313,21 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	@Override
 	public HibObjectType getHibObjectType() {
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
+	 */
+	public Bounds getBounds() {
+		return new Bounds(this.position, this.size);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
+	 */
+	public void setBounds(Bounds newBounds) {
+		this.setLocation(newBounds.getOrigin());
+		this.setSize(newBounds.getSize());
 	}
 
 }

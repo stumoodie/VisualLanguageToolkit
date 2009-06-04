@@ -19,6 +19,10 @@ public final class Size {
 	private final int width;
 	private final int height;
 
+	public Size(double w, double h){
+		this((int)Math.round(w), (int)Math.round(h));
+	}
+	
 	public Size(int width, int height){
 		if(width < 0 || height < 0)
 			throw new IllegalArgumentException("Size must have non-negative dimensions");

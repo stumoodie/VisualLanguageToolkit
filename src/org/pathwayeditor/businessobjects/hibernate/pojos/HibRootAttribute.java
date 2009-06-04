@@ -21,6 +21,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
@@ -127,6 +128,21 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 	 */
 	public void setSize(Size newSize) {
 		// not used
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
+	 */
+	public Bounds getBounds() {
+		return new Bounds(this.getLocation(), this.getSize());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
+	 */
+	public void setBounds(Bounds newBounds) {
+		this.setLocation(newBounds.getOrigin());
+		this.setSize(newBounds.getSize());
 	}
 
 }

@@ -18,6 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 /**
@@ -78,4 +79,13 @@ public interface ILinkEdgeFactory {
 	 * @throws IllegalStateException if <code>canCreateLink() == false</code>.
 	 */
 	ILinkEdge createLinkEdge();
+	
+	
+	void setSrcLinkTermLocation(Location location);
+
+	Location getSrcLinkTermLocation();
+	
+	void setTgtLinkTermLocation(Location location);
+
+	Location getTgtLinkTermLocation();
 }

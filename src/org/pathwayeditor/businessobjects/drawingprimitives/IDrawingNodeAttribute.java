@@ -18,6 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 
@@ -34,4 +35,8 @@ public interface IDrawingNodeAttribute extends ICanvasAttribute {
 	Size getSize();
 	
 	void setSize(Size newSize);
+	
+	Bounds getBounds();
+	
+	void setBounds(Bounds newBounds);
 }

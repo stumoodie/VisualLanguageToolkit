@@ -25,6 +25,10 @@ public final class Location {
 	private final int x;
 	private final int y;
 	
+	public Location(double x, double y){
+		this((int)Math.round(x), (int)Math.round(y));
+	}
+	
 	public Location(int x, int y){
 		this.x = x;
 		this.y = y;
@@ -37,6 +41,12 @@ public final class Location {
 		return y;
 	}
 
+	public Location newOrigin(Location newOrigin){
+		int adjustedX = this.getX() - newOrigin.getX();
+		int adjustedY = this.getY() - newOrigin.getY();
+		return new Location(adjustedX, adjustedY);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
