@@ -7,11 +7,11 @@ import org.apache.log4j.Logger;
 
 public class ConvexHullCalculator implements IConvexHullCalculator {
 	public static final double CURR_LINE_WIDTH = 1.0;
-	private static final double HALF_ELLIPSE_SEGS = 9.0;
+	private static final double HALF_ELLIPSE_SEGS = 18.0;
 	private static final double DEFAULT_LINE_WIDTH = 1.0;
 
 	private QuickHull quickHull;
-	private ConvexHull hull = null;
+	private IConvexHull hull = null;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private double lineWidth;
 
@@ -39,25 +39,31 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		return this.lineWidth;
 	}
 
-	private double getLineWidthRadius(){
-		return this.lineWidth/2;
-	}
+//	private double getLineWidthRadius(){
+//		return this.lineWidth/2;
+//	}
 	
 	public void addPoint(Point p) {
 		this.addPoint(p.getX(), p.getY());
 	}
 
 	public void addPoint(double x, double y) {
-//		this.quickHull.addPoint(new Point(x, y));
-		double radius = getLineWidthRadius();
-		double width = this.getLineWidthRadius();
-		this.drawOval(x-radius, y-radius, width, width);
+		this.quickHull.addPoint(new Point(x, y));
+//		double radius = getLineWidthRadius();
+//		double width = this.getLineWidthRadius();
+//		this.drawOval(x-radius, y-radius, width, width);
 	}
 
 	public void calculate() {
 		if(this.quickHull.isEmpty()) throw new IllegalStateException("No points present to generate hull");
 		this.quickHull.calculateConvexHull();
-		this.hull = new ConvexHull(this.quickHull.getHullPoints());
+		IConvexHull unscaledHull = new ConvexHull(this.quickHull.getHullPoints());
+		double halfLineWidth = this.getCurrentLineWidth() / 2;
+		double lineWidth = this.getCurrentLineWidth();
+		Point adjustedOrigin = unscaledHull.getOrigin().translate(-halfLineWidth, -halfLineWidth);
+		Dimension adjustedDim = unscaledHull.getDimension().expand(lineWidth, lineWidth);
+		Envelope newEnvelope = new Envelope(adjustedOrigin, adjustedDim);
+		this.hull = unscaledHull.changeEnvelope(newEnvelope);
 	}
 
 	public IConvexHull getConvexHull() {
@@ -84,21 +90,24 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 			double endY) {
 		// in order to handle the line thickness we must define a rectangle
 		// that has the height of the line thickness and the direction of the line 
-		double offset = this.getLineWidthRadius();
-		double xAdjust = - offset * Math.sin(Math.toRadians(90.0));
-		double yAdjust = - offset * Math.cos(Math.toRadians(90.0));
-		double startX1 = startX - xAdjust;
-		double startY1 = startY - yAdjust;
-		quickHull.addPoint(new Point(startX1, startY1));
-		double endX1 = endX - xAdjust;
-		double endY1 = endY - yAdjust;
-		quickHull.addPoint(new Point(endX1, endY1));
-		double startX2 = startX + xAdjust;
-		double startY2 = startY + yAdjust;
-		quickHull.addPoint(new Point(startX2, startY2));
-		double endX2 = endX + xAdjust;
-		double endY2 = endY + yAdjust;
-		quickHull.addPoint(new Point(endX2, endY2));
+//		double offset = this.getLineWidthRadius();
+//		double xAdjust = - offset * Math.sin(Math.toRadians(90.0));
+//		double yAdjust = - offset * Math.cos(Math.toRadians(90.0));
+//		double startX1 = startX - xAdjust;
+//		double startY1 = startY - yAdjust;
+//		quickHull.addPoint(new Point(startX1, startY1));
+//		double endX1 = endX - xAdjust;
+//		double endY1 = endY - yAdjust;
+//		quickHull.addPoint(new Point(endX1, endY1));
+//		double startX2 = startX + xAdjust;
+//		double startY2 = startY + yAdjust;
+//		quickHull.addPoint(new Point(startX2, startY2));
+//		double endX2 = endX + xAdjust;
+//		double endY2 = endY + yAdjust;
+//		quickHull.addPoint(new Point(endX2, endY2));
+		
+		quickHull.addPoint(new Point(startX, startY));
+		quickHull.addPoint(new Point(endX, endY));
 	}
 
 	private void drawRectangle(double x, double y, double width, double height) {
@@ -116,10 +125,10 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 	}
 
 	public void addOval(double x, double y, double width, double height) {
-//		drawOval(x, y, width, height);
-		double radius = this.getLineWidthRadius();
-		double lineWidth = this.getCurrentLineWidth();
-		drawOval(x - radius, y - radius, width + lineWidth, height + lineWidth);
+		drawOval(x, y, width, height);
+//		double radius = this.getLineWidthRadius();
+//		double lineWidth = this.getCurrentLineWidth();
+//		drawOval(x - radius, y - radius, width + lineWidth, height + lineWidth);
 	}
 
 	private Point calcOvalPoint(double angle, double x, double y, double width,	double height) {
@@ -143,22 +152,22 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 	}
 
 	private void drawPolygon(double[] pointArr){
-		int numPoints = pointArr.length/2;
-		double radius = getLineWidthRadius();
-		double width = this.getLineWidthRadius();
-		for (int i = 0, j = 0; i < numPoints; i++) {
-			double x = pointArr[j++] - radius;
-			double y = pointArr[j++] - radius;
-			this.drawOval(x, y, width, width);
-//			quickHull.addPoint(new Point(pointArr[j++], pointArr[j++]));
+		int numPoints = pointArr.length;
+//		double radius = getLineWidthRadius();
+//		double width = this.getLineWidthRadius();
+		for (int j = 0; j < numPoints;) {
+//			double x = pointArr[j++] - radius;
+//			double y = pointArr[j++] - radius;
+////			this.drawOval(x, y, width, width);
+			quickHull.addPoint(new Point(pointArr[j++], pointArr[j++]));
 		}
 	}
 	
 	public void addRectangle(double x, double y, double width, double height) {
-//		drawRectangle(x, y, width, height);
-		double offset = this.getLineWidthRadius();
-		drawRectangle(x-offset, y-offset, width + this.getCurrentLineWidth(),
-				height + this.getCurrentLineWidth());
+		drawRectangle(x, y, width, height);
+//		double offset = this.getLineWidthRadius();
+//		drawRectangle(x-offset, y-offset, width + this.getCurrentLineWidth(),
+//				height + this.getCurrentLineWidth());
 	}
 
 	public void addRoundRectangle(double x, double y, double width,

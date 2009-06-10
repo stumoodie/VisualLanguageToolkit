@@ -39,8 +39,17 @@ public class ConvexHull implements IConvexHull {
 		this.envelope = new Envelope(origin, dim);
 	}
 	
-	
-//	public ConvexHull(){
+		
+	ConvexHull(Envelope env, List<PointBuilder> localPointList){
+		if(localPointList.size() < MIN_NUM_POINTS) throw new IllegalArgumentException("Cannot define hull with less than " + MIN_NUM_POINTS + " points.");
+		this.pointList = new ArrayList<Point>(localPointList.size());
+		for(PointBuilder p : localPointList){
+			this.pointList.add(p.getPoint());
+		}
+		this.envelope = env;
+	}
+		
+		//	public ConvexHull(){
 //		this(EMPTY_LIST);
 //	}
 	
@@ -92,9 +101,9 @@ public class ConvexHull implements IConvexHull {
 //	}
 	
 	
-	public void addPoint(Point pt){
-		this.pointList.add(pt);
-	}
+//	public void addPoint(Point pt){
+//		this.pointList.add(pt);
+//	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#iterator()

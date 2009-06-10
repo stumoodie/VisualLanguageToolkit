@@ -61,4 +61,17 @@ public final class Dimension {
 		buf.append(")");
 		return buf.toString();
 	}
+
+	public Dimension expand(double currentLineWidth, double currentLineHeight) {
+		double newWidth = this.width + currentLineWidth;
+		double newHeight = this.height + currentLineHeight;
+		return new Dimension(newWidth, newHeight);
+	}
+
+	public Dimension shrink(double currentLineWidth, double currentLineHeight) {
+		double newWidth = this.width - currentLineWidth;
+		double newHeight = this.height - currentLineHeight;
+		if(newWidth < 0 || newHeight < 0) throw new IllegalArgumentException("Cannot make a diemntion nagative");
+		return new Dimension(newWidth, newHeight);
+	}
 }
