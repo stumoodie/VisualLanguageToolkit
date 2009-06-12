@@ -33,6 +33,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public class HibLabelAttribute extends HibCanvasAttribute implements Serializable, ILabelAttribute {
 	private final Logger logger = Logger.getLogger(this.getClass()); 
@@ -49,6 +50,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private RGB background;
 	private HibLabelNode labelNode;
 	private INodeObjectType objectType;
+	private IConvexHull convexHull = null;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
@@ -328,6 +330,20 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public void setBounds(Bounds newBounds) {
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getSize());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
+	 */
+	public IConvexHull getConvexHull() {
+		return this.convexHull;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setConvexHull(org.pathwayeditor.figure.geometry.IConvexHull)
+	 */
+	public void setConvexHull(IConvexHull newHull) {
+		this.convexHull = newHull;
 	}
 
 }

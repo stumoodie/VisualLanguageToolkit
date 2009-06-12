@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite errors="0" skipped="0" tests="16" time="0.023" failures="0" name="org.antlr.test.TestTreeContext">
+  <properties>
+    <property value="Apple Inc." name="java.vendor"/>
+    <property value="/Users/parrt/.m2/repository" name="localRepository"/>
+    <property value="SUN_STANDARD" name="sun.java.launcher"/>
+    <property value="HotSpot Client Compiler" name="sun.management.compiler"/>
+    <property value="69ef00" name="env.SECURITYSESSIONID"/>
+    <property value="true" name="env.DYLD_NO_FIX_PREBINDING"/>
+    <property value="Mac OS X" name="os.name"/>
+    <property value="/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/ui.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/laf.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/sunrsasign.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/jsse.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/jce.jar:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Classes/charsets.jar" name="sun.boot.class.path"/>
+    <property value="/var/folders/GB/GBAjm2lZ2RWWFk+8ZMYFYU+++TM/-Tmp-/" name="env.TMPDIR"/>
+    <property value="/Users/parrt/antlr/code/antlr/release-3.1.2" name="env.PWD"/>
+    <property value="en_US.UTF-8" name="env.LANG"/>
+    <property value="Sun Microsystems Inc." name="java.vm.specification.vendor"/>
+    <property value="1.5.0_16-b06-284" name="java.runtime.version"/>
+    <property value="/tmp/launch-Haknqx/Render" name="env.Apple_PubSub_Socket_Render"/>
+    <property value="/tmp/launch-aGC1Fw/:0" name="env.DISPLAY"/>
+    <property value="parrt" name="user.name"/>
+    <property value="parrt" name="env.USER"/>
+    <property value="org.codehaus.classworlds.Launcher" name="env.JAVA_MAIN_CLASS_74888"/>
+    <property value="/bin/bash" name="env.SHELL"/>
+    <property value="0x1F6:0:0" name="env.__CF_USER_TEXT_ENCODING"/>
+    <property value="true" name="awt.nativeDoubleBuffering"/>
+    <property value="/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/local/bin:/usr/local/teTeX/bin/i386-apple-darwin-current:/opt/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/texbin:/usr/local/bin" name="env.PATH"/>
+    <property value="en" name="user.language"/>
+    <property value="/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Libraries" name="sun.boot.library.path"/>
+    <property value="/opt/local/share/java/maven2/bin/m2.conf" name="classworlds.conf"/>
+    <property value="1.5.0_16" name="java.version"/>
+    <property value="America/Los_Angeles" name="user.timezone"/>
+    <property value="32" name="sun.arch.data.model"/>
+    <property value="local|*.local|169.254/16|*.169.254/16" name="http.nonProxyHosts"/>
+    <property value="/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home/lib/endorsed" name="java.endorsed.dirs"/>
+    <property value="" name="sun.cpu.isalist"/>
+    <property value="MacRoman" name="sun.jnu.encoding"/>
+    <property value="sun.io" name="file.encoding.pkg"/>
+    <property value="1" name="env.SHLVL"/>
+    <property value="/" name="file.separator"/>
+    <property value="Java Platform API Specification" name="java.specification.name"/>
+    <property value="49.0" name="java.class.version"/>
+    <property value="US" name="user.country"/>
+    <property value="/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home" name="java.home"/>
+    <property value="mixed mode, sharing" name="java.vm.info"/>
+    <property value="parrt" name="env.LOGNAME"/>
+    <property value="10.5.6" name="os.version"/>
+    <property value="240" name="env.TERM_PROGRAM_VERSION"/>
+    <property value=":" name="path.separator"/>
+    <property value="1.5.0_16-133" name="java.vm.version"/>
+    <property value="apple.awt.CPrinterJob" name="java.awt.printerjob"/>
+    <property value="xterm-color" name="env.TERM"/>
+    <property value="UnicodeLittle" name="sun.io.unicode.encoding"/>
+    <property value="apple.awt.CToolkit" name="awt.toolkit"/>
+    <property value="local|*.local|169.254/16|*.169.254/16" name="socksNonProxyHosts"/>
+    <property value="local|*.local|169.254/16|*.169.254/16" name="ftp.nonProxyHosts"/>
+    <property value="/sw/share/man:/usr/local/man:/usr/share/man:/usr/X11R6/man:/Library/Frameworks/Mono.framework/Versions/Current/man" name="env.MANPATH"/>
+    <property value="/Users/parrt" name="user.home"/>
+    <property value="/Users/parrt/antlr/code/antlr/release-3.1.2" name="env.OLDPWD"/>
+    <property value="Sun Microsystems Inc." name="java.specification.vendor"/>
+    <property value=".:/usr/local/lib/javax.servlet.jar:/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Classes/ui.jar:/Users/parrt/research/projects/Util/main:/Users/parrt/research/projects/TML/main:/Users/parrt/research/lime/main/src:/usr/local/site/lime/lib/jars/commons-fileupload-1.0-rc1.jar:/Users/parrt/antlr/code/org.antlr/main/main:/Users/parrt/antlr/code/usf/jprof:/usr/local/lib/junit.jar:/Users/parrt/USF/depot/flashmob/main/src:/Users/parrt/research/stsite/main/src:/Users/parrt/antlr/code/antlr/main/build:/Users/parrt/antlr/code/antlr/main/src/main/resources:/Users/parrt/antlr/code/antlr/main/runtime/Java/src:/Users/parrt/antlr/code/stringtemplate/java/main/src/:/usr/local/lib/CafeBabe.jar:/usr/local/lib/jasmin.jar:/usr/local/site/lime/lib/jars/pageforge-1.0.4.jar:/usr/local/lib/clover.jar:/Users/parrt/USF/advising/reports/code:/Users/parrt/antlr/code/antlrworks/main/lib/jgoodies.jar:/Users/parrt/antlr/code/mantra/main/runtime/src:/Users/parrt/antlr/code/mantra/main/src:/usr/local/lib/jetty-6.1.6rc0.jar:/usr/local/lib/jetty-util-6.1.6rc0.jar:/usr/local/lib/servlet-api-2.5-6.1.6rc0.jar:/usr/local/lib/jetty-6.1.6rc0.jar:/usr/local/lib/jetty-util-6.1.6rc0.jar:/usr/local/lib/servlet-api-2.5-6.1.6rc0.jar:/usr/local/lib/jburg.jar:/usr/local/lib/resin.jar:/usr/local/lib/gunit-1.0.2.jar:/Users/parrt/antlr/code/antlrworks/main/src:/Users/parrt/antlr/code/morph/main/src" name="env.CLASSPATH"/>
+    <property value="Apple_Terminal" name="env.TERM_PROGRAM"/>
+    <property value=".:/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java" name="java.library.path"/>
+    <property value="http://www.apple.com/" name="java.vendor.url"/>
+    <property value="vi" name="env.SVN_EDITOR"/>
+    <property value="Apple Inc." name="java.vm.vendor"/>
+    <property value="false" name="gopherProxySet"/>
+    <property value="/opt/local/share/java/maven2" name="maven.home"/>
+    <property value="Java(TM) 2 Runtime Environment, Standard Edition" name="java.runtime.name"/>
+    <property value="/opt/local/share/java/maven2/boot/classworlds-1.1.jar" name="java.class.path"/>
+    <property value="Java Virtual Machine Specification" name="java.vm.specification.name"/>
+    <property value="1.0" name="java.vm.specification.version"/>
+    <property value="little" name="sun.cpu.endian"/>
+    <property value="unknown" name="sun.os.patch.level"/>
+    <property value="/Users/parrt" name="env.HOME"/>
+    <property value="/Users/parrt/antlr/code/antlr/release-3.1.2/target/test-classes:/Users/parrt/antlr/code/antlr/release-3.1.2/target/classes:/Users/parrt/.m2/repository/junit/junit/4.5/junit-4.5.jar:/Users/parrt/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/Users/parrt/.m2/repository/org/antlr/stringtemplate/3.2/stringtemplate-3.2.jar:/Users/parrt/.m2/repository/org/antlr/antlr-runtime/3.1.2/antlr-runtime-3.1.2.jar:/Users/parrt/.m2/repository/org/antlr/gunit/1.0.5/gunit-1.0.5.jar:" name="surefire.test.class.path"/>
+    <property value="/tmp" name="java.io.tmpdir"/>
+    <property value="http://bugreport.apple.com/" name="java.vendor.url.bug"/>
+    <property value="/Users/parrt/vw7.6nc" name="env.VISUALWORKS"/>
+    <property value="/tmp/launch-TDMtQd/Listeners" name="env.SSH_AUTH_SOCK"/>
+    <property value="unix2003" name="env.COMMAND_MODE"/>
+    <property value="apple.awt.CGraphicsEnvironment" name="java.awt.graphicsenv"/>
+    <property value="i386" name="os.arch"/>
+    <property value="/Library/Java/Extensions:/System/Library/Java/Extensions:/System/Library/Frameworks/JavaVM.framework/Versions/1.5.0/Home/lib/ext" name="java.ext.dirs"/>
+    <property value="/Users/parrt/antlr/code/antlr/release-3.1.2" name="user.dir"/>
+    <property value="1050.1.5.0_16-284" name="mrj.version"/>
+    <property value="
+" name="line.separator"/>
+    <property value="Java HotSpot(TM) Client VM" name="java.vm.name"/>
+    <property value=".p4" name="env.P4CONFIG"/>
+    <property value="/Users/parrt/antlr/code/antlr/release-3.1.2" name="basedir"/>
+    <property value="MacRoman" name="file.encoding"/>
+    <property value="1.5" name="java.specification.version"/>
+  </properties>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.006" name="testSimpleParent"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0" name="testNoParent"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.002" name="testParentWithWildcard"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0" name="testWildcardAtStartIgnored"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testWildcardInBetween"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0" name="testLotsOfWildcards"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testDeep"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testDeepAndFindRoot"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testDeepAndFindRoot2"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testChain"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testNotParent"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testMismatch"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testMismatch2"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0" name="testMismatch3"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testDoubleEtc"/>
+  <testcase classname="org.antlr.test.TestTreeContext" time="0.001" name="testDotDot"/>
+</testsuite>

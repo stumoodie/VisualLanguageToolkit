@@ -100,4 +100,12 @@ public final class Bounds {
 		builder.append(")");
 		return builder.toString();
 	}
+
+	public Bounds changeOrigin(Location newLocation) {
+		return new Bounds(newLocation, this.size);
+	}
+
+	public Bounds changeSize(Size newSize) {
+		return new Bounds(this.location, newSize);
+	}
 }

@@ -39,6 +39,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.figure.customfigure.GraphicsInstructionList;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
@@ -83,6 +84,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private transient RGB textColour = DEFAULT_TEXT;
 	private transient ILabelLocationPolicy labelLocationPolicy;
 	private transient IConvexHull hull = null;
+	private GraphicsInstructionList figureDefn;
 	
 
 	/**
@@ -625,6 +627,20 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	
 	public void setConvexHull(IConvexHull hull){
 		this.hull = hull;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getFigureDefinition()
+	 */
+	public GraphicsInstructionList getFigureDefinition() {
+		return this.figureDefn;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setFigureDefinition(org.pathwayeditor.figure.customfigure.GraphicsInstructionList)
+	 */
+	public void setFigureDefinition(GraphicsInstructionList instList) {
+		this.figureDefn = instList;
 	}
 
 }

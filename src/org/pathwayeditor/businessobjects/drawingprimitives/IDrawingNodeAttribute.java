@@ -21,6 +21,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 
 /**
  * @author smoodie
@@ -39,4 +40,8 @@ public interface IDrawingNodeAttribute extends ICanvasAttribute {
 	Bounds getBounds();
 	
 	void setBounds(Bounds newBounds);
+
+	IConvexHull getConvexHull();
+	
+	void setConvexHull(IConvexHull newHull);
 }

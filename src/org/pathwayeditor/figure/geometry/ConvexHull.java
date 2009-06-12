@@ -17,7 +17,7 @@ public class ConvexHull implements IConvexHull {
 	private final List<Point> pointList;
 	private final Envelope envelope;
 	
-	public ConvexHull(List<Point> localPointList){
+	ConvexHull(List<Point> localPointList){
 		if(localPointList.size() < MIN_NUM_POINTS) throw new IllegalArgumentException("Cannot define hull with less than " + MIN_NUM_POINTS + " points.");
 		this.pointList = new ArrayList<Point>(localPointList.size());
 		Point firstPoint = localPointList.get(FIRST_IDX_POS);
