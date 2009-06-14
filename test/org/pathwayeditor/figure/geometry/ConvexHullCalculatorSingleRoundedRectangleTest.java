@@ -4,14 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ConvexHullCalculatorSingleRoundedRectangleTest {
-	private static final int EXPECTED_NUM_HULL_POINTS = 24;
+	private static final int EXPECTED_NUM_HULL_POINTS = 43;
 	private ConvexHullCalculator testInstance;
 
 	@Before

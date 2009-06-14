@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ConvexHullCalculatorMultipleShapesTest {
-	private static final int EXPECTED_NUM_HULL_POINTS = 16;
+	private static final int EXPECTED_NUM_HULL_POINTS = 21;
 	private ConvexHullCalculator testInstance;
 
 	@Before
