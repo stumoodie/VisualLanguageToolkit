@@ -1,7 +1,8 @@
 package org.pathwayeditor.figure.geometry;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,9 +10,6 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.figure.geometry.ConvexHull;
-import org.pathwayeditor.figure.geometry.IConvexHull;
-import org.pathwayeditor.figure.geometry.Point;
 
 public class ConvexHullContansPointTest {
 	private IConvexHull testInstance;
@@ -53,8 +51,8 @@ public class ConvexHullContansPointTest {
 	}
 	
 	@Test
-	public void testNotContainedOnBoundary(){
-		assertFalse("Not contained point", this.testInstance.containsPoint(0.0, 20.0));
-		assertFalse("Not contained point", this.testInstance.containsPoint(20.0, -10.0));
+	public void testContainedOnBoundary(){
+		assertTrue("contained point", this.testInstance.containsPoint(0.0, 20.0));
+		assertTrue("contained point", this.testInstance.containsPoint(20.0, -10.0));
 	}
 }

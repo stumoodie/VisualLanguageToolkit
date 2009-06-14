@@ -16,6 +16,11 @@ public class LineSegment {
 		this.terminus = terminus;
 	}
 	
+	public LineSegment(double startX, double startY, double endX, double endY){
+		this.origin = new Point(startX, startY);
+		this.terminus = new Point(endX, endY);
+	}
+	
 	/**
 	 * Determines the intersect point between this line and the line passed 
 	 * in as a parameter.  If they intersect, then true is returned and the 
@@ -112,6 +117,11 @@ public class LineSegment {
 		return intersections;
 	}
 
+	public LineSegment translate(double x, double y){
+		return new LineSegment(this.origin.translate(x, y), this.terminus.translate(x, y));
+	}
+	
+	
 	/**
 	 * Returns the coefficients of the generalized equation of the line passing through
 	 * points (x1,y1) and (x2,y2)
@@ -143,6 +153,40 @@ public class LineSegment {
 		equation[1]=1.0;
 		equation[2]=y2+equation[0]*x2;
 		return equation;
+	}
+
+	public Point getMidPoint(){
+		return new Point(this.origin.getX() + getXDisplacement()/2, this.origin.getY() + this.getYDisplacement()/2);
+	}
+	
+	public double getXDisplacement(){
+		return terminus.getX() - origin.getX();
+	}
+	
+	public double getYDisplacement(){
+		return terminus.getY() - origin.getY();
+	}
+	
+	public double getLength(){
+		double i = terminus.getX() - origin.getX();
+		double j = terminus.getY() - origin.getY();
+		return Math.sqrt(i * i + j * j);
+	}
+	
+	public Vector getVector(){
+		return new Vector(terminus.getX() - origin.getX(), terminus.getY() - origin.getY(), 0.0);
+	}
+	
+	public Vector getLeftHandNormal(){
+		double i = terminus.getX() - origin.getX();
+		double j = terminus.getY() - origin.getY();
+		return new Vector(-j, i, 0);
+	}
+
+	public Vector getRightHandNormal(){
+		double i = terminus.getX() - origin.getX();
+		double j = terminus.getY() - origin.getY();
+		return new Vector(j, -i, 0);
 	}
 
 	/**

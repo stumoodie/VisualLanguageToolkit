@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class ConvexHullCalculatorSingleRectangleTest {
 //	private static final Instruction TEST_INSTRUCTIONS[] = { new Instruction(0.0), new Instruction(0.0), new Instruction(50.0), new Instruction(60.0), new Instruction(OpCodes.RECT) }; 
-	private static final Point EXPECTED_HULL_POINTS[] = { new Point(50.0, 0.0), new Point(0.0, 0.0), new Point(0.0, 60.0), new Point(50.0, 60.0) }; 
+	private static final Point EXPECTED_HULL_POINTS[] = { new Point(50.0, 60.0), new Point(0.0, 60.0), new Point(0.0, 0.0), new Point(50.0, 0.0) }; 
 	private ConvexHullCalculator testInstance;
 
 	@Before

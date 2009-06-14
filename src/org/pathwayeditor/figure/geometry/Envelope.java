@@ -23,10 +23,10 @@ public final class Envelope {
 	}
 	
 	boolean intersects(Envelope other){
-		return other.getOrigin().getX() < this.origin.getX() + this.dim.getWidth() 
-			&& other.getOrigin().getY() < this.origin.getY() + this.dim.getHeight() 
-			&& other.getOrigin().getX() + other.getDimension().getWidth() > this.origin.getX() 
-			&& other.getOrigin().getY() + other.getDimension().getHeight() > this.origin.getY();
+		return other.getOrigin().getX() <= this.origin.getX() + this.dim.getWidth() 
+			&& other.getOrigin().getY() <= this.origin.getY() + this.dim.getHeight() 
+			&& other.getOrigin().getX() + other.getDimension().getWidth() >= this.origin.getX() 
+			&& other.getOrigin().getY() + other.getDimension().getHeight() >= this.origin.getY();
 
 	}
 	
@@ -95,9 +95,13 @@ public final class Envelope {
 		return this.origin.translate(this.dim.getWidth(), this.dim.getHeight());
 	}
 
+	public boolean containsPoint(double x, double y) {
+		return x >= this.origin.getX() && x <= this.origin.getX() + this.dim.getWidth()
+			&& y >= this.origin.getY() && y <= this.origin.getY() + this.dim.getHeight();
+	}
+
 	public boolean containsPoint(Point p) {
-		return p.getX() >= this.origin.getX() && p.getX() <= this.origin.getX() + this.dim.getWidth()
-			&& p.getY() >= this.origin.getY() && p.getY() <= this.origin.getY() + this.dim.getHeight();
+		return containsPoint(p.getX(), p.getY());
 	}
 	
 }

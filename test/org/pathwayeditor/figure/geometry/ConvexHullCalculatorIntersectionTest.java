@@ -10,9 +10,6 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
-import org.pathwayeditor.figure.geometry.ConvexHullIntersectionRenderer;
-import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public class ConvexHullCalculatorIntersectionTest {
 	private IConvexHull testInstance;
@@ -22,11 +19,11 @@ public class ConvexHullCalculatorIntersectionTest {
 	@Before
 	public void setUp() throws Exception {
 		ConvexHullCalculator testCalc = new ConvexHullCalculator();
-		testCalc.addRoundRectangle(20.0, 20.0, 60.0, 40.0, 8.0, 12.0);
+		testCalc.addPolygon(new double[]{0.0, 0.0, 20.0, 0.0, 20.0, 20.0});
 		testCalc.calculate();
 		this.testInstance = testCalc.getConvexHull();
 		ConvexHullCalculator otherCalc = new ConvexHullCalculator();
-		otherCalc.addRectangle(0.0, 0.0, 200.0, 200.0);
+		otherCalc.addPolygon(new double[]{0.0, 1.0, 19.0, 20.0, 0.0, 20.0});
 		otherCalc.calculate();
 		this.otherInstance = otherCalc.getConvexHull();
 	}
@@ -39,36 +36,44 @@ public class ConvexHullCalculatorIntersectionTest {
 
 	@Test
 	public void testExactlyOverlappingShape() throws IOException{
-		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
-		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(testInstance));
+		assertTrue("Overlaps", this.testInstance.hullsIntersect(testInstance));
+		assertTrue("Overlaps: reciprocal", this.testInstance.hullsIntersect(testInstance));
+		assertTrue("Overlaps", this.otherInstance.hullsIntersect(otherInstance));
+		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(otherInstance));
 	}
 
 	@Test
-	public void testOverlappingShape(){
-		this.otherInstance = this.otherInstance.translate(10.0, 10.0);
+	public void testOverlappingShape() throws IOException{
+		this.otherInstance = this.otherInstance.translate(10.0, 1.0);
+//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+//		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
 		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
 	}
 
 	@Test
-	public void testJustOverlappingShape(){
-		this.otherInstance = this.otherInstance.translate(-80.0, 0.0);
+	public void testJustOverlappingShape() throws IOException{
+		this.otherInstance = this.otherInstance.translate(1.0, 0.0);
+//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+//		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
 		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
 	}
 
 	@Test
 	public void testJustOverlappingAgainShape() throws IOException{
-		this.otherInstance = this.otherInstance.translate(0.0, 60.0);
-		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
-		renderer.writeAsPsFile(new File("test.ps"));
+		this.otherInstance = this.otherInstance.translate(-18.0, -19.0);
+//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+//		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
 		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
 	}
 
 	@Test
-	public void testNonOverlappingShape(){
-		this.otherInstance = this.otherInstance.translate(100.0, 180.0);
+	public void testNonOverlappingShape() throws IOException{
+//		this.otherInstance = this.otherInstance.translate(-1.0, 1.0);
+		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+		renderer.writeAsPsFile(new File("test.ps"));
 		assertFalse("Not Overlapping", this.testInstance.hullsIntersect(otherInstance));
 		assertFalse("Not Overlaping: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
 	}

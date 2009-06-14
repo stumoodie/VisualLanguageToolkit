@@ -1,16 +1,13 @@
 package org.pathwayeditor.figure.geometry;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 public class ConvexHull implements IConvexHull {
-//	private static final List<Point> EMPTY_LIST = Arrays.asList(new Point[]{ new Point(0,0)});
 	private static final int FIRST_IDX_POS = 0;
-	private static final double INTERSECT_TOLERANCE = 0.1;
 	private static final int MIN_NUM_POINTS = 3;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -67,43 +64,6 @@ public class ConvexHull implements IConvexHull {
 		return this.envelope;
 	}
 	
-//	public Point getOrigin(){
-//		Point firstPoint = this.pointList.get(FIRST_IDX_POS);
-//		double minX = firstPoint.getX();
-//		double minY = firstPoint.getY();
-//		for(int i = FIRST_IDX_POS+1; i < this.pointList.size(); i++){
-//			Point p = pointList.get(i);
-//			minX = Math.min(minX, p.getX());
-//			minY = Math.min(minY, p.getY());
-//		}
-//		return new Point(minX, minY);
-//	}
-//	
-//	public Dimension getDimension(){
-//		Point firstPoint = this.pointList.get(FIRST_IDX_POS);
-//		double minX = firstPoint.getX();
-//		double minY = firstPoint.getY();
-//		double maxX = firstPoint.getX();
-//		double maxY = firstPoint.getY();
-//		for(int i = FIRST_IDX_POS+1; i < this.pointList.size(); i++){
-//			Point p = pointList.get(i);
-//			minX = Math.min(minX, p.getX());
-//			minY = Math.min(minY, p.getY());
-//			maxX = Math.max(maxX, p.getX());
-//			maxY = Math.max(maxY, p.getY());
-//		}
-//		return new Dimension(Math.abs(maxX - minX), Math.abs(maxY - minY));
-//	}
-	
-	
-//	public Envelope getEnvelope(){
-//		return new Envelope(this.getOrigin(), this.getDimension());
-//	}
-	
-	
-//	public void addPoint(Point pt){
-//		this.pointList.add(pt);
-//	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#iterator()
@@ -119,66 +79,34 @@ public class ConvexHull implements IConvexHull {
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#containsPoint(double, double)
 	 */
 	public boolean containsPoint(double x, double y){
-		boolean isOdd = false;
-		int n = this.pointList.size();
-		if (n > 1) { // If there are at least 2 Points
-			double x1, y1;
-			double x0 = pointList.get(n - 1).getX();
-			double y0 = pointList.get(n - 1).getY();;
-			
-			for (int i = 0; i < n; x0 = x1, y0 = y1, i++) {
-				x1 = pointList.get(i).getX();
-				y1 = pointList.get(i).getY();
-
-				if (y0 <= y && y < y1 && crossProduct(x1, y1, x0, y0, x, y) > 0)
-					isOdd = !isOdd;
-				
-				if (y1 <= y && y < y0 && crossProduct(x0, y0, x1, y1, x, y) > 0)
-					isOdd = !isOdd;
-			}
-			if (isOdd)
-				return true;
-		}
-
-		return false;
-	}
-	
-	private double crossProduct(double ax, double ay, double bx, double by, double cx, double cy) {
-		return (ax - cx) * (by - cy) - (ay - cy) * (bx - cx);
-	}
-
-	private static List<Point> getEnvelopeCorners(final Envelope childBounds) {
-		// get 4 corners of the bounds, test each one for being contained after moving
-		List <Point> points = Arrays.asList(new Point [] {childBounds.getOrigin(),
-				childBounds.getHorizontal(),
-				childBounds.getVerical(),
-				childBounds.getDiagonal() } );
-		return points;
-	}
-	
-	/**
-	 * If this method returns <code>true</code> there must be at least one point contained
-	 * in 
-	 * @return <code>true</code> if at least two points of the child bounding box are contained by the 
-	 * parent.
-	 */
-	private static boolean checkOverlapByEnvelope (Envelope thisEnv, Envelope other) {
-		boolean rc = false;
-		int cornerCount = 0;
-		List<Point> points = getEnvelopeCorners(other);
-		for (Point p : points) { 
-			if (thisEnv.containsPoint(p)) {
-				cornerCount++;			   
-			}
-			if(cornerCount >= 2) {
-				rc = true;
-				break;
+		boolean retVal = false;
+		if(this.envelope.containsPoint(x, y)){
+			retVal = true;
+			logger.debug("testing point: x=" + x + ",y=" +y);
+			// check cross product has -k vector if not then the point must be outside polygon
+			Point lastPoint = this.pointList.get(this.pointList.size()-1);
+			for(int i = 0 ; i < this.pointList.size() && retVal; i++){
+				Point currPoint = this.pointList.get(i);
+				logger.trace("Next point: Last point=" + lastPoint + ",curr point=" + currPoint);
+				Vector edge = new Vector(currPoint.getX() - lastPoint.getX(), currPoint.getY() - lastPoint.getY(), 0);
+				logger.trace("Examining edge=" + edge);
+				Vector pointVect = new Vector(x - lastPoint.getX(), y - lastPoint.getY(), 0);
+				logger.trace("Examining pointVect=" + pointVect);
+				Vector crossProd = edge.crossProduct(pointVect);
+				logger.trace("Crossproduct=" + crossProd);
+				if(crossProd.getKMagnitude() < 0){
+					retVal = false;
+				}
+				lastPoint = currPoint;
 			}
 		}
-		return rc;
+		return retVal;
 	}
-
 	
+//	private double crossProduct(double ax, double ay, double bx, double by, double cx, double cy) {
+//		return (ax - cx) * (by - cy) - (ay - cy) * (bx - cx);
+//	}
+
 	public IConvexHull changeEnvelope(Envelope newEnvelope){
 		IConvexHull retVal = this;
  		if(!this.envelope.equals(newEnvelope)){
@@ -201,35 +129,94 @@ public class ConvexHull implements IConvexHull {
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#hullsIntersect(org.pathwayeditor.figure.customshape.IConvexHull)
 	 */
 	public boolean hullsIntersect(IConvexHull otherHull){
-		// first we look for envelop overlap and containment. If 2 points in one evelope are
-		// contained in the other then their must be overpa of containment
-		boolean retVal = checkOverlapByEnvelope(this.getEnvelope(), otherHull.getEnvelope())
-			|| checkOverlapByEnvelope(otherHull.getEnvelope(), this.getEnvelope());
-		if(!retVal){
-			for(LineSegment parentLs: this.getLines()){
-				if(retVal) break;
-				for(LineSegment childLS: otherHull.getLines()){
-					if(parentLs.intersect(childLS, INTERSECT_TOLERANCE) !=null){
-						retVal = true;
-						break;
-					}
-				}
-			}
+		boolean retVal = false;
+		if(this.envelope.intersects(otherHull.getEnvelope())){
+			// check if hulls overlap at all
+			retVal = this.testIntersection(otherHull);
 		}
 		logger.debug("Hulls intersect=" + retVal + ", this=" + this + ", other=" + otherHull);
 		return retVal;
 	}
+	
+	private boolean testIntersection(IConvexHull otherHull) {
+		boolean retVal = testLines(this.getLines(), otherHull) && testLines(otherHull.getLines(), otherHull);
+		return retVal;
+	}
+
+	
+	private boolean testLines(List<LineSegment> lines, IConvexHull otherHull){
+		double min0 = Double.POSITIVE_INFINITY;
+		double max0 = Double.NEGATIVE_INFINITY;
+		double min1 = Double.POSITIVE_INFINITY;
+		double max1 = Double.NEGATIVE_INFINITY;
+		boolean retVal = true;
+//		Point thisHullCentre = this.getCentre();
+//		Point otherHullCentre = otherHull.getCentre();
+		for (LineSegment line : lines) {
+			if(retVal){
+				logger.debug("Looking at line:" + line);
+				Vector outerNormal = line.getRightHandNormal().unitVector();
+				logger.trace("testLines: normal=" + outerNormal);
+				logger.debug("Testing this hull");
+				for(Point p : this.pointList){
+					double projection = outerNormal.scalarProduct(new Vector(p.getX(), p.getY(), 0));
+					logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					min0 = Math.min(min0, projection);
+					max0 = Math.max(max0, projection);
+				}
+				logger.trace("testLines: before offset: min0=" + min0 + ",max0=" + max0);
+//				double offset = thisHullCentre.getX() * outerNormal.getIMagnitude() + thisHullCentre.getY() * outerNormal.getJMagnitude();
+//				min0 += offset;
+//				max0 += offset;
+				logger.debug("Testing other hull");
+				for(Point p : otherHull.getPoints()){
+					double projection = outerNormal.scalarProduct(new Vector(p.getX(), p.getY(), 0));
+					logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					min1 = Math.min(min1, projection);
+					max1 = Math.max(max1, projection);
+				}
+				logger.trace("testLines: before offset: min1=" + min1 + ",max1=" + max1);
+//				offset = otherHullCentre.getX() * outerNormal.getIMagnitude() + otherHullCentre.getY() * outerNormal.getJMagnitude();
+//				min1 += offset;
+//				max1 += offset;
+				logger.debug("testLines: min0=" + min0 + ",max0=" + max0 + ",min1=" + min1 + ",max1=" + max1);
+				if(max0 < min1 || min0 > max1){
+					logger.debug("testLines: no intersection");
+					retVal = false;
+				}
+			}
+			else{
+				break;
+			}
+		}
+		return retVal;
+	}
+	
+//	private boolean testIntersection(IConvexHull otherHull){
+//		boolean retVal = false;
+//		for(LineSegment parentLs: this.getLines()){
+//			if(retVal) break;
+//			for(LineSegment childLS: otherHull.getLines()){
+//				if(parentLs.intersect(childLS, INTERSECT_TOLERANCE) !=null){
+//					retVal = true;
+//					break;
+//				}
+//			}
+//		}
+//		return retVal;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#getLines()
 	 */
 	public List<LineSegment> getLines() {
 		List<LineSegment>rc = new ArrayList<LineSegment>();
-		for(int i = 0; i < this.pointList.size()-1; i++) {
-			rc.add(new LineSegment(this.pointList.get(i), this.pointList.get(i+1)));
+		Point previous = this.pointList.get(this.pointList.size()-1);
+		for(int i = 0; i < this.pointList.size(); i++) {
+			Point curr = this.pointList.get(i);
+			rc.add(new LineSegment(previous, curr));
+			previous = curr;
 		}
-		final int lastPointIdx = this.pointList.size()-1;
-		rc.add(new LineSegment(this.pointList.get(lastPointIdx), this.pointList.get(FIRST_IDX_POS)));
 		return rc;
 	}
 

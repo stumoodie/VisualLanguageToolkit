@@ -4,6 +4,7 @@ package org.pathwayeditor.figure.geometry;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +22,18 @@ public class ConvexHullIntersectionTest {
 	private IConvexHull createConvexHull(){
 		List<Point> retVal = new ArrayList<Point>(); 
 		retVal.add(new Point(40.0, 1.0));
-		retVal.add(new Point(20.0, -10.0));
-		retVal.add(new Point(1.0, 1.0));
-		retVal.add(new Point(1.0, 20.0));
-		retVal.add(new Point(20.0, 60.0));
 		retVal.add(new Point(40.0, 20.0));
+		retVal.add(new Point(20.0, 60.0));
+		retVal.add(new Point(1.0, 20.0));
+		retVal.add(new Point(1.0, 1.0));
+		retVal.add(new Point(20.0, -10.0));
 		return new ConvexHull(retVal);
 	}
 	
 	private IConvexHull creatEnclosedConvexHull(){
 		List<Point> retVal = new ArrayList<Point>(); 
 		retVal.add(new Point(10.0, 10.0));
-		retVal.add(new Point(10.0, 20.0));
+		retVal.add(new Point(20.0, 10.0));
 		retVal.add(new Point(20.0, 20.0));
 		retVal.add(new Point(10.0, 20.0));
 		return new ConvexHull(retVal);
@@ -74,8 +75,8 @@ public class ConvexHullIntersectionTest {
 	@Test
 	public void testJustOverlappingShape() throws IOException{
 		this.otherInstance = this.otherInstance.translate(39.0, 10.0);
-//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
-//		renderer.writeAsPsFile(new File("test.ps"));
+		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
 		assertTrue("Overlaps: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
 	}

@@ -15,88 +15,13 @@ import org.pathwayeditor.figurevm.InstructionList;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
 
 public class FigureBuilder {
-//	private static class GraphicsState {
-//		private static final double DEFAULT_LINE_WIDTH = 1;
-//		private RGB fill; 
-//		private RGB line;
-//		private double lineWidth;
-//		private IFont font;
-//		
-////		public GraphicsState(IGraphicsEngine g){
-////			this.fill = g.getFillColour();
-////			this.line = g.getLineColour();
-////			this.lineWidth = g.getLineWidth();
-////		}
-//		
-//		public GraphicsState(){
-//			this.fill = RGB.WHITE;
-//			this.line = RGB.BLACK;
-//			this.lineWidth = DEFAULT_LINE_WIDTH;
-//		}
-//		
-//		public GraphicsState(GraphicsState other){
-//			this.fill = other.fill;
-//			this.line = other.line;
-//			this.lineWidth = other.lineWidth;
-//		}
-//		
-//		public void restoreState(IGraphicsEngine g){
-//			if(this.fill != null){
-//				g.setFillColor(fill);
-//			}
-//			if(this.line != null){
-//				g.setLineColor(this.line);
-//			}
-//			g.setLineWidth(this.lineWidth);
-//		}
-//
-//		public double getLineWidth() {
-//			return lineWidth;
-//		}
-//
-//		public void setLineWidth(double newLineWidth){
-//			this.lineWidth = newLineWidth;
-//		}
-//		
-//		public RGB getFillColour() {
-//			return this.fill;
-//		}
-//
-//		public void setFillColour(RGB newFillColour){
-//			this.fill = newFillColour;
-//		}
-//
-//		public RGB getLineColour() {
-//			return this.line;
-//		}
-//		
-//		public void setLineColour(RGB newLineColour){
-//			this.line = newLineColour;
-//		}
-//
-//		public IFont getFont() {
-//			return this.font;
-//		}
-//	}
-	
-	
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-//	private static final double MAX_X_DIM = 100.0;
-//	private static final double MAX_Y_DIM = 100.0;
 	private static final int RGB_LIST_SIZE = 3;
 	private static final char ITALIC_STYLE = 'I';
 	private static final char BOLD_STYLE = 'B';
-//	private static final int MIN_LINE_WIDTH = 1;
-//	private static final double CANVAS_WIDTH = 100.0;
-
 	private static final double MIN_DIMENSION_SIZE = 0;
 
-//	private IGraphicsEngine g;
-//	private PrecisionRectangle drawableArea;
-//	private Envelope drawableArea;
-//	private boolean fill = true;
-//	private boolean line = true;
 	private final InstructionList instList;
 	private final IConvexHullCalculator hullCalc;
 	private final ShapeDefinitionInterpreter producer;
@@ -144,50 +69,11 @@ public class FigureBuilder {
 		IFont font = currentState.getFont();
 		this.graphicsInstructions.add(g.fontSize(font.getFontSize()));
 		this.graphicsInstructions.add(g.fontStyle(font.getStyle()));
-		// we also need to setup the hull with the current state too
-		this.hullCalc.setCurrentLineWidth(this.currentState.getLineWidth());
 	}
-	
-//	public void paintFigure(IGraphicsEngine g){
-//		this.g = g;
-////		this.drawableArea = drawableArea;
-//		this.currentState = new GraphicsState(g);
-//		this.graphicsStack.clear();
-////		this.fill = true;
-////		this.line = true;
-//		this.hullCalc.reset();
-////		g.fillRectangle(this.drawableArea);
-//		producer.execute();
-//	}
 	
 	public <T> void setBindBoolean(String name, Boolean value){
 		this.producer.setBindBoolean(name, value);
 	}
-	
-//	private int getScaledHeight(double h) {
-//		return (int)Math.round(h/MAX_Y_DIM * this.drawableArea.getDimension().getHeight());
-//	}
-//
-//	private double getUnScaledHeight(int h) {
-//		return ((double)h)/this.drawableArea.getDimension().getHeight() * MAX_Y_DIM;
-//	}
-//
-//	private int getScaledWidth(double w) {
-//		return (int)Math.round(w/MAX_X_DIM * this.drawableArea.getDimension().getWidth());
-//	}
-//
-//	private double getUnScaledWidth(int w) {
-//		return ((double)w)/this.drawableArea.getDimension().getWidth() * MAX_X_DIM;
-//	}
-
-//	private int getScaledY(double y) {
-//		return (int)Math.round((y/MAX_Y_DIM * this.drawableArea.getDimension().getHeight())	+ this.drawableArea.getOrigin().getY());
-//	}
-
-//	private int getScaledXPos(double x) {
-//		return (int)Math.round((x/MAX_X_DIM * this.drawableArea.getDimension().getWidth()) + this.drawableArea.getOrigin().getX());
-//	}
-	
 	
 	private void drawRectangle(double x, double y, double width, double height){
 		if(width < MIN_DIMENSION_SIZE){
@@ -303,16 +189,6 @@ public class FigureBuilder {
 	
 	private void drawText(double x, double y, String text){
 		logger.debug("drawText: requests x=" + x + ", y=" + y + ", text=" + text);
-//		Font font = g.getFont();
-//		FontData fontData[] = font.getFontData();
-//		for (int i = 0; i < fontData.length; i++) {
-//			fontData[i].setStyle(SWT.BOLD|SWT.ITALIC);
-//			fontData[i].setHeight(10);
-//		}
-//		Font newFont = new Font(font.getDevice(), fontData);
-//		g.setFont(newFont);
-//		int xPos = (int)getScaledXPos(x);
-//		int yPos = (int)getScaledYPos(y);
 		if(getFillColour() != null){
 			this.graphicsInstructions.add(g.fillText(x, y, text));
 		}
@@ -398,7 +274,6 @@ public class FigureBuilder {
 
 		public double getTextHeight(String text) {
 			double textHeight = currentState.getFont().getStringExtends(text).getHeight();
-//			double retVal = getUnScaledHeight(textHeight);
 			double retVal = textHeight;
 			logger.debug("getTextHeight: SWTHgt=" + textHeight + ",scaledHgt=" + retVal);
 			return retVal;
@@ -406,7 +281,6 @@ public class FigureBuilder {
 
 		public double getTextLength(String text) {
 			double textLen = currentState.getFont().getStringExtends(text).getWidth();
-//			double retVal = getUnScaledWidth(textLen);
 			double retVal = textLen;
 			logger.debug("getTextLength: SWTLen=" + textLen + ",scaledLen=" + retVal);
 			return retVal;
@@ -499,30 +373,16 @@ public class FigureBuilder {
 		logger.debug("setCurrLineWidth: requested lineWidth=" + lineWidth +")");
 		graphicsInstructions.add(g.setLineWidth(lineWidth));
 		currentState.setLineWidth(lineWidth);
-		this.hullCalc.setCurrentLineWidth(lineWidth);
 		logger.debug("setCurrLineWidth: drawing lineWidth=" + lineWidth +")");
 	}
 
 	private double getCurLineWidth() {
 		double lineWidth = currentState.getLineWidth();
 		logger.debug("getCurrLineWidth: SWT lineWidth=" + lineWidth +")");
-		double retVal = lineWidth; //getUnscaledLineWidth(lineWidth);
+		double retVal = lineWidth;
 		logger.debug("getCurrLineWidth: scaled lineWidth=" + retVal +")");
 		return retVal;
 	}
-
-//	private int getScaledLineWidth(double lineWidth){
-//		double scaledLineWidth = lineWidth/CANVAS_WIDTH * Math.max(this.drawableArea.getDimension().getHeight(), this.drawableArea.getDimension().getWidth());
-//		scaledLineWidth = Math.max(scaledLineWidth, MIN_LINE_WIDTH);
-//		return (int)Math.round(scaledLineWidth);
-//	}
-	
-
-//	private double getUnscaledLineWidth(int lineWidth) {
-//		lineWidth = Math.max(lineWidth, MIN_LINE_WIDTH);
-//		double scaledLineWidth = (((double)lineWidth) / (Math.max(this.drawableArea.getDimension().getHeight(), this.drawableArea.getDimension().getWidth()))) * CANVAS_WIDTH;
-//		return Math.round(scaledLineWidth);
-//	}
 
 	public void setBindString(String string, String value) {
 		this.producer.setBindString(string, value);

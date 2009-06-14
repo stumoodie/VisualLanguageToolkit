@@ -22,10 +22,10 @@ public class ConvexHullTest {
 	private IConvexHull testInstance;
 	private List<LineSegment> expectedLines;
 	private final double LINES_DEFN[][] = {
+			{ 1, 21, 1, 1  },	
 			{ 1, 1, 41, 1  },	
 			{ 41, 1, 41, 21  },	
 			{ 41, 21, 1, 21  },	
-			{ 1, 21, 1, 1  },	
 	};
 	private List<Point> expectedPoints;
 	private final double POINTS_DEFN[][] = {

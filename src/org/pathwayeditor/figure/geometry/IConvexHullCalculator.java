@@ -6,10 +6,6 @@ public interface IConvexHullCalculator {
 
 	void reset();
 
-	void setCurrentLineWidth(double lineWidth);
-	
-	double getCurrentLineWidth();
-	
 	void addPoint(Point p);
 	
 	void addPoint(double x, double y);

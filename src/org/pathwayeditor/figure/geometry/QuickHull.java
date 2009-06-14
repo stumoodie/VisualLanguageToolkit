@@ -283,7 +283,8 @@ public class QuickHull {
 		}
 
 		public int compareTo(AngleWrapper ac) {
-			return (ac.angle < angle) ? -1 : (ac.angle > angle) ? 1 : 0;
+//			return (ac.angle < angle) ? -1 : (ac.angle > angle) ? 1 : 0;
+			return (ac.angle < angle) ? 1 : (ac.angle > angle) ? -1 : 0;
 		}
 	}
 
