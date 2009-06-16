@@ -18,7 +18,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;

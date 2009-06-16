@@ -99,7 +99,10 @@ public class FigureController implements IFigureController {
 		IConvexHullCalculator calc = this.builder.getConvexHullCalculator();
 		calc.calculate();
 		this.convexHull = calc.getConvexHull();
-		this.refBounds = this.convexHull.getEnvelope(); 
+		if(!this.refBounds.contains(this.convexHull.getEnvelope())){
+			logger.warn("The convex hull (env=" + this.convexHull.getEnvelope() + ") spills outside the requested envelope ("
+					+ this.refBounds + ". This may cause rendering problems");
+		}
 		logger.debug("Calcuated convex hull=" + this.convexHull);
 	}
 

@@ -1,4 +1,4 @@
-// $ANTLR 3.1.2 /Users/smoodie/workspacenewstuff/BusinessObjects/src/org/pathwayeditor/figurevm/DrawingVm.g 2009-06-14 21:15:53
+// $ANTLR 3.1.2 /Users/smoodie/workspacenewstuff/BusinessObjects/src/org/pathwayeditor/figurevm/DrawingVm.g 2009-06-16 16:51:00
 
 
 package org.pathwayeditor.figurevm;

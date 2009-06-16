@@ -95,6 +95,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.terminusSize = other.getTerminusSize();
 		this.terminusDefn = other.terminusDefn;
 		this.termShapeType = other.getTerminusDecoratorType();
+		this.location = other.getLocation();
 		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 	}
 

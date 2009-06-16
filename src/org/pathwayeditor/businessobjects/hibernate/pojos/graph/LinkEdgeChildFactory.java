@@ -20,7 +20,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -49,8 +48,6 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	private ILinkObjectType objectType;
 	private IHibNotationFactory hibNotationFactory;
 	private HibLinkAttribute attribute;
-	private Location srcTerminusLocation = Location.ORIGIN;
-	private Location tgtTerminusLocation = Location.ORIGIN;
 	
 	public LinkEdgeChildFactory(HibSubModel subCanvas) {
 		super();
@@ -73,8 +70,6 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
-		retVal.getAttribute().getSourceTerminus().setLocation(srcTerminusLocation);
-		retVal.getAttribute().getTargetTerminus().setLocation(tgtTerminusLocation);
 		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
@@ -228,24 +223,4 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	public void setAttribute(HibLinkAttribute attribute) {
 		this.attribute = attribute;
 	}
-
-	public Location getSrcLinkTermLocation() {
-		return this.srcTerminusLocation;
-	}
-
-	public void setSrcLinkTermLocation(Location srcTerminusLocation) {
-		if(srcTerminusLocation == null) throw new IllegalArgumentException();
-		
-		this.srcTerminusLocation = srcTerminusLocation;
-	}
-
-	public Location getTgtLinkTermLocation() {
-		return this.tgtTerminusLocation;
-	}
-
-	public void setTgtLinkTermLocation(Location tgtTerminusLocation) {
-		if(tgtTerminusLocation == null) throw new IllegalArgumentException();
-		this.tgtTerminusLocation = tgtTerminusLocation;
-	}
-
 }

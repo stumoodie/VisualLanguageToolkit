@@ -13,12 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
+package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 
 
-public interface IBendPoint {
+public interface IBendPoint extends IPropertyChangeListenee {
 	ILinkAttribute getOwningLink();
 	
 	int getCreationSerial();

@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
@@ -320,7 +320,7 @@ s	 */
 		this.hibBendPoints.remove(hibBendPoint);
 		// break link to this attribute so it will be deleted.
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, null, null);
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
 	}
 
 	/* (non-Javadoc)
@@ -457,7 +457,7 @@ s	 */
 		HibBendPoint hibBendPoint = this.hibBendPoints.get(index);
 		this.hibBendPoints.remove(index);
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, null, null);
+		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
 	}
 
 	/* (non-Javadoc)

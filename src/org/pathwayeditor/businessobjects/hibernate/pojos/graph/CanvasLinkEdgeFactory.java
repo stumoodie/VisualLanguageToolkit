@@ -21,7 +21,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -49,8 +48,6 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	private ILinkObjectType objectType;
 	private HibShapeNode outNode = null;
 	private HibShapeNode inNode = null;
-	private Location srcTerminusLocation = Location.ORIGIN;
-	private Location tgtTerminusLocation = Location.ORIGIN;
 	
 	public CanvasLinkEdgeFactory(HibModel canvas, IHibNotationFactory hibNotationFactory) {
 		super();
@@ -106,8 +103,6 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 		int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType);
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
-		retVal.getAttribute().getSourceTerminus().setLocation(srcTerminusLocation);
-		retVal.getAttribute().getTargetTerminus().setLocation(tgtTerminusLocation);
 		((HibSubModel)owningGraph).notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
@@ -217,24 +212,4 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 		&& this.isValidShapeNodePair(this.getOutNode(), this.getInNode())
 		&& this.canCreateEdge();
 	}
-
-	public Location getSrcLinkTermLocation() {
-		return this.srcTerminusLocation;
-	}
-
-	public void setSrcLinkTermLocation(Location srcTerminusLocation) {
-		if(srcTerminusLocation == null) throw new IllegalArgumentException();
-		
-		this.srcTerminusLocation = srcTerminusLocation;
-	}
-
-	public Location getTgtLinkTermLocation() {
-		return this.tgtTerminusLocation;
-	}
-
-	public void setTgtLinkTermLocation(Location tgtTerminusLocation) {
-		if(tgtTerminusLocation == null) throw new IllegalArgumentException();
-		this.tgtTerminusLocation = tgtTerminusLocation;
-	}
-
 }

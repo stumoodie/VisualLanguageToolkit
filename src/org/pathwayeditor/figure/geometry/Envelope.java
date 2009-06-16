@@ -104,4 +104,11 @@ public final class Envelope {
 		return containsPoint(p.getX(), p.getY());
 	}
 	
+	public boolean contains(Envelope envelope) {
+		return origin.getX() <= envelope.origin.getX()
+			&& (origin.getX() + this.dim.getWidth()) >= (envelope.origin.getX() + envelope.getDimension().getWidth())
+			&& origin.getY() <= envelope.origin.getY()
+			&& (origin.getY() + this.dim.getHeight()) >= (envelope.origin.getY() + envelope.getDimension().getHeight());
+	}
+
 }

@@ -41,6 +41,10 @@ public final class Bounds {
 		return this.size;
 	}
 	
+	public Bounds translate(Location translation){
+		return new Bounds(this.location.translate(translation), this.size);
+	}
+	
 	public boolean isPointWithinBounds(Location point){
 		Location origin = this.getOrigin();
 		Location dCorner = this.getDiagonalCorner(); 
