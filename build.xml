@@ -118,7 +118,9 @@
 
 	<target name="clean">
 		<delete dir="${build.dir}">
-	       	  <fileset dir="${src.dir}/${package}" includes="ContextTree*.java"/> 
+	       	  <fileset dir="${src.dir}/${package}" includes="TreeDrawingVm.java"/> 
+	       	  <fileset dir="${src.dir}/${package}" includes="DrawingVmLexer.java"/> 
+	       	  <fileset dir="${src.dir}/${package}" includes="DrawingVmParser.java"/> 
 	          <fileset dir="${src.dir}" 
 	                includes="**/*.class,**/*.tokens" />
 		</delete>
