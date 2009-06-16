@@ -3,23 +3,49 @@ package org.pathwayeditor.figurevm;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-public final class InstructionList {
+import org.pathwayeditor.figurevm.Instruction.InstructionType;
+
+public final class FigureDefinition implements IFigureDefinition {
 	private final List<Instruction> instlist;
 	
-	public InstructionList(List<Instruction> list){
+	public FigureDefinition(List<Instruction> list){
 		this.instlist = new ArrayList<Instruction>(list);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinition#iterator()
+	 */
 	public Iterator<Instruction> iterator(){
 		return this.instlist.iterator();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinition#getBindVariableNames()
+	 */
+	public Set<String> getBindVariableNames(){
+		Set<String> retVal = new TreeSet<String>();
+		for(Instruction inst : this.instlist){
+			if(inst.getType().equals(InstructionType.BOUND_VALUE)){
+				String name = inst.getTypedValue(); 
+				retVal.add(name);
+			}
+		}
+		return retVal;
+	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinition#size()
+	 */
 	public int size(){
 		return this.instlist.size();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinition#get(int)
+	 */
 	public Instruction get(int index){
 		return this.instlist.get(index);
 	}
@@ -44,9 +70,9 @@ public final class InstructionList {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof InstructionList))
+		if (!(obj instanceof FigureDefinition))
 			return false;
-		InstructionList other = (InstructionList) obj;
+		FigureDefinition other = (FigureDefinition) obj;
 		if (instlist == null) {
 			if (other.instlist != null)
 				return false;

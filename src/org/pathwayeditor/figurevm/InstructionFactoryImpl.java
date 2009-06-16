@@ -83,7 +83,7 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 	}
 	
 	public Instruction createArray(List<Instruction> instArray) {
-		return new Instruction(new InstructionList(instArray));
+		return new Instruction(new FigureDefinition(instArray));
 	}
 
 	public Instruction createBoolean(String value) {
@@ -129,7 +129,7 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 	}
 
 	public Instruction createProcedure(List<Instruction> procList) {
-		return new Instruction(new Value(new InstructionList(procList)));
+		return new Instruction(new Value(new FigureDefinition(procList)));
 	}
 
 }

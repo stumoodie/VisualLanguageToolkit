@@ -27,8 +27,8 @@ public IInstructionFactory getInstructionFactory(){
     return this.instFact;
 }
 
-public InstructionList getInstructions(){
-    return new InstructionList(this.allInstructions);
+public IFigureDefinition getInstructions(){
+    return new FigureDefinition(this.allInstructions);
 }
 
 private void addInstructions(List<Instruction> insts){
