@@ -166,7 +166,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	public void setGridSize(Size newGridSize){
 		Size oldGridSize = this.getGridSize();
 		this.gridSize = newGridSize;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.GRID_SIZE, oldGridSize, newGridSize);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.GRID_SIZE, oldGridSize, newGridSize);
 	}
 	
 	public boolean isGridEnabled() {
@@ -176,7 +176,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	public void setGridEnabled(boolean gridEnabled) {
 		boolean oldGridEnabled = this.gridEnabled;
 		this.gridEnabled = gridEnabled;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.GRID_SHOWN, oldGridEnabled, gridEnabled);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.GRID_SHOWN, oldGridEnabled, gridEnabled);
 	}
 
 //	public boolean isSnapToGridEnabled() {
@@ -253,7 +253,7 @@ public class HibCanvas implements ICanvas, Serializable {
 
 		RGB oldBackgroundColour = this.backgroundColour;
 		this.backgroundColour = backgroundColour;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BACKGROUND_COLOUR, oldBackgroundColour, this.backgroundColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BACKGROUND_COLOUR, oldBackgroundColour, this.backgroundColour);
 	}
 
 	/* (non-Javadoc)
@@ -262,7 +262,7 @@ public class HibCanvas implements ICanvas, Serializable {
 	public void setSnapToGrid(boolean snapToGridStatus) {
 		boolean oldValue = this.snapToGridEnabled;
 		this.snapToGridEnabled = snapToGridStatus ;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SNAP_TO_GRID_ENABLED, oldValue, this.snapToGridEnabled);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SNAP_TO_GRID_ENABLED, oldValue, this.snapToGridEnabled);
 	}
 	
 	boolean getSnapToGrid(){
@@ -285,7 +285,7 @@ public class HibCanvas implements ICanvas, Serializable {
 
 		Size oldCanvasSize = this.canvasSize;
 		this.canvasSize = size;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.CANVAS_SIZE, oldCanvasSize, this.canvasSize);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.CANVAS_SIZE, oldCanvasSize, this.canvasSize);
 	}
 
 	public int getMapINode() {

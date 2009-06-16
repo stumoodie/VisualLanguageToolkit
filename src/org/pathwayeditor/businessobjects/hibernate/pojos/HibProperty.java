@@ -16,6 +16,8 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
@@ -23,6 +25,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
@@ -37,6 +42,8 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String name;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
+	private final ListenablePropertyChangeItem listenerHandler = new ListenablePropertyChangeItem();
+
 
 	/**
 	 * Constructor should only be used by hiberate.
@@ -94,6 +101,10 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 			removeLabel();
 		}
 	}
+	
+	protected ListenablePropertyChangeItem getListenerHandler(){
+		return this.listenerHandler;
+	}
 
 	private void createNewLabel() {
 		// get new label location before add label as this may confuse calculations
@@ -138,6 +149,26 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		return this.owner.getLabelLocationPolicy();
 	}
 	
+	public final void addChangeListener(IPropertyChangeListener listener) {
+		this.listenerHandler.addChangeListener(listener);
+	}
+
+	public final void firePropertyChange(IPropertyChangeEvent evt) {
+		this.listenerHandler.firePropertyChange(evt);
+	}
+
+	public final List<IPropertyChangeListener> getListeners() {
+		return this.listenerHandler.getListeners();
+	}
+
+	public final Iterator<IPropertyChangeListener> listenerIterator() {
+		return this.listenerHandler.listenerIterator();
+	}
+
+	public final void removeChangeListener(IPropertyChangeListener listener) {
+		this.listenerHandler.removeChangeListener(listener);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

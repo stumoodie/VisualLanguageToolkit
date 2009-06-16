@@ -1,33 +1,33 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
-import org.pathwayeditor.figurevm.InstructionList;
+import org.pathwayeditor.figurevm.IFigureDefinition;
 
 public class FigureController implements IFigureController {
 	private static final int DEFAULT_LINE_WIDTH = 1;
-//	private static final int MIN_LINE_WIDTH = 1;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final FigureBuilder builder;
 	private IConvexHull convexHull = null;
 	private GraphicsInstructionList figureInstructions;
 	private Envelope refBounds;
+	private final IFigureDefinition shapeDefinition; 
 
-	public FigureController(InstructionList shapeDefinition){
+	public FigureController(IFigureDefinition shapeDefinition){
 		try {
-//			InstructionParser parser = new InstructionParser(shapeDefinition);
-//			parser.parse();
-//			final InstructionList instructions = parser.getInstructions();
+			this.shapeDefinition = shapeDefinition;
 			ConvexHullCalculator hullCalc = new ConvexHullCalculator();
 			this.builder = new FigureBuilder(shapeDefinition, hullCalc);
 			this.builder.setLineWidth(DEFAULT_LINE_WIDTH);
 			this.refBounds = new Envelope(0, 0, 100, 100);
 		} catch (RuntimeException ex) {
-			ex.printStackTrace();
+			logger.error("An error occured reading the figure definition", ex);
 			throw ex;
 		}
 	}
@@ -68,6 +68,10 @@ public class FigureController implements IFigureController {
 		this.setBindString(name, value);
 	}
 
+	public Set<String> getBindVariableNames(){
+		return this.shapeDefinition.getBindVariableNames();
+	}
+	
 	public void setEnvelope(Envelope newEnvelope) {
 		this.refBounds = newEnvelope;
 	}

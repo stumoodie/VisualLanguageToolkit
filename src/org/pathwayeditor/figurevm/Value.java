@@ -42,7 +42,7 @@ public final class Value {
 		this.value = value;
 	}
 	
-	public Value(InstructionList value){
+	public Value(IFigureDefinition value){
 		this.type = ValueType.PROCEDURE;
 		this.value = value;
 	}
@@ -98,8 +98,8 @@ public final class Value {
 		return (ValueList)this.value;
 	}
 	
-	public InstructionList getPackedArray(){
-		return (InstructionList)this.value;
+	public IFigureDefinition getPackedArray(){
+		return (IFigureDefinition)this.value;
 	}
 	
 	public boolean isNull(){

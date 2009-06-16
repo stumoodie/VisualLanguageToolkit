@@ -1,5 +1,7 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import java.util.Set;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
@@ -31,6 +33,8 @@ public interface IFigureController {
 	void setBindInteger(String name, int value);
 
 	void setBindDouble(String name, double value);
+	
+	Set<String> getBindVariableNames();
 	
 	void generateFigureDefinition();
 	

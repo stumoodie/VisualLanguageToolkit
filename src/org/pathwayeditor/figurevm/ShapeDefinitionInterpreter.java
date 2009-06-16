@@ -12,14 +12,14 @@ public class ShapeDefinitionInterpreter {
 	private final Map<String, Value> bindingLookup;
 	private final InstructionExecutor executor;
 	
-	public ShapeDefinitionInterpreter(InstructionList instructions, IOpCodeHandler opCodehandler,
+	public ShapeDefinitionInterpreter(IFigureDefinition instructions, IOpCodeHandler opCodehandler,
 										IInterpreterErrorHandler errorHandler) {
 		this.variableLookup  = new HashMap<String, Value>();
 		this.bindingLookup  = new HashMap<String, Value>();
 		this.executor = new InstructionExecutor(instructions, this.variableLookup, this.bindingLookup, opCodehandler, errorHandler);
 	}
 	
-	public InstructionList getInstructions(){
+	public IFigureDefinition getInstructions(){
 		return this.executor.getInstructions();
 	}
 	

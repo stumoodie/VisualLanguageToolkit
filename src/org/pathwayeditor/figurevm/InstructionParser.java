@@ -41,7 +41,7 @@ public class InstructionParser {
 	}
 
 
-	public InstructionList getInstructions(){
+	public IFigureDefinition getInstructions(){
 		return this.walker.getInstructions();
 	}
 

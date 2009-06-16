@@ -190,7 +190,7 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		if(!this.position.equals(location)){
 			Location oldLocation = this.position;
 			this.position = location;
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.position);
 		}
 	}
 

@@ -130,7 +130,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 		Location oldLocation = this.bounds.getOrigin();
 		if(!oldLocation.equals(newLocation)){
 			this.bounds = this.bounds.changeOrigin(newLocation);
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, newLocation);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, newLocation);
 		}
 	}
 
@@ -141,7 +141,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 		Size oldSize = this.bounds.getSize();
 		if(!oldSize.equals(newSize)){
 			this.bounds = this.bounds.changeSize(newSize);
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, newSize);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, newSize);
 		}
 	}
 
@@ -160,10 +160,10 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 		Size oldSize = this.bounds.getSize();
 		this.bounds = newBounds;
 		if(!oldSize.equals(this.bounds.getSize())){
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, this.bounds.getSize());
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.bounds.getSize());
 		}
 		if(!oldLocation.equals(this.bounds.getOrigin())){
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.bounds.getOrigin());
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.bounds.getOrigin());
 		}
 	}
 

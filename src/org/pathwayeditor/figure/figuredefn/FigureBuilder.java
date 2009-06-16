@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
+import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
-import org.pathwayeditor.figurevm.InstructionList;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
 
 public class FigureBuilder {
@@ -22,7 +22,7 @@ public class FigureBuilder {
 	private static final char BOLD_STYLE = 'B';
 	private static final double MIN_DIMENSION_SIZE = 0;
 
-	private final InstructionList instList;
+	private final IFigureDefinition instList;
 	private final IConvexHullCalculator hullCalc;
 	private final ShapeDefinitionInterpreter producer;
 	private final Stack<GraphicsState> graphicsStack;
@@ -31,7 +31,7 @@ public class FigureBuilder {
 	private final GraphicsInstructionFactory g;
 	private GraphicsInstructionList figureDefn = null;
 	
-	public FigureBuilder(InstructionList outlineDefinition, IConvexHullCalculator hullCalc){
+	public FigureBuilder(IFigureDefinition outlineDefinition, IConvexHullCalculator hullCalc){
 		this.instList = outlineDefinition;
 		this.hullCalc = hullCalc;
 		producer = new ShapeDefinitionInterpreter(instList, new OpCodeHandler(), null);
