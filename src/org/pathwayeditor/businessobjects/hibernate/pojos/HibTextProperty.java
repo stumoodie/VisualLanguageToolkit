@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -48,7 +49,11 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		if (textValue == null)
 			throw new IllegalArgumentException("Text value cannot be null.");
 
-		this.textValue = textValue;
+		if(!textValue.equals(this.textValue)){
+			String oldValue = this.textValue;
+			this.textValue = textValue;
+			this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, oldValue, this.textValue);
+		}
 	}
 
 	/*

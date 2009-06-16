@@ -209,7 +209,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 
 		RGB oldColour = this.background;
 		this.background = color;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
 	}
 	
 	public void setObjectType ( INodeObjectType nodeObjectType)
@@ -224,7 +224,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(!this.position.equals(location)){
 			Location oldValue = this.position;
 			this.position = location;
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldValue, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldValue, this.position);
 		}
 	}
 
@@ -235,7 +235,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(!this.size.equals(size)){
 			Size oldValue = this.size;
 			this.size = size;
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldValue, this.size);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldValue, this.size);
 		}
 	}
 

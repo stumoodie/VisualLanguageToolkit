@@ -28,7 +28,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
             TreeDrawingVm walker = new TreeDrawingVm(nodes);
             walker.setInstructionFactory(new InstructionFactoryImpl());
             walker.shapeDefn();
-            InstructionList instructions = walker.getInstructions();
+            IFigureDefinition instructions = walker.getInstructions();
             System.out.println("Insts: " + instructions);
             ShapeDefinitionInterpreterTest testHarness = new ShapeDefinitionInterpreterTest();
             ShapeDefinitionInterpreter interpreter = new ShapeDefinitionInterpreter(instructions, testHarness,

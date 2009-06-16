@@ -46,7 +46,7 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 		}
 	}
 	
-	public final void notifyProperyChange(final PropertyChange type, final Object oldValue, final Object newValue){
+	public final void notifyPropertyChange(final PropertyChange type, final Object oldValue, final Object newValue){
 		IPropertyChangeEvent event = new IPropertyChangeEvent(){
 
 			public Object getNewValue() {

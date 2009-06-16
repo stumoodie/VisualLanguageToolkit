@@ -205,7 +205,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		
 		String oldName = this.name;
 		this.name = name;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldName, this.name);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NAME, oldName, this.name);
 	}
 
 	public String getDescription() {
@@ -218,7 +218,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		
 		String oldDescription = this.description;
 		this.description = description;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldDescription, this.description);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DESCRIPTION, oldDescription, this.description);
 	}
 
 	public String getDetailedDescription() {
@@ -231,7 +231,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		
 		String oldDetailedDescription = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldDetailedDescription, this.detailedDescription);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DETAILED_DESCRIPTION, oldDetailedDescription, this.detailedDescription);
 	}
 
 	public String getUrl() {
@@ -243,7 +243,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		
 		String oldUrl = this.url;
 		this.url = url;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldUrl, this.url);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.URL, oldUrl, this.url);
 	}
 
 	public int getFillRed() {
@@ -354,7 +354,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		int oldLineWidth = this.lineWidth;
 		this.lineWidth = lineWidth;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
 	}
 
 	public int getPadding() {
@@ -364,7 +364,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	public void setPadding(int padding) {
 		int oldPadding = padding;
 		this.padding = padding;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.PADDING, oldPadding, this.padding);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.PADDING, oldPadding, this.padding);
 	}
 
 	void setShapeNode(HibShapeNode newNode){
@@ -422,7 +422,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		RGB oldFillColour = this.fillColour;
 		this.fillColour = fillColour;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
 	}
 
 	/* (non-Javadoc)
@@ -434,7 +434,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		RGB oldTextColour = this.textColour;
 		this.textColour = textColour;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.FILL_COLOUR, oldTextColour, this.textColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.FILL_COLOUR, oldTextColour, this.textColour);
 	}
 	
 	/* (non-Javadoc)
@@ -446,7 +446,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		RGB oldLineColour = this.lineColour;
 		this.lineColour = lineColour;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
 	}
 
 	/* (non-Javadoc)
@@ -458,7 +458,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		LineStyle oldLineStyle = this.lineStyle;
 		this.lineStyle = lineStyle ;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
 	}
 	
 	/* (non-Javadoc)
@@ -470,7 +470,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		Alignment oldHorizontalAlignment = this.horizontalAlignment;
 		this.horizontalAlignment = alignment ;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ALIGNMENT, oldHorizontalAlignment, this.horizontalAlignment);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.ALIGNMENT, oldHorizontalAlignment, this.horizontalAlignment);
 	}
 	
 	/* (non-Javadoc)
@@ -482,7 +482,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		Alignment oldVerticalAlignment = this.verticalAlignment;
 		this.verticalAlignment = alignment ;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ALIGNMENT, oldVerticalAlignment, this.verticalAlignment);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.ALIGNMENT, oldVerticalAlignment, this.verticalAlignment);
 	}
 
 	/* (non-Javadoc)
@@ -495,7 +495,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if(!this.position.equals(newLocation)){
 			Location oldLocation = this.position;
 			this.position = newLocation;
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.position);
 		}
 	}
 
@@ -507,7 +507,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		PrimitiveShapeType oldPrimitiveShape = this.shapeType;
 		this.shapeType = primitiveShape;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.PRIMITIVE_SHAPE_TYPE, oldPrimitiveShape, this.shapeType);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.PRIMITIVE_SHAPE_TYPE, oldPrimitiveShape, this.shapeType);
 	}
 
 	/* (non-Javadoc)
@@ -520,7 +520,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if(!this.size.equals(size)){
 			Size oldSize = this.size;
 			this.size = size;
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.SIZE, oldSize, this.size);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.size);
 		}
 	}
 
@@ -579,7 +579,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		
 		boolean oldNameVisible = this.nameVisible;
 		this.nameVisible = value;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME_VISIBLE, oldNameVisible, this.nameVisible);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NAME_VISIBLE, oldNameVisible, this.nameVisible);
 	}
 
 	/* (non-Javadoc)

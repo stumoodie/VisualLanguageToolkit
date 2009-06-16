@@ -171,7 +171,7 @@ s	 */
 		
 		String oldValue = this.name;
 		this.name = name;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.NAME, oldValue, this.name);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NAME, oldValue, this.name);
 	}
 
 	public String getDescription() {
@@ -184,7 +184,7 @@ s	 */
 		
 		String oldValue = this.name;
 		this.description = description;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DESCRIPTION, oldValue, this.description);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DESCRIPTION, oldValue, this.description);
 	}
 
 	public String getDetailedDescription() {
@@ -197,7 +197,7 @@ s	 */
 		
 		String oldValue = this.detailedDescription;
 		this.detailedDescription = detailedDescription;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.DETAILED_DESCRIPTION, oldValue, this.detailedDescription);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DETAILED_DESCRIPTION, oldValue, this.detailedDescription);
 }
 
 	public String getUrl() {
@@ -210,7 +210,7 @@ s	 */
 		
 		String oldValue = this.url;
 		this.url = url;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.URL, oldValue, this.url);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.URL, oldValue, this.url);
 	}
 
 	public int getLineRed() {
@@ -247,7 +247,7 @@ s	 */
 		
 		LineStyle oldValue = this.lineStyle;
 		this.lineStyle = lineStyle;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 	}
 
 	public int getLineWidth() {
@@ -260,7 +260,7 @@ s	 */
 		
 		int oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 	}
 
 	public ConnectionRouter getRouterType() {
@@ -273,7 +273,7 @@ s	 */
 		
 		ConnectionRouter oldValue = this.routerType;
 		this.routerType = routerType;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.ROUTER_TYPE, oldValue, this.routerType);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.ROUTER_TYPE, oldValue, this.routerType);
 	}
 
 	public List<HibBendPoint> getBendPoints() {
@@ -320,7 +320,7 @@ s	 */
 		this.hibBendPoints.remove(hibBendPoint);
 		// break link to this attribute so it will be deleted.
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
 	}
 
 	/* (non-Javadoc)
@@ -339,7 +339,7 @@ s	 */
 
 		RGB oldValue = this.lineColour;
 		this.lineColour = newColor;
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
 	}
 
 	/* (non-Javadoc)
@@ -424,7 +424,7 @@ s	 */
 				// we want to add it to the end of the list so we append it bp to the list.
 				this.hibBendPoints.add((HibBendPoint)bendPoint);
 			}
-			this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REINDEXED, oldIdx, indexPos);
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REINDEXED, oldIdx, indexPos);
 		}
 	}
 
@@ -457,7 +457,7 @@ s	 */
 		HibBendPoint hibBendPoint = this.hibBendPoints.get(index);
 		this.hibBendPoints.remove(index);
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
 	}
 
 	/* (non-Javadoc)
@@ -466,7 +466,7 @@ s	 */
 	public IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
 		this.hibBendPoints.add(retVal);
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
 		return retVal;
 	}
 
@@ -481,7 +481,7 @@ s	 */
 		else {
 			this.hibBendPoints.add(retVal);
 		}
-		this.listenablePropertyChangeItem.notifyProperyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
+		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
 		return retVal;
 	}
 

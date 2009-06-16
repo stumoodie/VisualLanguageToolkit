@@ -144,7 +144,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		LinkEndDecoratorShape oldValue = this.endDecoratorType;
 		this.endDecoratorType = decoratorType;
-		this.eventHandler.notifyProperyChange(PropertyChange.END_DECORATOR_TYPE, oldValue, this.endDecoratorType);
+		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_TYPE, oldValue, this.endDecoratorType);
 	}
 
 	public int getEndDecWidth() {
@@ -232,7 +232,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 
 		short oldValue = this.offset;
 		this.offset = (short) newGap;
-		this.eventHandler.notifyProperyChange(PropertyChange.TERMINUS_GAP, oldValue, this.offset);
+		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_GAP, oldValue, this.offset);
 	}
 
 	public HibLinkAttribute getOwningLink() {
@@ -285,7 +285,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		Size oldValue = this.endDecSize;
 		this.endDecSize = size;
-		this.eventHandler.notifyProperyChange(PropertyChange.END_DECORATOR_SIZE, oldValue, this.endDecSize);
+		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_SIZE, oldValue, this.endDecSize);
 	}
 
 	public void setTerminusColour(RGB newColour) {
@@ -293,7 +293,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		RGB oldValue = this.terminusColour;
 		this.terminusColour = newColour;
-		this.eventHandler.notifyProperyChange(PropertyChange.TERMINUS_DEC_COLOUR, oldValue, this.terminusColour);
+		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DEC_COLOUR, oldValue, this.terminusColour);
 	}
 
 	public void setTerminusDecoratorType(PrimitiveShapeType shapeObjectType) {
@@ -301,7 +301,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		PrimitiveShapeType oldValue = this.termShapeType;
 		this.termShapeType = shapeObjectType;
-		this.eventHandler.notifyProperyChange(PropertyChange.TERMINUS_DECORATOR_TYPE, oldValue, this.termShapeType);
+		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DECORATOR_TYPE, oldValue, this.termShapeType);
 	}
 
 	public void setTerminusSize(Size newSize) {
@@ -309,7 +309,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		Size oldValue = this.terminusSize;
 		this.terminusSize = newSize;
-		this.eventHandler.notifyProperyChange(PropertyChange.TERMINUS_SIZE, oldValue, this.terminusSize);
+		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_SIZE, oldValue, this.terminusSize);
 	}
 
 	public ILinkTerminusDefinition getDefinition() {
@@ -448,7 +448,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		if(!this.location.equals(newLocation)){
 			Location oldLocation = this.location;
 			this.location = newLocation;
-			this.eventHandler.notifyProperyChange(PropertyChange.LOCATION, oldLocation, this.location);
+			this.eventHandler.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.location);
 		}
 	}
 
