@@ -1,4 +1,4 @@
-package org.pathwayeditor.figure.customfigure;
+package org.pathwayeditor.figure.figuredefn;
 
 import java.util.ArrayList;
 import java.util.Collection;

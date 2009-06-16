@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.figure.customfigure.GraphicsInstructionList;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
 
 public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;

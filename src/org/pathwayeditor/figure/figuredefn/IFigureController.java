@@ -1,4 +1,4 @@
-package org.pathwayeditor.figure.customfigure;
+package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;

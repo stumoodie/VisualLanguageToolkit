@@ -1,4 +1,4 @@
-package org.pathwayeditor.figure.customfigure;
+package org.pathwayeditor.figure.figuredefn;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;

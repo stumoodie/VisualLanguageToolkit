@@ -1,4 +1,4 @@
-package org.pathwayeditor.figure.customfigure;
+package org.pathwayeditor.figure.figuredefn;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -9,8 +9,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.customfigure.GraphicsInstruction.GraphicsOpCode;
-import org.pathwayeditor.figure.customfigure.IFont.Style;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
+import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Point;
 
 public class FigureDrawer {

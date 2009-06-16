@@ -1,4 +1,4 @@
-package org.pathwayeditor.figure.customfigure;
+package org.pathwayeditor.figure.figuredefn;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -8,7 +8,7 @@ import java.util.Stack;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.customfigure.IFont.Style;
+import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
 import org.pathwayeditor.figurevm.InstructionList;
