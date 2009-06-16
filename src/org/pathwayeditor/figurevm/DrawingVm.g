@@ -175,6 +175,7 @@ OPCODE
 	| 'floor'
 	| 'neg'
 	| 'abs'
+	| 'curbounds'
 	;
 
 NAME_VALUE

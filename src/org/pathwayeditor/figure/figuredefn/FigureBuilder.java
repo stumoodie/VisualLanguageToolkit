@@ -9,6 +9,7 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
+import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
@@ -238,6 +239,17 @@ public class FigureBuilder {
 		public void handleText(double x, double y, String text) {
 			drawText(x, y, text);
 		}
+		
+		public List<Double> getCurBounds(){
+			final int numVariables = 4;
+			Envelope e = currentState.getEnvelope();
+			List<Double> retVal = new ArrayList<Double>(numVariables);
+			retVal.add(e.getOrigin().getX());
+			retVal.add(e.getOrigin().getY());
+			retVal.add(e.getDimension().getWidth());
+			retVal.add(e.getDimension().getHeight());
+			return retVal;
+		}
 
 		public List<Integer> getCurFillColour() {
 			List<Integer> retVal = null;
@@ -382,6 +394,10 @@ public class FigureBuilder {
 		double retVal = lineWidth;
 		logger.debug("getCurrLineWidth: scaled lineWidth=" + retVal +")");
 		return retVal;
+	}
+	
+	public void setEnvelope(Envelope newEnvelope){
+		this.currentState.setEnvelope(newEnvelope);
 	}
 
 	public void setBindString(String string, String value) {

@@ -52,5 +52,7 @@ public 	interface IOpCodeHandler {
 
 	void setLineWidth(double lineWidth);
 
+	List<Double> getCurBounds();
+	
 	double currentLineWidth();
 }

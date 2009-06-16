@@ -386,8 +386,23 @@ public class InstructionExecutor {
 				processAbs();
 			}
 		});
+		this.opCodeLookup.put(OpCodes.CUR_BOUNDS, new IOpCodeLookup(){
+			public void processOpCode() {
+				processCurBounds();
+			}
+		});
 	}
 	
+	/**
+	 * 
+	 */
+	private void processCurBounds() {
+		List<Double> bounds = this.opCodeHandler.getCurBounds();
+		for(Double component : bounds){
+			this.valueStack.push(new Value(component));
+		}
+	}
+
 	private void processAbs() {
 		Value operand = this.valueStack.pop();
 		Value result = null;
@@ -1000,7 +1015,9 @@ public class InstructionExecutor {
 			else if(inst.getType().equals(InstructionType.VARIABLE_NAME)){
 				// lookup variable
 				Value lookup = this.variableLookup.get((String)inst.getValue());
-				if(lookup == null) throw new IllegalStateException("No variable name found matching: " + inst.getValue());
+				if(lookup == null)
+					throw new IllegalStateException("No variable name found matching: " + inst.getValue());
+				
 				if(lookup.getType().equals(ValueType.PROCEDURE)){
 					InstructionExecutor arrayExec = new InstructionExecutor(lookup.getPackedArray(), this.valueStack,
 							variableLookup, bindLookup, opCodeHandler, errorHandler);

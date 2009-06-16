@@ -89,15 +89,16 @@ public class FigureController implements IFigureController {
 	}
 
 	public void generateFigureDefinition() {
-		double x = this.refBounds.getOrigin().getX();
-		double y = this.refBounds.getOrigin().getY();
-		double w = this.refBounds.getDimension().getWidth();
-		double h =this.refBounds.getDimension().getHeight();
-		this.builder.setBindDouble("x", x);
-		this.builder.setBindDouble("y", y);
-		this.builder.setBindDouble("w", w);
-		this.builder.setBindDouble("h", h);
-		logger.debug("Generating figure: x=" + x + ",y=" + y + ",w=" + w + "h=" + h);
+//		double x = this.refBounds.getOrigin().getX();
+//		double y = this.refBounds.getOrigin().getY();
+//		double w = this.refBounds.getDimension().getWidth();
+//		double h =this.refBounds.getDimension().getHeight();
+//		this.builder.setBindDouble("x", x);
+//		this.builder.setBindDouble("y", y);
+//		this.builder.setBindDouble("w", w);
+//		this.builder.setBindDouble("h", h);
+		this.builder.setEnvelope(refBounds);
+		logger.debug("Generating figure: env=" + this.refBounds);
 		this.builder.generateFigure();
 		this.figureInstructions = this.builder.getFigureDefinition();
 		IConvexHullCalculator calc = this.builder.getConvexHullCalculator();

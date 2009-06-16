@@ -168,4 +168,13 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		print("setLineWidth(" + lineWidth + ")");
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getCurBounds()
+	 */
+	public List<Double> getCurBounds() {
+		print("curBounds()");
+		Double retVal[] = new Double[]{ 0.0, 1.0, 2.0, 3.0 };
+		return Arrays.asList(retVal);
+	}
+
 }

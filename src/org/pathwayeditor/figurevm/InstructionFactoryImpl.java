@@ -73,6 +73,7 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 		{ "floor", OpCodes.FLOOR },
 		{ "neg", OpCodes.NEG },
 		{ "abs", OpCodes.ABS },
+		{ "curbounds", OpCodes.CUR_BOUNDS },
 	};
 	
 	public InstructionFactoryImpl(){
