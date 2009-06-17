@@ -28,7 +28,8 @@ public enum PrimitiveShapeType {
 	LH_PARALLELOGRAM(6), RH_PARALLELOGRAM(7), TRIANGLE(8), HEXAGON(9), UP_CHEVRON(10), DOWN_CHEVRON(11),
 	EMPTY_SET(12), ARC(13), LH_SIGN_ARROW(14), RH_SIGN_ARROW(15), SECTOR(16), MULTIMER(17),
 	CONCENTRIC_CIRCLES(18), ELLIPSE_MULTIMER(19), IRREGULAR_ROUNDED_RECTANGLE(20), XSHAPE(21),
-	BOTTOM_ROUNDED_RECTANGLE(22),SAUSAGE(23), PROCESS(24), ASSOCIATION(25), DISSOCIATION(26);
+	BOTTOM_ROUNDED_RECTANGLE(22),SAUSAGE(23), PROCESS(24), ASSOCIATION(25), DISSOCIATION(26),
+	MACROMOLECULE(27);
 
 	private static final int RECTANGLE_VAL = 1;
 	private static final int ELLIPSE_VAL = 2;
@@ -56,6 +57,7 @@ public enum PrimitiveShapeType {
 	private static final int PROCESS_VAL = 24;
 	private static final int ASSOCIATION_VAL = 25;
 	private static final int DISSOCIATION_VAL = 26;
+	private static final int MACROMOLECULE_VAL = 27;
 
 	private final int code;
 
@@ -121,6 +123,8 @@ public enum PrimitiveShapeType {
 				return ASSOCIATION;
 			case DISSOCIATION_VAL:
 				return DISSOCIATION;
+			case MACROMOLECULE_VAL:
+				return MACROMOLECULE;
 			default:
 				throw new IllegalArgumentException("Cannot obtain a enum type PrimitiveShapeType from code=" + code);
 		}

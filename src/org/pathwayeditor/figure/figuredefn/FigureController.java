@@ -53,19 +53,19 @@ public class FigureController implements IFigureController {
 	}
 
 	public void setBindBoolean(String name, Boolean value) {
-		this.setBindBoolean(name, value);
+		this.builder.setBindBoolean(name, value);
 	}
 
 	public void setBindDouble(String name, double value) {
-		this.setBindDouble(name, value);
+		this.builder.setBindDouble(name, value);
 	}
 
 	public void setBindInteger(String name, int value) {
-		this.setBindInteger(name, value);
+		this.builder.setBindInteger(name, value);
 	}
 
 	public void setBindString(String name, String value) {
-		this.setBindString(name, value);
+		this.builder.setBindString(name, value);
 	}
 
 	public Set<String> getBindVariableNames(){

@@ -852,7 +852,7 @@ public class InstructionExecutor {
 	private void processGe() {
 		Double val1 = this.valueStack.pop().getDouble();
 		Double val2 = this.valueStack.pop().getDouble();
-		int result = val1.compareTo(val2);
+		int result = val2.compareTo(val1);
 		boolean boolRes = result == GREATER_VAL || result == EQUAL_VAL;
 		Value inst = new Value(boolRes);
 		this.valueStack.push(inst);
@@ -861,7 +861,7 @@ public class InstructionExecutor {
 	private void processLe() {
 		Double val1 = this.valueStack.pop().getDouble();
 		Double val2 = this.valueStack.pop().getDouble();
-		int result = val1.compareTo(val2);
+		int result = val2.compareTo(val1);
 		boolean boolRes = result == LESSER_VAL || result == EQUAL_VAL;
 		Value inst = new Value(boolRes);
 		this.valueStack.push(inst);
@@ -870,7 +870,7 @@ public class InstructionExecutor {
 	private void processGt() {
 		Double val1 = this.valueStack.pop().getDouble();
 		Double val2 = this.valueStack.pop().getDouble();
-		int result = val1.compareTo(val2);
+		int result = val2.compareTo(val1);
 		boolean boolRes = result == GREATER_VAL;
 		Value inst = new Value(boolRes);
 		this.valueStack.push(inst);
@@ -879,7 +879,7 @@ public class InstructionExecutor {
 	private void processLt() {
 		Double val1 = this.valueStack.pop().getDouble();
 		Double val2 = this.valueStack.pop().getDouble();
-		int result = val1.compareTo(val2);
+		int result = val2.compareTo(val1);
 		boolean boolRes = result == LESSER_VAL;
 		Value inst = new Value(boolRes);
 		this.valueStack.push(inst);
