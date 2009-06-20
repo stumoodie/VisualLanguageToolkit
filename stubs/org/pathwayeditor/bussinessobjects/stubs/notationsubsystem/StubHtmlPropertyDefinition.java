@@ -89,4 +89,11 @@ public class StubHtmlPropertyDefinition implements IHtmlPropertyDefinition {
 		return IS_VISUALISABLE;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isDisplayed()
+	 */
+	public boolean isAlwaysDisplayed() {
+		return false;
+	}
+
 }

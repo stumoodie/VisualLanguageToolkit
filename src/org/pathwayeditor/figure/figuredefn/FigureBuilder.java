@@ -332,7 +332,7 @@ public class FigureBuilder {
 
 		public void setFontSize(int fontSize) {
 			IFont f = currentState.getFont();
-			f.setSize(fontSize);
+			currentState.setFont(f.newSize(fontSize));
 		}
 
 		public void setFontStyle(String styleString) {
@@ -346,7 +346,7 @@ public class FigureBuilder {
 				}
 			}
 			IFont f = currentState.getFont();
-			f.setStyle(style);
+			currentState.setFont(f.newStyle(style));
 		}
 
 		public void setLineColour(int red, int green, int blue) {

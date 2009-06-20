@@ -15,14 +15,13 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 
 public interface ILabelAttributeDefaults { 
-
-	Size getSize();
-
+	LabelLocationPolicy getLabelLocationPolicy();
+	
 	LineStyle getLineStyle();
 
 	RGB getLineColour();

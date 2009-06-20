@@ -90,7 +90,7 @@ public class LineSegment {
 	 * @return intersection points of two lines that contain this line segment and
 	 * the argumet line segment.
 	 */
-	private List<Point> getLinesIntersections (LineSegment line) {
+	public List<Point> getLinesIntersections (LineSegment line) {
 		List<Point> intersections = new ArrayList<Point>();
 		double temp[] = getEquation();
 		double a1 = temp[0];
@@ -121,6 +121,15 @@ public class LineSegment {
 		return new LineSegment(this.origin.translate(x, y), this.terminus.translate(x, y));
 	}
 	
+	/**
+	 * Get the angle of the vector of this line. Effectively the theta component of
+	 * the polar coordinate of the end point of this line using the start point
+	 * as the origin.
+	 * @return the angle in radians which is in the range -pi to pi.
+	 */
+	public double angle(){
+		return Math.atan2(this.getYDisplacement(), this.getXDisplacement());
+	}
 	
 	/**
 	 * Returns the coefficients of the generalized equation of the line passing through

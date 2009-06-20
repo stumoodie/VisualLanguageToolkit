@@ -88,4 +88,11 @@ public class StubListPropertyDefinition implements IListPropertyDefinition {
 		return IS_VISUALISABLE;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isDisplayed()
+	 */
+	public boolean isAlwaysDisplayed() {
+		return false;
+	}
+
 }

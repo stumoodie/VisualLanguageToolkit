@@ -18,10 +18,13 @@ limitations under the License.
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
+import org.pathwayeditor.figure.figuredefn.GenericFont;
+import org.pathwayeditor.figure.figuredefn.IFont;
 
 /**
  * @author smoodie
@@ -67,6 +70,20 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 	 */
 	public Size getSize() {
 		return SIZE;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getLabelLocationPolicy()
+	 */
+	public LabelLocationPolicy getLabelLocationPolicy() {
+		return LabelLocationPolicy.CENTRE;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getFont()
+	 */
+	public IFont getFont() {
+		return new GenericFont();
 	}
 
 }

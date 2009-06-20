@@ -50,6 +50,6 @@ public interface IGraphicsEngine {
 
 	RGB getLineColour();
 
-//	IFont createNewFont(EnumSet<Style> styles, double size);
+	void setFont(IFont modifiedFont);
 
 }

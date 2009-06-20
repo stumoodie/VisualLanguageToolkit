@@ -33,9 +33,9 @@ public class EnvelopeConvexHullBuilder  {
 	public IConvexHull getConvexHull(){
 		ConvexHullBuilder builder = new ConvexHullBuilder();
 		builder.addPoint(envelope.getOrigin());
-		builder.addPoint(envelope.getHorizontal());
-		builder.addPoint(envelope.getDiagonal());
-		builder.addPoint(envelope.getVerical());
+		builder.addPoint(envelope.getHorizontalCorner());
+		builder.addPoint(envelope.getDiagonalCorner());
+		builder.addPoint(envelope.getVerticalCorner());
 		return builder.getConvexHull();
 	}
 }

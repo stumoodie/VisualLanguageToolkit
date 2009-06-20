@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -32,8 +33,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
-import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
-import org.pathwayeditor.businessobjects.graphics.TerminatorLabelLocationPolicy;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -59,7 +58,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
     private transient ILinkTerminusDefinition terminusDefn = null;
     private transient Location location = Location.ORIGIN;
 	private final transient ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
-	private transient ILabelLocationPolicy labelLocationPolicy; 
 
 	/**
 	 * Default constructor to only be used by hibernate.
@@ -67,7 +65,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 */
 	HibLinkTerminus() {
 		super();
-		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 	}
 
 	public HibLinkTerminus(HibCanvas canvas, int creationSerial, HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
@@ -75,7 +72,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.linkAttribute = hibLinkAttribute;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
-		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 		setDefaults(terminusDefn.getDefaultAttributes());
 	}
 
@@ -96,7 +92,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.terminusDefn = other.terminusDefn;
 		this.termShapeType = other.getTerminusDecoratorType();
 		this.location = other.getLocation();
-		this.labelLocationPolicy = new TerminatorLabelLocationPolicy(this);
 	}
 
 	/**
@@ -206,6 +201,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	// The following is extra code specified in the hbm.xml files
 
 	private static final long serialVersionUID = -4462637156010353035L;
+	private static final int FIRST_PB_IDX = 0;
 
 
 	/*
@@ -453,23 +449,47 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#getLabelLocationPolicy()
-	 */
-	public ILabelLocationPolicy getLabelLocationPolicy() {
-		return this.labelLocationPolicy;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnnotatedCanvasAttribute#setLabelLocationPolicy(org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy)
-	 */
-	public void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy) {
-		this.labelLocationPolicy = labelLocationPolicy;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject#getLabelSubModel()
 	 */
 	public ILabelSubModel getLabelSubModel() {
 		return this.getOwningLink().getLabelSubModel();
+	}
+
+	public Location getReferencePoint() {
+		Location retVal = null;
+		if(this.linkTermType.equals(LinkTermType.SOURCE)){
+			retVal = getSrcReferencePoint();
+		}
+		else{
+			retVal = getTgtReferencePoint();
+		}
+		return retVal;
+	}
+
+	private Location getSrcReferencePoint(){
+		ILinkAttribute linkAtt = this.getOwningLink();
+		Location retVal = null;
+		if(linkAtt.numBendPoints() > 0){
+			IBendPoint bp = linkAtt.getBendPoint(FIRST_PB_IDX);
+			retVal = bp.getLocation();
+		}
+		else{
+			retVal = linkAtt.getTargetTerminus().getLocation();
+		}
+		return retVal;
+	}
+
+	private Location getTgtReferencePoint(){
+		ILinkAttribute linkAtt = this.getOwningLink();
+		Location retVal = null;
+		int numBendPoints = linkAtt.numBendPoints(); 
+		if(numBendPoints > 0){
+			IBendPoint bp = linkAtt.getBendPoint(numBendPoints - 1);
+			retVal = bp.getLocation();
+		}
+		else{
+			retVal = linkAtt.getSourceTerminus().getLocation();
+		}
+		return retVal;
 	}
 }

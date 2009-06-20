@@ -195,12 +195,14 @@ public class FigureDrawer {
 	}
 
 	private void processFontStyle(EnumSet<Style> values) {
-		this.graphics.getFont().setStyle(values);
+		IFont modifiedFont = this.graphics.getFont().newStyle(values);
+		this.graphics.setFont(modifiedFont);
 		logger.debug("Setting font style=" + values);
 	}
 
 	private void processFontSize(Integer fontSize) {
-		this.graphics.getFont().setSize(fontSize);
+		IFont modifiedFont = this.graphics.getFont().newSize(fontSize);
+		this.graphics.setFont(modifiedFont);
 		logger.debug("Setting font size=" + fontSize);
 	}
 

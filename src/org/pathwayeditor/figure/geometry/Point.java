@@ -9,6 +9,12 @@ public class Point {
 		this.y = y;
 	}
 
+	public static Point createFromPolar(double r, double theta){
+		double x = r * Math.cos(theta);
+		double y = r * Math.sin(theta);
+		return new Point(x, y);
+	}
+
 	public double getX() {
 		return x;
 	}

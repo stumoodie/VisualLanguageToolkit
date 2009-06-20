@@ -87,5 +87,12 @@ public class StubTextPropertyDefinition implements IPlainTextPropertyDefinition 
 	public boolean isVisualisable() {
 		return IS_VISUALISABLE;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isDisplayed()
+	 */
+	public boolean isAlwaysDisplayed() {
+		return true;
+	}
 	
 }

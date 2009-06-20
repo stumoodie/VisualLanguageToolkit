@@ -137,6 +137,8 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	 */
 	void setLocation(Location location);
 	
+	Location getReferencePoint();
+	
 	/**
 	 * Identity is based on the owningLink and the link end type.
 	 * @param other the other object to test.

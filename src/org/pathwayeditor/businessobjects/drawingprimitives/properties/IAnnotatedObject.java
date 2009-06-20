@@ -21,7 +21,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
-import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
 
 
 /**
@@ -43,10 +42,6 @@ public interface IAnnotatedObject {
 	IAnnotationProperty getProperty(IPropertyDefinition propDefn);
 	
 	IAnnotationProperty getProperty(String propName);
-	
-	ILabelLocationPolicy getLabelLocationPolicy();
-	
-	void setLabelLocationPolicy(ILabelLocationPolicy labelLocationPolicy);
 	
 	ILabelSubModel getLabelSubModel();
 }

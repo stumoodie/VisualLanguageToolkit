@@ -83,15 +83,15 @@ public final class Envelope {
 		return buf.toString();
 	}
 
-	public Point getHorizontal() {
+	public Point getHorizontalCorner() {
 		return this.origin.translate(this.dim.getWidth(), 0);
 	}
 
-	public Point getVerical() {
+	public Point getVerticalCorner() {
 		return this.origin.translate(0, this.dim.getHeight());
 	}
 
-	public Point getDiagonal() {
+	public Point getDiagonalCorner() {
 		return this.origin.translate(this.dim.getWidth(), this.dim.getHeight());
 	}
 

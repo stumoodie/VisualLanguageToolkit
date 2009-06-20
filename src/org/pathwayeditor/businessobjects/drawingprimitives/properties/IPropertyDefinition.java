@@ -18,7 +18,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public interface IPropertyDefinition {
-
 	/**
 	 * The property value as an object appropriate for its type.
 	 * This can be redefined by implementing classes. 
@@ -38,6 +37,11 @@ public interface IPropertyDefinition {
 	 */
 	boolean isVisualisable();
 
+	/**
+	 * Should this property be always displayed?
+	 * @return true if yes, false otherwise
+	 */
+	boolean isAlwaysDisplayed();
 	
 	/**
 	 * Is the property editable?
@@ -54,4 +58,6 @@ public interface IPropertyDefinition {
 	 * @return the copied annotation property.
 	 */
 	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty);
+	
+	
 }

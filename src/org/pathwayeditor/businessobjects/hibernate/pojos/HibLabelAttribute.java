@@ -49,8 +49,8 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private HibProperty visualisableProperty;
 	private RGB background;
 	private HibLabelNode labelNode;
-	private INodeObjectType objectType;
-	private IConvexHull convexHull = null;
+	private transient INodeObjectType objectType;
+	private transient IConvexHull convexHull = null;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
@@ -82,9 +82,9 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
-		this.setSize(labelDefaults.getSize());
-		this.setBackgroundColor(labelDefaults.getFillColour());
-	}
+//		this.setSize(labelDefaults.getSize());
+		this.size = new Size(0, 0);
+		this.setBackgroundColor(labelDefaults.getFillColour());	}
 
 	public Location getPosition() {
 		return this.position;
@@ -321,14 +321,18 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
 	public Bounds getBounds() {
-		return new Bounds(this.position, this.size);
+		Location topLhCorner = new Location(this.position.getX() - (this.size.getWidth()/2),
+				this.position.getY() - (this.size.getHeight()/2));
+		return new Bounds(topLhCorner, this.size);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Bounds newBounds) {
-		this.setLocation(newBounds.getOrigin());
+		Location centre = new Location(newBounds.getOrigin().getX() + (newBounds.getSize().getWidth()/2),
+				newBounds.getOrigin().getY() + (newBounds.getSize().getHeight()/2));
+		this.setLocation(centre);
 		this.setSize(newBounds.getSize());
 	}
 

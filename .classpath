@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="org/pathwayeditor/businessobjects/drawingprimitives/IAnnotatedCanvasAttribute.java|org/pathwayeditor/businessobjects/drawingprimitives/attributes/IPrimitiveShape.java" kind="src" path="src"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="stubs"/>
 	<classpathentry kind="src" path="Acceptance Test"/>
 	<classpathentry kind="src" path="test"/>

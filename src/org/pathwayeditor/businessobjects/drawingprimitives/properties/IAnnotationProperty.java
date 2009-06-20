@@ -17,11 +17,9 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
-import org.pathwayeditor.businessobjects.graphics.ILabelLocationPolicy;
 
 
 public interface IAnnotationProperty extends IPropertyChangeListenee {
-	
 	/**
 	 * Get the definition associated with this PlainTextProperty.
 	 * @return The property definition instance. Cannot be null.
@@ -54,7 +52,7 @@ public interface IAnnotationProperty extends IPropertyChangeListenee {
 	boolean isDisplayed();
 	
 	/**
-	 * Record that the property is displayed or not. Requires that size and location are defined if set to true.
+	 * Record that the property is displayed or not. This need not provide the location and size of the label.
 	 * @param displayed true for displayed, false for not.
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
@@ -66,11 +64,4 @@ public interface IAnnotationProperty extends IPropertyChangeListenee {
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
 	ILabelAttribute getDisplayedLabel();
-	
-	/**
-	 * Gets a location policy that is used to layout any labels associated with this property.
-	 * @return the label location policy, which cannot be null.
-	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
-	 */
-	ILabelLocationPolicy getLabelLocationPolicy();
 }

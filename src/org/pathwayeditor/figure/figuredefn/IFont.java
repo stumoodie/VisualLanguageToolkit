@@ -9,11 +9,11 @@ public interface IFont {
 
 	int getFontSize();
 
-	void setSize(int fontSize);
+	IFont newSize(int fontSize);
 
 	EnumSet<Style> getStyle();
 
-	void setStyle(EnumSet<Style> style);
+	IFont newStyle(EnumSet<Style> style);
 	
 	Dimension getStringExtends(String str);
 
