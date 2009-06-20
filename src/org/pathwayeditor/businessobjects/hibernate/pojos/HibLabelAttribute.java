@@ -21,10 +21,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
@@ -33,7 +30,10 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
+import org.pathwayeditor.figure.geometry.Point;
 
 public class HibLabelAttribute extends HibCanvasAttribute implements Serializable, ILabelAttribute {
 	private final Logger logger = Logger.getLogger(this.getClass()); 
@@ -44,8 +44,8 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private static final int DEFAULT_HEIGHT = 0;
 	private static final int DEFAULT_WIDTH = 0;
 
-	private Location position = new Location(DEFAULT_X, DEFAULT_Y);
-	private Size size = new Size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+	private Point position = new Point(DEFAULT_X, DEFAULT_Y);
+	private Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private HibProperty visualisableProperty;
 	private RGB background;
 	private HibLabelNode labelNode;
@@ -58,8 +58,8 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @deprecated should not be used by hibernate code, use one of the other constructors. 
 	 */
 	HibLabelAttribute() {
-		size = new Size (0 , 0) ;
-		position = new Location ( 0 , 0 ) ;
+		size = new Dimension (0 , 0) ;
+		position = Point.ORIGIN;
 		background = new RGB ( 0 , 0 ,0 ) ;
 	}
 
@@ -83,10 +83,10 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
 //		this.setSize(labelDefaults.getSize());
-		this.size = new Size(0, 0);
+		this.size = new Dimension(0, 0);
 		this.setBackgroundColor(labelDefaults.getFillColour());	}
 
-	public Location getPosition() {
+	public Point getPosition() {
 		return this.position;
 	}
 
@@ -98,35 +98,35 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.labelNode = node;
 	}
 
-	public void setXPosition(int XPosition) {
+	public void setXPosition(double XPosition) {
 		this.position = this.position.newX(XPosition);
 	}
 
-	public int getXPosition() {
+	public double getXPosition() {
 		return this.position.getX();
 	}
 
-	public int getYPosition() {
+	public double getYPosition() {
 		return this.position.getY();
 	}
 
-	public void setYPosition(int YPosition) {
+	public void setYPosition(double YPosition) {
 		this.position = this.position.newY(YPosition);
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return this.size.getWidth();
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		this.size = this.size.newWidth(width);
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return this.size.getHeight();
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.size = this.size.newHeight(height);
 	}
 
@@ -168,7 +168,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
 	 * getLocation()
 	 */
-	public Location getLocation() {
+	public Point getLocation() {
 		return this.position;
 	}
 
@@ -189,7 +189,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getSize
 	 * ()
 	 */
-	public Size getSize() {
+	public Dimension getSize() {
 		return this.size;
 	}
 
@@ -217,23 +217,23 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.objectType = nodeObjectType ;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(Point location) {
 		if (location == null)
 			throw new IllegalArgumentException("location cannot be null.");
 
 		if(!this.position.equals(location)){
-			Location oldValue = this.position;
+			Point oldValue = this.position;
 			this.position = location;
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldValue, this.position);
 		}
 	}
 
-	public void setSize(Size size) {
+	public void setSize(Dimension size) {
 		if (size == null)
 			throw new IllegalArgumentException("size cannot be null.");
 
 		if(!this.size.equals(size)){
-			Size oldValue = this.size;
+			Dimension oldValue = this.size;
 			this.size = size;
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldValue, this.size);
 		}
@@ -320,20 +320,20 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
-	public Bounds getBounds() {
-		Location topLhCorner = new Location(this.position.getX() - (this.size.getWidth()/2),
+	public Envelope getBounds() {
+		Point topLhCorner = new Point(this.position.getX() - (this.size.getWidth()/2),
 				this.position.getY() - (this.size.getHeight()/2));
-		return new Bounds(topLhCorner, this.size);
+		return new Envelope(topLhCorner, this.size);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
-	public void setBounds(Bounds newBounds) {
-		Location centre = new Location(newBounds.getOrigin().getX() + (newBounds.getSize().getWidth()/2),
-				newBounds.getOrigin().getY() + (newBounds.getSize().getHeight()/2));
+	public void setBounds(Envelope newBounds) {
+		Point centre = new Point(newBounds.getOrigin().getX() + (newBounds.getDimension().getWidth()/2),
+				newBounds.getOrigin().getY() + (newBounds.getDimension().getHeight()/2));
 		this.setLocation(centre);
-		this.setSize(newBounds.getSize());
+		this.setSize(newBounds.getDimension());
 	}
 
 	/* (non-Javadoc)

@@ -30,7 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author ntsorman
@@ -46,9 +46,9 @@ public class HibBendPointTest {
 	private static final int INDEX_POSITION = 10 ;
 	private static final int X_POSITION = 100 ;
 	private static final int Y_POSITION = 100 ;
-	private static final Location POSITION = new Location(X_POSITION, Y_POSITION);
-	private static final Location FIRST_REL_DIM = new Location(101, 102);
-	private static final Location SECOND_REL_DIM = new Location(103, 104);
+	private static final Point POSITION = new Point(X_POSITION, Y_POSITION);
+	private static final Point FIRST_REL_DIM = new Point(101, 102);
+	private static final Point SECOND_REL_DIM = new Point(103, 104);
 	private static final int INDEX_POSITION_OTHER = 15 ;
 	
 	@Before

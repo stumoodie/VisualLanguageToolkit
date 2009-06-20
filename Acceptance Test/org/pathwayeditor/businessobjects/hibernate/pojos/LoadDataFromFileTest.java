@@ -43,10 +43,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Connection
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
@@ -57,6 +55,8 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.testutils.GenericTester;
 
 /**
@@ -305,24 +305,24 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final RGB RGB_108 = new RGB ( 108 , 108 	, 108 ) ;
 	private static final RGB RGB_109 = new RGB ( 109 , 109 	, 109 ) ;
 	
-	private static final Size SIZE_10 = new Size ( 10 , 10 ) ;
-	private static final Size SIZE_51 = new Size ( 51 , 51 ) ;
-	private static final Size SIZE_52 = new Size ( 52 , 52 ) ;
-	private static final Size SIZE_53 = new Size ( 53 , 53 ) ;
-	private static final Size SIZE_54 = new Size ( 54 , 54 ) ;
-	private static final Size SIZE_55 = new Size ( 55 , 55 ) ;
-	private static final Size SIZE_56 = new Size ( 56 , 56 ) ;
-	private static final Size SIZE_57 = new Size ( 57 , 57 ) ;
-	private static final Size SIZE_58 = new Size ( 58 , 58 ) ;
+	private static final Dimension SIZE_10 = new Dimension ( 10 , 10 ) ;
+	private static final Dimension SIZE_51 = new Dimension ( 51 , 51 ) ;
+	private static final Dimension SIZE_52 = new Dimension ( 52 , 52 ) ;
+	private static final Dimension SIZE_53 = new Dimension ( 53 , 53 ) ;
+	private static final Dimension SIZE_54 = new Dimension ( 54 , 54 ) ;
+	private static final Dimension SIZE_55 = new Dimension ( 55 , 55 ) ;
+	private static final Dimension SIZE_56 = new Dimension ( 56 , 56 ) ;
+	private static final Dimension SIZE_57 = new Dimension ( 57 , 57 ) ;
+	private static final Dimension SIZE_58 = new Dimension ( 58 , 58 ) ;
 	
-	private static final Location LOCATION_51 = new Location ( 51, 51) ;
-	private static final Location LOCATION_52 = new Location ( 52, 52) ;
-	private static final Location LOCATION_53 = new Location ( 53, 53) ;
-	private static final Location LOCATION_54 = new Location ( 54, 54) ;
-	private static final Location LOCATION_55 = new Location ( 55, 55) ;
-	private static final Location LOCATION_56 = new Location ( 56, 56) ;
-	private static final Location LOCATION_57 = new Location ( 57, 57) ;
-	private static final Location LOCATION_58 = new Location ( 58, 58) ;
+	private static final Point LOCATION_51 = new Point ( 51, 51) ;
+	private static final Point LOCATION_52 = new Point ( 52, 52) ;
+	private static final Point LOCATION_53 = new Point ( 53, 53) ;
+	private static final Point LOCATION_54 = new Point ( 54, 54) ;
+	private static final Point LOCATION_55 = new Point ( 55, 55) ;
+	private static final Point LOCATION_56 = new Point ( 56, 56) ;
+	private static final Point LOCATION_57 = new Point ( 57, 57) ;
+	private static final Point LOCATION_58 = new Point ( 58, 58) ;
 	
 	private static final int PROPERTY1_CREATION_SERIAL = 1 ; 
 	private static final int PROPERTY2_CREATION_SERIAL = 2 ; 
@@ -366,24 +366,24 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int LINKTERM_OFFSET_VALUE17 = 17 ;
 	private static final int LINKTERM_OFFSET_VALUE18 = 18 ;
 	
-	private static final Size END_DECORATOR_SIZE11 = new Size ( 11 , 11 ) ;
-	private static final Size END_DECORATOR_SIZE12 = new Size ( 12 , 12 ) ;
-	private static final Size END_DECORATOR_SIZE13 = new Size ( 13 , 13 ) ;
-	private static final Size END_DECORATOR_SIZE14 = new Size ( 14 , 14 ) ;
-	private static final Size END_DECORATOR_SIZE15 = new Size ( 15 , 15 ) ;
-	private static final Size END_DECORATOR_SIZE16 = new Size ( 16 , 16 ) ;
-	private static final Size END_DECORATOR_SIZE17 = new Size ( 17 , 17 ) ;
-	private static final Size END_DECORATOR_SIZE18 = new Size ( 18 , 18 ) ;
-	private static final Size END_DECORATOR_SIZE19 = new Size ( 19 , 19 ) ;
-	private static final Size END_DECORATOR_SIZE20 = new Size ( 20 , 20 ) ;
-	private static final Size END_DECORATOR_SIZE21 = new Size ( 21 , 21 ) ;
-	private static final Size END_DECORATOR_SIZE22 = new Size ( 22 , 22 ) ;
-	private static final Size END_DECORATOR_SIZE23 = new Size ( 23 , 23 ) ;
-	private static final Size END_DECORATOR_SIZE24 = new Size ( 24 , 24 ) ;
-	private static final Size END_DECORATOR_SIZE25 = new Size ( 25 , 25 ) ;
-	private static final Size END_DECORATOR_SIZE26 = new Size ( 26 , 26 ) ;
-	private static final Size END_DECORATOR_SIZE27 = new Size ( 27 , 27 ) ;
-	private static final Size END_DECORATOR_SIZE28 = new Size ( 28 , 28 ) ;
+	private static final Dimension END_DECORATOR_SIZE11 = new Dimension ( 11 , 11 ) ;
+	private static final Dimension END_DECORATOR_SIZE12 = new Dimension ( 12 , 12 ) ;
+	private static final Dimension END_DECORATOR_SIZE13 = new Dimension ( 13 , 13 ) ;
+	private static final Dimension END_DECORATOR_SIZE14 = new Dimension ( 14 , 14 ) ;
+	private static final Dimension END_DECORATOR_SIZE15 = new Dimension ( 15 , 15 ) ;
+	private static final Dimension END_DECORATOR_SIZE16 = new Dimension ( 16 , 16 ) ;
+	private static final Dimension END_DECORATOR_SIZE17 = new Dimension ( 17 , 17 ) ;
+	private static final Dimension END_DECORATOR_SIZE18 = new Dimension ( 18 , 18 ) ;
+	private static final Dimension END_DECORATOR_SIZE19 = new Dimension ( 19 , 19 ) ;
+	private static final Dimension END_DECORATOR_SIZE20 = new Dimension ( 20 , 20 ) ;
+	private static final Dimension END_DECORATOR_SIZE21 = new Dimension ( 21 , 21 ) ;
+	private static final Dimension END_DECORATOR_SIZE22 = new Dimension ( 22 , 22 ) ;
+	private static final Dimension END_DECORATOR_SIZE23 = new Dimension ( 23 , 23 ) ;
+	private static final Dimension END_DECORATOR_SIZE24 = new Dimension ( 24 , 24 ) ;
+	private static final Dimension END_DECORATOR_SIZE25 = new Dimension ( 25 , 25 ) ;
+	private static final Dimension END_DECORATOR_SIZE26 = new Dimension ( 26 , 26 ) ;
+	private static final Dimension END_DECORATOR_SIZE27 = new Dimension ( 27 , 27 ) ;
+	private static final Dimension END_DECORATOR_SIZE28 = new Dimension ( 28 , 28 ) ;
 	
 	private static final RGB TERMINUS_COLOR101 = new RGB ( 101 , 101 , 101 ) ;
 	private static final RGB TERMINUS_COLOR102 = new RGB ( 102 , 102 , 102 ) ;
@@ -422,6 +422,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final int NUM_MODEL_SHAPE_NODES = 8;
 	private static final int NUM_MODEL_LABEL_NODES = 8;
 	private static final int NUM_MODEL_DRAWING_NODES = NUM_MODEL_SHAPE_NODES + NUM_MODEL_LABEL_NODES;
+	private static final double CMP_DELTA = 0.001;
 	
 	
 	
@@ -629,7 +630,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute1 fill color" , RGB_101 , shapeAttribute1.getFillColour()) ;
 		assertEquals ( "shapeAttribute1 line color" , RGB_101 , shapeAttribute1.getLineColour()) ;
 		assertEquals ( "shapeAttribute1 line style" , LineStyle.SOLID ,shapeAttribute1.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute1 line width" , SHAPE_ATTRIBUTE1_LINE_WIDTH ,shapeAttribute1.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute1 line width" , SHAPE_ATTRIBUTE1_LINE_WIDTH ,shapeAttribute1.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute1 line padding" , SHAPE_ATTRIBUTE1_LINE_PADDING , shapeAttribute1.getPadding() ) ;
 		assertEquals ( "shapeAttribute1 location" , LOCATION_51, shapeAttribute1.getLocation() ) ;
 		assertEquals ( "shapeAttribute1 line padding" , SIZE_51 , shapeAttribute1.getSize()) ;
@@ -663,7 +664,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute2 fill color" , RGB_102 , shapeAttribute2.getFillColour()) ;
 		assertEquals ( "shapeAttribute2 line color" , RGB_102 , shapeAttribute2.getLineColour()) ;
 		assertEquals ( "shapeAttribute2 line style" , LineStyle.DASHED ,shapeAttribute2.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute2 line width" , SHAPE_ATTRIBUTE2_LINE_WIDTH ,shapeAttribute2.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute2 line width" , SHAPE_ATTRIBUTE2_LINE_WIDTH ,shapeAttribute2.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute2 line padding" , SHAPE_ATTRIBUTE2_LINE_PADDING , shapeAttribute2.getPadding() ) ;
 		assertEquals ( "shapeAttribute2 location" , LOCATION_52, shapeAttribute2.getLocation() ) ;
 		assertEquals ( "shapeAttribute2 line padding" , SIZE_52 , shapeAttribute2.getSize()) ;
@@ -699,7 +700,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute3 fill color" , RGB_103 , shapeAttribute3.getFillColour()) ;
 		assertEquals ( "shapeAttribute3 line color" , RGB_103 , shapeAttribute3.getLineColour()) ;
 		assertEquals ( "shapeAttribute3 line style" , LineStyle.DASH_DOT ,shapeAttribute3.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute3 line width" , SHAPE_ATTRIBUTE3_LINE_WIDTH ,shapeAttribute3.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute3 line width" , SHAPE_ATTRIBUTE3_LINE_WIDTH ,shapeAttribute3.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute3 line padding" , SHAPE_ATTRIBUTE3_LINE_PADDING , shapeAttribute3.getPadding() ) ;
 		assertEquals ( "shapeAttribute3 location" , LOCATION_53, shapeAttribute3.getLocation() ) ;
 		assertEquals ( "shapeAttribute3 line padding" , SIZE_53 , shapeAttribute3.getSize()) ;
@@ -734,7 +735,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute4 fill color" , RGB_104 , shapeAttribute4.getFillColour()) ;
 		assertEquals ( "shapeAttribute4 line color" , RGB_104 , shapeAttribute4.getLineColour()) ;
 		assertEquals ( "shapeAttribute4 line style" , LineStyle.DASH_DOT_DOT ,shapeAttribute4.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute4 line width" , SHAPE_ATTRIBUTE4_LINE_WIDTH ,shapeAttribute4.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute4 line width" , SHAPE_ATTRIBUTE4_LINE_WIDTH ,shapeAttribute4.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute4 line padding" , SHAPE_ATTRIBUTE4_LINE_PADDING , shapeAttribute4.getPadding() ) ;
 		assertEquals ( "shapeAttribute4 location" , LOCATION_54, shapeAttribute4.getLocation() ) ;
 		assertEquals ( "shapeAttribute4 line padding" , SIZE_54 , shapeAttribute4.getSize()) ;
@@ -769,7 +770,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute5 fill color" , RGB_105 , shapeAttribute5.getFillColour()) ;
 		assertEquals ( "shapeAttribute5 line color" , RGB_105 , shapeAttribute5.getLineColour()) ;
 		assertEquals ( "shapeAttribute5 line style" , LineStyle.DOT ,shapeAttribute5.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute5 line width" , SHAPE_ATTRIBUTE5_LINE_WIDTH ,shapeAttribute5.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute5 line width" , SHAPE_ATTRIBUTE5_LINE_WIDTH ,shapeAttribute5.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute5 line padding" , SHAPE_ATTRIBUTE5_LINE_PADDING , shapeAttribute5.getPadding() ) ;
 		assertEquals ( "shapeAttribute5 location" , LOCATION_55, shapeAttribute5.getLocation() ) ;
 		assertEquals ( "shapeAttribute5 line padding" , SIZE_55 , shapeAttribute5.getSize()) ;
@@ -801,7 +802,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute6 fill color" , RGB_106 , shapeAttribute6.getFillColour()) ;
 		assertEquals ( "shapeAttribute6 line color" , RGB_106 , shapeAttribute6.getLineColour()) ;
 		assertEquals ( "shapeAttribute6 line style" , LineStyle.SOLID ,shapeAttribute6.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute6 line width" , SHAPE_ATTRIBUTE6_LINE_WIDTH ,shapeAttribute6.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute6 line width" , SHAPE_ATTRIBUTE6_LINE_WIDTH ,shapeAttribute6.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute6 line padding" , SHAPE_ATTRIBUTE6_LINE_PADDING , shapeAttribute6.getPadding() ) ;
 		assertEquals ( "shapeAttribute6 location" , LOCATION_56, shapeAttribute6.getLocation() ) ;
 		assertEquals ( "shapeAttribute6 line padding" , SIZE_56 , shapeAttribute6.getSize()) ;
@@ -844,7 +845,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute7 fill color" , RGB_107 , shapeAttribute7.getFillColour()) ;
 		assertEquals ( "shapeAttribute7 line color" , RGB_107 , shapeAttribute7.getLineColour()) ;
 		assertEquals ( "shapeAttribute7 line style" , LineStyle.DASHED ,shapeAttribute7.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute7 line width" , SHAPE_ATTRIBUTE7_LINE_WIDTH ,shapeAttribute7.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute7 line width" , SHAPE_ATTRIBUTE7_LINE_WIDTH ,shapeAttribute7.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute7 line padding" , SHAPE_ATTRIBUTE7_LINE_PADDING , shapeAttribute7.getPadding() ) ;
 		assertEquals ( "shapeAttribute7 location" , LOCATION_57, shapeAttribute7.getLocation() ) ;
 		assertEquals ( "shapeAttribute7 line padding" , SIZE_57 , shapeAttribute7.getSize()) ;
@@ -887,7 +888,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "shapeAttribute8 fill color" , RGB_108 , shapeAttribute8.getFillColour()) ;
 		assertEquals ( "shapeAttribute8 line color" , RGB_108 , shapeAttribute8.getLineColour()) ;
 		assertEquals ( "shapeAttribute8 line style" , LineStyle.DASH_DOT ,shapeAttribute8.getLineStyle() ) ;
-		assertEquals ( "shapeAttribute8 line width" , SHAPE_ATTRIBUTE8_LINE_WIDTH ,shapeAttribute8.getLineWidth() ) ;
+		assertEquals ( "shapeAttribute8 line width" , SHAPE_ATTRIBUTE8_LINE_WIDTH ,shapeAttribute8.getLineWidth(), CMP_DELTA ) ;
 		assertEquals ( "shapeAttribute8 line padding" , SHAPE_ATTRIBUTE8_LINE_PADDING , shapeAttribute8.getPadding() ) ;
 		assertEquals ( "shapeAttribute8 location" , LOCATION_58, shapeAttribute8.getLocation() ) ;
 		assertEquals ( "shapeAttribute8 line padding" , SIZE_58 , shapeAttribute8.getSize()) ;
@@ -1154,11 +1155,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR1_DESCR , linkAttribute1.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR1_DET_DESCR , linkAttribute1.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE1 ,linkAttribute1.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE1 ,linkAttribute1.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute1 , linkTerminus1.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus1.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE1 , linkTerminus1.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE1 , linkTerminus1.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus1.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE11 , linkTerminus1.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus1.getTerminusDecoratorType()) ;
@@ -1167,7 +1168,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute1 , linkTerminus2.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus2.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE2 , linkTerminus2.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE2 , linkTerminus2.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus2.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE12 , linkTerminus2.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus2.getTerminusDecoratorType()) ;
@@ -1201,11 +1202,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR2_DESCR , linkAttribute2.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR2_DET_DESCR , linkAttribute2.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE2 , linkAttribute2.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE2 , linkAttribute2.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute2 , linkTerminus3.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus3.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE3 , linkTerminus3.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE3 , linkTerminus3.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus3.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE13 , linkTerminus3.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus3.getTerminusDecoratorType()) ;
@@ -1214,7 +1215,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute2 , linkTerminus4.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus4.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE4 , linkTerminus4.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE4 , linkTerminus4.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus4.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE14 , linkTerminus4.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus4.getTerminusDecoratorType()) ;
@@ -1247,11 +1248,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR3_DESCR , linkAttribute3.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR3_DET_DESCR , linkAttribute3.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE3 , linkAttribute3.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE3 , linkAttribute3.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute3 , linkTerminus5.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus5.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE5 , linkTerminus5.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE5 , linkTerminus5.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus5.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE15 , linkTerminus5.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus5.getTerminusDecoratorType()) ;
@@ -1260,7 +1261,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute3 , linkTerminus6.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus6.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE6 , linkTerminus6.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE6 , linkTerminus6.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus6.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE16 , linkTerminus6.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus6.getTerminusDecoratorType()) ;
@@ -1293,11 +1294,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR4_DESCR , linkAttribute4.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR4_DET_DESCR , linkAttribute4.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK4 , linkAttribute4.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE4 , linkAttribute4.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE4 , linkAttribute4.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute4 , linkTerminus7.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus7.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE7 , linkTerminus7.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE7 , linkTerminus7.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus7.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE17 , linkTerminus7.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus7.getTerminusDecoratorType()) ;
@@ -1306,7 +1307,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute4 , linkTerminus8.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus8.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE8 , linkTerminus8.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE8 , linkTerminus8.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus8.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE18 , linkTerminus8.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus8.getTerminusDecoratorType()) ;
@@ -1339,11 +1340,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR5_DESCR , linkAttribute5.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR5_DET_DESCR , linkAttribute5.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE5 , linkAttribute5.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE5 , linkAttribute5.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute5 , linkTerminus9.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus9.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE9 , linkTerminus9.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE9 , linkTerminus9.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus9.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE19 , linkTerminus9.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus9.getTerminusDecoratorType()) ;
@@ -1352,7 +1353,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute5 , linkTerminus10.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus10.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE10 , linkTerminus10.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE10 , linkTerminus10.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus10.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE20 , linkTerminus10.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus10.getTerminusDecoratorType()) ;
@@ -1386,11 +1387,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR6_DESCR , linkAttribute6.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR6_DET_DESCR , linkAttribute6.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE6 , linkAttribute6.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE6 , linkAttribute6.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute6 , linkTerminus11.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus11.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE11 , linkTerminus11.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE11 , linkTerminus11.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus11.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE21 , linkTerminus11.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus11.getTerminusDecoratorType()) ;
@@ -1399,7 +1400,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute6 , linkTerminus12.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus12.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE12 , linkTerminus12.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE12 , linkTerminus12.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus12.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE22 , linkTerminus12.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus12.getTerminusDecoratorType()) ;
@@ -1433,11 +1434,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR7_DESCR , linkAttribute7.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR7_DET_DESCR , linkAttribute7.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE7 , linkAttribute7.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE7 , linkAttribute7.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute7 , linkTerminus13.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus13.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE13 , linkTerminus13.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE13 , linkTerminus13.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus13.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE23 , linkTerminus13.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus13.getTerminusDecoratorType()) ;
@@ -1446,7 +1447,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute7 , linkTerminus14.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus14.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE14 , linkTerminus14.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE14 , linkTerminus14.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus14.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE24 , linkTerminus14.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus14.getTerminusDecoratorType()) ;
@@ -1482,11 +1483,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR8_DESCR , linkAttribute8.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR8_DET_DESCR , linkAttribute8.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE8 , linkAttribute8.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE8 , linkAttribute8.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute8 , linkTerminus15.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus15.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE15 , linkTerminus15.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE15 , linkTerminus15.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus15.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE25 , linkTerminus15.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus15.getTerminusDecoratorType()) ;
@@ -1495,7 +1496,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute8 , linkTerminus16.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus16.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE16 , linkTerminus16.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE16 , linkTerminus16.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus16.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE26 , linkTerminus16.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus16.getTerminusDecoratorType()) ;
@@ -1529,11 +1530,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		assertEquals ( "check desc" , LINK_ATTR9_DESCR , linkAttribute9.getDescription()) ;
 		assertEquals ( "check detail desc" , LINK_ATTR9_DET_DESCR , linkAttribute9.getDetailedDescription()) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute9.numBendPoints()) ;
-		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE9 , linkAttribute9.getLineWidth()) ;
+		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE9 , linkAttribute9.getLineWidth(), CMP_DELTA) ;
 		
 		assertEquals ( "owning link "  , linkAttribute9 , linkTerminus17.getOwningLink()) ;
 		assertEquals ( "link term type" , SOURCE_LINK_TERMINUS_TYPE ,linkTerminus17.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE17 , linkTerminus17.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE17 , linkTerminus17.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_SOURCE , linkTerminus17.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE27 , linkTerminus17.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_SOURCE_SHAPE_TYPE , linkTerminus17.getTerminusDecoratorType()) ;
@@ -1542,7 +1543,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		
 		assertEquals ( "owning link "  , linkAttribute9 , linkTerminus18.getOwningLink()) ;
 		assertEquals ( "link term type" , TARGET_LINK_TERMINUS_TYPE ,linkTerminus18.getLinkTermType()) ;
-		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE18 , linkTerminus18.getGap()) ;
+		assertEquals ( "offsetValue" , LINKTERM_OFFSET_VALUE18 , linkTerminus18.getGap(), CMP_DELTA) ;
 		assertEquals ( "end decorator type" , END_DECORATOR_TYPE_TARGET , linkTerminus18.getEndDecoratorType()) ;
 		assertEquals ( "end decorator size" , END_DECORATOR_SIZE28 , linkTerminus18.getEndSize()) ;
 		assertEquals ( "terminus type" , TERMINUS_TARGET_SHAPE_TYPE , linkTerminus18.getTerminusDecoratorType()) ;
@@ -1556,11 +1557,11 @@ public class LoadDataFromFileTest extends GenericTester{
 		IBendPoint bendPoint1 = linkAttribute.getBendPoint(FIRST_LINK1_BENDPOINT);
 		
 		assertEquals ( "expected num bendpoints" , EXPECTED_NUM_LINK1_BENDPOINTS, linkAttribute.numBendPoints()) ;
-		assertEquals ( "check Location" , LOCATION_51 , bendPoint1.getLocation() ) ;
+		assertEquals ( "check Point" , LOCATION_51 , bendPoint1.getLocation() ) ;
 		assertEquals ( "check parent" , linkAttribute , bendPoint1.getOwningLink()) ;
 		
 //		assertNotNull ( "is not null" , bendpoint2 ) ;
-//		assertEquals ( "check Location" , LOCATION_52 , bendpoint2.getLocation() ) ;
+//		assertEquals ( "check Point" , LOCATION_52 , bendpoint2.getLocation() ) ;
 //		assertEquals ( "check parent" , linkAttribute2 , bendpoint2.getOwningLink()) ;
 
 	}
@@ -1571,7 +1572,7 @@ public class LoadDataFromFileTest extends GenericTester{
 		IBendPoint bendPoint1 = linkAttribute.getBendPoint(FIRST_LINK2_BENDPOINT);
 		
 		assertEquals ( "expected num bendpoints" , EXPECTED_NUM_LINK2_BENDPOINTS, linkAttribute.numBendPoints()) ;
-		assertEquals ( "check Location" , LOCATION_52 , bendPoint1.getLocation() ) ;
+		assertEquals ( "check Point" , LOCATION_52 , bendPoint1.getLocation() ) ;
 		assertEquals ( "check parent" , linkAttribute , bendPoint1.getOwningLink()) ;
 	}
 }

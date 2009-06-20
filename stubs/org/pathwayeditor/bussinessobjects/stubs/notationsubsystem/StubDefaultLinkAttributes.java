@@ -24,13 +24,13 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
@@ -40,14 +40,14 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	public static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
 	public static final String EXPECTED_DEFAULT_NAME = "link name";
 	public static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
-	public static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
+	public static final Dimension EXPECTED_DEFAULT_SIZE = new Dimension(15,25);
 	public static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
 	public static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
 	public static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
 	public static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
 	public static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
 	public static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
-	public static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+	public static final Point EXPECTED_INITIAL_LOCATION = new Point(235,5543);
 	public static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
 
 //	private final ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();

@@ -26,10 +26,10 @@
 			<column name="name" not-null="true"/>
 		</property>
 
-        <property name="gridX" type="int" access="property">
+        <property name="gridX" type="double" access="property">
             <column name="grid_x" not-null="true" />
         </property>
-        <property name="gridY" type="int" access="property">
+        <property name="gridY" type="double" access="property">
             <column name="grid_y" not-null="true" />
         </property>
         <property name="gridEnabled" type="boolean" access="property">
@@ -47,10 +47,10 @@
         <property name="backgroundBlue" type="int" access="property">
             <column name="background_blue" not-null="true" />
         </property>
-        <property name="canvasWidth" type="int" access="property">
+        <property name="canvasWidth" type="double" access="property">
             <column name="canvas_width" not-null="true" />
         </property>
-        <property name="canvasHeight" type="int" access="property">
+        <property name="canvasHeight" type="double" access="property">
             <column name="canvas_height" not-null="true" />
         </property>
         <property name="lastCreationSerial" type="int" access="property">

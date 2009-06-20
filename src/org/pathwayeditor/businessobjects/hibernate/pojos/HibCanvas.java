@@ -32,13 +32,13 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -65,11 +65,11 @@ public class HibCanvas implements ICanvas, Serializable {
 	private Long id;
 	private HibNotation hibNotation;
 	private INotationSubsystem notation;
-	private Size gridSize = new Size(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
+	private Dimension gridSize = new Dimension(DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT);
 	private boolean gridEnabled = DEFAULT_GRIB_ENABLED_VALUE;
 	private boolean snapToGridEnabled = DEFAULT_SNAP_TO_GRID_VALUE;
 	private RGB backgroundColour = new RGB(DEFAULT_BGD_RED, DEFAULT_BGD_GREEN, DEFAULT_BGD_BLUE);
-	private Size canvasSize = new Size(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+	private Dimension canvasSize = new Dimension(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 	private String canvasName;
 	private int mapINode;
 	private String repository;
@@ -143,28 +143,28 @@ public class HibCanvas implements ICanvas, Serializable {
 		return this.hibNotation;
 	}
 	
-	int getGridX() {
+	double getGridX() {
 		return this.gridSize.getWidth();
 	}
 
-	void setGridX(int gridX) {
+	void setGridX(double gridX) {
 		this.gridSize = this.gridSize.newWidth(gridX);
 	}
 
-	int getGridY() {
+	double getGridY() {
 		return this.gridSize.getHeight();
 	}
 
-	void setGridY(int gridY) {
+	void setGridY(double gridY) {
 		this.gridSize = this.gridSize.newHeight(gridY);
 	}
 
-	public Size getGridSize() {
+	public Dimension getGridSize() {
 		return this.gridSize;
 	}
 
-	public void setGridSize(Size newGridSize){
-		Size oldGridSize = this.getGridSize();
+	public void setGridSize(Dimension newGridSize){
+		Dimension oldGridSize = this.getGridSize();
 		this.gridSize = newGridSize;
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.GRID_SIZE, oldGridSize, newGridSize);
 	}
@@ -213,19 +213,19 @@ public class HibCanvas implements ICanvas, Serializable {
 		this.backgroundColour = this.backgroundColour.newBlue(backgroundBlue);
 	}
 
-	public int getCanvasWidth() {
+	public double getCanvasWidth() {
 		return this.canvasSize.getWidth();
 	}
 
-	public void setCanvasWidth(int canvasWidth) {
+	public void setCanvasWidth(double canvasWidth) {
 		this.canvasSize = this.canvasSize.newWidth(canvasWidth);
 	}
 
-	public int getCanvasHeight() {
+	public double getCanvasHeight() {
 		return this.canvasSize.getHeight();
 	}
 
-	public void setCanvasHeight(int canvasHeight) {
+	public void setCanvasHeight(double canvasHeight) {
 		this.canvasSize = this.canvasSize.newHeight(canvasHeight);
 	}
 
@@ -272,18 +272,18 @@ public class HibCanvas implements ICanvas, Serializable {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getMapSize()
 	 */
-	public Size getCanvasSize() {
+	public Dimension getCanvasSize() {
 		return this.canvasSize;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#setMapSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
 	 */
-	public void setCanvasSize(Size size) {
+	public void setCanvasSize(Dimension size) {
 		if (size == null)
 			throw new IllegalArgumentException () ;
 
-		Size oldCanvasSize = this.canvasSize;
+		Dimension oldCanvasSize = this.canvasSize;
 		this.canvasSize = size;
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.CANVAS_SIZE, oldCanvasSize, this.canvasSize);
 	}

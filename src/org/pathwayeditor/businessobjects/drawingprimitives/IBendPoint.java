@@ -15,8 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.figure.geometry.Point;
 
 
 public interface IBendPoint extends IPropertyChangeListenee {
@@ -24,15 +24,15 @@ public interface IBendPoint extends IPropertyChangeListenee {
 	
 	int getCreationSerial();
 	
-	Location getLocation();
+	Point getLocation();
 	
-	void setLocation ( Location location ) ;
+	void setLocation ( Point location ) ;
 	
-	Location getFirstRelativeDimension();
+	Point getFirstRelativeDimension();
 	
-	void setFirstRelativeDimension(Location newDimension);
+	void setFirstRelativeDimension(Point newDimension);
 
-	Location getSecondRelativeDimension();
+	Point getSecondRelativeDimension();
 	
-	void setSecondRelativeDimension(Location newDimension);
+	void setSecondRelativeDimension(Point newDimension);
 }

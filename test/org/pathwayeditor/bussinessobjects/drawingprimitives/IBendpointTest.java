@@ -29,9 +29,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author ntsorman
@@ -49,10 +49,10 @@ public class IBendpointTest {
 	private static final int Y_POSITION = 100 ;
 	private static final int X_POSITION_OTHER = 200 ;
 	private static final int Y_POSITION_OTHER = 200 ;
-	private static final Location POSITION = new Location(X_POSITION, Y_POSITION);
-	private static final Location POSITION_OTHER = new Location(X_POSITION_OTHER, Y_POSITION_OTHER);
-	private static final Location FIRST_REL_DIM = new Location(101, 102);
-	private static final Location SECOND_REL_DIM = new Location(103, 104);
+	private static final Point POSITION = new Point(X_POSITION, Y_POSITION);
+	private static final Point POSITION_OTHER = new Point(X_POSITION_OTHER, Y_POSITION_OTHER);
+	private static final Point FIRST_REL_DIM = new Point(101, 102);
+	private static final Point SECOND_REL_DIM = new Point(103, 104);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -70,7 +70,7 @@ public class IBendpointTest {
 		
 		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
 		
-		assertEquals ( "location" , new Location ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
+		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 	}
 	
 	@Test
@@ -80,9 +80,9 @@ public class IBendpointTest {
 		
 		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
 		
-		assertEquals ( "location" , new Location ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
+		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 		
-		Location newLocation = new Location ( X_POSITION_OTHER , Y_POSITION_OTHER ) ;
+		Point newLocation = new Point ( X_POSITION_OTHER , Y_POSITION_OTHER ) ;
 		
 		bendPoint.setLocation(newLocation) ;
 		
@@ -97,7 +97,7 @@ public class IBendpointTest {
 		
 		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
 		
-		assertEquals ( "location" , new Location ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
+		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 		
 		assertEquals ( "get owningLink" , mockLink ,  bendPoint.getOwningLink() );
 		

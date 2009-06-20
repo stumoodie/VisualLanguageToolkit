@@ -21,7 +21,7 @@ package org.pathwayeditor.businessobjects.typedefn;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author smoodie
@@ -38,7 +38,7 @@ public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaul
 
 	String getURL();
 
-	Size getSize();
+	Dimension getSize();
 
 	LineStyle getLineStyle();
 
@@ -46,5 +46,5 @@ public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaul
 
 	RGB getFillColour();
 
-	int getLineWidth();
+	double getLineWidth();
 }

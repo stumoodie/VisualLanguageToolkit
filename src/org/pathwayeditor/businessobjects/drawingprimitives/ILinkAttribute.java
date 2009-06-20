@@ -19,11 +19,11 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.figure.geometry.Point;
 
 public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee {
 	/**
@@ -101,10 +101,10 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @return the newly created bendpoint which cannot be null.
 	 * throws IllegalArgumentException if any parameter is null. 
 	 */
-	IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim);
+	IBendPoint createNewBendPoint(Point location, Point firstRelativeDim, Point secondRelativeDim);
 	
 	/**
-	 * As {@link #createNewBendPoint(Location, Location, Location)}, but also defines the index position
+	 * As {@link #createNewBendPoint(Point, Point, Point)}, but also defines the index position
 	 * that the new bendpoint should be inserted into. This allows an index position that will result in an
 	 * append to the list, i.e. <code>position == numBendPoints()</code>.
 	 * @param position the index position which must be valid for the list of bendpoints
@@ -115,7 +115,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @throws IllegalArgumentException if any parameter is null.
 	 * @throws IndexOutOfBoundsException if <code>indexPos &lt; 0 || indexPos &gt; this.numBendPoints()</code>.
 	 */
-	IBendPoint createNewBendPoint(int position, Location location, Location firstRelativeDim, Location secondRelativeDim);
+	IBendPoint createNewBendPoint(int position, Point location, Point firstRelativeDim, Point secondRelativeDim);
 	
 	/**
 	 * Adds a bendpoint to the list of bendpoints at the given position.
@@ -223,14 +223,14 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * Returns the width of the line.
 	 * @return the width.
 	 */
-	int getLineWidth() ;
+	double getLineWidth() ;
 	
 	/**
 	 * Sets a new width for the line of this link.
 	 * @param lineWidth the new line width, which must be a positive integer greater than zero.
 	 * @throws IllegalArgumentException if the line width is invalid.
 	 */
-	void setLineWidth ( int lineWidth) ;
+	void setLineWidth ( double lineWidth) ;
 	
 	
 	/**

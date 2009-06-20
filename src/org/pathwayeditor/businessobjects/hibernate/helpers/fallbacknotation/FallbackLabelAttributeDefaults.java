@@ -21,17 +21,17 @@ package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.figure.figuredefn.GenericFont;
 import org.pathwayeditor.figure.figuredefn.IFont;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author smoodie
  *
  */
 public class FallbackLabelAttributeDefaults implements ILabelAttributeDefaults {
-	private static final Size SIZE = null;
+	private static final Dimension SIZE = null;
 	private static final int LINE_WIDTH = 0;
 	private static final LineStyle LINE_STYLE = LineStyle.SOLID;
 	private static final RGB LINE_COLOUR = RGB.BLACK;
@@ -61,14 +61,14 @@ public class FallbackLabelAttributeDefaults implements ILabelAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getLineWidth()
 	 */
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return LINE_WIDTH;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getSize()
 	 */
-	public Size getSize() {
+	public Dimension getSize() {
 		return SIZE;
 	}
 

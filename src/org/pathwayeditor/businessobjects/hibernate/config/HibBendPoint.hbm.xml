@@ -19,22 +19,22 @@
 	  	<!-- property name="indexPos" type="int">
         	<column name="index_pos" not-null="true" />
       	</property-->
-        <property name="XPosition" type="int">
+        <property name="XPosition" type="double">
             <column name="x_position" not-null="true" />
         </property>
-        <property name="YPosition" type="int">
+        <property name="YPosition" type="double">
             <column name="y_position" not-null="true" />
         </property>
-        <property name="firstRelativeDimensionX" type="int">
+        <property name="firstRelativeDimensionX" type="double">
             <column name="first_rel_dim_x" not-null="true" />
         </property>
-        <property name="firstRelativeDimensionY" type="int">
+        <property name="firstRelativeDimensionY" type="double">
             <column name="first_rel_dim_y" not-null="true" />
         </property>
-        <property name="secondRelativeDimensionX" type="int">
+        <property name="secondRelativeDimensionX" type="double">
             <column name="second_rel_dim_x" not-null="true" />
         </property>
-        <property name="secondRelativeDimensionY" type="int">
+        <property name="secondRelativeDimensionY" type="double">
             <column name="second_rel_dim_y" not-null="true" />
         </property>
     </class>

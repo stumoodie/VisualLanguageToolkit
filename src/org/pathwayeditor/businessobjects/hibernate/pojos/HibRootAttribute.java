@@ -21,15 +21,15 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
@@ -40,7 +40,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 	private IRootObjectType objectType;
 	private IRootNode rootNode;
 	private IConvexHull convexHull;
-	private Bounds bounds = new Bounds(0, 0, 0, 0); 
+	private Envelope bounds = new Envelope(0, 0, 0, 0); 
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 
 	/**
@@ -112,22 +112,22 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLocation()
 	 */
-	public Location getLocation() {
+	public Point getLocation() {
 		return this.bounds.getOrigin();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getSize()
 	 */
-	public Size getSize() {
-		return this.bounds.getSize();
+	public Dimension getSize() {
+		return this.bounds.getDimension();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public void setLocation(Location newLocation) {
-		Location oldLocation = this.bounds.getOrigin();
+	public void setLocation(Point newLocation) {
+		Point oldLocation = this.bounds.getOrigin();
 		if(!oldLocation.equals(newLocation)){
 			this.bounds = this.bounds.changeOrigin(newLocation);
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, newLocation);
@@ -137,10 +137,10 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
 	 */
-	public void setSize(Size newSize) {
-		Size oldSize = this.bounds.getSize();
+	public void setSize(Dimension newSize) {
+		Dimension oldSize = this.bounds.getDimension();
 		if(!oldSize.equals(newSize)){
-			this.bounds = this.bounds.changeSize(newSize);
+			this.bounds = this.bounds.changeDimension(newSize);
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, newSize);
 		}
 	}
@@ -148,19 +148,19 @@ public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNode
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
-	public Bounds getBounds() {
+	public Envelope getBounds() {
 		return this.bounds;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
-	public void setBounds(Bounds newBounds) {
-		Location oldLocation = this.bounds.getOrigin();
-		Size oldSize = this.bounds.getSize();
+	public void setBounds(Envelope newBounds) {
+		Point oldLocation = this.bounds.getOrigin();
+		Dimension oldSize = this.bounds.getDimension();
 		this.bounds = newBounds;
-		if(!oldSize.equals(this.bounds.getSize())){
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.bounds.getSize());
+		if(!oldSize.equals(this.bounds.getDimension())){
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.bounds.getDimension());
 		}
 		if(!oldLocation.equals(this.bounds.getOrigin())){
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.bounds.getOrigin());

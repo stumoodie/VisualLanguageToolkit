@@ -24,12 +24,9 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
@@ -38,14 +35,17 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
+import org.pathwayeditor.figure.geometry.Point;
 
 public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
 	private transient final Logger logger = Logger.getLogger(this.getClass());
 
-	private static final Location DEFAULT_POSITION = Location.ORIGIN;
-	private static final Size DEFAULT_SIZE = new Size(10,10);
+	private static final Point DEFAULT_POSITION = Point.ORIGIN;
+	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
 	private static final String DEFAULT_NAME = "";
 	private static final String DEFAULT_DESCN = "";
 	private static final String DEFAULT_DETAILS = "";
@@ -60,8 +60,8 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private static final boolean DEFAULT_NAME_VISIBLE = true ;
 	private static final Alignment DEFAULT_ALIGNMENT = Alignment.CENTER ;
 
-	private transient Location position = DEFAULT_POSITION;
-	private transient Size size = DEFAULT_SIZE;
+	private transient Point position = DEFAULT_POSITION;
+	private transient Dimension size = DEFAULT_SIZE;
 	private HibObjectType hibObjectType;
 	private transient IShapeObjectType shapeObjectType;
 	private String name = DEFAULT_NAME;
@@ -71,7 +71,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private transient RGB fillColour = DEFAULT_FILL;
 	private transient RGB lineColour = DEFAULT_LINE;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
-	private int lineWidth = DEFAULT_LINE_WIDTH;
+	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private int padding = DEFAULT_PADDING;
 	private PrimitiveShapeType shapeType = DEFAULT_SHAPE_TYPE;
 	private transient HibShapeNode shapeNode;
@@ -138,35 +138,35 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.setPrimitiveShape(shapeDefaults.getShapeType());
 	}
 
-	public int getXPosition() {
+	public double getXPosition() {
 		return this.position.getX();
 	}
 
-	public void setXPosition(int XPosition) {
+	public void setXPosition(double XPosition) {
 		this.position = this.position.newX(XPosition);
 	}
 
-	public int getYPosition() {
+	public double getYPosition() {
 		return this.position.getY();
 	}
 	
-	public void setYPosition(int YPosition) {
+	public void setYPosition(double YPosition) {
 		this.position = this.position.newY(YPosition);
 	}
 
-	public int getWidth() {
+	public double getWidth() {
 		return this.size.getWidth();
 	}
 	
-	public void setWidth(int width) {
+	public void setWidth(double width) {
 		this.size = this.size.newWidth(width);
 	}
 
-	public int getHeight() {
+	public double getHeight() {
 		return this.size.getHeight();
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(double height) {
 		this.size = this.size.newHeight(height);
 	}
 
@@ -337,15 +337,15 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.verticalAlignment = alignment ;
 	}
 
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return this.lineWidth;
 	}
 
-	public void setLineWidth(int lineWidth) {
+	public void setLineWidth(double lineWidth) {
 		if ( lineWidth < MIN_LINE_WIDTH )
 			throw new IllegalArgumentException ("Line width cannot be less than " + MIN_LINE_WIDTH) ;
 
-		int oldLineWidth = this.lineWidth;
+		double oldLineWidth = this.lineWidth;
 		this.lineWidth = lineWidth;
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
 	}
@@ -388,7 +388,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLocation()
 	 */
-	public Location getLocation() {
+	public Point getLocation() {
 		return this.position;
 	}
 
@@ -402,7 +402,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getSize()
 	 */
-	public Size getSize() {
+	public Dimension getSize() {
 		return this.size;
 	}
 
@@ -481,12 +481,12 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public void setLocation(Location newLocation) {
+	public void setLocation(Point newLocation) {
 		if ( newLocation == null )
 			throw new IllegalArgumentException ("the new location cannot be null") ;
 
 		if(!this.position.equals(newLocation)){
-			Location oldLocation = this.position;
+			Point oldLocation = this.position;
 			this.position = newLocation;
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.position);
 		}
@@ -506,12 +506,12 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
 	 */
-	public void setSize(Size size) {
+	public void setSize(Dimension size) {
 		if ( size == null )
 			throw new IllegalArgumentException ("Size cannot be null") ;
 
 		if(!this.size.equals(size)){
-			Size oldSize = this.size;
+			Dimension oldSize = this.size;
 			this.size = size;
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.size);
 		}
@@ -585,16 +585,16 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
-	public Bounds getBounds() {
-		return new Bounds(this.position, this.size);
+	public Envelope getBounds() {
+		return new Envelope(this.position, this.size);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
-	public void setBounds(Bounds newBounds) {
+	public void setBounds(Envelope newBounds) {
 		this.setLocation(newBounds.getOrigin());
-		this.setSize(newBounds.getSize());
+		this.setSize(newBounds.getDimension());
 	}
 
 	/* (non-Javadoc)

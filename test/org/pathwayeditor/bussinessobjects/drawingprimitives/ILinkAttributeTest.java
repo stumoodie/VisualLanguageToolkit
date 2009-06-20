@@ -33,7 +33,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -48,6 +47,7 @@ import org.pathwayeditor.bussinessobjects.stubs.StubLinkObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.StubMap;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkAttributeDefaults;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author ntsorman
@@ -68,12 +68,12 @@ public class ILinkAttributeTest {
 	private static final int POS_VALUE_1 = 20 ;
 	private static final int POS_VALUE_2 = 30 ;
 	private static final int POS_VALUE_3 = 40 ;
-	private static final Location BP_POSITION1 = new Location(POS_VALUE_1, POS_VALUE_1); 
-	private static final Location BP_POSITION2 = new Location(POS_VALUE_2, POS_VALUE_2); 
-	private static final Location BP_POSITION3 = new Location(POS_VALUE_3, POS_VALUE_3); 
-	private static final Location BP_REL_DIM1 = new Location(POS_VALUE_1, POS_VALUE_1); 
-	private static final Location BP_REL_DIM2 = new Location(POS_VALUE_2, POS_VALUE_2); 
-	private static final Location BP_REL_DIM3 = new Location(POS_VALUE_3, POS_VALUE_3); 
+	private static final Point BP_POSITION1 = new Point(POS_VALUE_1, POS_VALUE_1); 
+	private static final Point BP_POSITION2 = new Point(POS_VALUE_2, POS_VALUE_2); 
+	private static final Point BP_POSITION3 = new Point(POS_VALUE_3, POS_VALUE_3); 
+	private static final Point BP_REL_DIM1 = new Point(POS_VALUE_1, POS_VALUE_1); 
+	private static final Point BP_REL_DIM2 = new Point(POS_VALUE_2, POS_VALUE_2); 
+	private static final Point BP_REL_DIM3 = new Point(POS_VALUE_3, POS_VALUE_3); 
 	
 	private static final int NUMERIC_VALUE_3 = 3 ;
 	private static final int NUMERIC_VALUE_2 = 2 ;
@@ -92,7 +92,7 @@ public class ILinkAttributeTest {
 //	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
 //	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
 //	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
-//	private static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+//	private static final Point EXPECTED_INITIAL_LOCATION = new Point(235,5543);
 //	private static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
 //	private static final int NEW_LINE_WIDTH = 99;
 //	private static final int INVALID_LINE_WIDTH = -99;

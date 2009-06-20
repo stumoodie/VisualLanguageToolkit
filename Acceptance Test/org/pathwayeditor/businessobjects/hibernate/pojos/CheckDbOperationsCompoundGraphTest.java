@@ -44,10 +44,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -56,6 +54,8 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkBObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeAObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.testutils.GenericTester;
 
 /**
@@ -112,7 +112,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final String MAP1_PATH = "/subfolder1/Diagram name" ;
 	private static final String MAP2_PATH = "/subfolder2/Diagram name2" ;
 	
-	private static final Location NEW_NODE_LOCATION = new Location ( 75 , 75 ) ;
+	private static final Point NEW_NODE_LOCATION = new Point ( 75 , 75 ) ;
 //	private static final Size NEW_NODE_SIZE = new Size (25 , 25) ;
 	
 
@@ -152,15 +152,15 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static int CHANGED_SHAPE_LINE_WIDTH = 100 ; 
 	private final static int CHANGED_SHAPE_PADDING = 150 ;
 	private final static PrimitiveShapeType CHANGED_SHAPE_PRIMITIVE_TYRE = PrimitiveShapeType.UP_CHEVRON ;
-	private final static Location CHANGED_SHAPE_LOCATION = new Location ( 500 , 500 ) ;
-	private final static Size CHANGED_SHAPE_SIZE = new Size ( 400 ,400 ) ;
+	private final static Point CHANGED_SHAPE_LOCATION = new Point ( 500 , 500 ) ;
+	private final static Dimension CHANGED_SHAPE_SIZE = new Dimension ( 400 ,400 ) ;
 	private final static String CHANGED_SHAPE_URL = "http://www.something.co.uk" ;
 	private final static boolean CHANGED_SHAPE_NAME_VISIB = false ;
 	private final static RGB CHANGED_SHAPE_TEXT_COLOUR = new RGB ( 100 , 100 , 100 ) ; 
 	
 	private final static RGB CHANGED_LABEL_BACKGROUND_COLOR = new RGB ( 200 , 200 , 200 ) ;
-	private final static Location CHANGED_LABEL_LOCATION = new Location ( 222 , 222 ) ;
-	private final static Size CHANGED_LABEL_SIZE = new Size ( 122 , 122 ) ;
+	private final static Point CHANGED_LABEL_LOCATION = new Point ( 222 , 222 ) ;
+	private final static Dimension CHANGED_LABEL_SIZE = new Dimension ( 122 , 122 ) ;
 	
 	private final static String CHANGED_LINK_NAME = "changed link name" ;
 	private final static String CHANGED_LINK_DESCRIPTION = "changed link description" ;
@@ -171,11 +171,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private final static ConnectionRouter CHANGED_LINK_CONNECTION_ROUTER = ConnectionRouter.SHORTEST_PATH ;
 	private final static String CHANGED_LINK_URL = "http://www.changed.co.uk" ;
 	
-	private static final Size CHANGED_CANVAS_GRID_SIZE = new Size ( 100 , 100) ;
+	private static final Dimension CHANGED_CANVAS_GRID_SIZE = new Dimension ( 100 , 100) ;
 	private static final boolean CHANGED_CANVAS_GRID_ENABLED = false ;
 	private static final boolean CHANGED_CANVAS_SNAP_ENABLED = false ;
 	private static final RGB CHANGED_CANVAS_BACKGROUND_COLOUR =  new RGB ( 123 , 123 ,123 ) ;
-	private static final Size CHANGED_CANVAS_SIZE = new Size ( 121 , 121 ) ;
+	private static final Dimension CHANGED_CANVAS_SIZE = new Dimension ( 121 , 121 ) ;
 	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
 	private static final int NUM_ROOT_NODE_SHAPES = 2;
 	private static final int NUM_ROOT_NODE_LABELS = 4;
@@ -408,10 +408,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	@Test
 	public void testCreateNewLabelNode () throws Exception {
 		final String propTestName = "TextProperty";
-		final Location testLocation = new Location(10, 20);
-		final Size testSize = new Size(30, 20);
-		final Size testLabelSize = new Size(20, 10);
-		final Location expectedLabelLocation = new Location(25, 0);
+		final Point testLocation = new Point(10, 20);
+		final Dimension testSize = new Dimension(30, 20);
+		final Dimension testLabelSize = new Dimension(20, 10);
+		final Point expectedLabelLocation = new Point(0, 0);
 		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		

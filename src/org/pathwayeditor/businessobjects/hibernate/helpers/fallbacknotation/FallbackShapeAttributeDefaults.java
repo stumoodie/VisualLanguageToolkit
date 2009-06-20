@@ -25,10 +25,10 @@ import java.util.Set;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author smoodie
@@ -44,7 +44,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	private static final int LINE_WIDTH = 0;
 	private static final String NAME = "Default Shape";
 	private static final PrimitiveShapeType SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
-	private static final Size SIZE = new Size(0, 0);
+	private static final Dimension SIZE = new Dimension(0, 0);
 	private static final String URL = null;
 	private static final Set<IPropertyDefinition> PROP_SET = Collections.emptySet();
 
@@ -96,7 +96,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 	 */
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return LINE_WIDTH;
 	}
 
@@ -124,7 +124,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getSize()
 	 */
-	public Size getSize() {
+	public Dimension getSize() {
 		return SIZE;
 	}
 

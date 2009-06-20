@@ -25,9 +25,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDec
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author smoodie
@@ -36,8 +36,8 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	public static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
 	public static final short EXPECTED_OFFSET = 1 ;
-	public static final Size EXPECTED_END_SIZE = new Size(10, 20);
-	public static final Size EXPECTED_TERM_SIZE = new Size(10, 20);
+	public static final Dimension EXPECTED_END_SIZE = new Dimension(10, 20);
+	public static final Dimension EXPECTED_TERM_SIZE = new Dimension(10, 20);
 	public static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 170);
 	public static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	public static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
@@ -59,14 +59,14 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndSize()
 	 */
-	public Size getEndSize() {
+	public Dimension getEndSize() {
 		return EXPECTED_END_SIZE;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getGap()
 	 */
-	public short getGap() {
+	public double getGap() {
 		return EXPECTED_OFFSET;
 	}
 
@@ -87,7 +87,7 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getTermSize()
 	 */
-	public Size getTermSize() {
+	public Dimension getTermSize() {
 		return EXPECTED_TERM_SIZE;
 	}
 

@@ -36,10 +36,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -48,6 +46,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author ntsorman
@@ -75,19 +75,21 @@ public class IShapeAttributeTest {
 	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
 	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
 
-	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 1;
+	private static final double EXPECTED_DEFAULT_LINE_WIDTH = 1.0;
 	private static final String EXPECTED_DEFAULT_NAME = SHAPE_NAME;
 	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
-	private static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
+	private static final Dimension EXPECTED_DEFAULT_SIZE = new Dimension(15,25);
 	private static final String EXPECTED_DEFAULT_URL = URL_VALUE;
 	private static final String EXPECTED_DEFAULT_DESCRIPTION = SHAPE_DESCR;
 	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = DETAILED_DESCR;
 	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
 	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
 	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LINE_STYLE;
-	private static final Location EXPECTED_INITIAL_LOCATION = new Location(235,5543);
+	private static final Point EXPECTED_INITIAL_LOCATION = new Point(235,5543);
 	private static final int NEW_LINE_WIDTH = 99;
 	private static final int INVALID_LINE_WIDTH = -99;
+
+	private static final double DOUBLE_DELTA = 0.001;
 	
 	private IShapeAttribute shapeAttribute ;
 	
@@ -170,7 +172,7 @@ public class IShapeAttributeTest {
 	
 	@Test
 	public void testChangeLocation (){
-		Location newLocation = new Location ( NEW_POSITION_VALUE , NEW_POSITION_VALUE) ;
+		Point newLocation = new Point ( NEW_POSITION_VALUE , NEW_POSITION_VALUE) ;
 		shapeAttribute.setLocation(newLocation) ;
 		
 		assertEquals ( "changed Position" , newLocation , shapeAttribute.getLocation() ) ;
@@ -189,7 +191,7 @@ public class IShapeAttributeTest {
 	
 	@Test
 	public void testChangeSize ()	{
-		Size newSize = new Size ( NEW_SIZE_VALUE , NEW_SIZE_VALUE ) ;
+		Dimension newSize = new Dimension ( NEW_SIZE_VALUE , NEW_SIZE_VALUE ) ;
 		shapeAttribute.setSize(newSize) ;
 		
 		assertEquals ( "changed SIZE" , newSize , shapeAttribute.getSize());
@@ -231,14 +233,14 @@ public class IShapeAttributeTest {
 	
 	@Test
 	public void testGetLineWidth ()	{
-		assertEquals ( "correct lineWidth" , EXPECTED_DEFAULT_LINE_WIDTH , shapeAttribute.getLineWidth()) ;
+		assertEquals ( "correct lineWidth" , EXPECTED_DEFAULT_LINE_WIDTH , shapeAttribute.getLineWidth(), DOUBLE_DELTA) ;
 	}
 	
 	@Test
 	public void testSetLineWidth () throws Exception
 	{
 		shapeAttribute.setLineWidth(NEW_LINE_WIDTH);
-		assertEquals ( "correct changed lineWidth" , NEW_LINE_WIDTH , shapeAttribute.getLineWidth()) ;
+		assertEquals ( "correct changed lineWidth" , NEW_LINE_WIDTH , shapeAttribute.getLineWidth(), DOUBLE_DELTA) ;
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -337,7 +339,7 @@ public class IShapeAttributeTest {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 		 */
-		public int getLineWidth() {
+		public double getLineWidth() {
 			return EXPECTED_DEFAULT_LINE_WIDTH;
 		}
 
@@ -358,7 +360,7 @@ public class IShapeAttributeTest {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getSize()
 		 */
-		public Size getSize() {
+		public Dimension getSize() {
 			return EXPECTED_DEFAULT_SIZE;
 		}
 

@@ -1,6 +1,6 @@
 package org.pathwayeditor.figure.geometry;
 
-public final class Envelope {
+public class Envelope {
 	private final Dimension dim;
 	private final Point origin;
 	
@@ -109,6 +109,18 @@ public final class Envelope {
 			&& (origin.getX() + this.dim.getWidth()) >= (envelope.origin.getX() + envelope.getDimension().getWidth())
 			&& origin.getY() <= envelope.origin.getY()
 			&& (origin.getY() + this.dim.getHeight()) >= (envelope.origin.getY() + envelope.getDimension().getHeight());
+	}
+
+	public Envelope translate(Point translation) {
+		return new Envelope(this.origin.translate(translation), this.dim);
+	}
+
+	public Envelope changeOrigin(Point newLocation) {
+		return new Envelope(newLocation, this.getDimension());
+	}
+
+	public Envelope changeDimension(Dimension newSize) {
+		return new Envelope(this.origin, newSize);
 	}
 
 }

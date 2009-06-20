@@ -17,14 +17,14 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
@@ -96,26 +96,26 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	 * @param newLocation the new location. Cannot be null
 	 * @throws IllegalArgumentException if location is null.
 	 */
-	void setLocation(Location newLocation);
+	void setLocation(Point newLocation);
 	
 	/**
-	 * Returns a {@link Location} representation of the coordinates of this Shape.
+	 * Returns a {@link Point} representation of the coordinates of this Shape.
 	 * @return the location. Cannot be null.
 	 */
-	Location getLocation();
+	Point getLocation();
 	
 	/**
 	 * Sets the new size for this Shape.
 	 * @param size the new size. Cannot be null
 	 * @throws IllegalArgumentException if size is null.
 	 */
-	void setSize(Size size);
+	void setSize(Dimension size);
 	
 	/**
-	 * Returns a {@link Size} representation for the size of this Shape
+	 * Returns a {@link Dimension} representation for the size of this Shape
 	 * @return the size. Cannot be null.
 	 */
-	Size getSize();
+	Dimension getSize();
 	
 	/**
 	 * Sets the primitive shape for this Shape.
@@ -161,14 +161,14 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	 * Returns the numerical value representing the thickness of the border line of the shape. 
 	 * @return the line width. Cannot be less than <code>MIN_LINE_WIDTH</code>.
 	 */
-	int getLineWidth();
+	double getLineWidth();
 	
 	/**
 	 * Sets the line width for this Shape.
 	 * @param lineWidth the new fill color. Must be at least <code>MIN_LINE_WIDTH</code>.
 	 * @throws IllegalArgumentException if lineWidth is less than MIN_LINE_WIDTH.
 	 */
-	void setLineWidth(int lineWidth);
+	void setLineWidth(double lineWidth);
 
 	/**
 	 * Returns a {@link RGB} representation for the color of this Shape's border line.

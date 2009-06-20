@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
@@ -39,6 +38,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author ntsorman
@@ -57,7 +57,7 @@ public class ICanvasTest {
 	private static final String MAP_DIAGRAM_NAME = "mapDiagramName" ;
 	private static final int GRID_WIDTH = 10;
 	private static final int GRID_HEIGHT = 20;
-	private static final Size GRID_SIZE = new Size(GRID_WIDTH, GRID_HEIGHT) ;
+	private static final Dimension GRID_SIZE = new Dimension(GRID_WIDTH, GRID_HEIGHT) ;
 //	private static final int NEW_GRID_SIZE = 20 ;
 	private static final boolean GRID_ENABLED = true ;
 	private static final boolean SNAP_TO_GRID_ENABLED = true ;
@@ -69,7 +69,7 @@ public class ICanvasTest {
 	private static final RGB BACKGROUND_COLOR = new RGB(BACKGROUND_RED, BACKGROUND_GREEN, BACKGROUND_BLUE) ;
 	private static final int CANVAS_WIDTH = 500;
 	private static final int CANVAS_HEIGHT = 600;
-	private static final Size CANVAS_SIZE = new Size(CANVAS_WIDTH, CANVAS_HEIGHT);
+	private static final Dimension CANVAS_SIZE = new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT);
 	private static final int NEW_CANVAS_SIZE = 600 ;
 	private static final int NEW_BACKGROUND_COLOR = 100 ;
 //	private static final int LESS_THAN_ZERO_SIZE = -10 ;
@@ -116,7 +116,7 @@ public class ICanvasTest {
 	@Ignore @Test
 	public void testChangeCanvasSize () throws Exception 
 	{
-		canvas.setCanvasSize(new Size (NEW_CANVAS_SIZE , NEW_CANVAS_SIZE)) ;
+		canvas.setCanvasSize(new Dimension (NEW_CANVAS_SIZE , NEW_CANVAS_SIZE)) ;
 		
 		assertEquals ( "height" , NEW_CANVAS_SIZE , ((HibCanvas)canvas).getCanvasHeight() ) ;
 		assertEquals ( "width" , NEW_CANVAS_SIZE , ((HibCanvas)canvas).getCanvasWidth() ) ;

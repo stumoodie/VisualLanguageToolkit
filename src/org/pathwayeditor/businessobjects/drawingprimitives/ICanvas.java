@@ -16,9 +16,9 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 
 public interface ICanvas extends IPropertyChangeListenee{
@@ -81,13 +81,13 @@ public interface ICanvas extends IPropertyChangeListenee{
 	 * Set Grid size.
 	 * @throws IllegalArgumentException if X or Y are less than zero.
 	 */	
-	void setGridSize(Size newSize);
+	void setGridSize(Dimension newSize);
 	
 	/**
 	 * Get the current grid size.
 	 * @return the grid size, which cannot be null.
 	 */
-	Size getGridSize();
+	Dimension getGridSize();
 
 	/**
 	 * Set the background color of this Canvas.
@@ -111,13 +111,13 @@ public interface ICanvas extends IPropertyChangeListenee{
 	 * Get the size of this map
 	 * @return the size. Cannot be null.
 	 */	
-	Size getCanvasSize () ;
+	Dimension getCanvasSize () ;
 	
 	/**
 	 * Set the size of this map
 	 * @throws IllegalArgumentException if value is null.
 	 */	
-	void setCanvasSize ( Size size ) ;
+	void setCanvasSize ( Dimension size ) ;
 	
 	/**
 	 * Get the model for this canvas.

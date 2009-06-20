@@ -26,7 +26,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
@@ -35,6 +34,7 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -43,9 +43,9 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	private static final int VALID_NUM_LINK_TERMINI = 2;
 	private static final RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
-	private static final int DEFAULT_LINE_WIDTH = 1;
+	private static final double DEFAULT_LINE_WIDTH = 1.0;
 	private static final ConnectionRouter DEFAULT_ROUTER_TYPE = ConnectionRouter.FAN;
-	private static final int MIN_LINE_WIDTH = 1;
+	private static final double MIN_LINE_WIDTH = 1.0;
 	
 	private HibObjectType hibObjectType;
 	private ILinkObjectType objectType;
@@ -55,7 +55,7 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	private String url = "";
 	private RGB lineColour = DEFAULT_LINE_COLOUR;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
-	private int lineWidth = DEFAULT_LINE_WIDTH;
+	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private ConnectionRouter routerType = DEFAULT_ROUTER_TYPE;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>();
 	private HibLinkEdge edge ;
@@ -244,15 +244,15 @@ s	 */
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 	}
 
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return this.lineWidth;
 	}
 
-	public void setLineWidth(int lineWidth) {
+	public void setLineWidth(double lineWidth) {
 		if ( lineWidth < MIN_LINE_WIDTH)
 			throw new IllegalArgumentException ( "Line width cannot be less than " + MIN_LINE_WIDTH) ;
 		
-		int oldValue = this.lineWidth;
+		double oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 	}
@@ -457,14 +457,14 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#createNewBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public IBendPoint createNewBendPoint(Location location, Location firstRelativeDim, Location secondRelativeDim) {
+	public IBendPoint createNewBendPoint(Point location, Point firstRelativeDim, Point secondRelativeDim) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
 		this.hibBendPoints.add(retVal);
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
 		return retVal;
 	}
 
-	public IBendPoint createNewBendPoint(int position, Location location, Location firstRelativeDim, Location secondRelativeDim) {
+	public IBendPoint createNewBendPoint(int position, Point location, Point firstRelativeDim, Point secondRelativeDim) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
 		if(position < 0 || position > this.hibBendPoints.size()) {
 			throw new IndexOutOfBoundsException("list size= " + this.hibBendPoints.size() + ", no bendpoint can be added at position: " + position);

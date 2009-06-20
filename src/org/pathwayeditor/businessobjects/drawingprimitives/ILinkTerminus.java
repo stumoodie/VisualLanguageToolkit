@@ -17,13 +17,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IPropertyChangeListenee {
 
@@ -49,14 +49,14 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	 * Get the gap between the position of the link end terminus.
 	 * @return the gap, which must be a positive integer or zero.
 	 */
-	short getGap();
+	double getGap();
 	
 	/**
 	 * Sets the gap, which must be a positive integer or zero.
 	 * @param newGap the new gap, which cannot be negative.
 	 * @throws IllegalArgumentException if <code>newGap</code> is negative.
 	 */
-	void setGap(short newGap);
+	void setGap(double newGap);
 	
 	/**
 	 * Get the terminus colour. 
@@ -75,14 +75,14 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	 * Gets the size of the terminus shape, which cannot be null.
 	 * @return the terminus size.
 	 */
-	Size getTerminusSize();
+	Dimension getTerminusSize();
 	
 	/**
 	 * Set the terminus size.
 	 * @param newSize the new terminus size, which cannot be null.
 	 * @throws IllegalArgumentException if <code>newSize</code> is null.
 	 */
-	void setTerminusSize(Size newSize) ;
+	void setTerminusSize(Dimension newSize) ;
 	
 	/**
 	 * Get the terminus decorator type.
@@ -101,14 +101,14 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	 * Gets the size of the terminus end decorator.
 	 * @return the size of the terminus end decorator, which cannot be null.
 	 */
-	Size getEndSize();
+	Dimension getEndSize();
 	
 	/**
 	 * Sets the terminus end decorator size. 
 	 * @param size the end decorator size, which cannot be null.
 	 * @throws IllegalArgumentException if <code>size<.code> is null.
 	 */
-	void setEndSize(Size size);
+	void setEndSize(Dimension size);
 	
 	/**
 	 * Get the link end decorator shape type.
@@ -128,16 +128,16 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	 * shape.
 	 * @return the location, which cannot be null;
 	 */
-	Location getLocation();
+	Point getLocation();
 	
 	/**
 	 * Sets the location of the terminus.
 	 * @param location the location, which cannot be null.
 	 * throws IllegalArgumentExtension if <code>location == null</code>.
 	 */
-	void setLocation(Location location);
+	void setLocation(Point location);
 	
-	Location getReferencePoint();
+	Point getReferencePoint();
 	
 	/**
 	 * Identity is based on the owningLink and the link end type.

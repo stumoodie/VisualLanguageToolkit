@@ -1,6 +1,8 @@
 package org.pathwayeditor.figure.geometry;
 
-public final class Dimension {
+
+
+public class Dimension {
 	private final double width;
 	private final double height;
 	
@@ -73,5 +75,13 @@ public final class Dimension {
 		double newHeight = this.height - currentLineHeight;
 		if(newWidth < 0 || newHeight < 0) throw new IllegalArgumentException("Cannot make a diemntion nagative");
 		return new Dimension(newWidth, newHeight);
+	}
+
+	public Dimension newWidth(double newWidth) {
+		return new Dimension(newWidth, this.height);
+	}
+
+	public Dimension newHeight(double newHeight) {
+		return new Dimension(this.width, newHeight);
 	}
 }

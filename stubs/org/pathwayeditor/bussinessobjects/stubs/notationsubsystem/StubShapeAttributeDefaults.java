@@ -24,9 +24,9 @@ import java.util.Set;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
  * @author smoodie
@@ -41,7 +41,7 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	public   int LINE_WIDTH = 1 ;
 	public   String NAME = "name" ;
 	public   PrimitiveShapeType PRIMITIVE_SHAPE_TYPE = PrimitiveShapeType.ARC ;
-	public   Size SIZE = new Size ( 50 , 50 ) ;
+	public   Dimension SIZE = new Dimension ( 50 , 50 ) ;
 	public   String URL = "http://www.url.com" ;
 	
 	
@@ -84,7 +84,7 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 	 */
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return LINE_WIDTH;
 	}
 
@@ -105,7 +105,7 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getSize()
 	 */
-	public Size getSize() {
+	public Dimension getSize() {
 		return SIZE;
 	}
 

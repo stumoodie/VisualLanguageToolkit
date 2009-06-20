@@ -26,10 +26,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
@@ -37,6 +35,8 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILinkTerminus, Serializable {
 	private transient final Logger logger = Logger.getLogger(this.getClass());
@@ -49,14 +49,14 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	
 	private HibLinkAttribute linkAttribute = null;
 	private LinkTermType linkTermType = null;
-	private short offset = DEFAULT_OFFSET;
+	private double offset = DEFAULT_OFFSET;
 	private LinkEndDecoratorShape endDecoratorType = null;
-	private transient Size endDecSize = new Size(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
+	private transient Dimension endDecSize = new Dimension(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
     private PrimitiveShapeType termShapeType = null;
     private transient RGB terminusColour = DEFAULT_TERM_COLOUR;
-    private transient Size terminusSize = new Size(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
+    private transient Dimension terminusSize = new Dimension(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
     private transient ILinkTerminusDefinition terminusDefn = null;
-    private transient Location location = Location.ORIGIN;
+    private transient Point location = Point.ORIGIN;
 	private final transient ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
 
 	/**
@@ -142,19 +142,19 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_TYPE, oldValue, this.endDecoratorType);
 	}
 
-	public int getEndDecWidth() {
+	public double getEndDecWidth() {
 		return this.endDecSize.getWidth();
 	}
 
-	public void setEndDecWidth(int width) {
+	public void setEndDecWidth(double width) {
 		this.endDecSize = this.endDecSize.newWidth(width);
 	}
 
-	public int getEndDecHeight() {
+	public double getEndDecHeight() {
 		return this.endDecSize.getHeight();
 	}
 
-	public void setEndDecHeight(int height) {
+	public void setEndDecHeight(double height) {
 		this.endDecSize = this.endDecSize.newHeight(height);
 	}
 
@@ -182,19 +182,19 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
     }
     
     
-    public int getTermDecWidth() {
+    public double getTermDecWidth() {
         return this.terminusSize.getWidth();
     }
     
-    public void setTermDecWidth(int width) {
+    public void setTermDecWidth(double width) {
         this.terminusSize = this.terminusSize.newWidth(width);
     }
     
-    public int getTermDecHeight() {
+    public double getTermDecHeight() {
         return this.terminusSize.getHeight();
     }
     
-    public void setTermDecHeight(int height) {
+    public void setTermDecHeight(double height) {
         this.terminusSize = this.terminusSize.newHeight(height);
     }
 
@@ -211,7 +211,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 * org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#getGap
 	 * ()
 	 */
-	public short getGap() {
+	public double getGap() {
 		return this.offset;
 	}
 
@@ -222,11 +222,11 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 * org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#setGap
 	 * (int)
 	 */
-	public void setGap(short newGap) {
+	public void setGap(double newGap) {
 		if (newGap < 0)
 			throw new IllegalArgumentException("newGap cannot be negative");
 
-		short oldValue = this.offset;
+		double oldValue = this.offset;
 		this.offset = (short) newGap;
 		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_GAP, oldValue, this.offset);
 	}
@@ -242,7 +242,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 * org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#getEndSize
 	 * ()
 	 */
-	public Size getEndSize() {
+	public Dimension getEndSize() {
 		return this.endDecSize;
 	}
 
@@ -272,14 +272,14 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#
 	 * getTerminusSize()
 	 */
-	public Size getTerminusSize() {
+	public Dimension getTerminusSize() {
 		return this.terminusSize;
 	}
 
-	public void setEndSize(Size size) {
+	public void setEndSize(Dimension size) {
 		if(size == null) throw new IllegalArgumentException("the end size cannot be null");
 		
-		Size oldValue = this.endDecSize;
+		Dimension oldValue = this.endDecSize;
 		this.endDecSize = size;
 		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_SIZE, oldValue, this.endDecSize);
 	}
@@ -300,10 +300,10 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DECORATOR_TYPE, oldValue, this.termShapeType);
 	}
 
-	public void setTerminusSize(Size newSize) {
+	public void setTerminusSize(Dimension newSize) {
 		if(newSize == null) throw new IllegalArgumentException("newSize cannot be null");
 		
-		Size oldValue = this.terminusSize;
+		Dimension oldValue = this.terminusSize;
 		this.terminusSize = newSize;
 		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_SIZE, oldValue, this.terminusSize);
 	}
@@ -414,35 +414,35 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	}
 	
 	
-	int getXPosition(){
+	double getXPosition(){
 		return this.location.getX();
 	}
 	
-	void setXPosition(int newX){
+	void setXPosition(double newX){
 		this.location = this.location.newX(newX);
 	}
 	
-	int getYPosition(){
+	double getYPosition(){
 		return this.location.getY();
 	}
 	
-	void setYPosition(int newY){
+	void setYPosition(double newY){
 		this.location = this.location.newY(newY);
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#getLocation()
 	 */
-	public Location getLocation() {
+	public Point getLocation() {
 		return this.location;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public void setLocation(Location newLocation) {
+	public void setLocation(Point newLocation) {
 		if(!this.location.equals(newLocation)){
-			Location oldLocation = this.location;
+			Point oldLocation = this.location;
 			this.location = newLocation;
 			this.eventHandler.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.location);
 		}
@@ -455,8 +455,8 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		return this.getOwningLink().getLabelSubModel();
 	}
 
-	public Location getReferencePoint() {
-		Location retVal = null;
+	public Point getReferencePoint() {
+		Point retVal = null;
 		if(this.linkTermType.equals(LinkTermType.SOURCE)){
 			retVal = getSrcReferencePoint();
 		}
@@ -466,9 +466,9 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		return retVal;
 	}
 
-	private Location getSrcReferencePoint(){
+	private Point getSrcReferencePoint(){
 		ILinkAttribute linkAtt = this.getOwningLink();
-		Location retVal = null;
+		Point retVal = null;
 		if(linkAtt.numBendPoints() > 0){
 			IBendPoint bp = linkAtt.getBendPoint(FIRST_PB_IDX);
 			retVal = bp.getLocation();
@@ -479,9 +479,9 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		return retVal;
 	}
 
-	private Location getTgtReferencePoint(){
+	private Point getTgtReferencePoint(){
 		ILinkAttribute linkAtt = this.getOwningLink();
-		Location retVal = null;
+		Point retVal = null;
 		int numBendPoints = linkAtt.numBendPoints(); 
 		if(numBendPoints > 0){
 			IBendPoint bp = linkAtt.getBendPoint(numBendPoints - 1);

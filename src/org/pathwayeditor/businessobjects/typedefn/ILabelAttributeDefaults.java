@@ -28,5 +28,5 @@ public interface ILabelAttributeDefaults {
 
 	RGB getFillColour();
 
-	int getLineWidth();
+	double getLineWidth();
 }

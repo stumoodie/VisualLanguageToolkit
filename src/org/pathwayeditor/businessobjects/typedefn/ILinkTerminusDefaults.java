@@ -18,7 +18,7 @@ package org.pathwayeditor.businessobjects.typedefn;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 
 /**
@@ -35,7 +35,7 @@ public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults
 	 * Get the offset value. The default is zero.
 	 * @return the gap size, which cannot be negative: <code>getGap() >= 0</code>.
 	 */
-	short getGap();
+	double getGap();
 	
 	/**
 	 * get the shape type of the decorator.
@@ -47,7 +47,7 @@ public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults
 	 * Get Decorator size 
 	 * @return a positive integer value.
 	 */
-	Size getTermSize();
+	Dimension getTermSize();
 
 	/**
 	 * Get the fill and line RGB colour.
@@ -65,5 +65,5 @@ public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults
 	 * Get the width of the decorator (arrowhead typically). 
 	 * @return a non-negative integer value.
 	 */
-	Size getEndSize();
+	Dimension getEndSize();
 }

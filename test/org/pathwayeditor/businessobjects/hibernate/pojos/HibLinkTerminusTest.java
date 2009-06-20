@@ -38,9 +38,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDec
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 import uk.ed.inf.graph.util.IndexCounter;
 
@@ -55,14 +55,16 @@ public class HibLinkTerminusTest {
 	}};
 	
 	private static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
-	private static final short EXPECTED_OFFSET = 1 ;
-	private static final Size EXPECTED_END_SIZE = new Size(10, 20);
-	private static final Size EXPECTED_TERM_SIZE = new Size(10, 20);
+	private static final double EXPECTED_OFFSET = 1.0 ;
+	private static final Dimension EXPECTED_END_SIZE = new Dimension(10, 20);
+	private static final Dimension EXPECTED_TERM_SIZE = new Dimension(10, 20);
 	private static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 150);
 	private static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	private static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
 	private static final int EXPECTED_CREATION_SERIAL = 2;
-	private static final IndexCounter EXPECTED_CREATION_SERIAL_CNTR = new IndexCounter(EXPECTED_CREATION_SERIAL); 
+	private static final IndexCounter EXPECTED_CREATION_SERIAL_CNTR = new IndexCounter(EXPECTED_CREATION_SERIAL);
+
+	private static final double DOUBLE_DELTA = 0.001; 
 
 	private HibCanvas mockCanvas;
 	private HibLinkAttribute mockHibLink;
@@ -109,7 +111,7 @@ public class HibLinkTerminusTest {
 	{
 		
 		assertEquals ("expected link end type" , LINK_END_TYPE , linkTerminus.getLinkTermType()) ;
-		assertEquals ("expected offset" , EXPECTED_OFFSET , linkTerminus.getGap()) ;
+		assertEquals ("expected offset" , EXPECTED_OFFSET , linkTerminus.getGap(), DOUBLE_DELTA) ;
 		assertEquals ("expected end size" , EXPECTED_END_SIZE , linkTerminus.getEndSize()) ;
 		assertEquals ("expected term size" , EXPECTED_TERM_SIZE , linkTerminus.getTerminusSize()) ;
 		assertEquals ("expected term dec" , EXPECTED_TERM_DEC , linkTerminus.getTerminusDecoratorType()) ;

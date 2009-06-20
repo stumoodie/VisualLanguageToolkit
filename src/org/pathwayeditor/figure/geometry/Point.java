@@ -1,6 +1,10 @@
 package org.pathwayeditor.figure.geometry;
 
+
+
 public class Point {
+	public static final Point ORIGIN = new Point(0, 0);
+	
 	private final double x;
 	private final double y;
 	
@@ -87,5 +91,13 @@ public class Point {
 	
 	public Point negate(){
 		return new Point(-this.x, -this.y);
+	}
+
+	public Point newX(double x2) {
+		return new Point(x2, this.y);
+	}
+
+	public Point newY(double y2) {
+		return new Point(this.x, y2);
 	}
 }

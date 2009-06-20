@@ -15,12 +15,12 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
 public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute, IPropertyChangeListenee {
 	
@@ -28,25 +28,25 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	 * Get the location of this LabelAttribute.
 	 * @return The location . Cannot be null.
 	 */
-	Location getLocation();
+	Point getLocation();
 
 	/**
 	 * Set the location for this LabelAttribute.
 	 * @throws IllegalArgumentException if the location is null.
 	 */
-	void setLocation (Location location) ;
+	void setLocation (Point location) ;
 	
 	/**
 	 * Get the size of this LabelAttribute.
 	 * @return The size. Cannot be null.
 	 */
-	Size getSize();
+	Dimension getSize();
 	
 	/**
 	 * Set the size for this LabelAttribute.
 	 * @throws IllegalArgumentException if the size is null.
 	 */
-	void setSize (Size size);
+	void setSize (Dimension size);
 	
 	/**
 	 * Get the property associated with the current Label

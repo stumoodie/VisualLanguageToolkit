@@ -43,16 +43,16 @@
 				cascade="none" lazy="false">
 				<column name="property_id" not-null="false" />
 			</many-to-one>
-			<property name="XPosition" type="int" access="property" >
+			<property name="XPosition" type="double" access="property" >
 				<column name="x_position" not-null="true" />
 			</property>
-			<property name="YPosition" type="int" access="property" >
+			<property name="YPosition" type="double" access="property" >
 				<column name="y_position" not-null="true" />
 			</property>
-			<property name="width" type="int" access="property" >
+			<property name="width" type="double" access="property" >
 				<column name="width" not-null="true" />
 			</property>
-			<property name="height" type="int" access="property" >
+			<property name="height" type="double" access="property" >
 				<column name="height" not-null="true" />
 			</property>
 			<property name="backgroundRed" type="int" access="property">
@@ -116,7 +116,7 @@
 				<property name="lineStyle" type="LineStyleType">
 					<column name="line_style" not-null="true" />
 				</property>
-				<property name="lineWidth" type="int">
+				<property name="lineWidth" type="double">
 					<column name="line_width" not-null="true" />
 				</property>
 				<property name="routerType" type="ConnectionRouterType">
@@ -152,16 +152,16 @@
 				<key>
 					<column name="id" not-null="true" unique="true" />
 				</key>
-				<property name="XPosition" type="int" access="property">
+				<property name="XPosition" type="double" access="property">
 					<column name="x_position" not-null="true" />
 				</property>
-				<property name="YPosition" type="int" access="property">
+				<property name="YPosition" type="double" access="property">
 					<column name="y_position" not-null="true" />
 				</property>
-				<property name="width" type="int" access="property">
+				<property name="width" type="double" access="property">
 					<column name="width" not-null="true" />
 				</property>
-				<property name="height" type="int" access="property">
+				<property name="height" type="double" access="property">
 					<column name="height" not-null="true" />
 				</property>
 				<many-to-one name="hibObjectType"
@@ -220,7 +220,7 @@
 				<property name="lineStyle" type="LineStyleType" access="property">
 					<column name="line_style" not-null="true" />
 				</property>
-				<property name="lineWidth" type="int" access="property">
+				<property name="lineWidth" type="double" access="property">
 					<column name="line_width" not-null="true" />
 				</property>
 				<property name="padding" type="int" access="property">
@@ -244,16 +244,16 @@
 				<property name="linkTermType" type="LinkTermType">
 					<column name="link_term_type" not-null="true" />
 				</property>
-				<property name="gap" type="short">
+				<property name="gap" type="double">
 					<column name="offset_val" not-null="true" />
 				</property>
 				<property name="endDecoratorType" type="ArrowHeadStyleType">
 					<column name="end_dec_type" not-null="true" />
 				</property>
-				<property name="endDecWidth" type="int">
+				<property name="endDecWidth" type="double">
 					<column name="end_dec_width" not-null="true" />
 				</property>
-				<property name="endDecHeight" type="int">
+				<property name="endDecHeight" type="double">
 					<column name="end_dec_height" not-null="true" />
 				</property>
 				<property name="terminusDecoratorType" type="PrimitiveShapeType">
@@ -268,16 +268,16 @@
 				<property name="termDecBlue" type="int">
 					<column name="term_dec_blue" not-null="true" />
 				</property>
-				<property name="termDecWidth" type="int">
+				<property name="termDecWidth" type="double">
 					<column name="term_dec_width" not-null="true" />
 				</property>
-				<property name="termDecHeight" type="int">
+				<property name="termDecHeight" type="double">
 					<column name="term_dec_height" not-null="true" />
 				</property>
-				<property name="XPosition" type="int" access="property">
+				<property name="XPosition" type="double" access="property">
 					<column name="x_position" not-null="true" />
 				</property>
-				<property name="YPosition" type="int" access="property">
+				<property name="YPosition" type="double" access="property">
 					<column name="y_position" not-null="true" />
 				</property>
 			</joined-subclass>

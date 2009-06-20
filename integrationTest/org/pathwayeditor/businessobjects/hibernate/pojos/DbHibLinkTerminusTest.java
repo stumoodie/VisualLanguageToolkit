@@ -35,6 +35,7 @@ public class DbHibLinkTerminusTest extends PojoTester{
 	
 	private static final LinkTermType EXPECTED_SRC_TYPE = LinkTermType.SOURCE; 
 	private static final int EXPECTED_OFFSET_VALUE = 10 ;
+	private static final double CMP_DELTA = 0.001;
 	
 	@Test
 	public void testLoadLinkTerminus () throws Exception
@@ -46,11 +47,11 @@ public class DbHibLinkTerminusTest extends PojoTester{
 		assertNotNull("terminus exists", dbLinkTerminus);
 
 		LinkTermType actualTermType = dbLinkTerminus.getLinkTermType(); 
-		int actualOffset = dbLinkTerminus.getGap();
+		double actualOffset = dbLinkTerminus.getGap();
 		sess.getTransaction().commit();
 		
 		assertEquals ("link term type " , EXPECTED_SRC_TYPE , actualTermType) ;
-		assertEquals ("link term offset" , EXPECTED_OFFSET_VALUE , actualOffset) ;
+		assertEquals ("link term offset" , EXPECTED_OFFSET_VALUE , actualOffset, CMP_DELTA) ;
 	}
 	
 	@Override
