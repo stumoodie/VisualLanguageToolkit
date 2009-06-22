@@ -29,9 +29,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
  * @author smoodie
  *
  */
-public final class ListenableNodeStructureChangeItem implements INodeChangeListenee {
+public final class ListenableNodeStructureChangeItem implements INodeChangeListenee, ISuppressableChangeListenee {
 	private final List<INodeChangeListener> listeners;
 	private final IDrawingNode model;
+	private boolean enabled = true;
 	
 	public ListenableNodeStructureChangeItem(IDrawingNode model){
 		this.listeners = new CopyOnWriteArrayList<INodeChangeListener>();
@@ -46,14 +47,18 @@ public final class ListenableNodeStructureChangeItem implements INodeChangeListe
 	}
 
 	public final void fireSourceNodeChange(INodeChangeEvent evt){
-		for(INodeChangeListener listener : this.getListeners()){
-			listener.sourceNodeStructureChange(evt);
+		if(enabled){
+			for(INodeChangeListener listener : this.getListeners()){
+				listener.sourceNodeStructureChange(evt);
+			}
 		}
 	}
 	
 	public final void fireTargetNodeChange(INodeChangeEvent evt){
-		for(INodeChangeListener listener : this.getListeners()){
-			listener.targetNodeStructureChange(evt);
+		if(enabled){
+			for(INodeChangeListener listener : this.getListeners()){
+				listener.targetNodeStructureChange(evt);
+			}
 		}
 	}
 	
@@ -151,5 +156,19 @@ public final class ListenableNodeStructureChangeItem implements INodeChangeListe
 	 */
 	public void removeNodeChangeListener(INodeChangeListener listener) {
 		this.listeners.remove(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
+	 */
+	public boolean areListenersEnabled() {
+		return this.enabled ;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
+	 */
+	public void setListenersEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

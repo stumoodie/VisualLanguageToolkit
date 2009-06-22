@@ -287,7 +287,6 @@
 		<column>canvas_id</column>
 		<column>creation_serial</column>
 		<column>node_id</column>
-		<column>displayed_property_id</column>
 		<column>is_displayed</column>
 		<column>background_red</column>
 		<column>background_green</column>
@@ -302,7 +301,6 @@
 			<value>100001</value>
 			<value>1</value>
 			<value>100003</value>
-			<value>100001</value>
 			<value>true</value>
 			<value>100</value>
 			<value>100</value>

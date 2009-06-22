@@ -30,9 +30,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
  * @author smoodie
  *
  */
-public final class ListenableSubModelStructureChangeItem implements ISubModelChangeListenee {
+public final class ListenableSubModelStructureChangeItem implements ISubModelChangeListenee, ISuppressableChangeListenee {
 	private final List<ISubModelChangeListener> listeners;
 	private final ISubModel model;
+	private boolean enabled = true;
 	
 	public ListenableSubModelStructureChangeItem(ISubModel model){
 		this.listeners = new CopyOnWriteArrayList<ISubModelChangeListener>();
@@ -47,14 +48,18 @@ public final class ListenableSubModelStructureChangeItem implements ISubModelCha
 	}
 
 	public final void firePropertyChange(ISubModelNodeChangeEvent evt){
-		for(ISubModelChangeListener listener : this.getListeners()){
-			listener.nodeStructureChange(evt);
+		if(this.enabled){
+			for(ISubModelChangeListener listener : this.getListeners()){
+				listener.nodeStructureChange(evt);
+			}
 		}
 	}
 	
 	public final void fireEdgeChange(ISubModelEdgeChangeEvent evt){
-		for(ISubModelChangeListener listener : this.getListeners()){
-			listener.edgeStructureChange(evt);
+		if(this.enabled){
+			for(ISubModelChangeListener listener : this.getListeners()){
+				listener.edgeStructureChange(evt);
+			}
 		}
 	}
 	
@@ -115,5 +120,19 @@ public final class ListenableSubModelStructureChangeItem implements ISubModelCha
 	 */
 	public void removeSubModelNodeChangeListener(ISubModelChangeListener listener) {
 		this.listeners.remove(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
+	 */
+	public boolean areListenersEnabled() {
+		return this.enabled;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
+	 */
+	public void setListenersEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

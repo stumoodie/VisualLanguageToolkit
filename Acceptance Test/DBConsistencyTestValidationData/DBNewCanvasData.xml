@@ -170,7 +170,6 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
-		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>

@@ -507,4 +507,12 @@ s	 */
 	public ILabelSubModel getLabelSubModel() {
 		return this.getCurrentDrawingElement().getOwningSubModel();
 	}
+
+	public boolean areListenersEnabled() {
+		return this.listenablePropertyChangeItem.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
+	}
 }

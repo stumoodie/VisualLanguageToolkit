@@ -604,7 +604,6 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
-		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -614,7 +613,6 @@
 		<column>height</column>
 		<row>
 			<value>100005</value>
-			<value>100001</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -625,7 +623,6 @@
 		</row>
 		<row>
 			<value>100006</value>
-			<value>100002</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -636,7 +633,6 @@
 		</row>
 		<row>
 			<value>100007</value>
-			<value>100004</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -647,7 +643,6 @@
 		</row>
 		<row>
 			<value>100008</value>
-			<value>100005</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>

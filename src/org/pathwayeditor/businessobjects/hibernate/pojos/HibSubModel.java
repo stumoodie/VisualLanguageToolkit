@@ -371,5 +371,13 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	public Iterator<HibLinkEdge> allEdgesIterator(){
 		return new IterationCaster<HibLinkEdge, BaseCompoundEdge>(super.unfilteredEdgeIterator());
 	}
+
+	public boolean areListenersEnabled() {
+		return this.listenerHandler.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenerHandler.setListenersEnabled(enabled);
+	}
 }
 

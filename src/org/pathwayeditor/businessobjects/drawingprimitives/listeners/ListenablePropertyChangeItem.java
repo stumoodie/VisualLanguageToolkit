@@ -26,8 +26,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author smoodie
  *
  */
-public final class ListenablePropertyChangeItem	implements IPropertyChangeListenee {
+public final class ListenablePropertyChangeItem	implements IPropertyChangeListenee, ISuppressableChangeListenee {
 	private final List<IPropertyChangeListener> listeners;
+	private boolean enabled = true; 
 	
 	public ListenablePropertyChangeItem(){
 		this.listeners = new CopyOnWriteArrayList<IPropertyChangeListener>();
@@ -41,8 +42,10 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 	}
 
 	public final void firePropertyChange(IPropertyChangeEvent evt){
-		for(IPropertyChangeListener listener : this.getListeners()){
-			listener.propertyChange(evt);
+		if(enabled){
+			for(IPropertyChangeListener listener : this.getListeners()){
+				listener.propertyChange(evt);
+			}
 		}
 	}
 	
@@ -75,5 +78,19 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 
 	public final void removeChangeListener(IPropertyChangeListener listener){
 		this.listeners.remove(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
+	 */
+	public boolean areListenersEnabled() {
+		return this.enabled;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
+	 */
+	public void setListenersEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 }

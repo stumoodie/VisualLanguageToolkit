@@ -3,7 +3,6 @@
 <dataset>
 <table name="LabelAttribute">
 		<column>id</column>
-		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -13,7 +12,6 @@
 		<column>height</column>
 		<row>
 			<value>100018</value>
-			<value>100001</value>
 			<value>200</value>
 			<value>200</value>
 			<value>200</value>
@@ -24,7 +22,6 @@
 		</row>
 		<row>
 			<value>100019</value>
-			<value>100002</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -35,7 +32,6 @@
 		</row>
 		<row>
 			<value>100020</value>
-			<value>100003</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -46,7 +42,6 @@
 		</row>
 		<row>
 			<value>100021</value>
-			<value>100004</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -57,7 +52,6 @@
 		</row>
 		<row>
 			<value>100022</value>
-			<value>100005</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -68,7 +62,6 @@
 		</row>
 		<row>
 			<value>100023</value>
-			<value>100006</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -79,7 +72,6 @@
 		</row>
 		<row>
 			<value>100024</value>
-			<value>100007</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -90,7 +82,6 @@
 		</row>
 		<row>
 			<value>100025</value>
-			<value>100008</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>

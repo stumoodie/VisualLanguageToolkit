@@ -38,11 +38,6 @@
 			<key>
 				<column name="id" not-null="true" unique="true" />
 			</key>
-			<many-to-one name="visualisableProperty"
-				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty"
-				cascade="none" lazy="false">
-				<column name="property_id" not-null="false" />
-			</many-to-one>
 			<property name="XPosition" type="double" access="property" >
 				<column name="x_position" not-null="true" />
 			</property>

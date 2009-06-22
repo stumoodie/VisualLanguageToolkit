@@ -165,7 +165,6 @@
 	</table>
 	<table name="LabelAttribute">
 		<column>id</column>
-		<column>property_id</column>
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
@@ -175,7 +174,6 @@
 		<column>height</column>
 		<row>
 			<value>100018</value>
-			<null/>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -186,7 +184,6 @@
 		</row>
 		<row>
 			<value>100019</value>
-			<value>100002</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -197,7 +194,6 @@
 		</row>
 		<row>
 			<value>100020</value>
-			<value>100003</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -208,7 +204,6 @@
 		</row>
 		<row>
 			<value>100021</value>
-			<value>100004</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -219,7 +214,6 @@
 		</row>
 		<row>
 			<value>100022</value>
-			<value>100005</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -230,7 +224,6 @@
 		</row>
 		<row>
 			<value>100023</value>
-			<value>100006</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -241,7 +234,6 @@
 		</row>
 		<row>
 			<value>100024</value>
-			<value>100007</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -252,14 +244,229 @@
 		</row>
 		<row>
 			<value>100025</value>
+			<value>108</value>
+			<value>108</value>
+			<value>108</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
+			<value>58</value>
+		</row>
+	</table>
+	<table name="property">
+		<column>id</column>
+		<column>canvas_attribute_id</column>
+		<column>name</column>
+		<column>displayed_label_id</column>
+		<row>
+			<value>100001</value>
+			<value>100001</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100002</value>
+			<value>100026</value>
+			<value>TextProperty</value>
+			<value>100019</value>
+		</row>
+		<row>
+			<value>100003</value>
+			<value>100009</value>
+			<value>RichTextProperty</value>
+			<value>100020</value>
+		</row>
+		<row>
+			<value>100004</value>
+			<value>100002</value>
+			<value>RichTextProperty</value>
+			<value>100021</value>
+		</row>
+		<row>
+			<value>100005</value>
+			<value>100027</value>
+			<value>NumberProperty</value>
+			<value>100022</value>
+		</row>
+		<row>
+			<value>100006</value>
+			<value>100010</value>
+			<value>NumberProperty</value>
+			<value>100023</value>
+		</row>
+		<row>
+			<value>100007</value>
+			<value>100003</value>
+			<value>ShapeLinkProperty</value>
+			<value>100024</value>
+		</row>
+		<row>
 			<value>100008</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
+			<value>100004</value>
+			<value>ShapeLinkProperty</value>
+			<value>100025</value>
+		</row>
+		<row>
+			<value>100009</value>
+			<value>100005</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100010</value>
+			<value>100006</value>
+			<value>RichTextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100011</value>
+			<value>100007</value>
+			<value>ShapeLinkProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100012</value>
+			<value>100008</value>
+			<value>ShapeLinkProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100013</value>
+			<value>100011</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100014</value>
+			<value>100012</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100015</value>
+			<value>100013</value>
+			<value>RichTextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100016</value>
+			<value>100014</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100017</value>
+			<value>100015</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100018</value>
+			<value>100016</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100019</value>
+			<value>100017</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100020</value>
+			<value>100028</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100021</value>
+			<value>100029</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100022</value>
+			<value>100030</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100023</value>
+			<value>100031</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100024</value>
+			<value>100032</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100025</value>
+			<value>100033</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100026</value>
+			<value>100034</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100027</value>
+			<value>100035</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100028</value>
+			<value>100036</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100029</value>
+			<value>100037</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100030</value>
+			<value>100038</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100031</value>
+			<value>100039</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100032</value>
+			<value>100040</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100033</value>
+			<value>100041</value>
+			<value>NumberProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100034</value>
+			<value>100042</value>
+			<value>TextProperty</value>
+			<null/>
+		</row>
+		<row>
+			<value>100035</value>
+			<value>100043</value>
+			<value>NumberProperty</value>
+			<null/>
 		</row>
 	</table>
 </dataset>

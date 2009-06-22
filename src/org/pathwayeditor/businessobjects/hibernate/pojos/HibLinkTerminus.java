@@ -492,4 +492,12 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		}
 		return retVal;
 	}
+
+	public boolean areListenersEnabled() {
+		return this.eventHandler.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.eventHandler.setListenersEnabled(enabled);
+	}
 }

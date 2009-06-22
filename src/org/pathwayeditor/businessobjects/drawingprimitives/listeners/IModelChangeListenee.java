@@ -45,5 +45,4 @@ public interface IModelChangeListenee {
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
 	Iterator<IModelChangeListener> modelChangeListenerIterator();
-	
 }

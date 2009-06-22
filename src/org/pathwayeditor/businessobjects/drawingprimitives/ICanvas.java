@@ -17,11 +17,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 
-public interface ICanvas extends IPropertyChangeListenee{
+public interface ICanvas extends IPropertyChangeListenee, ISuppressableChangeListenee {
 	
 	/**
 	 * Gets the name of the canvas, which cannot be null.

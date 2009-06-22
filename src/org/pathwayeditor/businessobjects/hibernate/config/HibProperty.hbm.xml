@@ -14,7 +14,9 @@
         <property name="name" type="string">
 	        <column name="name" not-null="true" />
     	</property>
-		<one-to-one name="displayedLabel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" cascade="none" property-ref="visualisableProperty" lazy="false" />
+		<many-to-one name="displayedLabel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" cascade="none" lazy="false">
+			<column name="displayed_label_id" not-null="false" />
+		</many-to-one>
 
     	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty" table="textproperty" lazy="false">
     		<key>

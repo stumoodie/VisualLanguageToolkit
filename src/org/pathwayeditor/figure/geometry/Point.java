@@ -89,6 +89,10 @@ public class Point {
 		return new Point(this.x + t.getX(), this.y + t.getY());
 	}
 	
+	public Point difference(Point t){
+		return new Point(t.getX()-x, t.getY()-y);
+	}
+	
 	public Point negate(){
 		return new Point(-this.x, -this.y);
 	}

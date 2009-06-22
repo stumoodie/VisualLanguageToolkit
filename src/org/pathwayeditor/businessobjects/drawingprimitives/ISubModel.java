@@ -21,12 +21,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 
 /**
  * @author smoodie
  *
  */
-public interface ISubModel extends ISubModelChangeListenee {
+public interface ISubModel extends ISubModelChangeListenee, ISuppressableChangeListenee {
 
 	/**
 	 * Get model that this belongs to.

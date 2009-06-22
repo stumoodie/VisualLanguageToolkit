@@ -350,4 +350,12 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.convexHull = newHull;
 	}
 
+	public boolean areListenersEnabled() {
+		return this.listenablePropertyChangeItem.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
+	}
+
 }

@@ -622,4 +622,12 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.figureDefn = instList;
 	}
 
+	public boolean areListenersEnabled() {
+		return this.listenablePropertyChangeItem.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
+	}
+
 }

@@ -89,6 +89,10 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		return this.labelAttribute != null;
 	}
 	
+	void setLabel(HibLabelAttribute label){
+		this.labelAttribute = label;
+	}
+	
 	public void setDisplayed(boolean displayStatus) {
 		if(!canVisualiseProperty()) throw new IllegalStateException("This property is not visualisable");
 
@@ -116,8 +120,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		ISelectionFactory fact = model.newSelectionFactory();
 		fact.addDrawingNode(this.labelAttribute.getCurrentDrawingElement());
 		model.removeSubgraph(fact.createGeneralSelection());
-		this.labelAttribute.setVisualisableProperty(null);
-		this.labelAttribute = null;
+		setLabel(null);
 	}
 	
 	void setOwner(HibAnnotatedCanvasAttribute owner) {
@@ -130,6 +133,9 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	
 	void setDisplayedLabel(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
+		if(this.labelAttribute != null){
+			this.labelAttribute.setVisualisableProperty(this);
+		}
 	}
 	
 	public ILabelAttribute getDisplayedLabel() {

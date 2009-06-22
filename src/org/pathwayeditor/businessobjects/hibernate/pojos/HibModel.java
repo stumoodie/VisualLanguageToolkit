@@ -410,4 +410,12 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
 		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
 	}
+
+	public boolean areListenersEnabled() {
+		return this.listenerHandler.areListenersEnabled();
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenerHandler.setListenersEnabled(enabled);
+	}
 }
