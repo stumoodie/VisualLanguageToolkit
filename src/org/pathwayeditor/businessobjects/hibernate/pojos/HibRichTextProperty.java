@@ -15,7 +15,6 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -59,7 +58,7 @@ public class HibRichTextProperty extends HibProperty implements IHtmlAnnotationP
 		if(!richTextValue.equals(this.richTextValue)){
 			String oldValue = this.richTextValue;
 			this.richTextValue = richTextValue;
-			this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, oldValue, this.richTextValue);
+			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.richTextValue);
 		}
 	}
 

@@ -15,7 +15,6 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -50,7 +49,7 @@ public class HibIntegerProperty extends HibProperty implements IIntegerAnnotatio
 		if(!numberValue.equals(this.numberValue)){
 			Integer oldValue = this.numberValue;
 			this.numberValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, oldValue, this.numberValue);
+			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.numberValue);
 		}
 	}
 

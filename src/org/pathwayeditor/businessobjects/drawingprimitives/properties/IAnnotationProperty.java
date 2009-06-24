@@ -16,10 +16,10 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListenee;
 
 
-public interface IAnnotationProperty extends IPropertyChangeListenee {
+public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	/**
 	 * Get the definition associated with this PlainTextProperty.
 	 * @return The property definition instance. Cannot be null.

@@ -17,7 +17,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.math.BigDecimal;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -53,7 +52,7 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 		if(!numberValue.equals(this.numberValue)){
 			BigDecimal oldValue = this.numberValue;
 			this.numberValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, oldValue, this.numberValue);
+			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.numberValue);
 		}
 	}
 

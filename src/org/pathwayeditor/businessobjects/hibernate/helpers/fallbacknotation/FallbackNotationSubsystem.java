@@ -18,6 +18,7 @@ package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 import java.util.Collections;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
@@ -105,6 +106,20 @@ public class FallbackNotationSubsystem implements INotationSubsystem {
 		} else if (!this.notation.equals(other.notation))
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#registerCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public void registerCanvas(ICanvas canvasToRegister) {
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#unregisterCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+	 */
+	public void unregisterCanvas(ICanvas canvasToRegister) {
+		
 	}
 	
 }

@@ -17,6 +17,8 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+
 /**
  * This interfaces provides a client with access to the services provided by a context adapter. It will typically
  * be implemented behind an Eclipse extension point.  
@@ -24,6 +26,10 @@ import java.util.Set;
  *
  */
 public interface INotationSubsystem {
+
+	void registerCanvas(ICanvas canvasToRegister);
+	
+	void unregisterCanvas(ICanvas canvasToRegister);
 
 	/**
 	 * The context (graphical notation) that is defined by this context adapter and for which the services

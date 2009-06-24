@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -79,7 +78,7 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	 */
 	public void addValue(String newValue) {
 		this.values.add(newValue);
-		this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, null, newValue);
+		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, null, newValue);
 	}
 
 	/* (non-Javadoc)

@@ -24,9 +24,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableAnnotationPropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
@@ -42,7 +42,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
-	private final ListenablePropertyChangeItem listenerHandler = new ListenablePropertyChangeItem();
+	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem();
 
 
 	/**
@@ -114,7 +114,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		}
 	}
 	
-	protected ListenablePropertyChangeItem getListenerHandler(){
+	protected ListenableAnnotationPropertyChangeItem getListenerHandler(){
 		return this.listenerHandler;
 	}
 
@@ -152,23 +152,23 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		return this.labelAttribute;
 	}
 
-	public final void addChangeListener(IPropertyChangeListener listener) {
+	public final void addChangeListener(IAnnotationPropertyChangeListener listener) {
 		this.listenerHandler.addChangeListener(listener);
 	}
 
-	public final void firePropertyChange(IPropertyChangeEvent evt) {
+	public final void firePropertyChange(IAnnotationPropertyChangeEvent evt) {
 		this.listenerHandler.firePropertyChange(evt);
 	}
 
-	public final List<IPropertyChangeListener> getListeners() {
+	public final List<IAnnotationPropertyChangeListener> getListeners() {
 		return this.listenerHandler.getListeners();
 	}
 
-	public final Iterator<IPropertyChangeListener> listenerIterator() {
+	public final Iterator<IAnnotationPropertyChangeListener> listenerIterator() {
 		return this.listenerHandler.listenerIterator();
 	}
 
-	public final void removeChangeListener(IPropertyChangeListener listener) {
+	public final void removeChangeListener(IAnnotationPropertyChangeListener listener) {
 		this.listenerHandler.removeChangeListener(listener);
 	}
 

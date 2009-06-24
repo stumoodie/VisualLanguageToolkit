@@ -106,6 +106,10 @@ public class MapPersistenceManagerTest {
 			// Canvas has a repo name and inode set.
 			allowing(mockCanvas).getRepositoryName(); will(returnValue(EXPECTED_REPO_NAME));
 			allowing(mockCanvas).getINode(); will(returnValue(EXPECTED_CANVAS_INODE));
+			allowing(mockCanvas).getNotationSubsystem(); will(returnValue(mockNotationSubsystem));
+			
+			allowing(mockNotationSubsystem).registerCanvas(with(any(ICanvas.class)));
+			allowing(mockNotationSubsystem).unregisterCanvas(with(any(ICanvas.class)));
 			
 			// Map has a name, repo and inode set.
 			allowing(mockMap).getRepository(); will(returnValue(mockRepository));

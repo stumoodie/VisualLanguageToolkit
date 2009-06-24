@@ -643,5 +643,18 @@ public class HibCanvasTest {
 			return false;
 		}
 
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#registerCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+		 */
+		public void registerCanvas(ICanvas canvasToRegister) {
+			
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#unregisterCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+		 */
+		public void unregisterCanvas(ICanvas canvasToRegister) {
+		}
+
 	}
 }

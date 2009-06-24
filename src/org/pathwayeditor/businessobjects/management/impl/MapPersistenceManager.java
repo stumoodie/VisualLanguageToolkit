@@ -64,6 +64,10 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 */
 	public void close(boolean force) {
 		if(force || !requestCancelStateChange(StateChange.CLOSED)) {
+			if(this.canvasPersistenceHandler.getLoadedCanvas() != null){
+				ICanvas canvas = this.canvasPersistenceHandler.getLoadedCanvas();
+				canvas.getNotationSubsystem().unregisterCanvas(canvas);
+			}
 			this.open.set(false);
 			this.canvasPersistenceHandler.reset();
 			this.fireStateChange(StateChange.CLOSED);
@@ -76,6 +80,8 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 		
 		if (this.canvasPersistenceHandler.doesCanvasExist()) {
 			this.canvasPersistenceHandler.loadCanvas();
+			ICanvas canvas = this.canvasPersistenceHandler.getLoadedCanvas();
+			canvas.getNotationSubsystem().registerCanvas(canvas);
 		}
 		this.open.set(true);
 		this.fireStateChange(StateChange.OPENED);
@@ -168,6 +174,8 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 				throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
 		
 		this.canvasPersistenceHandler.createCanvas(notationSubsystem);
+		ICanvas canvas = this.canvasPersistenceHandler.getLoadedCanvas();
+		notationSubsystem.registerCanvas(canvas);
 		this.fireStateChange(StateChange.CANVAS_CREATED);
 	}
 
@@ -189,7 +197,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	public void deleteCanvas() {
 		if(!this.isOpen())
 			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
-			
+
 		this.canvasPersistenceHandler.deleteCanvas();
 		this.fireStateChange(StateChange.CANVAS_DESTROYED);
 	}

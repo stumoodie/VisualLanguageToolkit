@@ -15,7 +15,6 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -48,7 +47,7 @@ public class HibBooleanProperty extends HibProperty implements IBooleanAnnotatio
 		if(!numberValue.equals(this.boolValue)){
 			Boolean oldValue = this.boolValue;
 			this.boolValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(PropertyChange.ANNOTATION_VALUE, oldValue, this.boolValue);
+			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.boolValue);
 		}
 	}
 

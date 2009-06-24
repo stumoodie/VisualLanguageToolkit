@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
@@ -234,6 +235,19 @@ public class HibNotationFactoryTest extends PojoTester {
 		 */
 		public boolean isFallback() {
 			return false;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#registerCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+		 */
+		public void registerCanvas(ICanvas canvasToRegister) {
+			
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#unregisterCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
+		 */
+		public void unregisterCanvas(ICanvas canvasToRegister) {
 		}
 		
 	}
