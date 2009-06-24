@@ -11,11 +11,7 @@
 			</row>
 	</table>
 	<table name="ShapeAttribute">
-		<column>name</column>
 		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -24,19 +20,13 @@
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
+		<column>shape_defn</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>name_visible</column>
 		<row>
-			<value>shapeName8</value>
 			<value>100004</value>
-			<value>descr8</value>
-			<value>detailed descr8</value>
-			<value>http://www.shape8URL.org</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -45,13 +35,11 @@
 			<value>108</value>
 			<value>3</value>
 			<value>8</value>
-			<value>8</value>
-			<value>8</value>
+			<value>curbounds rect</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-			<value>true</value>
 		</row>																
 	</table>
 	<table name="LinkEdge"><!-- REMEBER TO SETUP THE CORRECT LINK_ATTRIBUTES -->
@@ -62,16 +50,11 @@
 	<table name="LinkAttribute">
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
 		<column>line_red</column>
 		<column>line_green</column>
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- END OF ATTRIBUTE DECLARATION -->

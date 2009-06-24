@@ -16,8 +16,6 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 
@@ -37,24 +35,6 @@ public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults
 	 */
 	double getGap();
 	
-	/**
-	 * get the shape type of the decorator.
-	 * @return the shape type.
-	 */
-	PrimitiveShapeType getTermDecoratorType();
-
-	/**
-	 * Get Decorator size 
-	 * @return a positive integer value.
-	 */
-	Dimension getTermSize();
-
-	/**
-	 * Get the fill and line RGB colour.
-	 * @return and RBG instance.
-	 */
-	RGB getTermColour();
-
 	/**
 	 * Get the arrowhead style associated with the decorator.
 	 * @return A non-null instance of an arrowhead type.

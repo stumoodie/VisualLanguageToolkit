@@ -37,6 +37,10 @@ public interface IPropertyBuilder {
 
 	INumberAnnotationProperty createNumberProperty(INumberPropertyDefinition propDefn);
 
+	IIntegerAnnotationProperty createIntegerProperty(IIntegerPropertyDefinition propDefn);
+
+	IBooleanAnnotationProperty createBooleanProperty(IBooleanPropertyDefinition propDefn);
+
 	IListAnnotationProperty createListProperty(IListPropertyDefinition propDefn);
 
 	IPlainTextAnnotationProperty copyPlainTextProperty(IPlainTextAnnotationProperty other);
@@ -44,6 +48,10 @@ public interface IPropertyBuilder {
 	IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other);
 
 	INumberAnnotationProperty copyNumberProperty(INumberAnnotationProperty other);
+
+	IIntegerAnnotationProperty copyIntegerProperty(IIntegerAnnotationProperty other);
+
+	IBooleanAnnotationProperty copyBooleanProperty(IBooleanAnnotationProperty other);
 
 	IListAnnotationProperty copyListProperty(IListAnnotationProperty other);
 }

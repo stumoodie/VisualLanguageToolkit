@@ -51,8 +51,6 @@ public class IBendpointTest {
 	private static final int Y_POSITION_OTHER = 200 ;
 	private static final Point POSITION = new Point(X_POSITION, Y_POSITION);
 	private static final Point POSITION_OTHER = new Point(X_POSITION_OTHER, Y_POSITION_OTHER);
-	private static final Point FIRST_REL_DIM = new Point(101, 102);
-	private static final Point SECOND_REL_DIM = new Point(103, 104);
 	
 	@Before
 	public void setUp() throws Exception {
@@ -68,7 +66,7 @@ public class IBendpointTest {
 	{
 		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
 		
-		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
+		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION) ;
 		
 		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 	}
@@ -78,7 +76,7 @@ public class IBendpointTest {
 	{
 		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
 		
-		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
+		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION) ;
 		
 		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 		
@@ -95,7 +93,7 @@ public class IBendpointTest {
 	{
 		final HibLinkAttribute mockLink = mockery.mock(HibLinkAttribute.class , "mockLink") ;
 		
-		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION, FIRST_REL_DIM, SECOND_REL_DIM) ;
+		IBendPoint bendPoint = new HibBendPoint ( mockLink, INDEX_POSITION, POSITION) ;
 		
 		assertEquals ( "location" , new Point ( X_POSITION , Y_POSITION ) , bendPoint.getLocation() ) ;
 		

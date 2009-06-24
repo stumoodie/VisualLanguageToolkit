@@ -1,5 +1,6 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 
 public interface IGraphicsEngine {
@@ -51,5 +52,7 @@ public interface IGraphicsEngine {
 	RGB getLineColour();
 
 	void setFont(IFont modifiedFont);
+
+	void setLineStyle(LineStyle values);
 
 }

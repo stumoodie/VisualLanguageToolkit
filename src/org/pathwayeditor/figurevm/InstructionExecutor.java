@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figurevm.IInterpreterErrorHandler.ErrorCode;
 import org.pathwayeditor.figurevm.Instruction.InstructionType;
 import org.pathwayeditor.figurevm.Instruction.OpCodes;
@@ -32,11 +33,8 @@ public class InstructionExecutor {
 	private static final int GREATER_VAL = 1;
 	private static final int EQUAL_VAL = 0;
 	private static final int LESSER_VAL = -1;
-//	private static final int IF_BLOCK_SKIP_SIZE = 2;
-//	private static final int NUM_COLOUR_COMPONENTS = 0;
-//	private static final int RED_IDX = 0;
-//	private static final int GREEN_IDX = 1;
-//	private static final int BLUE_IDX = 2;
+	private static final String CHOP_HULL_ANCHOR_CODE = "C";
+	private static final String SEMI_FIXED_ANCHOR_CODE = "S";
 	
 	private final IOpCodeHandler opCodeHandler;
 	private InstructionReader reader;
@@ -391,8 +389,28 @@ public class InstructionExecutor {
 				processCurBounds();
 			}
 		});
+		this.opCodeLookup.put(OpCodes.ANCHOR, new IOpCodeLookup(){
+			public void processOpCode() {
+				processSetAnchor();
+			}
+		});
 	}
 	
+	/**
+	 * 
+	 */
+	private void processSetAnchor() {
+		String anchorType = this.valueStack.pop().getStringLiteral();
+		if(anchorType.equals(CHOP_HULL_ANCHOR_CODE)){
+			this.opCodeHandler.setChopHullAnchor();
+		}
+		else if(anchorType.equals(SEMI_FIXED_ANCHOR_CODE)){
+			ValueList array = this.valueStack.pop().getArray();
+			List<Double> points = array.getDoubleList();
+			this.opCodeHandler.setSemiFixedAnchorCode(PointList.createFromDoubles(points));
+		}
+	}
+
 	/**
 	 * 
 	 */

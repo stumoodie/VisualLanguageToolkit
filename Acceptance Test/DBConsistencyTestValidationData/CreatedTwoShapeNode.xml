@@ -102,11 +102,7 @@
 			</row>								
 	</table>
 <table name="ShapeAttribute">
-		<column>name</column>
 		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -115,19 +111,13 @@
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
+		<column>shape_defn</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>name_visible</column>
 		<row>
-			<value>shapeName1</value>
 			<value>100001</value>
-			<value>descr1</value>
-			<value>detailed descr1</value>
-			<value>http://www.shape1URL.org</value>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -136,20 +126,14 @@
 			<value>101</value>
 			<value>1</value>
 			<value>1</value>
-			<value>1</value>
-			<value>1</value>
+			<value>curbounds rect</value>
 			<value>51</value>
 			<value>51</value>
 			<value>51</value>
 			<value>51</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName2</value>
 			<value>100002</value>
-			<value>descr2</value>
-			<value>detailed descr2</value>
-			<value>http://www.shape2URL.org</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -158,20 +142,14 @@
 			<value>102</value>
 			<value>2</value>
 			<value>2</value>
-			<value>2</value>
-			<value>2</value>
+			<value>curbounds rect</value>
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName3</value>
 			<value>100003</value>
-			<value>descr3</value>
-			<value>detailed descr3</value>
-			<value>http://www.shape3URL.org</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -180,20 +158,14 @@
 			<value>103</value>
 			<value>3</value>
 			<value>3</value>
-			<value>3</value>
-			<value>3</value>
+			<value>curbounds rect</value>
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName4</value>
 			<value>100004</value>
-			<value>descr4</value>
-			<value>detailed descr4</value>
-			<value>http://www.shape4URL.org</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -202,20 +174,14 @@
 			<value>104</value>
 			<value>4</value>
 			<value>4</value>
-			<value>4</value>
-			<value>4</value>
+			<value>curbounds rect</value>
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName5</value>
 			<value>100001</value>
-			<value>descr5</value>
-			<value>detailed descr5</value>
-			<value>http://www.shape5URL.org</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -224,20 +190,14 @@
 			<value>105</value>
 			<value>5</value>
 			<value>5</value>
-			<value>5</value>
-			<value>5</value>
+			<value>curbounds rect</value>
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName6</value>
 			<value>100002</value>
-			<value>descr6</value>
-			<value>detailed descr6</value>
-			<value>http://www.shape6URL.org</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -246,20 +206,14 @@
 			<value>106</value>
 			<value>1</value>
 			<value>6</value>
-			<value>6</value>
-			<value>6</value>
+			<value>curbounds rect</value>
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName7</value>
 			<value>100003</value>
-			<value>descr7</value>
-			<value>detailed descr7</value>
-			<value>http://www.shape7URL.org</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -268,20 +222,14 @@
 			<value>107</value>
 			<value>2</value>
 			<value>7</value>
-			<value>7</value>
-			<value>7</value>
+			<value>curbounds rect</value>
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
-			<value>true</value>
 		</row>
 		<row>
-			<value>shapeName8</value>
 			<value>100004</value>
-			<value>descr8</value>
-			<value>detailed descr8</value>
-			<value>http://www.shape8URL.org</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -290,20 +238,14 @@
 			<value>108</value>
 			<value>3</value>
 			<value>8</value>
-			<value>8</value>
-			<value>8</value>
+			<value>curbounds rect</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-			<value>true</value>
 		</row>	
 		<row>
-			<value>name</value>
 			<value>100001</value>
-			<value>description</value>
-			<value>detailed description</value>
-			<value>http://www.url.com</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -312,20 +254,14 @@
 			<value>150</value>
 			<value>3</value>
 			<value>1</value>
-			<value>0</value>
-			<value>13</value>
+			<value>curbounds 90 90 arc</value>
 			<value>75</value>
 			<value>75</value>
 			<value>50</value>
 			<value>50</value>
-			<value>true</value>
 		</row>	
 		<row>
-			<value>name</value>
 			<value>100001</value>
-			<value>description</value>
-			<value>detailed description</value>
-			<value>http://www.url.com</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -334,8 +270,7 @@
 			<value>150</value>
 			<value>3</value>
 			<value>1</value>
-			<value>0</value>
-			<value>13</value>
+			<value>curbounds 90 90 arc</value>
 			<value>75</value>
 			<value>75</value>
 			<value>50</value>

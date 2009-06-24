@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
@@ -33,33 +32,19 @@ import org.pathwayeditor.figure.geometry.Dimension;
  *
  */
 public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
-	public   String DESCRIPTION = "description" ;
-	public   String DETAILED_DESCRIPTION = "detailed description" ;
 	public   RGB    FILL_COLOR = new RGB ( 100 , 100 , 100 ) ;
 	public   RGB    LINE_COLOR = new RGB ( 150 , 150 , 150 ) ;
 	public   LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
 	public   int LINE_WIDTH = 1 ;
-	public   String NAME = "name" ;
-	public   PrimitiveShapeType PRIMITIVE_SHAPE_TYPE = PrimitiveShapeType.ARC ;
+	public   String PRIMITIVE_SHAPE_TYPE = "curbounds 90 90 arc";
 	public   Dimension SIZE = new Dimension ( 50 , 50 ) ;
-	public   String URL = "http://www.url.com" ;
 	
 	
-	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
-	 */
-	public String getDescription() {
-		return DESCRIPTION;
+	public String getShapeDefinition(){
+		return PRIMITIVE_SHAPE_TYPE;
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
-	 */
-	public String getDetailedDescription() {
-		return DETAILED_DESCRIPTION;
-	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getFillColour()
 	 */
@@ -88,32 +73,12 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 		return LINE_WIDTH;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getName()
-	 */
-	public String getName() {
-		return NAME;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
-	 */
-	public PrimitiveShapeType getShapeType() {
-		return PRIMITIVE_SHAPE_TYPE;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getSize()
 	 */
 	public Dimension getSize() {
 		return SIZE;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
-	 */
-	public String getURL() {
-		return URL;
 	}
 
 	/* (non-Javadoc)

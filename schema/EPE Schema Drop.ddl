@@ -42,6 +42,8 @@ alter table RootAttribute drop constraint FKRootAttrib985728;
 alter table RootObjectNode drop constraint R15;
 alter table RootAttribute drop constraint R16;
 alter table Property drop constraint FKProperty207842;
+alter table BooleanProperty drop constraint R130;
+alter table IntegerProperty drop constraint R131;
 drop table LinkEdge if exists;
 drop table CompoundNode if exists;
 drop table CompoundGraph if exists;
@@ -71,4 +73,6 @@ drop table ChildCompoundGraph if exists;
 drop table CanvasAttribute if exists;
 drop table AnnotatedCanvasAttribute if exists;
 drop table RootAttribute if exists;
+drop table BooleanProperty if exists;
+drop table IntegerProperty if exists;
 

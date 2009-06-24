@@ -31,6 +31,8 @@ public interface IPropertyDefinition {
 	 */
 	String getName();
 	
+	String getDisplayName();
+	
 	/**
 	 * Is the property visualisable
 	 * @return True if it is, false otherwise.

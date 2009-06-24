@@ -23,7 +23,6 @@ import java.util.List;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -44,19 +43,13 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	private static final RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
 	private static final double DEFAULT_LINE_WIDTH = 1.0;
-	private static final ConnectionRouter DEFAULT_ROUTER_TYPE = ConnectionRouter.FAN;
 	private static final double MIN_LINE_WIDTH = 1.0;
 	
 	private HibObjectType hibObjectType;
 	private ILinkObjectType objectType;
-	private String name = "";
-	private String description = "";
-	private String detailedDescription = "";
-	private String url = "";
 	private RGB lineColour = DEFAULT_LINE_COLOUR;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
 	private double lineWidth = DEFAULT_LINE_WIDTH;
-	private ConnectionRouter routerType = DEFAULT_ROUTER_TYPE;
 	private List<HibBendPoint> hibBendPoints = new ArrayList<HibBendPoint>();
 	private HibLinkEdge edge ;
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>();
@@ -103,11 +96,6 @@ s	 */
 		this.lineColour = otherAttribute.getLineColor();
 		this.lineStyle = otherAttribute.getLineStyle();
 		this.lineWidth = otherAttribute.getLineWidth();
-		this.name = otherAttribute.getName();
-		this.description = otherAttribute.getDescription();
-		this.detailedDescription = otherAttribute.getDetailedDescription();
-		this.url = otherAttribute.getUrl();
-		this.routerType = otherAttribute.getRouterType();
 		for(HibLinkTerminus linkTerm : otherAttribute.getLinkTermini()){
 			HibLinkTerminus copiedTerminus = new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, linkTerm);
 			this.linkTermini.add(copiedTerminus);
@@ -125,11 +113,6 @@ s	 */
 		this.setLineColor(linkAttributeDefaults.getLineColour());
 		this.setLineStyle(linkAttributeDefaults.getLineStyle());
 		this.setLineWidth(linkAttributeDefaults.getLineWidth());
-		this.setName(linkAttributeDefaults.getName());
-		this.setDescription(linkAttributeDefaults.getDescription());
-		this.setDetailedDescription(linkAttributeDefaults.getDetailedDescription());
-		this.setUrl(linkAttributeDefaults.getUrl());
-		this.setRouterType(linkAttributeDefaults.getRouter());
 	}
 
 	void setLinkEdge(HibLinkEdge edge) {
@@ -153,58 +136,6 @@ s	 */
 		injectPropertyDefinitions(this.objectType.getDefaultAttributes());
 		this.getSourceTerminus().injectLinkTerminusDefaults(this.objectType.getSourceTerminusDefinition());
 		this.getTargetTerminus().injectLinkTerminusDefaults(this.objectType.getTargetTerminusDefinition());
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		if ( name == null)
-			throw new IllegalArgumentException ( "Name cannot be null." ) ;
-		
-		String oldValue = this.name;
-		this.name = name;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NAME, oldValue, this.name);
-	}
-
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		if ( description == null )
-			throw new IllegalArgumentException ( "Description cannot be null." ) ;
-		
-		String oldValue = this.name;
-		this.description = description;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DESCRIPTION, oldValue, this.description);
-	}
-
-	public String getDetailedDescription() {
-		return this.detailedDescription;
-	}
-
-	public void setDetailedDescription(String detailedDescription) {
-		if ( detailedDescription == null )
-			throw new IllegalArgumentException ( "DetailedDescription cannot be null." ) ;
-		
-		String oldValue = this.detailedDescription;
-		this.detailedDescription = detailedDescription;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.DETAILED_DESCRIPTION, oldValue, this.detailedDescription);
-}
-
-	public String getUrl() {
-		return this.url;
-	}
-
-	public void setUrl(String url) {
-		if ( url == null )
-			throw new IllegalArgumentException ( "URL cannot be null." ) ;
-		
-		String oldValue = this.url;
-		this.url = url;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.URL, oldValue, this.url);
 	}
 
 	public int getLineRed() {
@@ -255,19 +186,6 @@ s	 */
 		double oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
-	}
-
-	public ConnectionRouter getRouterType() {
-		return this.routerType;
-	}
-
-	public void setRouterType(ConnectionRouter routerType) {
-		if ( routerType == null )
-			throw new IllegalArgumentException ( "Router type cannot be null." ) ;
-		
-		ConnectionRouter oldValue = this.routerType;
-		this.routerType = routerType;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.ROUTER_TYPE, oldValue, this.routerType);
 	}
 
 	public List<HibBendPoint> getBendPoints() {
@@ -457,15 +375,15 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#createNewBendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location, org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
 	 */
-	public IBendPoint createNewBendPoint(Point location, Point firstRelativeDim, Point secondRelativeDim) {
-		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
+	public IBendPoint createNewBendPoint(Point location) {
+		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location);
 		this.hibBendPoints.add(retVal);
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
 		return retVal;
 	}
 
-	public IBendPoint createNewBendPoint(int position, Point location, Point firstRelativeDim, Point secondRelativeDim) {
-		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location, firstRelativeDim, secondRelativeDim);
+	public IBendPoint createNewBendPoint(int position, Point location) {
+		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location);
 		if(position < 0 || position > this.hibBendPoints.size()) {
 			throw new IndexOutOfBoundsException("list size= " + this.hibBendPoints.size() + ", no bendpoint can be added at position: " + position);
 		}
@@ -515,4 +433,15 @@ s	 */
 	public void setListenersEnabled(boolean enabled) {
 		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
+	
+	public void makeSelfBendPoints(Point src, Point tgt) {
+		this.getSourceTerminus().setLocation(src);
+		this.getTargetTerminus().setLocation(tgt);
+		double startHeight= this.getCurrentDrawingElement().getSourceShape().getAttribute().getHeight();
+		double startWidth = this.getCurrentDrawingElement().getSourceShape().getAttribute().getWidth();
+		this.createNewBendPoint(src.translate(startWidth/2.0, 0.0));
+		this.createNewBendPoint(src.translate(startWidth/2.0, startHeight*2/3));
+		this.createNewBendPoint(new Point(tgt.getX(), src.getY() + startHeight*2/3));
+	}
+
 }

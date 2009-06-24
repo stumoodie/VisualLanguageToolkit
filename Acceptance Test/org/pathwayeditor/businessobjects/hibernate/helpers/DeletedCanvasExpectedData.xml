@@ -257,7 +257,6 @@
 	</table>
 	<table name="ShapeAttribute">
 		<column>id</column>
-		<column>name_visible</column>
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>

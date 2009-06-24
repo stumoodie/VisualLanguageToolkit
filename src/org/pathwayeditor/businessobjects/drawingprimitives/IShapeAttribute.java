@@ -15,9 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Alignment;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
@@ -30,9 +28,9 @@ import org.pathwayeditor.figure.geometry.Point;
 public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDrawingNodeAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
 	
-	GraphicsInstructionList getFigureDefinition(); 
+	GraphicsInstructionList getGraphicalDefinition(); 
 	
-	void setFigureDefinition(GraphicsInstructionList instList);
+	void setGraphicalDefinition(GraphicsInstructionList instList);
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -40,57 +38,6 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	 */
 	IShapeObjectType getObjectType();
 	
-	/**
-	 * Gets the name of this Shape.
-	 * @return the name. Cannot be null.
-	 */
-	String getName();
-	
-	/**
-	 * Sets the new name for this Shape.
-	 * @param name the new name. Cannot be null
-	 * @throws IllegalArgumentException if name is null.
-	 */
-	void setName(String name);
-	
-	/**
-	 * Gets the description of this Shape
-	 * @return the description. Cannot be null.
-	 */
-	String getDescription();
-	
-	/**
-	 * Sets the new description for this Shape.
-	 * @param description the new description. Cannot be null
-	 * @throws IllegalArgumentException if description is null.
-	 */
-	void setDescription(String description);
-	
-	/**
-	 * Sets the new detailed description for this Shape.
-	 * @param detailedDescription the new detailed description. Cannot be null
-	 * @throws IllegalArgumentException if detailed description is null.
-	 */
-	void setDetailedDescription(String detailedDescription);
-	
-	/**
-	 * Gets the detailed description of this Shape
-	 * @return the detailed description. Cannot be null.
-	 */
-	String getDetailedDescription();
-	
-	/**
-	 * Sets the new URL for this Shape.
-	 * @param url the new URL. Cannot be null
-	 * @throws IllegalArgumentException if URL is null.
-	 */
-	void setUrl(String url);
-	
-	/**
-	 * Gets the URL related to this Shape
-	 * @return the URL. Cannot be null.
-	 */
-	String getUrl();
 
 	/**
 	 * Sets the new location for this Shape.
@@ -119,18 +66,18 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	Dimension getSize();
 	
 	/**
-	 * Sets the primitive shape for this Shape.
-	 * @param primitiveShape the new primitive shape. Cannot be null
-	 * @throws IllegalArgumentException if primitiveShape is null.
+	 * Sets the shape definition string for this Shape.
+	 * @param shapeDefinitionthe new shape definition string. Cannot be null
+	 * @throws IllegalArgumentException if shapeDefinition is null.
 	 */
-	void setPrimitiveShape(PrimitiveShapeType primitiveShape);
+	void setShapeDefinition(String shapeDefinition);
 	
 	
 	/**
-	 * Gets the primitive shape type, which cannot be null.
-	 * @return the primitive shape type.
+	 * Gets the shape definition string, which cannot be null.
+	 * @return the shape definition.
 	 */
-	PrimitiveShapeType getPrimitiveShape();
+	String getShapeDefinition();
 	
 	/**
 	 * Returns a {@link RGB} representation for the background color of this Shape
@@ -145,19 +92,6 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	 */
 	void setFillColour(RGB fillColour);
 
-	/**
-	 * Returns a {@link RGB} representation for the text color of this Shape
-	 * @return the text color. Cannot be null.
-	 */	
-	RGB getTextColour();
-
-	/**
-	 * Sets the text color for this Shape.
-	 * @param textColour the new text color. Cannot be null
-	 * @throws IllegalArgumentException if textColour is null.
-	 */
-	void setTextColour(RGB textColour);
-	
 	/**
 	 * Returns the numerical value representing the thickness of the border line of the shape. 
 	 * @return the line width. Cannot be less than <code>MIN_LINE_WIDTH</code>.
@@ -191,18 +125,6 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	LineStyle getLineStyle();
 	
 	/**
-	 * Returns the horizontal alignment of the text. 
-	 * @return the horizontal alignment. Cannot be null.
-	 */
-	Alignment getHorizontalAlignment();
-	
-	/**
-	 * Returns the vertical alignment of the text. 
-	 * @return the vertical alignment. Cannot be null.
-	 */
-	Alignment getVerticalAlignment();
-	
-	/**
 	 * Sets the line style for this Shape.
 	 * @param lineStyle the new line style. Cannot be null
 	 * @throws IllegalArgumentException if lineStyle is null.
@@ -210,49 +132,9 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, IDr
 	void setLineStyle(LineStyle lineStyle);
 	
 	/**
-	 * Sets the horizontal alignment for this Shape's text.
-	 * @param alignment the new alignment. Cannot be null
-	 * @throws IllegalArgumentException if alignment is null.
-	 */
-	void setHorizontalAlignment(Alignment lineStyle);
-	
-	/**
-	 * Sets the vertical alignment for this Shape's text.
-	 * @param alignment the new alignment. Cannot be null
-	 * @throws IllegalArgumentException if alignment is null.
-	 */
-	void setVerticalAlignment(Alignment lineStyle);
-	
-	/**
-	 * @deprecated This is no longer used and will be removed soon.
-	 * Returns the padding for this Shape.
-	 * @return the padding of this Shape.
-	 */
-	int getPadding () ;
-	
-	/**
-	 * @deprecated this is no longer used and will be removed soon.
-	 * Sets the padding for this Shape
-	 * @param padding the new padding.
-	 */
-	void setPadding ( int padding ) ;
-
-	/**
 	 * Gets the shape node associated with the attribute.
 	 * @return the shape node, which cannot be null.
 	 */
 	IShapeNode getCurrentDrawingElement();
 	
-	
-	/**
-	 * Returns the visibility of the name for this Shape. 
-	 * @return the visibility status. 
-	 */
-	boolean isNameVisible () ;
-	
-	/** 
-	 * Sets the visibility of the name for this Shape.
-	 * @param value the visibility of the name.
-	 */
-	void setNameVisible ( boolean value ) ;
 }

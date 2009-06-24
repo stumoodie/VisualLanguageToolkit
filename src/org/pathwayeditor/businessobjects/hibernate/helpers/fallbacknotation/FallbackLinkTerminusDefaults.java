@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
@@ -39,7 +38,6 @@ public class FallbackLinkTerminusDefaults implements ILinkTerminusDefaults {
 	private static final Dimension DEFAULT_END_SIZE = new Dimension(0, 0);
 	private static final short DEFAULT_GAP = 0;
 	private static final RGB DEFAULT_COLOUR = new RGB(0, 0, 0);
-	private static final PrimitiveShapeType DEFAULT_TERM_DECORATOR = PrimitiveShapeType.RECTANGLE;
 	private static final Dimension DEFAULT_TERM_SIZE = new Dimension(0, 0);
 	private static final ILabelAttributeDefaults LABEL_DEFAULTS = new FallbackLabelAttributeDefaults();
 	
@@ -82,13 +80,6 @@ public class FallbackLinkTerminusDefaults implements ILinkTerminusDefaults {
 	 */
 	public RGB getTermColour() {
 		return DEFAULT_COLOUR;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getTermDecoratorType()
-	 */
-	public PrimitiveShapeType getTermDecoratorType() {
-		return DEFAULT_TERM_DECORATOR;
 	}
 
 	/* (non-Javadoc)

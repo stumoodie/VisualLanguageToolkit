@@ -19,7 +19,6 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Dimension;
 
@@ -28,15 +27,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
  *
  */
 public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer  {
-	String getName();
-
-	String getDescription();
-
-	String getDetailedDescription();
-
-	PrimitiveShapeType getShapeType();
-
-	String getURL();
+	String getShapeDefinition();
 
 	Dimension getSize();
 

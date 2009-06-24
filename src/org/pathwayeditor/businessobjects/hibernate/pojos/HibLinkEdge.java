@@ -22,7 +22,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
-import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
@@ -279,14 +278,6 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 */
 	public ISubModel getLabelSubModel() {
 		return this.getOwningSubModel();
-	}
-
-	public void makeSelfBendPoints() {
-		Point start=this.getSourceShape().getAttribute().getLocation();
-		double startHeight=this.getSourceShape().getAttribute().getHeight();
-		double startWidth = this.getSourceShape().getAttribute().getWidth();
-		attribute.createNewBendPoint(start,new Point(startWidth,-1*startHeight*2/3),new Point(0,0));
-		attribute.createNewBendPoint(start,new Point(startWidth*2,0),new Point(0,startHeight*2/3));
 	}
 }
 

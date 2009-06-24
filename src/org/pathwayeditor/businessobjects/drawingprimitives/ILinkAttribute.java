@@ -17,7 +17,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
@@ -47,20 +46,6 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	ILinkTerminus getTargetTerminus();
 
 	/**
-	 * Get the Connector router of the link. Cannot be null.
-	 * @return the connection router.
-	 */
-	ConnectionRouter getRouterType();
-
-	/**
-	 * Sets the Connector router of the link.
-	 * @param router the router type to set, which cannot be null.
-	 * @throws IllegalArgumentException if router is null.
-	 */
-	void setRouterType(ConnectionRouter router);
-	
-	
-	/**
 	 * Gets an iterator that contains all the bendpoints of this Link. Cannot be null.
 	 * @return the bendpoint iterator.
 	 */
@@ -71,6 +56,12 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @return the numeric value of the bendpoints.
 	 */
 	int numBendPoints();
+	
+	/**
+	 *  Makes a set of bendpoints which draw a dog-leg link
+	 */
+	void makeSelfBendPoints(Point src, Point tgt);
+
 	
 	/**
 	 * Checks if the bendpoint in question belongs to this Link.
@@ -102,10 +93,10 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @return the newly created bendpoint which cannot be null.
 	 * throws IllegalArgumentException if any parameter is null. 
 	 */
-	IBendPoint createNewBendPoint(Point location, Point firstRelativeDim, Point secondRelativeDim);
+	IBendPoint createNewBendPoint(Point location);
 	
 	/**
-	 * As {@link #createNewBendPoint(Point, Point, Point)}, but also defines the index position
+	 * As {@link #createNewBendPoint(Point)}, but also defines the index position
 	 * that the new bendpoint should be inserted into. This allows an index position that will result in an
 	 * append to the list, i.e. <code>position == numBendPoints()</code>.
 	 * @param position the index position which must be valid for the list of bendpoints
@@ -116,7 +107,7 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @throws IllegalArgumentException if any parameter is null.
 	 * @throws IndexOutOfBoundsException if <code>indexPos &lt; 0 || indexPos &gt; this.numBendPoints()</code>.
 	 */
-	IBendPoint createNewBendPoint(int position, Point location, Point firstRelativeDim, Point secondRelativeDim);
+	IBendPoint createNewBendPoint(int position, Point location);
 	
 	/**
 	 * Adds a bendpoint to the list of bendpoints at the given position.
@@ -167,58 +158,6 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @throws IllegalArgumentException if style is null.
 	 */
 	void setLineStyle ( LineStyle style );
-	
-	/**
-	 * Gets the URL that is related with this link.
-	 * @return the url of the link.
-	 */	
-	String getUrl () ;
-	
-	/**
-	 * Sets the URL related with this link.
-	 * @param url the url, which cannot be null, but can be malformed or an empty string.
-	 * @throws IllegalArgumentException if url is null.
-	 */
-	void setUrl ( String url) ;
-	
-	/**
-	 * Gets the Name that is related with this link.
-	 * @return the name of the link.
-	 */	
-	String getName () ;
-	
-	/**
-	 * Sets the Name that is related with this link.
-	 * @param newName the new Name, which cannot be null, but can be an empty string.
-	 * @throws IllegalArgumentException if <code>newName</code> is null.
-	 */
-	void setName ( String newName) ;
-	
-	/**
-	 * Gets the description of this link.
-	 * @return the description of the link, which cannot be null.
-	 */	
-	String getDescription () ;
-	
-	/**
-	 * Sets the Description that is related with this link.
-	 * @param newDescription the new Description, which cannot be null.
-	 * @throws IllegalArgumentException if <code>description</code> is null.
-	 */
-	void setDescription ( String newDescription) ;	
-	
-	/**
-	 * Gets the DetailedDescription that is related with this link.
-	 * @return the DetailedDescription of the link.
-	 */	
-	String getDetailedDescription () ;
-	
-	/**
-	 * Sets the DetailedDescription that is related with this link.
-	 * @param DetailedDescription the new DetailedDescription, which cannot be null.
-	 * @throws IllegalArgumentException if <code>detailedDescription</code> is null.
-	 */
-	void setDetailedDescription ( String DetailedDescription) ;	
 	
 	/**
 	 * Returns the width of the line.

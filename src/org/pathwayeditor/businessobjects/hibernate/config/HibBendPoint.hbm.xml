@@ -25,17 +25,5 @@
         <property name="YPosition" type="double">
             <column name="y_position" not-null="true" />
         </property>
-        <property name="firstRelativeDimensionX" type="double">
-            <column name="first_rel_dim_x" not-null="true" />
-        </property>
-        <property name="firstRelativeDimensionY" type="double">
-            <column name="first_rel_dim_y" not-null="true" />
-        </property>
-        <property name="secondRelativeDimensionX" type="double">
-            <column name="second_rel_dim_x" not-null="true" />
-        </property>
-        <property name="secondRelativeDimensionY" type="double">
-            <column name="second_rel_dim_y" not-null="true" />
-        </property>
     </class>
 </hibernate-mapping>

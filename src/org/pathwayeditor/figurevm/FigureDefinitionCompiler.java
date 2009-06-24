@@ -8,16 +8,16 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 
-public class InstructionParser {
+public class FigureDefinitionCompiler {
 	private final String figureDefinition;
     private TreeDrawingVm walker = null;
 	
-	public InstructionParser(String figureDefinition){
+	public FigureDefinitionCompiler(String figureDefinition){
 		this.figureDefinition = figureDefinition;
 	}
 	
 	
-	public void parse(){
+	public void compile(){
         DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream(figureDefinition));
        	CommonTokenStream tokens = new CommonTokenStream(lex);
 
@@ -41,12 +41,12 @@ public class InstructionParser {
 	}
 
 
-	public IFigureDefinition getInstructions(){
+	public IFigureDefinition getCompiledFigureDefinition(){
 		return this.walker.getInstructions();
 	}
 
 
-	public String getFigureDefinition() {
+	public String getFigureDefinitionString() {
 		return figureDefinition;
 	}
 }

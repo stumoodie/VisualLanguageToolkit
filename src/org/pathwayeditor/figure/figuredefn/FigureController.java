@@ -3,20 +3,19 @@ package org.pathwayeditor.figure.figuredefn;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
-import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 
 public class FigureController implements IFigureController {
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final FigureBuilder builder;
-	private IConvexHull convexHull = null;
 	private GraphicsInstructionList figureInstructions;
-	private Envelope refBounds;
+	private Envelope requestedEnvelope;
 	private final IFigureDefinition shapeDefinition; 
 
 	public FigureController(IFigureDefinition shapeDefinition){
@@ -25,7 +24,7 @@ public class FigureController implements IFigureController {
 			ConvexHullCalculator hullCalc = new ConvexHullCalculator();
 			this.builder = new FigureBuilder(shapeDefinition, hullCalc);
 			this.builder.setLineWidth(DEFAULT_LINE_WIDTH);
-			this.refBounds = new Envelope(0, 0, 100, 100);
+			this.requestedEnvelope = new Envelope(0, 0, 100, 100);
 		} catch (RuntimeException ex) {
 			logger.error("An error occured reading the figure definition", ex);
 			throw ex;
@@ -33,11 +32,11 @@ public class FigureController implements IFigureController {
 	}
 
 	public IConvexHull getConvexHull() {
-		return this.convexHull;
+		return this.builder.getConvexHull();
 	}
 
 	public Envelope getEnvelope() {
-		return this.refBounds;
+		return this.builder.getConvexHull().getEnvelope();
 	}
 
 	public RGB getFillColour() {
@@ -72,8 +71,8 @@ public class FigureController implements IFigureController {
 		return this.shapeDefinition.getBindVariableNames();
 	}
 	
-	public void setEnvelope(Envelope newEnvelope) {
-		this.refBounds = newEnvelope;
+	public void setRequestedEnvelope(Envelope newEnvelope) {
+		this.requestedEnvelope = newEnvelope;
 	}
 
 	public void setFillColour(RGB newFillColour) {
@@ -89,30 +88,47 @@ public class FigureController implements IFigureController {
 	}
 
 	public void generateFigureDefinition() {
-//		double x = this.refBounds.getOrigin().getX();
-//		double y = this.refBounds.getOrigin().getY();
-//		double w = this.refBounds.getDimension().getWidth();
-//		double h =this.refBounds.getDimension().getHeight();
-//		this.builder.setBindDouble("x", x);
-//		this.builder.setBindDouble("y", y);
-//		this.builder.setBindDouble("w", w);
-//		this.builder.setBindDouble("h", h);
-		this.builder.setEnvelope(refBounds);
-		logger.debug("Generating figure: env=" + this.refBounds);
+		this.builder.setEnvelope(requestedEnvelope);
+		logger.debug("Generating figure: env=" + this.requestedEnvelope);
 		this.builder.generateFigure();
 		this.figureInstructions = this.builder.getFigureDefinition();
-		IConvexHullCalculator calc = this.builder.getConvexHullCalculator();
-		calc.calculate();
-		this.convexHull = calc.getConvexHull();
-		if(!this.refBounds.contains(this.convexHull.getEnvelope())){
-			logger.warn("The convex hull (env=" + this.convexHull.getEnvelope() + ") spills outside the requested envelope ("
-					+ this.refBounds + ". This may cause rendering problems");
+		if(!this.requestedEnvelope.contains(this.getEnvelope())){
+			logger.info("The convex hull (env=" + this.getEnvelope() + ") spills outside the requested envelope ("
+					+ this.requestedEnvelope + ". This may cause rendering problems");
 		}
-		logger.debug("Calcuated convex hull=" + this.convexHull);
+		logger.debug("Calcuated convex hull=" + this.getConvexHull());
 	}
 
 	public GraphicsInstructionList getFigureDefinition() {
 		return this.figureInstructions;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getAnchorCalculator()
+	 */
+	public IAnchorLocatorFactory getAnchorLocatorFactory() {
+		return this.builder.getAnchorLocatorFactory();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getLineStyle()
+	 */
+	public LineStyle getLineStyle() {
+		return this.builder.getLineStyle();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getRequestedEnvelope()
+	 */
+	public Envelope getRequestedEnvelope() {
+		return this.requestedEnvelope;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#setLineStyle()
+	 */
+	public void setLineStyle(LineStyle lineStyle) {
+		this.builder.setLineStyle(lineStyle);
 	}
 	
 	

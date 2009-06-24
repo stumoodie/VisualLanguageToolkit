@@ -98,4 +98,7 @@ public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
 		return false;
 	}
 
+	public String getDisplayName() {
+		return NAME;
+	}
 }

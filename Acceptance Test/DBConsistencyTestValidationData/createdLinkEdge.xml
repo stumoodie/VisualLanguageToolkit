@@ -19,28 +19,18 @@
 	</table>
 <table name="LinkAttribute">
 		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
 		<column>line_red</column>
 		<column>line_green</column>
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
 		<row>
 			<value>100006</value>
-			<value>link name</value>
-			<value>detailed descn</value>
-			<value>descn</value>
 			<value>4</value>
 			<value>5</value>
 			<value>6</value>
 			<value>3</value>
 			<value>3</value>
-			<value>1</value>
-			<value>http://www.google.com</value>
 		</row>
 	</table>
 </dataset>

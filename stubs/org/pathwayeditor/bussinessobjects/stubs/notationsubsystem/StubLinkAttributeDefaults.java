@@ -21,9 +21,7 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
@@ -39,7 +37,7 @@ import org.pathwayeditor.figure.geometry.Point;
 public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefaults {
 	public static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
 	public static final  String EXPECTED_DEFAULT_NAME = "link name";
-	public static final  PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
+	public static final  String EXPECTED_DEFAULT_SHAPE_TYPE = "curbounds oval";
 	public static final Dimension EXPECTED_DEFAULT_SIZE = new Dimension(15,25);
 	public static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
 	public static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
@@ -48,7 +46,6 @@ public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefault
 	public static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
 	public static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
 	public static final Point EXPECTED_INITIAL_LOCATION = new Point(235,5543);
-	public static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.SHORTEST_PATH;
 
 //	private  ILinkTerminusDefaults sourceTermDefaults = new StubSourceTerminusDefaults();
 //	private  ILinkTerminusDefaults targetTermDefaults = new StubTargetTerminusDefaults();
@@ -91,7 +88,7 @@ public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefault
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getLineWidth()
 	 */
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return EXPECTED_DEFAULT_LINE_WIDTH;
 	}
 
@@ -116,13 +113,6 @@ public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefault
 		throw new UnsupportedOperationException("not implemented");
 	}
 
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getRouter()
-	 */
-	public ConnectionRouter getRouter() {
-		return EXPECTED_DEFAULT_ROUTER;
-	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IDefaultLinkAttributes#getUrl()

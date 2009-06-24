@@ -36,8 +36,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private static final long serialVersionUID = -1996477907215294788L;
 
+	private static final String DEFAULT_DISPLAY_NAME = "A Property";
 	private Long id = null;
 	private String name;
+	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
 	private final ListenablePropertyChangeItem listenerHandler = new ListenablePropertyChangeItem();
@@ -85,6 +87,14 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		return name;
 	}
 	
+	public String getDisplayName() {
+		return this.displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
 	public boolean isDisplayed() {
 		return this.labelAttribute != null;
 	}

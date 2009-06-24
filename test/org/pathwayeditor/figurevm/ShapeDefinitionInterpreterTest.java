@@ -8,6 +8,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.pathwayeditor.figure.geometry.PointList;
 
 public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 
@@ -175,6 +176,20 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		print("curBounds()");
 		Double retVal[] = new Double[]{ 0.0, 1.0, 2.0, 3.0 };
 		return Arrays.asList(retVal);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
+	 */
+	public void setChopHullAnchor() {
+		print("setChopHullAnchor()");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
+	 */
+	public void setSemiFixedAnchorCode(PointList points) {
+		print("setSemiFixedAnchorCode(" + points.toString() + ")");
 	}
 
 }

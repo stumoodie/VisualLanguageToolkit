@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
@@ -43,7 +42,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	private static final LineStyle LINE_STYLE = LineStyle.SOLID;
 	private static final int LINE_WIDTH = 0;
 	private static final String NAME = "Default Shape";
-	private static final PrimitiveShapeType SHAPE_TYPE = PrimitiveShapeType.RECTANGLE;
+	private static final String SHAPE_TYPE = "curbounds rect";
 	private static final Dimension SIZE = new Dimension(0, 0);
 	private static final String URL = null;
 	private static final Set<IPropertyDefinition> PROP_SET = Collections.emptySet();
@@ -117,7 +116,7 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
 	 */
-	public PrimitiveShapeType getShapeType() {
+	public String getShapeDefinition() {
 		return SHAPE_TYPE;
 	}
 

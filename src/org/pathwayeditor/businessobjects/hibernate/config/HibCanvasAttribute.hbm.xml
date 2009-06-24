@@ -87,18 +87,6 @@
 					cascade="none" lazy="false" >
 					<column name="object_type_id" not-null="true" />
 				</many-to-one>
-				<property name="name" type="string">
-					<column name="name" length="128" not-null="true" />
-				</property>
-				<property name="description" type="string">
-					<column name="description" length="2048" not-null="true" />
-				</property>
-				<property name="detailedDescription" type="string">
-					<column name="detailed_description" not-null="true" />
-				</property>
-				<property name="url" type="string">
-					<column name="url" length="2048" not-null="true" />
-				</property>
 				<property name="lineRed" type="int">
 					<column name="line_red" not-null="true" />
 				</property>
@@ -113,9 +101,6 @@
 				</property>
 				<property name="lineWidth" type="double">
 					<column name="line_width" not-null="true" />
-				</property>
-				<property name="routerType" type="ConnectionRouterType">
-					<column name="router_type" not-null="true" />
 				</property>
 				<property name="lastBendPointSerial" type="int">
 					<column name="last_bendpoint_serial" not-null="true" />
@@ -164,36 +149,6 @@
 					cascade="none" lazy="false" >
 					<column name="object_type_id" not-null="true" />
 				</many-to-one>
-				<property name="name" type="string" access="property">
-					<column name="name" length="128" not-null="true" />
-				</property>
-				<property name="nameVisible" type="boolean" access="property">
-					<column name="name_visible" not-null="true" />
-				</property>
-		       	<property name="horizontalAlignment" type="AlignmentType" access="property">
-        		   	<column name="name_horiz_align" not-null="true" />
-       			</property>
-       			<property name="verticalAlignment" type="AlignmentType" access="property">
-           			<column name="name_vert_align" not-null="true" />
-       			</property>
-		       	<property name="textRed" type="int" access="property">
-        		   	<column name="name_red" not-null="true" />
-       			</property>
-       			<property name="textGreen" type="int" access="property">
-           			<column name="name_green" not-null="true" />
-       			</property>
-       			<property name="textBlue" type="int" access="property">
-           			<column name="name_blue" not-null="true" />
-       			</property>
-				<property name="description" type="string" access="property">
-					<column name="description" length="2048" not-null="true" />
-				</property>
-				<property name="detailedDescription" type="string" access="property">
-					<column name="detailed_description" not-null="true" />
-				</property>
-				<property name="url" type="string" access="property">
-					<column name="url" length="2048" not-null="true" />
-				</property>
 				<property name="fillRed" type="int" access="property">
 					<column name="fill_red" not-null="true" />
 				</property>
@@ -218,11 +173,8 @@
 				<property name="lineWidth" type="double" access="property">
 					<column name="line_width" not-null="true" />
 				</property>
-				<property name="padding" type="int" access="property">
-					<column name="padding" not-null="true" />
-				</property>
-				<property name="primitiveShape" type="PrimitiveShapeType" access="property">
-					<column name="shape_type" not-null="true" />
+				<property name="shapeDefinition" type="string" access="property">
+					<column name="shape_defn" length="4096" not-null="true" />
 				</property>
 			</joined-subclass>
 
@@ -250,24 +202,6 @@
 				</property>
 				<property name="endDecHeight" type="double">
 					<column name="end_dec_height" not-null="true" />
-				</property>
-				<property name="terminusDecoratorType" type="PrimitiveShapeType">
-					<column name="term_dec_type" not-null="true" />
-				</property>
-				<property name="termDecRed" type="int">
-					<column name="term_dec_red" not-null="true" />
-				</property>
-				<property name="termDecGreen" type="int">
-					<column name="term_dec_green" not-null="true" />
-				</property>
-				<property name="termDecBlue" type="int">
-					<column name="term_dec_blue" not-null="true" />
-				</property>
-				<property name="termDecWidth" type="double">
-					<column name="term_dec_width" not-null="true" />
-				</property>
-				<property name="termDecHeight" type="double">
-					<column name="term_dec_height" not-null="true" />
 				</property>
 				<property name="XPosition" type="double" access="property">
 					<column name="x_position" not-null="true" />

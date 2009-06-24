@@ -19,8 +19,12 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.helpers;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
@@ -29,6 +33,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainText
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibBooleanProperty;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibIntegerProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibListProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty;
@@ -81,6 +87,14 @@ public class PropertyBuilder implements IPropertyBuilder {
 		return new HibNumberProperty(owner, (HibNumberProperty)other);
 	}
 
+	public IIntegerAnnotationProperty copyIntegerProperty(IIntegerAnnotationProperty other) {
+		return new HibIntegerProperty(owner, (HibIntegerProperty)other);
+	}
+
+	public IBooleanAnnotationProperty copyBooleanProperty(IBooleanAnnotationProperty other) {
+		return new HibBooleanProperty(owner, (HibBooleanProperty)other);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition)
 	 */
@@ -93,6 +107,16 @@ public class PropertyBuilder implements IPropertyBuilder {
 	 */
 	public INumberAnnotationProperty createNumberProperty(INumberPropertyDefinition propDefn) {
 		INumberAnnotationProperty aNumberProperty =  new HibNumberProperty(owner,  propDefn); 
+		return aNumberProperty ;
+	}
+
+	public IIntegerAnnotationProperty createIntegerProperty(IIntegerPropertyDefinition propDefn) {
+		IIntegerAnnotationProperty aNumberProperty =  new HibIntegerProperty(owner,  propDefn); 
+		return aNumberProperty ;
+	}
+
+	public IBooleanAnnotationProperty createBooleanProperty(IBooleanPropertyDefinition propDefn) {
+		IBooleanAnnotationProperty aNumberProperty =  new HibBooleanProperty(owner,  propDefn); 
 		return aNumberProperty ;
 	}
 

@@ -76,9 +76,7 @@ public class Point {
 	}
 
 	public double getDistance(Point other) {
-		double xDist = this.x - other.getX();
-		double yDist = this.getY() - other.getY();
-		return Math.sqrt(xDist * xDist + yDist * yDist);
+		return Math.sqrt(this.getSqrDistance(other));
 	}
 
 	public Point translate(double d, double e) {
@@ -103,5 +101,18 @@ public class Point {
 
 	public Point newY(double y2) {
 		return new Point(this.x, y2);
+	}
+
+	/**
+	 * Gets the square distance - which is quicker if all you are doing
+	 * is looking for a relative distance, such as the furthest or nearest point and so an exact value
+	 * is not required.
+	 * @param other the point to meature the distance to.
+	 * @return the distance to the other point squared.
+	 */
+	public double getSqrDistance(Point other) {
+		double xDist = this.x - other.getX();
+		double yDist = this.getY() - other.getY();
+		return xDist * xDist + yDist * yDist;
 	}
 }

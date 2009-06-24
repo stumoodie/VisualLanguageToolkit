@@ -387,24 +387,12 @@
 		<column>end_dec_type</column>
 		<column>end_dec_width</column>
 		<column>end_dec_height</column>
-		<column>term_dec_type</column>
-		<column>term_dec_red</column>
-		<column>term_dec_green</column>
-		<column>term_dec_blue</column>
-		<column>term_dec_height</column>
-		<column>term_dec_width</column>
 		<row>
 			<value>100026</value>
 			<value>100009</value>
 			<value>0</value>
 			<value>1</value>
 			<value>1</value>
-			<value>11</value>
-			<value>11</value>
-			<value>1</value>
-			<value>101</value>
-			<value>101</value>
-			<value>101</value>
 			<value>11</value>
 			<value>11</value>
 		</row>
@@ -416,12 +404,6 @@
 			<value>2</value>
 			<value>12</value>
 			<value>12</value>
-			<value>2</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>12</value>
-			<value>12</value>
 		</row>
 		<row>
 			<value>100028</value>
@@ -429,12 +411,6 @@
 			<value>0</value>
 			<value>3</value>
 			<value>1</value>
-			<value>13</value>
-			<value>13</value>
-			<value>1</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
 			<value>13</value>
 			<value>13</value>
 		</row>
@@ -446,12 +422,6 @@
 			<value>2</value>
 			<value>14</value>
 			<value>14</value>
-			<value>2</value>
-			<value>104</value>
-			<value>104</value>
-			<value>104</value>
-			<value>14</value>
-			<value>14</value>
 		</row>
 		<row>
 			<value>100030</value>
@@ -459,12 +429,6 @@
 			<value>0</value>
 			<value>5</value>
 			<value>1</value>
-			<value>15</value>
-			<value>15</value>
-			<value>1</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
 			<value>15</value>
 			<value>15</value>
 		</row>
@@ -476,12 +440,6 @@
 			<value>2</value>
 			<value>16</value>
 			<value>16</value>
-			<value>2</value>
-			<value>106</value>
-			<value>106</value>
-			<value>106</value>
-			<value>16</value>
-			<value>16</value>
 		</row>
 		<row>
 			<value>100032</value>
@@ -489,12 +447,6 @@
 			<value>0</value>
 			<value>7</value>
 			<value>1</value>
-			<value>17</value>
-			<value>17</value>
-			<value>1</value>
-			<value>107</value>
-			<value>107</value>
-			<value>107</value>
 			<value>17</value>
 			<value>17</value>
 		</row>		
@@ -506,12 +458,6 @@
 			<value>2</value>
 			<value>18</value>
 			<value>18</value>
-			<value>2</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>18</value>
-			<value>18</value>
 		</row>
 		<row>
 			<value>100034</value>
@@ -519,12 +465,6 @@
 			<value>0</value>
 			<value>9</value>
 			<value>1</value>
-			<value>19</value>
-			<value>19</value>
-			<value>1</value>
-			<value>109</value>
-			<value>109</value>
-			<value>109</value>
 			<value>19</value>
 			<value>19</value>
 		</row>
@@ -536,12 +476,6 @@
 			<value>2</value>
 			<value>20</value>
 			<value>20</value>
-			<value>2</value>
-			<value>110</value>
-			<value>110</value>
-			<value>110</value>
-			<value>20</value>
-			<value>20</value>
 		</row>
 		<row>
 			<value>100036</value>
@@ -549,12 +483,6 @@
 			<value>0</value>
 			<value>11</value>
 			<value>1</value>
-			<value>21</value>
-			<value>21</value>
-			<value>1</value>
-			<value>111</value>
-			<value>111</value>
-			<value>111</value>
 			<value>21</value>
 			<value>21</value>
 		</row>
@@ -566,12 +494,6 @@
 			<value>2</value>
 			<value>22</value>
 			<value>22</value>
-			<value>2</value>
-			<value>112</value>
-			<value>112</value>
-			<value>112</value>
-			<value>22</value>
-			<value>22</value>
 		</row>
 		<row>
 			<value>100038</value>
@@ -579,12 +501,6 @@
 			<value>0</value>
 			<value>13</value>
 			<value>1</value>
-			<value>23</value>
-			<value>23</value>
-			<value>1</value>
-			<value>113</value>
-			<value>113</value>
-			<value>113</value>
 			<value>23</value>
 			<value>23</value>
 		</row>
@@ -596,12 +512,6 @@
 			<value>2</value>
 			<value>24</value>
 			<value>24</value>
-			<value>2</value>
-			<value>114</value>
-			<value>114</value>
-			<value>114</value>
-			<value>24</value>
-			<value>24</value>
 		</row>
 		<row>
 			<value>100040</value>
@@ -609,12 +519,6 @@
 			<value>0</value>
 			<value>15</value>
 			<value>1</value>
-			<value>25</value>
-			<value>25</value>
-			<value>1</value>
-			<value>115</value>
-			<value>115</value>
-			<value>115</value>
 			<value>25</value>
 			<value>25</value>
 		</row>
@@ -626,12 +530,6 @@
 			<value>2</value>
 			<value>26</value>
 			<value>26</value>
-			<value>2</value>
-			<value>116</value>
-			<value>116</value>
-			<value>116</value>
-			<value>26</value>
-			<value>26</value>
 		</row>
 		<row>
 			<value>100042</value>
@@ -641,12 +539,6 @@
 			<value>1</value>
 			<value>27</value>
 			<value>27</value>
-			<value>1</value>
-			<value>117</value>
-			<value>117</value>
-			<value>117</value>
-			<value>27</value>
-			<value>27</value>
 		</row>
 		<row>
 			<value>100043</value>
@@ -654,12 +546,6 @@
 			<value>1</value>
 			<value>18</value>
 			<value>2</value>
-			<value>28</value>
-			<value>28</value>
-			<value>2</value>
-			<value>118</value>
-			<value>118</value>
-			<value>118</value>
 			<value>28</value>
 			<value>28</value>
 		</row>

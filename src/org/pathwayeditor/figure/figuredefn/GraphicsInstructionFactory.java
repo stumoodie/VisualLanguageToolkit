@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
@@ -167,5 +168,9 @@ public class GraphicsInstructionFactory {
 
 	public GraphicsInstruction setLineWidth(double lineWidth) {
 		return new GraphicsInstruction(GraphicsOpCode.LINE_WIDTH, Double.valueOf(lineWidth));
+	}
+
+	public GraphicsInstruction setLineStyle(LineStyle lineStyle) {
+		return new GraphicsInstruction(GraphicsOpCode.LINE_STYLE, lineStyle);
 	}
 }

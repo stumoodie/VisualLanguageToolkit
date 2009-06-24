@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -35,8 +34,6 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
  */
 public class FallbackLinkAttributeDefaults implements ILinkAttributeDefaults {
 	private static final Set<IPropertyDefinition> PROP_SET = Collections.emptySet();
-	private static final String URL = null;
-	private static final ConnectionRouter ROUTER = ConnectionRouter.FAN;
 	private static final String NAME = "Default Link";
 	private static final int LINE_WIDTH = 0;
 	private static final LineStyle LINE_STYLE = LineStyle.SOLID;
@@ -83,7 +80,7 @@ public class FallbackLinkAttributeDefaults implements ILinkAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults#getLineWidth()
 	 */
-	public int getLineWidth() {
+	public double getLineWidth() {
 		return LINE_WIDTH;
 	}
 
@@ -99,20 +96,6 @@ public class FallbackLinkAttributeDefaults implements ILinkAttributeDefaults {
 	 */
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
 		return PROP_SET.iterator();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults#getRouter()
-	 */
-	public ConnectionRouter getRouter() {
-		return ROUTER;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults#getUrl()
-	 */
-	public String getUrl() {
-		return URL;
 	}
 
 	/* (non-Javadoc)

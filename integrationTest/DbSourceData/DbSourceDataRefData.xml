@@ -445,11 +445,7 @@
 	</table>
 	<table name="ShapeAttribute">
 		<column>id</column>
-		<column>name</column>
 		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -458,25 +454,14 @@
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
+		<column>shape_defn</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>name_visible</column>
-		<column>name_horiz_align</column>
-		<column>name_vert_align</column>
-		<column>name_red</column>
-		<column>name_green</column>
-		<column>name_blue</column>
 		<row>
 			<value>100002</value>
-			<value>shapeName</value>
 			<value>100001</value>
-			<value>descr</value>
-			<value>detailed descr</value>
-			<value>http://www.shapeURL.org</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -485,26 +470,15 @@
 			<value>100</value>
 			<value>1</value>
 			<value>1</value>
-			<value>1</value>
-			<value>1</value>
+			<value>curbounds rect</value>
 			<value>50</value>
 			<value>50</value>
 			<value>50</value>
 			<value>50</value>
-			<value>true</value>
-			<value>3</value>
-			<value>3</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100003</value>
-			<value>shapeName2</value>
 			<value>100001</value>
-			<value>descr2</value>
-			<value>detailed descr2</value>
-			<value>http://www.shapeURL.org2</value>
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -513,48 +487,31 @@
 			<value>100</value>
 			<value>1</value>
 			<value>1</value>
-			<value>1</value>
-			<value>1</value>
+			<value>curbounds rect</value>
 			<value>50</value>
 			<value>50</value>
 			<value>50</value>
 			<value>50</value>
-			<value>true</value>
-			<value>3</value>
-			<value>3</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>
 		<column>last_bendpoint_serial</column>
 		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
 		<column>line_red</column>
 		<column>line_green</column>
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
 		<row>
 			<value>100004</value>
 			<value>0</value>
 			<value>100001</value>
-			<value>link_name</value>
-			<value>link_detailed_descr</value>
-			<value>link_descr</value>
 			<value>1</value>
 			<value>2</value>
 			<value>3</value>
 			<value>1</value>
 			<value>10</value>
-			<value>1</value>
-			<value>http://www.HibLink.org</value>
 		</row>
 	</table>
 	<table name="LinkTerminus">
@@ -565,12 +522,6 @@
 		<column>end_dec_type</column>
 		<column>end_dec_width</column>
 		<column>end_dec_height</column>
-		<column>term_dec_type</column>
-		<column>term_dec_red</column>
-		<column>term_dec_green</column>
-		<column>term_dec_blue</column>
-		<column>term_dec_height</column>
-		<column>term_dec_width</column>
 		<row>
 			<value>100009</value>
 			<value>0</value>
@@ -579,12 +530,6 @@
 			<value>1</value>
 			<value>15</value>
 			<value>25</value>
-			<value>2</value>
-			<value>4</value>
-			<value>5</value>
-			<value>6</value>
-			<value>20</value>
-			<value>30</value>
 		</row>
 		<row>
 			<value>100010</value>
@@ -594,12 +539,6 @@
 			<value>1</value>
 			<value>15</value>
 			<value>25</value>
-			<value>2</value>
-			<value>4</value>
-			<value>5</value>
-			<value>6</value>
-			<value>20</value>
-			<value>30</value>
 		</row>
 	</table>
 	<table name="LabelAttribute">
@@ -659,10 +598,6 @@
 		<column>index_pos</column>
 		<column>x_position</column>
 		<column>y_position</column>
-		<column>first_rel_dim_x</column>
-		<column>first_rel_dim_y</column>
-		<column>second_rel_dim_x</column>
-		<column>second_rel_dim_y</column>
 		<row>
 			<value>100001</value>
 			<value>100004</value>
@@ -670,10 +605,6 @@
 			<value>0</value>
 			<value>25</value>
 			<value>25</value>
-			<value>5</value>
-			<value>6</value>
-			<value>7</value>
-			<value>8</value>
 		</row>
 	</table>
 	<table name="property">

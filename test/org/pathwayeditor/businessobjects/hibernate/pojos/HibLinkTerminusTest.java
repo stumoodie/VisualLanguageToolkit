@@ -36,8 +36,6 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
@@ -57,9 +55,6 @@ public class HibLinkTerminusTest {
 	private static final LinkTermType LINK_END_TYPE = LinkTermType.SOURCE;
 	private static final double EXPECTED_OFFSET = 1.0 ;
 	private static final Dimension EXPECTED_END_SIZE = new Dimension(10, 20);
-	private static final Dimension EXPECTED_TERM_SIZE = new Dimension(10, 20);
-	private static final RGB EXPECTED_TERM_COLOUR = new RGB(100, 200, 150);
-	private static final PrimitiveShapeType EXPECTED_TERM_DEC = PrimitiveShapeType.ELLIPSE;
 	private static final LinkEndDecoratorShape EXPECTED_END_DEC = LinkEndDecoratorShape.ARROW;
 	private static final int EXPECTED_CREATION_SERIAL = 2;
 	private static final IndexCounter EXPECTED_CREATION_SERIAL_CNTR = new IndexCounter(EXPECTED_CREATION_SERIAL);
@@ -93,9 +88,6 @@ public class HibLinkTerminusTest {
 			allowing(mockDefaults).getEndDecoratorType(); will(returnValue(EXPECTED_END_DEC));
 			allowing(mockDefaults).getEndSize(); will(returnValue(EXPECTED_END_SIZE));
 			allowing(mockDefaults).getGap(); will(returnValue(EXPECTED_OFFSET));
-			allowing(mockDefaults).getTermColour(); will(returnValue(EXPECTED_TERM_COLOUR));
-			allowing(mockDefaults).getTermDecoratorType(); will(returnValue(EXPECTED_TERM_DEC));
-			allowing(mockDefaults).getTermSize(); will(returnValue(EXPECTED_TERM_SIZE));
 			allowing(mockDefaults).propertyDefinitionIterator(); will(returnIterator());
 		}});
 		
@@ -113,9 +105,6 @@ public class HibLinkTerminusTest {
 		assertEquals ("expected link end type" , LINK_END_TYPE , linkTerminus.getLinkTermType()) ;
 		assertEquals ("expected offset" , EXPECTED_OFFSET , linkTerminus.getGap(), DOUBLE_DELTA) ;
 		assertEquals ("expected end size" , EXPECTED_END_SIZE , linkTerminus.getEndSize()) ;
-		assertEquals ("expected term size" , EXPECTED_TERM_SIZE , linkTerminus.getTerminusSize()) ;
-		assertEquals ("expected term dec" , EXPECTED_TERM_DEC , linkTerminus.getTerminusDecoratorType()) ;
-		assertEquals ("expected offset" , EXPECTED_TERM_COLOUR , linkTerminus.getTerminusColour()) ;
 		assertEquals ("expected offset" , EXPECTED_END_DEC , linkTerminus.getEndDecoratorType()) ;
 		assertFalse( "expected properties" , linkTerminus.propertyIterator().hasNext()) ;
 		

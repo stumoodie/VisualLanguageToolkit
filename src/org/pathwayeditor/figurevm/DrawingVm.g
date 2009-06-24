@@ -176,6 +176,7 @@ OPCODE
 	| 'neg'
 	| 'abs'
 	| 'curbounds'
+	| 'setanchor'
 	;
 
 NAME_VALUE

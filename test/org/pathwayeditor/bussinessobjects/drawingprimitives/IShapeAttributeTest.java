@@ -36,7 +36,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -61,27 +60,15 @@ public class IShapeAttributeTest {
 	}};
 	
 	private static final int CREATION_SERIAL = 123456 ;
-	private static final String SHAPE_NAME = "shapeName" ;
-	private static final String NEW_SHAPE_NAME = "newShapeName" ;
 	private static final int NEW_COLOR_VALUE = 100 ;
 	private static final int NEW_SIZE_VALUE = 60 ;
-	private static final String URL_VALUE = "http://www.shapeURL.org" ;
-	private static final String NEW_URL_VALUE = "http://www.newShapeURL.org" ;
 	private static final int NEW_POSITION_VALUE = 150 ;
-	private static final String SHAPE_DESCR = "descr";
-	private static final String NEW_SHAPE_DESCR = "newdescr";
-	private static final String DETAILED_DESCR = "detailed descr";
-	private static final String NEW_DETAILED_DESCR = "newdetailed descr";
 	private static final LineStyle LINE_STYLE  = LineStyle.DASH_DOT ;
 	private static final LineStyle OTHER_LINE_STYLE  = LineStyle.DASH_DOT_DOT ;
 
 	private static final double EXPECTED_DEFAULT_LINE_WIDTH = 1.0;
-	private static final String EXPECTED_DEFAULT_NAME = SHAPE_NAME;
-	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
+	private static final String EXPECTED_DEFAULT_SHAPE_TYPE = "curbounds oval";
 	private static final Dimension EXPECTED_DEFAULT_SIZE = new Dimension(15,25);
-	private static final String EXPECTED_DEFAULT_URL = URL_VALUE;
-	private static final String EXPECTED_DEFAULT_DESCRIPTION = SHAPE_DESCR;
-	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = DETAILED_DESCR;
 	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
 	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
 	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LINE_STYLE;
@@ -120,50 +107,6 @@ public class IShapeAttributeTest {
 	public void tearDown() throws Exception {
 	}
 	
-	@Test
-	public void testGetName () throws Exception 
-	{
-		assertEquals ( "correctName" , SHAPE_NAME, shapeAttribute.getName()) ;
-	}
-	
-	@Test
-	public void testChangeName () throws Exception {
-		shapeAttribute.setName(NEW_SHAPE_NAME) ;
-		assertEquals ( "correct changed Name" , NEW_SHAPE_NAME , shapeAttribute.getName()) ;
-	}
-	
-	@Test
-	public void testGetDescription () throws Exception {
-		assertEquals ( "correct Description" , SHAPE_DESCR , shapeAttribute.getDescription()) ;
-	}
-	
-	@Test
-	public void testChangeDescription () throws Exception {
-		shapeAttribute.setDescription(NEW_SHAPE_DESCR) ;
-		assertEquals ( "correct changed Description" , NEW_SHAPE_DESCR , shapeAttribute.getDescription()) ;
-	}
-	
-	@Test
-	public void testGetDetailedDescription () throws Exception {
-		assertEquals ( "correct DetailedDescription" , DETAILED_DESCR , shapeAttribute.getDetailedDescription()) ;
-	}
-	
-	@Test
-	public void testChangeDetailedDescription () throws Exception {
-		shapeAttribute.setDetailedDescription(NEW_DETAILED_DESCR) ;
-		assertEquals ( "correct changed DetailedDescription" , NEW_DETAILED_DESCR , shapeAttribute.getDetailedDescription()) ;
-	}
-	
-	@Test
-	public void testGetURL () throws Exception {
-		assertEquals ("correct URL" , URL_VALUE , shapeAttribute.getUrl()) ;
-	}
-	
-	@Test
-	public void testChangeURL () throws Exception {
-		shapeAttribute.setUrl(NEW_URL_VALUE) ;
-		assertEquals ("correct changed URL" , NEW_URL_VALUE , shapeAttribute.getUrl()) ;
-	}
 	
 	@Test
 	public void testGetLocation (){
@@ -206,11 +149,11 @@ public class IShapeAttributeTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetPrimitiveShape () throws Exception
 	{
-		shapeAttribute.setPrimitiveShape(null) ;
+		shapeAttribute.setShapeDefinition(null) ;
 	}
 	
 	public void testGetPrimitiveShape () {
-		assertEquals("expected shape type", EXPECTED_DEFAULT_SHAPE_TYPE, shapeAttribute.getPrimitiveShape());
+		assertEquals("expected shape type", EXPECTED_DEFAULT_SHAPE_TYPE, shapeAttribute.getShapeDefinition());
 	}
 	
 	@Test
@@ -301,19 +244,6 @@ public class IShapeAttributeTest {
 			throw new UnsupportedOperationException("not implemented");
 		}
 
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
-		 */
-		public String getDescription() {
-			return EXPECTED_DEFAULT_DESCRIPTION;
-		}
-
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
-		 */
-		public String getDetailedDescription() {
-			return EXPECTED_DEFAULT_DETAILED_DESCRIPTION;
-		}
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getFillColour()
@@ -343,17 +273,11 @@ public class IShapeAttributeTest {
 			return EXPECTED_DEFAULT_LINE_WIDTH;
 		}
 
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getName()
-		 */
-		public String getName() {
-			return EXPECTED_DEFAULT_NAME;
-		}
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getShapeType()
 		 */
-		public PrimitiveShapeType getShapeType() {
+		public String getShapeDefinition() {
 			return EXPECTED_DEFAULT_SHAPE_TYPE;
 		}
 
@@ -364,12 +288,6 @@ public class IShapeAttributeTest {
 			return EXPECTED_DEFAULT_SIZE;
 		}
 
-		/* (non-Javadoc)
-		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
-		 */
-		public String getURL() {
-			return EXPECTED_DEFAULT_URL;
-		}
 
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#propertyIterator()

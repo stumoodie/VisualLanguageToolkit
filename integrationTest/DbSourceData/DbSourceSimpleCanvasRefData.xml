@@ -164,11 +164,7 @@
 		<column>id</column>
 		<column>canvas_id</column>
 		<column>creation_serial</column>
-		<column>name</column>
 		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -177,25 +173,17 @@
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
+		<column>shape_defn</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
 		<column>node_id</column>
-		<column>name_visible</column>
-		<column>horizontal_alignment</column>
-		<column>vertical_alignment</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>123456</value>
-				<value>shapeName</value>
 				<value>100001</value>
-				<value>descr</value>
-				<value>detailed descr</value>
-				<value>http://www.shapeURL.org</value>
 				<value>100</value>
 				<value>100</value>
 				<value>100</value>
@@ -204,16 +192,12 @@
 				<value>100</value>
 				<value>1</value>
 				<value>1</value>
-				<value>1</value>
-				<value>1</value>
+				<value>curbounds rect</value>
 				<value>50</value>
 				<value>50</value>
 				<value>50</value>
 				<value>50</value>
 				<value>100002</value>
-				<value>true</value>
-				<value>3</value>
-				<value>3</value>
 			</row>
 	</table>
 	<table name="LinkEdge">
@@ -235,32 +219,22 @@
 		<column>canvas_id</column>
 		<column>creation_serial</column>
 		<column>object_type_id</column>
-		<column>name</column>
-		<column>detailed_description</column>
-		<column>description</column>
 		<column>line_red</column>
 		<column>line_green</column>
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>router_type</column>
-		<column>url</column>
 		<column>edge_id</column>
 			<row>
 				<value>100001</value>
 				<value>100001</value>
 				<value>34567</value>
 				<value>100001</value>
-				<value>link_name</value>
-				<value>link_detailed_descr</value>
-				<value>link_descr</value>
 				<value>100</value>
 				<value>100</value>
 				<value>100</value>
 				<value>1</value>
 				<value>10</value>
-				<value>1</value>
-				<value>http://www.HibLink.org</value>
 				<value>100001</value>
 			</row>
 	</table>
@@ -291,7 +265,6 @@
 		<column>background_red</column>
 		<column>background_green</column>
 		<column>background_blue</column>
-		<column>no_fill_set</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
@@ -305,7 +278,6 @@
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
-			<value>true</value>
 			<value>1</value>
 			<value>1</value>
 			<value>1</value>

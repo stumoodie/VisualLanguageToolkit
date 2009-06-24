@@ -1,5 +1,6 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;
 
@@ -10,6 +11,7 @@ public class GraphicsState {
 	private double lineWidth;
 	private IFont font;
 	private Envelope env;
+	private LineStyle lineStyle;
 	
 	public GraphicsState(){
 		this.fill = RGB.WHITE;
@@ -17,6 +19,7 @@ public class GraphicsState {
 		this.lineWidth = DEFAULT_LINE_WIDTH;
 		this.font = new GenericFont();
 		this.env = new Envelope(0, 0, 0, 0);
+		this.lineStyle = LineStyle.SOLID;
 	}
 	
 	public GraphicsState(GraphicsState other){
@@ -25,6 +28,7 @@ public class GraphicsState {
 		this.lineWidth = other.lineWidth;
 		this.font = new GenericFont(other.font);
 		this.env = other.env;
+		this.lineStyle = other.lineStyle;
 	}
 	
 	public double getLineWidth() {
@@ -65,5 +69,13 @@ public class GraphicsState {
 
 	public Envelope getEnvelope() {
 		return env;
+	}
+
+	public LineStyle getLineStyle() {
+		return this.lineStyle;
+	}
+
+	public void setLineStyle(LineStyle lineStyle) {
+		this.lineStyle = lineStyle;
 	}
 }

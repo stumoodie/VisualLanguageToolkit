@@ -2,6 +2,8 @@ package org.pathwayeditor.figurevm;
 
 import java.util.List;
 
+import org.pathwayeditor.figure.geometry.PointList;
+
 public 	interface IOpCodeHandler {
 	void handleRoundRectangle(double x, double y, double width,
 			double height, double arcWidth, double arcHeight);
@@ -55,4 +57,8 @@ public 	interface IOpCodeHandler {
 	List<Double> getCurBounds();
 	
 	double currentLineWidth();
+	
+	void setChopHullAnchor();
+
+	void setSemiFixedAnchorCode(PointList points);
 }

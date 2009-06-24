@@ -2,20 +2,21 @@ package org.pathwayeditor.figure.figuredefn;
 
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
 public interface IFigureController {
 
-	double getLineWidth();
+	void setRequestedEnvelope(Envelope newEnvelope);
 	
-	void setLineWidth(double lineWidth);
-
-	void setEnvelope(Envelope newEnvelope);
+	Envelope getRequestedEnvelope();
 	
 	Envelope getEnvelope();
 	
+	public IConvexHull getConvexHull();
+
 	void setFillColour(RGB newFillColour);
 	
 	RGB getFillColour();
@@ -23,8 +24,14 @@ public interface IFigureController {
 	void setLineColour(RGB newLineColour);
 	
 	RGB getLineColour();
+	
+	LineStyle getLineStyle();
+	
+	void setLineStyle(LineStyle lineStyle);
 
-	public IConvexHull getConvexHull();
+	double getLineWidth();
+	
+	void setLineWidth(double lineWidth);
 
 	void setBindBoolean(String name, Boolean value);
 
@@ -39,4 +46,6 @@ public interface IFigureController {
 	void generateFigureDefinition();
 	
 	GraphicsInstructionList getFigureDefinition();
+	
+	IAnchorLocatorFactory getAnchorLocatorFactory();
 }

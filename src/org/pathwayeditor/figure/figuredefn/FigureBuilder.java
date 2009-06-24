@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Envelope;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
+import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
@@ -31,6 +34,7 @@ public class FigureBuilder {
 	private final List<GraphicsInstruction> graphicsInstructions;
 	private final GraphicsInstructionFactory g;
 	private GraphicsInstructionList figureDefn = null;
+	private IAnchorLocatorFactory anchorCalc = null;
 	
 	public FigureBuilder(IFigureDefinition outlineDefinition, IConvexHullCalculator hullCalc){
 		this.instList = outlineDefinition;
@@ -46,6 +50,10 @@ public class FigureBuilder {
 		return this.hullCalc;
 	}
 	
+	public IAnchorLocatorFactory getAnchorLocatorFactory(){
+		return this.anchorCalc;
+	}
+	
 	public void generateFigure(){
 		this.graphicsStack.clear();
 		this.hullCalc.reset();
@@ -53,12 +61,14 @@ public class FigureBuilder {
 		this.figureDefn = null;
 		writeGraphicsState();
 		producer.execute();
+		this.hullCalc.calculate();
 		this.figureDefn = new GraphicsInstructionList(this.graphicsInstructions);
 	}
 	
 	
 	private void writeGraphicsState(){
 		this.graphicsInstructions.add(g.setLineWidth(this.currentState.getLineWidth()));
+		this.graphicsInstructions.add(g.setLineStyle(this.currentState.getLineStyle()));
 		RGB fillColour = currentState.getFillColour();
 		if(fillColour != null){
 			this.graphicsInstructions.add(g.fillColour(fillColour));
@@ -370,6 +380,20 @@ public class FigureBuilder {
 		public void setLineWidth(double lineWidth) {
 			setCurrLineWidth(lineWidth);
 		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
+		 */
+		public void setChopHullAnchor() {
+			anchorCalc = new ChopBoxAnchorCalculatorFactory();
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
+		 */
+		public void setSemiFixedAnchorCode(PointList points) {
+			anchorCalc = new MultiplePositionFixedAnchorFactory(points);
+		}
 		
 	}
 
@@ -430,5 +454,64 @@ public class FigureBuilder {
 
 	public void setLineColour(RGB newLineColour) {
 		this.currentState.setLineColour(newLineColour);
+	}
+
+	public LineStyle getLineStyle() {
+		return this.currentState.getLineStyle();
+	}
+
+	/**
+	 * @param lineStyle
+	 */
+	public void setLineStyle(LineStyle lineStyle) {
+		this.currentState.setLineStyle(lineStyle);
+	}
+
+	public IConvexHull getConvexHull() {
+		return this.hullCalc.getConvexHull();
+	}
+	
+	private class ChopBoxAnchorCalculatorFactory implements IAnchorLocatorFactory {
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
+		 */
+		public IAnchorLocator createAnchorLocator() {
+			return new ChopBoxAnchorCalculator(getConvexHull());
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
+		 */
+		public IAnchorLocator createAnchorLocator(IConvexHull newHull) {
+			return new ChopBoxAnchorCalculator(newHull);
+		}
+		
+	}
+	
+	private class MultiplePositionFixedAnchorFactory implements IAnchorLocatorFactory {
+		private final PointList points;
+		
+		/**
+		 * @param points
+		 */
+		public MultiplePositionFixedAnchorFactory(PointList points) {
+			this.points = points;
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
+		 */
+		public IAnchorLocator createAnchorLocator() {
+			return new MultiplePositionFixedAnchor(points, getConvexHull());
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
+		 */
+		public IAnchorLocator createAnchorLocator(IConvexHull newHull) {
+			return new MultiplePositionFixedAnchor(points, newHull);
+		}
+		
 	}
 }

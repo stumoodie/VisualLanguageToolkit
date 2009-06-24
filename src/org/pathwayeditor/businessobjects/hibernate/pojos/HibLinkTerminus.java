@@ -26,7 +26,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
@@ -52,7 +51,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	private double offset = DEFAULT_OFFSET;
 	private LinkEndDecoratorShape endDecoratorType = null;
 	private transient Dimension endDecSize = new Dimension(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
-    private PrimitiveShapeType termShapeType = null;
     private transient RGB terminusColour = DEFAULT_TERM_COLOUR;
     private transient Dimension terminusSize = new Dimension(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
     private transient ILinkTerminusDefinition terminusDefn = null;
@@ -90,7 +88,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.terminusColour = other.getTerminusColour();
 		this.terminusSize = other.getTerminusSize();
 		this.terminusDefn = other.terminusDefn;
-		this.termShapeType = other.getTerminusDecoratorType();
 		this.location = other.getLocation();
 	}
 
@@ -101,9 +98,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.setEndDecoratorType(linkTerminusDefaults.getEndDecoratorType());
 		this.setEndSize(linkTerminusDefaults.getEndSize());
 		this.setGap(linkTerminusDefaults.getGap());
-		this.setTerminusDecoratorType(linkTerminusDefaults.getTermDecoratorType());
-		this.setTerminusColour(linkTerminusDefaults.getTermColour());
-		this.setTerminusSize(linkTerminusDefaults.getTermSize());
 	}
 
 	public void injectLinkTerminusDefaults(ILinkTerminusDefinition terminusDefn) throws InconsistentNotationDefinitionException {
@@ -260,16 +254,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	 * (non-Javadoc)
 	 * 
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#
-	 * getTerminusDecoratorType()
-	 */
-	public PrimitiveShapeType getTerminusDecoratorType() {
-		return this.termShapeType;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#
 	 * getTerminusSize()
 	 */
 	public Dimension getTerminusSize() {
@@ -292,13 +276,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DEC_COLOUR, oldValue, this.terminusColour);
 	}
 
-	public void setTerminusDecoratorType(PrimitiveShapeType shapeObjectType) {
-		if(shapeObjectType == null) throw new IllegalArgumentException("shapeObjectType cannot be null");
-		
-		PrimitiveShapeType oldValue = this.termShapeType;
-		this.termShapeType = shapeObjectType;
-		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DECORATOR_TYPE, oldValue, this.termShapeType);
-	}
 
 	public void setTerminusSize(Dimension newSize) {
 		if(newSize == null) throw new IllegalArgumentException("newSize cannot be null");

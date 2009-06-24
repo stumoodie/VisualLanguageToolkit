@@ -95,4 +95,7 @@ public class StubTextPropertyDefinition implements IPlainTextPropertyDefinition 
 		return true;
 	}
 	
+	public String getDisplayName() {
+		return NAME;
+	}
 }

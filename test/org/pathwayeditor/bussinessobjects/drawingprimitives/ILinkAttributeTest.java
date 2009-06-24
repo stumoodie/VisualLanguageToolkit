@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
@@ -45,7 +44,6 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.StubHibNotationFactory;
 import org.pathwayeditor.bussinessobjects.stubs.StubLinkObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.StubMap;
-import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkAttributeDefaults;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.figure.geometry.Point;
 
@@ -71,34 +69,11 @@ public class ILinkAttributeTest {
 	private static final Point BP_POSITION1 = new Point(POS_VALUE_1, POS_VALUE_1); 
 	private static final Point BP_POSITION2 = new Point(POS_VALUE_2, POS_VALUE_2); 
 	private static final Point BP_POSITION3 = new Point(POS_VALUE_3, POS_VALUE_3); 
-	private static final Point BP_REL_DIM1 = new Point(POS_VALUE_1, POS_VALUE_1); 
-	private static final Point BP_REL_DIM2 = new Point(POS_VALUE_2, POS_VALUE_2); 
-	private static final Point BP_REL_DIM3 = new Point(POS_VALUE_3, POS_VALUE_3); 
 	
 	private static final int NUMERIC_VALUE_3 = 3 ;
 	private static final int NUMERIC_VALUE_2 = 2 ;
 	private static final int NUMERIC_VALUE_1 = 1 ;
-	
-	private static final String URL = "url" ;
-	private static final String NEW_URL = "newurl" ;
-	
-//	private static final int EXPECTED_DEFAULT_LINE_WIDTH = 3;
-//	private static final String EXPECTED_DEFAULT_NAME = "link name";
-//	private static final PrimitiveShapeType EXPECTED_DEFAULT_SHAPE_TYPE = PrimitiveShapeType.ELLIPSE;
-//	private static final Size EXPECTED_DEFAULT_SIZE = new Size(15,25);
-//	private static final String EXPECTED_DEFAULT_URL = "http://www.google.com";
-//	private static final String EXPECTED_DEFAULT_DESCRIPTION = "descn";
-//	private static final String EXPECTED_DEFAULT_DETAILED_DESCRIPTION = "detailed descn";
-//	private static final RGB EXPECTED_DEFAULT_FILL_COLOUR = new RGB(1,2,3);
-//	private static final RGB EXPECTED_DEFAULT_LINE_COLOUR = new RGB(4,5, 6);
-//	private static final LineStyle EXPECTED_DEFAULT_LINE_STYLE = LineStyle.DASH_DOT;
-//	private static final Point EXPECTED_INITIAL_LOCATION = new Point(235,5543);
-//	private static final ConnectionRouter EXPECTED_DEFAULT_ROUTER = ConnectionRouter.FAN;
-//	private static final int NEW_LINE_WIDTH = 99;
-//	private static final int INVALID_LINE_WIDTH = -99;
 
-	
-	private static final ConnectionRouter ROUTER_TYPE = ConnectionRouter.SHORTEST_PATH ;
 	private static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;
 	
 	private ILinkAttribute linkAttribute ;
@@ -133,8 +108,8 @@ public class ILinkAttributeTest {
 		
 //		tempLinkAttribute.setCreationSerial(CREATION_SERIAL) ;
 		
-		mockBendPoint1 = linkAttribute.createNewBendPoint(BP_POSITION1, BP_REL_DIM1, BP_REL_DIM1) ;
-		mockBendPoint2 = linkAttribute.createNewBendPoint(BP_POSITION2, BP_REL_DIM2, BP_REL_DIM2) ;
+		mockBendPoint1 = linkAttribute.createNewBendPoint(BP_POSITION1) ;
+		mockBendPoint2 = linkAttribute.createNewBendPoint(BP_POSITION2) ;
 		
 //		linkAttribute.setUrl(URL) ;
 		
@@ -165,14 +140,6 @@ public class ILinkAttributeTest {
 	}
 	
 	@Test
-	public void testSetRouter() throws Exception
-	{
-		assertEquals ( "null router" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_ROUTER , linkAttribute.getRouterType() ) ;
-		linkAttribute.setRouterType(ROUTER_TYPE) ;
-		assertEquals ( "router type" , ROUTER_TYPE , linkAttribute.getRouterType() );
-	}
-	
-	@Test
 	public void testGetBendpointsIterator () throws Exception
 	{
 		Iterator<IBendPoint> iter = linkAttribute.bendPointIterator() ; 
@@ -196,7 +163,7 @@ public class ILinkAttributeTest {
 	@Test
 	public void testAddBendPoins () throws Exception
 	{
-		IBendPoint newBendPoint = linkAttribute.createNewBendPoint(BP_POSITION3, BP_REL_DIM3, BP_REL_DIM3);
+		IBendPoint newBendPoint = linkAttribute.createNewBendPoint(BP_POSITION3);
 		assertEquals ( "two bendpoints" , NUMERIC_VALUE_3 , linkAttribute.numBendPoints()) ;
 		assertTrue ( "contains bendpoint3" , linkAttribute.containsBendPoint(newBendPoint)) ;
 	}
@@ -214,21 +181,6 @@ public class ILinkAttributeTest {
 		linkAttribute.removeBendPoint(mockBendPoint1) ;
 		assertEquals ( "one bendpoints" , NUMERIC_VALUE_1 , linkAttribute.numBendPoints()) ;
 		assertFalse ( "contains bendpoint1" , linkAttribute.containsBendPoint(mockBendPoint1)) ;
-	}
-	
-	@Test
-	public void testSetUrl () throws Exception 
-	{
-		linkAttribute.setUrl(NEW_URL) ;
-		assertEquals ( "url" , NEW_URL , linkAttribute.getUrl()) ;
-	}
-	
-	@Test
-	public void testSetUrlToNull() throws Exception 
-	{
-		assertEquals ( "url" , StubLinkAttributeDefaults.EXPECTED_DEFAULT_URL , linkAttribute.getUrl()) ;
-		linkAttribute.setUrl(URL) ;
-		assertEquals ( "url" , URL , linkAttribute.getUrl()) ;
 	}
 	
 	@Test

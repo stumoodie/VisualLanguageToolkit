@@ -30,10 +30,8 @@ import org.pathwayeditor.testutils.PojoTester;
  */
 public class DbBendpointTest extends PojoTester{
 	
-//	private static final int INDEX = 2 ;
 	private static final int POSITION = 45 ;
 	private static final Point BP_LOCATION = new Point(POSITION, POSITION);
-	private static final Point BP_REL_DIM = new Point(POSITION, POSITION);
 	
 	private static final String ADDED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbAddedBendPointRefData.xml" ;
 	private static final String DELETED_BENDPOINT_DATA = "integrationTest/DbBendpointTestData/DbDeletedBendPointRefData.xml" ;
@@ -48,7 +46,7 @@ public class DbBendpointTest extends PojoTester{
 		Query retreivedContext = sess.createQuery("from HibLinkAttribute where id = '100004'" ) ;
 		HibLinkAttribute dbLinkAttribute = (HibLinkAttribute) retreivedContext.uniqueResult() ;
 		
-		dbLinkAttribute.createNewBendPoint(BP_LOCATION, BP_REL_DIM, BP_REL_DIM) ;
+		dbLinkAttribute.createNewBendPoint(BP_LOCATION) ;
 		
 		sess.saveOrUpdate(dbLinkAttribute) ;
 		sess.getTransaction().commit() ;

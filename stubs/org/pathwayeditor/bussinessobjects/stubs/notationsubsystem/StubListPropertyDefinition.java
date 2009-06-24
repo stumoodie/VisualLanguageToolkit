@@ -95,4 +95,11 @@ public class StubListPropertyDefinition implements IListPropertyDefinition {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#getDisplayName()
+	 */
+	public String getDisplayName() {
+		return NAME;
+	}
+
 }

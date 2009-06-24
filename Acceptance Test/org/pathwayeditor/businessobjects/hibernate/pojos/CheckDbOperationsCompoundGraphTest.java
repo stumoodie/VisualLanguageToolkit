@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
@@ -42,9 +41,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.ConnectionRouter;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
@@ -92,16 +89,16 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	private ILinkEdge linkEdge1 ;
 //	private ILinkEdge linkEdge2 ;
-	private ILinkEdge linkEdge3;
-	private ILinkEdge linkEdge4 ;
-	private ILinkEdge linkEdge5 ;
-	private ILinkEdge linkEdge6 ;
-	private ILinkEdge linkEdge7 ;
-	private ILinkEdge linkEdge8 ;
-	private ILinkEdge linkEdge9 ;
+//	private ILinkEdge linkEdge3;
+//	private ILinkEdge linkEdge4 ;
+//	private ILinkEdge linkEdge5 ;
+//	private ILinkEdge linkEdge6 ;
+//	private ILinkEdge linkEdge7 ;
+//	private ILinkEdge linkEdge8 ;
+//	private ILinkEdge linkEdge9 ;
 	
 	private IShapeNode newNode ;
-	private ILabelNode newLabel ;
+//	private ILabelNode newLabel ;
 //	private ILinkEdge newLinkEdge ;
 	
 	private INotationSubsystem dbNotationSubSystem;
@@ -143,33 +140,21 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final String CANVAS_COPIED_FILE = "Acceptance Test/DBConsistencyTestValidationData/CanvasCopiedData.xml";
 	
 	
-	private final static String CHANGED_SHAPE_NAME = "new shape name" ;
-	private final static String CHANGED_SHAPE_DESCRIPTION = "new shape description" ;
-	private final static String CHANGED_SHAPE_DETAILED_DESCRIPTION = "new shape detailed description" ;
 	private final static RGB CHANGED_SHAPE_FILL_COLOR = new RGB ( 1 ,1 ,1 ) ;
 	private final static RGB CHANGED_SHAPE_LINE_COLOR = new RGB ( 2 ,2 ,2 ) ;
 	private final static LineStyle CHANGED_SHAPE_LINE_STYLE = LineStyle.SOLID ;
 	private final static int CHANGED_SHAPE_LINE_WIDTH = 100 ; 
-	private final static int CHANGED_SHAPE_PADDING = 150 ;
-	private final static PrimitiveShapeType CHANGED_SHAPE_PRIMITIVE_TYRE = PrimitiveShapeType.UP_CHEVRON ;
+	private final static String CHANGED_SHAPE_PRIMITIVE_TYRE = "curbounds oval" ;
 	private final static Point CHANGED_SHAPE_LOCATION = new Point ( 500 , 500 ) ;
 	private final static Dimension CHANGED_SHAPE_SIZE = new Dimension ( 400 ,400 ) ;
-	private final static String CHANGED_SHAPE_URL = "http://www.something.co.uk" ;
-	private final static boolean CHANGED_SHAPE_NAME_VISIB = false ;
-	private final static RGB CHANGED_SHAPE_TEXT_COLOUR = new RGB ( 100 , 100 , 100 ) ; 
 	
 	private final static RGB CHANGED_LABEL_BACKGROUND_COLOR = new RGB ( 200 , 200 , 200 ) ;
 	private final static Point CHANGED_LABEL_LOCATION = new Point ( 222 , 222 ) ;
 	private final static Dimension CHANGED_LABEL_SIZE = new Dimension ( 122 , 122 ) ;
 	
-	private final static String CHANGED_LINK_NAME = "changed link name" ;
-	private final static String CHANGED_LINK_DESCRIPTION = "changed link description" ;
-	private final static String CHANGED_LINK_DETAILED_DESCRIPTION = "changed link detailed description" ;
 	private final static RGB CHANGED_LINK_LINE_COLOUR = new RGB ( 111 , 111 ,111 ) ;
 	private final static LineStyle CHANGED_LINK_LINE_STYLE = LineStyle.SOLID ;
 	private final static int CHANGED_LINK_LINE_WIDTH = 222 ; 
-	private final static ConnectionRouter CHANGED_LINK_CONNECTION_ROUTER = ConnectionRouter.SHORTEST_PATH ;
-	private final static String CHANGED_LINK_URL = "http://www.changed.co.uk" ;
 	
 	private static final Dimension CHANGED_CANVAS_GRID_SIZE = new Dimension ( 100 , 100) ;
 	private static final boolean CHANGED_CANVAS_GRID_ENABLED = false ;
@@ -186,6 +171,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //	private static final int EXPECTED_NUM_PROPS_PER_SHAPE = 1;
 
 	private static final String DELETED_CANVAS_DATA_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/DeletedCanvasExpectedData.xml";
+	private static final String EXPECTED_SHAPE = "curbounds 90 90 arc";
 	
 	
 	
@@ -290,18 +276,18 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //			{
 //				linkEdge2 = tempLinkEdge ;
 //			}
-			if ( tempLinkEdge.getIndex() == 2 )
-			{
-				linkEdge3 = tempLinkEdge ;
-			}
-			if ( tempLinkEdge.getIndex() == 3 )
-			{
-				linkEdge4 = tempLinkEdge ;
-			}
-			if ( tempLinkEdge.getIndex() == 6 )
-			{
-				linkEdge7 = tempLinkEdge ;
-			}
+//			if ( tempLinkEdge.getIndex() == 2 )
+//			{
+//				linkEdge3 = tempLinkEdge ;
+//			}
+//			if ( tempLinkEdge.getIndex() == 3 )
+//			{
+//				linkEdge4 = tempLinkEdge ;
+//			}
+//			if ( tempLinkEdge.getIndex() == 6 )
+//			{
+//				linkEdge7 = tempLinkEdge ;
+//			}
 		}
 		
 		
@@ -332,16 +318,16 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		linkEdge1 = null;
 //		linkEdge2 = null;
-		linkEdge3 = null;
-		linkEdge4 = null;
-		linkEdge5 = null;
-		linkEdge6 = null;
-		linkEdge7 = null;
-		linkEdge8 = null;
-		linkEdge9 = null;
+//		linkEdge3 = null;
+//		linkEdge4 = null;
+//		linkEdge5 = null;
+//		linkEdge6 = null;
+//		linkEdge7 = null;
+//		linkEdge8 = null;
+//		linkEdge9 = null;
 		
 		newNode = null;
-		newLabel = null;
+//		newLabel = null;
 //		newLinkEdge = null;
 		
 		dbNotationSubSystem = null;
@@ -379,7 +365,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_NODE_VALIDATION);
 	}
@@ -393,13 +379,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		
 		IShapeNodeFactory newNodeFactory = newNode.getSubModel().shapeNodeFactory() ;
 		newNodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		IShapeNode newNode2 = newNodeFactory.createShapeNode() ;
 		newNode2.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode2.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		newNode2.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		
 		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(CREATED_TWO_NODE_VALIDATION);
@@ -585,20 +571,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		IShapeAttribute shapeAttribute1 = shapeNode1.getAttribute() ;
 		
-		shapeAttribute1.setName(CHANGED_SHAPE_NAME) ;
-		shapeAttribute1.setDescription(CHANGED_SHAPE_DESCRIPTION) ;
-		shapeAttribute1.setDetailedDescription(CHANGED_SHAPE_DETAILED_DESCRIPTION) ;
 		shapeAttribute1.setFillColour(CHANGED_SHAPE_FILL_COLOR) ;
 		shapeAttribute1.setLineColour(CHANGED_SHAPE_LINE_COLOR) ;
 		shapeAttribute1.setLineStyle(CHANGED_SHAPE_LINE_STYLE) ;
 		shapeAttribute1.setLineWidth(CHANGED_SHAPE_LINE_WIDTH);
-		shapeAttribute1.setPadding(CHANGED_SHAPE_PADDING) ;
 		shapeAttribute1.setLocation(CHANGED_SHAPE_LOCATION) ;
 		shapeAttribute1.setSize(CHANGED_SHAPE_SIZE);
-		shapeAttribute1.setUrl(CHANGED_SHAPE_URL) ;
-		shapeAttribute1.setPrimitiveShape(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
-		shapeAttribute1.setNameVisible(CHANGED_SHAPE_NAME_VISIB) ;
-		shapeAttribute1.setTextColour(CHANGED_SHAPE_TEXT_COLOUR) ;
+		shapeAttribute1.setShapeDefinition(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
 		
 		map1Manager.synchronise();map1Manager.close(true);
 		
@@ -626,13 +605,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		ILinkAttribute linkAttribute1 = linkEdge1.getAttribute() ;
 		
-		linkAttribute1.setName(CHANGED_LINK_NAME) ;
-		linkAttribute1.setDescription(CHANGED_LINK_DESCRIPTION) ;
-		linkAttribute1.setDetailedDescription(CHANGED_LINK_DETAILED_DESCRIPTION) ;
 		linkAttribute1.setLineColor(CHANGED_LINK_LINE_COLOUR);
 		linkAttribute1.setLineStyle(CHANGED_LINK_LINE_STYLE) ;
-		linkAttribute1.setRouterType(CHANGED_LINK_CONNECTION_ROUTER) ;
-		linkAttribute1.setUrl(CHANGED_LINK_URL) ;
 		linkAttribute1.setLineWidth(CHANGED_LINK_LINE_WIDTH) ;
 		
 		map1Manager.synchronise();map1Manager.close(true);
@@ -687,7 +661,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setPrimitiveShape(PrimitiveShapeType.ARC) ;
+		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise() ;
 		
 		map1Manager.synchronise() ;
@@ -809,7 +783,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertNotNull ( "property is not null" , aProperty) ;
 		
 		aProperty.setDisplayed(true);
-		newLabel = aProperty.getDisplayedLabel().getCurrentDrawingElement();
+//		newLabel = aProperty.getDisplayedLabel().getCurrentDrawingElement();
 		
 		map1Manager.synchronise() ;
 		

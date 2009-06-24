@@ -3,11 +3,7 @@
 <dataset>
 <table name="ShapeAttribute">
 		<column>id</column>
-		<column>name</column>
 		<column>object_type_id</column>
-		<column>description</column>
-		<column>detailed_description</column>
-		<column>url</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -16,23 +12,14 @@
 		<column>line_blue</column>
 		<column>line_style</column>
 		<column>line_width</column>
-		<column>padding</column>
-		<column>shape_type</column>
+		<column>shape_defn</column>
 		<column>x_position</column>
 		<column>y_position</column>
 		<column>width</column>
 		<column>height</column>
-		<column>name_visible</column>
-		<column>name_red</column>
-		<column>name_green</column>
-		<column>name_blue</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
-			<value>new shape name</value>
 			<value>100001</value>
-			<value>new shape description</value>
-			<value>new shape detailed description</value>
-			<value>http://www.something.co.uk</value>
 			<value>1</value>
 			<value>1</value>
 			<value>1</value>
@@ -41,24 +28,15 @@
 			<value>2</value>
 			<value>1</value>
 			<value>100</value>
-			<value>150</value>
-			<value>10</value>
+			<value>curbounds oval</value>
 			<value>500</value>
 			<value>500</value>
 			<value>400</value>
 			<value>400</value>
-			<value>false</value>
-			<value>100</value>
-			<value>100</value>
-			<value>100</value>
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
-			<value>shapeName2</value>
 			<value>100002</value>
-			<value>descr2</value>
-			<value>detailed descr2</value>
-			<value>http://www.shape2URL.org</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -67,24 +45,15 @@
 			<value>102</value>
 			<value>2</value>
 			<value>2</value>
-			<value>2</value>
-			<value>2</value>
+			<value>curbounds rect</value>
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
 			<value>52</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
-			<value>shapeName3</value>
 			<value>100003</value>
-			<value>descr3</value>
-			<value>detailed descr3</value>
-			<value>http://www.shape3URL.org</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -93,24 +62,15 @@
 			<value>103</value>
 			<value>3</value>
 			<value>3</value>
-			<value>3</value>
-			<value>3</value>
+			<value>curbounds rect</value>
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
 			<value>53</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
-			<value>shapeName4</value>
 			<value>100004</value>
-			<value>descr4</value>
-			<value>detailed descr4</value>
-			<value>http://www.shape4URL.org</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -119,24 +79,15 @@
 			<value>104</value>
 			<value>4</value>
 			<value>4</value>
-			<value>4</value>
-			<value>4</value>
+			<value>curbounds rect</value>
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
-			<value>shapeName5</value>
 			<value>100001</value>
-			<value>descr5</value>
-			<value>detailed descr5</value>
-			<value>http://www.shape5URL.org</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -145,24 +96,15 @@
 			<value>105</value>
 			<value>5</value>
 			<value>5</value>
-			<value>5</value>
-			<value>5</value>
+			<value>curbounds rect</value>
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
 			<value>55</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
-			<value>shapeName6</value>
 			<value>100002</value>
-			<value>descr6</value>
-			<value>detailed descr6</value>
-			<value>http://www.shape6URL.org</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -171,24 +113,15 @@
 			<value>106</value>
 			<value>1</value>
 			<value>6</value>
-			<value>6</value>
-			<value>6</value>
+			<value>curbounds rect</value>
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
 			<value>56</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
-			<value>shapeName7</value>
 			<value>100003</value>
-			<value>descr7</value>
-			<value>detailed descr7</value>
-			<value>http://www.shape7URL.org</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -197,24 +130,15 @@
 			<value>107</value>
 			<value>2</value>
 			<value>7</value>
-			<value>7</value>
-			<value>7</value>
+			<value>curbounds rect</value>
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
 			<value>57</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
-			<value>shapeName8</value>
 			<value>100004</value>
-			<value>descr8</value>
-			<value>detailed descr8</value>
-			<value>http://www.shape8URL.org</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -223,16 +147,11 @@
 			<value>108</value>
 			<value>3</value>
 			<value>8</value>
-			<value>8</value>
-			<value>8</value>
+			<value>curbounds rect</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
 			<value>58</value>
-			<value>true</value>
-			<value>0</value>
-			<value>0</value>
-			<value>0</value>
 		</row>																
 	</table>
 </dataset>

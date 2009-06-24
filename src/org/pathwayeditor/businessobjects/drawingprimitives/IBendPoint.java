@@ -28,11 +28,4 @@ public interface IBendPoint extends IPropertyChangeListenee {
 	
 	void setLocation ( Point location ) ;
 	
-	Point getFirstRelativeDimension();
-	
-	void setFirstRelativeDimension(Point newDimension);
-
-	Point getSecondRelativeDimension();
-	
-	void setSecondRelativeDimension(Point newDimension);
 }

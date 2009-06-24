@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
@@ -187,6 +188,22 @@ public class FigureDrawer {
 			}
 			
 		});
+		this.opCodeLookup.put(GraphicsOpCode.LINE_STYLE, new IGraphicsOpCodeAction(){
+
+			public void handleOpCode(GraphicsInstruction inst) {
+				LineStyle values = inst.getTypedValue();
+				processLineStyle(values);
+			}
+			
+		});
+	}
+
+	/**
+	 * @param values
+	 */
+	private void processLineStyle(LineStyle values) {
+		this.graphics.setLineStyle(values);
+		logger.debug("Setting line style=" + values);
 	}
 
 	private void processLineWidth(Double width) {

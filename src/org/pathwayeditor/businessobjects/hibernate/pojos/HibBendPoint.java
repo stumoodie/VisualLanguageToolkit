@@ -32,16 +32,12 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public class HibBendPoint implements IBendPoint, Serializable {
 	private static final Point DEFAULT_LOCATION = Point.ORIGIN;
-	private static final Point DEFAULT_FIRST_REL_DIM = Point.ORIGIN;
-	private static final Point DEFAULT_SECOND_REL_DIM = Point.ORIGIN;
 
 	private Long id;
 	private HibLinkAttribute owningLink;
 	private int creationSerial;
 	private int indexPos;
 	private Point position = DEFAULT_LOCATION;
-	private Point firstRelativeDimension = DEFAULT_FIRST_REL_DIM;
-	private Point secondRelativeDimension = DEFAULT_SECOND_REL_DIM;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
 	/**
@@ -52,21 +48,16 @@ public class HibBendPoint implements IBendPoint, Serializable {
 	HibBendPoint() {
 	}
 
-	public HibBendPoint(HibLinkAttribute owningLink, int creationSerial, Point position, Point firstRelativeDimension,
-			Point secondRelativeDimension) {
+	public HibBendPoint(HibLinkAttribute owningLink, int creationSerial, Point position) {
 		this.owningLink = owningLink;
 		this.creationSerial = creationSerial;
 		this.position = position;
-		this.firstRelativeDimension = firstRelativeDimension;
-		this.secondRelativeDimension = secondRelativeDimension;
 	}
 
 	public HibBendPoint(HibLinkAttribute newOwningLink, HibBendPoint otherBendPoint) {
 		this.owningLink = newOwningLink;
 		this.creationSerial = otherBendPoint.creationSerial;
 		this.position = otherBendPoint.position;
-		this.firstRelativeDimension = otherBendPoint.firstRelativeDimension;
-		this.secondRelativeDimension = otherBendPoint.secondRelativeDimension;
 	}
 
 	public Long getId() {
@@ -111,37 +102,6 @@ public class HibBendPoint implements IBendPoint, Serializable {
         this.position = this.position.newY(YPosition);
     }
 
-    public double getFirstRelativeDimensionX() {
-		return this.firstRelativeDimension.getX();
-	}
-
-	public void setFirstRelativeDimensionX(double xPosition) {
-		this.firstRelativeDimension = this.firstRelativeDimension.newX(xPosition);
-	}
-
-	public double getFirstRelativeDimensionY() {
-		return this.firstRelativeDimension.getY();
-	}
-
-	public void setFirstRelativeDimensionY(double yPosition) {
-		this.firstRelativeDimension = this.firstRelativeDimension.newY(yPosition);
-	}
-
-	public double getSecondRelativeDimensionX() {
-		return this.secondRelativeDimension.getX() ;
-	}
-
-	public void setSecondRelativeDimensionX(double xPosition) {
-		this.secondRelativeDimension = this.secondRelativeDimension.newX(xPosition);
-	}
-
-	public double getSecondRelativeDimensionY() {
-		return this.secondRelativeDimension.getY();
-	}
-
-	public void setSecondRelativeDimensionY(double yPosition) {
-		this.secondRelativeDimension = this.secondRelativeDimension.newY(yPosition);
-	}
 
 	public boolean equals(Object other) {
 		if ((this == other))
@@ -194,45 +154,6 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#getFirstRelativeDimension()
-	 */
-	public Point getFirstRelativeDimension() {
-		return this.firstRelativeDimension;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#getSecondRelativeDimension()
-	 */
-	public Point getSecondRelativeDimension() {
-		return this.secondRelativeDimension;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#setFirstRelativeDimension(org.pathwayeditor.businessobjects.drawingprimitives
-	 * .attributes.Location)
-	 */
-	public void setFirstRelativeDimension(Point newDimension) {
-		this.firstRelativeDimension = newDimension;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint#setSecondRelativeDimension(org.pathwayeditor.businessobjects.drawingprimitives
-	 * .attributes.Location)
-	 */
-	public void setSecondRelativeDimension(Point newDimension) {
-		this.secondRelativeDimension = newDimension;
-	}
 
 	public int getCreationSerial() {
 		return this.creationSerial;
@@ -271,10 +192,7 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		builder.append(this.creationSerial);
 		builder.append(", location=");
 		builder.append(this.position);
-		builder.append(", firstRelDim=");
-		builder.append(this.firstRelativeDimension);
-		builder.append(", secondRelDim=");
-		builder.append(this.secondRelativeDimension);
+		builder.append(")");
 		return builder.toString();
 	}
 }

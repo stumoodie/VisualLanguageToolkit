@@ -17,8 +17,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.PrimitiveShapeType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
@@ -60,46 +58,7 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	void setGap(double newGap);
 	
 	/**
-	 * Get the terminus colour. 
-	 * @return the terminus colour, which cannot be null.
-	 */
-	RGB getTerminusColour() ;
-	
-	/**
-	 * Set the terminus colour.
-	 * @param newColour the new colour which cannot be null.
-	 * @throws IllegalArgumentException if <code>newColour</code> is null. 
-	 */
-	void setTerminusColour(RGB newColour) ;
-	
-	/**
-	 * Gets the size of the terminus shape, which cannot be null.
-	 * @return the terminus size.
-	 */
-	Dimension getTerminusSize();
-	
-	/**
-	 * Set the terminus size.
-	 * @param newSize the new terminus size, which cannot be null.
-	 * @throws IllegalArgumentException if <code>newSize</code> is null.
-	 */
-	void setTerminusSize(Dimension newSize) ;
-	
-	/**
-	 * Get the terminus decorator type.
-	 * @return the terminus decorator type, which cannot be null.
-	 */
-	PrimitiveShapeType getTerminusDecoratorType();
-	
-	/**
-	 * Set the terminus decorator shape type.
-	 * @param shapeObjectType the new shape type of the terminus decorator, which cannot be null.
-	 * @throws IllegalArgumentException if <code>shapeObjectType</code> is null. 
-	 */
-	void setTerminusDecoratorType(PrimitiveShapeType shapeObjectType);
-	
-	/**
-	 * Gets the size of the terminus end decorator.
+§	 * Gets the size of the terminus end decorator.
 	 * @return the size of the terminus end decorator, which cannot be null.
 	 */
 	Dimension getEndSize();
