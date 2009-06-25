@@ -321,18 +321,14 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
 	public Envelope getBounds() {
-		Point topLhCorner = new Point(this.position.getX() - (this.size.getWidth()/2),
-				this.position.getY() - (this.size.getHeight()/2));
-		return new Envelope(topLhCorner, this.size);
+		return new Envelope(this.position, this.size);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
-		Point centre = new Point(newBounds.getOrigin().getX() + (newBounds.getDimension().getWidth()/2),
-				newBounds.getOrigin().getY() + (newBounds.getDimension().getHeight()/2));
-		this.setLocation(centre);
+		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
 
