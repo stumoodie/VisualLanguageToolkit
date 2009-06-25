@@ -2,6 +2,7 @@ package org.pathwayeditor.figure.figuredefn;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -9,14 +10,17 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
+import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
+import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
 
 public class FigureBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -198,17 +202,50 @@ public class FigureBuilder {
 	}
 	
 	
-	private void drawText(double x, double y, String text){
+	private void drawText(double x, double y, TextAlignment alignment, String text){
 		logger.debug("drawText: requests x=" + x + ", y=" + y + ", text=" + text);
+		GraphicalTextAlignment graphicalAlign = getGraphicalAlignment(alignment);
 		if(getFillColour() != null){
-			this.graphicsInstructions.add(g.fillText(x, y, text));
+			this.graphicsInstructions.add(g.fillText(x, y, graphicalAlign, text));
 		}
 		if(getLineColour() != null){
-			this.graphicsInstructions.add(g.drawText(x, y, text));
+			this.graphicsInstructions.add(g.drawText(x, y, graphicalAlign, text));
 		}
 		logger.debug("drawText: x=" + x + ", y=" + y);
 	}
 
+	public GraphicalTextAlignment getGraphicalAlignment(TextAlignment textAlign){
+		GraphicalTextAlignment retVal = null;
+		if(textAlign.equals(TextAlignment.C)){
+			retVal = GraphicalTextAlignment.C;
+		}
+		else if(textAlign.equals(TextAlignment.N)){
+			retVal = GraphicalTextAlignment.N;
+		}
+		else if(textAlign.equals(TextAlignment.S)){
+			retVal = GraphicalTextAlignment.S;
+		}
+		else if(textAlign.equals(TextAlignment.E)){
+			retVal = GraphicalTextAlignment.E;
+		}
+		else if(textAlign.equals(TextAlignment.W)){
+			retVal = GraphicalTextAlignment.W;
+		}
+		else if(textAlign.equals(TextAlignment.NW)){
+			retVal = GraphicalTextAlignment.NW;
+		}
+		else if(textAlign.equals(TextAlignment.SW)){
+			retVal = GraphicalTextAlignment.SW;
+		}
+		else if(textAlign.equals(TextAlignment.NE)){
+			retVal = GraphicalTextAlignment.NE;
+		}
+		else if(textAlign.equals(TextAlignment.SE)){
+			retVal = GraphicalTextAlignment.SE;
+		}
+		return retVal;
+	}
+	
 	private class OpCodeHandler implements IOpCodeHandler {
 
 		public void handleArc(double x, double y, double width, double height,
@@ -246,8 +283,8 @@ public class FigureBuilder {
 			drawRoundedRectangle(x, y, width, height, arcWidth, arcHeight);
 		}
 
-		public void handleText(double x, double y, String text) {
-			drawText(x, y, text);
+		public void handleText(double x, double y, TextAlignment alignment, String text) {
+			drawText(x, y, alignment, text);
 		}
 		
 		public List<Double> getCurBounds(){
@@ -269,8 +306,8 @@ public class FigureBuilder {
 			return retVal;
 		}
 
-		public int getCurFontSize() {
-			int fontSize = currentState.getFont().getFontSize();
+		public double getCurFontSize() {
+			double fontSize = currentState.getFont().getFontSize();
 			return fontSize;
 		}
 
@@ -291,20 +328,6 @@ public class FigureBuilder {
 			if(getLineColour() != null){
 				retVal = rgbToList(currentState.getLineColour());
 			}
-			return retVal;
-		}
-
-		public double getTextHeight(String text) {
-			double textHeight = currentState.getFont().getStringExtends(text).getHeight();
-			double retVal = textHeight;
-			logger.debug("getTextHeight: SWTHgt=" + textHeight + ",scaledHgt=" + retVal);
-			return retVal;
-		}
-
-		public double getTextLength(String text) {
-			double textLen = currentState.getFont().getStringExtends(text).getWidth();
-			double retVal = textLen;
-			logger.debug("getTextLength: SWTLen=" + textLen + ",scaledLen=" + retVal);
 			return retVal;
 		}
 
@@ -340,9 +363,11 @@ public class FigureBuilder {
 			currentState.setFillColour(newColour);
 		}
 
-		public void setFontSize(int fontSize) {
+		public void setFontSize(double fontSize) {
 			IFont f = currentState.getFont();
-			currentState.setFont(f.newSize(fontSize));
+			f = f.newSize(fontSize);
+			graphicsInstructions.add(g.fontSize(f.getFontSize()));
+			currentState.setFont(f);
 		}
 
 		public void setFontStyle(String styleString) {
@@ -356,7 +381,9 @@ public class FigureBuilder {
 				}
 			}
 			IFont f = currentState.getFont();
-			currentState.setFont(f.newStyle(style));
+			f = f.newStyle(style);
+			graphicsInstructions.add(g.fontStyle(f.getStyle()));
+			currentState.setFont(f);
 		}
 
 		public void setLineColour(int red, int green, int blue) {
@@ -483,7 +510,8 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
-		public IAnchorLocator createAnchorLocator(IConvexHull newHull) {
+		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
+			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
 			return new ChopBoxAnchorCalculator(newHull);
 		}
 		
@@ -509,8 +537,17 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
-		public IAnchorLocator createAnchorLocator(IConvexHull newHull) {
-			return new MultiplePositionFixedAnchor(points, newHull);
+		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
+			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
+			Envelope oldBounds = getConvexHull().getEnvelope(); 
+			Iterator<Point> pointIter = this.points.iterator();
+			List<Point> newPoints = new LinkedList<Point>();
+			while(pointIter.hasNext()){
+				Point p = pointIter.next();
+				Point newP = oldBounds.transformPointToNewEnvelope(p, newBounds);
+				newPoints.add(newP);
+			}
+			return new MultiplePositionFixedAnchor(new PointList(newPoints), newHull);
 		}
 		
 	}

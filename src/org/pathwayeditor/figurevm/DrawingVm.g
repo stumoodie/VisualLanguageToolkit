@@ -80,7 +80,7 @@ INTEGER :	SIGN? (DIGIT)+
 	;
 
 STRING_LITERAL
-	:	'(' ( ( ~( '(' | ')' )) | '\\)' | '\\(' )* ')' // string literal with brackets and escaped \)
+	:	'(' ( ( ~( '(' | ')' )) | '))' | '((' )* ')' // string literal with brackets and escaped \)
 	;
 
 fragment SIGN
@@ -149,8 +149,6 @@ OPCODE
 	|	'curlinecol'
 	|	'setlinecol'
 	|	'text' // show text
-	|	'texthgt'
-	|	'textlen'
 	|	'setlinewidth'
 	|	'curlinewidth'
 	|	'if'

@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.figure.figuredefn;
 
-import org.pathwayeditor.figure.geometry.IConvexHull;
+import org.pathwayeditor.figure.geometry.Envelope;
 
 /**
  * @author smoodie
@@ -25,6 +25,6 @@ public interface IAnchorLocatorFactory {
 	 * @return the new anchor locator.
 	 * @throws IllegalArgumentException if <code>newHull == null</code>.
 	 */
-	IAnchorLocator createAnchorLocator(IConvexHull newHull);
+	IAnchorLocator createAnchorLocator(Envelope newBounds);
 	
 }

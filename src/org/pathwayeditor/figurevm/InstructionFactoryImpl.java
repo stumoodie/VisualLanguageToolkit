@@ -48,8 +48,6 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 		{ "setfillcol", OpCodes.SET_FILL_COL },
 		{ "curlinecol", OpCodes.CUR_LINE_COL },
 		{ "setlinecol", OpCodes.SET_LINE_COL },
-		{ "texthgt", OpCodes.GETTEXTHEIGHT },
-		{ "textlen", OpCodes.GETTEXTLENGTH },
 		{ "curlinewidth", OpCodes.CURR_LINE_WIDTH },
 		{ "setlinewidth", OpCodes.SET_LINE_WIDTH },
 		{ "exit", OpCodes.EXIT },

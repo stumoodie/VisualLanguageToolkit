@@ -9,6 +9,7 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figurevm.IInterpreterErrorHandler.ErrorCode;
+import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
 import org.pathwayeditor.figurevm.Instruction.InstructionType;
 import org.pathwayeditor.figurevm.Instruction.OpCodes;
 import org.pathwayeditor.figurevm.Value.ValueType;
@@ -262,16 +263,6 @@ public class InstructionExecutor {
 		this.opCodeLookup.put(OpCodes.GPUSH, new IOpCodeLookup(){
 			public void processOpCode() {
 				pushGraphicsState();
-			}
-		});
-		this.opCodeLookup.put(OpCodes.GETTEXTLENGTH, new IOpCodeLookup(){
-			public void processOpCode() {
-				getTextLength();
-			}
-		});
-		this.opCodeLookup.put(OpCodes.GETTEXTHEIGHT, new IOpCodeLookup(){
-			public void processOpCode() {
-				getTextHeight();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CURR_LINE_WIDTH, new IOpCodeLookup(){
@@ -611,18 +602,6 @@ public class InstructionExecutor {
 		this.valueStack.push(new Value(lineWidth));
 	}
 
-	private void getTextHeight() {
-		String text = this.valueStack.pop().getStringLiteral();
-		double textWidth = this.opCodeHandler.getTextHeight(text);
-		this.valueStack.push(new Value(textWidth));
-	}
-
-	private void getTextLength() {
-		String text = this.valueStack.pop().getStringLiteral();
-		double textHeight = this.opCodeHandler.getTextLength(text);
-		this.valueStack.push(new Value(textHeight));
-	}
-
 	private void pushGraphicsState() {
 		this.opCodeHandler.saveGraphicsState();
 	}
@@ -659,12 +638,12 @@ public class InstructionExecutor {
 	}
 
 	private void processCurfontsize() {
-		int fontSize = this.opCodeHandler.getCurFontSize();
+		double fontSize = this.opCodeHandler.getCurFontSize();
 		this.valueStack.push(new Value(fontSize));
 	}
 
 	private void processSetfontsize() {
-		int fontSize = this.valueStack.pop().getInteger();
+		double fontSize = this.valueStack.pop().getDouble();
 		this.opCodeHandler.setFontSize(fontSize);
 	}
 
@@ -921,9 +900,14 @@ public class InstructionExecutor {
 
 	private void processText() {
 		String text = this.valueStack.pop().getStringLiteral();
+		String alignmentStr = this.valueStack.pop().getStringLiteral();
 		double y = this.valueStack.pop().getDouble();
 		double x = this.valueStack.pop().getDouble();
-		this.opCodeHandler.handleText(x, y, text);
+		TextAlignment alignment = TextAlignment.createFromString(alignmentStr);
+		if(alignment == null){
+			this.reportError("Unrecognised alignment value:" + alignmentStr);
+		}
+		this.opCodeHandler.handleText(x, y, alignment, text);
 	}
 
 	private void processArc() {

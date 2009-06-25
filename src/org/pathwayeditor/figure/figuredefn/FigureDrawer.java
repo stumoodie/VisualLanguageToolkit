@@ -10,16 +10,22 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Point;
 
 public class FigureDrawer {
+	private static final int TEXT_X_IDX = 0;
+	private static final int TEXT_Y_IDX = 1;
+	private static final int TEXT_ALIGN_IDX = 2;
+	private static final int TEXT_IDX = 3;
+	
 	public interface IGraphicsOpCodeAction {
 		
 		void handleOpCode(GraphicsInstruction inst);
 	}
-	
+
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final GraphicsInstructionList instList;
 	private final Map<GraphicsOpCode, IGraphicsOpCodeAction> opCodeLookup;
@@ -167,7 +173,7 @@ public class FigureDrawer {
 		this.opCodeLookup.put(GraphicsOpCode.FONT_SIZE, new IGraphicsOpCodeAction(){
 
 			public void handleOpCode(GraphicsInstruction inst) {
-				Integer values = inst.getTypedValue();
+				Double values = inst.getTypedValue();
 				processFontSize(values);
 			}
 			
@@ -217,7 +223,7 @@ public class FigureDrawer {
 		logger.debug("Setting font style=" + values);
 	}
 
-	private void processFontSize(Integer fontSize) {
+	private void processFontSize(Double fontSize) {
 		IFont modifiedFont = this.graphics.getFont().newSize(fontSize);
 		this.graphics.setFont(modifiedFont);
 		logger.debug("Setting font size=" + fontSize);
@@ -234,9 +240,10 @@ public class FigureDrawer {
 	}
 
 	private void processFillText(List<Object> values) {
-		Point p = scaledPoint((Double)values.get(0), (Double)values.get(1));
-		String text = (String)values.get(2);
-		this.graphics.fillString(text, p.getX(), p.getY());
+		Point p = scaledPoint((Double)values.get(TEXT_X_IDX), (Double)values.get(TEXT_Y_IDX));
+		GraphicalTextAlignment align = (GraphicalTextAlignment)values.get(TEXT_ALIGN_IDX);
+		String text = (String)values.get(TEXT_IDX);
+		this.graphics.fillString(text, p.getX(), p.getY(), align);
 		logger.debug("Fill text: text=" + text + ",pos=" + p);
 	}
 
@@ -283,9 +290,10 @@ public class FigureDrawer {
 	}
 
 	private void processDrawText(List<Object> values) {
-		Point p = scaledPoint((Double)values.get(0), (Double)values.get(1));
-		String text = (String)values.get(2);
-		this.graphics.drawString(text, p.getX(), p.getY());
+		Point p = scaledPoint((Double)values.get(TEXT_X_IDX), (Double)values.get(TEXT_Y_IDX));
+		GraphicalTextAlignment align = (GraphicalTextAlignment)values.get(TEXT_ALIGN_IDX);
+		String text = (String)values.get(TEXT_IDX);
+		this.graphics.drawString(text, p.getX(), p.getY(), align);
 		logger.debug("Draw text: text=" + text + ",pos=" + p);
 	}
 

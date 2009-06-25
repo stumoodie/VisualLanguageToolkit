@@ -15,20 +15,8 @@ public class MultiplePositionFixedAnchor implements IAnchorLocator {
 		this.shape = hull;
 	}
 	
-	public IConvexHull getShapeConvexHull(){
-		return this.shape;
-	}
-	
 	public Point calcAnchorPosition(){
 		Point retVal = this.refAnchorPoints.nearestPointTo(this.otherEndPoint);
-//		double shortedDistance = Double.POSITIVE_INFINITY;
-//		for(Point p : this.refAnchorPoints){
-//			double refDist = p.getDistance(this.otherEndPoint);
-//			if(refDist < shortedDistance){
-//				shortedDistance = refDist;
-//				retVal = p;
-//			}
-//		}
 		return retVal;
 	}
 

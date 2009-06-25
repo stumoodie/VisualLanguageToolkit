@@ -17,6 +17,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	 */
 	public static void main(String[] args) {
         DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream(args[0]));
+//        DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream("10 10 (C) (\\\\) text curfontsize 0.8 mul setfontsize"));
        	CommonTokenStream tokens = new CommonTokenStream(lex);
 
         DrawingVmParser parser = new DrawingVmParser(tokens);
@@ -90,8 +91,8 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		
 	}
 
-	public void handleText(double x, double y, String text) {
-		System.out.println("Text(" + x + ", " + y + ", " + text + ")");
+	public void handleText(double x, double y, TextAlignment align, String text) {
+		System.out.println("Text(" + x + ", " + y + ", align=" + align + ",text=" + text + ")");
 	}
 
 	public void setNoFill() {
@@ -124,7 +125,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		print("setNoLine()");
 	}
 
-	public int getCurFontSize() {
+	public double getCurFontSize() {
 		print("getCurFontSize()");
 		return 12;
 	}
@@ -138,7 +139,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		print("setFontStyle(" + styleString + ")");
 	}
 
-	public void setFontSize(int fontSize) {
+	public void setFontSize(double fontSize) {
 		print("setFontSize(" + fontSize + ")");
 	}
 
@@ -148,16 +149,6 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 
 	public void saveGraphicsState() {
 		print("pushGraphicsState()");
-	}
-
-	public double getTextHeight(String text) {
-		print("getTextHeight(" + text + ")");
-		return 25;
-	}
-
-	public double getTextLength(String text) {
-		print("getTextLength(" + text + ")");
-		return 10.0;
 	}
 
 	public double currentLineWidth() {

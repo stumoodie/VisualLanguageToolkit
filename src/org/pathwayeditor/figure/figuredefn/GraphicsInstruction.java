@@ -12,7 +12,8 @@ public class GraphicsInstruction {
 		DRAW_POLYGON, FILL_POLYGON, DRAW_POLYLINE, DRAW_LINE, DRAW_POINT, DRAW_TEXT, FILL_TEXT,
 		FILL_COLOUR, LINE_COLOUR, FONT_STYLE, FONT_SIZE, LINE_WIDTH, LINE_STYLE
 	};
-
+	public enum GraphicalTextAlignment { N, NE, E, SE, S, SW, W, NW, C };
+	
 	private final GraphicsOpCode opCode;
 	private final Object value;
 	

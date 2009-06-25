@@ -2,6 +2,7 @@ package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 
 public interface IGraphicsEngine {
 
@@ -31,9 +32,9 @@ public interface IGraphicsEngine {
 
 	void drawLine(double beginPos, double beginPos2, double endPos, double endPos2);
 
-	void fillString(String text, double pos, double pos2);
+	void fillString(String text, double pos, double pos2, GraphicalTextAlignment alignment);
 
-	void drawString(String text, double pos, double pos2);
+	void drawString(String text, double pos, double pos2, GraphicalTextAlignment alignment);
 
 	IFont getFont();
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 
@@ -134,18 +135,20 @@ public class GraphicsInstructionFactory {
 		return new GraphicsInstruction(GraphicsOpCode.DRAW_POINT, valList);
 	}
 
-	public GraphicsInstruction drawText(double x, double y, String text){
+	public GraphicsInstruction drawText(double x, double y, GraphicalTextAlignment textAlign, String text){
 		List<Object> valList = new ArrayList<Object>();
 		valList.add(x);
 		valList.add(y);
+		valList.add(textAlign);
 		valList.add(text);
 		return new GraphicsInstruction(GraphicsOpCode.DRAW_TEXT, valList);
 	}
 
-	public GraphicsInstruction fillText(double x, double y, String text){
+	public GraphicsInstruction fillText(double x, double y, GraphicalTextAlignment textAlign, String text){
 		List<Object> valList = new ArrayList<Object>();
 		valList.add(x);
 		valList.add(y);
+		valList.add(textAlign);
 		valList.add(text);
 		return new GraphicsInstruction(GraphicsOpCode.FILL_TEXT, valList);
 	}
@@ -158,8 +161,8 @@ public class GraphicsInstructionFactory {
 		return new GraphicsInstruction(GraphicsOpCode.FILL_COLOUR, colour);
 	}
 
-	public GraphicsInstruction fontSize(int fontSize){
-		return new GraphicsInstruction(GraphicsOpCode.FONT_SIZE, Integer.valueOf(fontSize));
+	public GraphicsInstruction fontSize(double fontSize){
+		return new GraphicsInstruction(GraphicsOpCode.FONT_SIZE, Double.valueOf(fontSize));
 	}
 
 	public GraphicsInstruction fontStyle(EnumSet<Style> fontStyles){
