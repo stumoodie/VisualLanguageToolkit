@@ -117,8 +117,8 @@ public class LineSegment {
 		return intersections;
 	}
 
-	public LineSegment translate(double x, double y){
-		return new LineSegment(this.origin.translate(x, y), this.terminus.translate(x, y));
+	public LineSegment translate(Point p){
+		return new LineSegment(this.origin.translate(p), this.terminus.translate(p));
 	}
 	
 	/**

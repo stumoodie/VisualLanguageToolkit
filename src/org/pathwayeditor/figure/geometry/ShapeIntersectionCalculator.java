@@ -65,12 +65,12 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.geometry.INodeIntersectionCalculator#findNodesAt(org.pathwayeditor.figure.geometry.IConvexHull)
 	 */
-	public SortedSet<IDrawingNode> findNodesAt(double x, double y) {
+	public SortedSet<IDrawingNode> findNodesAt(Point p) {
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
 		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>();
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
-			if(filter.accept(node) && node.getAttribute().getConvexHull().containsPoint(x, y)){
+			if(filter.accept(node) && node.getAttribute().getConvexHull().containsPoint(p)){
 				retVal.add(node);
 			}
 		}

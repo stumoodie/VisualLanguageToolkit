@@ -95,7 +95,7 @@ public class Envelope {
 		return this.origin.translate(this.dim.getWidth(), this.dim.getHeight());
 	}
 
-	public boolean containsPoint(double x, double y) {
+	private boolean containsPoint(double x, double y) {
 		return x >= this.origin.getX() && x <= this.origin.getX() + this.dim.getWidth()
 			&& y >= this.origin.getY() && y <= this.origin.getY() + this.dim.getHeight();
 	}

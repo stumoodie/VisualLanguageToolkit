@@ -58,7 +58,7 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IProp
 	void setGap(double newGap);
 	
 	/**
-§	 * Gets the size of the terminus end decorator.
+	 * Gets the size of the terminus end decorator.
 	 * @return the size of the terminus end decorator, which cannot be null.
 	 */
 	Dimension getEndSize();

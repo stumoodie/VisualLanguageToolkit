@@ -72,17 +72,15 @@ public class ConvexHull implements IConvexHull {
 		return this.pointList.iterator();
 	}
 	
+//	public boolean containsPoint(Point p){
+//		return this.containsPoint(p.getX(), p.getY());
+//	}
+
 	public boolean containsPoint(Point p){
-		return this.containsPoint(p.getX(), p.getY());
-	}
-		/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.customshape.IConvexHull#containsPoint(double, double)
-	 */
-	public boolean containsPoint(double x, double y){
 		boolean retVal = false;
-		if(this.envelope.containsPoint(x, y)){
+		if(this.envelope.containsPoint(p)){
 			retVal = true;
-			logger.debug("testing point: x=" + x + ",y=" +y);
+			logger.debug("testing point: x=" + p.getX() + ",y=" + p.getY());
 			// check cross product has -k vector if not then the point must be outside polygon
 			Point lastPoint = this.pointList.get(this.pointList.size()-1);
 			for(int i = 0 ; i < this.pointList.size() && retVal; i++){
@@ -90,7 +88,7 @@ public class ConvexHull implements IConvexHull {
 				logger.trace("Next point: Last point=" + lastPoint + ",curr point=" + currPoint);
 				Vector edge = new Vector(currPoint.getX() - lastPoint.getX(), currPoint.getY() - lastPoint.getY(), 0);
 				logger.trace("Examining edge=" + edge);
-				Vector pointVect = new Vector(x - lastPoint.getX(), y - lastPoint.getY(), 0);
+				Vector pointVect = new Vector(p.getX() - lastPoint.getX(), p.getY() - lastPoint.getY(), 0);
 				logger.trace("Examining pointVect=" + pointVect);
 				Vector crossProd = edge.crossProduct(pointVect);
 				logger.trace("Crossproduct=" + crossProd);
@@ -366,5 +364,9 @@ public class ConvexHull implements IConvexHull {
 
 	public int numPoints() {
 		return this.pointList.size();
+	}
+
+	public IConvexHull translate(Point p) {
+		return this.translate(p.getX(), p.getY());
 	}
 }

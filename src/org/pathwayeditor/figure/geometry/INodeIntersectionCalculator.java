@@ -20,6 +20,6 @@ public interface INodeIntersectionCalculator {
 
 	SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull);
 
-	SortedSet<IDrawingNode> findNodesAt(double x, double y);
+	SortedSet<IDrawingNode> findNodesAt(Point p);
 	
 }

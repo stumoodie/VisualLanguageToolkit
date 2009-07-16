@@ -7,7 +7,9 @@ public interface IConvexHull {
 
 	Iterator<Point> iterator();
 
-	boolean containsPoint(double x, double y);
+//	boolean containsPoint(double x, double y);
+
+	boolean containsPoint(Point p);
 
 	boolean hullsIntersect(IConvexHull otherHull);
 
@@ -17,7 +19,7 @@ public interface IConvexHull {
 
 	Point getPointLineIntersects(Point reference);
 	
-	Point getPointLineIntersects(double refX, double refY);
+//	Point getPointLineIntersects(double refX, double refY);
 	
 	Point getCentre();
 	
@@ -33,7 +35,9 @@ public interface IConvexHull {
 	
 	IConvexHull changeEnvelope(Envelope newEnvelope);
 	
-	IConvexHull translate(double d, double e);
+	IConvexHull translate(double x, double y);
+
+	IConvexHull translate(Point p);
 
 	IConvexHull scale(double scaleX, double scaleY);
 	

@@ -44,7 +44,7 @@ public class ConvexHullCalculatorIntersectionTest {
 
 	@Test
 	public void testOverlappingShape() throws IOException{
-		this.otherInstance = this.otherInstance.translate(10.0, 1.0);
+		this.otherInstance = this.otherInstance.translate(new Point(10.0, 1.0));
 //		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
 //		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
@@ -53,7 +53,7 @@ public class ConvexHullCalculatorIntersectionTest {
 
 	@Test
 	public void testJustOverlappingShape() throws IOException{
-		this.otherInstance = this.otherInstance.translate(1.0, 0.0);
+		this.otherInstance = this.otherInstance.translate(new Point(1.0, 0.0));
 //		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
 //		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));
@@ -62,7 +62,7 @@ public class ConvexHullCalculatorIntersectionTest {
 
 	@Test
 	public void testJustOverlappingAgainShape() throws IOException{
-		this.otherInstance = this.otherInstance.translate(-18.0, -19.0);
+		this.otherInstance = this.otherInstance.translate(new Point(-18.0, -19.0));
 //		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
 //		renderer.writeAsPsFile(new File("test.ps"));
 		assertTrue("Overlaps", this.testInstance.hullsIntersect(otherInstance));

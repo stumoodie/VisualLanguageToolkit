@@ -38,21 +38,21 @@ public class ConvexHullContansPointTest {
 
 	@Test
 	public void testContainsPoint(){
-		assertTrue("Contains point", this.testInstance.containsPoint(20.0, 20.0));
-		assertTrue("Contains point", this.testInstance.containsPoint(0.01, 20.0));
+		assertTrue("Contains point", this.testInstance.containsPoint(new Point(20.0, 20.0)));
+		assertTrue("Contains point", this.testInstance.containsPoint(new Point(0.01, 20.0)));
 	}
 
 	@Test
 	public void testNotContainedPoint(){
-		assertFalse("Not contained point", this.testInstance.containsPoint(-20.0, 20.0));
-		assertFalse("Not contained point", this.testInstance.containsPoint(-20.0, -20.0));
-		assertFalse("Not contained point", this.testInstance.containsPoint(-1.0, 20.0));
-		assertFalse("Not contained point", this.testInstance.containsPoint(5.0, 50.0));
+		assertFalse("Not contained point", this.testInstance.containsPoint(new Point(-20.0, 20.0)));
+		assertFalse("Not contained point", this.testInstance.containsPoint(new Point(-20.0, -20.0)));
+		assertFalse("Not contained point", this.testInstance.containsPoint(new Point(-1.0, 20.0)));
+		assertFalse("Not contained point", this.testInstance.containsPoint(new Point(5.0, 50.0)));
 	}
 	
 	@Test
 	public void testContainedOnBoundary(){
-		assertTrue("contained point", this.testInstance.containsPoint(0.0, 20.0));
-		assertTrue("contained point", this.testInstance.containsPoint(20.0, -10.0));
+		assertTrue("contained point", this.testInstance.containsPoint(new Point(0.0, 20.0)));
+		assertTrue("contained point", this.testInstance.containsPoint(new Point(20.0, -10.0)));
 	}
 }

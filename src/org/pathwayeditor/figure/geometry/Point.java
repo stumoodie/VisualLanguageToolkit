@@ -31,7 +31,7 @@ public class Point {
 		return newOrigin(p.x, p.y);
 	}
 	
-	public Point newOrigin(double x, double y){
+	private Point newOrigin(double x, double y){
 		return new Point(this.x - x, this.y - y);
 	}
 

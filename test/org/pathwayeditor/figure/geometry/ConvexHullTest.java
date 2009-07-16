@@ -127,8 +127,8 @@ public class ConvexHullTest {
 
 	@Test
 	public final void testContainsPoint() {
-		assertTrue("Contains point", this.testInstance.containsPoint(21.0, 11.0));
-		assertTrue("Contains point", this.testInstance.containsPoint(1.01, 20.9));
+		assertTrue("Contains point", this.testInstance.containsPoint(new Point(21.0, 11.0)));
+		assertTrue("Contains point", this.testInstance.containsPoint(new Point(1.01, 20.9)));
 	}
 
 	@Test
