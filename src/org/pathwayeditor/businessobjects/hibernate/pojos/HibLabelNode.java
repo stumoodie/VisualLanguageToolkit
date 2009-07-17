@@ -117,12 +117,12 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		if(removed){
 			type = ModelStructureChangeType.DELETED;
 			// remove the label from the associated property
-			this.getAttribute().getVisualisableProperty().setLabel(null);
+//			this.getAttribute().getVisualisableProperty().setLabel(null);
 		}
 		else{
 			type = ModelStructureChangeType.ADDED;
 			this.labelAttribute.setCurrentDrawingElement(this);
-			this.getAttribute().getVisualisableProperty().setLabel(this.getAttribute());
+//			this.getAttribute().getVisualisableProperty().setLabel(this.getAttribute());
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);

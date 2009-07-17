@@ -44,6 +44,12 @@ public interface IDrawingElement {
 	ICanvasAttribute getAttribute();
 
 	/**
+	 * Tests if this element has been removed from the canvas.
+	 * @return true if it has, false otherwise.
+	 */
+	boolean isRemoved();
+	
+	/**
 	 * identity based on the canvas and the attribute combination. 
 	 * @param other
 	 * @return true if objects are equal, false otherwise.

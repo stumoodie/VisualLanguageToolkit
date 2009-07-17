@@ -66,7 +66,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
-		this.visualisableProperty.setDisplayedLabel(this);
 		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
 	}
@@ -74,7 +73,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, ILabelAttribute otherAttribute, HibProperty copiedProperty) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = copiedProperty;
-		this.visualisableProperty.setDisplayedLabel(this);
 		this.position = otherAttribute.getLocation();
 		this.size = otherAttribute.getSize();
 		this.background = otherAttribute.getBackgroundColor();

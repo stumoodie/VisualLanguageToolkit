@@ -96,20 +96,16 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	}
 
 	public boolean isDisplayed() {
-		return this.labelAttribute != null;
-	}
-	
-	void setLabel(HibLabelAttribute label){
-		this.labelAttribute = label;
+		return this.labelAttribute != null && !this.labelAttribute.getCurrentDrawingElement().isRemoved();
 	}
 	
 	public void setDisplayed(boolean displayStatus) {
 		if(!canVisualiseProperty()) throw new IllegalStateException("This property is not visualisable");
 
-		if(displayStatus && this.labelAttribute == null) {
+		if(!isDisplayed()) {
 			createNewLabel();
 		}
-		else if(!displayStatus && this.labelAttribute != null){
+		else {
 			removeLabel();
 		}
 	}
@@ -130,7 +126,6 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		ISelectionFactory fact = model.newSelectionFactory();
 		fact.addDrawingNode(this.labelAttribute.getCurrentDrawingElement());
 		model.removeSubgraph(fact.createGeneralSelection());
-		setLabel(null);
 	}
 	
 	void setOwner(HibAnnotatedCanvasAttribute owner) {
@@ -143,9 +138,6 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	
 	void setDisplayedLabel(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
-		if(this.labelAttribute != null){
-			this.labelAttribute.setVisualisableProperty(this);
-		}
 	}
 	
 	public ILabelAttribute getDisplayedLabel() {
