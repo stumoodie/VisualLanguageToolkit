@@ -46,7 +46,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 
 	private Point position = new Point(DEFAULT_X, DEFAULT_Y);
 	private Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	private HibProperty visualisableProperty;
+	private transient HibProperty visualisableProperty;
 	private RGB background;
 	private HibLabelNode labelNode;
 	private transient INodeObjectType objectType;
@@ -66,6 +66,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
+		property.setLabel(this);
 		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
 	}
@@ -73,6 +74,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, ILabelAttribute otherAttribute, HibProperty copiedProperty) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = copiedProperty;
+		copiedProperty.setLabel(this);
 		this.position = otherAttribute.getLocation();
 		this.size = otherAttribute.getSize();
 		this.background = otherAttribute.getBackgroundColor();

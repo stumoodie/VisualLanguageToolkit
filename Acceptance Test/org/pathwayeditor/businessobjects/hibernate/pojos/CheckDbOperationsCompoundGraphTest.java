@@ -408,11 +408,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertNotNull ( "property is not null" , aProperty) ;
 		assertTrue("can visualise", aProperty.canVisualiseProperty());
 		assertFalse("not displayed", aProperty.isDisplayed());
-		assertNull("label not created", aProperty.getDisplayedLabel());
+		assertNull("label not created", aProperty.getLabel());
 		aProperty.setDisplayed(true);
-		aProperty.getDisplayedLabel().setSize(testLabelSize);
-		assertNotNull("label created", aProperty.getDisplayedLabel());
-		assertEquals("expected label location", expectedLabelLocation, aProperty.getDisplayedLabel().getLocation());
+		aProperty.getLabel().setSize(testLabelSize);
+		assertNotNull("label created", aProperty.getLabel());
+		assertEquals("expected label location", expectedLabelLocation, aProperty.getLabel().getLocation());
 		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_LABEL_VALIDATION);
 	}
@@ -453,7 +453,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertTrue("is displayed", testProp.isDisplayed());
 		testProp.setDisplayed(false);
 		assertFalse("not displayed", testProp.isDisplayed());
-		assertNull("no label", testProp.getDisplayedLabel());
+		assertNull("no label", testProp.getLabel());
 		assertTrue("model is valid after removal", this.dbModel.isValid());
 		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_LABEL_VALIDATION);
@@ -722,7 +722,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		assertTrue("is displayed", testProp.isDisplayed());
 		testProp.setDisplayed(false);
 		assertFalse("not displayed", testProp.isDisplayed());
-		assertNull("no label", testProp.getDisplayedLabel());
+		assertNull("no label", testProp.getLabel());
 		
 		map1Manager.synchronise();
 		

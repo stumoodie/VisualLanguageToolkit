@@ -124,7 +124,6 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 			this.labelAttribute.setCurrentDrawingElement(this);
 //			this.getAttribute().getVisualisableProperty().setLabel(this.getAttribute());
 		}
-		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);
 	}
 

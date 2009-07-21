@@ -136,12 +136,31 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		return this.owner;
 	}
 	
+	/**
+	 * Used by hibernate. Ensures that the reciprocal attribute as assigned correctly.
+	 * @param labelAttribute
+	 */
 	void setDisplayedLabel(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
+		if(this.labelAttribute != null){
+			this.labelAttribute.setVisualisableProperty(this);
+		}
+	}
+
+	/**
+	 * Use by hibernate.
+	 * @return
+	 */
+	HibLabelAttribute getDisplayedLabel() {
+		return this.labelAttribute;
 	}
 	
-	public ILabelAttribute getDisplayedLabel() {
-		return this.labelAttribute;
+	public ILabelAttribute getLabel() {
+		ILabelAttribute retVal = this.labelAttribute;
+		if(retVal != null && retVal.getCurrentDrawingElement().isRemoved()){
+			retVal = null;
+		}
+		return retVal;
 	}
 
 	public final void addChangeListener(IAnnotationPropertyChangeListener listener) {
@@ -193,5 +212,12 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		} else if (!this.owner.equals(other.owner))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @param hibLabelAttribute
+	 */
+	void setLabel(HibLabelAttribute hibLabelAttribute) {
+		this.labelAttribute = hibLabelAttribute;
 	}
 }

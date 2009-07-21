@@ -63,5 +63,5 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	 * @return the displayed label, which must be not null if <code>isDisplayed() == true</code>.
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
-	ILabelAttribute getDisplayedLabel();
+	ILabelAttribute getLabel();
 }
