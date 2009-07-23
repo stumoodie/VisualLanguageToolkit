@@ -21,6 +21,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
@@ -48,6 +49,11 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private transient HibProperty visualisableProperty;
 	private RGB background;
+	private RGB foreground;
+	private boolean noBorder;
+	private boolean noFill;
+	private double lineWidth;
+	private LineStyle lineStyle = LineStyle.SOLID;
 	private HibLabelNode labelNode;
 	private transient INodeObjectType objectType;
 	private transient IConvexHull convexHull = null;
@@ -61,6 +67,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		size = new Dimension (0 , 0) ;
 		position = Point.ORIGIN;
 		background = new RGB ( 0 , 0 ,0 ) ;
+		foreground = RGB.BLACK;
 	}
 
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
@@ -78,21 +85,28 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.position = otherAttribute.getLocation();
 		this.size = otherAttribute.getSize();
 		this.background = otherAttribute.getBackgroundColor();
+		this.foreground = otherAttribute.getForegroundColor();
 		this.objectType = otherAttribute.getObjectType();
+		this.lineStyle = otherAttribute.getLineStyle();
+		this.lineWidth = otherAttribute.getLineWidth();
+		this.noBorder = otherAttribute.hasNoBorder();
+		this.noFill = otherAttribute.hasNoFill();
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
-//		this.setSize(labelDefaults.getSize());
 		this.size = new Dimension(0, 0);
-		this.setBackgroundColor(labelDefaults.getFillColour());	}
+		this.background = labelDefaults.getFillColour();
+		this.foreground = labelDefaults.getLineColour();
+		this.lineStyle = labelDefaults.getLineStyle();
+		this.lineWidth = labelDefaults.getLineWidth();
+		this.noBorder = labelDefaults.hasNoBorder();
+		this.noFill = labelDefaults.hasNoFill();
+	}
+	
 
 	public Point getPosition() {
 		return this.position;
 	}
-
-//	public HibLabelNode getLabelNode() {
-//		return this.labelNode;
-//	}
 
 	void setCurrentDrawingElement(HibLabelNode node) {
 		this.labelNode = node;
@@ -162,6 +176,30 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.background = this.background.newBlue(backgroundBlue);
 	}
 
+	public int getForegroundRed() {
+		return this.foreground.getRed();
+	}
+
+	public void setForegroundRed(int red) {
+		this.foreground = this.foreground.newRed(red);
+	}
+
+	public int getForegroundGreen() {
+		return this.foreground.getGreen();
+	}
+
+	public void setForegroundGreen(int green) {
+		this.foreground = this.foreground.newGreen(green);
+	}
+
+	public int getForegroundBlue() {
+		return this.foreground.getBlue();
+	}
+
+	public void setForegroundBlue(int blue) {
+		this.foreground = this.foreground.newBlue(blue);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -207,9 +245,11 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if (color == null)
 			throw new IllegalArgumentException("Color cannot be null.");
 
-		RGB oldColour = this.background;
-		this.background = color;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
+		if(this.background != color){
+			RGB oldColour = this.background;
+			this.background = color;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
+		}
 	}
 	
 	public void setObjectType ( INodeObjectType nodeObjectType)
@@ -354,4 +394,96 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getForegroundColor()
+	 */
+	public RGB getForegroundColor() {
+		return this.foreground;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 */
+	public void setForegroundColor(RGB color) {
+		if(this.foreground != color){
+			RGB oldValue = this.foreground;
+			this.foreground = color;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldValue, this.foreground);
+		}
+	}
+
+	public void setNoBorder(boolean noBorder){
+		if(this.noBorder != noBorder){
+			boolean oldValue = this.noBorder;
+			this.noBorder = noBorder;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NO_BORDER, oldValue, this.noBorder);
+		}
+	}
+	
+	public boolean hasNoBorder(){
+		return this.noBorder;
+	}
+	
+	boolean getNoBorder(){
+		return this.noBorder;
+	}
+
+	public void setNoFill(boolean noFill){
+		if(this.noFill != noFill){
+			boolean oldValue = this.noFill;
+			this.noFill = noFill;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NO_FILL, oldValue, this.noFill);
+		}
+	}
+	
+	public boolean hasNoFill(){
+		return this.noFill;
+	}
+	
+	boolean getNoFill(){
+		return this.noFill;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLineStyle()
+	 */
+	public LineStyle getLineStyle() {
+		return this.lineStyle;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLineWidth()
+	 */
+	public double getLineWidth() {
+		return this.lineWidth;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
+	 */
+	public void setLineStyle(LineStyle lineStyle) {
+		if(!this.lineStyle.equals(lineStyle)){
+			LineStyle oldValue = this.lineStyle;
+			this.lineStyle = lineStyle;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setLineWidth(int)
+	 */
+	public void setLineWidth(double lineWidth) {
+		if(this.lineWidth != lineWidth){
+			double oldValue = this.lineWidth;
+			this.lineWidth = lineWidth;
+			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getMinimumSize()
+	 */
+	public Dimension getMinimumSize() {
+		return this.visualisableProperty.getDefinition().getLabelDefaults().getMinimumSize();
+	}
 }

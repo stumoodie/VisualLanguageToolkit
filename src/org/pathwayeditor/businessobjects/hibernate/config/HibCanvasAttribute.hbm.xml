@@ -59,6 +59,27 @@
 			<property name="backgroundBlue" type="int" access="property">
 				<column name="background_blue" not-null="true" />
 			</property>
+			<property name="foregroundRed" type="int" access="property">
+				<column name="foreground_red" not-null="true" />
+			</property>
+			<property name="foregroundGreen" type="int" access="property">
+				<column name="foreground_green" not-null="true" />
+			</property>
+			<property name="foregroundBlue" type="int" access="property">
+				<column name="foreground_blue" not-null="true" />
+			</property>
+			<property name="noBorder" type="boolean" access="property">
+				<column name="no_border" not-null="true"/>
+			</property>
+			<property name="noFill" type="boolean" access="property">
+				<column name="no_fill" not-null="true"/>
+			</property>
+			<property name="lineStyle" type="LineStyleType">
+				<column name="line_style" not-null="true" />
+			</property>
+			<property name="lineWidth" type="double">
+				<column name="line_width" not-null="true" />
+			</property>
 		</joined-subclass>
 
 		<joined-subclass

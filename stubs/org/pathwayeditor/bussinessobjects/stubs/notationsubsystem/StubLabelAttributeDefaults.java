@@ -86,4 +86,25 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 		return new GenericFont();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getMinimumSize()
+	 */
+	public Dimension getMinimumSize() {
+		return new Dimension(10.0, 10.0);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoBorder()
+	 */
+	public boolean hasNoBorder() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoFill()
+	 */
+	public boolean hasNoFill() {
+		return false;
+	}
+
 }

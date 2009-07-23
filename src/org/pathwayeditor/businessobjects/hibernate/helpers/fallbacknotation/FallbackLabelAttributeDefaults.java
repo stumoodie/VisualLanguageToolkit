@@ -36,6 +36,7 @@ public class FallbackLabelAttributeDefaults implements ILabelAttributeDefaults {
 	private static final LineStyle LINE_STYLE = LineStyle.SOLID;
 	private static final RGB LINE_COLOUR = RGB.BLACK;
 	private static final RGB FILL_COLOUR = RGB.WHITE;
+	private static final Dimension DEFAULT_MIN_SIZE = new Dimension(10.0, 10.0);
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getFillColour()
@@ -84,6 +85,27 @@ public class FallbackLabelAttributeDefaults implements ILabelAttributeDefaults {
 	 */
 	public IFont getFont() {
 		return new GenericFont();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getMinimumSize()
+	 */
+	public Dimension getMinimumSize() {
+		return DEFAULT_MIN_SIZE;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoBorder()
+	 */
+	public boolean hasNoBorder() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoFill()
+	 */
+	public boolean hasNoFill() {
+		return false;
 	}
 
 }

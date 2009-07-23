@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
@@ -65,8 +66,8 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	INodeObjectType getObjectType();
 	
 	/**
-	 * Get the background color of this Label.
-	 * @return the RGB representation of the color of the Label.
+	 * Get the background colour of this Label.
+	 * @return the RGB representation of the colour of the Label.
 	 */	
 	RGB getBackgroundColor ();
 	
@@ -75,6 +76,36 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	 * @throws IllegalArgumentException if value is null.
 	 */
 	void setBackgroundColor (RGB color);
+	
+	/**
+	 * Get the foreground colour of this Label.
+	 * @return the RGB representation of the colour of the Label.
+	 */	
+	RGB getForegroundColor ();
+	
+	/**
+	 * Set the foreground color of this Label.
+	 * @throws IllegalArgumentException if value is null.
+	 */
+	void setForegroundColor (RGB color);
+	
+	void setNoFill(boolean noFill);
+	
+	boolean hasNoFill();
+	
+	void setNoBorder(boolean noBorder);
+	
+	boolean hasNoBorder();
+	
+	public double getLineWidth();
+	
+	public void setLineWidth(double lineWidth);
+	
+	public LineStyle getLineStyle();
+	
+	public void setLineStyle(LineStyle lineStyle);
+	
+	public Dimension getMinimumSize();
 	
 	/**
 	 * Test if the label attribute is that same as the other label. Bases on its associated
