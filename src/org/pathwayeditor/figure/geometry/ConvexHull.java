@@ -78,9 +78,10 @@ public class ConvexHull implements IConvexHull {
 
 	public boolean containsPoint(Point p){
 		boolean retVal = false;
+		logger.debug("testing point: x=" + p.getX() + ",y=" + p.getY());
 		if(this.envelope.containsPoint(p)){
+			logger.trace("inside envelope");
 			retVal = true;
-			logger.debug("testing point: x=" + p.getX() + ",y=" + p.getY());
 			// check cross product has -k vector if not then the point must be outside polygon
 			Point lastPoint = this.pointList.get(this.pointList.size()-1);
 			for(int i = 0 ; i < this.pointList.size() && retVal; i++){
@@ -93,11 +94,13 @@ public class ConvexHull implements IConvexHull {
 				Vector crossProd = edge.crossProduct(pointVect);
 				logger.trace("Crossproduct=" + crossProd);
 				if(crossProd.getKMagnitude() < 0){
+					logger.trace("Crossproduct is negative so not contained");
 					retVal = false;
 				}
 				lastPoint = currPoint;
 			}
 		}
+		logger.trace("Contains point=" + retVal);
 		return retVal;
 	}
 	

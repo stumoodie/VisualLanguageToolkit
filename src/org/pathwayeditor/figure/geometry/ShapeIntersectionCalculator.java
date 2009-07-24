@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
@@ -15,6 +16,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
  *
  */
 public class ShapeIntersectionCalculator implements INodeIntersectionCalculator {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	
 	private static final IIntersectionCalcnFilter DEFAULT_FILTER = new IIntersectionCalcnFilter(){
 		public boolean accept(IDrawingNode node) {
 			return true;
@@ -70,7 +73,9 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>();
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
+			logger.trace("Testing contains node:" + node + ", hull=" + node.getAttribute().getConvexHull() + ", point=" + p);
 			if(filter.accept(node) && node.getAttribute().getConvexHull().containsPoint(p)){
+				logger.trace("Found containing node");
 				retVal.add(node);
 			}
 		}
