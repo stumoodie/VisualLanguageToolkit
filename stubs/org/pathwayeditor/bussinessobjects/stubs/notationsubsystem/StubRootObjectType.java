@@ -95,14 +95,12 @@ public class StubRootObjectType implements IRootObjectType {
 		 * @see org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules#isValidChild(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 		 */
 		public boolean isValidChild(IObjectType possibleChild) {
-//			boolean retVal = false;
-//			if(possibleChild.getUniqueId() == StubShapeAObjectType.UNIQUE_ID
-//					|| possibleChild.getUniqueId() == StubShapeCObjectType.UNIQUE_ID
-//					|| possibleChild.getUniqueId() == StubShapeDObjectType.UNIQUE_ID){
-//				retVal = true; 
-//			}
-//			return retVal;
-			return true;
+			boolean retVal = false;
+			if(possibleChild.getUniqueId() == StubShapeAObjectType.UNIQUE_ID
+					|| possibleChild.getUniqueId() == StubShapeCObjectType.UNIQUE_ID){
+				retVal = true; 
+			}
+			return retVal;
 		}
 		
 	}

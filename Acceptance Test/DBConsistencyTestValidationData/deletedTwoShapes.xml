@@ -401,7 +401,6 @@
 	<!-- ATTRIBUTES DECLARATION -->
 	<table name="ShapeAttribute">
 		<column>id</column>
-		<column>object_type_id</column>
 		<column>fill_red</column>
 		<column>fill_green</column>
 		<column>fill_blue</column>
@@ -417,7 +416,6 @@
 		<column>height</column>
 		<row>
 			<value>100001</value><!-- ASSIGNED TO node2 -->
-			<value>100001</value>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -434,7 +432,6 @@
 		</row>
 		<row>
 			<value>100002</value><!-- ASSIGNED TO node3 -->
-			<value>100002</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -451,7 +448,6 @@
 		</row>
 		<row>
 			<value>100003</value><!-- ASSIGNED TO node4 -->
-			<value>100003</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -468,7 +464,6 @@
 		</row>
 		<row>
 			<value>100004</value><!-- ASSIGNED TO node5 -->
-			<value>100004</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -485,7 +480,6 @@
 		</row>
 		<row>
 			<value>100005</value><!-- ASSIGNED TO node6 -->
-			<value>100001</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -502,7 +496,6 @@
 		</row>
 		<row>
 			<value>100006</value><!-- ASSIGNED TO node7 -->
-			<value>100002</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -519,7 +512,6 @@
 		</row>
 		<row>
 			<value>100007</value><!-- ASSIGNED TO node8 -->
-			<value>100003</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -536,7 +528,6 @@
 		</row>
 		<row>
 			<value>100008</value><!-- ASSIGNED TO node9 -->
-			<value>100004</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>

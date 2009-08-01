@@ -20,6 +20,9 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+
 /**
  * @author smoodie
  *
@@ -46,4 +49,7 @@ public interface ISubModelChangeListenee {
 	 */
 	Iterator<ISubModelChangeListener> subModelNodeChangeListenerIterator();
 	
+	void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode changedNode);
+
+	void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge);
 }

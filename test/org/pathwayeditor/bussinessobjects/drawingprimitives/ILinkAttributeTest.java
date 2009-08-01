@@ -133,11 +133,11 @@ public class ILinkAttributeTest {
 		assertEquals ( "correct creationSerial" , CREATION_SERIAL , linkAttribute.getCreationSerial()) ;
 	}
 	
-	@Test
-	public void testGetObjectType () throws Exception
-	{
-		assertEquals("correct OT", stubObjectType, linkAttribute.getObjectType());
-	}
+//	@Test
+//	public void testGetObjectType () throws Exception
+//	{
+//		assertEquals("correct OT", stubObjectType, linkAttribute.getObjectType());
+//	}
 	
 	@Test
 	public void testGetBendpointsIterator () throws Exception

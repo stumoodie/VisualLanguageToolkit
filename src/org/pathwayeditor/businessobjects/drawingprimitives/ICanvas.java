@@ -200,4 +200,6 @@ public interface ICanvas extends IPropertyChangeListenee, ISuppressableChangeLis
 	 * @throws IllegalArgumentException if <code>containsLabelAttribute(attributeSerial) == false</code>.
 	 */
 	ILabelAttribute getLabelAttribute(int attributeSerial);
+	
+	int numCanvasAttributes();
 }

@@ -25,8 +25,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
-
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
@@ -35,7 +33,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
@@ -51,6 +48,7 @@ import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkBObjectType;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeAObjectType;
+import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeBObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.testutils.GenericTester;
@@ -76,18 +74,18 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private IMap mapDiagram1 ;
 	private ICanvas dbCanvas ;
 	private IModel dbModel ;
-	private IRootNode dbRootNode ;
+//	private IRootNode dbRootNode ;
 	
-	private IShapeNode shapeNode1 ;
-	private IShapeNode shapeNode2 ;
-	private IShapeNode shapeNode3 ;
+//	private IShapeNode shapeNode1 ;
+//	private IShapeNode shapeNode2 ;
+//	private IShapeNode shapeNode3 ;
 //	private IShapeNode shapeNode4 ;
-	private IShapeNode shapeNode5 ;
-	private IShapeNode shapeNode6 ;
-	private IShapeNode shapeNode7 ;
-	private IShapeNode shapeNode8 ;
+//	private IShapeNode shapeNode5 ;
+//	private IShapeNode shapeNode6 ;
+//	private IShapeNode shapeNode7 ;
+//	private IShapeNode shapeNode8 ;
 	
-	private ILinkEdge linkEdge1 ;
+//	private ILinkEdge linkEdge1 ;
 //	private ILinkEdge linkEdge2 ;
 //	private ILinkEdge linkEdge3;
 //	private ILinkEdge linkEdge4 ;
@@ -97,7 +95,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //	private ILinkEdge linkEdge8 ;
 //	private ILinkEdge linkEdge9 ;
 	
-	private IShapeNode newNode ;
+//	private IShapeNode newNode ;
 //	private ILabelNode newLabel ;
 //	private ILinkEdge newLinkEdge ;
 	
@@ -172,6 +170,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 
 	private static final String DELETED_CANVAS_DATA_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/DeletedCanvasExpectedData.xml";
 	private static final String EXPECTED_SHAPE = "curbounds 90 90 arc";
+	private static final int SHAPE_ATTRIB5 = 5;
+	private static final int SHAPE_ATTRIB8 = 8;
+	private static final int SHAPE_ATTRIB1 = 1;
+	private static final int SHAPE_ATTRIB2 = 2;
+	private static final int LINK1_ATTRIB = 9;
+	private static final int SHAPE_ATTRIB3 = 3;
+	private static final int SHAPE_ATTRIB7 = 7;
 	
 	
 	
@@ -201,77 +206,77 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		
 		
 		dbModel = dbCanvas.getModel() ;
-		dbRootNode = dbModel.getRootNode() ;
+//		dbRootNode = dbModel.getRootNode() ;
 		
 		dbNotationSubSystem = dbCanvas.getNotationSubsystem() ;
 		
 		
-		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeNodeIterator() ;
-		
-		while ( rootNodeChildrenIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==1 )
-			{
-				shapeNode1 = tempShapeNode ;
-			}
-			else
-			{
-				shapeNode2 = tempShapeNode ;
-			}
-			
-		}
-		
-		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeNodeIterator() ;
-		while ( shape1ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape1ChildIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==3 )
-			{
-				shapeNode3 = tempShapeNode ;
-			}
-//			else
-//			if  ( tempShapeNode.getIndex() ==4 )
+//		Iterator<IShapeNode> rootNodeChildrenIterator = dbRootNode.getSubModel().shapeNodeIterator() ;
+//		
+//		while ( rootNodeChildrenIterator.hasNext())
+//		{
+//			IShapeNode tempShapeNode = rootNodeChildrenIterator.next();
+//			
+//			if ( tempShapeNode.getIndex() ==1 )
 //			{
-//				shapeNode4 = tempShapeNode ;
+//				shapeNode1 = tempShapeNode ;
 //			}
-			
-		}
+//			else
+//			{
+//				shapeNode2 = tempShapeNode ;
+//			}
+//			
+//		}
+//		
+//		Iterator<IShapeNode> shape1ChildIterator = shapeNode1.getSubModel().shapeNodeIterator() ;
+//		while ( shape1ChildIterator.hasNext())
+//		{
+//			IShapeNode tempShapeNode = shape1ChildIterator.next();
+//			
+//			if ( tempShapeNode.getIndex() ==3 )
+//			{
+//				shapeNode3 = tempShapeNode ;
+//			}
+////			else
+////			if  ( tempShapeNode.getIndex() ==4 )
+////			{
+////				shapeNode4 = tempShapeNode ;
+////			}
+//			
+//		}
+//		
+//		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeNodeIterator() ;
+//		while ( shape2ChildIterator.hasNext())
+//		{
+//			IShapeNode tempShapeNode = shape2ChildIterator.next();
+//			
+//			if ( tempShapeNode.getIndex() ==5 )
+//			{
+//				shapeNode5 = tempShapeNode ;
+//			}
+//			else
+//			if  ( tempShapeNode.getIndex() ==6 )
+//			{
+//				shapeNode6 = tempShapeNode ;
+//			}
+//			
+//		}
 		
-		Iterator<IShapeNode> shape2ChildIterator = shapeNode2.getSubModel().shapeNodeIterator() ;
-		while ( shape2ChildIterator.hasNext())
-		{
-			IShapeNode tempShapeNode = shape2ChildIterator.next();
-			
-			if ( tempShapeNode.getIndex() ==5 )
-			{
-				shapeNode5 = tempShapeNode ;
-			}
-			else
-			if  ( tempShapeNode.getIndex() ==6 )
-			{
-				shapeNode6 = tempShapeNode ;
-			}
-			
-		}
-		
-		shapeNode7 = shapeNode6.getSubModel().shapeNodeIterator().next() ;
-		
-		shapeNode8 = shapeNode7.getSubModel().shapeNodeIterator().next() ;
+//		shapeNode7 = shapeNode6.getSubModel().shapeNodeIterator().next() ;
+//		
+//		shapeNode8 = shapeNode7.getSubModel().shapeNodeIterator().next() ;
 		
 		
-		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
-		
-		while ( rootNodeEdges.hasNext())
-		{
-			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
-			
-			if ( tempLinkEdge.getIndex() == 0 )
-			{
-				linkEdge1 = tempLinkEdge ;
-			}
+//		Iterator<ILinkEdge> rootNodeEdges = dbRootNode.getSubModel().linkIterator() ;	
+//		
+//		while ( rootNodeEdges.hasNext())
+//		{
+//			ILinkEdge tempLinkEdge = rootNodeEdges.next() ;
+//			
+//			if ( tempLinkEdge.getIndex() == 0 )
+//			{
+//				linkEdge1 = tempLinkEdge ;
+//			}
 //			if ( tempLinkEdge.getIndex() == 1 )
 //			{
 //				linkEdge2 = tempLinkEdge ;
@@ -288,7 +293,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //			{
 //				linkEdge7 = tempLinkEdge ;
 //			}
-		}
+//		}
 		
 		
 	}
@@ -305,18 +310,18 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		mapDiagram1 = null;
 		dbCanvas = null;
 		dbModel = null;
-		dbRootNode = null;
-		
-		shapeNode1 =null;
-		shapeNode2 = null;
-		shapeNode3 = null;
+//		dbRootNode = null;
+//		
+//		shapeNode1 =null;
+//		shapeNode2 = null;
+//		shapeNode3 = null;
 //		shapeNode4 =null;
-		shapeNode5 =null;
-		shapeNode6 = null;
-		shapeNode7 = null;
-		shapeNode8 = null;
+//		shapeNode5 =null;
+//		shapeNode6 = null;
+//		shapeNode7 = null;
+//		shapeNode8 = null;
 		
-		linkEdge1 = null;
+//		linkEdge1 = null;
 //		linkEdge2 = null;
 //		linkEdge3 = null;
 //		linkEdge4 = null;
@@ -326,7 +331,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 //		linkEdge8 = null;
 //		linkEdge9 = null;
 		
-		newNode = null;
+//		newNode = null;
 //		newLabel = null;
 //		newLinkEdge = null;
 		
@@ -357,13 +362,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCreateNewShapeNode () throws Exception
-	{
-		
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+	public void testCreateNewShapeNode () throws Exception	{
+		IShapeNodeFactory nodeFactory = this.dbModel.getRootNode().getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		
-		newNode = nodeFactory.createShapeNode() ;
+		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise();map1Manager.close(true);
@@ -371,18 +374,16 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testCreateTwoShapeNodesOneChildOfAnother () throws Exception
-	{
-		
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+	public void testCreateTwoShapeNodesOneChildOfAnother () throws Exception {
+		IShapeNodeFactory nodeFactory = this.dbModel.getRootNode().getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		
-		newNode = nodeFactory.createShapeNode() ;
+		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		
 		IShapeNodeFactory newNodeFactory = newNode.getSubModel().shapeNodeFactory() ;
-		newNodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
+		newNodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeBObjectType.UNIQUE_ID)  ) ;
 		IShapeNode newNode2 = newNodeFactory.createShapeNode() ;
 		newNode2.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode2.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
@@ -398,10 +399,10 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		final Dimension testSize = new Dimension(30, 20);
 		final Dimension testLabelSize = new Dimension(20, 10);
 		final Point expectedLabelLocation = new Point(0, 0);
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		IShapeNodeFactory nodeFactory = this.dbModel.getRootNode().getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		
-		newNode = nodeFactory.createShapeNode() ;
+		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(testLocation);
 		newNode.getAttribute().setSize(testSize);
 		IAnnotationProperty aProperty = newNode.getAttribute().getProperty(propTestName);
@@ -418,9 +419,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 
 	@Test
-	public void testCreateNewEdgeLink () throws Exception 
-	{
-		
+	public void testCreateNewEdgeLink () throws Exception {
+		IShapeNode shapeNode5 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		ILinkEdgeFactory linkFactory = shapeNode5.getSubModel().linkEdgeFactory() ;
 		linkFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getLinkObjectType(StubLinkBObjectType.UNIQUE_ID)) ;
 		linkFactory.setShapeNodePair(shapeNode5, shapeNode5) ;
@@ -433,11 +433,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testDeleteShapeNode () throws Exception
-	{
+	public void testDeleteShapeNode () throws Exception	{
+		IShapeNode shapeNode8 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB8).getCurrentDrawingElement();
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		
-		objectSelection.addDrawingNode(this.shapeNode8);
+		objectSelection.addDrawingNode(shapeNode8);
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after removal", this.dbModel.isValid());
 		map1Manager.synchronise();map1Manager.close(true);
@@ -445,9 +445,9 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testDeleteLabelNode () throws Exception
-	{
+	public void testDeleteLabelNode () throws Exception	{
 		final String testPropName = "TextProperty";
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		IAnnotationProperty testProp = shapeNode1.getAttribute().getProperty(testPropName); 
 		assertTrue("can display", testProp.canVisualiseProperty());
 		assertTrue("is displayed", testProp.isDisplayed());
@@ -460,36 +460,33 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testMoveNode () throws Exception
-	{
-		
-		
+	public void testMoveNode () throws Exception {
+		IShapeNode shapeNode = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
-		objectSelection.addDrawingNode(shapeNode8) ;
-		assertTrue("model is valid before move", dbRootNode.getModel().isValid());
-		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
-		assertTrue("model is valid after move", dbRootNode.getModel().isValid());
-		map1Manager.synchronise();map1Manager.close(true);
+		objectSelection.addDrawingNode(shapeNode) ;
+		assertTrue("model is valid before move", this.dbModel.isValid());
+		this.dbModel.getRootNode().getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
+		assertTrue("model is valid after move", this.dbModel.isValid());
+		map1Manager.synchronise();
+		map1Manager.close(true);
 		this.compareDatabase(MOVED_NODE_VALIDATION);
 	}
 	
 	@Test
-	public void testCopyNode () throws Exception
-	{
-		
-		
-		assertTrue("model is valid before copy", dbRootNode.getModel().isValid());
+	public void testCopyNode () throws Exception {
+		assertTrue("model is valid before copy", this.dbModel.isValid());
 		assertEquals("root has correct shapes", NUM_ROOT_NODE_SHAPES, this.dbModel.getRootNode().getSubModel().numShapeNodes());
 		assertEquals("root has an same labels", NUM_ROOT_NODE_LABELS, this.dbModel.getRootNode().getSubModel().numLabelNodes());
 		assertEquals("model correct num shapes", NUM_MODEL_SHAPES, this.dbModel.numShapeNodes());
 		assertEquals("model has same labels", NUM_MODEL_LABELS, this.dbModel.numLabelNodes());
 		assertEquals("model has same edges", NUM_MODEL_EDGES, this.dbModel.numLinkEdges());
 
+		IShapeNode shapeNode = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
-		objectSelection.addDrawingNode(shapeNode8) ;
+		objectSelection.addDrawingNode(shapeNode) ;
 		
-		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
-		assertTrue("model is valid after copy", dbRootNode.getModel().isValid());
+		this.dbModel.getRootNode().getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
+		assertTrue("model is valid after copy", this.dbModel.isValid());
 		assertEquals("root has an extra shape", NUM_ROOT_NODE_SHAPES + 1, this.dbModel.getRootNode().getSubModel().numShapeNodes());
 		assertEquals("root has an same labels", NUM_ROOT_NODE_LABELS, this.dbModel.getRootNode().getSubModel().numLabelNodes());
 		assertEquals("model extra shape", NUM_MODEL_SHAPES + 1, this.dbModel.numShapeNodes());
@@ -503,10 +500,12 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	@Test
 	public void testCopyEntireGraphBySelectingTheTopNodes () throws Exception {
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
+		IShapeNode shapeNode2 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB2).getCurrentDrawingElement();
 		objectSelection.addDrawingNode(shapeNode1) ;
 		objectSelection.addDrawingNode(shapeNode2) ;
-		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
-		assertTrue("model is valid after copy", dbRootNode.getModel().isValid());
+		this.dbModel.getRootNode().getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
+		assertTrue("model is valid after copy", this.dbModel.isValid());
 		IModel model = this.dbCanvas.getModel();
 		ISubModel rootModel = model.getRootNode().getSubModel();
 		assertEquals("model has additional nodes", NUM_MODEL_SHAPES + 8, model.numShapeNodes());
@@ -521,25 +520,22 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testDeleteEdge () throws Exception 
-	{
-		
-		
+	public void testDeleteEdge () throws Exception {
+		ILinkEdge linkEdge1 = this.dbCanvas.getLinkAttribute(LINK1_ATTRIB).getCurrentDrawingElement(); 
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addLink(linkEdge1) ;
 		
 		this.dbModel.removeSubgraph(objectSelection.createGeneralSelection()) ;
-		assertTrue("model is valid after delete", dbRootNode.getModel().isValid());
+		assertTrue("model is valid after delete", this.dbModel.isValid());
 		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(DELETED_EDGE_VALIDATION);
 	}
 	
 	
 	@Test
-	public void testDeleteTwoConnectedShapes () throws Exception
-	{
-		
-		
+	public void testDeleteTwoConnectedShapes () throws Exception {
+		IShapeNode shapeNode3 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB3).getCurrentDrawingElement();
+		IShapeNode shapeNode7 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB7).getCurrentDrawingElement();
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode3) ;
 		objectSelection.addDrawingNode(shapeNode7) ;
@@ -551,10 +547,9 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	
 	@Test
-	public void testDeleteAll () throws Exception 
-	{
-		
-		
+	public void testDeleteAll () throws Exception {
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
+		IShapeNode shapeNode2 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB2).getCurrentDrawingElement();
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addDrawingNode(shapeNode1) ;
 		objectSelection.addDrawingNode(shapeNode2) ;
@@ -565,10 +560,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testAlterShapeAttributeValues () throws Exception
-	{
-		
-		
+	public void testAlterShapeAttributeValues () throws Exception {
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		IShapeAttribute shapeAttribute1 = shapeNode1.getAttribute() ;
 		
 		shapeAttribute1.setFillColour(CHANGED_SHAPE_FILL_COLOR) ;
@@ -586,8 +579,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	@Test
 	public void testAlterLabelAttributeValues () throws Exception {
-		
-		
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		ILabelAttribute labelAttribute1 = shapeNode1.getSubModel().labelIterator().next().getAttribute() ;
 		
 		labelAttribute1.setBackgroundColor(CHANGED_LABEL_BACKGROUND_COLOR) ;
@@ -600,9 +592,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testAlterLinkAttributeValues () throws Exception
-	{
-		
+	public void testAlterLinkAttributeValues () throws Exception {
+		ILinkEdge linkEdge1 = this.dbCanvas.getLinkAttribute(LINK1_ATTRIB).getCurrentDrawingElement(); 
 		ILinkAttribute linkAttribute1 = linkEdge1.getAttribute() ;
 		
 		linkAttribute1.setLineColor(CHANGED_LINK_LINE_COLOUR);
@@ -630,10 +621,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreStateDeletingNodes () throws Exception 
-	{
-		 
-		
+	public void testSaveAndRestoreStateDeletingNodes () throws Exception {
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
@@ -650,16 +639,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreStateAddingShape () throws Exception 
-	{
-		
-		
+	public void testSaveAndRestoreStateAddingShape () throws Exception {
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		IShapeNodeFactory nodeFactory = this.dbModel.getRootNode().getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		
-		newNode = nodeFactory.createShapeNode() ;
+		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
 		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise() ;
@@ -674,16 +660,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	
 	@Test
-	public void testSaveAndRestoreStateMovingShape () throws Exception
-	{
-		
-		
+	public void testSaveAndRestoreStateMovingShape () throws Exception {
+		IShapeNode shapeNode = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
-		objectSelection.addDrawingNode(shapeNode8) ;
-		
-		dbRootNode.getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
+		objectSelection.addDrawingNode(shapeNode) ;
+		this.dbModel.getRootNode().getSubModel().moveHere(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise() ;
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
@@ -693,16 +676,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreStateCopyingShape () throws Exception 
-	{
-		
-		
+	public void testSaveAndRestoreStateCopyingShape () throws Exception	{
+		IShapeNode shapeNode = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
-		objectSelection.addDrawingNode(shapeNode8) ;
+		objectSelection.addDrawingNode(shapeNode) ;
 		
-		dbRootNode.getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
+		this.dbModel.getRootNode().getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
 		map1Manager.synchronise();
 		
 		dbCanvas.getModel().restoreToState(savedOriginalState) ;
@@ -712,11 +693,11 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreDeleteLabel () throws Exception
-	{
+	public void testSaveAndRestoreDeleteLabel () throws Exception {
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
 		final String testPropName = "TextProperty";
+		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		IAnnotationProperty testProp = shapeNode1.getAttribute().getProperty(testPropName); 
 		assertTrue("can display", testProp.canVisualiseProperty());
 		assertTrue("is displayed", testProp.isDisplayed());
@@ -733,9 +714,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreDeletedLink () throws Exception
-	{
-		
+	public void testSaveAndRestoreDeletedLink () throws Exception {
+		ILinkEdge linkEdge1 = this.dbCanvas.getLinkAttribute(LINK1_ATTRIB).getCurrentDrawingElement(); 
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		objectSelection.addLink(linkEdge1) ;
@@ -749,9 +729,8 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreAddLink () throws Exception
-	{
-		
+	public void testSaveAndRestoreAddLink () throws Exception {
+		IShapeNode shapeNode5 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB5).getCurrentDrawingElement();
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
 		ILinkEdgeFactory linkFactory = shapeNode5.getSubModel().linkEdgeFactory() ;
@@ -768,15 +747,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	}
 	
 	@Test
-	public void testSaveAndRestoreStateAddLabel () throws Exception 
-	{
+	public void testSaveAndRestoreStateAddLabel () throws Exception	{
 		
 		IGraphMomento savedOriginalState = dbCanvas.getModel().getCurrentState() ;
 		
-		IShapeNodeFactory nodeFactory = dbRootNode.getSubModel().shapeNodeFactory() ;
+		IShapeNodeFactory nodeFactory = this.dbModel.getRootNode().getSubModel().shapeNodeFactory() ;
 		nodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeAObjectType.UNIQUE_ID)  ) ;
 		
-		newNode = nodeFactory.createShapeNode() ;
+		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		
 		IAnnotationProperty aProperty = newNode.getAttribute().propertyIterator().next() ;
 		
@@ -827,7 +805,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	@Test
 	public void testDeleteBendPoint () throws Exception {
-		
+		ILinkEdge linkEdge1 = this.dbCanvas.getLinkAttribute(LINK1_ATTRIB).getCurrentDrawingElement(); 
 		assertEquals ( "has  1 bendpoint" , 1 , linkEdge1.getAttribute().numBendPoints() );
 		linkEdge1.getAttribute().removeBendPoint(linkEdge1.getAttribute().getBendPoint(0));
 		assertEquals ( "has 0 bendpoint" , 0 , linkEdge1.getAttribute().numBendPoints() );

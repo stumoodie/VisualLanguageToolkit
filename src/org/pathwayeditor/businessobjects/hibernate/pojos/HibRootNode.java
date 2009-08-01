@@ -18,9 +18,14 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
+import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 
 /**
  * @author nhanlon
@@ -59,17 +64,16 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		this.canvasAttribute = rootAttribute;
 	}
 	
-	@Override
 	public HibRootNode getParentNode() {
 		return this;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
-	 */
-	public IRootObjectType getObjectType() {
-		return this.canvasAttribute.getObjectType();
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
+//	 */
+//	public IRootObjectType getObjectType() {
+//		return this.canvasAttribute.getObjectType();
+//	}
 
 	@Override
 	public String toString(){
@@ -110,5 +114,65 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	 */
 	public ISubModel getLabelSubModel() {
 		return this.getSubModel();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean canParent(IDrawingNode possibleChild) {
+		boolean retVal = false;
+		if(possibleChild != null){
+			if(possibleChild instanceof ILabelNode){
+				retVal = true;
+			}
+			else{
+				ITypedDrawingNode typedNode = (ITypedDrawingNode)possibleChild;
+				if(typedNode.getAttribute().getObjectType() != null && this.getAttribute().getObjectType() != null){
+					IRootObjectParentingRules rules = this.getAttribute().getObjectType().getParentingRules();
+					retVal = rules.isValidChild(typedNode.getAttribute().getObjectType());
+				}
+			}
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean canParent(INodeObjectType childType) {
+		boolean retVal = false;
+		if(this.getAttribute().getObjectType() != null){
+			IRootObjectParentingRules rules = this.getAttribute().getObjectType().getParentingRules();
+			retVal = rules.isValidChild(childType);
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean isValidChildOf(IDrawingNode possibleParent) {
+		boolean retVal = false;
+		if(possibleParent != null){
+			if(possibleParent instanceof ITypedDrawingNode){
+				ITypedDrawingNode typedNode = (ITypedDrawingNode)possibleParent;
+				if(typedNode.getAttribute().getObjectType() != null){
+					IObjectTypeParentingRules rules = typedNode.getAttribute().getObjectType().getParentingRules();
+					retVal = rules.isValidChild(this.getAttribute().getObjectType());
+				}
+			}
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean isValidChildOf(INodeObjectType parentType) {
+		boolean retVal = false;
+		if(parentType != null){
+			retVal = parentType.getParentingRules().isValidChild(this.getAttribute().getObjectType());
+		}
+		return retVal;
 	}
 }

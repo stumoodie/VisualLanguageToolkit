@@ -187,10 +187,10 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		return this.hibParentNode;
 	}
 	
-	public abstract HibCompoundNode getParentNode();
+//	public abstract HibCompoundNode getParentNode();
 
 	public HibCompoundNode getParent() {
-		return getParentNode();
+		return (HibCompoundNode)getParentNode();
 	}
 
 	void setIsRemoved(boolean removed){

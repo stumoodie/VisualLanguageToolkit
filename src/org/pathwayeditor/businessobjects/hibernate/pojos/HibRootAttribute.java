@@ -19,8 +19,8 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
@@ -35,7 +35,7 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author smoodie
  *
  */
-public class HibRootAttribute extends HibCanvasAttribute implements IDrawingNodeAttribute {
+public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawingNodeAttribute {
 	private HibObjectType hibObjectType;
 	private IRootObjectType objectType;
 	private IRootNode rootNode;

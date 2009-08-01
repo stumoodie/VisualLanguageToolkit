@@ -18,7 +18,6 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 
 
@@ -40,11 +39,11 @@ public interface ICanvasAttribute {
 	 */	
 	int getCreationSerial();	
 	
-	/**
-	 * The object type associated with the drawing node
-	 * @return the object type, which cannot be null.
-	 */
-	IObjectType getObjectType();
+//	/**
+//	 * The object type associated with the drawing node
+//	 * @return the object type, which cannot be null.
+//	 */
+//	IObjectType getObjectType();
 	
 	/**
 	 * Gets the drawing elements associated with the attribute.

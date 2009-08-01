@@ -44,7 +44,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.LabelObjectType;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -126,7 +125,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		} catch (InconsistentNotationDefinitionException e) {
 			this.fact.getCurrentSession().getTransaction().rollback();
 			this.loadedCanvas = null;
-			throw new IllegalStateException("The loaded model is invalid and cannot be syncronised.");
+			throw new IllegalStateException("The loaded model is invalid and cannot be syncronised.", e);
 		}
 	}
 
@@ -208,8 +207,10 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			canvasAttribute.injectObjectType(objectType);
 		}
 		else if(canvasAttribute instanceof ILabelAttribute) {
-			// insert a dummy label object type.
-			canvasAttribute.injectObjectType(new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService()));
+			//TODO: this could do with refactoring 
+			// do nothing for a label OT
+//			// insert a dummy label object type.
+//			canvasAttribute.injectObjectType(new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService()));
 		}
 	}
 

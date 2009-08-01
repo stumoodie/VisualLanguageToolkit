@@ -20,14 +20,18 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableNodeStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 
@@ -58,7 +62,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		if(parentNode == null || shapeAttribute == null) throw new IllegalArgumentException("parentNode and shapeAttribute cannot be null");
 		this.shapeAttribute = shapeAttribute;
 		this.shapeAttribute.setShapeNode(this);
-		if(!parentNode.getObjectType().getParentingRules().isValidChild(this.getObjectType())) {
+		if(!parentNode.canParent(shapeAttribute.getObjectType())) {
 			// root node has null parent
 			throw new IllegalArgumentException("This not is not a valid child of it's parent: " + parentNode);
 		}
@@ -97,12 +101,12 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 //		this.shapeAttribute = newShapeAttribute;
 //	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
-	 */
-	public IShapeObjectType getObjectType() {
-		return this.shapeAttribute.getObjectType();
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
+//	 */
+//	public IShapeObjectType getObjectType() {
+//		return this.shapeAttribute.getObjectType();
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumSourceLinks()
@@ -205,9 +209,8 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return this.shapeAttribute != null && this.shapeAttribute.isValid();
 	}
 	
-	@Override
-	public HibCompoundNode getParentNode() {
-		return this.getHibParentNode();
+	public ITypedDrawingNode getParentNode() {
+		return (ITypedDrawingNode)this.getHibParentNode();
 	}
 
 	/* (non-Javadoc)
@@ -217,4 +220,62 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		return this.getSubModel();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean canParent(IDrawingNode possibleChild) {
+		boolean retVal = false;
+		if(possibleChild != null){
+			if(possibleChild instanceof ILabelNode){
+				retVal = true;
+			}
+			else{
+				ITypedDrawingNode typedNode = (ITypedDrawingNode)possibleChild;
+				if(this.getAttribute().getObjectType() != null && typedNode.getAttribute().getObjectType() != null){
+					IObjectTypeParentingRules rules = this.getAttribute().getObjectType().getParentingRules();
+					retVal = rules.isValidChild(typedNode.getAttribute().getObjectType());
+				}
+			}
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean canParent(INodeObjectType childType) {
+		boolean retVal = false;
+		// Need to check that object type has been set in which case we return false
+		if(this.getAttribute().getObjectType() != null){
+			retVal = this.getAttribute().getObjectType().getParentingRules().isValidChild(childType);
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean isValidChildOf(IDrawingNode possibleParent) {
+		boolean retVal = false;
+		if(possibleParent instanceof ITypedDrawingNode && this.getAttribute().getObjectType() != null){
+			ITypedDrawingNode typedNode = (ITypedDrawingNode)possibleParent;
+			// Need to check that object type has been set in which case we return false
+			if(typedNode.getAttribute().getObjectType() != null){
+				IObjectTypeParentingRules rules = typedNode.getAttribute().getObjectType().getParentingRules();
+				retVal = rules.isValidChild(this.getAttribute().getObjectType());
+			}
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean isValidChildOf(INodeObjectType parentType) {
+		boolean retVal = false;
+		if(parentType != null){
+			retVal = parentType.getParentingRules().isValidChild(this.getAttribute().getObjectType());
+		}
+		return retVal;
+	}
 }

@@ -568,4 +568,11 @@ public class HibCanvas implements ICanvas, Serializable {
 	public void setListenersEnabled(boolean enabled) {
 		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#numCanvasAttributes()
+	 */
+	public int numCanvasAttributes() {
+		return this.canvasAttributes.size();
+	}
 }

@@ -18,9 +18,8 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.INodeChangeListenee;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeNode extends IDrawingNode, IZOrderedObject, INodeChangeListenee {
+public interface IShapeNode extends ITypedDrawingNode, IZOrderedObject, INodeChangeListenee {
 	/**
 	 * Gets the number of the links that are sourcing from this Shape node.
 	 * @return the number of links.
@@ -51,5 +50,5 @@ public interface IShapeNode extends IDrawingNode, IZOrderedObject, INodeChangeLi
 	 */
 	IShapeAttribute getAttribute();
 	
-	IShapeObjectType getObjectType();
+//	IShapeObjectType getObjectType();
 }

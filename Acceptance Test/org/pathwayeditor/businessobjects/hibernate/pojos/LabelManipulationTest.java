@@ -11,7 +11,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.testutils.GenericTester;
 
 
@@ -30,7 +29,6 @@ public class LabelManipulationTest extends GenericTester {
 	private static final int EXPECTED_PARENT_SHAPE_ATTRIBUTE = 4;
 	private static final String EXPECTED_MOVED_LABEL = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/pojos/ExpectedMovedLabel.xml";
 
-	private IRepository repository;
 	private IShapeAttribute testShape;
 	private IShapeAttribute testParentShape;
 	private ILinkAttribute testLink;
@@ -39,7 +37,6 @@ public class LabelManipulationTest extends GenericTester {
 	@Override
 	protected void doAdditionalSetUp() {
 		IRepositoryPersistenceManager repoManager = this.getRepositoryPersistenceManager();
-		repository = repoManager.getRepository();
 		this.mapManager = repoManager.getMapPersistenceManager(TEST_INODE);
 		mapManager.open();
 		ICanvas canvas = mapManager.getCanvas();
@@ -130,7 +127,6 @@ public class LabelManipulationTest extends GenericTester {
 	
 	@Override
 	protected void doAdditionalTearDown() {
-		this.repository = null;
 		this.testLink = null;
 		this.testShape = null;
 	}

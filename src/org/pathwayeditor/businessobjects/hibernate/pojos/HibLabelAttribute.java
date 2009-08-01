@@ -29,7 +29,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyCha
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
-import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
@@ -55,7 +54,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private double lineWidth;
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private HibLabelNode labelNode;
-	private transient INodeObjectType objectType;
+//	private transient INodeObjectType objectType;
 	private transient IConvexHull convexHull = null;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 
@@ -74,7 +73,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
 		property.setLabel(this);
-		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
+//		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
 	}
 
@@ -86,7 +85,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.size = otherAttribute.getSize();
 		this.background = otherAttribute.getBackgroundColor();
 		this.foreground = otherAttribute.getForegroundColor();
-		this.objectType = otherAttribute.getObjectType();
+//		this.objectType = otherAttribute.getObjectType();
 		this.lineStyle = otherAttribute.getLineStyle();
 		this.lineWidth = otherAttribute.getLineWidth();
 		this.noBorder = otherAttribute.hasNoBorder();
@@ -252,11 +251,11 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		}
 	}
 	
-	public void setObjectType ( INodeObjectType nodeObjectType)
-	{
-		this.objectType = nodeObjectType ;
-	}
-
+//	public void setObjectType ( INodeObjectType nodeObjectType)
+//	{
+//		this.objectType = nodeObjectType ;
+//	}
+//
 	public void setLocation(Point location) {
 		if (location == null)
 			throw new IllegalArgumentException("location cannot be null.");
@@ -279,16 +278,16 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#
-	 * getObjectType()
-	 */
-	public INodeObjectType getObjectType() {
-		return this.objectType;
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#
+//	 * getObjectType()
+//	 */
+//	public INodeObjectType getObjectType() {
+//		return this.objectType;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
@@ -326,17 +325,20 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	}
 
 	public boolean isValid() {
-		boolean objectTypeTest = this.getObjectType() != null;
+//		boolean objectTypeTest = this.getObjectType() != null;
 		boolean labelNodeTest = this.getCurrentDrawingElement() != null
 			&& this.getCurrentDrawingElement().getAttribute().equals(this);
 		// valid to have no visualisable label set if the label node has been removed
-		boolean propertySetTest = this.getVisualisableProperty() != null
-			|| (this.getVisualisableProperty() == null && ((HibLabelNode)this.getCurrentDrawingElement()).isRemoved());
-		if(!objectTypeTest || !labelNodeTest || !propertySetTest) {
-			logger.error("attribute=" + this + " objectType set=" + objectTypeTest
-					+ ", labelnode set and points to this attribute=" + labelNodeTest
+		boolean propertySetTest = this.getVisualisableProperty() != null;
+		if(!labelNodeTest || this.getVisualisableProperty() == null) {
+			logger.error("attribute=" + this + ", labelnode set and points to this attribute=" + labelNodeTest
 					+ ", propertySet=" + propertySetTest);
 		}
+//		if(!objectTypeTest || !labelNodeTest || this.getVisualisableProperty() == null) {
+//			logger.error("attribute=" + this + " objectType set=" + objectTypeTest
+//					+ ", labelnode set and points to this attribute=" + labelNodeTest
+//					+ ", propertySet=" + propertySetTest);
+//		}
 		return propertySetTest && labelNodeTest && propertySetTest;
 	}
 
@@ -345,7 +347,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 */
 	@Override
 	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-		this.objectType = (INodeObjectType)objectType;
+//		this.objectType = (INodeObjectType)objectType;
 	}
 
 	/* (non-Javadoc)

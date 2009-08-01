@@ -26,20 +26,20 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<value>100004</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>108</value>
-			<value>3</value>
-			<value>8</value>
+			<value>100003</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>5</value>
+			<value>5</value>
 			<value>curbounds rect</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
-			<value>58</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
 		</row>																
 	</table>
 	<table name="LinkEdge"><!-- REMEBER TO SETUP THE CORRECT LINK_ATTRIBUTES -->

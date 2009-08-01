@@ -37,6 +37,7 @@ public class StubShapeAObjectType implements IShapeObjectType {
 	public static final EnumSet<EditableShapeAttributes> EDITABLE_ATTRIBUTES = EnumSet.of(EditableShapeAttributes.FILL_COLOUR, EditableShapeAttributes.LINE_COLOUR);
 	private final INotationSyntaxService syntaxService;
 	private final IShapeAttributeDefaults attributeDefaults;
+	private final int id = UNIQUE_ID;
 	
 	/**
 	 * @param stubNotationSyntaxService
@@ -71,7 +72,9 @@ public class StubShapeAObjectType implements IShapeObjectType {
 			}
 
 			public boolean isValidChild(IObjectType possibleChild) {
-				return true;
+				return StubShapeBObjectType.UNIQUE_ID == possibleChild.getUniqueId()
+					|| StubShapeCObjectType.UNIQUE_ID == possibleChild.getUniqueId()
+					|| StubShapeDObjectType.UNIQUE_ID == possibleChild.getUniqueId();
 			}
 			
 		};
@@ -81,7 +84,7 @@ public class StubShapeAObjectType implements IShapeObjectType {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeObjectType#getUniqueId()
 	 */
 	public int getUniqueId() {
-		return UNIQUE_ID;
+		return id;
 	}
 
 	/* (non-Javadoc)

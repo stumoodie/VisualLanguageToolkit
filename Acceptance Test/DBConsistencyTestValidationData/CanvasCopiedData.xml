@@ -229,39 +229,39 @@
 			<value>51</value>
 		</row>
 		<row>
-			<value>100002</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>102</value>
-			<value>2</value>
-			<value>2</value>
-			<value>curbounds rect</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
-			<value>52</value>
-		</row>
-		<row>
 			<value>100003</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>103</value>
-			<value>3</value>
-			<value>3</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>102</value>
+			<value>2</value>
+			<value>2</value>
 			<value>curbounds rect</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
-			<value>53</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
+			<value>52</value>
 		</row>
 		<row>
 			<value>100004</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>103</value>
+			<value>3</value>
+			<value>3</value>
+			<value>curbounds rect</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
+			<value>53</value>
+		</row>
+		<row>
+			<value>100003</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -275,25 +275,25 @@
 			<value>54</value>
 			<value>54</value>
 			<value>54</value>
+		</row>
+		<row>
+			<value>100003</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>105</value>
+			<value>5</value>
+			<value>5</value>
+			<value>curbounds rect</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
+			<value>55</value>
 		</row>
 		<row>
 			<value>100001</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>105</value>
-			<value>5</value>
-			<value>5</value>
-			<value>curbounds rect</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
-			<value>55</value>
-		</row>
-		<row>
-			<value>100002</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -309,7 +309,7 @@
 			<value>56</value>
 		</row>
 		<row>
-			<value>100003</value>
+			<value>100002</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -369,7 +369,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100007</value>
+			<value>100006</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -378,7 +378,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100008</value>
+			<value>100006</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -387,7 +387,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100005</value>
+			<value>100007</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -396,7 +396,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100006</value>
+			<value>100007</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -405,7 +405,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100007</value>
+			<value>100008</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -414,7 +414,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100008</value>
+			<value>100005</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -423,7 +423,7 @@
 		</row>
 		<row>
 			<value>0</value>
-			<value>100008</value>
+			<value>100005</value>
 			<value>109</value>
 			<value>109</value>
 			<value>109</value>
@@ -514,254 +514,6 @@
 	</table>
 	<!-- END OF ATTRIBUTE DECLARATION -->
 	<!-- END OF ATTRIBUTE DECLARATION -->
-	<!-- PROPERTIES -->
-	<table name="property">
-		<column>name</column>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>				
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>
-		<row>
-			<value>ShapeLinkProperty</value>
-		</row>				
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>RichTextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-		<row>
-			<value>TextProperty</value>
-		</row>
-		<row>
-			<value>NumberProperty</value>
-		</row>
-	</table>
-	<table name="textproperty">
-		<column>text_value</column>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue2</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-		<row>
-			<value>textPropertyValue</value>
-		</row>
-	</table>
-	<table name="richtextProperty">
-		<column>rich_text_value</column>
-		<row>
-			<value>richtextvalue</value>
-		</row>
-		<row>
-			<value>richtextvalue2</value>
-		</row>
-		<row>
-			<value>richtextvalue</value>
-		</row>
-		<row>
-			<value>richtextvalue</value>
-		</row>
-	</table>
-	<table name="numberproperty">
-		<column>number_value</column>
-		<row>
-			<value>1</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>2</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-		<row>
-			<value>99</value>
-		</row>
-	</table>
-	<table name="listvalue">
-		<column>index_pos</column>
-		<column>string_representation</column>
-		<row>
-			<value>0</value>
-			<value>first in list 1</value>
-		</row>
-		<row>
-			<value>1</value>
-			<value>second in list 1</value>
-		</row>
-		<row>
-			<value>0</value>
-			<value>first in list 2</value>
-		</row>
-		<row>
-			<value>1</value>
-			<value>second in list 2</value>
-		</row>
-		<row>
-			<value>0</value>
-			<value>first in list 2</value>
-		</row>
-		<row>
-			<value>1</value>
-			<value>second in list 2</value>
-		</row>
-		<row>
-			<value>0</value>
-			<value>first in list 2</value>
-		</row>
-		<row>
-			<value>1</value>
-			<value>second in list 2</value>
-		</row>
-	</table>
-	<!-- END OF PROPERTIES -->
 	<!-- TERMINUS & DECORATORS -->
 	<table name="LinkTerminus">
 		<column>link_term_type</column>

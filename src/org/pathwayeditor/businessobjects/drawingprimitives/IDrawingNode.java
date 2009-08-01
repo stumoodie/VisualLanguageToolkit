@@ -21,6 +21,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 
+
 /**
  * @author smoodie
  *
@@ -31,13 +32,17 @@ public interface IDrawingNode extends IDrawingElement {
 	
 	ISubModel getSubModel();
 	
-	IDrawingNode getParentNode();
+	ITypedDrawingNode getParentNode();
 	
 	boolean isDescendent(IDrawingNode testNode);
 	
-	INodeObjectType getObjectType();
+	boolean canParent(IDrawingNode possibleChild);
+	
+	boolean canParent(INodeObjectType childType);
+	
+	boolean isValidChildOf(IDrawingNode possibleParent);
+	
+	boolean isValidChildOf(INodeObjectType parentType);
 	
 	IDrawingNodeAttribute getAttribute();
-	
-//	Iterator<IDrawingNode> levelOrderIterator();
 }

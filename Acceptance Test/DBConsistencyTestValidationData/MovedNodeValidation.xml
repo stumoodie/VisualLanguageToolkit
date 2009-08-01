@@ -40,7 +40,7 @@
 				<value>100001</value>
 				<value>5</value>
 				<value>100003</value>
-				<value>false</value>
+				<value>true</value>
 			</row>
 			<row>
 				<value>100001</value>
@@ -58,7 +58,7 @@
 				<value>100001</value>
 				<value>8</value>       <!-- the old position of the moved node, now marked for removal -->
 				<value>100008</value>
-				<value>true</value>
+				<value>false</value>
 			</row>
 			<row>
 				<value>100001</value>
@@ -146,12 +146,12 @@
 			<value>100007</value>
 		</row>
 		<row>
-		<!-- Position where shape node used to be ShapeAttribute8 -->
+		<!-- ShapeAttribute8 -->
 			<value>100008</value>
 		</row>
 		<row>
-			<!-- New shape node ShapeAttribute8 -->
-			<value>100008</value>
+			<!-- New shape node ShapeAttribute5 -->
+			<value>100005</value>
 		</row>
 	</table>
 </dataset>

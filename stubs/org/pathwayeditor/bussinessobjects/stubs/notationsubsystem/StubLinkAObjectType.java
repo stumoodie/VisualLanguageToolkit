@@ -42,6 +42,7 @@ public class StubLinkAObjectType implements ILinkObjectType {
 	private final ILinkConnectionRules connectionRules;
 	private final ILinkTerminusDefinition sourceTerminusDefn;
 	private final ILinkTerminusDefinition targetTerminusDefn;
+	private final int id = UNIQUE_ID;
 	
 	/**
 	 * @param stubNotationSyntaxService
@@ -58,11 +59,13 @@ public class StubLinkAObjectType implements ILinkObjectType {
 			}
 
 			public boolean isValidSource(IShapeObjectType source) {
-				return true;
+				return StubShapeAObjectType.UNIQUE_ID == source.getUniqueId();
 			}
 
 			public boolean isValidTarget(IShapeObjectType source, IShapeObjectType target) {
-				return true;
+				return isValidSource(source)
+					&& (StubShapeAObjectType.UNIQUE_ID == target.getUniqueId()
+							|| StubShapeCObjectType.UNIQUE_ID == target.getUniqueId());
 			}
 			
 		};
@@ -107,7 +110,7 @@ public class StubLinkAObjectType implements ILinkObjectType {
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkObjectType#getUniqueId()
 	 */
 	public int getUniqueId() {
-		return UNIQUE_ID;
+		return this.id;
 	}
 
 	/* (non-Javadoc)

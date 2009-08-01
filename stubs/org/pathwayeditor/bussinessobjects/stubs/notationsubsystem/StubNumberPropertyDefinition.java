@@ -101,4 +101,14 @@ public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
 	public String getDisplayName() {
 		return NAME;
 	}
+	
+	@Override
+	public String toString(){
+		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+		builder.append("(");
+		builder.append("name=");
+		builder.append(this.getName());
+		builder.append(")");
+		return builder.toString();
+	}
 }

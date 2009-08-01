@@ -103,7 +103,6 @@
 	</table>
 	<table name="LinkAttribute">
 		<column>id</column>
-		<column>object_type_id</column>
 		<column>line_red</column>
 		<column>line_green</column>
 		<column>line_blue</column>
@@ -111,7 +110,6 @@
 		<column>line_width</column>
 		<row>
 			<value>100009</value>
-			<value>100005</value>
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -120,7 +118,6 @@
 		</row>
 		<row>
 			<value>100010</value>
-			<value>100006</value>
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -129,7 +126,6 @@
 		</row>
 		<row>
 			<value>100011</value>
-			<value>100007</value>
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -138,7 +134,6 @@
 		</row>
 		<row>
 			<value>100012</value>
-			<value>100008</value>
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -147,7 +142,6 @@
 		</row>
 		<row>
 			<value>100013</value>
-			<value>100005</value>
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -156,7 +150,6 @@
 		</row>
 		<row>
 			<value>100014</value>
-			<value>100006</value>
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -165,7 +158,6 @@
 		</row>
 		<row>
 			<value>100015</value>
-			<value>100007</value>
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -174,7 +166,6 @@
 		</row>
 		<row>
 			<value>100016</value>
-			<value>100008</value>
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -184,7 +175,6 @@
 		</row>
 		<row>
 			<value>100017</value>
-			<value>100008</value>
 			<value>109</value>
 			<value>109</value>
 			<value>109</value>

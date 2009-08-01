@@ -112,8 +112,8 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 		boolean retVal = false;
 		ILinkObjectType testOt = this.getCurrentObjectType();
 		if(testOt != null){
-			IShapeObjectType outOt = this.outNode.getObjectType(); 
-			IShapeObjectType inOt = this.inNode.getObjectType(); 
+			IShapeObjectType outOt = this.outNode.getAttribute().getObjectType(); 
+			IShapeObjectType inOt = this.inNode.getAttribute().getObjectType(); 
 			retVal = testOt.getLinkConnectionRules().isValidTarget(outOt, inOt);
 		}
 		return retVal;

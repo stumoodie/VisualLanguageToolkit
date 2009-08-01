@@ -208,7 +208,8 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 */
 	public boolean canCreateLink() {
 		return this.objectType != null
-		&& this.objectType.getLinkConnectionRules().isValidTarget(this.getOutNode().getObjectType(), this.getInNode().getObjectType())
+		&& this.objectType.getLinkConnectionRules().isValidTarget(this.getOutNode().getAttribute().getObjectType(),
+				this.getInNode().getAttribute().getObjectType())
 		&& this.isValidShapeNodePair(this.getOutNode(), this.getInNode())
 		&& this.canCreateEdge();
 	}

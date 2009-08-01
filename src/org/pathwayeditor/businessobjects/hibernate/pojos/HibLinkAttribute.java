@@ -404,8 +404,8 @@ s	 */
 				// check edge points to this node
 				&& this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getAttribute().equals(this)
 				// check property
-				&& this.getObjectType().getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getObjectType(),
-								this.getCurrentDrawingElement().getTargetShape().getObjectType())){
+				&& this.getObjectType().getLinkConnectionRules().isValidTarget(this.getCurrentDrawingElement().getSourceShape().getAttribute().getObjectType(),
+								this.getCurrentDrawingElement().getTargetShape().getAttribute().getObjectType())){
 			// now check properties
 			retVal = this.arePropertiesValid(this.getObjectType().getDefaultAttributes());
 			if(retVal) {

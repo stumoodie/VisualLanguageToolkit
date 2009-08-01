@@ -242,7 +242,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	private static final String PROPERTY1_VALUE = "textPropertyValue" ;
 	private static final String PROPERTY2_VALUE = "textPropertyValue2" ;
 	private static final String PROPERTY3_VALUE = "richtextvalue" ;
-	private static final String PROPERTY4_VALUE = "richtextvalue2" ;
+	private static final int PROPERTY4_VALUE = 2;
 	private static final int PROPERTY5_VALUE = 1 ;
 	private static final int PROPERTY6_VALUE = 2 ;
 	private static final String PROPERTY7_LIST_VALUE1 = "first in list 1" ;
@@ -847,9 +847,9 @@ public class LoadDataFromFileTest extends GenericTester{
 
 		assertNotNull ( "is not null " , property4 ) ;
 		
-		assertTrue ( "is text property" , property4 instanceof IHtmlAnnotationProperty ) ;
-		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property4 ;
-		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue()) ;
+		assertTrue ( "is text property" , property4 instanceof IListAnnotationProperty ) ;
+		IListAnnotationProperty theProperty = (IListAnnotationProperty) property4 ;
+		assertEquals ( "value" , PROPERTY4_VALUE, theProperty.getValue().size()) ;
 }
 	
 	@Test

@@ -26,6 +26,7 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
@@ -110,13 +111,13 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 		// Now test if parent contains this property. If it does then the label is a label for the parent shape
 		// and we can add the property from the copied parent shape as the copied property that should be
 		// added to the copied label.
-		HibCompoundNode parentNode = srcLabelNode.getParentNode();
+		ITypedDrawingNode parentNode = srcLabelNode.getParentNode();
 		HibProperty copiedProperty = null;
 		if(parentNode instanceof IShapeNode) {
 			IShapeNode parentShape = (IShapeNode)parentNode;
 			if(parentShape.getAttribute().containsProperty(srcProperty)) {
 				// parent contains prop so label must be for a property held by this shape 
-				IShapeNode copiedParentNode = (IShapeNode)super.getCopiedNode(parentNode);
+				IShapeNode copiedParentNode = (IShapeNode)super.getCopiedNode((BaseCompoundNode)parentNode);
 				if(copiedParentNode != null) {
 					copiedProperty = (HibProperty)copiedParentNode.getAttribute().getProperty(srcProperty.getDefinition());
 				}
@@ -158,8 +159,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	}
 	
 	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
-			BaseCompoundNode inNode , HibSubModel edgeOwner )
-	{
+			BaseCompoundNode inNode , HibSubModel edgeOwner ) {
 		// FIXME: This will nee to be refactored one the labels are reorganised.
 		// This should make label copying much more efficient.
 		HibCanvas destCanvas = (HibCanvas)edgeOwner.getModel().getCanvas();

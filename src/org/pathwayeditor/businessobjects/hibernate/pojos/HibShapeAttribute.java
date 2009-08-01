@@ -355,13 +355,18 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		boolean objectTypeSet = this.getObjectType() != null;
 		boolean reciprocalAttributeSet = this.getCurrentDrawingElement().getAttribute() != null
 				&& this.getCurrentDrawingElement().getAttribute().equals(this);
-		boolean syntaxRulesCorrect = this.getCurrentDrawingElement().getParent().getObjectType() != null
-			&& this.getCurrentDrawingElement().getParent().getObjectType().getParentingRules().isValidChild(this.getObjectType());
+		boolean syntaxRulesCorrect = this.getCurrentDrawingElement().getParent().canParent(this.getObjectType());
 		boolean propertiesValid = super.arePropertiesValid(this.getObjectType().getDefaultAttributes());
-		if (!objectTypeSet || !reciprocalAttributeSet || !syntaxRulesCorrect || !propertiesValid) {
+		boolean retVal = false;
+		if(objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid){
+			retVal = true;
+		}
+		else{
+//		if (!objectTypeSet || !reciprocalAttributeSet || !syntaxRulesCorrect || !propertiesValid) {
 			logger.error("Attribute invalid, may be objecttypes or incompletely formed relationship with node");
 		}
-		return objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid;
+//		return objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid;
+		return retVal;
 	}
 
 	/* (non-Javadoc)

@@ -183,9 +183,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
 			while(iter.hasNext() && retVal) {
 				IDrawingNode node = iter.next();
-				if(!(node instanceof ILabelNode)){
-					retVal = this.getRootNode().getObjectType().getParentingRules().isValidChild(node.getObjectType());
-				}
+				retVal = this.getRootNode().canParent(node);
 			}
 		}
 		return retVal;
@@ -288,7 +286,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
 			while(iter.hasNext() && retVal) {
 				IDrawingNode node = iter.next();
-				retVal = this.getRootNode().getObjectType().getParentingRules().isValidChild(node.getObjectType());
+				retVal = this.getRootNode().canParent(node);
 			}
 		}
 		return retVal;

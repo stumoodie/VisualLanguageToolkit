@@ -25,9 +25,6 @@ import static org.junit.Assert.assertTrue;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
-import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.testutils.PojoTester;
 
 /**
@@ -48,9 +45,9 @@ public class HibLabelNodeTest extends PojoTester {
 	 */
 	@Test
 	public final void testIsValid() throws InconsistentNotationDefinitionException {
-		INotationSubsystem stubNotationSubsystem = new StubNotationSubSystem();
-		INodeObjectType labelObjectType = new LabelObjectType(stubNotationSubsystem.getSyntaxService()); 
-		this.testInstance.getAttribute().injectObjectType(labelObjectType);
+//		INotationSubsystem stubNotationSubsystem = new StubNotationSubSystem();
+//		INodeObjectType labelObjectType = new LabelObjectType(stubNotationSubsystem.getSyntaxService()); 
+		this.testInstance.getAttribute().injectObjectType(null);
 		assertTrue("valid", this.testInstance.isValid());
 	}
 

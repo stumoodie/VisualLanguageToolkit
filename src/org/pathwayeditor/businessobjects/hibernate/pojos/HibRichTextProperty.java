@@ -93,5 +93,4 @@ public class HibRichTextProperty extends HibProperty implements IHtmlAnnotationP
 	public boolean canVisualiseProperty() {
 		return this.propertyDefinition.isVisualisable();
 	}
-
 }

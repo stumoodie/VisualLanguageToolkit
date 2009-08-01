@@ -117,7 +117,7 @@
 		<column>width</column>
 		<column>height</column>
 		<row>
-			<value>100001</value>
+			<value>100001</value><!-- shape 1 -->
 			<value>101</value>
 			<value>101</value>
 			<value>101</value>
@@ -133,7 +133,7 @@
 			<value>51</value>
 		</row>
 		<row>
-			<value>100002</value>
+			<value>100003</value><!-- shape 2 -->
 			<value>102</value>
 			<value>102</value>
 			<value>102</value>
@@ -149,7 +149,7 @@
 			<value>52</value>
 		</row>
 		<row>
-			<value>100003</value>
+			<value>100004</value><!-- shape 3 -->
 			<value>103</value>
 			<value>103</value>
 			<value>103</value>
@@ -165,7 +165,7 @@
 			<value>53</value>
 		</row>
 		<row>
-			<value>100004</value>
+			<value>100003</value><!-- shape 4 -->
 			<value>104</value>
 			<value>104</value>
 			<value>104</value>
@@ -181,7 +181,7 @@
 			<value>54</value>
 		</row>
 		<row>
-			<value>100001</value>
+			<value>100003</value><!-- shape 5 -->
 			<value>105</value>
 			<value>105</value>
 			<value>105</value>
@@ -197,7 +197,7 @@
 			<value>55</value>
 		</row>
 		<row>
-			<value>100002</value>
+			<value>100001</value><!-- shape 6 -->
 			<value>106</value>
 			<value>106</value>
 			<value>106</value>
@@ -213,7 +213,7 @@
 			<value>56</value>
 		</row>
 		<row>
-			<value>100003</value>
+			<value>100002</value><!-- shape 7 -->
 			<value>107</value>
 			<value>107</value>
 			<value>107</value>
@@ -229,7 +229,7 @@
 			<value>57</value>
 		</row>
 		<row>
-			<value>100004</value>
+			<value>100004</value><!-- shape 8 -->
 			<value>108</value>
 			<value>108</value>
 			<value>108</value>
@@ -245,7 +245,7 @@
 			<value>58</value>
 		</row>	
 		<row>
-			<value>100001</value>
+			<value>100001</value><!-- shape 9 -->
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>
@@ -261,7 +261,7 @@
 			<value>50</value>
 		</row>	
 		<row>
-			<value>100001</value>
+			<value>100002</value><!-- shape 10 -->
 			<value>100</value>
 			<value>100</value>
 			<value>100</value>

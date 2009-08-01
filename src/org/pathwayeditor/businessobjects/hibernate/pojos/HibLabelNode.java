@@ -18,7 +18,9 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
@@ -85,12 +87,12 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		this.labelAttribute.setCurrentDrawingElement(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
-	 */
-	public INodeObjectType getObjectType() {
-		return this.labelAttribute.getObjectType();
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getObjectType()
+//	 */
+//	public INodeObjectType getObjectType() {
+//		return this.labelAttribute.getObjectType();
+//	}
 	
 	@Override
 	public String toString(){
@@ -136,14 +138,45 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 		return this.labelAttribute != null && this.labelAttribute.isValid();
 	}
 
-	@Override
-	public HibCompoundNode getParentNode() {
-		return this.getHibParentNode();
+	public ITypedDrawingNode getParentNode() {
+		return (ITypedDrawingNode)this.getHibParentNode();
 	}
 
 
 	// This method should not be used as one cannot have a label of a label. 
 	public HibSubModel getLabelSubModel() {
 		throw new UnsupportedOperationException("Cannot have a label of a label");
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean canParent(IDrawingNode possibleChild) {
+		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#canParent(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean canParent(INodeObjectType childType) {
+		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
+	 */
+	public boolean isValidChildOf(IDrawingNode possibleParent) {
+		return !(possibleParent instanceof ILabelNode);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#isValidChild(org.pathwayeditor.businessobjects.typedefn.INodeObjectType)
+	 */
+	public boolean isValidChildOf(INodeObjectType parentType) {
+		return true;
 	}
 }
