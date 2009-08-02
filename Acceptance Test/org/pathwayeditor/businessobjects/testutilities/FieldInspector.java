@@ -24,10 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -73,13 +71,6 @@ public class FieldInspector {
 		}
 	}
 
-	/**
-	 * @param comparison
-	 *            object one
-	 * @param comparison
-	 *            object two
-	 * @return true if all fields identical
-	 */
 	@SuppressWarnings("unchecked")
 	public static boolean allFieldsIdenticalForTwoMapObjects(Object one, Object two, List<String> ignored) {
 		objectsTestedForIdentity = new HashSet();
@@ -87,17 +78,6 @@ public class FieldInspector {
 		return testFieldsIdenticalForTwoMapObjects(one, two);
 	}
 
-	/**
-	 * @param one
-	 *            - first object for comparison
-	 * @param two
-	 *            - second object for comparison
-	 * @param excludeds
-	 *            - get methods that will not be tested
-	 * @param allowed
-	 *            - get methods that will be tested, if a get method is discovered that is not in this set return false
-	 * @return true if all values returned by the public get methods are the same
-	 */
 	@SuppressWarnings("unchecked")
 	public static boolean allAllowedPublicInterfaceGetMethodsExceptExcludedReturnIdenticalForTwoObjects(Object one,
 			Object two) {
@@ -120,8 +100,6 @@ public class FieldInspector {
 					gets.add(methodsOriginal[i]);
 			}
 		}
-		Map<String, Method> nameMethodMap = new HashMap<String, Method>();
-		Set<String> getsMinusExcludeds = nameMethodMap.keySet();
 		for (Method method : gets) {
 			if (method.getName().equals("getObjectType")) // TODO - URGENT NH remove this conditional when object types are fixed
 				continue;
@@ -141,22 +119,6 @@ public class FieldInspector {
 		return true;
 	}
 
-	/**
-	 * @param allowed
-	 * @param newMethods
-	 * @return true if newMethods (the methods being tested for return value) contains more then allowed,
-	 */
-	private static boolean extraMethodsExist(Set<String> allowed, Set<String> newMethods) {
-		newMethods.removeAll(allowed);
-		if (newMethods.size() > 0) {
-			for (String name : newMethods) {
-				System.out.println("WARNING!!! Method " + name
-						+ " has not been set up for export - add to the custom converter for its class.");
-			}
-			return true;
-		}
-		return false;
-	}
 
 	@SuppressWarnings("unchecked")
 	private static boolean testMethodReturnsSameInTwoObjects(Method method, Object one, Object two) {
@@ -209,7 +171,7 @@ public class FieldInspector {
 
 	private static Object extractMethodValue(Method method, Object one) {
 		try {
-			return method.invoke(one, null);
+			return method.invoke(one, (Object[])null);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -248,6 +210,7 @@ public class FieldInspector {
 	/**
 	 * @param canvas
 	 */
+	@SuppressWarnings("unchecked")
 	private static void inspectFieldsFor(Object target) {
 		objectsTestedForIdentity.add(target);
 	
@@ -266,6 +229,7 @@ public class FieldInspector {
 	 * @param canvas an ICanvas
 	 * @param ignoredFields fields which we don not want to inspect
 	 */
+	@SuppressWarnings("unchecked")
 	public static void inspectAllFields(ICanvas canvas, List<String>ignoredFields) {
 		ignoredList=ignoredFields;
 		objectsTestedForIdentity = new HashSet();
@@ -276,6 +240,7 @@ public class FieldInspector {
 	 * @param field
 	 * @param target
 	 */
+	@SuppressWarnings("unchecked")
 	private static void inspectField(Field field, Object target) {
 		field.setAccessible(true);
 		System.out.print(" "+field.getName() +" value: ");
@@ -290,7 +255,7 @@ public class FieldInspector {
 		else
 			testObj.toString();
 		if (testObj instanceof Collection) {
-			List tests = new ArrayList((Collection)testObj);
+			List<Object> tests = new ArrayList<Object>((Collection)testObj);
 			for (Object inCollection:tests){
 				if(hasRelevantFieldsToCompare(inCollection)&&!objectsTestedForIdentity.contains(inCollection)){
 					inspectFieldsFor(inCollection);
@@ -339,13 +304,6 @@ public class FieldInspector {
 		return false;
 	}
 
-	/**
-	 * @param Collection
-	 *            first - a collection with natural comparator
-	 * @param Collection
-	 *            second - a collection with natural comparator
-	 * @return true if both collections can be sorted by natural order and each object in the collections is identical
-	 */
 	@SuppressWarnings("unchecked")
 	public static boolean isIdenticalCollection(Collection testObj, Collection otherObj) {
 		if (testObj.isEmpty()) {
