@@ -10,11 +10,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 
-public class LinkLabelCopyTest extends GenericTester {
-	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+public class LinkLabelCopyTest extends GenericXlsTester {
+	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final String REPOSITORY_NAME ="repo name";
 	private static final int TEST_INODE = 4;
 	private static final int EXPECTED_LINK_ATTRIBUTE = 9;

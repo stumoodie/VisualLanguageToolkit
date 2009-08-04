@@ -84,7 +84,6 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 
 	void setAttribute(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
-		this.labelAttribute.setCurrentDrawingElement(this);
 	}
 
 //	/* (non-Javadoc)

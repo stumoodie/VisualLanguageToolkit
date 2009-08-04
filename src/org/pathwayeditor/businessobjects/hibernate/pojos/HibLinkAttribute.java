@@ -115,7 +115,7 @@ s	 */
 		this.setLineWidth(linkAttributeDefaults.getLineWidth());
 	}
 
-	void setLinkEdge(HibLinkEdge edge) {
+	void setCurrentEdge(HibLinkEdge edge) {
 		this.edge = edge;
 	}
 	
@@ -261,6 +261,11 @@ s	 */
 		return this.edge;
 	}
 
+	HibLinkEdge getCurrentEdge(){
+		return this.edge;
+	}
+	
+	
 	public List<HibLinkTerminus> getLinkTermini() {
 		return this.linkTermini;
 	}

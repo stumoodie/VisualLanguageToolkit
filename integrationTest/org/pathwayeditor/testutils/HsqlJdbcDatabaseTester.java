@@ -33,8 +33,9 @@ public class HsqlJdbcDatabaseTester extends JdbcDatabaseTester{
 	/**
 	 * @param driverClass
 	 * @param connectionUrl
+	 * @throws ClassNotFoundException 
 	 */
-	public HsqlJdbcDatabaseTester(String driverClass, String connectionUrl) {
+	public HsqlJdbcDatabaseTester(String driverClass, String connectionUrl) throws ClassNotFoundException {
 		super(driverClass, connectionUrl);
 	}
 
@@ -43,12 +44,13 @@ public class HsqlJdbcDatabaseTester extends JdbcDatabaseTester{
 	 * @param connectionUrl
 	 * @param userName
 	 * @param password
+	 * @throws ClassNotFoundException 
 	 */
 	public HsqlJdbcDatabaseTester(String driverClass, String connectionUrl,
-			String userName, String password) {
+			String userName, String password) throws ClassNotFoundException {
 		super(driverClass,connectionUrl,userName,password);
 	}
-	public HsqlJdbcDatabaseTester(HibernateDataSource builder) {
+	public HsqlJdbcDatabaseTester(HibernateDataSource builder) throws ClassNotFoundException {
 		super(builder.getDriverClass(),builder.getConnectionUrl(),builder.getUserName(),builder.getPassword());
 	}
 	

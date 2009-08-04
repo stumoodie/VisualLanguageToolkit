@@ -21,6 +21,7 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 
 import org.dbunit.IDatabaseTester;
+import org.dbunit.IOperationListener;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -45,9 +46,9 @@ public class HibernateTestManager implements IDatabaseTester {
 	}
 	
 	public HibernateTestManager(HibernateDataSource manager, File createSchemaScript, File dropSchemaScript) {
-		this.hibBuilder=manager;
-		this.delegator = new HsqlJdbcDatabaseTester(hibBuilder);
 		try{
+			this.hibBuilder=manager;
+			this.delegator = new HsqlJdbcDatabaseTester(hibBuilder);
 //			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(),
 //					new File("schema/EPE Schema Create.ddl"), new File("schema/EPE Schema Drop.ddl"));
 			this.schemaManager = new HqlDbSchema(this.delegator.getConnection().getConnection(), createSchemaScript, dropSchemaScript);
@@ -174,5 +175,12 @@ public class HibernateTestManager implements IDatabaseTester {
 	 */
 	public void setConnectionInfo(IConnectionInfo conn) {
 		hibBuilder.setConnectionInfo(conn);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.dbunit.IDatabaseTester#setOperationListener(org.dbunit.IOperationListener)
+	 */
+	public void setOperationListener(IOperationListener arg0) {
+		
 	}
 }

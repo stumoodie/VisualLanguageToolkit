@@ -20,6 +20,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
@@ -31,11 +32,11 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITy
 	
 	void setGraphicalDefinition(GraphicsInstructionList instList);
 	
-//	/**
-//	 * Gets the object type that is related with this shape.
-//	 * @return the object type. Cannot be null.
-//	 */
-//	IShapeObjectType getObjectType();
+	/**
+	 * Gets the object type that is related with this shape.
+	 * @return the object type. Cannot be null.
+	 */
+	IShapeObjectType getObjectType();
 	
 
 	/**

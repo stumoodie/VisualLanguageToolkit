@@ -23,17 +23,17 @@ import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 
 /**
  * @author smoodie
  *
  */
-public class CanvasCreationTest extends GenericTester {
+public class CanvasCreationTest extends GenericXlsTester {
 	private static final String REPOSITORY_NAME ="repo name" ;
 	private static final String TEST_MAP_PATH = "/subfolder2/Diagram name2";
-	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final String CANVAS_CREATION_CHANGES = "Acceptance Test/DBConsistencyTestValidationData/DBNewCanvasData.xml";
 	private IMapPersistenceManager mapContentManager;
 	

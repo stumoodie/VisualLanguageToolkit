@@ -11,11 +11,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 
-public class LabelManipulationTest extends GenericTester {
-	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+public class LabelManipulationTest extends GenericXlsTester {
+	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final String REPOSITORY_NAME ="repo name";
 	private static final int TEST_INODE = 4;
 	private static final int EXPECTED_SHAPE_ATTRIBUTE = 1;
@@ -70,9 +70,6 @@ public class LabelManipulationTest extends GenericTester {
 	public void testLabelCreatedAndRemoved() throws Exception{
 		IAnnotationProperty prop = testLink.getProperty(LINK_PROP_NAME);
 		prop.setDisplayed(true);
-//		mapManager.synchronise();
-//		mapManager.close(true);
-//		mapManager.open();
 		ICanvas canvas = mapManager.getCanvas();
 		ILinkAttribute link = canvas.getLinkAttribute(EXPECTED_LINK_ATTRIBUTE);
 		IAnnotationProperty newProp = link.getProperty(LINK_PROP_NAME);
@@ -88,20 +85,14 @@ public class LabelManipulationTest extends GenericTester {
 		{
 			IAnnotationProperty prop = testLink.getProperty(LINK_PROP_NAME);
 			prop.setDisplayed(true);
-//			mapManager.synchronise();
-//			mapManager.close(true);
 		}
 		{
-//			mapManager.open();
 			ICanvas canvas = mapManager.getCanvas();
 			ILinkAttribute link = canvas.getLinkAttribute(EXPECTED_LINK_ATTRIBUTE);
 			IAnnotationProperty newProp = link.getProperty(LINK_PROP_NAME);
 			newProp.setDisplayed(false);
-//			mapManager.synchronise();
-//			mapManager.close(true);
 		}
 		{
-//			mapManager.open();
 			ICanvas canvas = mapManager.getCanvas();
 			ILinkAttribute link = canvas.getLinkAttribute(EXPECTED_LINK_ATTRIBUTE);
 			IAnnotationProperty newProp = link.getProperty(LINK_PROP_NAME);

@@ -25,14 +25,14 @@ import static org.junit.Assert.assertTrue;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.testutils.PojoTester;
+import org.pathwayeditor.testutils.PojoXlsTester;
 
 /**
  * @author smoodie
  *
  */
-public class HibLabelNodeTest extends PojoTester {
-	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+public class HibLabelNodeTest extends PojoXlsTester {
+	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 
 	private static final long TEST_LABEL_ID = 100016L;
 	private static final int EXPECTED_NODE_IDX = 24;
@@ -52,7 +52,7 @@ public class HibLabelNodeTest extends PojoTester {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute#getVisualisableProperty()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute#getProperty()}.
 	 */
 	@Test
 	public final void testGetAttribute() {

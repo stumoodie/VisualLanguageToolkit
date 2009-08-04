@@ -54,7 +54,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.changeInEdge();
 		this.changeOutNode();
 		this.attribute = linkAttribute;
-		this.attribute.setLinkEdge(this);
+		this.attribute.setCurrentEdge(this);
 		this.owningChildGraph.addNewEdge(this);
 	}
 	
@@ -127,7 +127,6 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 
 	public void setAttribute(HibLinkAttribute linkAttribute) {
 		this.attribute = linkAttribute;
-		this.attribute.setLinkEdge(this);
 	}
 
 	@Override

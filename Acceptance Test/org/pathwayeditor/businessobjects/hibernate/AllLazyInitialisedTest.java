@@ -33,12 +33,12 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.businessobjects.testutilities.FieldInspector;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 /**
  * @author nhanlon Load data from the database and test that all Hibernate proxies have been initialised
  */
-public class AllLazyInitialisedTest extends GenericTester {
+public class AllLazyInitialisedTest extends GenericXlsTester {
 
 	private static final String REPOSITORY_NAME = "repo name";
 	private static final String SUBFOLDER1_PATH = "/subfolder1/" ;
@@ -97,7 +97,7 @@ public class AllLazyInitialisedTest extends GenericTester {
 	 */
 	@Override
 	protected String getDbUnitDataFilePath() {
-		return "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+		return "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	}
 
 	/*

@@ -72,7 +72,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, HibProperty property,	ILabelAttributeDefaults labelDefaults) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
-		property.setLabel(this);
+		property.setDisplayedLabel(this);
 //		this.objectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
 		populateDefaults(labelDefaults);
 	}
@@ -80,7 +80,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public HibLabelAttribute(HibCanvas hibCanvas, int creationSerial, ILabelAttribute otherAttribute, HibProperty copiedProperty) {
 		super(hibCanvas, creationSerial);
 		this.visualisableProperty = copiedProperty;
-		copiedProperty.setLabel(this);
+		copiedProperty.setDisplayedLabel(this);
 		this.position = otherAttribute.getLocation();
 		this.size = otherAttribute.getSize();
 		this.background = otherAttribute.getBackgroundColor();
@@ -143,11 +143,11 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.size = this.size.newHeight(height);
 	}
 
-	public HibProperty getVisualisableProperty() {
+	public HibProperty getProperty() {
 		return this.visualisableProperty;
 	}
 
-	public void setVisualisableProperty(HibProperty visualisableProperty) {
+	void setProperty(HibProperty visualisableProperty) {
 		this.visualisableProperty = visualisableProperty;
 	}
 
@@ -207,16 +207,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 */
 	public Point getLocation() {
 		return this.position;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
-	 * getProperty()
-	 */
-	public HibProperty getProperty() {
-		return this.visualisableProperty;
 	}
 
 	/*
@@ -323,14 +313,22 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	public ILabelNode getCurrentDrawingElement() {
 		return this.labelNode;
 	}
+	
+	void setCurrentLabelNode(HibLabelNode labelNode){
+		this.labelNode = labelNode;
+	}
+	
+	HibLabelNode getCurrentLabelNode(){
+		return this.labelNode;
+	}
 
 	public boolean isValid() {
 //		boolean objectTypeTest = this.getObjectType() != null;
 		boolean labelNodeTest = this.getCurrentDrawingElement() != null
 			&& this.getCurrentDrawingElement().getAttribute().equals(this);
 		// valid to have no visualisable label set if the label node has been removed
-		boolean propertySetTest = this.getVisualisableProperty() != null;
-		if(!labelNodeTest || this.getVisualisableProperty() == null) {
+		boolean propertySetTest = this.getProperty() != null;
+		if(!labelNodeTest || this.getProperty() == null) {
 			logger.error("attribute=" + this + ", labelnode set and points to this attribute=" + labelNodeTest
 					+ ", propertySet=" + propertySetTest);
 		}

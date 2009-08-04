@@ -38,6 +38,13 @@
 			<key>
 				<column name="id" not-null="true" unique="true" />
 			</key>
+			<one-to-one name="property"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty" cascade="none" lazy="false" property-ref="displayedLabel" />
+			<many-to-one name="currentLabelNode"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode"
+				cascade="none" lazy="false" >
+				<column name="current_node_id" not-null="false" />
+			</many-to-one>
 			<property name="XPosition" type="double" access="property" >
 				<column name="x_position" not-null="true" />
 			</property>
@@ -108,6 +115,11 @@
 					cascade="none" lazy="false" >
 					<column name="object_type_id" not-null="true" />
 				</many-to-one>
+				<many-to-one name="currentEdge"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge"
+					cascade="none" lazy="false" >
+					<column name="current_edge_id" not-null="false" />
+				</many-to-one>
 				<property name="lineRed" type="int">
 					<column name="line_red" not-null="true" />
 				</property>
@@ -153,6 +165,11 @@
 				<key>
 					<column name="id" not-null="true" unique="true" />
 				</key>
+				<many-to-one name="currentShapeNode"
+					class="org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode"
+					cascade="none" lazy="false" >
+					<column name="current_node_id" not-null="false" />
+				</many-to-one>
 				<property name="XPosition" type="double" access="property">
 					<column name="x_position" not-null="true" />
 				</property>

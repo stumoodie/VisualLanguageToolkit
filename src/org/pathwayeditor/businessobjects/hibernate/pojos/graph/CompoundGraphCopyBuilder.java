@@ -19,14 +19,14 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
@@ -34,6 +34,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
@@ -50,14 +51,16 @@ import uk.ed.inf.graph.compound.base.BaseGraphCopyBuilder;
  */
 public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());
-	private final Map<HibProperty, HibLabelAttribute> copiedLabelCache;
+//	private final Map<HibProperty, HibLabelAttribute> copiedLabelCache;
+	private final Map<HibLinkAttribute, HibLinkAttribute> copiedLinkAttributes;
 	
 	/**
 	 * 
 	 */
 	public CompoundGraphCopyBuilder() {
 		super();
-		this.copiedLabelCache = new HashMap<HibProperty, HibLabelAttribute>();
+//		this.copiedLabelCache = new HashMap<HibProperty, HibLabelAttribute>();
+		this.copiedLinkAttributes = new HashMap<HibLinkAttribute, HibLinkAttribute>();
 	}
 
 	/* (non-Javadoc)
@@ -106,49 +109,73 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	 * @return
 	 */
 	private HibCompoundNode createCopyOfLabelNode(HibCompoundNode destHibParentNode, HibLabelNode srcLabelNode) {
-		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
 		HibProperty srcProperty = srcLabelNode.getAttribute().getProperty();
 		// Now test if parent contains this property. If it does then the label is a label for the parent shape
 		// and we can add the property from the copied parent shape as the copied property that should be
 		// added to the copied label.
-		ITypedDrawingNode parentNode = srcLabelNode.getParentNode();
+		IDrawingElement owningSrcElement = srcProperty.getOwner().getCurrentDrawingElement();
 		HibProperty copiedProperty = null;
-		if(parentNode instanceof IShapeNode) {
-			IShapeNode parentShape = (IShapeNode)parentNode;
-			if(parentShape.getAttribute().containsProperty(srcProperty)) {
+		if(owningSrcElement instanceof HibShapeNode) {
+			HibShapeNode ownerOfSrcShape = (HibShapeNode)owningSrcElement;
+			if(ownerOfSrcShape.getAttribute().containsProperty(srcProperty.getDefinition())) {
 				// parent contains prop so label must be for a property held by this shape 
-				IShapeNode copiedParentNode = (IShapeNode)super.getCopiedNode((BaseCompoundNode)parentNode);
-				if(copiedParentNode != null) {
-					copiedProperty = (HibProperty)copiedParentNode.getAttribute().getProperty(srcProperty.getDefinition());
-				}
-				else {
-					throw new IllegalStateException("Assumption that parent shape will be copied before label is invalid");
-				}
+				IShapeNode copiedParentNode = (IShapeNode)super.getCopiedNode(ownerOfSrcShape);
+				copiedProperty = (HibProperty)copiedParentNode.getAttribute().getProperty(srcProperty.getDefinition());
+			}
+			else{
+				throw new IllegalStateException("Inconsistency: the owner of the property MUST constain the property: " + srcProperty);
 			}
 		}
-		else if(parentNode instanceof ILabelNode) {
+		else if(owningSrcElement instanceof HibLinkEdge){
+			HibLinkEdge ownerOfSrcLink = (HibLinkEdge)owningSrcElement;
+			HibLinkAttribute copiedAttribute = null;
+			copiedAttribute = this.copiedLinkAttributes.get(ownerOfSrcLink.getAttribute());
+			if(copiedAttribute == null){
+				// create a copy of the link attibute
+				copiedAttribute = createCopyOfLinkAttribute(destHibParentNode.getModel().getCanvas(), ownerOfSrcLink.getAttribute());
+			}
+			copiedProperty = getCopiedLinkProperty(copiedAttribute, srcProperty);
+		}
+		else if(owningSrcElement instanceof ILabelNode) {
 			throw new IllegalStateException("parent node of a label cannot be another label");
 		}
-		boolean cacheCopiedLabel = false;
-		if(copiedProperty == null) {
-			// In this case, the property must be associated with a link which hasn't been copied yet. Therefore we will use the src
-			// property to create the label and then replace it with the copied property whent he links are copied later.
-			copiedProperty = srcProperty;
-			// to do reassign the copied prop later we need to cache the copied label.
-			cacheCopiedLabel = true;
+		else{
+			throw new IllegalStateException("unrecognised element type");
 		}
+		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
 		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
 		HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
 		HibLabelAttribute destAttribute = new HibLabelAttribute(destCanvas, destCanvas.getCreationSerialCounter().nextIndex(), srcAttribute, copiedProperty);
 		LabelNodeFactory fact = destHibParentNode.getChildCompoundGraph().labelNodeFactory();
 		fact.setAttribute(destAttribute);
 		HibCompoundNode retVal = fact.createLabel();
-		if(cacheCopiedLabel) {
-			this.copiedLabelCache.put(srcProperty, destAttribute);
-		}
 		return retVal;
 	}
 
+	private HibProperty getCopiedLinkProperty(HibLinkAttribute copiedLinkAttribute, IAnnotationProperty srcProperty){
+		HibProperty retVal = null;
+		if(srcProperty.getOwner() instanceof HibLinkAttribute){
+			// easy case
+			retVal = copiedLinkAttribute.getProperty(srcProperty.getDefinition());
+		}
+		else if(srcProperty.getOwner() instanceof HibLinkTerminus){
+			// more awkward case of label is on link terminus
+			HibLinkTerminus srcLinkTerm = (HibLinkTerminus)srcProperty.getOwner();
+			if(srcLinkTerm.getLinkTermType().equals(LinkTermType.SOURCE)){
+				retVal = copiedLinkAttribute.getSourceTerminus().getProperty(srcProperty.getDefinition());
+			}
+			else{
+				// must be target
+				retVal = copiedLinkAttribute.getTargetTerminus().getProperty(srcProperty.getDefinition());
+			}
+		}
+		if(retVal == null){
+			throw new IllegalStateException("Copy inconsistency: the copied owner, " + copiedLinkAttribute
+					+ ", MUST contain the src property: " + srcProperty);
+		}
+		return retVal;
+	}
+	
 	private HibShapeNode createCopyOfShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
 		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
 		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
@@ -158,28 +185,37 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 		return fact.createShapeNode();
 	}
 	
+	private HibLinkAttribute createCopyOfLinkAttribute(HibCanvas destCanvas, HibLinkAttribute srcAttribute){
+		HibLinkAttribute retVal = new HibLinkAttribute ( destCanvas , destCanvas.getCreationSerialCounter().nextIndex() , srcAttribute) ;
+		this.copiedLinkAttributes.put(srcAttribute, retVal);
+		return retVal;
+	}
+	
 	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
 			BaseCompoundNode inNode , HibSubModel edgeOwner ) {
-		// FIXME: This will nee to be refactored one the labels are reorganised.
-		// This should make label copying much more efficient.
 		HibCanvas destCanvas = (HibCanvas)edgeOwner.getModel().getCanvas();
-		HibLinkAttribute destAttribute = new HibLinkAttribute ( destCanvas , destCanvas.getCreationSerialCounter().nextIndex() , srcAttribute) ;
+		// use the cached copy of the lin k attribute if there is one
+		HibLinkAttribute destAttribute = this.copiedLinkAttributes.get(srcAttribute);
+		if(destAttribute == null){
+			destAttribute = createCopyOfLinkAttribute(destCanvas, srcAttribute);
+		}
 		LinkEdgeChildFactory edgeFact = edgeOwner.edgeFactory() ;
 		edgeFact.setPair(outNode, inNode);
 		edgeFact.setAttribute(destAttribute) ;
 		HibLinkEdge retVal = edgeFact.createLinkEdge() ;
-		// now lest look up any labels from the cache, using the properties of the src link attribute
-		// (remember this was cached before the link was copied so we cannot use the destAttribute).
-		Iterator<IAnnotationProperty> propIter = srcAttribute.propertyIterator();
-		while(propIter.hasNext()) {
-			IAnnotationProperty srcProp = propIter.next();
-			HibLabelAttribute copiedLabel = this.copiedLabelCache.get(srcProp);
-			if(copiedLabel!= null) {
-				// now add in the copied prop from the destLinkAttribute
-				HibProperty copiedProp = destAttribute.getProperty(srcProp.getDefinition());
-				copiedLabel.setVisualisableProperty(copiedProp);
-			}
-		}
+		// all label nodes should be copied properly during the node copying phase
+//		// now lest look up any labels from the cache, using the properties of the src link attribute
+//		// (remember this was cached before the link was copied so we cannot use the destAttribute).
+//		Iterator<IAnnotationProperty> propIter = srcAttribute.propertyIterator();
+//		while(propIter.hasNext()) {
+//			IAnnotationProperty srcProp = propIter.next();
+//			HibLabelAttribute copiedLabel = this.copiedLabelCache.get(srcProp);
+//			if(copiedLabel!= null) {
+//				// now add in the copied prop from the destLinkAttribute
+//				HibProperty copiedProp = destAttribute.getProperty(srcProp.getDefinition());
+//				copiedLabel.setProperty(copiedProp);
+//			}
+//		}
 		return retVal;
 	}
 
@@ -189,7 +225,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	@Override
 	protected void additionalCopyTasks() {
 		// avoid unnecessary memory usage.
-		this.copiedLabelCache.clear();
+		this.copiedLinkAttributes.clear();
 	}
 
 	/* (non-Javadoc)
@@ -197,6 +233,6 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	 */
 	@Override
 	protected void additionalInitialisation() {
-		this.copiedLabelCache.clear();
+		this.copiedLinkAttributes.clear();
 	}
 }

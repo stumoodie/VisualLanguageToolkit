@@ -61,7 +61,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		super(parentNode.getGraph(), parentNode, nodeIndex);
 		if(parentNode == null || shapeAttribute == null) throw new IllegalArgumentException("parentNode and shapeAttribute cannot be null");
 		this.shapeAttribute = shapeAttribute;
-		this.shapeAttribute.setShapeNode(this);
+		this.shapeAttribute.setCurrentShapeNode(this);
 		if(!parentNode.canParent(shapeAttribute.getObjectType())) {
 			// root node has null parent
 			throw new IllegalArgumentException("This not is not a valid child of it's parent: " + parentNode);
@@ -84,7 +84,6 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 
 	public void setAttribute(HibShapeAttribute shapeAttribute) {
 		this.shapeAttribute = shapeAttribute;
-		this.shapeAttribute.setShapeNode(this);
 	}
 	
 //	public void changeAttribute(HibShapeAttribute newShapeAttribute){
@@ -162,7 +161,7 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 		}
 		else{
 			type = ModelStructureChangeType.ADDED;
-			this.shapeAttribute.setShapeNode(this);
+			this.shapeAttribute.setCurrentShapeNode(this);
 		}
 		this.getModel().notifyNodeStructureChange(type, this);
 		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);

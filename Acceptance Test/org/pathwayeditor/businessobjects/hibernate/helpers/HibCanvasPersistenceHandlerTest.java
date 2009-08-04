@@ -37,19 +37,19 @@ import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubSystem;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
-import org.pathwayeditor.testutils.PojoTester;
+import org.pathwayeditor.testutils.PojoXlsTester;
 
 /**
  * @author smoodie
  *
  */
 @RunWith(JMock.class)
-public class HibCanvasPersistenceHandlerTest extends PojoTester {
+public class HibCanvasPersistenceHandlerTest extends PojoXlsTester {
 	private static final String EXPECTED_MAP = "Test Map";
 	private static final int EXPECTED_INODE = 4;
 	private static final String EXPECTED_REPOSITORY_NAME = "repo name";
 	private static final int EXPECTED_NUM_DRAWING_ELEMENTS = 26;
-	private static final String SOURCE_DATA_FILE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+	private static final String SOURCE_DATA_FILE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final String EXPECTED_CANVAS_DATA_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/PostSynchroniseExpectedData.xml";
 	private static final RGB EXPECTED_COLOUR = new RGB(100, 100, 100);
 	private static final String EXPECTED_NEW_MAP = "Diagram name2";

@@ -51,14 +51,14 @@ import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeAObje
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubShapeBObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 /**
  * @author ntsorman
  *
  */
 //@RunWith(JMock.class)
-public class CheckDbOperationsCompoundGraphTest extends GenericTester{
+public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 	
 //	private Mockery mockery = new JUnit4Mockery() {{
 //		 setImposteriser(ClassImposteriser.INSTANCE);
@@ -159,7 +159,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	private static final boolean CHANGED_CANVAS_SNAP_ENABLED = false ;
 	private static final RGB CHANGED_CANVAS_BACKGROUND_COLOUR =  new RGB ( 123 , 123 ,123 ) ;
 	private static final Dimension CHANGED_CANVAS_SIZE = new Dimension ( 121 , 121 ) ;
-	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final int NUM_ROOT_NODE_SHAPES = 2;
 	private static final int NUM_ROOT_NODE_LABELS = 4;
 	private static final int NUM_MODEL_SHAPES = 8;
@@ -499,6 +499,24 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 	
 	@Test
 	public void testCopyEntireGraphBySelectingTheTopNodes () throws Exception {
+		IModel model = this.dbCanvas.getModel();
+		ISubModel rootModel = model.getRootNode().getSubModel();
+		{
+			final int expectedNumShapes = NUM_MODEL_SHAPES;
+			assertEquals("model has additional nodes", expectedNumShapes, model.numShapeNodes());
+			final int expectedNumLabels = NUM_MODEL_LABELS;
+			assertEquals("model has additional labels", expectedNumLabels, model.numLabelNodes());
+			final int expectedNumEdges = NUM_MODEL_EDGES;
+			assertEquals("model has additional edges", expectedNumEdges, model.numLinkEdges());
+			final int expectedNumRootNodeShapes =  NUM_ROOT_NODE_SHAPES;
+			assertEquals("root has additional nodes", expectedNumRootNodeShapes, rootModel.numShapeNodes());
+			final int expectedNumRootNodeLabels = NUM_ROOT_NODE_LABELS;
+			assertEquals("root has additional labels", expectedNumRootNodeLabels, rootModel.numLabelNodes());
+			final int expectedNumRootEdges = NUM_ROOT_NODE_EDGES;
+			assertEquals("root has additional edges", expectedNumRootEdges, rootModel.numLinkEdges());
+			int expectedNumAttributes = expectedNumShapes + expectedNumLabels + (expectedNumEdges*3) + 1;
+			assertEquals("expected link attributes", expectedNumAttributes, model.getCanvas().numCanvasAttributes());
+		}
 		ISelectionFactory objectSelection = this.dbModel.newSelectionFactory() ;
 		IShapeNode shapeNode1 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB1).getCurrentDrawingElement();
 		IShapeNode shapeNode2 = this.dbCanvas.getShapeAttribute(SHAPE_ATTRIB2).getCurrentDrawingElement();
@@ -506,15 +524,22 @@ public class CheckDbOperationsCompoundGraphTest extends GenericTester{
 		objectSelection.addDrawingNode(shapeNode2) ;
 		this.dbModel.getRootNode().getSubModel().copyHere(objectSelection.createGeneralSelection()) ;
 		assertTrue("model is valid after copy", this.dbModel.isValid());
-		IModel model = this.dbCanvas.getModel();
-		ISubModel rootModel = model.getRootNode().getSubModel();
-		assertEquals("model has additional nodes", NUM_MODEL_SHAPES + 8, model.numShapeNodes());
-		assertEquals("model has additional labels", NUM_MODEL_LABELS + 8, model.numLabelNodes());
-		assertEquals("model has additional edges", NUM_MODEL_EDGES + 9, model.numLinkEdges());
-		assertEquals("root has additional nodes", NUM_ROOT_NODE_SHAPES + 2, rootModel.numShapeNodes());
-		assertEquals("root has additional labels", NUM_ROOT_NODE_LABELS + 4, rootModel.numLabelNodes());
-		assertEquals("root has additional edges", NUM_ROOT_NODE_EDGES + 4, rootModel.numLinkEdges());
-		
+		{
+			final int expectedNumShapes = NUM_MODEL_SHAPES + 8;
+			assertEquals("model has additional nodes", expectedNumShapes, model.numShapeNodes());
+			final int expectedNumLabels = NUM_MODEL_LABELS + 8;
+			assertEquals("model has additional labels", expectedNumLabels, model.numLabelNodes());
+			final int expectedNumEdges = NUM_MODEL_EDGES + 9;
+			assertEquals("model has additional edges", expectedNumEdges, model.numLinkEdges());
+			final int expectedNumRootNodeShapes = NUM_ROOT_NODE_SHAPES + 2;
+			assertEquals("root has additional nodes", expectedNumRootNodeShapes, rootModel.numShapeNodes());
+			final int expectedNumRootNodeLabels = NUM_ROOT_NODE_LABELS + 4;
+			assertEquals("root has additional labels", expectedNumRootNodeLabels, rootModel.numLabelNodes());
+			final int expectedNumRootEdges = NUM_ROOT_NODE_EDGES + 4;
+			assertEquals("root has additional edges", expectedNumRootEdges, rootModel.numLinkEdges());
+			int expectedNumAttributes = expectedNumShapes + expectedNumLabels + (expectedNumEdges * 3) + 1;
+			assertEquals("expected link attributes", expectedNumAttributes, model.getCanvas().numCanvasAttributes());
+		}
 		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(SOURCE_DATA_FILE, COPY_WHOLE_VALIDATION);
 	}

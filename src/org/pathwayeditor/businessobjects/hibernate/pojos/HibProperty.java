@@ -146,11 +146,8 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	 * Used by hibernate. Ensures that the reciprocal attribute as assigned correctly.
 	 * @param labelAttribute
 	 */
-	public void setDisplayedLabel(HibLabelAttribute labelAttribute) {
+	void setDisplayedLabel(HibLabelAttribute labelAttribute) {
 		this.labelAttribute = labelAttribute;
-		if(this.labelAttribute != null){
-			this.labelAttribute.setVisualisableProperty(this);
-		}
 	}
 
 	/**
@@ -219,14 +216,6 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 			return false;
 		return true;
 	}
-
-	/**
-	 * @param hibLabelAttribute
-	 */
-	void setLabel(HibLabelAttribute hibLabelAttribute) {
-		this.labelAttribute = hibLabelAttribute;
-	}
-	
 
 	@Override
 	public String toString(){

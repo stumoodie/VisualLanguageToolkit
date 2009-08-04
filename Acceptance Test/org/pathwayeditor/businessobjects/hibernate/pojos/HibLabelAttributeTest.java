@@ -27,14 +27,14 @@ import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.testutils.PojoTester;
+import org.pathwayeditor.testutils.PojoXlsTester;
 
 /**
  * @author smoodie
  *
  */
-public class HibLabelAttributeTest extends PojoTester {
-	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+public class HibLabelAttributeTest extends PojoXlsTester {
+	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 
 	private static final long TEST_LABEL_ID = 100024L;
 	private static final int EXPECTED_NODE_IDX = 15;
@@ -61,7 +61,7 @@ public class HibLabelAttributeTest extends PojoTester {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute#getVisualisableProperty()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute#getProperty()}.
 	 */
 	@Test
 	public final void testGetCurrentDrawingElement() {
@@ -75,7 +75,7 @@ public class HibLabelAttributeTest extends PojoTester {
 	 */
 	@Test
 	public final void testGetVisualisableProperty() {
-		HibProperty actualProp = this.testInstance.getVisualisableProperty();
+		HibProperty actualProp = this.testInstance.getProperty();
 		ICanvasAttribute owningAttribute = actualProp.getOwner();
 		assertEquals("expected owning attribute serial", EXPECTED_PROPERTY_OWNING_ATTR_SERIAL, owningAttribute.getCreationSerial());
 		assertEquals("expected property", EXPECTED_PROPERTY_ID, actualProp.getId());

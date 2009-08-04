@@ -53,13 +53,13 @@ import org.pathwayeditor.businessobjects.repository.IRootFolder;
 import org.pathwayeditor.businessobjects.repository.ISubFolder;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.testutils.GenericTester;
+import org.pathwayeditor.testutils.GenericXlsTester;
 
 /**
  * @author ntsorman
  *
  */
-public class LoadDataFromFileTest extends GenericTester{
+public class LoadDataFromFileTest extends GenericXlsTester{
 	
 	private IRepository repository;
 	private ICanvas dbCanvas ;
@@ -343,7 +343,7 @@ public class LoadDataFromFileTest extends GenericTester{
 	 */
 	@Override
 	protected String getDbUnitDataFilePath() {
-		return "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xml";
+		return "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	}
 
 	/* (non-Javadoc)

@@ -59,7 +59,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
-	private transient HibShapeNode shapeNode;
+	private HibShapeNode shapeNode;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 	private transient IConvexHull hull = null;
 	private GraphicsInstructionList graphicsInstructions;
@@ -227,7 +227,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
 	}
 
-	void setShapeNode(HibShapeNode newNode){
+	void setCurrentShapeNode(HibShapeNode newNode){
 		this.shapeNode = newNode;
 	}
 
@@ -351,11 +351,15 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		return this.shapeNode;
 	}
 
+	HibShapeNode getCurrentShapeNode(){
+		return this.shapeNode;
+	}
+	
 	public boolean isValid() {
 		boolean objectTypeSet = this.getObjectType() != null;
-		boolean reciprocalAttributeSet = this.getCurrentDrawingElement().getAttribute() != null
+		boolean reciprocalAttributeSet = this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getAttribute() != null
 				&& this.getCurrentDrawingElement().getAttribute().equals(this);
-		boolean syntaxRulesCorrect = this.getCurrentDrawingElement().getParent().canParent(this.getObjectType());
+		boolean syntaxRulesCorrect = this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getParent().canParent(this.getObjectType());
 		boolean propertiesValid = super.arePropertiesValid(this.getObjectType().getDefaultAttributes());
 		boolean retVal = false;
 		if(objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid){
