@@ -36,21 +36,11 @@ public interface IGraphicsEngine {
 
 	void drawString(String text, double pos, double pos2, GraphicalTextAlignment alignment);
 
-	IFont getFont();
-
 	void setFillColor(RGB color);
-
-//	void setFont(IFont newFont);
 
 	void setLineColor(RGB color);
 
-	double getLineWidth();
-
 	void setLineWidth(double lineWidthVal);
-
-	RGB getFillColour();
-
-	RGB getLineColour();
 
 	void setFont(IFont modifiedFont);
 

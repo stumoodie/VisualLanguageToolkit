@@ -31,10 +31,12 @@ public class FigureDrawer {
 	private final Map<GraphicsOpCode, IGraphicsOpCodeAction> opCodeLookup;
 //	private final Envelope refBounds;
 	private IGraphicsEngine graphics;
+	private IFont currFont;
 //	private Envelope newBounds;
 	
 	public FigureDrawer(GraphicsInstructionList graphicsInstList){
 		this.instList = graphicsInstList;
+		this.currFont = new GenericFont();
 //		this.refBounds = refBounds;
 		this.opCodeLookup = new HashMap<GraphicsOpCode, IGraphicsOpCodeAction>();
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_ARC, new IGraphicsOpCodeAction(){
@@ -218,14 +220,14 @@ public class FigureDrawer {
 	}
 
 	private void processFontStyle(EnumSet<Style> values) {
-		IFont modifiedFont = this.graphics.getFont().newStyle(values);
-		this.graphics.setFont(modifiedFont);
+		this.currFont = this.currFont.newStyle(values);
+		this.graphics.setFont(this.currFont);
 		logger.debug("Setting font style=" + values);
 	}
 
 	private void processFontSize(Double fontSize) {
-		IFont modifiedFont = this.graphics.getFont().newSize(fontSize);
-		this.graphics.setFont(modifiedFont);
+		this.currFont = this.currFont.newSize(fontSize);
+		this.graphics.setFont(this.currFont);
 		logger.debug("Setting font size=" + fontSize);
 	}
 
@@ -366,7 +368,7 @@ public class FigureDrawer {
 		this.graphics = g;
 //		this.newBounds = newBounds;
 //		logger.debug("Drawing figure: newBounds=" + newBounds);
-		logger.debug("Initial graphics state: fill=" + g.getFillColour() + ",line=" + g.getLineColour() + ",lineWidth=" + g.getLineWidth());
+//		logger.debug("Initial graphics state: fill=" + g.getFillColour() + ",line=" + g.getLineColour() + ",lineWidth=" + g.getLineWidth());
 		Iterator<GraphicsInstruction> iter = this.instList.iterator();
 		while(iter.hasNext()){
 			GraphicsInstruction inst = iter.next();
@@ -378,7 +380,7 @@ public class FigureDrawer {
 				action.handleOpCode(inst);
 			}
 		}
-		logger.debug("Final graphics state: fill=" + g.getFillColour() + ",line=" + g.getLineColour() + ",lineWidth=" + g.getLineWidth());
+//		logger.debug("Final graphics state: fill=" + g.getFillColour() + ",line=" + g.getLineColour() + ",lineWidth=" + g.getLineWidth());
 		logger.debug("Finished drawing figure");
 	}
 	
