@@ -22,4 +22,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface IRootNode extends ITypedDrawingNode {
 	
+	IRootAttribute getAttribute();
+	
 }

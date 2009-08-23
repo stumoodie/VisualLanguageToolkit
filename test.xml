@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epx:canvas xmlns:epx="http://www.pathwayeditor.org/Exchange"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Canvas.xsd">
+    <Grid snapToGrid="true" gridOn="true">
+        <GridSize width="10" height="10"/>
+    </Grid>
+    <epx:Notation qualifiedName="org.pathwayeditor.stub.notation"
+        majorVersion="99" minorVersion="19" patchVersion="9"/>
+    <CanvasSize width="10" height="10"/>
+    <Background red="100" green="100" blue="100"/>
+    <Model>
+        <RootNode nodeId="0">
+            <epx:ChildModel>
+                <epx:ShapeNode nodeId="1" shapeAttributeSerial="1">
+                    <epx:ChildModel>
+                        <epx:ShapeNode nodeId="3" shapeAttributeSerial="3">
+                            <epx:ChildModel>
+                                <epx:LabelNode nodeId="15" labelAttributeSerial="24">
+                                    <epx:ChildModel/>
+                                </epx:LabelNode>
+                            </epx:ChildModel>
+                        </epx:ShapeNode>
+                        <epx:ShapeNode nodeId="4" shapeAttributeSerial="4">
+                            <epx:ChildModel>
+                                <epx:LabelNode nodeId="16" labelAttributeSerial="25">
+                                    <epx:ChildModel/>
+                                </epx:LabelNode>
+                            </epx:ChildModel>
+                        </epx:ShapeNode>
+                        <epx:LabelNode nodeId="9" labelAttributeSerial="18">
+                            <epx:ChildModel/>
+                        </epx:LabelNode>
+                        <LinkEdge linkIdx="7" srcNodeIdx="1"
+                            tgtNodeIdx="1" linkAttributeSerial="16"/>
+                        <LinkEdge linkIdx="8" srcNodeIdx="1"
+                            tgtNodeIdx="1" linkAttributeSerial="17"/>
+                    </epx:ChildModel>
+                </epx:ShapeNode>
+                <epx:ShapeNode nodeId="2" shapeAttributeSerial="2">
+                    <epx:ChildModel>
+                        <epx:ShapeNode nodeId="5" shapeAttributeSerial="5">
+                            <epx:ChildModel/>
+                        </epx:ShapeNode>
+                        <epx:ShapeNode nodeId="6" shapeAttributeSerial="6">
+                            <epx:ChildModel>
+                                <epx:ShapeNode nodeId="7" shapeAttributeSerial="7">
+                                    <epx:ChildModel>
+                                    <epx:ShapeNode nodeId="8" shapeAttributeSerial="8">
+                                    <epx:ChildModel/>
+                                    </epx:ShapeNode>
+                                    </epx:ChildModel>
+                                </epx:ShapeNode>
+                                <LinkEdge linkIdx="4" srcNodeIdx="7"
+                                    tgtNodeIdx="6" linkAttributeSerial="13"/>
+                                <LinkEdge linkIdx="5" srcNodeIdx="6"
+                                    tgtNodeIdx="7" linkAttributeSerial="14"/>
+                            </epx:ChildModel>
+                        </epx:ShapeNode>
+                        <epx:LabelNode nodeId="12" labelAttributeSerial="21">
+                            <epx:ChildModel/>
+                        </epx:LabelNode>
+                        <LinkEdge linkIdx="2" srcNodeIdx="2"
+                            tgtNodeIdx="6" linkAttributeSerial="11"/>
+                    </epx:ChildModel>
+                </epx:ShapeNode>
+                <epx:LabelNode nodeId="10" labelAttributeSerial="19">
+                    <epx:ChildModel/>
+                </epx:LabelNode>
+                <epx:LabelNode nodeId="11" labelAttributeSerial="20">
+                    <epx:ChildModel/>
+                </epx:LabelNode>
+                <epx:LabelNode nodeId="13" labelAttributeSerial="22">
+                    <epx:ChildModel/>
+                </epx:LabelNode>
+                <epx:LabelNode nodeId="14" labelAttributeSerial="23">
+                    <epx:ChildModel/>
+                </epx:LabelNode>
+                <LinkEdge linkIdx="0" srcNodeIdx="1" tgtNodeIdx="2" linkAttributeSerial="9"/>
+                <LinkEdge linkIdx="1" srcNodeIdx="2" tgtNodeIdx="1" linkAttributeSerial="10"/>
+                <LinkEdge linkIdx="3" srcNodeIdx="2" tgtNodeIdx="4" linkAttributeSerial="12"/>
+                <LinkEdge linkIdx="6" srcNodeIdx="7" tgtNodeIdx="3" linkAttributeSerial="15"/>
+            </epx:ChildModel>
+        </RootNode>
+    </Model>
+    <epx:RootAttribute creationSerial="44">
+        <Location x="0" y="0"/>
+        <Size width="0" height="0"/>
+        <epx:ObjectType uniqueId="0"/>
+        <epx:Annotations/>
+    </epx:RootAttribute>
+    <epx:ShapeAttribute creationSerial="4">
+        <Location x="54" y="54"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="6">
+        <Location x="56" y="56"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="7">
+        <Location x="57" y="57"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="2">
+        <Location x="52" y="52"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="8">
+        <Location x="58" y="58"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="1">
+        <Location x="51" y="51"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="3">
+        <Location x="53" y="53"/>
+    </epx:ShapeAttribute>
+    <epx:ShapeAttribute creationSerial="5">
+        <Location x="55" y="55"/>
+    </epx:ShapeAttribute>
+    <epx:LabelAttribute creationSerial="22">
+        <Location x="55" y="55"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="20">
+        <Location x="53" y="53"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="24">
+        <Location x="57" y="57"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="19">
+        <Location x="52" y="52"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="25">
+        <Location x="58" y="58"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="18">
+        <Location x="51" y="51"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="21">
+        <Location x="54" y="54"/>
+    </epx:LabelAttribute>
+    <epx:LabelAttribute creationSerial="23">
+        <Location x="56" y="56"/>
+    </epx:LabelAttribute>
+    <epx:LinkAttribute creationSerial="9"/>
+    <epx:LinkAttribute creationSerial="17"/>
+    <epx:LinkAttribute creationSerial="10"/>
+    <epx:LinkAttribute creationSerial="13"/>
+    <epx:LinkAttribute creationSerial="16"/>
+    <epx:LinkAttribute creationSerial="15"/>
+    <epx:LinkAttribute creationSerial="11"/>
+    <epx:LinkAttribute creationSerial="12"/>
+    <epx:LinkAttribute creationSerial="14"/>
+    <epx:LinkTerminus creationSerial="36"/>
+    <epx:LinkTerminus creationSerial="38"/>
+    <epx:LinkTerminus creationSerial="35"/>
+    <epx:LinkTerminus creationSerial="27"/>
+    <epx:LinkTerminus creationSerial="39"/>
+    <epx:LinkTerminus creationSerial="30"/>
+    <epx:LinkTerminus creationSerial="33"/>
+    <epx:LinkTerminus creationSerial="41"/>
+    <epx:LinkTerminus creationSerial="32"/>
+    <epx:LinkTerminus creationSerial="26"/>
+    <epx:LinkTerminus creationSerial="31"/>
+    <epx:LinkTerminus creationSerial="42"/>
+    <epx:LinkTerminus creationSerial="29"/>
+    <epx:LinkTerminus creationSerial="34"/>
+    <epx:LinkTerminus creationSerial="28"/>
+    <epx:LinkTerminus creationSerial="43"/>
+    <epx:LinkTerminus creationSerial="40"/>
+    <epx:LinkTerminus creationSerial="37"/>
+</epx:canvas>

@@ -19,7 +19,9 @@ import java.math.BigDecimal;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 
 public class HibNumberProperty extends HibProperty implements INumberAnnotationProperty {
 	private static final long serialVersionUID = 1951406655193239331L;
@@ -87,4 +89,14 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 		return this.propertyDefinition.isVisualisable();
 	}
 
+	public INumberAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
+		return propertyBuilder.copyNumberProperty(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
+	 */
+	public void visitProperty(IAnnotationPropertyVisitor visitor) {
+		visitor.visitNumberProperty(this);
+	}
 }

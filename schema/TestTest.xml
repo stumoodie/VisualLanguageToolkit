@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Canvas xmlns="http://www.pathwayeditor.org/Exchange"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Test.xsd">
+    <Grid xmlns="" snapToGrid="true" gridOn="true">
+        <GridSize width="10" height="10"/>
+    </Grid>
+    <CanvasSize xmlns="" width="10" height="10"/>
+    <Background xmlns="" red="111" green="1" blue="10"/>
+    <RootAttribute creationSerial="1">
+        <location xmlns="" x="1" y="1"/>
+        <size xmlns="" width="22" height="22"/>
+    </RootAttribute>
+    <ShapeAttribute creationSerial="33">
+        <location xmlns="" x="4" y="3"/>
+        <size xmlns="" width="4" height="7"/>
+    </ShapeAttribute>
+    
+    <LabelAttribute creationSerial="11">
+        <location xmlns="" x="1" y="11"/>
+        <size xmlns="" width="1" height="222"/>
+    </LabelAttribute>
+    <LinkAttribute creationSerial="33">
+        <location xmlns="" x="22" y="33"/>
+        <size xmlns="" width="22" height="22"/>
+    </LinkAttribute>
+    
+</Canvas>

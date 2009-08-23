@@ -17,7 +17,9 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 
 public class HibTextProperty extends HibProperty implements IPlainTextAnnotationProperty {
 	private static final long serialVersionUID = 2408749022194227955L;
@@ -86,4 +88,14 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		return this.propertyDefinition.isVisualisable();
 	}
 
+	public IPlainTextAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
+		return propertyBuilder.copyPlainTextProperty(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
+	 */
+	public void visitProperty(IAnnotationPropertyVisitor visitor) {
+		visitor.visitPlainTextProperty(this);
+	}
 }

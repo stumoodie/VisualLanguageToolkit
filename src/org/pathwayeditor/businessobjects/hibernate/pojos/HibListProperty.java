@@ -21,7 +21,9 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 
 public class HibListProperty extends HibProperty implements IListAnnotationProperty {
 	private static final long serialVersionUID = 3772272140640145846L;
@@ -99,4 +101,14 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 		return this.propertyDefinition.isVisualisable();
 	}
 
+	public IListAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
+		return propertyBuilder.copyListProperty(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
+	 */
+	public void visitProperty(IAnnotationPropertyVisitor visitor) {
+		visitor.visitListProperty(this);
+	}
 }

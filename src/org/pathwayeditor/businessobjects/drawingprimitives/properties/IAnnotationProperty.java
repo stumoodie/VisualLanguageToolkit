@@ -64,4 +64,12 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
 	ILabelAttribute getLabel();
+
+	/**
+	 * @param propertyBuilder
+	 * @return the copied annotation property.
+	 */
+	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder);
+	
+	void visitProperty(IAnnotationPropertyVisitor visitor);
 }

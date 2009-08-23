@@ -54,12 +54,4 @@ public interface IPropertyDefinition {
 	ILabelAttributeDefaults getLabelDefaults();
 	
 	IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder);
-
-	/**
-	 * @param propertyBuilder
-	 * @return the copied annotation property.
-	 */
-	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty);
-	
-	
 }

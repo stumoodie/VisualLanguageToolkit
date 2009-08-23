@@ -19,12 +19,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDec
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkTerminus extends IAnnotatedCanvasAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 

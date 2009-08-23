@@ -21,11 +21,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject, IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkAttribute extends IZOrderedObject, IAnnotatedCanvasAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.

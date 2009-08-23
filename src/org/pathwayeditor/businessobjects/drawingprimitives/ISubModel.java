@@ -133,6 +133,9 @@ public interface ISubModel extends ISubModelChangeListenee, ISuppressableChangeL
 	 */
 	int numLabelNodes();
 	
+	
+	Iterator<IDrawingNode> drawingNodeIterator();
+	
 	/**
 	 * Traverses over all the shapes in the sub-model, using depth-first
 	 * traversal. This means that each root node will be taken in turn and 

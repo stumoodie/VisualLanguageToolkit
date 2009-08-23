@@ -99,6 +99,15 @@
 		<pathelement location="${lib.dir}/antlr-3.1.2/lib/antlr-3.1.2.jar" />
 		<pathelement location="${lib.dir}/antlr-3.1.2/lib/stringtemplate-3.2.jar" />
 		<pathelement location="${lib.dir}/antlr-3.1.2/lib/runtime-3.1.2.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-codegen.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-xml-schema.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-core.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-anttasks.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/cglib-full-2.0.2.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-collections-3.1.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-lang-2.1.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-logging-1.1.jar" />
 	</path>
 
 	<path id="test.classpath">
@@ -287,6 +296,53 @@
 				<path refid="classpath" />
 			</classpath>
 		</java>
+	</target>
+	
+	<!-- ================================= 
+          target: name              
+         ================================= -->
+    <target name="xmlschema-code" depends="cleanup-castor-code,castor-gen" description="Generate xmlschema handling code">
+    </target>
+
+	
+	<target name="cleanup-castor-code">
+		<delete>
+			<fileset dir="${src.dir}">
+			    <include name="org/pathwayeditor/businessobjects/exchange/castor/**"/>
+			</fileset>
+		</delete>
+	</target>
+	
+	<path id="castor.class.path">
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-codegen.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-xml-schema.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-core.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-anttasks.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/cglib-full-2.0.2.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-collections-3.1.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-lang-2.1.jar" />
+		<pathelement location="${lib.dir}/castor-1.3/lib/commons-logging-1.1.jar" />
+		<!--pathelement location="${src.dir}/castorbuilder.properties" /-->
+	</path>
+		
+	<target name="castor-gen" depends="init"
+	         description="Generate Java source files from XSD.">
+
+		<taskdef name="castor-srcgen"
+	             classname="org.castor.anttask.CastorCodeGenTask"
+	             classpathref="castor.class.path" />
+	    <castor-srcgen file="schema/Canvas.xsd"
+	                   todir="src"
+	                   package="org.pathwayeditor.businessobjects.exchange.castor"
+	                   types="j2"
+	    			   verbose="true"
+	    			   nodesc="false"
+	                   warnings="true"
+	    			   bindingfile="schema/CanvasBinding.xml"
+	    			   properties="${src.dir}/castorbuilder.properties"
+	    			   nameConflictStrategy="informViaLog"
+	    />
 	</target>
 	
 </project>

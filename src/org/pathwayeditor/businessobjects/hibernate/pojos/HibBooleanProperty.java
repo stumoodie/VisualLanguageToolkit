@@ -17,7 +17,9 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 
 public class HibBooleanProperty extends HibProperty implements IBooleanAnnotationProperty {
 	private static final long serialVersionUID = 3415354271386318411L;
@@ -82,4 +84,14 @@ public class HibBooleanProperty extends HibProperty implements IBooleanAnnotatio
 		return this.propertyDefinition.isVisualisable();
 	}
 
+	public IBooleanAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
+		return propertyBuilder.copyBooleanProperty(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
+	 */
+	public void visitProperty(IAnnotationPropertyVisitor visitor) {
+		visitor.visitBooleanProperty(this);
+	}
 }
