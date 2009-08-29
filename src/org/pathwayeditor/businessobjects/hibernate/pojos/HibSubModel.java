@@ -379,5 +379,12 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	public void setListenersEnabled(boolean enabled) {
 		this.listenerHandler.setListenersEnabled(enabled);
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#drawingNodeIterator()
+	 */
+	public Iterator<IDrawingNode> drawingNodeIterator() {
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+	}
 }
 
