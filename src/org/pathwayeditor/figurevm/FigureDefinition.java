@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.pathwayeditor.figurevm.Instruction.InstructionType;
+import org.pathwayeditor.figurevm.Value.ValueType;
 
 public final class FigureDefinition implements IFigureDefinition {
 	private final List<Instruction> instlist;
@@ -31,6 +32,17 @@ public final class FigureDefinition implements IFigureDefinition {
 			if(inst.getType().equals(InstructionType.BOUND_VALUE)){
 				String name = inst.getTypedValue(); 
 				retVal.add(name);
+			}
+			else if(inst.getType().equals(InstructionType.RAW_ARRAY)){
+				IFigureDefinition procList = inst.getTypedValue();
+				retVal.addAll(procList.getBindVariableNames());
+			}
+			else if(inst.getType().equals(InstructionType.VALUE)){
+				Value val = inst.getTypedValue();
+				if(val.getType().equals(ValueType.PROCEDURE)){
+					IFigureDefinition procList = val.getPackedArray();
+					retVal.addAll(procList.getBindVariableNames());
+				}
 			}
 		}
 		return retVal;

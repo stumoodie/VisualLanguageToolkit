@@ -207,6 +207,7 @@
 			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
 				<exclude name="**/*.class" />
+				<exclude name="**/*.txt" />
 			</fileset>
 		</copy>
 	</target>

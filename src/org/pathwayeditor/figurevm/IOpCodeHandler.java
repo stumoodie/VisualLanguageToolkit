@@ -94,4 +94,6 @@ public 	interface IOpCodeHandler {
 	void setChopHullAnchor();
 
 	void setSemiFixedAnchorCode(PointList points);
+
+	List<Double> getTextBounds(String text);
 }

@@ -1,5 +1,9 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
@@ -29,6 +33,7 @@ public class FigureBuilder {
 	private static final char ITALIC_STYLE = 'I';
 	private static final char BOLD_STYLE = 'B';
 	private static final double MIN_DIMENSION_SIZE = 0;
+	private static final String FONT_NAME = "Arial";
 
 	private final IFigureDefinition instList;
 	private final IConvexHullCalculator hullCalc;
@@ -421,6 +426,13 @@ public class FigureBuilder {
 		public void setSemiFixedAnchorCode(PointList points) {
 			anchorCalc = new MultiplePositionFixedAnchorFactory(points);
 		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds()
+		 */
+		public List<Double> getTextBounds(String text) {
+			return handleGetTextBounds(text);
+		}
 		
 	}
 
@@ -429,6 +441,29 @@ public class FigureBuilder {
 		retVal.add(backgroundColor.getRed());
 		retVal.add(backgroundColor.getGreen());
 		retVal.add(backgroundColor.getBlue());
+		return retVal;
+	}
+
+	/**
+	 * @param text
+	 * @return
+	 */
+	private List<Double> handleGetTextBounds(String text) {
+		double size = this.currentState.getFont().getFontSize();
+		int style = Font.PLAIN;
+		if(this.currentState.getFont().getStyle().contains(Style.ITALIC)){
+			style |= Font.ITALIC;
+		}
+		if(this.currentState.getFont().getStyle().contains(Style.BOLD)){
+			style |= Font.BOLD;
+		}
+    	Font f = new Font(FONT_NAME, style, (int)Math.ceil(size));
+    	AffineTransform af = new AffineTransform();
+    	FontRenderContext ctx = new FontRenderContext(af, false, false);
+    	Rectangle2D bounds = f.getStringBounds(text, ctx);
+    	List<Double> retVal = new ArrayList<Double>(2);
+    	retVal.add(bounds.getWidth());
+    	retVal.add(bounds.getHeight());
 		return retVal;
 	}
 
