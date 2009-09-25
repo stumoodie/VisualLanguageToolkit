@@ -184,7 +184,7 @@ public class FigureBuilder {
 			logger.debug("drawOutline: fgCol=" + getLineColour() + ",bgCol=" + getFillColour());
 		}
 		this.hullCalc.addRoundRectangle(x, y, width, height, arcWidth, arcHeight);
-		logger.debug("drawRoundedRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		logger.debug("drawRoundedRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height + ", arcW=" + arcWidth + ", arcH=" + arcHeight);
 	}
 
 
