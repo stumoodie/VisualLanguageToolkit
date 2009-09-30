@@ -19,6 +19,7 @@ import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibRepositoryPersistenceHandler;
+import org.pathwayeditor.businessobjects.hyperlink.IRepositoryServiceCallback;
 import org.pathwayeditor.businessobjects.management.impl.RepositoryPersistenceManager;
 
 /**
@@ -31,10 +32,22 @@ public class RepositoryManagerBuilder implements IRepositoryManagerBuilder {
 	private final HibernateDataSource hibdataSource;
 	private IConnectionInfo connectionInfo = null;
 	private INotationSubsystemPool notationSubsystemPool = null;
+	private IRepositoryServiceCallback callback = null;
 	
 
+	/**
+	 * Create the repository manager builder
+	 * @deprecated It is preferable to create an instance of this class using the 
+	 * RepositoryLookupService as this enables lookups via a URI.
+	 * @see org.pathwayeditor.businessobjects.management.RepositoryServices 
+	 */
 	public RepositoryManagerBuilder(){
 		this.hibdataSource = new HibernateDataSource(HIB_CONFIG_FILE_NAME);
+	}
+
+	RepositoryManagerBuilder(IRepositoryServiceCallback callback){
+		this();
+		this.callback = callback;
 	}
 	
 	/* (non-Javadoc)
@@ -54,7 +67,11 @@ public class RepositoryManagerBuilder implements IRepositoryManagerBuilder {
 		SessionFactory factory = this.hibdataSource.getSessionFactory(); 
 		ICanvasPersistenceHandlerFactory canvasPersistenceHandler = new HibCanvasPersistenceHandlerFactory(factory, this.getNotationSubsystemPool());
 		IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(factory, this.getConnectionInfo().getRepositoryName());  
-		return new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
+		IRepositoryPersistenceManager retVal = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
+		if(this.callback != null){
+			this.callback.registerRepository(retVal);
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)
