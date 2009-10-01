@@ -16,6 +16,8 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
-	private String uri = "";
+	private URI uri = null;
 	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem();
 
 
@@ -96,11 +98,29 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 		this.displayName = displayName;
 	}
 
-	public String getUri() {
+	String getUriString() {
+		String retVal = null;
+		if(uri != null){
+			retVal = this.uri.toString();
+		}
+		return retVal;
+	}
+
+	void setUriString(String uri) {
+		try {
+			if(uri != null){
+				this.uri = new URI(uri);
+			}
+		} catch (URISyntaxException e) {
+			throw new IllegalArgumentException("must be a valid URI string", e);
+		}
+	}
+
+	public URI getHyperlink() {
 		return this.uri;
 	}
 
-	public void setUri(String uri) {
+	public void setHyperlink(URI uri) {
 		this.uri = uri;
 	}
 

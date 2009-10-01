@@ -35,16 +35,12 @@ import org.pathwayeditor.figure.geometry.Dimension;
  */
 public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	private static final ILabelAttributeDefaults LABEL_DEFAULTS = new FallbackLabelAttributeDefaults();
-	private static final String DESCN = "Default Shape descn";
-	private static final String DETAILED_DESCN = "Default shape detailed descn";
 	private static final RGB FILL_COLOUR = RGB.WHITE;
 	private static final RGB LINE_COLOUR = RGB.BLACK;
 	private static final LineStyle LINE_STYLE = LineStyle.SOLID;
 	private static final int LINE_WIDTH = 0;
-	private static final String NAME = "Default Shape";
 	private static final String SHAPE_TYPE = "curbounds rect";
 	private static final Dimension SIZE = new Dimension(0, 0);
-	private static final String URL = null;
 	private static final Set<IPropertyDefinition> PROP_SET = Collections.emptySet();
 
 	public FallbackShapeAttributeDefaults(){
@@ -55,20 +51,6 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	 */
 	public ILabelAttributeDefaults getDefaultLabelAttributes() {
 		return LABEL_DEFAULTS;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDescription()
-	 */
-	public String getDescription() {
-		return DESCN;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getDetailedDescription()
-	 */
-	public String getDetailedDescription() {
-		return DETAILED_DESCN;
 	}
 
 	/* (non-Javadoc)
@@ -100,13 +82,6 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getName()
-	 */
-	public String getName() {
-		return NAME;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getPropertiesFilter()
 	 */
 	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
@@ -125,13 +100,6 @@ public class FallbackShapeAttributeDefaults implements IShapeAttributeDefaults {
 	 */
 	public Dimension getSize() {
 		return SIZE;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults#getURL()
-	 */
-	public String getURL() {
-		return URL;
 	}
 
 	/* (non-Javadoc)

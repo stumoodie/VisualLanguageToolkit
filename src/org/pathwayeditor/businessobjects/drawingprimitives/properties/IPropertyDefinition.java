@@ -27,10 +27,14 @@ public interface IPropertyDefinition {
 	
 	/**
 	 * The property name
-	 * @return S string that is not null.
+	 * @return A string that is not null.
 	 */
 	String getName();
 	
+	/**
+	 * The name of the property to be displayed.
+	 * @return the name of the property displayed by the user interface. 
+	 */
 	String getDisplayName();
 	
 	/**

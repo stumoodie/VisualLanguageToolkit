@@ -15,6 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
+import java.net.URI;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListenee;
 
@@ -57,6 +59,10 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
 	void setDisplayed(boolean displayed);
+	
+	URI getHyperlink();
+	
+	void setHyperlink(URI uri);
 	
 	/**
 	 * Get the label that is being used to display this property.
