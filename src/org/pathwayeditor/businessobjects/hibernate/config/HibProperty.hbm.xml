@@ -17,6 +17,9 @@
         <property name="displayName" type="string">
 	        <column name="display_name" not-null="true" />
     	</property>
+        <property name="uri" type="string">
+	        <column name="uri" not-null="true" />
+    	</property>
 		<many-to-one name="displayedLabel" class="org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute" cascade="none" lazy="false">
 			<column name="displayed_label_id" not-null="false" />
 		</many-to-one>

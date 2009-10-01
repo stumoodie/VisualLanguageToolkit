@@ -42,6 +42,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
+	private String uri = "";
 	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem();
 
 
@@ -93,6 +94,14 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
+	}
+
+	public String getUri() {
+		return this.uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 
 	public boolean isDisplayed() {
