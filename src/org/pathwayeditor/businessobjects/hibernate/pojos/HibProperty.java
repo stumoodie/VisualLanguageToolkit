@@ -55,6 +55,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	protected HibProperty(HibAnnotatedCanvasAttribute owner, IPropertyDefinition propDefn) {
 		this.owner = owner;
 		this.name = propDefn.getName();
+		this.displayName=propDefn.getDisplayName();
 	}
 
 	protected HibProperty(HibAnnotatedCanvasAttribute newOwner, HibProperty other) {

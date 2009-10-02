@@ -69,14 +69,18 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 		return this.values;
 	}
 	
-	void setValue(List<String> value){
+	public void setValue(List<String> value){
+		List<String> oldValue = this.values;
 		this.values = value;
+		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, value);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty#addValue(java.lang.String)
 	 */
 	public void addValue(String newValue) {
+		List<String> oldValue = this.values;
+		this.values = new ArrayList<String>(oldValue);
 		this.values.add(newValue);
 		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, null, newValue);
 	}
