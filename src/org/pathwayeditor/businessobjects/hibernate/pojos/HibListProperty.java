@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -101,6 +102,13 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	 */
 	public boolean canVisualiseProperty() {
 		return this.propertyDefinition.isVisualisable();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitListAnnotationProperty(this);
 	}
 
 }

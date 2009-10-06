@@ -186,7 +186,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	public final void removeChangeListener(IAnnotationPropertyChangeListener listener) {
 		this.listenerHandler.removeChangeListener(listener);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

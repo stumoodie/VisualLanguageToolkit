@@ -59,6 +59,7 @@ public class IHtmlAnnotationPropertyTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(mockPropDefn).getName(); will(returnValue(PROP_NAME));
 			allowing(mockPropDefn).getDefaultValue(); will(returnValue(TEXT_VALUE));
+			allowing(mockPropDefn).getDisplayName(); will(returnValue(PROP_NAME));
 		}});
 		
 		htmlProperty = new HibRichTextProperty (mockCanvasAttribute, mockPropDefn) ;
@@ -67,6 +68,9 @@ public class IHtmlAnnotationPropertyTest {
 
 	@After
 	public void tearDown() throws Exception {
+		this.mockPropDefn = null;
+		this.htmlProperty = null;
+		this.mockCanvasAttribute = null;
 	}
 	
 	@Test

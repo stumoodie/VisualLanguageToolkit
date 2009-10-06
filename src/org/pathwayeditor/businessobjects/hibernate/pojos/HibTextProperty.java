@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -84,6 +85,13 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 	 */
 	public boolean canVisualiseProperty() {
 		return this.propertyDefinition.isVisualisable();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitPlainTextAnnotationProperty(this);
 	}
 
 }

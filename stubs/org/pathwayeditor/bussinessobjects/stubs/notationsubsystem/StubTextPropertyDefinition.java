@@ -22,6 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
@@ -99,6 +100,14 @@ public class StubTextPropertyDefinition implements IPlainTextPropertyDefinition 
 		return NAME;
 	}
 	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IPropertyDefinition o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());

@@ -61,7 +61,7 @@
     		<key>
     			<column name="id" not-null="true" unique="true"/>
     		</key>
-	        <property name="value" type="int">
+	        <property name="value" type="boolean">
     	        <column name="boolean_value" not-null="false" />
         	</property>
     	</joined-subclass>

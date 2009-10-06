@@ -17,6 +17,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.math.BigDecimal;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -85,6 +86,13 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 	 */
 	public boolean canVisualiseProperty() {
 		return this.propertyDefinition.isVisualisable();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitNumberAnnotationProperty(this);
 	}
 
 }

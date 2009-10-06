@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
@@ -102,6 +103,14 @@ public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
 		return NAME;
 	}
 	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IPropertyDefinition o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());

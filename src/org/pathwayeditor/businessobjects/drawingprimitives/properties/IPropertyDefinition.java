@@ -31,6 +31,10 @@ public interface IPropertyDefinition {
 	 */
 	String getName();
 	
+	/**
+	 * Get the display name.
+	 * @return the display name which cannot be null.
+	 */
 	String getDisplayName();
 	
 	/**
@@ -53,6 +57,11 @@ public interface IPropertyDefinition {
 	
 	ILabelAttributeDefaults getLabelDefaults();
 	
+	/**
+	 * A method to create the property using the visitor pattern. 
+	 * @param propertyBuilder
+	 * @return the newly created property.
+	 */
 	IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder);
 
 	/**
@@ -61,5 +70,16 @@ public interface IPropertyDefinition {
 	 */
 	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty);
 	
+//	/**
+//	 * Provides a string describing what the valid property should look like.
+//	 * @return the valid property description which cannot be null.
+//	 */
+//	String getValidPropertyInformation();
+//	
+//	/**
+//	 * Gets a validator that is used to check the validity of the annotation property
+//	 * @return the validator, which cannot be null.
+//	 */
+//	IAnnotationPropertyValidator getValidator();
 	
 }

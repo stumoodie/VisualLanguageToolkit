@@ -15,6 +15,12 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
+/**
+ * @deprecated Do not use. No longer supported. Use a Plain Text Property Instead. Scheduled for deletion soon.
+ * @author smoodie
+ *
+ */
+
 public interface IHtmlAnnotationProperty extends IAnnotationProperty {
 	
 	/**

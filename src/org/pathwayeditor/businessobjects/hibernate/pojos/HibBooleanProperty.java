@@ -15,6 +15,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -82,4 +83,10 @@ public class HibBooleanProperty extends HibProperty implements IBooleanAnnotatio
 		return this.propertyDefinition.isVisualisable();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitBooleanAnnotationProperty(this);
+	}
 }
