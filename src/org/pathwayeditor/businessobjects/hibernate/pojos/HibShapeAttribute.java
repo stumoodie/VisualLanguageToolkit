@@ -32,11 +32,13 @@ import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationD
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
+import org.pathwayeditor.figure.figuredefn.FigureController;
+import org.pathwayeditor.figure.figuredefn.IFigureController;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figurevm.FigureDefinitionCompiler;
 
 public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
@@ -62,7 +64,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private HibShapeNode shapeNode;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
 	private transient IConvexHull hull = null;
-	private GraphicsInstructionList graphicsInstructions;
+	private IFigureController figureController = null;
 	
 
 	/**
@@ -409,16 +411,21 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getFigureDefinition()
 	 */
-	public GraphicsInstructionList getGraphicalDefinition() {
-		return this.graphicsInstructions;
+	public IFigureController getFigureController() {
+		if(this.figureController == null){
+			FigureDefinitionCompiler compiler = new FigureDefinitionCompiler(this.figureDefn);
+			compiler.compile();
+			figureController = new FigureController(compiler.getCompiledFigureDefinition());
+		}
+		return this.figureController;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setFigureDefinition(org.pathwayeditor.figure.customfigure.GraphicsInstructionList)
-	 */
-	public void setGraphicalDefinition(GraphicsInstructionList instList) {
-		this.graphicsInstructions = instList;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setFigureDefinition(org.pathwayeditor.figure.customfigure.GraphicsInstructionList)
+//	 */
+//	public void setGraphicalDefinition(GraphicsInstructionList instList) {
+//		this.graphicsInstructions = instList;
+//	}
 
 	public boolean areListenersEnabled() {
 		return this.listenablePropertyChangeItem.areListenersEnabled();
