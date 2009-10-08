@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.figure.geometry;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -23,13 +24,40 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 			return true;
 		}
 	};
+	
+	private static final Comparator<IDrawingNode> DEFAULT_COMPARATOR = new Comparator<IDrawingNode>(){
+
+		public int compare(IDrawingNode o1, IDrawingNode o2) {
+			int retVal = 0;
+			if(o1.getLevel() < o2.getLevel()){
+				retVal = 1;
+			}
+			else if(o1.getLevel() > o2.getLevel()){
+				retVal = -1;
+			}
+			else{
+				int o1Idx = o1.getIndex();
+				int o2Idx = o2.getIndex();
+				retVal = o1Idx < o2Idx ? 1 : (o1Idx > o2Idx ? -1 : 0); 
+			}
+			return retVal;
+		}
+		
+	};
+	
 	private final IModel model;
 	private IIntersectionCalcnFilter filter;
+	private Comparator<IDrawingNode> comparator = DEFAULT_COMPARATOR;
 	
 	public ShapeIntersectionCalculator(IModel model){
 		this.model = model;
 		this.filter = DEFAULT_FILTER;
 	}
+	
+	public void setComparator(Comparator<IDrawingNode> comparator){
+		this.comparator = comparator;
+	}
+	
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.geometry.INodeIntersectionCalculator#getModel()
@@ -55,7 +83,7 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	 */
 	public SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull){
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
-		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>();
+		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>(this.comparator);
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
 			if(filter.accept(node) && queryHull.hullsIntersect(node.getAttribute().getConvexHull())){
@@ -70,7 +98,7 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	 */
 	public SortedSet<IDrawingNode> findNodesAt(Point p) {
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
-		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>();
+		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>(this.comparator);
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
 			logger.trace("Testing contains node:" + node + ", hull=" + node.getAttribute().getConvexHull() + ", point=" + p);

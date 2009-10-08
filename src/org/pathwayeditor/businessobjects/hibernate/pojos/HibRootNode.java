@@ -19,6 +19,7 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
@@ -121,9 +122,12 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	 */
 	public boolean canParent(IDrawingNode possibleChild) {
 		boolean retVal = false;
-		if(possibleChild != null){
+		if(possibleChild != null && !this.equals(possibleChild)){
 			if(possibleChild instanceof ILabelNode){
-				retVal = true;
+				// test if the label belongs to a drawing element help in the submode
+				// of this node (required for link labels)
+				ILabelAttribute labelAttrib = (ILabelAttribute)possibleChild.getAttribute();
+				retVal = this.getSubModel().equals(labelAttrib.getProperty().getOwner().getLabelSubModel());
 			}
 			else{
 				ITypedDrawingNode typedNode = (ITypedDrawingNode)possibleChild;

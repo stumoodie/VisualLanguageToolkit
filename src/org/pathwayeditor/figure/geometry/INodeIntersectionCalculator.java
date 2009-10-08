@@ -3,6 +3,7 @@
  */
 package org.pathwayeditor.figure.geometry;
 
+import java.util.Comparator;
 import java.util.SortedSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
@@ -18,6 +19,8 @@ public interface INodeIntersectionCalculator {
 
 	void setFilter(IIntersectionCalcnFilter filter);
 
+	void setComparator(Comparator<IDrawingNode> comparator);
+	
 	SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull);
 
 	SortedSet<IDrawingNode> findNodesAt(Point p);

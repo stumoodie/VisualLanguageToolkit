@@ -32,6 +32,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	private HibSubModel childCompoundGraph = null;
 	private HibCompoundNode hibParentNode = null;
 	private boolean removed;
+	private transient Integer level;
 	private INodeSet<BaseCompoundNode, BaseCompoundEdge> children = new NodeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
@@ -57,6 +58,7 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		if(this.hibParentNode != null) {
 			this.hibParentNode.getSubModel().addNewNode(this);
 		}
+		this.level = super.calcTreeLevel();
 	}
 	
 	void setOwningChildGraph(HibSubModel childCompoundGraph){
@@ -226,4 +228,15 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		}
 		return retVal;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode#getLevel()
+	 */
+	public int getLevel() {
+		if(this.level == null){
+			this.level = Integer.valueOf(super.calcTreeLevel());
+		}
+		return this.level.intValue();
+	}
+
 }

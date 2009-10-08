@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableSubModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
@@ -183,7 +184,11 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
 			while(iter.hasNext() && retVal) {
 				IDrawingNode node = iter.next();
-				retVal = this.getRootNode().canParent(node);
+				// ignore labels - just looks at types
+				if(node instanceof ITypedDrawingNode){
+					ITypedDrawingNode typesNode = (ITypedDrawingNode)node;
+					retVal = this.getRootNode().canParent(typesNode.getAttribute().getObjectType());
+				}
 			}
 		}
 		return retVal;
