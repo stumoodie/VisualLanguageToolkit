@@ -17,6 +17,8 @@ public interface IConvexHull {
 
 	List<Point> getPoints();
 
+	Iterator<Point> pointIterator();
+	
 	Point getPointLineIntersects(Point reference);
 	
 //	Point getPointLineIntersects(double refX, double refY);

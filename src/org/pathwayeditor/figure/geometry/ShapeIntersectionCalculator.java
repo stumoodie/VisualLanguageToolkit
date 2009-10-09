@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 
 /**
  * @author smoodie
@@ -81,12 +82,17 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.geometry.INodeIntersectionCalculator#findIntersectingNodes(org.pathwayeditor.figure.geometry.IConvexHull)
 	 */
-	public SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull){
+	public SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull, IDrawingNode queryNode){
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
 		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>(this.comparator);
+		// the root node will always intersect - that's a give so add it in and exclude it from
+		// intersection tests
+		IRootNode rootNode = model.getRootNode();
+		retVal.add(rootNode);
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
-			if(filter.accept(node) && queryHull.hullsIntersect(node.getAttribute().getConvexHull())){
+			// ignore matches to self
+			if(!node.equals(queryNode) && !node.equals(rootNode) && filter.accept(node) && queryHull.hullsIntersect(node.getAttribute().getConvexHull())){
 				retVal.add(node);
 			}
 		}

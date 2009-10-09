@@ -21,7 +21,7 @@ public interface INodeIntersectionCalculator {
 
 	void setComparator(Comparator<IDrawingNode> comparator);
 	
-	SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull);
+	SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull, IDrawingNode queryNode);
 
 	SortedSet<IDrawingNode> findNodesAt(Point p);
 	

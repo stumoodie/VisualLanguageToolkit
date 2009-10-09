@@ -25,11 +25,13 @@ public class EnvelopeTest {
 	private static final Point EXPECTED_VERTICAL_CORNER = new Point(179.0, -32.0);
 	private static final Point EXPECTED_DIAGONAL_CORNER = new Point(240.0, -32.0);
 	private Envelope testInstance;
+	private Envelope altTestInstance;
 	
 	
 	@Before
 	public void doSetUp(){
 		this.testInstance = new Envelope(EXPECTED_X, EXPECTED_Y, EXPECTED_WIDTH, EXPECTED_HEIGHT);
+		this.altTestInstance = new Envelope(77.0, 90, 86, 71);
 	}
 	
 	
@@ -96,6 +98,11 @@ public class EnvelopeTest {
 			Envelope intersectingEnv = new Envelope(EXPECTED_X, EXPECTED_Y-100, EXPECTED_WIDTH, EXPECTED_HEIGHT);
 			assertFalse("intersects", this.testInstance.intersects(intersectingEnv));
 			assertFalse("reciprocal case intersects", intersectingEnv.intersects(this.testInstance));
+		}
+		{
+			Envelope intersectingEnv = new Envelope(-8.9, -9.1, 1.9, 1.9);
+			assertFalse("intersects", this.altTestInstance.intersects(intersectingEnv));
+			assertFalse("reciprocal case intersects", intersectingEnv.intersects(this.altTestInstance));
 		}
 	}
 

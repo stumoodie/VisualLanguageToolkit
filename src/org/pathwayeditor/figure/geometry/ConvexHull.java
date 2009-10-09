@@ -170,7 +170,9 @@ public class ConvexHull implements IConvexHull {
 //				min0 += offset;
 //				max0 += offset;
 				logger.debug("Testing other hull");
-				for(Point p : otherHull.getPoints()){
+				Iterator<Point> otherHullPointIter = otherHull.pointIterator();
+				while(otherHullPointIter.hasNext()){
+					Point p = otherHullPointIter.next();
 					double projection = outerNormal.scalarProduct(new Vector(p.getX(), p.getY(), 0));
 					logger.trace("testLines: projection=" + projection + ", for p=" + p);
 					min1 = Math.min(min1, projection);
@@ -229,6 +231,9 @@ public class ConvexHull implements IConvexHull {
 		return new ArrayList<Point>(this.pointList);
 	}
 
+	public Iterator<Point> pointIterator(){
+		return this.pointList.iterator();
+	}
 
 	public IConvexHull translate(double d, double e) {
 		List<Point> retVal = new ArrayList<Point>(this.pointList.size()); 
