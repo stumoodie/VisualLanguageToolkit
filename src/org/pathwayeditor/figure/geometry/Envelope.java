@@ -41,7 +41,13 @@ public class Envelope {
 		return new Point(newX, newY);
 	}
 	
-@Override
+	public Point calculateTranslation(Envelope destinationBounds){
+		double x = destinationBounds.getOrigin().getX() - this.getOrigin().getX();
+		double y = destinationBounds.getOrigin().getY() - this.getOrigin().getY();
+		return new Point(x, y);
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
