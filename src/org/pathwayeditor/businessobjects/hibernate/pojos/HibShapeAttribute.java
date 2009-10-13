@@ -63,7 +63,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private HibShapeNode shapeNode;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
-	private transient IConvexHull hull = null;
+//	private transient IConvexHull hull = null;
 	private IFigureController figureController = null;
 	
 
@@ -321,6 +321,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if(!this.size.equals(size)){
 			Dimension oldSize = this.size;
 			this.size = size;
+			getConvexHull().changeEnvelope(getBounds());
 			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.size);
 		}
 	}
@@ -393,6 +394,8 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
+		getFigureController().setRequestedEnvelope(newBounds);
+		getFigureController().generateFigureDefinition();
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
@@ -401,12 +404,12 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getConvexHull()
 	 */
 	public IConvexHull getConvexHull() {
-		return this.hull;
+		return getFigureController().getConvexHull();
 	}
 	
-	public void setConvexHull(IConvexHull hull){
-		this.hull = hull;
-	}
+//	public void setConvexHull(IConvexHull hull){
+//		this.hull = hull;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getFigureDefinition()

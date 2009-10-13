@@ -134,12 +134,27 @@ public interface ISubModel extends ISubModelChangeListenee, ISuppressableChangeL
 	int numLabelNodes();
 	
 	
+	/**
+	 * Does tree traversal taking the current node then each of the child subtrees in turn.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<IDrawingNode> preOrderTraveralIterator();
+	
+	/**
+	 * Does tree traversal taking the current node then each of the child nodes at the next level
+	 * traversing the nodes in each level of the tree in turn.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<IDrawingNode> levelOrderTraveralIterator();
+	
+	/**
+	 * Iterators over all the drawing nodes in this submodel 
+	 * @return the iterator, which cannot be null.
+	 */
 	Iterator<IDrawingNode> drawingNodeIterator();
 	
 	/**
-	 * Traverses over all the shapes in the sub-model, using depth-first
-	 * traversal. This means that each root node will be taken in turn and 
-	 * traversal will proceed down the tree until all nodes are traversed.
+	 * Traverses over all the shapes in the sub-model
 	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<IShapeNode> shapeNodeIterator();

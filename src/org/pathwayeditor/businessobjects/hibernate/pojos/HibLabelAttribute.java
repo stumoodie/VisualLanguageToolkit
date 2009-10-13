@@ -34,6 +34,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.geometry.RectangleHull;
 
 public class HibLabelAttribute extends HibCanvasAttribute implements Serializable, ILabelAttribute {
 	private final Logger logger = Logger.getLogger(this.getClass()); 
@@ -41,8 +42,8 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 
 	private static final int DEFAULT_X = 0;
 	private static final int DEFAULT_Y = 0;
-	private static final int DEFAULT_HEIGHT = 0;
-	private static final int DEFAULT_WIDTH = 0;
+	private static final int DEFAULT_HEIGHT = 1;
+	private static final int DEFAULT_WIDTH = 1;
 
 	private Point position = new Point(DEFAULT_X, DEFAULT_Y);
 	private Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -368,6 +369,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
+		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
@@ -376,15 +378,18 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
 	 */
 	public IConvexHull getConvexHull() {
+		if(convexHull == null){
+			this.convexHull = new RectangleHull(getBounds());
+		}
 		return this.convexHull;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setConvexHull(org.pathwayeditor.figure.geometry.IConvexHull)
-	 */
-	public void setConvexHull(IConvexHull newHull) {
-		this.convexHull = newHull;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setConvexHull(org.pathwayeditor.figure.geometry.IConvexHull)
+//	 */
+//	public void setConvexHull(IConvexHull newHull) {
+//		this.convexHull = newHull;
+//	}
 
 	public boolean areListenersEnabled() {
 		return this.listenablePropertyChangeItem.areListenersEnabled();

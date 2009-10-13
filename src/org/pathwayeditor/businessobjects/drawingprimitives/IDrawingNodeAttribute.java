@@ -18,10 +18,8 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
-import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
@@ -29,13 +27,13 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public interface IDrawingNodeAttribute extends ICanvasAttribute {
 
-	Point getLocation();
+//	Point getLocation();
+//	
+//	void setLocation(Point newLocation);
 	
-	void setLocation(Point newLocation);
-	
-	Dimension getSize();
-	
-	void setSize(Dimension newSize);
+//	Dimension getSize();
+//	
+//	void setSize(Dimension newSize);
 	
 	Envelope getBounds();
 	
@@ -43,5 +41,5 @@ public interface IDrawingNodeAttribute extends ICanvasAttribute {
 
 	IConvexHull getConvexHull();
 	
-	void setConvexHull(IConvexHull newHull);
+//	void setConvexHull(IConvexHull newHull);
 }
