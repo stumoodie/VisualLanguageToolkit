@@ -27,13 +27,13 @@ import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.testutils.PojoXlsTester;
+import org.pathwayeditor.testutils.PojoXlsXmlTester;
 
 /**
  * @author smoodie
  *
  */
-public class HibLabelAttributeTest extends PojoXlsTester {
+public class HibLabelAttributeTest extends PojoXlsXmlTester {
 	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 
 	private static final long TEST_LABEL_ID = 100024L;

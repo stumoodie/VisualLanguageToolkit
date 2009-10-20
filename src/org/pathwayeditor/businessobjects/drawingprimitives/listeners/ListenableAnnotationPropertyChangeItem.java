@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 /**
  * @author smoodie
@@ -31,9 +31,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 public final class ListenableAnnotationPropertyChangeItem	implements IAnnotationPropertyChangeListenee, ISuppressableChangeListenee {
 	private final List<IAnnotationPropertyChangeListener> listeners;
 	private boolean enabled = true; 
+	private IAnnotationProperty annot;
 	
-	public ListenableAnnotationPropertyChangeItem(){
+	public ListenableAnnotationPropertyChangeItem(IAnnotationProperty annot){
 		this.listeners = new CopyOnWriteArrayList<IAnnotationPropertyChangeListener>();
+		this.annot = annot;
 	}
 
 	/**
@@ -51,7 +53,7 @@ public final class ListenableAnnotationPropertyChangeItem	implements IAnnotation
 		}
 	}
 	
-	public final void notifyPropertyChange(final IPropertyDefinition propDefn, final Object oldValue, final Object newValue){
+	public final void notifyPropertyChange(final Object oldValue, final Object newValue){
 		IAnnotationPropertyChangeEvent event = new IAnnotationPropertyChangeEvent(){
 
 			public Object getNewValue() {
@@ -62,8 +64,8 @@ public final class ListenableAnnotationPropertyChangeItem	implements IAnnotation
 				return oldValue;
 			}
 
-			public IPropertyDefinition getPropertyDefinition() {
-				return propDefn;
+			public IAnnotationProperty getPropertyDefinition() {
+				return annot;
 			}
 			
 		};

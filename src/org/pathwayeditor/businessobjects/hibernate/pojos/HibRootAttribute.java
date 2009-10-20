@@ -18,19 +18,19 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.figure.geometry.RectangleHull;
 
 /**
  * @author smoodie
@@ -41,37 +41,34 @@ public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawin
 	private static final Dimension INITIAL_SIZE = new Dimension(Double.MAX_VALUE, Double.MAX_VALUE);
 	private HibObjectType hibObjectType;
 	private IRootObjectType objectType;
-	private IRootNode rootNode;
-	private IConvexHull convexHull;
+	private HibRootNode rootNode;
+//	private IConvexHull convexHull;
 	private Point location = INITIAL_POS; 
 	private Dimension size = INITIAL_SIZE; 
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
+	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
 
 	/**
 	 * @deprecated Only to be used by hibernate, not application code.
 	 */
 	HibRootAttribute(){
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 	
 	public HibRootAttribute(HibCanvas canvas, int creationSerial, IRootObjectType objectType, HibObjectType hibObjectType) {
 		super(canvas, creationSerial);
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
 	}
 
 	public HibRootAttribute(HibCanvas canvas, int creationSerial, HibRootAttribute otherAttribute) {
 		super(canvas, creationSerial);
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.objectType = otherAttribute.getObjectType();
 		this.hibObjectType = otherAttribute.getHibObjectType();
 	}
 
-	@Override
-	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-		this.objectType = (IRootObjectType)objectType;
-	}
+//	@Override
+//	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+//		this.objectType = (IRootObjectType)objectType;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getObjectType()
@@ -81,9 +78,17 @@ public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawin
 	}
 
 	void setRootNode(IRootNode rootNode) {
-		this.rootNode = rootNode;
+		this.rootNode = (HibRootNode)rootNode;
 	}
 	
+	void setCurrentRootNode(HibRootNode newNode){
+		this.rootNode = newNode;
+	}
+
+	HibRootNode getCurrentRootNode(){
+		return this.rootNode;
+	}
+
 	IRootNode getRootNode() {
 		return this.rootNode;
 	}
@@ -134,7 +139,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawin
 		Point oldLocation = this.location;
 		if(!oldLocation.equals(newLocation)){
 			this.location = newLocation;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, newLocation);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldLocation, newLocation);
 		}
 	}
 
@@ -145,7 +150,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawin
 		Dimension oldSize = this.size;
 		if(!oldSize.equals(newSize)){
 			this.size = newSize;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, newSize);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldSize, newSize);
 		}
 	}
 
@@ -160,18 +165,54 @@ public class HibRootAttribute extends HibCanvasAttribute implements ITypedDrawin
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
-		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
+//		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
 		setLocation(newBounds.getOrigin());
 		setSize(newBounds.getDimension());
 	}
 
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
+//	 */
+//	public IConvexHull getConvexHull() {
+//		if(convexHull == null){
+//			this.convexHull = new RectangleHull(getBounds());
+//		}
+//		return this.convexHull;
+//	}
+
+	public void setObjectType(IRootObjectType objectType) {
+		this.objectType = objectType;
+	}
+
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector)
 	 */
-	public IConvexHull getConvexHull() {
-		if(convexHull == null){
-			this.convexHull = new RectangleHull(getBounds());
-		}
-		return this.convexHull;
+	@Override
+	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
+		injector.inject(this);
+	}
+
+	public final void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.addChangeListener(listener);
+	}
+
+	public boolean areListenersEnabled() {
+		return this.listenablePropertyChangeItem.areListenersEnabled();
+	}
+
+	public final Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
+		return this.listenablePropertyChangeItem.listenerIterator();
+	}
+
+	public final void notifyPropertyChange(CanvasAttributePropertyChange type, Object oldValue, Object newValue) {
+		this.listenablePropertyChangeItem.notifyPropertyChange(type, oldValue, newValue);
+	}
+
+	public final void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
+		this.listenablePropertyChangeItem.removeChangeListener(listener);
+	}
+
+	public void setListenersEnabled(boolean enabled) {
+		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
 }

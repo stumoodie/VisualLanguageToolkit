@@ -17,18 +17,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.figure.figuredefn.IFigureController;
-import org.pathwayeditor.figure.geometry.Dimension;
-import org.pathwayeditor.figure.geometry.Point;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITypedDrawingNodeAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITypedDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
-	
-	IFigureController getFigureController(); 
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -37,40 +32,6 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITy
 	IShapeObjectType getObjectType();
 	
 
-	/**
-	 * Sets the new location for this Shape.
-	 * @param newLocation the new location. Cannot be null
-	 * @throws IllegalArgumentException if location is null.
-	 */
-	void setLocation(Point newLocation);
-	
-	/**
-	 * Returns a {@link Point} representation of the coordinates of this Shape.
-	 * @return the location. Cannot be null.
-	 */
-	Point getLocation();
-	
-	/**
-	 * Sets the new size for this Shape.
-	 * @param size the new size. Cannot be null
-	 * @throws IllegalArgumentException if size is null.
-	 */
-	void setSize(Dimension size);
-	
-	/**
-	 * Returns a {@link Dimension} representation for the size of this Shape
-	 * @return the size. Cannot be null.
-	 */
-	Dimension getSize();
-	
-	/**
-	 * Sets the shape definition string for this Shape.
-	 * @param shapeDefinitionthe new shape definition string. Cannot be null
-	 * @throws IllegalArgumentException if shapeDefinition is null.
-	 */
-	void setShapeDefinition(String shapeDefinition);
-	
-	
 	/**
 	 * Gets the shape definition string, which cannot be null.
 	 * @return the shape definition.

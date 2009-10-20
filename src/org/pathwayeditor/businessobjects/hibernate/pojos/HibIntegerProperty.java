@@ -50,7 +50,7 @@ public class HibIntegerProperty extends HibProperty implements IIntegerAnnotatio
 		if(!numberValue.equals(this.numberValue)){
 			Integer oldValue = this.numberValue;
 			this.numberValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.numberValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.numberValue);
 		}
 	}
 

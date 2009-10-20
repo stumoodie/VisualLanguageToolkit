@@ -39,6 +39,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraphFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.figure.figuredefn.FigureGeometryFactory;
+import org.pathwayeditor.figure.figuredefn.IFigureGeometryFactory;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
@@ -66,6 +68,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	private final transient IndexCounter momentoCntr;
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
 	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
+	private final IFigureGeometryFactory figureGeometryFactory = new FigureGeometryFactory(this);
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -417,5 +420,12 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 
 	public void setListenersEnabled(boolean enabled) {
 		this.listenerHandler.setListenersEnabled(enabled);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getFigureGeometryFactory()
+	 */
+	public IFigureGeometryFactory getFigureGeometryFactory() {
+		return this.figureGeometryFactory;
 	}
 }

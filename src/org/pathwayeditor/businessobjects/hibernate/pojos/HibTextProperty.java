@@ -52,7 +52,7 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		if(!textValue.equals(this.textValue)){
 			String oldValue = this.textValue;
 			this.textValue = textValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.textValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.textValue);
 		}
 	}
 

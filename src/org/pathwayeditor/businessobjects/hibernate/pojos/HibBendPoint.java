@@ -21,10 +21,8 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointLocationChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableBendPointLocationChangeItem;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
@@ -38,7 +36,7 @@ public class HibBendPoint implements IBendPoint, Serializable {
 	private int creationSerial;
 	private int indexPos;
 	private Point position = DEFAULT_LOCATION;
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
+	private transient final ListenableBendPointLocationChangeItem listenablePropertyChangeItem = new ListenableBendPointLocationChangeItem(this);
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -150,7 +148,7 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		if(!this.position.equals(location)){
 			Point oldLocation = this.position;
 			this.position = location;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(oldLocation, this.position);
 		}
 	}
 
@@ -163,23 +161,19 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		this.creationSerial = creationSerial;
 	}
 
-	public final void addChangeListener(IPropertyChangeListener listener) {
+	public final void addChangeListener(IBendPointLocationChangeListener listener) {
 		this.listenablePropertyChangeItem.addChangeListener(listener);
 	}
 
-	public final void firePropertyChange(IPropertyChangeEvent evt) {
-		this.listenablePropertyChangeItem.firePropertyChange(evt);
-	}
-
-	public final List<IPropertyChangeListener> getListeners() {
+	public final List<IBendPointLocationChangeListener> getListeners() {
 		return this.listenablePropertyChangeItem.getListeners();
 	}
 
-	public final Iterator<IPropertyChangeListener> listenerIterator() {
+	public final Iterator<IBendPointLocationChangeListener> listenerIterator() {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
 
-	public final void removeChangeListener(IPropertyChangeListener listener) {
+	public final void removeChangeListener(IBendPointLocationChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 

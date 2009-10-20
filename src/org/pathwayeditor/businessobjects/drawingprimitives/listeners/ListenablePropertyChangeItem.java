@@ -22,36 +22,44 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+
 /**
  * @author smoodie
  *
  */
-public final class ListenablePropertyChangeItem	implements IPropertyChangeListenee, ISuppressableChangeListenee {
-	private final List<IPropertyChangeListener> listeners;
+public final class ListenablePropertyChangeItem	implements ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+	private final List<ICanvasAttributePropertyChangeListener> listeners;
+	private final ICanvasAttribute attribute;
 	private boolean enabled = true; 
 	
-	public ListenablePropertyChangeItem(){
-		this.listeners = new CopyOnWriteArrayList<IPropertyChangeListener>();
+	public ListenablePropertyChangeItem(ICanvasAttribute attribute){
+		this.listeners = new CopyOnWriteArrayList<ICanvasAttributePropertyChangeListener>();
+		this.attribute = attribute;
 	}
 
 	/**
 	 * 
 	 */
-	public final List<IPropertyChangeListener> getListeners() {
+	public final List<ICanvasAttributePropertyChangeListener> getListeners() {
 		return this.listeners;
 	}
 
-	public final void firePropertyChange(IPropertyChangeEvent evt){
+	public final void firePropertyChange(ICanvasAttributePropertyChangeEvent evt){
 		if(enabled){
-			for(IPropertyChangeListener listener : this.getListeners()){
+			for(ICanvasAttributePropertyChangeListener listener : this.getListeners()){
 				listener.propertyChange(evt);
 			}
 		}
 	}
 	
-	public final void notifyPropertyChange(final PropertyChange type, final Object oldValue, final Object newValue){
-		IPropertyChangeEvent event = new IPropertyChangeEvent(){
+	public final void notifyPropertyChange(final CanvasAttributePropertyChange type, final Object oldValue, final Object newValue){
+		ICanvasAttributePropertyChangeEvent event = new ICanvasAttributePropertyChangeEvent(){
 
+			public ICanvasAttribute getAttribute(){
+				return attribute;
+			}
+			
 			public Object getNewValue() {
 				return newValue;
 			}
@@ -60,7 +68,7 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 				return oldValue;
 			}
 
-			public PropertyChange getPropertyChange() {
+			public CanvasAttributePropertyChange getPropertyChange() {
 				return type;
 			}
 			
@@ -68,15 +76,15 @@ public final class ListenablePropertyChangeItem	implements IPropertyChangeListen
 		firePropertyChange(event);
 	}
 	
-	public final Iterator<IPropertyChangeListener> listenerIterator(){
+	public final Iterator<ICanvasAttributePropertyChangeListener> listenerIterator(){
 		return this.listeners.iterator();
 	}
 	
-	public final void addChangeListener(IPropertyChangeListener listener){
+	public final void addChangeListener(ICanvasAttributePropertyChangeListener listener){
 		this.listeners.add(listener);
 	}
 
-	public final void removeChangeListener(IPropertyChangeListener listener){
+	public final void removeChangeListener(ICanvasAttributePropertyChangeListener listener){
 		this.listeners.remove(listener);
 	}
 

@@ -22,6 +22,7 @@ import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.figure.figuredefn.IFigureGeometryFactory;
 
 
 /**
@@ -157,4 +158,7 @@ public interface IModel extends IModelChangeListenee, ISuppressableChangeListene
 	 * @return the number of link edges.
 	 */
 	int numLinkEdges();
+	
+	
+	IFigureGeometryFactory getFigureGeometryFactory();
 }

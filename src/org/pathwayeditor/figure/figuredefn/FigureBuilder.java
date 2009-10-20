@@ -586,4 +586,20 @@ public class FigureBuilder {
 		}
 		
 	}
+
+	public Boolean getBindBooleanValue(String name) {
+		return this.producer.getBindBooleanValue(name);
+	}
+
+	public Double getBindDoubleValue(String name) {
+		return this.producer.getBindDoubleValue(name);
+	}
+
+	public Integer getBindIntegerValue(String name) {
+		return this.producer.getBindIntegerValue(name);
+	}
+
+	public String getBindStringValue(String name) {
+		return this.producer.getBindStringValue(name);
+	}
 }

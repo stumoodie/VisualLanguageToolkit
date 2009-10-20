@@ -30,6 +30,11 @@
 				cascade="none" lazy="false">
 				<column name="object_type_id" not-null="true" />
 			</many-to-one>
+			<many-to-one name="currentRootNode"
+				class="org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode"
+				cascade="none" lazy="false" >
+				<column name="current_node_id" not-null="false" />
+			</many-to-one>
 		</joined-subclass>
 
 		<joined-subclass

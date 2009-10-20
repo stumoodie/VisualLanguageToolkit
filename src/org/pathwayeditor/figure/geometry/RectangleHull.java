@@ -17,9 +17,9 @@ public class RectangleHull implements IConvexHull {
 	public RectangleHull(Envelope initialBounds){
 		List<Point> points = new LinkedList<Point>();
 		points.add(initialBounds.getOrigin());
-		points.add(initialBounds.getVerticalCorner());
-		points.add(initialBounds.getDiagonalCorner());
 		points.add(initialBounds.getHorizontalCorner());
+		points.add(initialBounds.getDiagonalCorner());
+		points.add(initialBounds.getVerticalCorner());
 		this.hull = new ConvexHull(points);
 	}
 

@@ -21,6 +21,7 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -51,8 +52,6 @@ import org.junit.BeforeClass;
 public abstract class PojoTester {
 
 	private static HibernateTestManager dbTester = null;
-//	private SessionFactory hibFactory;
-//	private Session session;
 	private FileInputStream loadFile = null;
 	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
 	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
@@ -69,6 +68,7 @@ public abstract class PojoTester {
 	public static void dropSchema() throws Exception {
 		dbTester.discardHibernateSessionFactory();
 		dbTester.dropSchema();
+		dbTester = null;
 	}
 
 	@Before
@@ -187,14 +187,18 @@ public abstract class PojoTester {
 	 * @throws Exception An exception is thrown by DBUnit during the comparison.
 	 */
 	protected final void compareDatabase(String mainFile, String deltaFile) throws Exception{
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(deltaFile));
+		InputStream deltaIn = new FileInputStream(deltaFile);
+		IDataSet expectedDeltas = new XmlDataSet(deltaIn);
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(new XmlDataSet(new FileInputStream(mainFile)), expectedDeltas);
+		InputStream mainIn = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new CompositeDataSet(new XmlDataSet(mainIn), expectedDeltas);
 		for (String t : testTables) {
 			String[] columnNameList = getFilterColumnNames(expectedDeltas.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		mainIn.close();
+		deltaIn.close();
 	}
 
 	private String[] getFilterColumnNames(ITable expectedFilterTable) throws DataSetException {
@@ -216,7 +220,8 @@ public abstract class PojoTester {
 	}
 	
 	protected final void compareDatabase(String mainFile) throws Exception{
-		IDataSet expectedChanges = new XmlDataSet(new FileInputStream(mainFile)); 
+		InputStream mainIn = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new XmlDataSet(mainIn); 
 		String testTables[] = expectedChanges.getTableNames();
 		
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
@@ -224,5 +229,6 @@ public abstract class PojoTester {
 			String[] columnNameList = getFilterColumnNames(expectedChanges.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		mainIn.close();
 	}
 }

@@ -254,7 +254,7 @@
 			<value>150</value>
 			<value>3</value>
 			<value>1</value>
-			<value>curbounds 90 90 arc</value>
+			<value>curbounds oval</value>
 			<value>75</value>
 			<value>75</value>
 			<value>50</value>
@@ -270,7 +270,7 @@
 			<value>150</value>
 			<value>3</value>
 			<value>1</value>
-			<value>curbounds 90 90 arc</value>
+			<value>curbounds oval</value>
 			<value>75</value>
 			<value>75</value>
 			<value>50</value>

@@ -23,18 +23,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.figure.geometry.RectangleHull;
 
 public class HibLabelAttribute extends HibCanvasAttribute implements Serializable, ILabelAttribute {
 	private final Logger logger = Logger.getLogger(this.getClass()); 
@@ -56,8 +53,8 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private HibLabelNode labelNode;
 //	private transient INodeObjectType objectType;
-	private transient IConvexHull convexHull = null;
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
+//	private transient IConvexHull convexHull = null;
+	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -238,7 +235,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(this.background != color){
 			RGB oldColour = this.background;
 			this.background = color;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BACKGROUND_COLOUR, oldColour, this.background);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldColour, this.background);
 		}
 	}
 	
@@ -254,7 +251,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(!this.position.equals(location)){
 			Point oldValue = this.position;
 			this.position = location;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldValue, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldValue, this.position);
 		}
 	}
 
@@ -265,7 +262,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(!this.size.equals(size)){
 			Dimension oldValue = this.size;
 			this.size = size;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldValue, this.size);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldValue, this.size);
 		}
 	}
 
@@ -290,21 +287,21 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void addChangeListener(IPropertyChangeListener listener) {
+	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
 	 */
-	public Iterator<IPropertyChangeListener> listenerIterator() {
+	public Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void removeChangeListener(IPropertyChangeListener listener) {
+	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 
@@ -342,14 +339,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
-	 */
-	@Override
-	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-//		this.objectType = (INodeObjectType)objectType;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#getHibObjectType()
 	 */
 	// no persisted object type so return null
@@ -369,20 +358,20 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
-		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
+//		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
-	 */
-	public IConvexHull getConvexHull() {
-		if(convexHull == null){
-			this.convexHull = new RectangleHull(getBounds());
-		}
-		return this.convexHull;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
+//	 */
+//	public IConvexHull getConvexHull() {
+//		if(convexHull == null){
+//			this.convexHull = new RectangleHull(getBounds());
+//		}
+//		return this.convexHull;
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setConvexHull(org.pathwayeditor.figure.geometry.IConvexHull)
@@ -413,7 +402,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(this.foreground != color){
 			RGB oldValue = this.foreground;
 			this.foreground = color;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldValue, this.foreground);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.foreground);
 		}
 	}
 
@@ -421,7 +410,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(this.noBorder != noBorder){
 			boolean oldValue = this.noBorder;
 			this.noBorder = noBorder;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NO_BORDER, oldValue, this.noBorder);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.NO_BORDER, oldValue, this.noBorder);
 		}
 	}
 	
@@ -437,7 +426,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(this.noFill != noFill){
 			boolean oldValue = this.noFill;
 			this.noFill = noFill;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.NO_FILL, oldValue, this.noFill);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.NO_FILL, oldValue, this.noFill);
 		}
 	}
 	
@@ -470,7 +459,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(!this.lineStyle.equals(lineStyle)){
 			LineStyle oldValue = this.lineStyle;
 			this.lineStyle = lineStyle;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 		}
 	}
 
@@ -481,7 +470,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		if(this.lineWidth != lineWidth){
 			double oldValue = this.lineWidth;
 			this.lineWidth = lineWidth;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 		}
 	}
 
@@ -490,5 +479,13 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	 */
 	public Dimension getMinimumSize() {
 		return this.visualisableProperty.getDefinition().getLabelDefaults().getMinimumSize();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector)
+	 */
+	@Override
+	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
+		// do nothing
 	}
 }

@@ -3,7 +3,7 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 /**
  * @author smoodie
@@ -11,7 +11,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
  */
 public interface IAnnotationPropertyChangeEvent  {
 
-	IPropertyDefinition getPropertyDefinition();
+	IAnnotationProperty getPropertyDefinition();
 	
 	/**
 	 * Gets the old property value. 

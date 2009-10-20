@@ -18,6 +18,8 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
+
 
 
 
@@ -25,7 +27,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  * @author smoodie
  *
  */
-public interface ICanvasAttribute {
+public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee {
 	
 	/**
 	 * Get the Canvas related with this attribute. Cannot be null.

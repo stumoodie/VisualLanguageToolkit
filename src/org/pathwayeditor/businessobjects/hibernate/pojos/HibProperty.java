@@ -42,7 +42,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
-	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem();
+	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem(this);
 
 
 	/**

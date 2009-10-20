@@ -25,7 +25,6 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
@@ -33,22 +32,20 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation.FallbackNotationSubsystem;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
+import org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.compound.base.UnfilteredTreeIterator;
@@ -63,6 +60,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	private final INotationSubsystemPool subsystemPool;
 	private final IMap owningMap;
 	private ICanvas loadedCanvas = null;
+	private IObjectTypeInjector objectTypeInjector = null;
 
 
 	public HibCanvasPersistenceHandler(SessionFactory fact, INotationSubsystemPool subsystemPool, IMap map) {
@@ -87,41 +85,44 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 */
 	public void loadCanvas() {
 		try {
-		this.loadedCanvas = null;
-		Session s = this.fact.getCurrentSession();
-		s.getTransaction().begin();
-		HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas").setString("repo",
-				this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
-				.uniqueResult();
-		this.loadedCanvas = hibCanvas;
-		Hibernate.initialize(hibCanvas);
-		INotationSubsystem loadedNotationSubsystem = null;
-		IHibNotationFactory hibNotationFactory = null;
-		if (this.subsystemPool.hasNotationSubsystem(hibCanvas.getHibNotation())) {
-			loadedNotationSubsystem = this.subsystemPool.getSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new HibNotationFactory(this.fact, loadedNotationSubsystem);
-		} else {
-			logger.warn("Notation subsystem: " + loadedNotationSubsystem
-					+ " was not provided by application using fallback notation subsystem instead.");
-			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
-		}
+			this.loadedCanvas = null;
+			this.objectTypeInjector = null;
+			Session s = this.fact.getCurrentSession();
+			s.getTransaction().begin();
+			HibCanvas hibCanvas = (HibCanvas) s.getNamedQuery("loadCanvas").setString("repo",
+					this.getOwningMap().getRepository().getName()).setInteger("inode", this.getOwningMap().getINode())
+					.uniqueResult();
+			this.loadedCanvas = hibCanvas;
+			Hibernate.initialize(hibCanvas);
+			INotationSubsystem loadedNotationSubsystem = null;
+			IHibNotationFactory hibNotationFactory = null;
+			if (this.subsystemPool.hasNotationSubsystem(hibCanvas.getHibNotation())) {
+				loadedNotationSubsystem = this.subsystemPool.getSubsystem(hibCanvas.getHibNotation());
+				hibNotationFactory = new HibNotationFactory(this.fact, loadedNotationSubsystem);
+				this.objectTypeInjector = new StandardObjectTypeInjector(loadedNotationSubsystem);
+			} else {
+				logger.warn("Notation subsystem: " + loadedNotationSubsystem
+						+ " was not provided by application using fallback notation subsystem instead.");
+				loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
+				hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
+				this.objectTypeInjector = new FallbackObjectTypeInjector(loadedNotationSubsystem);
+			}
 			hibNotationFactory.initialise();
-		if(hibNotationFactory.hasInitialisationFailed()) {
-			logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.");
-			loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-			hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
-		}
-		hibCanvas.setNotationSubsystem(loadedNotationSubsystem);
-		HibModel loadedModel = hibCanvas.getModel();
-		loadedModel.setHibNotationFactory(hibNotationFactory);
-//		initialiseNotation(hibCanvas.getHibNotation());
-		initialiseCanvas(hibCanvas);
-//		initialiseModel(loadedModel);
-		if(!loadedModel.isValid()) {
-			throw new IllegalStateException("The loaded model is invalid.");
-		}
-		s.getTransaction().commit();
+			if (hibNotationFactory.hasInitialisationFailed()) {
+				logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.");
+				loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
+				hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
+			}
+			hibCanvas.setNotationSubsystem(loadedNotationSubsystem);
+			HibModel loadedModel = hibCanvas.getModel();
+			loadedModel.setHibNotationFactory(hibNotationFactory);
+			// initialiseNotation(hibCanvas.getHibNotation());
+			initialiseCanvas(hibCanvas);
+			// initialiseModel(loadedModel);
+			if (!loadedModel.isValid()) {
+				throw new IllegalStateException("The loaded model is invalid.");
+			}
+			s.getTransaction().commit();
 		} catch (InconsistentNotationDefinitionException e) {
 			this.fact.getCurrentSession().getTransaction().rollback();
 			this.loadedCanvas = null;
@@ -129,30 +130,13 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-//	private void initialiseNotation(HibNotation notation) {
-//		Hibernate.initialize(notation);
-//		Hibernate.initialize(notation.getObjectTypes());
-//		for (HibObjectType objectType : notation.getObjectTypes()) {
-//			Hibernate.initialize(objectType);
-//		}
-//	}
 
-	/**
-	 * @param hibCanvas
-	 */
-//	private void initialiseAttributes(HibCanvas hibCanvas) {
-//		Hibernate.initialize(hibCanvas.getCanvasAttributes());
-////		initShapeAttributes(hibCanvas);
-//		initCanvasAttributes(hibCanvas);
-////		initLabelAttributes(hibCanvas);
-//	}
 
 	private void initialiseCanvas(HibCanvas hibCanvas) throws InconsistentNotationDefinitionException {
-//		Hibernate.initialize(hibCanvas.getCanvasAttributes());
 		HibModel model = hibCanvas.getModel();
 		HibRootAttribute rootAttribute = model.getRootNode().getAttribute();
-//		Hibernate.initialize(rootAttribute);
-		injectObjectType(hibCanvas, rootAttribute);
+		rootAttribute.injectObjectType(this.objectTypeInjector);
+//		injectObjectType(hibCanvas, rootAttribute);
 		// need to do this because we need to traverse the removed nodes to make sure they behave correctly
 		// if not then they will throw up a validation error.
 		// FIXME: We need to purge deleted nodes and edges on closure of manager
@@ -184,35 +168,20 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				throw new IllegalStateException("Unknown node type");
 			}
 		}
-//		ISubModel rootsSubmodel = model.getRootNode().getSubModel();
-//		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
-//		while(shapeIter.hasNext()) {
-//			visitShapeNode(hibCanvas, (HibShapeNode)shapeIter.next());
-//		}
-//		Iterator<ILinkEdge> linkIter = rootsSubmodel.linkIterator();
-//		while(linkIter.hasNext()) {
-//			visitLinkEdge(hibCanvas, (HibLinkEdge)linkIter.next());
-//		}
-//		Iterator<ILabelNode> labelIter = rootsSubmodel.labelIterator();
-//		while(labelIter.hasNext()) {
-//			visitLabelNode(hibCanvas, (HibLabelNode)labelIter.next());
-//		}
 	}
 
-	private void injectObjectType(HibCanvas hibCanvas, HibCanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {
-		HibObjectType hibObjectType = canvasAttribute.getHibObjectType();
-		if(hibObjectType != null) {
-			IObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getObjectType(
-					hibObjectType.getUniqueId());
-			canvasAttribute.injectObjectType(objectType);
-		}
-		else if(canvasAttribute instanceof ILabelAttribute) {
-			//TODO: this could do with refactoring 
-			// do nothing for a label OT
-//			// insert a dummy label object type.
-//			canvasAttribute.injectObjectType(new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService()));
-		}
-	}
+//	private void injectObjectType(HibCanvas hibCanvas, HibCanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {
+//		HibObjectType hibObjectType = canvasAttribute.getHibObjectType();
+//		if(hibObjectType != null) {
+//			IObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getObjectType(
+//					hibObjectType.getUniqueId());
+//			canvasAttribute.injectObjectType(objectType);
+//		}
+//		else if(canvasAttribute instanceof ILabelAttribute) {
+//			//TODO: this could do with refactoring 
+//			// do nothing for a label OT
+//		}
+//	}
 
 	/**
 	 * @param canvas 
@@ -220,13 +189,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * @throws InconsistentNotationDefinitionException 
 	 */
 	private void visitLabelNode(HibCanvas canvas, HibLabelNode labelNode) throws InconsistentNotationDefinitionException {
-//		Hibernate.initialize(labelNode);
 		HibLabelAttribute attribute = labelNode.getAttribute();
-//		Hibernate.initialize(attribute);
-		injectObjectType(canvas, attribute);
-//		Hibernate.initialize(attribute.getCurrentDrawingElement());
-//		HibProperty property = (HibProperty)attribute.getVisualisableProperty();
-//		property.getDisplayedLabel();
+		attribute.injectObjectType(this.objectTypeInjector);
+//		injectObjectType(canvas, attribute);
 	}
 
 	/**
@@ -235,34 +200,10 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * @throws InconsistentNotationDefinitionException 
 	 */
 	private void visitLinkEdge(HibCanvas canvas, HibLinkEdge linkEdge) throws InconsistentNotationDefinitionException {
-//		Hibernate.initialize(linkEdge);
 		HibLinkAttribute attribute = linkEdge.getAttribute();
-//		Hibernate.initialize(attribute);
-//		Hibernate.initialize(attribute.getCurrentDrawingElement());
-//		Hibernate.initialize(attribute.getBendPoints());
-//		visitProperties(attribute);
-		injectObjectType(canvas, attribute);
-//		linkEdge.getOutNode();
-//		linkEdge.getInNode();
-//		linkEdge.getOwningSubModel();
-//		visitLinkTermini(canvas, attribute);
+		attribute.injectObjectType(this.objectTypeInjector);
+//		injectObjectType(canvas, attribute);
 	}
-	
-//	private void visitLinkTermini(HibCanvas canvas, HibLinkAttribute linkAttribute) {
-//		Hibernate.initialize(linkAttribute.getLinkTermini());
-//		for(HibLinkTerminus term : linkAttribute.getLinkTermini()) {
-//			Hibernate.initialize(term.getOwningLink());
-//			visitProperties(term);
-//		}
-//	}
-//
-//	private void visitProperties(HibAnnotatedCanvasAttribute attribute) {
-//		Hibernate.initialize(attribute.getProperties());
-//		for(HibProperty property : attribute.getProperties()) {
-//			Hibernate.initialize(property);
-//			Hibernate.initialize(property.getValue());
-//		}
-//	}
 	
 	
 	/**
@@ -270,11 +211,9 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 	 * @throws InconsistentNotationDefinitionException 
 	 */
 	private void visitShapeNode(HibCanvas canvas, HibShapeNode shapeNode) throws InconsistentNotationDefinitionException {
-//		Hibernate.initialize(shapeNode);
 		HibShapeAttribute attribute = shapeNode.getAttribute();
-//		Hibernate.initialize(attribute.getCurrentDrawingElement());
-//		visitProperties(attribute);
-		injectObjectType(canvas, attribute);
+		attribute.injectObjectType(this.objectTypeInjector);
+//		injectObjectType(canvas, attribute);
 		ISubModel rootsSubmodel = shapeNode.getSubModel();
 		Iterator<IShapeNode> shapeIter = rootsSubmodel.shapeNodeIterator();
 		while(shapeIter.hasNext()) {
@@ -290,59 +229,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-//	private void initLabelAttributes(HibCanvas hibCanvas) {
-//		final INodeObjectType labelObjectType = new LabelObjectType(hibCanvas.getNotationSubsystem().getSyntaxService());
-//		for (HibLabelAttribute labelAttr : hibCanvas.getLabelAttributes()) {
-//			Hibernate.initialize(labelAttr);
-//			labelAttr.setObjectType(labelObjectType);
-//			Hibernate.initialize(labelAttr.getProperty().getValue());
-//		}
-//	}
-
-//	private void initShapeAttributes(HibCanvas canvas) {
-//		try {
-//			for (HibShapeAttribute shapeAttr : canvas.getShapeAttributes()) {
-//				Hibernate.initialize(shapeAttr);
-//				IShapeObjectType objectType = canvas.getNotationSubsystem().getSyntaxService().getShapeObjectType(
-//						shapeAttr.getHibObjectType().getUniqueId());
-//				shapeAttr.injectShapeObjectType(objectType);
-//				Hibernate.initialize(shapeAttr.getProperties());
-//			}
-//		} catch (InconsistentNotationDefinitionException e) {
-//			throw new IllegalStateException(e);
-//		}
-//	}
-
-//	private void initialiseModel(HibModel model) {
-//		Hibernate.initialize(model);
-//		// set the OT required by the root node
-//		HibRootNode hibRootNode = model.getRootNode();
-//		Hibernate.initialize(hibRootNode);
-////		hibRootNode.setObjectType(model.getCanvas().getNotationSubsystem().getSyntaxService().getRootObjectType());
-//		initNodesAndEdges(model);
-//	}
-
-//	private void initNodesAndEdges(HibModel model) {
-//		// now go through all the nodes and edges and get them loaded from the
-//		// DB
-//		Iterator<IDrawingNode> nodeIter = model.drawingNodeIterator();
-//		while (nodeIter.hasNext()) {
-//			IDrawingNode node = nodeIter.next();
-//			Hibernate.initialize((HibCompoundNode) node);
-//			Hibernate.initialize(node.getAttribute());
-//			HibCompoundNode hibNode = (HibCompoundNode) node;
-//			Hibernate.initialize(hibNode.getChildren());
-//			Hibernate.initialize(hibNode.getHibParentNode());
-//			Hibernate.initialize(hibNode.getChildCompoundGraph());
-//			Hibernate.initialize(hibNode.getInEdges());
-//			Hibernate.initialize(hibNode.getOutEdges());
-//			Iterator<ILinkEdge> edgeIter = node.getSubModel().linkIterator();
-//			while (edgeIter.hasNext()) {
-//				HibLinkEdge link = (HibLinkEdge) edgeIter.next();
-//				Hibernate.initialize(link);
-//			}
-//		}
-//	}
 
 	public ICanvas getLoadedCanvas() {
 		return this.loadedCanvas;
@@ -368,10 +254,6 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 			s.getTransaction().begin();
 			s.saveOrUpdate(this.getLoadedCanvas().getModel().getRootNode());
 			s.saveOrUpdate(this.loadedCanvas);
-//		Iterator<IDrawingNode> nodeIterator = loadedCanvas.getModel().drawingNodeIterator();
-//		while (nodeIterator.hasNext()) {
-//			s.saveOrUpdate(nodeIterator.next());
-//		}
 			s.getTransaction().commit();
 		}
 		else {

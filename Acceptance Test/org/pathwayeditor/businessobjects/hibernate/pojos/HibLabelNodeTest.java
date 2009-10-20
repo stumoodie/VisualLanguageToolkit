@@ -25,13 +25,13 @@ import static org.junit.Assert.assertTrue;
 import org.hibernate.Session;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.testutils.PojoXlsTester;
+import org.pathwayeditor.testutils.PojoXlsXmlTester;
 
 /**
  * @author smoodie
  *
  */
-public class HibLabelNodeTest extends PojoXlsTester {
+public class HibLabelNodeTest extends PojoXlsXmlTester {
 	private static final String DB_SOURCE_NAME = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 
 	private static final long TEST_LABEL_ID = 100016L;
@@ -39,10 +39,6 @@ public class HibLabelNodeTest extends PojoXlsTester {
 	
 	private HibLabelNode testInstance;
 	
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute#injectObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)}.
-	 * @throws InconsistentNotationDefinitionException 
-	 */
 	@Test
 	public final void testIsValid() throws InconsistentNotationDefinitionException {
 //		INotationSubsystem stubNotationSubsystem = new StubNotationSubSystem();

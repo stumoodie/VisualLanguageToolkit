@@ -59,7 +59,7 @@ public class HibRichTextProperty extends HibProperty implements IHtmlAnnotationP
 		if(!richTextValue.equals(this.richTextValue)){
 			String oldValue = this.richTextValue;
 			this.richTextValue = richTextValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.richTextValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.richTextValue);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package org.pathwayeditor.figure.figuredefn;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -48,4 +49,10 @@ public interface IFigureController {
 	GraphicsInstructionList getFigureDefinition();
 	
 	IAnchorLocatorFactory getAnchorLocatorFactory();
+	
+	void addListener(IFigureChangeListener listener);
+	
+	void removeListener(IFigureChangeListener listener);
+
+	Iterator<IFigureChangeListener> listenerIterator();
 }

@@ -48,7 +48,7 @@ public class HibBooleanProperty extends HibProperty implements IBooleanAnnotatio
 		if(!numberValue.equals(this.boolValue)){
 			Boolean oldValue = this.boolValue;
 			this.boolValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.boolValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.boolValue);
 		}
 	}
 

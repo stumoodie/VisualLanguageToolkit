@@ -13,7 +13,7 @@ public class Envelope {
 		this.dim = new Dimension(w, h);
 		this.origin = new Point(x, y);
 	}
-
+	
 	public Dimension getDimension() {
 		return dim;
 	}
@@ -128,5 +128,17 @@ public class Envelope {
 	public Envelope changeDimension(Dimension newSize) {
 		return new Envelope(this.origin, newSize);
 	}
+	
+	public Transformation calcTransformation(Envelope transformedEnvelope){
+		Scale newScale = this.dim.calcScalingFactors(transformedEnvelope.getDimension());
+		Point newTrans = this.origin.difference(transformedEnvelope.getOrigin());
+		return new Transformation(newTrans, newScale);
+	}
 
+	
+	public Envelope applyTransformation(Transformation transform){
+		Point newOrigin = this.origin.translate(transform.getTranslation());
+		Dimension newDim = this.dim.scale(transform.getScale());
+		return new Envelope(newOrigin, newDim);
+	}
 }

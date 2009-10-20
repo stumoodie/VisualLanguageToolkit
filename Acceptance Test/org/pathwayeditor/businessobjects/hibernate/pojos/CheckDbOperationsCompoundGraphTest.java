@@ -33,6 +33,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
@@ -142,7 +143,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 	private final static RGB CHANGED_SHAPE_LINE_COLOR = new RGB ( 2 ,2 ,2 ) ;
 	private final static LineStyle CHANGED_SHAPE_LINE_STYLE = LineStyle.SOLID ;
 	private final static int CHANGED_SHAPE_LINE_WIDTH = 100 ; 
-	private final static String CHANGED_SHAPE_PRIMITIVE_TYRE = "curbounds oval" ;
+//	private final static String CHANGED_SHAPE_PRIMITIVE_TYRE = "curbounds oval" ;
 	private final static Point CHANGED_SHAPE_LOCATION = new Point ( 500 , 500 ) ;
 	private final static Dimension CHANGED_SHAPE_SIZE = new Dimension ( 400 ,400 ) ;
 	
@@ -169,7 +170,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 //	private static final int EXPECTED_NUM_PROPS_PER_SHAPE = 1;
 
 	private static final String DELETED_CANVAS_DATA_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/hibernate/helpers/DeletedCanvasExpectedData.xml";
-	private static final String EXPECTED_SHAPE = "curbounds 90 90 arc";
+//	private static final String EXPECTED_SHAPE = "curbounds 90 90 arc";
 	private static final int SHAPE_ATTRIB5 = 5;
 	private static final int SHAPE_ATTRIB8 = 8;
 	private static final int SHAPE_ATTRIB1 = 1;
@@ -355,6 +356,14 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 	protected String getTestRepositoryName() {
 		return REPOSITORY_NAME ;
 	}
+	
+	@Test
+	public void testRootNodeIsValid(){
+		IRootNode rootNode = this.dbModel.getRootNode();
+		assertNotNull("root set", rootNode);
+		assertNotNull("root attrib set", rootNode.getAttribute());
+		assertNotNull("root curr element set", rootNode.getAttribute().getCurrentDrawingElement());
+	}
 
 	@Test
 	public void testLoadedModelIsValid() {
@@ -368,7 +377,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 		
 		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
+//		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise();map1Manager.close(true);
 		super.compareDatabase(SOURCE_DATA_FILE, CREATED_NODE_VALIDATION);
 	}
@@ -380,13 +389,13 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 		
 		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
+//		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		
 		IShapeNodeFactory newNodeFactory = newNode.getSubModel().shapeNodeFactory() ;
 		newNodeFactory.setObjectType(this.dbNotationSubSystem.getSyntaxService().getShapeObjectType(StubShapeBObjectType.UNIQUE_ID)  ) ;
 		IShapeNode newNode2 = newNodeFactory.createShapeNode() ;
 		newNode2.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode2.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
+//		newNode2.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		
 		map1Manager.synchronise();map1Manager.close(true);
 		this.compareDatabase(CREATED_TWO_NODE_VALIDATION);
@@ -595,7 +604,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 		shapeAttribute1.setLineWidth(CHANGED_SHAPE_LINE_WIDTH);
 		shapeAttribute1.setLocation(CHANGED_SHAPE_LOCATION) ;
 		shapeAttribute1.setSize(CHANGED_SHAPE_SIZE);
-		shapeAttribute1.setShapeDefinition(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
+//		shapeAttribute1.setShapeDefinition(CHANGED_SHAPE_PRIMITIVE_TYRE) ;
 		
 		map1Manager.synchronise();map1Manager.close(true);
 		
@@ -672,7 +681,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 		
 		IShapeNode newNode = nodeFactory.createShapeNode() ;
 		newNode.getAttribute().setLocation(NEW_NODE_LOCATION) ;
-		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
+//		newNode.getAttribute().setShapeDefinition(EXPECTED_SHAPE) ;
 		map1Manager.synchronise() ;
 		
 		map1Manager.synchronise() ;

@@ -845,9 +845,11 @@
 	<table name="RootAttribute">
 		<column>id</column>
 		<column>object_type_id</column>
+		<column>current_node_id</column>
 		<row>
 			<value>100044</value>
 			<value>100000</value>
+			<value>100001</value>
 		</row>
 	</table>
 	<table name="AnnotatedCanvasAttribute">

@@ -26,13 +26,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.BendPointChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableBendPointChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ed.inf.graph.util.IndexCounter;
@@ -54,7 +56,8 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	private HibLinkEdge edge ;
 	private List<HibLinkTerminus> linkTermini = new ArrayList<HibLinkTerminus>();
 	private IndexCounter bendPointCounter = new IndexCounter();
-	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem();
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private final ListenableBendPointChangeItem listenableBendPointChangeItem = new ListenableBendPointChangeItem(this);
 	
 	/**
 	 * Default constructor to be used only by hibernate.
@@ -110,9 +113,9 @@ s	 */
 	 * @param linkAttributeDefaults
 	 */
 	private void addDefaults(ILinkAttributeDefaults linkAttributeDefaults) {
-		this.setLineColor(linkAttributeDefaults.getLineColour());
-		this.setLineStyle(linkAttributeDefaults.getLineStyle());
-		this.setLineWidth(linkAttributeDefaults.getLineWidth());
+		this.lineColour = linkAttributeDefaults.getLineColour();
+		this.lineStyle = linkAttributeDefaults.getLineStyle();
+		this.lineWidth = linkAttributeDefaults.getLineWidth();
 	}
 
 	void setCurrentEdge(HibLinkEdge edge) {
@@ -131,12 +134,12 @@ s	 */
 		this.hibObjectType = hibObjectType ;
 	}
 
-	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-		this.objectType = (ILinkObjectType)objectType;
-		injectPropertyDefinitions(this.objectType.getDefaultAttributes());
-		this.getSourceTerminus().injectLinkTerminusDefaults(this.objectType.getSourceTerminusDefinition());
-		this.getTargetTerminus().injectLinkTerminusDefaults(this.objectType.getTargetTerminusDefinition());
-	}
+//	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+//		this.objectType = (ILinkObjectType)objectType;
+//		injectPropertyDefinitions(this.objectType.getDefaultAttributes());
+//		this.getSourceTerminus().injectLinkTerminusDefaults(this.objectType.getSourceTerminusDefinition());
+//		this.getTargetTerminus().injectLinkTerminusDefaults(this.objectType.getTargetTerminusDefinition());
+//	}
 
 	public int getLineRed() {
 		return this.lineColour.getRed();
@@ -172,7 +175,7 @@ s	 */
 		
 		LineStyle oldValue = this.lineStyle;
 		this.lineStyle = lineStyle;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 	}
 
 	public double getLineWidth() {
@@ -185,7 +188,7 @@ s	 */
 		
 		double oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 	}
 
 	public List<HibBendPoint> getBendPoints() {
@@ -228,11 +231,12 @@ s	 */
 	public void removeBendPoint(IBendPoint bendPoint) {
 		if ( !containsBendPoint(bendPoint) ) throw new IllegalArgumentException ("no bendpoint") ;
 
-		HibBendPoint hibBendPoint = (HibBendPoint)bendPoint; 
+		HibBendPoint hibBendPoint = (HibBendPoint)bendPoint;
+		int index = this.hibBendPoints.indexOf(hibBendPoint);
 		this.hibBendPoints.remove(hibBendPoint);
 		// break link to this attribute so it will be deleted.
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_REMOVED, hibBendPoint, index, index);
 	}
 
 	/* (non-Javadoc)
@@ -251,7 +255,7 @@ s	 */
 
 		RGB oldValue = this.lineColour;
 		this.lineColour = newColor;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
 	}
 
 	/* (non-Javadoc)
@@ -302,21 +306,21 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void addChangeListener(IPropertyChangeListener listener) {
+	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
 	 */
-	public Iterator<IPropertyChangeListener> listenerIterator() {
+	public Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void removeChangeListener(IPropertyChangeListener listener) {
+	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 
@@ -341,7 +345,7 @@ s	 */
 				// we want to add it to the end of the list so we append it bp to the list.
 				this.hibBendPoints.add((HibBendPoint)bendPoint);
 			}
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REINDEXED, oldIdx, indexPos);
+			this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_REINDEXED, bendPoint, oldIdx, indexPos);
 		}
 	}
 
@@ -374,7 +378,7 @@ s	 */
 		HibBendPoint hibBendPoint = this.hibBendPoints.get(index);
 		this.hibBendPoints.remove(index);
 		hibBendPoint.setOwningLink(null);
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_REMOVED, hibBendPoint, null);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_REMOVED, hibBendPoint, index, index);
 	}
 
 	/* (non-Javadoc)
@@ -383,7 +387,8 @@ s	 */
 	public IBendPoint createNewBendPoint(Point location) {
 		HibBendPoint retVal = new HibBendPoint(this, this.bendPointCounter.nextIndex(), location);
 		this.hibBendPoints.add(retVal);
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
+		int index = this.hibBendPoints.size()-1;
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_ADDED, retVal, index, index);
 		return retVal;
 	}
 
@@ -398,7 +403,7 @@ s	 */
 		else {
 			this.hibBendPoints.add(retVal);
 		}
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.BEND_POINT_ADDED, null, retVal);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_ADDED, retVal, position, position);
 		return retVal;
 	}
 
@@ -447,6 +452,41 @@ s	 */
 		this.createNewBendPoint(src.translate(startWidth/2.0, 0.0));
 		this.createNewBendPoint(src.translate(startWidth/2.0, startHeight*2/3));
 		this.createNewBendPoint(new Point(tgt.getX(), src.getY() + startHeight*2/3));
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector)
+	 */
+	@Override
+	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
+		injector.inject(this);
+		injector.inject(this.getSourceTerminus());
+		injector.inject(this.getTargetTerminus());
+	}
+
+	public void setObjectType(ILinkObjectType objectType) {
+		this.objectType = objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener)
+	 */
+	public void addChangeListener(IBendPointChangeListener listener) {
+		this.listenableBendPointChangeItem.addChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#bendPointListenerIterator()
+	 */
+	public Iterator<IBendPointChangeListener> bendPointListenerIterator() {
+		return this.listenableBendPointChangeItem.bendPointListenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener)
+	 */
+	public void removeChangeListener(IBendPointChangeListener listener) {
+		this.listenableBendPointChangeItem.removeChangeListener(listener);
 	}
 
 }

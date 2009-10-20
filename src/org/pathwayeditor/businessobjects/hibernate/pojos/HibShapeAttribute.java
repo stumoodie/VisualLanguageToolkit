@@ -25,20 +25,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.figure.figuredefn.FigureController;
-import org.pathwayeditor.figure.figuredefn.IFigureController;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.figurevm.FigureDefinitionCompiler;
 
 public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IShapeAttribute,  Serializable {
 	private static final long serialVersionUID = -8557015458835029042L;
@@ -62,9 +57,9 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private HibShapeNode shapeNode;
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem;
+	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
 //	private transient IConvexHull hull = null;
-	private IFigureController figureController = null;
+//	private IFigureController figureController = null;
 	
 
 	/**
@@ -73,12 +68,10 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	 */
 	HibShapeAttribute() {
 		super();
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 	}
 
 	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
 		super(hibCanvas, creationSerial, shapeObjectType.getDefaultAttributes());
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
@@ -86,7 +79,6 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	
 	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
 		super(newCanvas, newCreationSerial, other);
-		this.listenablePropertyChangeItem = new ListenablePropertyChangeItem();
 		this.position = other.position;
 		this.size = other.size;
 		this.hibObjectType = other.hibObjectType;
@@ -100,11 +92,11 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	
 	
 	private void populateDefaults(IShapeAttributeDefaults shapeDefaults){
-		this.setFillColour(shapeDefaults.getFillColour());
-		this.setSize(shapeDefaults.getSize());
-		this.setLineColour(shapeDefaults.getLineColour());
-		this.setLineStyle(shapeDefaults.getLineStyle());
-		this.setLineWidth(shapeDefaults.getLineWidth());
+		this.fillColour = shapeDefaults.getFillColour();
+		this.size = shapeDefaults.getSize();
+		this.lineColour = shapeDefaults.getLineColour();
+		this.lineStyle = shapeDefaults.getLineStyle();
+		this.lineWidth = shapeDefaults.getLineWidth();
 		this.setShapeDefinition(shapeDefaults.getShapeDefinition());
 	}
 
@@ -144,11 +136,11 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		return this.shapeObjectType;
 	}
 	
-	@Override
-	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-		this.shapeObjectType = (IShapeObjectType)objectType;
-		super.injectPropertyDefinitions(shapeObjectType.getDefaultAttributes());
-	}
+//	@Override
+//	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
+//		this.shapeObjectType = (IShapeObjectType)objectType;
+//		super.injectPropertyDefinitions(shapeObjectType.getDefaultAttributes());
+//	}
 
 	public HibObjectType getHibObjectType () {
 		return this.hibObjectType ;
@@ -226,7 +218,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		double oldLineWidth = this.lineWidth;
 		this.lineWidth = lineWidth;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
 	}
 
 	void setCurrentShapeNode(HibShapeNode newNode){
@@ -270,7 +262,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		RGB oldFillColour = this.fillColour;
 		this.fillColour = fillColour;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
 	}
 
 	/* (non-Javadoc)
@@ -282,7 +274,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		RGB oldLineColour = this.lineColour;
 		this.lineColour = lineColour;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
 	}
 
 	/* (non-Javadoc)
@@ -294,7 +286,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 
 		LineStyle oldLineStyle = this.lineStyle;
 		this.lineStyle = lineStyle ;
-		this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
 	}
 	
 	/* (non-Javadoc)
@@ -307,7 +299,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if(!this.position.equals(newLocation)){
 			Point oldLocation = this.position;
 			this.position = newLocation;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.position);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldLocation, this.position);
 		}
 	}
 
@@ -321,29 +313,28 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		if(!this.size.equals(size)){
 			Dimension oldSize = this.size;
 			this.size = size;
-			getConvexHull().changeEnvelope(getBounds());
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.SIZE, oldSize, this.size);
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldSize, this.size);
 		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void addChangeListener(IPropertyChangeListener listener) {
+	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void removeChangeListener(IPropertyChangeListener listener) {
+	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#listenerIterator()
 	 */
-	public Iterator<IPropertyChangeListener> listenerIterator() {
+	public Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
 		return this.listenablePropertyChangeItem.listenerIterator();
 	}
 
@@ -394,34 +385,34 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	public void setBounds(Envelope newBounds) {
-		getFigureController().setRequestedEnvelope(newBounds);
-		getFigureController().generateFigureDefinition();
+//		getFigureController().setRequestedEnvelope(newBounds);
+//		getFigureController().generateFigureDefinition();
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getConvexHull()
-	 */
-	public IConvexHull getConvexHull() {
-		return getFigureController().getConvexHull();
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getConvexHull()
+//	 */
+//	public IConvexHull getConvexHull() {
+//		return getFigureController().getConvexHull();
+//	}
 	
 //	public void setConvexHull(IConvexHull hull){
 //		this.hull = hull;
 //	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getFigureDefinition()
-	 */
-	public IFigureController getFigureController() {
-		if(this.figureController == null){
-			FigureDefinitionCompiler compiler = new FigureDefinitionCompiler(this.figureDefn);
-			compiler.compile();
-			figureController = new FigureController(compiler.getCompiledFigureDefinition());
-		}
-		return this.figureController;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getFigureDefinition()
+//	 */
+//	public IFigureController getFigureController() {
+//		if(this.figureController == null){
+//			FigureDefinitionCompiler compiler = new FigureDefinitionCompiler(this.figureDefn);
+//			compiler.compile();
+//			figureController = new FigureController(compiler.getCompiledFigureDefinition());
+//		}
+//		return this.figureController;
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setFigureDefinition(org.pathwayeditor.figure.customfigure.GraphicsInstructionList)
@@ -448,14 +439,23 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#setShapeDefinition(java.lang.String)
 	 */
-	public void setShapeDefinition(String shapeDefn) {
-		if(shapeDefn == null) throw new IllegalArgumentException("primitive shape cannot be null");
+	void setShapeDefinition(String shapeDefn) {
+		this.figureDefn = shapeDefn;
+	}
 
-		if(!this.figureDefn.equals(shapeDefn)){
-			String oldPrimitiveShape = this.figureDefn;
-			this.figureDefn = shapeDefn;
-			this.listenablePropertyChangeItem.notifyPropertyChange(PropertyChange.PRIMITIVE_SHAPE_TYPE, oldPrimitiveShape, this.figureDefn);
-		}
+	/**
+	 * @param objectType
+	 */
+	public void setObjectType(IShapeObjectType objectType) {
+		this.shapeObjectType = objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector)
+	 */
+	@Override
+	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
+		injector.inject(this);
 	}
 
 }

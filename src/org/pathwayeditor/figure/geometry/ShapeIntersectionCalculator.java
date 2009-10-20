@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.figure.figuredefn.IFigureGeometryFactory;
 
 /**
  * @author smoodie
@@ -85,14 +86,16 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	public SortedSet<IDrawingNode> findIntersectingNodes(IConvexHull queryHull, IDrawingNode queryNode){
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
 		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>(this.comparator);
+		IFigureGeometryFactory fact = model.getFigureGeometryFactory();
 		// the root node will always intersect - that's a give so add it in and exclude it from
 		// intersection tests
 		IRootNode rootNode = model.getRootNode();
 		retVal.add(rootNode);
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
+			IConvexHull attributeHull = fact.getConvexHull(node);
 			// ignore matches to self
-			if(!node.equals(queryNode) && !node.equals(rootNode) && filter.accept(node) && queryHull.hullsIntersect(node.getAttribute().getConvexHull())){
+			if(!node.equals(queryNode) && !node.equals(rootNode) && filter.accept(node) && queryHull.hullsIntersect(attributeHull)){
 				retVal.add(node);
 			}
 		}
@@ -105,10 +108,12 @@ public class ShapeIntersectionCalculator implements INodeIntersectionCalculator 
 	public SortedSet<IDrawingNode> findNodesAt(Point p) {
 		Iterator<IDrawingNode> iter = model.drawingNodeIterator();
 		SortedSet<IDrawingNode> retVal = new TreeSet<IDrawingNode>(this.comparator);
+		IFigureGeometryFactory fact = model.getFigureGeometryFactory();
 		while(iter.hasNext()){
 			IDrawingNode node = iter.next();
-			logger.trace("Testing contains node:" + node + ", hull=" + node.getAttribute().getConvexHull() + ", point=" + p);
-			if(filter.accept(node) && node.getAttribute().getConvexHull().containsPoint(p)){
+			IConvexHull attributeHull = fact.getConvexHull(node);
+			logger.trace("Testing contains node:" + node + ", hull=" + attributeHull + ", point=" + p);
+			if(filter.accept(node) && attributeHull.containsPoint(p)){
 				logger.trace("Found containing node");
 				retVal.add(node);
 			}

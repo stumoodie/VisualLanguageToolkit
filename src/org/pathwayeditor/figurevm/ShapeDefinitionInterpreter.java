@@ -52,4 +52,40 @@ public class ShapeDefinitionInterpreter {
 		this.executor.execute();
 		logger.debug("Interpreter completed.");
 	}
+
+	public Boolean getBindBooleanValue(String name) {
+		Boolean retVal = null;
+		Value val = this.bindingLookup.get(name);
+		if(val != null){
+			retVal = val.getBoolean();
+		}
+		return retVal;
+	}
+
+	public Integer getBindIntegerValue(String name) {
+		Integer retVal = null;
+		Value val = this.bindingLookup.get(name);
+		if(val != null){
+			retVal = val.getInteger();
+		}
+		return retVal;
+	}
+
+	public Double getBindDoubleValue(String name) {
+		Double retVal = null;
+		Value val = this.bindingLookup.get(name);
+		if(val != null){
+			retVal = val.getDouble();
+		}
+		return retVal;
+	}
+
+	public String getBindStringValue(String name) {
+		String retVal = null;
+		Value val = this.bindingLookup.get(name);
+		if(val != null){
+			retVal = val.getStringLiteral();
+		}
+		return retVal;
+	}
 }

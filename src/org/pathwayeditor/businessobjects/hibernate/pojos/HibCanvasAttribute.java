@@ -20,7 +20,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
  * @author smoodie
@@ -76,8 +75,9 @@ public abstract class HibCanvasAttribute implements ICanvasAttribute {
 		return this.creationSerial;
 	}
 
+
 	
-	public abstract void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException;
+	public abstract void injectObjectType(IObjectTypeInjector injector)  throws InconsistentNotationDefinitionException;
 
 	public abstract HibObjectType getHibObjectType();
 	

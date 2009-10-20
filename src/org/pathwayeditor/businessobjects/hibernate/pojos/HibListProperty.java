@@ -73,7 +73,7 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 	public void setValue(List<String> value){
 		List<String> oldValue = this.values;
 		this.values = value;
-		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, value);
+		this.getListenerHandler().notifyPropertyChange(oldValue, value);
 	}
 
 	/* (non-Javadoc)
@@ -83,7 +83,7 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 		List<String> oldValue = this.values;
 		this.values = new ArrayList<String>(oldValue);
 		this.values.add(newValue);
-		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, null, newValue);
+		this.getListenerHandler().notifyPropertyChange(null, newValue);
 	}
 
 	/* (non-Javadoc)
