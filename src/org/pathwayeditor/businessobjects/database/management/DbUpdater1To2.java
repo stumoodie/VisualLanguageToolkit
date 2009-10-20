@@ -36,6 +36,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	public void doUpgrade() throws SQLException {
 		if(!canDoUpgrade()) throw new IllegalStateException("Cannot perfrom upgrade on db version as set");
 
+		this.connManager.openConnection();
 		Connection conn = this.connManager.getConnection();
 		Statement stmt = null;
 		PreparedStatement prepStmt = null;

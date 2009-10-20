@@ -23,7 +23,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.pathwayeditor.businessobjects.management.IConnectionInfo;
-import org.pathwayeditor.businessobjects.management.IDatabaseManager;
 
 /**
  * @author smoodie
@@ -146,6 +145,13 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	 */
 	public void startup() throws SQLException {
 		this.connManager.doesTestConnectionSucceed();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.database.management.IDatabaseManager#getConnectionManager()
+	 */
+	public IDbConnectionManager getConnectionManager() {
+		return this.connManager;
 	}
 
 }

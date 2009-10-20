@@ -16,9 +16,11 @@ limitations under the License.
 /**
  * 
  */
-package org.pathwayeditor.businessobjects.management;
+package org.pathwayeditor.businessobjects.database.management;
 
 import java.sql.SQLException;
+
+import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 
 
 /**
@@ -56,6 +58,7 @@ public interface IDatabaseManager {
 	 */
 	IConnectionInfo getConnectionInfo();
 	
+	IDbConnectionManager getConnectionManager();
 	
 	/**
 	 * Shuts down the database typically by issuing a shutdown command to the database.
