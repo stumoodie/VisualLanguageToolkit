@@ -79,5 +79,13 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/easymock-2.5.2/easymock-2.5.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/batik-1.7/batik-1.7/lib/batik-all.jar" sourcepath="lib/batik-1.7/sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/batik-1.7/batik-1.7/docs.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/batik-1.7/lib/xalan-2.6.0.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.7/lib/xerces_2_5_0.jar"/>
+	<classpathentry kind="lib" path="lib/batik-1.7/lib/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

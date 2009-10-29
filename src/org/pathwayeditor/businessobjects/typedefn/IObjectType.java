@@ -15,6 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import java.io.InputStream;
+
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 
 /**
@@ -48,6 +50,19 @@ public interface IObjectType extends Comparable<IObjectType> {
 	 */
 	String getDescription();
 
+	/**
+	 * Returns an SVG representation of drawing primitive defined by this object type. The stream
+	 * contains a standard SVG file and so can be read by any standard SVG file reader.
+	 * The figure is 100 x 100 points in size and the figures is centred in this square area.
+	 * The figure is drawn with the colours and line styles that are defined as the defaults
+	 * for this object type.
+	 *  
+	 * It is anticipated that clients may convert this to an icon for a palette or something
+	 * similar.  
+	 * @return the svg figure provided as an input stream. This cannot be null and will not be empty.
+	 */
+	InputStream getIconAsSvgStream();
+	
 	/**
 	 * An object type is equal if it belongs to the same notation and has the same UniqueId().
 	 * Otherwise it should comply with the standard equals contract.

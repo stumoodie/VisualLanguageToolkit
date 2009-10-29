@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 
+import java.io.InputStream;
 import java.util.EnumSet;
 
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
@@ -23,6 +24,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
+import org.pathwayeditor.figure.figuredefn.rendering.NotationIconGenerator;
 
 
 public class FallbackShapeObjectType implements IShapeObjectType {
@@ -112,5 +114,21 @@ public class FallbackShapeObjectType implements IShapeObjectType {
 		if (this.getUniqueId() != other.getUniqueId())
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getIconAsSvgStream()
+	 */
+	public InputStream getIconAsSvgStream() {
+		NotationIconGenerator iconGen = new NotationIconGenerator();
+		iconGen.setFigureDefn(ATTRIBUTE_DEFAULTS.getShapeDefinition());
+		iconGen.setFillColour(ATTRIBUTE_DEFAULTS.getFillColour());
+		iconGen.setLineColour(ATTRIBUTE_DEFAULTS.getLineColour());
+		iconGen.setLineStyle(ATTRIBUTE_DEFAULTS.getLineStyle());
+		iconGen.setLineWidth(ATTRIBUTE_DEFAULTS.getLineWidth());
+		iconGen.setProperties(ATTRIBUTE_DEFAULTS.propertyDefinitionIterator());
+		iconGen.setSize(ATTRIBUTE_DEFAULTS.getSize());
+		iconGen.buildSvg();
+		return iconGen.getSvgAsInputStream();
 	}
 }

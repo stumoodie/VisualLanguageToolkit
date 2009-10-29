@@ -15,15 +15,26 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.figure.figuredefn.rendering.NotationIconGenerator;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class FallbackRootObjectType implements IRootObjectType {
 
+	private static final String FIGURE_DEFN = "currbounds rect";
+	private static final double LINE_WIDTH = 1.0;
+	private static final Dimension ICON_SIZE = new Dimension(100.0, 100.0);
 	private final INotationSyntaxService syntaxService;
 	private final IRootObjectParentingRules parentingRules;
 	private final HibObjectType hibObjectType;
@@ -107,5 +118,21 @@ public class FallbackRootObjectType implements IRootObjectType {
 		if (this.getUniqueId() != other.getUniqueId())
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getIconAsSvgStream()
+	 */
+	public InputStream getIconAsSvgStream() {
+		NotationIconGenerator iconGen = new NotationIconGenerator();
+		iconGen.setFigureDefn(FIGURE_DEFN);
+		iconGen.setFillColour(RGB.WHITE);
+		iconGen.setLineColour(RGB.WHITE);
+		iconGen.setLineStyle(LineStyle.SOLID);
+		iconGen.setLineWidth(LINE_WIDTH);
+		iconGen.setProperties(new ArrayList<IPropertyDefinition>(0).iterator());
+		iconGen.setSize(ICON_SIZE);
+		iconGen.buildSvg();
+		return iconGen.getSvgAsInputStream();
 	}
 }

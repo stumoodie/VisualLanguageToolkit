@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.helpers.fallbacknotation;
 
+import java.io.InputStream;
 import java.util.EnumSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -25,9 +26,15 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.figuredefn.rendering.NotationIconGenerator;
+import org.pathwayeditor.figure.geometry.Dimension;
 
 public class FallbackLinkObjectType implements ILinkObjectType {
 	private static final ILinkAttributeDefaults DEFAULT_ATTRIBUTES = new FallbackLinkAttributeDefaults();
+	private static final String FIGURE_DEFN = "curbounds /h exch def /w exch def /y exch def /x exch def\n"
+		+ "/xoffset { w mul x add } def /yoffset { h mul y add } def\n"
+		+ "0.0 xoffset 0.5 yoffset 1.0 xoffset 0.5 yoffset line";
+	private static final Dimension FIG_SIZE = new Dimension(30, 10);
 	
 	private final HibObjectType hibObjectType;
 	private final INotationSyntaxService syntaxService;
@@ -142,6 +149,22 @@ public class FallbackLinkObjectType implements ILinkObjectType {
 		if (this.getUniqueId() != other.getUniqueId())
 			return false;
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getIconAsSvgStream()
+	 */
+	public InputStream getIconAsSvgStream() {
+		NotationIconGenerator iconGen = new NotationIconGenerator();
+		iconGen.setFigureDefn(FIGURE_DEFN);
+		iconGen.setFillColour(null);
+		iconGen.setLineColour(DEFAULT_ATTRIBUTES.getLineColour());
+		iconGen.setLineStyle(DEFAULT_ATTRIBUTES.getLineStyle());
+		iconGen.setLineWidth(DEFAULT_ATTRIBUTES.getLineWidth());
+		iconGen.setProperties(DEFAULT_ATTRIBUTES.propertyDefinitionIterator());
+		iconGen.setSize(FIG_SIZE);
+		iconGen.buildSvg();
+		return iconGen.getSvgAsInputStream();
 	}
 
 }

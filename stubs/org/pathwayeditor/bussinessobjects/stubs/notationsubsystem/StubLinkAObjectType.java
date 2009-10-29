@@ -18,6 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import java.io.InputStream;
 import java.util.EnumSet;
 
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -27,6 +28,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.figure.figuredefn.rendering.NotationIconGenerator;
 
 /**
  * @author smoodie
@@ -139,6 +141,22 @@ public class StubLinkAObjectType implements ILinkObjectType {
 	 */
 	public int compareTo(IObjectType o) {
 		return this.getUniqueId() < o.getUniqueId() ? -1 : this.getUniqueId() > o.getUniqueId() ? 1 : 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getIconAsSvgStream()
+	 */
+	public InputStream getIconAsSvgStream() {
+		NotationIconGenerator iconGen = new NotationIconGenerator();
+		iconGen.setFigureDefn(FIG_DEFN);
+		iconGen.setFillColour(null);
+		iconGen.setLineColour(DEFAULT_ATTRIBUTES.getLineColour());
+		iconGen.setLineStyle(DEFAULT_ATTRIBUTES.getLineStyle());
+		iconGen.setLineWidth(DEFAULT_ATTRIBUTES.getLineWidth());
+		iconGen.setProperties(DEFAULT_ATTRIBUTES.propertyDefinitionIterator());
+		iconGen.setSize(FIG_SIZE);
+		iconGen.buildSvg();
+		return iconGen.getSvgAsInputStream();
 	}
 
 }
