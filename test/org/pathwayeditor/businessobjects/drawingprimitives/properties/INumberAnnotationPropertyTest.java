@@ -59,6 +59,7 @@ public class INumberAnnotationPropertyTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(mockPropDefn).getName(); will(returnValue(PROP_NAME));
 			allowing(mockPropDefn).getDefaultValue(); will(returnValue(NUMBER_VALUE));
+			allowing(mockPropDefn).getDisplayName(); will(returnValue(PROP_NAME));
 		}});
 		
 		numberProperty = new HibNumberProperty (mockCanvasAttribute, mockPropDefn) ;
@@ -66,6 +67,8 @@ public class INumberAnnotationPropertyTest {
 
 	@After
 	public void tearDown() throws Exception {
+		this.mockCanvasAttribute = null;
+		this.mockPropDefn = null;
 	}
 	
 	@Test

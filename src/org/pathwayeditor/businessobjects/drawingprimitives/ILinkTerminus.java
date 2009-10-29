@@ -17,13 +17,14 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkTerminus extends IAnnotatedCanvasAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 

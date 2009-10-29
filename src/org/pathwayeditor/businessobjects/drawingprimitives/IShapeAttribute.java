@@ -17,17 +17,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.figure.figuredefn.GraphicsInstructionList;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedCanvasAttribute, ITypedDrawingNodeAttribute, IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITypedDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
-	
-	GraphicsInstructionList getGraphicalDefinition(); 
-	
-	void setGraphicalDefinition(GraphicsInstructionList instList);
 	
 	/**
 	 * Gets the object type that is related with this shape.
@@ -36,14 +32,6 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedCanvasAttri
 	IShapeObjectType getObjectType();
 	
 
-	/**
-	 * Sets the shape definition string for this Shape.
-	 * @param shapeDefinitionthe new shape definition string. Cannot be null
-	 * @throws IllegalArgumentException if shapeDefinition is null.
-	 */
-	void setShapeDefinition(String shapeDefinition);
-	
-	
 	/**
 	 * Gets the shape definition string, which cannot be null.
 	 * @return the shape definition.

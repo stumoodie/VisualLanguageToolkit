@@ -36,7 +36,7 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	public   RGB    LINE_COLOR = new RGB ( 150 , 150 , 150 ) ;
 	public   LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
 	public   int LINE_WIDTH = 1 ;
-	public   String PRIMITIVE_SHAPE_TYPE = "curbounds 90 90 arc";
+	public   String PRIMITIVE_SHAPE_TYPE = "curbounds oval";
 	public   Dimension SIZE = new Dimension ( 50 , 50 ) ;
 	
 	

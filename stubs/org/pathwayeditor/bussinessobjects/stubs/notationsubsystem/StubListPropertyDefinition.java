@@ -26,6 +26,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
@@ -93,6 +94,14 @@ public class StubListPropertyDefinition implements IListPropertyDefinition {
 	 */
 	public boolean isAlwaysDisplayed() {
 		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IPropertyDefinition o) {
+		return this.getName().compareTo(o.getName());
 	}
 
 	/* (non-Javadoc)

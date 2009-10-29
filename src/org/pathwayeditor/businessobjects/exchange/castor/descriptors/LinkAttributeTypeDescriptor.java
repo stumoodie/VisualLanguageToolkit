@@ -206,15 +206,15 @@ public class LinkAttributeTypeDescriptor extends org.pathwayeditor.businessobjec
         { //-- local scope
         }
         desc.setValidator(fieldValidator);
-        //-- _lineColour
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(org.pathwayeditor.businessobjects.exchange.castor.LineColour.class, "_lineColour", "LineColour", org.exolab.castor.xml.NodeType.Element);
+        //-- _linkLineColour
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour.class, "_linkLineColour", "LineColour", org.exolab.castor.xml.NodeType.Element);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 LinkAttributeType target = (LinkAttributeType) object;
-                return target.getLineColour();
+                return target.getLinkLineColour();
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -222,7 +222,7 @@ public class LinkAttributeTypeDescriptor extends org.pathwayeditor.businessobjec
             {
                 try {
                     LinkAttributeType target = (LinkAttributeType) object;
-                    target.setLineColour( (org.pathwayeditor.businessobjects.exchange.castor.LineColour) value);
+                    target.setLinkLineColour( (org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour) value);
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -233,14 +233,14 @@ public class LinkAttributeTypeDescriptor extends org.pathwayeditor.businessobjec
                 return null;
             }
         };
-        desc.setSchemaType("org.pathwayeditor.businessobjects.exchange.castor.LineColour");
+        desc.setSchemaType("org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
         addFieldDescriptor(desc);
         addSequenceElement(desc);
 
-        //-- validation code for: _lineColour
+        //-- validation code for: _linkLineColour
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope

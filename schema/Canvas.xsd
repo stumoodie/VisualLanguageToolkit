@@ -7,6 +7,7 @@
     </xs:simpleType>
     <xs:complexType block="" name="CanvasAttributeType" abstract="true">
         <xs:attribute name="creationSerial" type="CanvasSerialType" use="required"/>
+        <xs:attribute name="terminusType" type="LinkTerminusTypeType"/>
     </xs:complexType>
     <xs:complexType name="PropertyType">
         <xs:attribute name="name" type="xs:string" use="required"/>
@@ -50,16 +51,6 @@
                     <xs:element name="location" type="PointType"/>
                     <xs:element ref="Annotations"/>
                 </xs:sequence>
-                <xs:attribute form="unqualified" name="terminusType" use="required">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:normalizedString">
-                            <xs:whiteSpace value="replace"/>
-                            <xs:enumeration value="S,T"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="srcTermSerial" type="CanvasSerialType" use="required"/>
-                <xs:attribute name="tgtTermSerial" type="CanvasSerialType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -99,12 +90,12 @@
         <xs:attribute name="blue" type="xs:nonNegativeInteger" use="required"/>
     </xs:complexType>
     <xs:complexType name="PointType">
-        <xs:attribute name="x" type="xs:decimal" use="required"/>
-        <xs:attribute name="y" type="xs:decimal" use="required"/>
+        <xs:attribute name="x" type="xs:double" use="required"/>
+        <xs:attribute name="y" type="xs:double" use="required"/>
     </xs:complexType>
     <xs:complexType name="DimensionType">
-        <xs:attribute name="width" type="xs:decimal" use="required"/>
-        <xs:attribute name="height" type="xs:decimal" use="required"/>
+        <xs:attribute name="width" type="xs:double" use="required"/>
+        <xs:attribute name="height" type="xs:double" use="required"/>
     </xs:complexType>
     <xs:complexType name="ModelType">
         <xs:sequence>
@@ -234,4 +225,10 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:simpleType name="LinkTerminusTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="S"/>
+            <xs:enumeration value="T"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

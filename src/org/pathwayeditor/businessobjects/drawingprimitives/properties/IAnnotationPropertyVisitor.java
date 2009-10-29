@@ -9,15 +9,14 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  */
 public interface IAnnotationPropertyVisitor {
 
-	void visitNumberProperty(INumberAnnotationProperty property);
+	void visitIntegerAnnotationProperty(IIntegerAnnotationProperty prop);
 	
-	void visitIntegerProperty(IIntegerAnnotationProperty property);
+	void visitBooleanAnnotationProperty(IBooleanAnnotationProperty prop);
 	
-	void visitPlainTextProperty(IPlainTextAnnotationProperty property);
+	void visitPlainTextAnnotationProperty(IPlainTextAnnotationProperty prop);
 	
-	void visitHtmlProperty(IHtmlAnnotationProperty property);
+	void visitNumberAnnotationProperty(INumberAnnotationProperty prop);
 	
-	void visitBooleanProperty(IBooleanAnnotationProperty property);
-
-	void visitListProperty(IListAnnotationProperty property);
+	void visitListAnnotationProperty(IListAnnotationProperty prop);
+	
 }

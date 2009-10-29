@@ -22,6 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
@@ -111,6 +112,13 @@ public class StubHtmlPropertyDefinition implements IHtmlPropertyDefinition {
 		builder.append(this.getName());
 		builder.append(")");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(IPropertyDefinition o) {
+		return this.getName().compareTo(o.getName());
 	}
 
 }

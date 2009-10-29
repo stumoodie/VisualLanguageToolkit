@@ -35,7 +35,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	public void build(){
 		while(iter.hasNext()){
 			IAnnotationProperty prop = iter.next();
-			prop.visitProperty(this);
+			prop.visit(this);
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitBooleanProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty)
 	 */
-	public void visitBooleanProperty(IBooleanAnnotationProperty property) {
+	public void visitBooleanAnnotationProperty(IBooleanAnnotationProperty property) {
 		BooleanAnnotationProperty prop = new BooleanAnnotationProperty();
 		prop.setName(property.getDefinition().getName());
 		prop.setDisplayName(property.getDefinition().getDisplayName());
@@ -63,7 +63,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitIntegerProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty)
 	 */
-	public void visitIntegerProperty(IIntegerAnnotationProperty property) {
+	public void visitIntegerAnnotationProperty(IIntegerAnnotationProperty property) {
 		IntegerAnnotationProperty prop = new IntegerAnnotationProperty();
 		prop.setName(property.getDefinition().getName());
 		prop.setDisplayName(property.getDefinition().getDisplayName());
@@ -73,13 +73,13 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitListProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty)
 	 */
-	public void visitListProperty(IListAnnotationProperty property) {
+	public void visitListAnnotationProperty(IListAnnotationProperty property) {
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitNumberProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty)
 	 */
-	public void visitNumberProperty(INumberAnnotationProperty property) {
+	public void visitNumberAnnotationProperty(INumberAnnotationProperty property) {
 		NumberAnnotationProperty prop = new NumberAnnotationProperty();
 		prop.setName(property.getDefinition().getName());
 		prop.setDisplayName(property.getDefinition().getDisplayName());
@@ -89,11 +89,10 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty)
 	 */
-	public void visitPlainTextProperty(IPlainTextAnnotationProperty property) {
+	public void visitPlainTextAnnotationProperty(IPlainTextAnnotationProperty property) {
 		TextAnnotationProperty prop = new TextAnnotationProperty();
 		prop.setName(property.getDefinition().getName());
 		prop.setDisplayName(property.getDefinition().getDisplayName());
 		prop.setName(property.getValue());
 	}
-
 }

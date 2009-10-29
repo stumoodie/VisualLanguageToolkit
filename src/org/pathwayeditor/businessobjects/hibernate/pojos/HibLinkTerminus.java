@@ -27,9 +27,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.PropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -55,7 +55,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
     private transient Dimension terminusSize = new Dimension(DEF_TERM_DEC_WIDTH, DEF_TERM_DEC_HEIGHT);
     private transient ILinkTerminusDefinition terminusDefn = null;
     private transient Point location = Point.ORIGIN;
-	private final transient ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem();
+	private final transient ListenablePropertyChangeItem eventHandler = new ListenablePropertyChangeItem(this);
 
 	/**
 	 * Default constructor to only be used by hibernate.
@@ -100,14 +100,14 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		this.setGap(linkTerminusDefaults.getGap());
 	}
 
-	public void injectLinkTerminusDefaults(ILinkTerminusDefinition terminusDefn) throws InconsistentNotationDefinitionException {
-		super.injectPropertyDefinitions(terminusDefn.getDefaultAttributes());
-		if(terminusDefn != null && (!terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
-				|| !terminusDefn.getLinkEndCode().equals(this.linkTermType))){
-			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
-		}
-		this.terminusDefn = terminusDefn;
-	}
+//	public void injectLinkTerminusDefaults(ILinkTerminusDefinition terminusDefn) throws InconsistentNotationDefinitionException {
+//		super.injectPropertyDefinitions(terminusDefn.getDefaultAttributes());
+//		if(terminusDefn != null && (!terminusDefn.getOwningObjectType().equals(linkAttribute.getObjectType())
+//				|| !terminusDefn.getLinkEndCode().equals(this.linkTermType))){
+//			throw new IllegalArgumentException("terminusDefn must belong to the same object type as the link owning this terminus and be for the correct link terminus type.");
+//		}
+//		this.terminusDefn = terminusDefn;
+//	}
 	
 	void setOwningLink(HibLinkAttribute hibLinkAttribute) {
 		this.linkAttribute = hibLinkAttribute;
@@ -133,7 +133,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		LinkEndDecoratorShape oldValue = this.endDecoratorType;
 		this.endDecoratorType = decoratorType;
-		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_TYPE, oldValue, this.endDecoratorType);
+		this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.END_DECORATOR_TYPE, oldValue, this.endDecoratorType);
 	}
 
 	public double getEndDecWidth() {
@@ -222,7 +222,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 
 		double oldValue = this.offset;
 		this.offset = (short) newGap;
-		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_GAP, oldValue, this.offset);
+		this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.TERMINUS_GAP, oldValue, this.offset);
 	}
 
 	public HibLinkAttribute getOwningLink() {
@@ -265,7 +265,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		Dimension oldValue = this.endDecSize;
 		this.endDecSize = size;
-		this.eventHandler.notifyPropertyChange(PropertyChange.END_DECORATOR_SIZE, oldValue, this.endDecSize);
+		this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.END_DECORATOR_SIZE, oldValue, this.endDecSize);
 	}
 
 	public void setTerminusColour(RGB newColour) {
@@ -273,7 +273,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		RGB oldValue = this.terminusColour;
 		this.terminusColour = newColour;
-		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_DEC_COLOUR, oldValue, this.terminusColour);
+		this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.TERMINUS_DEC_COLOUR, oldValue, this.terminusColour);
 	}
 
 
@@ -282,7 +282,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		
 		Dimension oldValue = this.terminusSize;
 		this.terminusSize = newSize;
-		this.eventHandler.notifyPropertyChange(PropertyChange.TERMINUS_SIZE, oldValue, this.terminusSize);
+		this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.TERMINUS_SIZE, oldValue, this.terminusSize);
 	}
 
 	public ILinkTerminusDefinition getDefinition() {
@@ -341,21 +341,21 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void addChangeListener(IPropertyChangeListener listener) {
+	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.eventHandler.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
 	 */
-	public Iterator<IPropertyChangeListener> listenerIterator() {
+	public Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
 		return this.eventHandler.listenerIterator();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
-	public void removeChangeListener(IPropertyChangeListener listener) {
+	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.eventHandler.removeChangeListener(listener);
 	}
 
@@ -382,15 +382,6 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
-	 */
-	@Override
-	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-		// do nothing
-	}
-	
-	
 	double getXPosition(){
 		return this.location.getX();
 	}
@@ -421,7 +412,7 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		if(!this.location.equals(newLocation)){
 			Point oldLocation = this.location;
 			this.location = newLocation;
-			this.eventHandler.notifyPropertyChange(PropertyChange.LOCATION, oldLocation, this.location);
+			this.eventHandler.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldLocation, this.location);
 		}
 	}
 
@@ -476,5 +467,17 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 
 	public void setListenersEnabled(boolean enabled) {
 		this.eventHandler.setListenersEnabled(enabled);
+	}
+
+	public void setTerminusDefinition(ILinkTerminusDefinition terminusDefn) {
+		this.terminusDefn = terminusDefn;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvasAttribute#injectObjectType(org.pathwayeditor.businessobjects.hibernate.pojos.IObjectTypeInjector)
+	 */
+	@Override
+	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
+		injector.inject(this);
 	}
 }

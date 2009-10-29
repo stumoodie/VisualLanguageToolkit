@@ -30,6 +30,11 @@ public abstract class CanvasAttributeType implements java.io.Serializable {
      */
     private boolean _has_creationSerial;
 
+    /**
+     * Field _terminusType.
+     */
+    private org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType _terminusType;
+
 
       //----------------/
      //- Constructors -/
@@ -59,6 +64,16 @@ public abstract class CanvasAttributeType implements java.io.Serializable {
     public long getCreationSerial(
     ) {
         return this._creationSerial;
+    }
+
+    /**
+     * Returns the value of field 'terminusType'.
+     * 
+     * @return the value of field 'TerminusType'.
+     */
+    public org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType getTerminusType(
+    ) {
+        return this._terminusType;
     }
 
     /**
@@ -95,6 +110,16 @@ public abstract class CanvasAttributeType implements java.io.Serializable {
             final long creationSerial) {
         this._creationSerial = creationSerial;
         this._has_creationSerial = true;
+    }
+
+    /**
+     * Sets the value of field 'terminusType'.
+     * 
+     * @param terminusType the value of field 'terminusType'.
+     */
+    public void setTerminusType(
+            final org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType terminusType) {
+        this._terminusType = terminusType;
     }
 
     /**

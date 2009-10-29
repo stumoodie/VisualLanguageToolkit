@@ -307,6 +307,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 	private static final int NUM_MODEL_LABEL_NODES = 8;
 	private static final int NUM_MODEL_DRAWING_NODES = NUM_MODEL_SHAPE_NODES + NUM_MODEL_LABEL_NODES;
 	private static final double CMP_DELTA = 0.001;
+	private IMapPersistenceManager map1Manager;
 	
 	
 	
@@ -316,24 +317,22 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 	@Override
 	protected void doAdditionalSetUp() {
 		repository = this.getRepositoryPersistenceManager().getRepository();
+
+		IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
 	
-		loadObjects();
+		map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
+		map1Manager.open() ;
+		this.dbCanvas = map1Manager.getCanvas();
 		
 	}
 	
-	private void loadObjects ()	{
-		IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
-			
-		IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
-		map1Manager.open() ;
-		this.dbCanvas = map1Manager.getCanvas();
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.testutils.GenericTester#doAdditionalTearDown()
 	 */
 	@Override
 	protected void doAdditionalTearDown() {
+		this.map1Manager.close(true);
+		this.map1Manager = null;
 		repository = null;
 		this.dbCanvas = null;
 	}

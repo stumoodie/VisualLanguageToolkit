@@ -6,7 +6,6 @@ package org.pathwayeditor.businessobjects.exchange;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.math.BigDecimal;
 import java.util.Iterator;
 
 import org.exolab.castor.xml.MarshalException;
@@ -24,6 +23,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.Annotations;
@@ -39,10 +39,11 @@ import org.pathwayeditor.businessobjects.exchange.castor.Grid;
 import org.pathwayeditor.businessobjects.exchange.castor.GridSize;
 import org.pathwayeditor.businessobjects.exchange.castor.LabelAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.LabelNode;
-import org.pathwayeditor.businessobjects.exchange.castor.LineColour;
 import org.pathwayeditor.businessobjects.exchange.castor.LinkAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.LinkEdge;
+import org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour;
 import org.pathwayeditor.businessobjects.exchange.castor.LinkTerminus;
+import org.pathwayeditor.businessobjects.exchange.castor.Location;
 import org.pathwayeditor.businessobjects.exchange.castor.Model;
 import org.pathwayeditor.businessobjects.exchange.castor.Notation;
 import org.pathwayeditor.businessobjects.exchange.castor.ObjectType;
@@ -50,8 +51,10 @@ import org.pathwayeditor.businessobjects.exchange.castor.PointType;
 import org.pathwayeditor.businessobjects.exchange.castor.RootAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.RootNode;
 import org.pathwayeditor.businessobjects.exchange.castor.ShapeAttribute;
+import org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour;
 import org.pathwayeditor.businessobjects.exchange.castor.ShapeNode;
 import org.pathwayeditor.businessobjects.exchange.castor.Size;
+import org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
@@ -118,13 +121,13 @@ public class XmlCanvasBuilder {
 		grid.setGridOn(dbCanvas.isGridEnabled());
 		grid.setSnapToGrid(dbCanvas.isSnapToGridOn());
 		GridSize gridSize = new GridSize();
-		gridSize.setHeight(new BigDecimal(dbCanvas.getCanvasSize().getHeight()));
-		gridSize.setWidth(new BigDecimal(dbCanvas.getCanvasSize().getWidth()));
+		gridSize.setHeight(dbCanvas.getCanvasSize().getHeight());
+		gridSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		grid.setGridSize(gridSize);
 		xmlCanvas.setGrid(grid);
 		CanvasSize canvasSize = new CanvasSize();
-		canvasSize.setHeight(new BigDecimal(dbCanvas.getCanvasSize().getHeight()));
-		canvasSize.setWidth(new BigDecimal(dbCanvas.getCanvasSize().getWidth()));
+		canvasSize.setHeight(dbCanvas.getCanvasSize().getHeight());
+		canvasSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		xmlCanvas.setCanvasSize(canvasSize);
 	}
 	
@@ -160,8 +163,8 @@ public class XmlCanvasBuilder {
 	
 	private static Size createSize(Dimension size) {
 		Size retVal = new Size();
-		retVal.setHeight(new BigDecimal(size.getHeight()));
-		retVal.setWidth(new BigDecimal(size.getWidth()));
+		retVal.setHeight(size.getHeight());
+		retVal.setWidth(size.getWidth());
 		return retVal;
 	}
 
@@ -189,7 +192,7 @@ public class XmlCanvasBuilder {
 			xmlAttrib.setObjectType(createObjectType(attrib.getObjectType()));
 			xmlAttrib.setAnnotations(createAnnotations(attrib.propertyIterator()));
 			xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getFillColour()));
-			xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
+			xmlAttrib.setShapeLineColour(setColour(new ShapeLineColour(), attrib.getLineColour()));
 			this.xmlCanvas.addShapeAttribute(xmlAttrib);
 		}
 	}
@@ -225,7 +228,9 @@ public class XmlCanvasBuilder {
 			xmlAttrib.setCreationSerial(attrib.getCreationSerial());
 			xmlAttrib.setObjectType(createObjectType(attrib.getObjectType()));
 			xmlAttrib.setAnnotations(createAnnotations(attrib.propertyIterator()));
-			xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColor()));
+			xmlAttrib.setLinkLineColour(setColour(new LinkLineColour(), attrib.getLineColor()));
+			xmlAttrib.setSrcTermSerial(attrib.getSourceTerminus().getCreationSerial());
+			xmlAttrib.setTgtTermSerial(attrib.getTargetTerminus().getCreationSerial());
 			this.xmlCanvas.addLinkAttribute(xmlAttrib);
 		}
 	}
@@ -237,13 +242,26 @@ public class XmlCanvasBuilder {
 			LinkTerminus xmlAttrib = new LinkTerminus();
 			xmlAttrib.setCreationSerial(attrib.getCreationSerial());
 			xmlAttrib.setAnnotations(createAnnotations(attrib.propertyIterator()));
+			Location locn = new Location();
+			locn.setX(attrib.getLocation().getX());
+			locn.setY(attrib.getLocation().getY());
+			xmlAttrib.setLocation(locn);
+			xmlAttrib.setTerminusType(createLinkTermType(attrib));
 			this.xmlCanvas.addLinkTerminus(xmlAttrib);
 		}
 	}
 	
+	private LinkTerminusTypeType createLinkTermType(ILinkTerminus terminus){
+		LinkTerminusTypeType retVal = LinkTerminusTypeType.S;
+		if(terminus.getLinkTermType().equals(LinkTermType.TARGET)){
+			retVal = LinkTerminusTypeType.T;
+		}
+		return retVal;
+	}
+	
 	private static <T extends PointType> T createLocation(T location, Point p){
-		location.setX(new BigDecimal(p.getX()));
-		location.setY(new BigDecimal(p.getY()));
+		location.setX(p.getX());
+		location.setY(p.getY());
 		return location;
 	}
 	

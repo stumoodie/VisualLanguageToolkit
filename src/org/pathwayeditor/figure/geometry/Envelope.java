@@ -13,7 +13,7 @@ public class Envelope {
 		this.dim = new Dimension(w, h);
 		this.origin = new Point(x, y);
 	}
-
+	
 	public Dimension getDimension() {
 		return dim;
 	}
@@ -41,7 +41,13 @@ public class Envelope {
 		return new Point(newX, newY);
 	}
 	
-@Override
+	public Point calculateTranslation(Envelope destinationBounds){
+		double x = destinationBounds.getOrigin().getX() - this.getOrigin().getX();
+		double y = destinationBounds.getOrigin().getY() - this.getOrigin().getY();
+		return new Point(x, y);
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -122,5 +128,17 @@ public class Envelope {
 	public Envelope changeDimension(Dimension newSize) {
 		return new Envelope(this.origin, newSize);
 	}
+	
+	public Transformation calcTransformation(Envelope transformedEnvelope){
+		Scale newScale = this.dim.calcScalingFactors(transformedEnvelope.getDimension());
+		Point newTrans = this.origin.difference(transformedEnvelope.getOrigin());
+		return new Transformation(newTrans, newScale);
+	}
 
+	
+	public Envelope applyTransformation(Transformation transform){
+		Point newOrigin = this.origin.translate(transform.getTranslation());
+		Dimension newDim = this.dim.scale(transform.getScale());
+		return new Envelope(newOrigin, newDim);
+	}
 }

@@ -45,4 +45,6 @@ public interface IDrawingNode extends IDrawingElement {
 	boolean isValidChildOf(INodeObjectType parentType);
 	
 	IDrawingNodeAttribute getAttribute();
+
+	int getLevel();
 }

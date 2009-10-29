@@ -73,7 +73,7 @@ public class Dimension {
 	public Dimension shrink(double currentLineWidth, double currentLineHeight) {
 		double newWidth = this.width - currentLineWidth;
 		double newHeight = this.height - currentLineHeight;
-		if(newWidth < 0 || newHeight < 0) throw new IllegalArgumentException("Cannot make a diemntion nagative");
+		if(newWidth < 0 || newHeight < 0) throw new IllegalArgumentException("Cannot make a dimension nagative");
 		return new Dimension(newWidth, newHeight);
 	}
 
@@ -83,5 +83,13 @@ public class Dimension {
 
 	public Dimension newHeight(double newHeight) {
 		return new Dimension(this.width, newHeight);
+	}
+
+	public Scale calcScalingFactors(Dimension scaledDimension) {
+		return new Scale(scaledDimension.width/this.width, scaledDimension.height/this.height);
+	}
+
+	public Dimension scale(Scale scale) {
+		return new Dimension(this.width * scale.getXfactor(), this.height * scale.getYFactor());
 	}
 }

@@ -41,7 +41,7 @@
 			<value>150</value>
 			<value>3</value>
 			<value>1</value>
-			<value>curbounds 90 90 arc</value>
+			<value>curbounds oval</value>
 			<value>10</value>
 			<value>20</value>
 			<value>30</value>

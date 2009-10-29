@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -53,7 +54,7 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		if(!textValue.equals(this.textValue)){
 			String oldValue = this.textValue;
 			this.textValue = textValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.textValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.textValue);
 		}
 	}
 
@@ -88,14 +89,11 @@ public class HibTextProperty extends HibProperty implements IPlainTextAnnotation
 		return this.propertyDefinition.isVisualisable();
 	}
 
-	public IPlainTextAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
-		return propertyBuilder.copyPlainTextProperty(this);
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitPlainTextAnnotationProperty(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
-	 */
-	public void visitProperty(IAnnotationPropertyVisitor visitor) {
-		visitor.visitPlainTextProperty(this);
-	}
 }

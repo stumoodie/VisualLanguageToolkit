@@ -15,6 +15,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -51,7 +52,7 @@ public class HibIntegerProperty extends HibProperty implements IIntegerAnnotatio
 		if(!numberValue.equals(this.numberValue)){
 			Integer oldValue = this.numberValue;
 			this.numberValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.numberValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.numberValue);
 		}
 	}
 
@@ -86,14 +87,10 @@ public class HibIntegerProperty extends HibProperty implements IIntegerAnnotatio
 		return this.propertyDefinition.isVisualisable();
 	}
 
-	public IIntegerAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
-		return propertyBuilder.copyIntegerProperty(this);
-	}
-
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
 	 */
-	public void visitProperty(IAnnotationPropertyVisitor visitor) {
-		visitor.visitIntegerProperty(this);
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitIntegerAnnotationProperty(this);
 	}
 }

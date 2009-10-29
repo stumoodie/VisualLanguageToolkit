@@ -54,10 +54,12 @@ public class IPlainTextAnnotationPropertyTest {
 	@Before
 	public void setUp() throws Exception {
 		mockPropDefn = this.mockery.mock(IPlainTextPropertyDefinition.class, "mockpropDefn");
+		mockCanvasAttribute = this.mockery.mock(HibAnnotatedCanvasAttribute.class, "mockCanvasAttribute");
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockPropDefn).getName(); will(returnValue(PROP_NAME));
 			allowing(mockPropDefn).getDefaultValue(); will(returnValue(TEXT_VALUE));
+			allowing(mockPropDefn).getDisplayName(); will(returnValue(PROP_NAME));
 		}});
 		
 		textProperty = new HibTextProperty (mockCanvasAttribute, mockPropDefn) ;

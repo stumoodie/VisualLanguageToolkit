@@ -112,6 +112,45 @@ public class CanvasAttributeTypeDescriptor extends org.exolab.castor.xml.util.XM
             typeValidator.setMinInclusive(0L);
         }
         desc.setValidator(fieldValidator);
+        //-- _terminusType
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType.class, "_terminusType", "terminusType", org.exolab.castor.xml.NodeType.Attribute);
+        handler = new org.exolab.castor.xml.XMLFieldHandler() {
+            @Override
+            public java.lang.Object getValue( java.lang.Object object ) 
+                throws IllegalStateException
+            {
+                CanvasAttributeType target = (CanvasAttributeType) object;
+                return target.getTerminusType();
+            }
+            @Override
+            public void setValue( java.lang.Object object, java.lang.Object value) 
+                throws IllegalStateException, IllegalArgumentException
+            {
+                try {
+                    CanvasAttributeType target = (CanvasAttributeType) object;
+                    target.setTerminusType( (org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType) value);
+                } catch (java.lang.Exception ex) {
+                    throw new IllegalStateException(ex.toString());
+                }
+            }
+            @Override
+            @SuppressWarnings("unused")
+            public java.lang.Object newInstance(java.lang.Object parent) {
+                return null;
+            }
+        };
+        handler = new org.exolab.castor.xml.handlers.EnumFieldHandler(org.pathwayeditor.businessobjects.exchange.castor.types.LinkTerminusTypeType.class, handler);
+        desc.setImmutable(true);
+        desc.setSchemaType("LinkTerminusTypeType");
+        desc.setHandler(handler);
+        desc.setMultivalued(false);
+        addFieldDescriptor(desc);
+
+        //-- validation code for: _terminusType
+        fieldValidator = new org.exolab.castor.xml.FieldValidator();
+        { //-- local scope
+        }
+        desc.setValidator(fieldValidator);
         //-- initialize element descriptors
 
     }

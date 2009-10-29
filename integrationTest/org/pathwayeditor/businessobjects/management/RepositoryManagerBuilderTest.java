@@ -26,6 +26,8 @@ import java.io.File;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.database.management.HsqlDatabaseManager;
+import org.pathwayeditor.businessobjects.database.management.IDatabaseManager;
 import org.pathwayeditor.businessobjects.database.util.HibernateDataSource;
 import org.pathwayeditor.businessobjects.database.util.InitialisedDefaultDB;
 import org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandlerFactory;

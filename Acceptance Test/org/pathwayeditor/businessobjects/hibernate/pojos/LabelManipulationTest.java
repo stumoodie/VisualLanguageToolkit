@@ -11,10 +11,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.testutils.GenericXlsTester;
+import org.pathwayeditor.testutils.GenericXlsSchemaBuilderTester;
 
 
-public class LabelManipulationTest extends GenericXlsTester {
+public class LabelManipulationTest extends GenericXlsSchemaBuilderTester {
 	private static final String SOURCE_DATA_FILE = "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
 	private static final String REPOSITORY_NAME ="repo name";
 	private static final int TEST_INODE = 4;

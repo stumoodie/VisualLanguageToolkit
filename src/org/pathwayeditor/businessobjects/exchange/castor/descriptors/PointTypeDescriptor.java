@@ -66,14 +66,15 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
         //-- initialize attribute descriptors
 
         //-- _x
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.math.BigDecimal.class, "_x", "x", org.exolab.castor.xml.NodeType.Attribute);
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.Double.TYPE, "_x", "x", org.exolab.castor.xml.NodeType.Attribute);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 PointType target = (PointType) object;
-                return target.getX();
+                if (!target.hasX()) { return null; }
+                return new java.lang.Double(target.getX());
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -81,7 +82,10 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
             {
                 try {
                     PointType target = (PointType) object;
-                    target.setX( (java.math.BigDecimal) value);
+                    // ignore null values for non optional primitives
+                    if (value == null) { return; }
+
+                    target.setX( ((java.lang.Double) value).doubleValue());
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -89,11 +93,10 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
             @Override
             @SuppressWarnings("unused")
             public java.lang.Object newInstance(java.lang.Object parent) {
-                return new java.math.BigDecimal(0);
+                return null;
             }
         };
-        desc.setImmutable(true);
-        desc.setSchemaType("decimal");
+        desc.setSchemaType("double");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
@@ -103,20 +106,23 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope
-            org.exolab.castor.xml.validators.DecimalValidator typeValidator;
-            typeValidator = new org.exolab.castor.xml.validators.DecimalValidator();
+            org.exolab.castor.xml.validators.DoubleValidator typeValidator;
+            typeValidator = new org.exolab.castor.xml.validators.DoubleValidator();
             fieldValidator.setValidator(typeValidator);
+            typeValidator.setMinInclusive(-1.7976931348623157E308);
+            typeValidator.setMaxInclusive(1.7976931348623157E308);
         }
         desc.setValidator(fieldValidator);
         //-- _y
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.math.BigDecimal.class, "_y", "y", org.exolab.castor.xml.NodeType.Attribute);
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.Double.TYPE, "_y", "y", org.exolab.castor.xml.NodeType.Attribute);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 PointType target = (PointType) object;
-                return target.getY();
+                if (!target.hasY()) { return null; }
+                return new java.lang.Double(target.getY());
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -124,7 +130,10 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
             {
                 try {
                     PointType target = (PointType) object;
-                    target.setY( (java.math.BigDecimal) value);
+                    // ignore null values for non optional primitives
+                    if (value == null) { return; }
+
+                    target.setY( ((java.lang.Double) value).doubleValue());
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -132,11 +141,10 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
             @Override
             @SuppressWarnings("unused")
             public java.lang.Object newInstance(java.lang.Object parent) {
-                return new java.math.BigDecimal(0);
+                return null;
             }
         };
-        desc.setImmutable(true);
-        desc.setSchemaType("decimal");
+        desc.setSchemaType("double");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
@@ -146,9 +154,11 @@ public class PointTypeDescriptor extends org.exolab.castor.xml.util.XMLClassDesc
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope
-            org.exolab.castor.xml.validators.DecimalValidator typeValidator;
-            typeValidator = new org.exolab.castor.xml.validators.DecimalValidator();
+            org.exolab.castor.xml.validators.DoubleValidator typeValidator;
+            typeValidator = new org.exolab.castor.xml.validators.DoubleValidator();
             fieldValidator.setValidator(typeValidator);
+            typeValidator.setMinInclusive(-1.7976931348623157E308);
+            typeValidator.setMaxInclusive(1.7976931348623157E308);
         }
         desc.setValidator(fieldValidator);
         //-- initialize element descriptors

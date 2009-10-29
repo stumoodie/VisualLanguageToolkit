@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <binding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.castor.org/SourceGenerator/Binding file:/Users/smoodie/sfworkspace/BusinessObjects/lib/castor-1.3/doc/binding.xsd"
+ xsi:schemaLocation="http://www.castor.org/SourceGenerator/Binding"
  xmlns="http://www.castor.org/SourceGenerator/Binding">
 
    <elementBinding name="/complexType:DrawingNodeAttributeType/Location">
@@ -9,5 +9,13 @@
 
    <elementBinding name="/complexType:LinkTerminusType/Location">
       <java-class name="TerminusLocation"/>
+   </elementBinding>
+   
+   <elementBinding name="/complexType:ShapeAttributeType/LineColour">
+   		<java-class name="ShapeLineColour"/>
+   </elementBinding>
+   
+   <elementBinding name="/complexType:LinkAttributeType/LineColour">
+   		<java-class name="LinkLineColour"/>
    </elementBinding>
 </binding>

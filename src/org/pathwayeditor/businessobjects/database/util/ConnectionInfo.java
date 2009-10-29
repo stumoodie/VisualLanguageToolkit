@@ -21,15 +21,10 @@ package org.pathwayeditor.businessobjects.database.util;
 import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 
 /**
- * @author nhanlon
+ * @author nhanlon/smoodie
  * The default settings for ConnectionInfo are for the Hsql Database
  */
 public class ConnectionInfo implements IConnectionInfo{
-//	private final String userName="sa";
-//	private final String password="";
-//	private final String url="jdbc:hsqldb:hsql://localhost/epeDev";
-//	private final String repositoryName;
-//	private final String driverName="org.hsqldb.jdbcDriver";
 	private final String userName;
 	private final String password;
 	private final String url;

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -71,16 +72,20 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 		return this.values;
 	}
 	
-	void setValue(List<String> value){
+	public void setValue(List<String> value){
+		List<String> oldValue = this.values;
 		this.values = value;
+		this.getListenerHandler().notifyPropertyChange(oldValue, value);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty#addValue(java.lang.String)
 	 */
 	public void addValue(String newValue) {
+		List<String> oldValue = this.values;
+		this.values = new ArrayList<String>(oldValue);
 		this.values.add(newValue);
-		this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, null, newValue);
+		this.getListenerHandler().notifyPropertyChange(null, newValue);
 	}
 
 	/* (non-Javadoc)
@@ -101,14 +106,11 @@ public class HibListProperty extends HibProperty implements IListAnnotationPrope
 		return this.propertyDefinition.isVisualisable();
 	}
 
-	public IListAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
-		return propertyBuilder.copyListProperty(this);
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitListAnnotationProperty(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
-	 */
-	public void visitProperty(IAnnotationPropertyVisitor visitor) {
-		visitor.visitListProperty(this);
-	}
 }

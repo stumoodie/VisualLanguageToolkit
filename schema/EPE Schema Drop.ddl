@@ -47,6 +47,7 @@ alter table IntegerProperty drop constraint R131;
 alter table ShapeAttribute drop constraint FKShapeAttri651535;
 alter table LinkAttribute drop constraint R19;
 alter table LabelAttribute drop constraint R26;
+alter table RootAttribute drop constraint R1000;
 drop table LinkEdge if exists;
 drop table CompoundNode if exists;
 drop table CompoundGraph if exists;

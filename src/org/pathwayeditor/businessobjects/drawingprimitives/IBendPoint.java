@@ -15,11 +15,11 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointLocationChangeListenee;
 import org.pathwayeditor.figure.geometry.Point;
 
 
-public interface IBendPoint extends IPropertyChangeListenee {
+public interface IBendPoint extends IBendPointLocationChangeListenee {
 	ILinkAttribute getOwningLink();
 	
 	int getCreationSerial();

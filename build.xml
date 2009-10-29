@@ -43,7 +43,6 @@
 
 	<path id="classpath">
 		<pathelement location="${build.dir.src}" />
-		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/hibernate3.jar" />
 		<!--pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/ant-1.6.5.jar" />
@@ -81,18 +80,6 @@
 		<pathelement location="${lib.dir}/slf4j-1.5.2/slf4j-log4j12-1.5.2.jar" />
 		<pathelement location="${lib.dir}/apache-log4j-1.2.15/log4j-1.2.15.jar" />
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/xerces-2.6.2.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/bsh-core-2.0b4.jar" />
-		<!--pathelement location="${lib.dir}/jmock-2.5.1/cglib-2.1_3-src.jar" /-->
-		<pathelement location="${lib.dir}/jmock-2.5.1/cglib-nodep-2.1_3.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-core-1.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-library-1.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-2.5.1.jar" />
-		<!--pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" /-->
-		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit4-2.5.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
-		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
-		<pathelement location="${lib.dir}/DbUnit/dbunit-2.3.0.jar" />
 		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
 		<pathelement location="${lib.dir}/compoundgraph/CompoundGraph.jar" />
 		<pathelement location="${lib.dir}/antlr-3.1.2/lib/antlr-2.7.7.jar"/>
@@ -112,6 +99,23 @@
 
 	<path id="test.classpath">
 		<path refid="classpath" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/bsh-core-2.0b4.jar" />
+		<!--pathelement location="${lib.dir}/jmock-2.5.1/cglib-2.1_3-src.jar" /-->
+		<pathelement location="${lib.dir}/jmock-2.5.1/cglib-nodep-2.1_3.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-core-1.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-library-1.1.jar" />
+		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-2.5.1.jar" />
+		<!--pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" /-->
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit4-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
+		<pathelement location="${lib.dir}/jmock-2.5.1/objenesis-1.0.jar" />
+		<pathelement location="${lib.dir}/DbUnit/dbunit-2.3.0.jar" />
+		<pathelement location="${lib.dir}/hsqldb/lib/hsqldb.jar" />
+		<pathelement location="${lib.dir}/dbunit-2.4.5/dbunit-2.4.5.jar" />
+		<pathelement location="${lib.dir}/easymock-2.5.2/easymock-2.5.2.jar" />
+		<pathelement location="${lib.dir}/poi-3.2-FINAL/poi-3.2-FINAL-20081019.jar" />
 		<pathelement location="${build.dir.src}" />
 		<pathelement location="${build.dir.tests}" />
 		<pathelement location="${build.dir.stubs}" />
@@ -216,6 +220,7 @@
 			<fileset dir="${src.dir}">
 				<exclude name="**/*.java" />
 				<exclude name="**/*.class" />
+				<exclude name="**/*.txt" />
 			</fileset>
 		</copy>
 	</target>
@@ -226,7 +231,7 @@
 		</javadoc>
 	</target>
 
-	<target name="tests" depends="buildTest, buildIntegrationTest, buildAcceptanceTest">
+	<target name="tests" description="Run all tests" depends="buildTest, buildIntegrationTest, buildAcceptanceTest">
 		<delete dir="${build.dir}/test/logs" />
 		<mkdir dir="${build.dir}/test/logs" />
 		<!-- <echo>running with classpath ${toString:test.classpath}</echo>-->
@@ -234,7 +239,7 @@
 			run test cases. All test class names should end in 'Test' to avoid
 			inclusion of inner classes.
 		-->
-		<junit printsummary="yes" haltonfailure="no" fork="yes" forkmode="perBatch">
+		<junit printsummary="yes" haltonfailure="no" fork="yes" forkmode="perBatch" maxmemory="512m">
 			<classpath>
 				<path refid="test.classpath" />
 			</classpath>
@@ -314,16 +319,16 @@
 	</target>
 	
 	<path id="castor.class.path">
+		<pathelement location="schema" />
+		<pathelement location="${lib.dir}/apache-log4j-1.2.15/log4j-1.2.15.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-codegen.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-xml-schema.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-core.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/castor-1.3.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/castor-1.3-anttasks.jar" />
 		<pathelement location="${lib.dir}/castor-1.3/lib/cglib-full-2.0.2.jar" />
-		<pathelement location="${lib.dir}/castor-1.3/lib/commons-collections-3.1.jar" />
-		<pathelement location="${lib.dir}/castor-1.3/lib/commons-lang-2.1.jar" />
-		<pathelement location="${lib.dir}/castor-1.3/lib/commons-logging-1.1.jar" />
-		<!--pathelement location="${src.dir}/castorbuilder.properties" /-->
+		<pathelement location="${lib.dir}/hibernate-3.2/lib/commons-collections-2.1.1.jar" />
+		<pathelement location="${lib.dir}/hibernate-3.2/lib/commons-logging-1.0.4.jar" />
 	</path>
 		
 	<target name="castor-gen" depends="init"
@@ -336,7 +341,7 @@
 	                   todir="src"
 	                   package="org.pathwayeditor.businessobjects.exchange.castor"
 	                   types="j2"
-	    			   verbose="true"
+	    			   verbose="false"
 	    			   nodesc="false"
 	                   warnings="true"
 	    			   bindingfile="schema/CanvasBinding.xml"

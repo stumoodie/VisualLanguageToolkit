@@ -37,12 +37,12 @@ public interface INodeChangeEvent {
 	 * was removed then this will return null 
 	 * @return the item that was changed, which will be null if it has been removed.
 	 */
-	ILinkEdge getChangedItem();
+	ILinkEdge getChangedEdge();
 	
 	/**
 	 * Gets the node whose structure has been changed by this event.
 	 * @return the folder whose content was changed, which cannot be null
 	 */
-	IDrawingNode getChangedModel();
+	IDrawingNode getChangedNode();
 
 }

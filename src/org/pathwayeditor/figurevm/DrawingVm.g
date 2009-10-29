@@ -175,6 +175,8 @@ OPCODE
 	| 'abs'
 	| 'curbounds'
 	| 'setanchor'
+	| 'cvs'
+	| 'textbounds'
 	;
 
 NAME_VALUE

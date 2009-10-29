@@ -191,15 +191,15 @@ public class ShapeAttributeTypeDescriptor extends org.pathwayeditor.businessobje
         { //-- local scope
         }
         desc.setValidator(fieldValidator);
-        //-- _lineColour
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(org.pathwayeditor.businessobjects.exchange.castor.LineColour.class, "_lineColour", "LineColour", org.exolab.castor.xml.NodeType.Element);
+        //-- _shapeLineColour
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour.class, "_shapeLineColour", "LineColour", org.exolab.castor.xml.NodeType.Element);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 ShapeAttributeType target = (ShapeAttributeType) object;
-                return target.getLineColour();
+                return target.getShapeLineColour();
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -207,7 +207,7 @@ public class ShapeAttributeTypeDescriptor extends org.pathwayeditor.businessobje
             {
                 try {
                     ShapeAttributeType target = (ShapeAttributeType) object;
-                    target.setLineColour( (org.pathwayeditor.businessobjects.exchange.castor.LineColour) value);
+                    target.setShapeLineColour( (org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour) value);
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -218,14 +218,14 @@ public class ShapeAttributeTypeDescriptor extends org.pathwayeditor.businessobje
                 return null;
             }
         };
-        desc.setSchemaType("org.pathwayeditor.businessobjects.exchange.castor.LineColour");
+        desc.setSchemaType("org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
         addFieldDescriptor(desc);
         addSequenceElement(desc);
 
-        //-- validation code for: _lineColour
+        //-- validation code for: _shapeLineColour
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope

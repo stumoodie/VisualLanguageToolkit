@@ -59,8 +59,8 @@ public abstract class HibAnnotatedCanvasAttribute extends HibCanvasAttribute imp
 		super(newCanvas, newCreationSerial);
 		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this);
 		for (HibProperty property : other.hibProperties) {
-//			IPropertyDefinition defn = property.getDefinition(); 
-			this.hibProperties.add((HibProperty)property.copyProperty(propertyBuilder));
+			IPropertyDefinition defn = property.getDefinition(); 
+			this.hibProperties.add((HibProperty)defn.copyProperty(propertyBuilder, property));
 		}
 	}
 	

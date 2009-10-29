@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://www.pathwayeditor.org/Exchange"
-    xmlns="http://www.pathwayeditor.org/Exchange">
-    <xs:complexType block="" name="CanvasAttributeType">
-        <xs:attribute name="creationSerial" type="xs:positiveInteger" use="required"/>
-    </xs:complexType>
-    <xs:complexType name="ShapeAttributeType">
-        <xs:complexContent>
-            <xs:extension base="TypedDrawingNodeAttributeType"> </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="LinkAttributeType">
-        <xs:complexContent>
-            <xs:extension base="TypedDrawingNodeAttributeType"> </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="LabelAttributeType">
-        <xs:complexContent>
-            <xs:extension base="DrawingNodeAttributeType"> </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="DrawingNodeAttributeType">
-        <xs:complexContent>
-            <xs:extension base="CanvasAttributeType">
-                <xs:sequence>
-                    <xs:element name="location" type="PointType"/>
-                    <xs:element name="size" type="DimensionType"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="RootAttributeType">
-        <xs:complexContent>
-            <xs:extension base="TypedDrawingNodeAttributeType"/>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="TypedDrawingNodeAttributeType">
-        <xs:complexContent>
-            <xs:extension base="DrawingNodeAttributeType"> </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
+    xmlns:epe="http://www.pathwayeditor.org/Exchange">
     <xs:complexType name="ColourType">
         <xs:attribute name="red" type="xs:nonNegativeInteger" use="required"/>
         <xs:attribute name="green" type="xs:nonNegativeInteger" use="required"/>
@@ -67,17 +28,7 @@
                 </xs:element>
                 <xs:element name="CanvasSize" type="DimensionType"/>
                 <xs:element form="unqualified" name="Background" type="ColourType"/>
-                <xs:sequence maxOccurs="1" minOccurs="1">
-                    <xs:element maxOccurs="1" minOccurs="1" ref="RootAttribute"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ShapeAttribute"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="LabelAttribute"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="LinkAttribute"/>
-                </xs:sequence>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ShapeAttribute" type="ShapeAttributeType"/>
-    <xs:element name="LinkAttribute" type="LinkAttributeType"/>
-    <xs:element name="RootAttribute" type="RootAttributeType"/>
-    <xs:element name="LabelAttribute" type="LabelAttributeType"/>
 </xs:schema>

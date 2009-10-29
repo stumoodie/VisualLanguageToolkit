@@ -385,8 +385,38 @@ public class InstructionExecutor {
 				processSetAnchor();
 			}
 		});
+		this.opCodeLookup.put(OpCodes.CVS, new IOpCodeLookup(){
+			public void processOpCode() {
+				processCvs();
+			}
+		});
+		this.opCodeLookup.put(OpCodes.TEXTBOUNDS, new IOpCodeLookup(){
+			public void processOpCode() {
+				processTextBounds();
+			}
+		});
 	}
 	
+	/**
+	 * 
+	 */
+	private void processTextBounds() {
+		String text = this.valueStack.pop().getStringLiteral();
+		List<Double> dimensions = this.opCodeHandler.getTextBounds(text);
+		for(Double component : dimensions){
+			this.valueStack.push(new Value(component));
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void processCvs() {
+		String stringConversion = this.valueStack.pop().getValue().toString();
+		Value stringValue = new Value(ValueType.STRING_LITERAL, stringConversion);
+		this.valueStack.push(stringValue);
+	}
+
 	/**
 	 * 
 	 */

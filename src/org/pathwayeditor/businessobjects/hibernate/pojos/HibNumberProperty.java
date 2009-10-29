@@ -17,6 +17,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.math.BigDecimal;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -54,7 +55,7 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 		if(!numberValue.equals(this.numberValue)){
 			BigDecimal oldValue = this.numberValue;
 			this.numberValue = numberValue;
-			this.getListenerHandler().notifyPropertyChange(this.propertyDefinition, oldValue, this.numberValue);
+			this.getListenerHandler().notifyPropertyChange(oldValue, this.numberValue);
 		}
 	}
 
@@ -89,14 +90,11 @@ public class HibNumberProperty extends HibProperty implements INumberAnnotationP
 		return this.propertyDefinition.isVisualisable();
 	}
 
-	public INumberAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder) {
-		return propertyBuilder.copyNumberProperty(this);
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
+	 */
+	public void visit(IAnnotationPropertyVisitor visitor) {
+		visitor.visitNumberAnnotationProperty(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visitProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IVisitor)
-	 */
-	public void visitProperty(IAnnotationPropertyVisitor visitor) {
-		visitor.visitNumberProperty(this);
-	}
 }

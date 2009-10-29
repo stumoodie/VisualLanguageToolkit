@@ -69,11 +69,11 @@ public final class ListenableNodeStructureChangeItem implements INodeChangeListe
 				return type;
 			}
 
-			public ILinkEdge getChangedItem() {
+			public ILinkEdge getChangedEdge() {
 				return changedNode;
 			}
 
-			public IDrawingNode getChangedModel() {
+			public IDrawingNode getChangedNode() {
 				return model;
 			}
 			
@@ -96,11 +96,11 @@ public final class ListenableNodeStructureChangeItem implements INodeChangeListe
 				return type;
 			}
 
-			public ILinkEdge getChangedItem() {
+			public ILinkEdge getChangedEdge() {
 				return changedNode;
 			}
 
-			public IDrawingNode getChangedModel() {
+			public IDrawingNode getChangedNode() {
 				return model;
 			}
 			
@@ -120,11 +120,11 @@ public final class ListenableNodeStructureChangeItem implements INodeChangeListe
 				return type;
 			}
 
-			public ILinkEdge getChangedItem() {
+			public ILinkEdge getChangedEdge() {
 				return changedNode;
 			}
 
-			public IDrawingNode getChangedModel() {
+			public IDrawingNode getChangedNode() {
 				return model;
 			}
 			

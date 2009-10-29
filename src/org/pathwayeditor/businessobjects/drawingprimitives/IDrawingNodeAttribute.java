@@ -20,7 +20,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
@@ -41,7 +40,7 @@ public interface IDrawingNodeAttribute extends ICanvasAttribute {
 	
 	void setBounds(Envelope newBounds);
 
-	IConvexHull getConvexHull();
+//	IConvexHull getConvexHull();
 	
-	void setConvexHull(IConvexHull newHull);
+//	void setConvexHull(IConvexHull newHull);
 }

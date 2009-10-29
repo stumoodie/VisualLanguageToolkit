@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -101,12 +102,10 @@ public abstract class GenericXlsTester {
 			dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 			doSetup();
 			ICanvasPersistenceHandlerFactory canvasPersistenceHandler = new HibCanvasPersistenceHandlerFactory(
-					dbTester.getSessionFactory(),
-					new StubNotationSubsystemPool());
+					dbTester.getSessionFactory(), new StubNotationSubsystemPool());
 			IRepositoryPersistenceHandler repoHandler = new HibRepositoryPersistenceHandler(
 					dbTester.getSessionFactory(), getTestRepositoryName());
-			bofac = new RepositoryPersistenceManager(repoHandler,
-					canvasPersistenceHandler);
+			bofac = new RepositoryPersistenceManager(repoHandler, canvasPersistenceHandler);
 			bofac.open();
 			doAdditionalSetUp();
 		} catch (Throwable exc) {
@@ -149,11 +148,16 @@ public abstract class GenericXlsTester {
 			}
 			disableConstraints();
 			dbTester.onTearDown();
-			this.loadFile.close();
 			enableConstraints();
 		} catch (Throwable ex) {
 			ex.printStackTrace();
 			throw ex;
+		}
+		finally{
+			if(this.loadFile != null){
+				this.loadFile.close();
+				this.loadFile = null;
+			}
 		}
 	}
 
@@ -229,10 +233,12 @@ public abstract class GenericXlsTester {
 	 * @throws Exception An exception is thrown by DBUnit during the comparison.
 	 */
 	protected final void compareDatabase(String mainFile, String deltaFile) throws Exception{
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(deltaFile));
+		InputStream deltaIn = new FileInputStream(deltaFile);
+		IDataSet expectedDeltas = new XmlDataSet(deltaIn);
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(new XlsDataSet(new FileInputStream(mainFile)), expectedDeltas);
+		InputStream mainIn = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new CompositeDataSet(new XlsDataSet(mainIn), expectedDeltas);
 		for (String t : testTables) {
 //			List<String> columnList = new ArrayList<String>();
 //			for(Column expectedColumn : expectedDeltas.getTable(t).getTableMetaData().getColumns()) {
@@ -242,6 +248,8 @@ public abstract class GenericXlsTester {
 			String[] columnNameList = getFilterColumnNames(expectedDeltas.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		deltaIn.close();
+		mainIn.close();
 	}
 
 	private String[] getFilterColumnNames(ITable expectedFilterTable) throws DataSetException {
@@ -263,7 +271,8 @@ public abstract class GenericXlsTester {
 	}
 	
 	protected final void compareDatabase(String mainFile) throws Exception{
-		IDataSet expectedChanges = new XmlDataSet(new FileInputStream(mainFile)); 
+		InputStream mainIn = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new XmlDataSet(mainIn); 
 		String testTables[] = expectedChanges.getTableNames();
 		
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
@@ -283,5 +292,6 @@ public abstract class GenericXlsTester {
 			String[] columnNameList = getFilterColumnNames(expectedChanges.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		mainIn.close();
 	}
 }

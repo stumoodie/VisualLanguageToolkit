@@ -34,7 +34,8 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	
 	/**
 	 * Get the an object representation of the value of this property
-	 * @return An object representing the value of the property. Cannot be null.
+	 * @return An object representing the value of the property. Cannot be null. The value must satisfy
+	 * <code>this.isValid(this.getValue))</code>
 	 */
 	Object getValue();
 
@@ -64,12 +65,7 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	 * @throws IllegalStateException if <code>canVisualiseProperty() == false</code>.  
 	 */
 	ILabelAttribute getLabel();
-
-	/**
-	 * @param propertyBuilder
-	 * @return the copied annotation property.
-	 */
-	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder);
 	
-	void visitProperty(IAnnotationPropertyVisitor visitor);
+	
+	void visit(IAnnotationPropertyVisitor visitor);
 }

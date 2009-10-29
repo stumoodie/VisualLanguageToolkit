@@ -22,11 +22,16 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelect
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableSubModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphMoveBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
@@ -183,7 +188,24 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 			Iterator<IDrawingNode> iter = canvasObjectSelection.topDrawingNodeIterator();
 			while(iter.hasNext() && retVal) {
 				IDrawingNode node = iter.next();
-				retVal = this.getRootNode().canParent(node);
+				// ignore labels - just looks at types
+				if(node instanceof ITypedDrawingNode){
+					ITypedDrawingNode typesNode = (ITypedDrawingNode)node;
+					retVal = this.getRootNode().canParent(typesNode.getAttribute().getObjectType());
+				}
+				if(node instanceof ILabelNode){
+					ILabelNode labelNode = (ILabelNode)node;
+					IAnnotatedObject annotObj = labelNode.getAttribute().getProperty().getOwner();
+					if(annotObj instanceof IShapeAttribute){
+						retVal = subgraph.containsNode(((IShapeAttribute)annotObj).getCurrentDrawingElement());
+					}
+					else if(annotObj instanceof ILinkTerminus){
+						retVal = subgraph.containsEdge(((ILinkTerminus)annotObj).getOwningLink().getCurrentDrawingElement());
+					}
+					else{
+						retVal = subgraph.containsEdge(((ILinkAttribute)annotObj).getCurrentDrawingElement());
+					}
+				}
 			}
 		}
 		return retVal;
@@ -380,8 +402,25 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 		this.listenerHandler.setListenersEnabled(enabled);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#drawingNodeIterator()
+	 */
 	public Iterator<IDrawingNode> drawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.nodeIterator());
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#levelOrderTraveralIterator()
+	 */
+	public Iterator<IDrawingNode> levelOrderTraveralIterator() {
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.getRootNode().levelOrderIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#preOrderTraveralIterator()
+	 */
+	public Iterator<IDrawingNode> preOrderTraveralIterator() {
+		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.getRootNode().preOrderIterator());
 	}
 }
 

@@ -47,4 +47,5 @@ public interface IListAnnotationProperty extends IAnnotationProperty{
 	
 	Iterator<String> getValueIterator();
 	
+	void setValue(List<String> value);
 }

@@ -115,4 +115,8 @@ public class Point {
 		double yDist = this.getY() - other.getY();
 		return xDist * xDist + yDist * yDist;
 	}
+
+	public Point scale(Scale scale) {
+		return new Point(this.x * scale.getXfactor(), this.y * scale.getYFactor());
+	}
 }

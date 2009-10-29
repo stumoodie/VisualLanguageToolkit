@@ -18,13 +18,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 
-public interface ICanvas extends IPropertyChangeListenee, ISuppressableChangeListenee {
+public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableChangeListenee {
 	
 	/**
 	 * Gets the name of the canvas, which cannot be null.
@@ -213,5 +213,9 @@ public interface ICanvas extends IPropertyChangeListenee, ISuppressableChangeLis
 	
 	Iterator<ILinkTerminus> linkTerminusIterator();
 	
+	/**
+	 * Number of canvas attributes stored by this canvas.
+	 * @return the number of canvas attributes.
+	 */
 	int numCanvasAttributes();
 }

@@ -1,6 +1,11 @@
 package org.pathwayeditor.figurevm;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.antlr.runtime.ANTLRStringStream;
@@ -11,13 +16,31 @@ import org.antlr.runtime.tree.CommonTreeNodeStream;
 import org.pathwayeditor.figure.geometry.PointList;
 
 public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
+//	private static String FIG = 		"(C) setanchor\n" +
+//	"curbounds /h exch def /w exch def /y exch def /x exch def\n" +
+//	"/xoffset { w mul x add } def /yoffset { h mul y add } def\n" +
+//	"/cardinalityBox { /card exch def /fsize exch def /cpy exch def /cpx exch def\n" +
+//	"fsize setfontsize\n" +
+//	"card cvs textbounds /hoff exch curlinewidth 2 mul add h div def /woff exch curlinewidth 2 mul add w div def \n" +
+//	"cpx woff 2 div sub xoffset cpy hoff 2 div sub yoffset woff w mul hoff h mul rect\n" +
+//	"gsave\n" +
+//	"null setfillcol cpx xoffset cpy yoffset (C) card cvs text\n" +
+//	"grestore\n" +
+//	"} def\n" +
+//	":cardinality 1 gt {\n" +
+//	"0.10 xoffset 0.10 yoffset 0.90 w mul 0.90 h mul 0.20 w mul 0.20 h mul rrect\n" +
+//	"0 xoffset 0 yoffset 0.90 w mul 0.90 h mul 0.20 w mul 0.20 h mul rrect\n" +
+//	"0.3 0 :cardFontSize :cardinality cardinalityBox\n" +
+//	"}\n" +
+//	"{ x y w h 0.2 w mul 0.20 h mul rrect } ifelse";
 
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
         DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream(args[0]));
-//        DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream("10 10 (C) (\\\\) text curfontsize 0.8 mul setfontsize"));
+//        DrawingVmLexer lex = new DrawingVmLexer(new ANTLRStringStream(FIG));
        	CommonTokenStream tokens = new CommonTokenStream(lex);
 
         DrawingVmParser parser = new DrawingVmParser(tokens);
@@ -45,7 +68,9 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 						}
             	
             });
-            interpreter.setBindBoolean("bindTest", Boolean.FALSE);
+            interpreter.setBindInteger("cardinality", 1);
+            interpreter.setBindDouble("cardFontSize", 12.0);
+            System.out.println("Bind vars = " + interpreter.getInstructions().getBindVariableNames());
             interpreter.execute();
         } catch (RecognitionException e)  {
             e.printStackTrace();
@@ -181,6 +206,22 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	 */
 	public void setSemiFixedAnchorCode(PointList points) {
 		print("setSemiFixedAnchorCode(" + points.toString() + ")");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds(java.lang.String)
+	 */
+	public List<Double> getTextBounds(String text) {
+        System.setProperty("java.awt.headless", "true");
+    	Font f = new Font("Arial", Font.ITALIC, 12);
+    	AffineTransform af = new AffineTransform();
+    	FontRenderContext ctx = new FontRenderContext(af, false, false);
+    	Rectangle2D bounds = f.getStringBounds(text, ctx);
+    	List<Double> retVal = new LinkedList<Double>();
+    	retVal.add(bounds.getWidth());
+    	retVal.add(bounds.getHeight());
+    	print("textbounds=" + retVal);
+		return retVal;
 	}
 
 }

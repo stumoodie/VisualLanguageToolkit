@@ -73,6 +73,8 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 		{ "abs", OpCodes.ABS },
 		{ "curbounds", OpCodes.CUR_BOUNDS },
 		{ "setanchor", OpCodes.ANCHOR },
+		{ "cvs", OpCodes.CVS },
+		{ "textbounds", OpCodes.TEXTBOUNDS },
 	};
 	
 	public InstructionFactoryImpl(){

@@ -29,23 +29,24 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
 import org.pathwayeditor.businessobjects.management.IConnectionInfo;
 
 public class InitialisedDefaultDB {
-	private static final String DB_DIR_NAME = "DB";
+	private static final String DB_DIR_NAME = DbProperties.getString("InitialisedDefaultDB.db_directory_name"); //$NON-NLS-1$
 	// private static final String CONNECTION_URL = "jdbc:hsqldb:file:" +
 	// DB_DIR_NAME + "/EmbeddedDb;shutdown=true";
-	private static final String CONNECTION_URL = "jdbc:hsqldb:file:"
-			+ DB_DIR_NAME + "/EmbeddedDb";
-	private static final String PASSWORD = "";
-	private static final String USERNAME = "sa";
-	private static final String DRIVER_NAME = "org.hsqldb.jdbcDriver";
-	private static final String REPO_NAME = "Default";
-	private static final String REPO_DESCRIPTION = "Default local repository";
-	private static final int REPO_BUILD_NUM = 1;
+	private static final String CONNECTION_URL = "jdbc:hsqldb:file:" //$NON-NLS-1$
+			+ DB_DIR_NAME + DbProperties.getString("InitialisedDefaultDB.db_name"); //$NON-NLS-1$
+	private static final String PASSWORD = ""; //$NON-NLS-1$
+	private static final String USERNAME = "sa"; //$NON-NLS-1$
+	private static final String DRIVER_NAME = "org.hsqldb.jdbcDriver"; //$NON-NLS-1$
+	private static final String REPO_NAME = "Default"; //$NON-NLS-1$
+	private static final String REPO_DESCRIPTION = "Default local repository"; //$NON-NLS-1$
+	private static final String BUILD_NUM_STR = DbProperties.getString("InitialisedDefaultDB.schema_version_num"); //$NON-NLS-1$
+	private static final int REPO_BUILD_NUM = Integer.valueOf(BUILD_NUM_STR);
 	private static final File SCHEMA_DROP_FILE = new File(
-			"schema/EPE Schema Drop.ddl");
-	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
+			"schema/EPE Schema Drop.ddl"); //$NON-NLS-1$
+	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml"; //$NON-NLS-1$
 	private static final File SCHEMA_CREATE_FILE = new File(
-			"schema/EPE Schema Create.ddl");
-	private static final File DB_DIR = new File("DB");
+			"schema/EPE Schema Create.ddl"); //$NON-NLS-1$
+	private static final File DB_DIR = new File(DB_DIR_NAME);
 
 	private final HibernateDataSource hibDataSource;
 	private final File createScript;
@@ -80,15 +81,15 @@ public class InitialisedDefaultDB {
 					deleteDir(subFile);
 				}
 				if (!subFile.delete())
-					System.err.println("Failed to remove file: "
+					System.err.println("Failed to remove file: " //$NON-NLS-1$
 							+ subFile.getAbsolutePath());
 			}
 			if (!directory.delete()) {
-				System.err.println("Failed to remove directory: "
+				System.err.println("Failed to remove directory: " //$NON-NLS-1$
 						+ directory.getAbsolutePath());
 			}
 		} else {
-			System.err.println("Directory does not exists: "
+			System.err.println("Directory does not exists: " //$NON-NLS-1$
 					+ directory.getAbsolutePath());
 		}
 	}
@@ -100,8 +101,8 @@ public class InitialisedDefaultDB {
 		sess.beginTransaction();
 		Connection conn = sess.connection();
 		Statement stmt = conn.createStatement();
-		// stmt.execute("set property \"hsqldb.default_table_type\" 'cached'");
-		stmt.execute("set property \"hsqldb.applog\" 3");
+		stmt.execute("set property \"hsqldb.default_table_type\" 'cached'");
+		stmt.execute("set property \"hsqldb.applog\" 3"); //$NON-NLS-1$
 		stmt.close();
 		schemaManager.setConnection(conn);
 		schemaManager.createSchema();
@@ -144,7 +145,7 @@ public class InitialisedDefaultDB {
 			conn = DriverManager.getConnection(CONNECTION_URL);
 			conn.setAutoCommit(true);
 			stmt = conn.createStatement();
-			stmt.execute("SHUTDOWN COMPACT");
+			stmt.execute("SHUTDOWN COMPACT"); //$NON-NLS-1$
 			stmt.close();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
@@ -160,33 +161,33 @@ public class InitialisedDefaultDB {
 
 	public static final void main(String[] args) {
 		try {
-			System.out.println("Starting ...");
+			System.out.println("Starting ..."); //$NON-NLS-1$
 			InitialisedDefaultDB worker = new InitialisedDefaultDB(
 					HIB_CONFIG_FILE, new DefaultConnection(),
 					SCHEMA_CREATE_FILE, SCHEMA_DROP_FILE);
 			System.err.flush();
-			System.out.print("Removing old database... ");
+			System.out.print("Removing old database... "); //$NON-NLS-1$
 			worker.removeDB();
 			System.err.flush();
-			System.out.println("Done.");
-			System.out.print("Building schema... ");
+			System.out.println("Done."); //$NON-NLS-1$
+			System.out.print("Building schema... "); //$NON-NLS-1$
 			worker.buildSchema();
 			System.err.flush();
-			System.out.println("Done.");
-			System.out.print("Initialising data... ");
+			System.out.println("Done."); //$NON-NLS-1$
+			System.out.print("Initialising data... "); //$NON-NLS-1$
 			worker.addInitialData();
 			System.err.flush();
-			System.out.println("Done.");
-			System.out.print("Shutting down... ");
+			System.out.println("Done."); //$NON-NLS-1$
+			System.out.print("Shutting down... "); //$NON-NLS-1$
 			worker.shutDownDb();
 			System.err.flush();
-			System.out.println("Done.");
-			System.out.println("Database initialised successfully");
+			System.out.println("Done."); //$NON-NLS-1$
+			System.out.println("Database initialised successfully"); //$NON-NLS-1$
 		} catch (SQLException e) {
-			System.err.println("Error: initialisation failed");
+			System.err.println("Error: initialisation failed"); //$NON-NLS-1$
 			e.printStackTrace(System.err);
 		} catch (Throwable e) {
-			System.err.println("Something went wrong!");
+			System.err.println("Something went wrong!"); //$NON-NLS-1$
 			e.printStackTrace(System.err);
 		}
 	}

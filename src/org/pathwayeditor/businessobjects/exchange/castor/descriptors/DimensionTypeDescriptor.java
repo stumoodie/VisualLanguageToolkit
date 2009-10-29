@@ -66,14 +66,15 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
         //-- initialize attribute descriptors
 
         //-- _width
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.math.BigDecimal.class, "_width", "width", org.exolab.castor.xml.NodeType.Attribute);
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.Double.TYPE, "_width", "width", org.exolab.castor.xml.NodeType.Attribute);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 DimensionType target = (DimensionType) object;
-                return target.getWidth();
+                if (!target.hasWidth()) { return null; }
+                return new java.lang.Double(target.getWidth());
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -81,7 +82,10 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
             {
                 try {
                     DimensionType target = (DimensionType) object;
-                    target.setWidth( (java.math.BigDecimal) value);
+                    // ignore null values for non optional primitives
+                    if (value == null) { return; }
+
+                    target.setWidth( ((java.lang.Double) value).doubleValue());
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -89,11 +93,10 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
             @Override
             @SuppressWarnings("unused")
             public java.lang.Object newInstance(java.lang.Object parent) {
-                return new java.math.BigDecimal(0);
+                return null;
             }
         };
-        desc.setImmutable(true);
-        desc.setSchemaType("decimal");
+        desc.setSchemaType("double");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
@@ -103,20 +106,23 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope
-            org.exolab.castor.xml.validators.DecimalValidator typeValidator;
-            typeValidator = new org.exolab.castor.xml.validators.DecimalValidator();
+            org.exolab.castor.xml.validators.DoubleValidator typeValidator;
+            typeValidator = new org.exolab.castor.xml.validators.DoubleValidator();
             fieldValidator.setValidator(typeValidator);
+            typeValidator.setMinInclusive(-1.7976931348623157E308);
+            typeValidator.setMaxInclusive(1.7976931348623157E308);
         }
         desc.setValidator(fieldValidator);
         //-- _height
-        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.math.BigDecimal.class, "_height", "height", org.exolab.castor.xml.NodeType.Attribute);
+        desc = new org.exolab.castor.xml.util.XMLFieldDescriptorImpl(java.lang.Double.TYPE, "_height", "height", org.exolab.castor.xml.NodeType.Attribute);
         handler = new org.exolab.castor.xml.XMLFieldHandler() {
             @Override
             public java.lang.Object getValue( java.lang.Object object ) 
                 throws IllegalStateException
             {
                 DimensionType target = (DimensionType) object;
-                return target.getHeight();
+                if (!target.hasHeight()) { return null; }
+                return new java.lang.Double(target.getHeight());
             }
             @Override
             public void setValue( java.lang.Object object, java.lang.Object value) 
@@ -124,7 +130,10 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
             {
                 try {
                     DimensionType target = (DimensionType) object;
-                    target.setHeight( (java.math.BigDecimal) value);
+                    // ignore null values for non optional primitives
+                    if (value == null) { return; }
+
+                    target.setHeight( ((java.lang.Double) value).doubleValue());
                 } catch (java.lang.Exception ex) {
                     throw new IllegalStateException(ex.toString());
                 }
@@ -132,11 +141,10 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
             @Override
             @SuppressWarnings("unused")
             public java.lang.Object newInstance(java.lang.Object parent) {
-                return new java.math.BigDecimal(0);
+                return null;
             }
         };
-        desc.setImmutable(true);
-        desc.setSchemaType("decimal");
+        desc.setSchemaType("double");
         desc.setHandler(handler);
         desc.setRequired(true);
         desc.setMultivalued(false);
@@ -146,9 +154,11 @@ public class DimensionTypeDescriptor extends org.exolab.castor.xml.util.XMLClass
         fieldValidator = new org.exolab.castor.xml.FieldValidator();
         fieldValidator.setMinOccurs(1);
         { //-- local scope
-            org.exolab.castor.xml.validators.DecimalValidator typeValidator;
-            typeValidator = new org.exolab.castor.xml.validators.DecimalValidator();
+            org.exolab.castor.xml.validators.DoubleValidator typeValidator;
+            typeValidator = new org.exolab.castor.xml.validators.DoubleValidator();
             fieldValidator.setValidator(typeValidator);
+            typeValidator.setMinInclusive(-1.7976931348623157E308);
+            typeValidator.setMaxInclusive(1.7976931348623157E308);
         }
         desc.setValidator(fieldValidator);
         //-- initialize element descriptors

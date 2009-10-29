@@ -42,7 +42,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	private String displayName = DEFAULT_DISPLAY_NAME;
 	private HibLabelAttribute labelAttribute = null;
 	private HibAnnotatedCanvasAttribute owner;
-	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem();
+	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem(this);
 
 
 	/**
@@ -55,6 +55,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	protected HibProperty(HibAnnotatedCanvasAttribute owner, IPropertyDefinition propDefn) {
 		this.owner = owner;
 		this.name = propDefn.getName();
+		this.displayName=propDefn.getDisplayName();
 	}
 
 	protected HibProperty(HibAnnotatedCanvasAttribute newOwner, HibProperty other) {
@@ -185,7 +186,7 @@ public abstract class HibProperty implements IAnnotationProperty, Serializable {
 	public final void removeChangeListener(IAnnotationPropertyChangeListener listener) {
 		this.listenerHandler.removeChangeListener(listener);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

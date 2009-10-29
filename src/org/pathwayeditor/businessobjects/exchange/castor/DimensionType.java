@@ -23,12 +23,22 @@ public abstract class DimensionType implements java.io.Serializable {
     /**
      * Field _width.
      */
-    private java.math.BigDecimal _width;
+    private double _width;
+
+    /**
+     * keeps track of state for field: _width
+     */
+    private boolean _has_width;
 
     /**
      * Field _height.
      */
-    private java.math.BigDecimal _height;
+    private double _height;
+
+    /**
+     * keeps track of state for field: _height
+     */
+    private boolean _has_height;
 
 
       //----------------/
@@ -45,11 +55,25 @@ public abstract class DimensionType implements java.io.Serializable {
     //-----------/
 
     /**
+     */
+    public void deleteHeight(
+    ) {
+        this._has_height= false;
+    }
+
+    /**
+     */
+    public void deleteWidth(
+    ) {
+        this._has_width= false;
+    }
+
+    /**
      * Returns the value of field 'height'.
      * 
      * @return the value of field 'Height'.
      */
-    public java.math.BigDecimal getHeight(
+    public double getHeight(
     ) {
         return this._height;
     }
@@ -59,9 +83,29 @@ public abstract class DimensionType implements java.io.Serializable {
      * 
      * @return the value of field 'Width'.
      */
-    public java.math.BigDecimal getWidth(
+    public double getWidth(
     ) {
         return this._width;
+    }
+
+    /**
+     * Method hasHeight.
+     * 
+     * @return true if at least one Height has been added
+     */
+    public boolean hasHeight(
+    ) {
+        return this._has_height;
+    }
+
+    /**
+     * Method hasWidth.
+     * 
+     * @return true if at least one Width has been added
+     */
+    public boolean hasWidth(
+    ) {
+        return this._has_width;
     }
 
     /**
@@ -85,8 +129,9 @@ public abstract class DimensionType implements java.io.Serializable {
      * @param height the value of field 'height'.
      */
     public void setHeight(
-            final java.math.BigDecimal height) {
+            final double height) {
         this._height = height;
+        this._has_height = true;
     }
 
     /**
@@ -95,8 +140,9 @@ public abstract class DimensionType implements java.io.Serializable {
      * @param width the value of field 'width'.
      */
     public void setWidth(
-            final java.math.BigDecimal width) {
+            final double width) {
         this._width = width;
+        this._has_width = true;
     }
 
     /**

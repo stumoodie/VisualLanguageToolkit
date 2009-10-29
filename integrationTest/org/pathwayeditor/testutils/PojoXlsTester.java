@@ -21,6 +21,7 @@ package org.pathwayeditor.testutils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -37,13 +38,10 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.dataset.filter.DefaultColumnFilter;
-import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.hibernate.SessionFactory;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  * @author nhanlon
@@ -51,30 +49,27 @@ import org.junit.BeforeClass;
  */
 public abstract class PojoXlsTester {
 
-	private static HibernateTestManager dbTester = null;
-//	private SessionFactory hibFactory;
-//	private Session session;
+	private HibernateTestManager dbTester = null;
 	private FileInputStream loadFile = null;
 	private static final String HIB_CONFIG_FILE = "hibernate.cfg.xml";
 	private static final File SCHEMA_CREATION_SCRIPT = new File("schema/EPE Schema Create.ddl"); 
 	private static final File SCHEMA_DROP_SCRIPT = new File("schema/EPE Schema Drop.ddl"); 
 
-	@BeforeClass
-	public static void initSchema() throws Exception {
-		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, SCHEMA_CREATION_SCRIPT, SCHEMA_DROP_SCRIPT);
+	public void initSchema() throws Exception {
+		dbTester = new HibernateTestManager(HIB_CONFIG_FILE, getSchemaCreationScript(), getSchemaDropScript());
 		dbTester.createSchema();
 		dbTester.createHibernateSessionFactory();
 	}
 
-	@AfterClass
-	public static void dropSchema() throws Exception {
+	public void dropSchema() throws Exception {
 		dbTester.discardHibernateSessionFactory();
 		dbTester.dropSchema();
+		dbTester = null;
 	}
 
 	@Before
 	public void setUp() throws Exception {
-//		this.hibFactory = dbTester.getSessionFactory();
+		initSchema();
 		dbTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
 		dbTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
 //		startNewTransaction();
@@ -82,20 +77,21 @@ public abstract class PojoXlsTester {
 		additionalSetup();
 	}
 	
-	protected void additionalSetup(){
+	protected void additionalSetup() throws Exception {
 		
 	}
 
-//	protected void saveAndCommit(Serializable in) {
-//		getSession().saveOrUpdate(in);
-//		getSession().getTransaction().commit();
-//	}
-
-//	protected void startNewTransaction() {
-////		setSession(getHibFactory().openSession());
-//		getSession().beginTransaction();
-//	}
-
+	
+	protected File getSchemaCreationScript(){
+		return SCHEMA_CREATION_SCRIPT;
+	}
+	
+	
+	protected File getSchemaDropScript(){
+		return SCHEMA_DROP_SCRIPT;
+	}
+	
+	
 	private void doSetup() throws DataSetException, FileNotFoundException,
 	Exception {
 		disableConstraints() ;
@@ -105,7 +101,7 @@ public abstract class PojoXlsTester {
 		enableConstraints() ;
 	}
 
-	protected void additionalTeardown(){
+	protected void additionalTeardown() throws Exception {
 		
 	}
 	
@@ -124,8 +120,10 @@ public abstract class PojoXlsTester {
 		dbTester.onTearDown();
 		if(this.loadFile != null){
 			this.loadFile.close();
+			this.loadFile = null;
 		}
 		enableConstraints() ;
+		dropSchema();
 	}
 
 	protected final HibernateTestManager getDbTester() {
@@ -188,14 +186,18 @@ public abstract class PojoXlsTester {
 	 * @throws Exception An exception is thrown by DBUnit during the comparison.
 	 */
 	protected final void compareDatabase(String mainFile, String deltaFile) throws Exception{
-		IDataSet expectedDeltas = new XmlDataSet(new FileInputStream(deltaFile));
+		InputStream deltaIn = new FileInputStream(deltaFile);
+		IDataSet expectedDeltas = new XlsDataSet(deltaIn);
 		String testTables[] = expectedDeltas.getTableNames();
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
-		IDataSet expectedChanges = new CompositeDataSet(new XlsDataSet(new FileInputStream(mainFile)), expectedDeltas);
+		InputStream mainIn = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new CompositeDataSet(new XlsDataSet(mainIn), expectedDeltas);
 		for (String t : testTables) {
 			String[] columnNameList = getFilterColumnNames(expectedDeltas.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		mainIn.close();
+		deltaIn.close();
 	}
 
 	private String[] getFilterColumnNames(ITable expectedFilterTable) throws DataSetException {
@@ -217,7 +219,8 @@ public abstract class PojoXlsTester {
 	}
 	
 	protected final void compareDatabase(String mainFile) throws Exception{
-		IDataSet expectedChanges = new XmlDataSet(new FileInputStream(mainFile)); 
+		InputStream in = new FileInputStream(mainFile);
+		IDataSet expectedChanges = new XlsDataSet(in); 
 		String testTables[] = expectedChanges.getTableNames();
 		
 		IDataSet actualChanges = dbTester.getConnection().createDataSet(testTables);
@@ -225,5 +228,6 @@ public abstract class PojoXlsTester {
 			String[] columnNameList = getFilterColumnNames(expectedChanges.getTable(t));
 			doTableComparison(actualChanges.getTable(t), expectedChanges.getTable(t), columnNameList);
 		}
+		in.close();
 	}
 }

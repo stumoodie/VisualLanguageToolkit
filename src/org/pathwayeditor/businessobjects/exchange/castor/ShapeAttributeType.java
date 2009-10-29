@@ -38,9 +38,9 @@ implements java.io.Serializable
     private org.pathwayeditor.businessobjects.exchange.castor.FillColour _fillColour;
 
     /**
-     * Field _lineColour.
+     * Field _shapeLineColour.
      */
-    private org.pathwayeditor.businessobjects.exchange.castor.LineColour _lineColour;
+    private org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour _shapeLineColour;
 
 
       //----------------/
@@ -67,16 +67,6 @@ implements java.io.Serializable
     }
 
     /**
-     * Returns the value of field 'lineColour'.
-     * 
-     * @return the value of field 'LineColour'.
-     */
-    public org.pathwayeditor.businessobjects.exchange.castor.LineColour getLineColour(
-    ) {
-        return this._lineColour;
-    }
-
-    /**
      * Returns the value of field 'lineStyle'.
      * 
      * @return the value of field 'LineStyle'.
@@ -94,6 +84,16 @@ implements java.io.Serializable
     public java.math.BigDecimal getLineWidth(
     ) {
         return this._lineWidth;
+    }
+
+    /**
+     * Returns the value of field 'shapeLineColour'.
+     * 
+     * @return the value of field 'ShapeLineColour'.
+     */
+    public org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour getShapeLineColour(
+    ) {
+        return this._shapeLineColour;
     }
 
     /**
@@ -122,16 +122,6 @@ implements java.io.Serializable
     }
 
     /**
-     * Sets the value of field 'lineColour'.
-     * 
-     * @param lineColour the value of field 'lineColour'.
-     */
-    public void setLineColour(
-            final org.pathwayeditor.businessobjects.exchange.castor.LineColour lineColour) {
-        this._lineColour = lineColour;
-    }
-
-    /**
      * Sets the value of field 'lineStyle'.
      * 
      * @param lineStyle the value of field 'lineStyle'.
@@ -149,6 +139,16 @@ implements java.io.Serializable
     public void setLineWidth(
             final java.math.BigDecimal lineWidth) {
         this._lineWidth = lineWidth;
+    }
+
+    /**
+     * Sets the value of field 'shapeLineColour'.
+     * 
+     * @param shapeLineColour the value of field 'shapeLineColour'.
+     */
+    public void setShapeLineColour(
+            final org.pathwayeditor.businessobjects.exchange.castor.ShapeLineColour shapeLineColour) {
+        this._shapeLineColour = shapeLineColour;
     }
 
     /**

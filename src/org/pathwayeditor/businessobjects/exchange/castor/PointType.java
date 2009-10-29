@@ -23,12 +23,22 @@ public abstract class PointType implements java.io.Serializable {
     /**
      * Field _x.
      */
-    private java.math.BigDecimal _x;
+    private double _x;
+
+    /**
+     * keeps track of state for field: _x
+     */
+    private boolean _has_x;
 
     /**
      * Field _y.
      */
-    private java.math.BigDecimal _y;
+    private double _y;
+
+    /**
+     * keeps track of state for field: _y
+     */
+    private boolean _has_y;
 
 
       //----------------/
@@ -45,11 +55,25 @@ public abstract class PointType implements java.io.Serializable {
     //-----------/
 
     /**
+     */
+    public void deleteX(
+    ) {
+        this._has_x= false;
+    }
+
+    /**
+     */
+    public void deleteY(
+    ) {
+        this._has_y= false;
+    }
+
+    /**
      * Returns the value of field 'x'.
      * 
      * @return the value of field 'X'.
      */
-    public java.math.BigDecimal getX(
+    public double getX(
     ) {
         return this._x;
     }
@@ -59,9 +83,29 @@ public abstract class PointType implements java.io.Serializable {
      * 
      * @return the value of field 'Y'.
      */
-    public java.math.BigDecimal getY(
+    public double getY(
     ) {
         return this._y;
+    }
+
+    /**
+     * Method hasX.
+     * 
+     * @return true if at least one X has been added
+     */
+    public boolean hasX(
+    ) {
+        return this._has_x;
+    }
+
+    /**
+     * Method hasY.
+     * 
+     * @return true if at least one Y has been added
+     */
+    public boolean hasY(
+    ) {
+        return this._has_y;
     }
 
     /**
@@ -85,8 +129,9 @@ public abstract class PointType implements java.io.Serializable {
      * @param x the value of field 'x'.
      */
     public void setX(
-            final java.math.BigDecimal x) {
+            final double x) {
         this._x = x;
+        this._has_x = true;
     }
 
     /**
@@ -95,8 +140,9 @@ public abstract class PointType implements java.io.Serializable {
      * @param y the value of field 'y'.
      */
     public void setY(
-            final java.math.BigDecimal y) {
+            final double y) {
         this._y = y;
+        this._has_y = true;
     }
 
     /**

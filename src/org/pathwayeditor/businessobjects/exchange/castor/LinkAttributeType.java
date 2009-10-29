@@ -48,9 +48,9 @@ implements java.io.Serializable
     private org.pathwayeditor.businessobjects.exchange.castor.ObjectType _objectType;
 
     /**
-     * Field _lineColour.
+     * Field _linkLineColour.
      */
-    private org.pathwayeditor.businessobjects.exchange.castor.LineColour _lineColour;
+    private org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour _linkLineColour;
 
     /**
      * Field _annotations.
@@ -96,13 +96,13 @@ implements java.io.Serializable
     }
 
     /**
-     * Returns the value of field 'lineColour'.
+     * Returns the value of field 'linkLineColour'.
      * 
-     * @return the value of field 'LineColour'.
+     * @return the value of field 'LinkLineColour'.
      */
-    public org.pathwayeditor.businessobjects.exchange.castor.LineColour getLineColour(
+    public org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour getLinkLineColour(
     ) {
-        return this._lineColour;
+        return this._linkLineColour;
     }
 
     /**
@@ -181,13 +181,13 @@ implements java.io.Serializable
     }
 
     /**
-     * Sets the value of field 'lineColour'.
+     * Sets the value of field 'linkLineColour'.
      * 
-     * @param lineColour the value of field 'lineColour'.
+     * @param linkLineColour the value of field 'linkLineColour'.
      */
-    public void setLineColour(
-            final org.pathwayeditor.businessobjects.exchange.castor.LineColour lineColour) {
-        this._lineColour = lineColour;
+    public void setLinkLineColour(
+            final org.pathwayeditor.businessobjects.exchange.castor.LinkLineColour linkLineColour) {
+        this._linkLineColour = linkLineColour;
     }
 
     /**
