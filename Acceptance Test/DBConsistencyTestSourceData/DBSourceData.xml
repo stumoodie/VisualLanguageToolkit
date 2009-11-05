@@ -1751,10 +1751,6 @@
 			<value>100034</value>
 			<value>textPropertyValue</value>
 		</row>
-	</table>
-	<table name="richtextProperty">
-		<column>id</column>
-		<column>rich_text_value</column>
 		<row>
 			<value>100003</value>
 			<value>richtextvalue</value>

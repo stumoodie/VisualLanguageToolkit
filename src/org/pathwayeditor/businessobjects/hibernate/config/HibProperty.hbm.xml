@@ -30,15 +30,6 @@
         	</property>
     	</joined-subclass>
 
-    	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty" table="richtextproperty" lazy="false">
-    		<key>
-    			<column name="id" not-null="true" unique="true"/>
-    		</key>
-	        <property name="value" type="text">
-    	        <column name="rich_text_value" not-null="false" />
-        	</property>
-    	</joined-subclass>
-
     	<joined-subclass name="org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty" table="numberproperty" lazy="false">
     		<key>
     			<column name="id" not-null="true" unique="true"/>

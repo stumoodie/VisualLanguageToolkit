@@ -19,8 +19,8 @@ limitations under the License.
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
@@ -29,7 +29,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
  * @author smoodie
  *
  */
-public class StubHtmlPropertyDefinition implements IHtmlPropertyDefinition {
+public class StubHtmlPropertyDefinition implements IPlainTextPropertyDefinition {
 	public static final String DEFAULT_VALUE = "<html><head><title>Default Property Value</title></head><body><h1>Default Property</h1></body></html>";
 	public static final String NAME = "RichTextProperty";
 	public static final boolean IS_EDITABLE = true;
@@ -45,14 +45,14 @@ public class StubHtmlPropertyDefinition implements IHtmlPropertyDefinition {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#copyProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder)
 	 */
 	public IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProp) {
-		return propertyBuilder.copyHtmlProperty((IHtmlAnnotationProperty)otherProp);
+		return propertyBuilder.copyPlainTextProperty((IPlainTextAnnotationProperty)otherProp);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#createProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder)
 	 */
 	public IAnnotationProperty createProperty(IPropertyBuilder propertyBuilder) {
-		return propertyBuilder.createHtmlProperty(this);
+		return propertyBuilder.createPlainTextProperty(this);
 	}
 
 	/* (non-Javadoc)

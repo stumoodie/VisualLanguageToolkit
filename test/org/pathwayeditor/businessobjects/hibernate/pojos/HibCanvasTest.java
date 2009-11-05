@@ -78,6 +78,7 @@ public class HibCanvasTest {
 	private InnerStubMap map2;
 	private InnerStubHibNotationFactory hibNotationFactory;
 	private INotationSubsystem notationSubsystem;
+	private HibNotation hibNotation;
 
 	@Before
 	public void setUp() {
@@ -85,6 +86,8 @@ public class HibCanvasTest {
 		map2 = new InnerStubMap();
 		hibNotationFactory = new InnerStubHibNotationFactory();
 		notationSubsystem = new StubNotationSubSystem();
+		INotation notn = notationSubsystem.getNotation();
+		this.hibNotation = new HibNotation(notn.getQualifiedName(), notn.getDisplayName(), notn.getDescription(), notn.getVersion());
 		this.map1.setRepositoryName(EXPECTED_REPO_NAME);
 		this.map1.setINode(EXPECTED_INODE);
 		this.testInstance = new HibCanvas(map1.getRepository().getName(), map1.getINode(), hibNotationFactory, notationSubsystem, map1.getName());
@@ -481,9 +484,8 @@ public class HibCanvasTest {
 		 * org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType
 		 * )
 		 */
-		public boolean containsObjectType(IObjectType objectType) {
-
-			return false;
+		public boolean containsObjectType(int objectType) {
+			return notationSubsystem.getSyntaxService().containsObjectType(objectType);
 		}
 
 		/*
@@ -492,8 +494,7 @@ public class HibCanvasTest {
 		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getNotation()
 		 */
 		public HibNotation getNotation() {
-
-			return null;
+			return hibNotation;
 		}
 
 		/*
@@ -512,9 +513,11 @@ public class HibCanvasTest {
 		 * @see
 		 * org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 		 */
-		public HibObjectType getObjectType(IObjectType objectType) {
-
-			return null;
+		public HibObjectType getObjectType(int objectType) {
+			IObjectType ot = notationSubsystem.getSyntaxService().getObjectType(objectType);
+			HibObjectType retVal = new HibObjectType(ot.getUniqueId(), ot.getName(), ot.getDescription(), ObjectTypeClassification.SHAPE);
+			retVal.changeNotation(hibNotation);
+			return retVal;
 		}
 
 		/*

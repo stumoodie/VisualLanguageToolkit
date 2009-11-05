@@ -113,7 +113,7 @@ public abstract class HibAnnotatedCanvasAttribute extends HibCanvasAttribute imp
 	public HibProperty getProperty(String propertyName) {
 		HibProperty retVal = this.findProperty(propertyName);
 		if(retVal == null) {
-			throw new IllegalArgumentException("property name is not held by this canvas attribute");
+			throw new IllegalArgumentException("Property is not held by this canvas attribute=" + this + ",name=" + propertyName);
 		}
 		return retVal;
 	}

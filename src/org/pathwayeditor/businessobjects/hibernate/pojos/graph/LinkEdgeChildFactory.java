@@ -20,11 +20,13 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
@@ -64,10 +66,12 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibLinkAttribute linkAttribute = this.attribute;
 		if(linkAttribute == null){
-			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType());
+			HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.getCurrentObjectType().getUniqueId());
 			HibCanvas canvas = ((HibSubModel)owningChildGraph).getModel().getCanvas();
 			int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
-			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType);
+			HibLinkTerminus srcTerm = new HibLinkTerminus(canvas, canvas.getCreationSerialCounter().nextIndex(), LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
+			HibLinkTerminus tgtTerm = new HibLinkTerminus(canvas, canvas.getCreationSerialCounter().nextIndex(), LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
+			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType, srcTerm, tgtTerm);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
 		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);

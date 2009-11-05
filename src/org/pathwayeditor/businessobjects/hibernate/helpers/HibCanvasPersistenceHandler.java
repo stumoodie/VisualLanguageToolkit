@@ -104,14 +104,14 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 				logger.warn("Notation subsystem: " + loadedNotationSubsystem
 						+ " was not provided by application using fallback notation subsystem instead.");
 				loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-				hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
+				hibNotationFactory = new FallbackHibNotationFactory(hibCanvas.getHibNotation());
 				this.objectTypeInjector = new FallbackObjectTypeInjector(loadedNotationSubsystem);
 			}
 			hibNotationFactory.initialise();
 			if (hibNotationFactory.hasInitialisationFailed()) {
 				logger.warn("Application and Db notations were inconsistent. Using fallback notation instead.");
 				loadedNotationSubsystem = new FallbackNotationSubsystem(hibCanvas.getHibNotation());
-				hibNotationFactory = new FallbackHibNotationFactory(loadedNotationSubsystem, hibCanvas.getHibNotation());
+				hibNotationFactory = new FallbackHibNotationFactory(hibCanvas.getHibNotation());
 			}
 			hibCanvas.setNotationSubsystem(loadedNotationSubsystem);
 			HibModel loadedModel = hibCanvas.getModel();

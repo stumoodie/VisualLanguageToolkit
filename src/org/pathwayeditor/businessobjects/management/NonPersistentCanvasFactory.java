@@ -19,6 +19,7 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.management;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
@@ -120,11 +121,11 @@ public class NonPersistentCanvasFactory {
 	private class StubHibNotationFactory implements IHibNotationFactory {
 		private final HibNotation hibNotation;
 		private final INotationSubsystem notationSubsystem;
-		private final Map<IObjectType, HibObjectType> otMap;
+		private final Map<Integer, HibObjectType> otMap;
 		private boolean initialised = false;
 		
 		public StubHibNotationFactory(INotationSubsystem notationSubsystem){
-			this.otMap = new HashMap<IObjectType, HibObjectType>();
+			this.otMap = new HashMap<Integer, HibObjectType>();
 			this.notationSubsystem = notationSubsystem;
 			INotation notn = this.notationSubsystem.getNotation();
 			this.hibNotation = new HibNotation(notn.getQualifiedName(), notn.getDisplayName(), notn.getDescription(), notn.getVersion());
@@ -133,8 +134,8 @@ public class NonPersistentCanvasFactory {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 		 */
-		public boolean containsObjectType(IObjectType objectType) {
-			return this.notationSubsystem.getSyntaxService().containsObjectType(objectType.getUniqueId());
+		public boolean containsObjectType(int uniqueId) {
+			return this.notationSubsystem.getSyntaxService().containsObjectType(uniqueId);
 		}
 
 		/* (non-Javadoc)
@@ -154,13 +155,10 @@ public class NonPersistentCanvasFactory {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 		 */
-		public HibObjectType getObjectType(IObjectType objectType) {
-			HibObjectType retVal = this.otMap.get(objectType);
+		public HibObjectType getObjectType(int uniqueId) {
+			HibObjectType retVal = this.otMap.get(uniqueId);
 			if(retVal == null){
-				ObjectTypeClassification otClassn = objectType instanceof IShapeObjectType ? ObjectTypeClassification.SHAPE
-						: objectType instanceof ILinkObjectType ? ObjectTypeClassification.LINK : ObjectTypeClassification.ROOTOBJECT; 
-				retVal = new HibObjectType(objectType.getUniqueId(), objectType.getName(), objectType.getDescription(), otClassn);
-				this.otMap.put(objectType, retVal);
+				throw new IllegalArgumentException("Unique Id not found");
 			}
 			return retVal;
 		}
@@ -169,6 +167,14 @@ public class NonPersistentCanvasFactory {
 		 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#initialise()
 		 */
 		public void initialise() {
+			Iterator<IObjectType> iter = this.notationSubsystem.getSyntaxService().objectTypeIterator();
+			while(iter.hasNext()){
+				IObjectType objectType = iter.next();
+				ObjectTypeClassification otClassn = objectType instanceof IShapeObjectType ? ObjectTypeClassification.SHAPE
+						: objectType instanceof ILinkObjectType ? ObjectTypeClassification.LINK : ObjectTypeClassification.ROOTOBJECT; 
+				HibObjectType hibObjectType = new HibObjectType(objectType.getUniqueId(), objectType.getName(), objectType.getDescription(), otClassn);
+				this.otMap.put(objectType.getUniqueId(), hibObjectType);
+			}
 			this.initialised = true;
 		}
 

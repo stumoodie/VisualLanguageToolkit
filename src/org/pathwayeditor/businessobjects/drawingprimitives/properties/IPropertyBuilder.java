@@ -33,7 +33,7 @@ public interface IPropertyBuilder {
 	
 	IPlainTextAnnotationProperty createPlainTextProperty(IPlainTextPropertyDefinition propDefn);
 
-	IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn);
+//	IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn);
 
 	INumberAnnotationProperty createNumberProperty(INumberPropertyDefinition propDefn);
 
@@ -45,7 +45,7 @@ public interface IPropertyBuilder {
 
 	IPlainTextAnnotationProperty copyPlainTextProperty(IPlainTextAnnotationProperty other);
 
-	IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other);
+//	IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other);
 
 	INumberAnnotationProperty copyNumberProperty(INumberAnnotationProperty other);
 

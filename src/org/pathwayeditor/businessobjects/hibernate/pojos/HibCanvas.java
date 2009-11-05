@@ -363,6 +363,10 @@ public class HibCanvas implements ICanvas, Serializable {
 		return this.creationSerialCounter.getLastIndex();
 	}
 	
+	public void setCreationSerialCounter(IndexCounter newCounter){
+		this.creationSerialCounter = newCounter;
+	}
+
 	public IndexCounter getCreationSerialCounter(){
 		return this.creationSerialCounter;
 	}

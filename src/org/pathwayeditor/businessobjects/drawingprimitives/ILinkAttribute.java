@@ -138,14 +138,14 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * Gets the RGB representation of the color of the link. Cannot be null.
 	 * @return the RGB color.
 	 */
-	RGB getLineColor () ;
+	RGB getLineColour () ;
 	
 	/**
 	 * Sets a new Color for this link.
 	 * @param newColor the new colour for the line, which cannot be null.
 	 * @throws IllegalArgumentException if newColor is null.
 	 */
-	void setLineColor ( RGB newColor ) ;
+	void setLineColour ( RGB newColor ) ;
 	
 	/**
 	 * Gets the line style of this link.

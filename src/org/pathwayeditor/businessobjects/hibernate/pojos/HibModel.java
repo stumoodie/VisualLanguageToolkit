@@ -93,7 +93,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		this();
 		this.canvas = newCanvas;
 		this.hibNotationFactory = hibNotationFactory;
-		HibObjectType hibRootObjectType = hibNotationFactory.getObjectType(rootObjectType);
+		HibObjectType hibRootObjectType = hibNotationFactory.getObjectType(rootObjectType.getUniqueId());
 		this.rootNode = new HibRootNode(this, ROOT_NODE_IDX, new HibRootAttribute(this.canvas, this.canvas.getCreationSerialCounter().nextIndex(),
 				rootObjectType, hibRootObjectType));
 		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
@@ -159,9 +159,17 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		return this.edgeCntr;
 	}
 
+	public final void setEdgeCounter(IndexCounter index) {
+		this.edgeCntr = index;
+	}
+
 	@Override
 	public final IndexCounter getNodeCounter() {
 		return this.nodeCntr;
+	}
+
+	public final void setNodeCounter(IndexCounter index) {
+		this.nodeCntr = index;
 	}
 
 	@Override
@@ -173,20 +181,6 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		return new GraphModelState(this, this.momentoCntr.nextIndex(), super.getCurrentState());
 	}
 	
-//	public HibSubCompoundGraphFactory subgraphFactory() {
-//		return this.subgraphFactory;
-//	}
-	
-//	@Override
-//	public HibCompoundNode getNode(int index){
-//		return (HibCompoundNode)super.getNode(index);
-//	}
-//
-//	@Override
-//	public HibLinkEdge getEdge(int index){
-//		return (HibLinkEdge)super.getEdge(index);
-//	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICompoundGraph#createCopy(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */

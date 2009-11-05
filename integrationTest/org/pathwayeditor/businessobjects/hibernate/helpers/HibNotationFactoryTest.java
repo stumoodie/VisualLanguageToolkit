@@ -120,17 +120,13 @@ public class HibNotationFactoryTest extends PojoTester {
 		assertEquals("Notation id correct", expectedId, notation.getQualifiedName());
 	}
 
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)}.
-	 * @throws InconsistentNotationDefinitionException 
-	 */
 	@Test
 	public final void testGetObjectType() throws InconsistentNotationDefinitionException {
 		Session sess = getHibFactory().getCurrentSession();
 		sess.beginTransaction();
 		this.testUnloadedInstance.initialise();
 		IObjectType objectType = this.testUnloadedInstance.getNotationSubsystem().getSyntaxService().getObjectType(StubShapeAObjectType.UNIQUE_ID);
-		HibObjectType actualObjectType = this.testUnloadedInstance.getObjectType(objectType);
+		HibObjectType actualObjectType = this.testUnloadedInstance.getObjectType(objectType.getUniqueId());
 		assertEquals("correct object type", StubShapeAObjectType.UNIQUE_ID, actualObjectType.getUniqueId());
 		sess.getTransaction().commit();
 	}

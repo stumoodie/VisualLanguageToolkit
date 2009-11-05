@@ -3,19 +3,19 @@
  xsi:schemaLocation="http://www.castor.org/SourceGenerator/Binding"
  xmlns="http://www.castor.org/SourceGenerator/Binding">
 
-   <elementBinding name="/complexType:DrawingNodeAttributeType/Location">
+   <!-- elementBinding name="/complexType:DrawingNodeAttributeType/Location">
       <java-class name="DrawingNodeLocation"/>
-   </elementBinding>
+   </elementBinding-->
 
-   <elementBinding name="/complexType:LinkTerminusType/Location">
+   <!-- elementBinding name="/complexType:LinkTerminusType/Location">
       <java-class name="TerminusLocation"/>
-   </elementBinding>
+   </elementBinding-->
    
-   <elementBinding name="/complexType:ShapeAttributeType/LineColour">
+   <!-- elementBinding name="/complexType:ShapeAttributeType/LineColour">
    		<java-class name="ShapeLineColour"/>
-   </elementBinding>
+   </elementBinding-->
    
-   <elementBinding name="/complexType:LinkAttributeType/LineColour">
+   <!-- elementBinding name="/complexType:LinkAttributeType/LineColour">
    		<java-class name="LinkLineColour"/>
-   </elementBinding>
+   </elementBinding-->
 </binding>

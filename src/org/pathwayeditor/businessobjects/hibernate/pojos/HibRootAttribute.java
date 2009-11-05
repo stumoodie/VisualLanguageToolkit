@@ -61,7 +61,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements IRootAttribu
 	public HibRootAttribute(HibCanvas canvas, int creationSerial, HibRootAttribute otherAttribute) {
 		super(canvas, creationSerial);
 		this.objectType = otherAttribute.getObjectType();
-		this.hibObjectType = otherAttribute.getHibObjectType();
+		this.hibObjectType = canvas.getModel().getHibNotationFactory().getObjectType(otherAttribute.getHibObjectType().getUniqueId());
 	}
 
 //	@Override

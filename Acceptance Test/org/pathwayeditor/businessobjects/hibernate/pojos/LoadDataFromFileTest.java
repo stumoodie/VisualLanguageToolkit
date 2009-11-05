@@ -42,7 +42,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDec
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
@@ -819,8 +818,8 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 
 		assertNotNull ( "is not null " , property3 ) ;
 		
-		assertTrue ( "is text property" , property3 instanceof IHtmlAnnotationProperty ) ;
-		IHtmlAnnotationProperty theProperty = (IHtmlAnnotationProperty) property3 ;
+		assertTrue ( "is text property" , property3 instanceof IPlainTextAnnotationProperty ) ;
+		IPlainTextAnnotationProperty theProperty = (IPlainTextAnnotationProperty) property3 ;
 		assertEquals ( "value" , PROPERTY3_VALUE, theProperty.getValue()) ;
 	}
 	
@@ -981,7 +980,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute1.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE1_SERIAL , linkAttribute1.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_101 , linkAttribute1.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_101 , linkAttribute1.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute1.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK1 , linkAttribute1.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE1 ,linkAttribute1.getLineWidth(), CMP_DELTA) ;
@@ -1017,7 +1016,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute2.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE2_SERIAL , linkAttribute2.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_102 , linkAttribute2.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_102 , linkAttribute2.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute2.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK2 , linkAttribute2.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE2 , linkAttribute2.getLineWidth(), CMP_DELTA) ;
@@ -1052,7 +1051,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute3.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE3_SERIAL , linkAttribute3.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_103 , linkAttribute3.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_103 , linkAttribute3.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute3.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK3 , linkAttribute3.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE3 , linkAttribute3.getLineWidth(), CMP_DELTA) ;
@@ -1087,7 +1086,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute4.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE4_SERIAL , linkAttribute4.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_104 , linkAttribute4.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_104 , linkAttribute4.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute4.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK4 , linkAttribute4.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE4 , linkAttribute4.getLineWidth(), CMP_DELTA) ;
@@ -1122,7 +1121,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute5.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE5_SERIAL , linkAttribute5.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_105 , linkAttribute5.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_105 , linkAttribute5.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DOT , linkAttribute5.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK5 , linkAttribute5.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE5 , linkAttribute5.getLineWidth(), CMP_DELTA) ;
@@ -1158,7 +1157,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute6.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE6_SERIAL , linkAttribute6.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_106 , linkAttribute6.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_106 , linkAttribute6.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.SOLID , linkAttribute6.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK6 , linkAttribute6.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE6 , linkAttribute6.getLineWidth(), CMP_DELTA) ;
@@ -1193,7 +1192,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute7.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE7_SERIAL , linkAttribute7.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_107 , linkAttribute7.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_107 , linkAttribute7.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASHED , linkAttribute7.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK7 , linkAttribute7.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE7 , linkAttribute7.getLineWidth(), CMP_DELTA) ;
@@ -1228,7 +1227,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute8.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE8_SERIAL , linkAttribute8.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_108 , linkAttribute8.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_108 , linkAttribute8.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT , linkAttribute8.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK8 , linkAttribute8.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE8 , linkAttribute8.getLineWidth(), CMP_DELTA) ;
@@ -1263,7 +1262,7 @@ public class LoadDataFromFileTest extends GenericXlsTester{
 		
 		assertEquals ( "check Canvas" , dbCanvas , linkAttribute9.getCanvas() );
 		assertEquals ( "check creation serial" , LINK_ATTRIBUTE9_SERIAL , linkAttribute9.getCreationSerial()) ;
-		assertEquals ( "check line color" , RGB_109 , linkAttribute9.getLineColor() ) ;
+		assertEquals ( "check line color" , RGB_109 , linkAttribute9.getLineColour() ) ;
 		assertEquals ( "check linestyle" , LineStyle.DASH_DOT_DOT , linkAttribute9.getLineStyle() ) ;
 		assertEquals ( "check no of bends" , NUM_OF_BENDPOINTS_IN_LINK9 , linkAttribute9.numBendPoints()) ;
 		assertEquals ( "check line width" , LINE_WIDTH_OF_LINKATTRIBUTE9 , linkAttribute9.getLineWidth(), CMP_DELTA) ;

@@ -32,9 +32,11 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
+import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
 import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
@@ -104,7 +106,9 @@ public class ILinkAttributeTest {
 		notation.addObjectType(objectType);
 		stubObjectType = new StubLinkObjectType();
 		
-		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	stubObjectType, objectType ) ;
+		HibLinkTerminus srcTerm = new HibLinkTerminus(mockCanvas, LINK_INDEX+1, LinkTermType.SOURCE, stubObjectType.getSourceTerminusDefinition());
+		HibLinkTerminus tgtTerm = new HibLinkTerminus(mockCanvas, LINK_INDEX+2, LinkTermType.TARGET, stubObjectType.getTargetTerminusDefinition());
+		linkAttribute = new HibLinkAttribute ( mockCanvas, LINK_INDEX,	stubObjectType, objectType, srcTerm, tgtTerm) ;
 		
 //		tempLinkAttribute.setCreationSerial(CREATION_SERIAL) ;
 		

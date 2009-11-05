@@ -630,7 +630,7 @@ public class CheckDbOperationsCompoundGraphTest extends GenericXlsTester{
 		ILinkEdge linkEdge1 = this.dbCanvas.getLinkAttribute(LINK1_ATTRIB).getCurrentDrawingElement(); 
 		ILinkAttribute linkAttribute1 = linkEdge1.getAttribute() ;
 		
-		linkAttribute1.setLineColor(CHANGED_LINK_LINE_COLOUR);
+		linkAttribute1.setLineColour(CHANGED_LINK_LINE_COLOUR);
 		linkAttribute1.setLineStyle(CHANGED_LINK_LINE_STYLE) ;
 		linkAttribute1.setLineWidth(CHANGED_LINK_LINE_WIDTH) ;
 		

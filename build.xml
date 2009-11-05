@@ -100,13 +100,11 @@
 	<path id="test.classpath">
 		<path refid="classpath" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/bsh-core-2.0b4.jar" />
-		<!--pathelement location="${lib.dir}/jmock-2.5.1/cglib-2.1_3-src.jar" /-->
 		<pathelement location="${lib.dir}/jmock-2.5.1/cglib-nodep-2.1_3.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-core-1.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/hamcrest-library-1.1.jar" />
 		<pathelement location="${lib.dir}/junit4.4/junit-4.4.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-2.5.1.jar" />
-		<!--pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit3-2.5.1.jar" /-->
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-junit4-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-legacy-2.5.1.jar" />
 		<pathelement location="${lib.dir}/jmock-2.5.1/jmock-script-2.5.1.jar" />
@@ -129,8 +127,8 @@
 		<mkdir dir="${build.dir.stubs}" />
 	</target>
 
-	<target name="clean">
-		<delete dir="${build.dir}">
+	<target name="clean" description="Cleanup the jars, classes and generated source" depends="cleanup-castor-code">
+		<delete dir="${build.dir}"  includeemptydirs="true">
 	       	  <fileset dir="${src.dir}/${package}" includes="TreeDrawingVm.java"/> 
 	       	  <fileset dir="${src.dir}/${package}" includes="DrawingVmLexer.java"/> 
 	       	  <fileset dir="${src.dir}/${package}" includes="DrawingVmParser.java"/> 
@@ -212,7 +210,7 @@
        <antlr3 grammar.name="${walker.name}" debugFlag="no" />
     </target>
 
-	<target name="buildSrc" description="src build task" depends="init,grammar,walker">
+	<target name="buildSrc" description="src build task" depends="init,grammar,walker,castor-gen">
 		<!-- <echo>running with classpath ${toString:classpath}</echo>-->
 		<javac classpathref="classpath" srcdir="${src.dir}" source="${source}" target="${target}" debug="true" debuglevel="lines,vars,source" destdir="${build.dir.src}">
 		</javac>
@@ -311,9 +309,10 @@
 
 	
 	<target name="cleanup-castor-code">
-		<delete>
+		<delete includeemptydirs="true">
 			<fileset dir="${src.dir}">
-			    <include name="org/pathwayeditor/businessobjects/exchange/castor/**"/>
+			    <include name="org/pathwayeditor/businessobjects/exchange/castor/**/*"/>
+			    <include name="org/pathwayeditor/businessobjects/exchange/castor"/>
 			</fileset>
 		</delete>
 	</target>
@@ -331,7 +330,7 @@
 		<pathelement location="${lib.dir}/hibernate-3.2/lib/commons-logging-1.0.4.jar" />
 	</path>
 		
-	<target name="castor-gen" depends="init"
+	<target name="castor-gen" depends="init,cleanup-castor-code"
 	         description="Generate Java source files from XSD.">
 
 		<taskdef name="castor-srcgen"
@@ -343,7 +342,7 @@
 	                   types="j2"
 	    			   verbose="false"
 	    			   nodesc="false"
-	                   warnings="true"
+	                   warnings="false"
 	    			   bindingfile="schema/CanvasBinding.xml"
 	    			   properties="${src.dir}/castorbuilder.properties"
 	    			   nameConflictStrategy="informViaLog"
