@@ -17,16 +17,13 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.exchange;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
-import org.pathwayeditor.businessobjects.exchange.castor.Notation;
-import org.pathwayeditor.businessobjects.exchange.castor.ObjectType;
-import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 
 /**
  * @author smoodie
@@ -34,12 +31,12 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassificatio
  */
 public class XmlNotationFactory implements IHibNotationFactory {
 
-	private final Notation xmlNotation;
 	private HibNotation hibNotation;
 	private final Map<Integer, HibObjectType> hibObjectTypeMap;
+	private final INotationDelegate delegate;
 	
-	public XmlNotationFactory(Notation hibNotation){
-		this.xmlNotation = hibNotation;
+	public XmlNotationFactory(INotationDelegate notationDelegate){
+		this.delegate = notationDelegate;
 		this.hibObjectTypeMap = new HashMap<Integer, HibObjectType>();
 	}
 	
@@ -54,7 +51,7 @@ public class XmlNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getNotation()
 	 */
 	public HibNotation getNotation() {
-		return null;
+		return this.hibNotation;
 	}
 
 	/* (non-Javadoc)
@@ -75,19 +72,24 @@ public class XmlNotationFactory implements IHibNotationFactory {
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#initialise()
 	 */
 	public void initialise() {
-		Version notationVersion = new Version((int)xmlNotation.getMajorVersion(), (int)xmlNotation.getMinorVersion(),
-				(int)xmlNotation.getPatchVersion());
-		this.hibNotation = new HibNotation(xmlNotation.getQualifiedName(), xmlNotation.getDisplayName(), xmlNotation.getDescription(), notationVersion);
-		for(ObjectType xmlObjectType : this.xmlNotation.getObjectType()){
-			ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
-			if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.ROOT)){
-				classn = ObjectTypeClassification.ROOTOBJECT;
-			}
-			else if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.LINK)){
-				classn = ObjectTypeClassification.LINK;
-			}
+		INotation iNotation = this.delegate.getNotation();
+		this.hibNotation = new HibNotation(iNotation.getQualifiedName(), iNotation.getDisplayName(), iNotation.getDescription(), iNotation.getVersion());
+//		Version notationVersion = new Version((int)xmlNotation.getMajorVersion(), (int)xmlNotation.getMinorVersion(),
+//				(int)xmlNotation.getPatchVersion());
+//		this.hibNotation = new HibNotation(xmlNotation.getQualifiedName(), xmlNotation.getDisplayName(), xmlNotation.getDescription(), notationVersion);
+		Iterator<IObjectInfo> iter = this.delegate.objectTypeIterator();
+		while(iter.hasNext()){
+			IObjectInfo xmlObjectType = iter.next();
+//		for(ObjectType xmlObjectType : this.xmlNotation.getObjectType()){
+//			ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
+//			if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.ROOT)){
+//				classn = ObjectTypeClassification.ROOTOBJECT;
+//			}
+//			else if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.LINK)){
+//				classn = ObjectTypeClassification.LINK;
+//			}
 			HibObjectType hibObjectType = new HibObjectType((int)xmlObjectType.getUniqueId(), xmlObjectType.getName(),
-					xmlObjectType.getDescription(), classn);
+					xmlObjectType.getDescription(), xmlObjectType.getClassification());
 			this.hibNotation.addObjectType(hibObjectType);
 			this.hibObjectTypeMap.put((int)xmlObjectType.getUniqueId(), hibObjectType);
 		}

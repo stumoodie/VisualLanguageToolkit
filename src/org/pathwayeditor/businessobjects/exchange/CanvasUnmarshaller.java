@@ -36,6 +36,7 @@ public class CanvasUnmarshaller {
 	private INotationSubsystemPool notationPool;
 	private final String repoName;
 	private final int iNode;
+	private CanvasBuilder builder = null;
 
 	public CanvasUnmarshaller(INotationSubsystemPool notationPool, String name, int iNode){
 		this.notationPool = notationPool;
@@ -57,12 +58,20 @@ public class CanvasUnmarshaller {
 	}
 
 
-	public ICanvas getCanvas(){
-		CanvasBuilder builder = new CanvasBuilder(this.repoName, this.iNode, xmlInstance, notationPool);
+	public void buildCanvas(){
+		if(this.xmlInstance == null) throw new IllegalStateException("File has not been read");
+
+		this.builder = new CanvasBuilder(this.repoName, this.iNode, xmlInstance, notationPool);
 		builder.buildNotation();
 		builder.buildCanvas();
 		builder.buildModel();
-		return builder.getCanvas();
+	}
+	
+	
+	public ICanvas getCanvas(){
+		if(this.builder == null) throw new IllegalStateException("Canvas not build from XML document");
+		
+		return this.builder.getCanvas();
 	}
 	
 }

@@ -19,6 +19,7 @@ package org.pathwayeditor.businessobjects.exchange;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -49,6 +50,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.ListAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.ListItem;
 import org.pathwayeditor.businessobjects.exchange.castor.Model;
 import org.pathwayeditor.businessobjects.exchange.castor.NumberAnnotationProperty;
+import org.pathwayeditor.businessobjects.exchange.castor.ObjectType;
 import org.pathwayeditor.businessobjects.exchange.castor.PointType;
 import org.pathwayeditor.businessobjects.exchange.castor.PropertyList;
 import org.pathwayeditor.businessobjects.exchange.castor.PropertyRef;
@@ -61,6 +63,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.SubModel;
 import org.pathwayeditor.businessobjects.exchange.castor.TextAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
+import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
@@ -77,7 +80,9 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
+import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -148,7 +153,7 @@ public class CanvasBuilder {
 	}
 	
 	public void buildNotation(){
-		notationFactory = new XmlNotationFactory(xmlInstance.getNotation());
+		notationFactory = new XmlNotationFactory(new XmlNotationDeletgate());
 		notationFactory.initialise();
 	}
 	
@@ -399,4 +404,70 @@ public class CanvasBuilder {
 		return retVal;
 	}
 	
+	
+	private class XmlNotationDeletgate implements INotationDelegate {
+		
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#getNotation()
+		 */
+		public INotation getNotation() {
+			return new XmlNotation(xmlInstance.getNotation());
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#numObjectTypes()
+		 */
+		public int numObjectTypes() {
+			return xmlInstance.getNotation().getObjectTypeCount();
+		}
+
+		/* (non-Javadoc)
+		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#objectTypeIterator()
+		 */
+		public Iterator<IObjectInfo> objectTypeIterator() {
+			final Iterator<ObjectType> objectTypeIter = Arrays.asList(xmlInstance.getNotation().getObjectType()).iterator();
+			return new Iterator<IObjectInfo>(){
+
+				public boolean hasNext() {
+					return objectTypeIter.hasNext();
+				}
+
+				public IObjectInfo next() {
+					final ObjectType xmlObjectType = objectTypeIter.next();
+					return new IObjectInfo(){
+
+						public ObjectTypeClassification getClassification() {
+							ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
+							if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.ROOT)){
+								classn = ObjectTypeClassification.ROOTOBJECT;
+							}
+							else if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.LINK)){
+								classn = ObjectTypeClassification.LINK;
+							}
+							return classn;
+						}
+
+						public String getDescription() {
+							return xmlObjectType.getDescription();
+						}
+
+						public String getName() {
+							return xmlObjectType.getName();
+						}
+
+						public int getUniqueId() {
+							return xmlObjectType.getUniqueId();
+						}
+						
+					};
+				}
+
+				public void remove() {
+					throw new UnsupportedOperationException("Removal is not supported");
+				}
+				
+			};
+		}
+		
+	}
 }

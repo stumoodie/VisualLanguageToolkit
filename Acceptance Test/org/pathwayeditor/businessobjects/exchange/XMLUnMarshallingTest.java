@@ -78,6 +78,7 @@ public class XMLUnMarshallingTest extends GenericAllXlsTester {
 			CanvasUnmarshaller builder = new CanvasUnmarshaller(this.stubNotationPool, TEST_FILE_NAME, 0);
 			in = new FileReader(TEST_FILE_NAME);
 			builder.read(in);
+			builder.buildCanvas();
 			ICanvas canvas = builder.getCanvas();
 			assertEquals("expected num canvas attribs", 44, canvas.numCanvasAttributes());
 			assertEquals("expected num elements", 26, canvas.getModel().numDrawingElements());

@@ -171,9 +171,9 @@
             <xs:element maxOccurs="unbounded" name="ObjectType" type="ObjectTypeType"/>
         </xs:sequence>
         <xs:attribute name="qualifiedName" type="xs:string" use="required"/>
-        <xs:attribute name="majorVersion" type="xs:nonNegativeInteger" use="required"/>
-        <xs:attribute name="minorVersion" type="xs:nonNegativeInteger" use="required"/>
-        <xs:attribute name="patchVersion" type="xs:nonNegativeInteger" use="required"/>
+        <xs:attribute name="majorVersion" type="xs:int" use="required"/>
+        <xs:attribute name="minorVersion" type="xs:int" use="required"/>
+        <xs:attribute name="patchVersion" type="xs:int" use="required"/>
         <xs:attribute name="displayName" type="xs:string" use="required"/>
     </xs:complexType>
     <xs:complexType name="ModelType">
