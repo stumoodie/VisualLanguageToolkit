@@ -25,9 +25,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -81,7 +81,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		super(newCanvas, newCreationSerial, other);
 		this.position = other.position;
 		this.size = other.size;
-		this.hibObjectType = other.hibObjectType;
+		this.hibObjectType = newCanvas.getModel().getHibNotationFactory().getObjectType(other.hibObjectType.getUniqueId());
 		this.fillColour = other.fillColour;
 		this.lineColour = other.lineColour;
 		this.lineStyle = other.lineStyle;
@@ -100,35 +100,35 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.setShapeDefinition(shapeDefaults.getShapeDefinition());
 	}
 
-	public double getXPosition() {
+	double getXPosition() {
 		return this.position.getX();
 	}
 
-	public void setXPosition(double XPosition) {
+	void setXPosition(double XPosition) {
 		this.position = this.position.newX(XPosition);
 	}
 
-	public double getYPosition() {
+	double getYPosition() {
 		return this.position.getY();
 	}
 	
-	public void setYPosition(double YPosition) {
+	void setYPosition(double YPosition) {
 		this.position = this.position.newY(YPosition);
 	}
 
-	public double getWidth() {
+	double getWidth() {
 		return this.size.getWidth();
 	}
 	
-	public void setWidth(double width) {
+	void setWidth(double width) {
 		this.size = this.size.newWidth(width);
 	}
 
-	public double getHeight() {
+	double getHeight() {
 		return this.size.getHeight();
 	}
 
-	public void setHeight(double height) {
+	void setHeight(double height) {
 		this.size = this.size.newHeight(height);
 	}
 
@@ -150,51 +150,51 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		this.hibObjectType = hibObjectType;
 	}
 
-	public int getFillRed() {
+	int getFillRed() {
 		return this.fillColour.getRed();
 	}
 
-	public void setFillRed(int fillRed) {
+	void setFillRed(int fillRed) {
 		this.fillColour = this.fillColour.newRed(fillRed);
 	}
 
-	public int getFillGreen() {
+	int getFillGreen() {
 		return this.fillColour.getGreen();
 	}
 	
-	public void setFillGreen(int fillGreen) {
+	void setFillGreen(int fillGreen) {
 		this.fillColour = this.fillColour.newGreen(fillGreen);
 	}
 
-	public int getFillBlue() {
+	int getFillBlue() {
 		return this.fillColour.getBlue();
 	}
 
-	public void setFillBlue(int fillBlue) {
+	void setFillBlue(int fillBlue) {
 		this.fillColour = fillColour.newBlue(fillBlue);
 	}
 
-	public int getLineRed() {
+	int getLineRed() {
 		return this.lineColour.getRed();
 	}
 
-	public void setLineRed(int lineRed) {
+	void setLineRed(int lineRed) {
 		this.lineColour = this.lineColour.newRed(lineRed);
 	}
 
-	public int getLineGreen() {
+	int getLineGreen() {
 		return this.lineColour.getGreen();
 	}
 
-	public void setLineGreen(int lineGreen) {
+	void setLineGreen(int lineGreen) {
 		this.lineColour = this.lineColour.newGreen(lineGreen);
 	}
 
-	public int getLineBlue() {
+	int getLineBlue() {
 		return this.lineColour.getBlue();
 	}
 
-	public void setLineBlue(int lineBlue) {
+	void setLineBlue(int lineBlue) {
 		this.lineColour = this.lineColour.newBlue(lineBlue);
 	}
 	
@@ -203,7 +203,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	}
 	
 
-	public void setHibLineStyle(LineStyle lineStyle) {
+	void setHibLineStyle(LineStyle lineStyle) {
 		this.lineStyle = lineStyle;
 	}
 	

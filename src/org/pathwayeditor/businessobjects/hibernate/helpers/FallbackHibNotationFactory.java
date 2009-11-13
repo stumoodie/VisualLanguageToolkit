@@ -23,8 +23,6 @@ import java.util.Map;
 
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
  * @author smoodie
@@ -33,17 +31,13 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 public class FallbackHibNotationFactory implements IHibNotationFactory {
 	private final HibNotation hibNotation;
 	private final Map<Integer, HibObjectType> objectTypeLookup;
-	private final INotationSubsystem notationSubsystem;
 	private boolean initialised = false;
 	
 	/**
 	 * @param hibNotation
 	 */
-	public FallbackHibNotationFactory(INotationSubsystem subsystem, HibNotation hibNotation) {
-		if(!subsystem.isFallback()) throw new IllegalArgumentException("Expect a fallback notation subsystem");
-		
+	public FallbackHibNotationFactory(HibNotation hibNotation) {
 		this.hibNotation = hibNotation;
-		this.notationSubsystem = subsystem;
 		this.objectTypeLookup = new HashMap<Integer, HibObjectType>();
 	}
 
@@ -55,22 +49,13 @@ public class FallbackHibNotationFactory implements IHibNotationFactory {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getNotationSubsystem()
-	 */
-	public INotationSubsystem getNotationSubsystem() {
-		return this.notationSubsystem;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
-	public HibObjectType getObjectType(IObjectType objectType) {
+	public HibObjectType getObjectType(int uniqueId) {
 		HibObjectType retVal = null;
-		if(objectType != null) {
-			retVal = this.objectTypeLookup.get(objectType.getUniqueId());
-		}
+		retVal = this.objectTypeLookup.get(uniqueId);
 		if(retVal == null) {
-			throw new IllegalArgumentException("No object type mapping exists for object type: " + objectType);
+			throw new IllegalArgumentException("No object type mapping exists for object type uid=" + uniqueId);
 		}
 		return retVal;
 	}
@@ -96,11 +81,9 @@ public class FallbackHibNotationFactory implements IHibNotationFactory {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
-	public boolean containsObjectType(IObjectType objectType) {
+	public boolean containsObjectType(int uniqueId) {
 		boolean retVal = false;
-		if(objectType != null) {
-			retVal = this.objectTypeLookup.containsKey(objectType.getUniqueId());
-		}
+		retVal = this.objectTypeLookup.containsKey(uniqueId);
 		return retVal;
 	}
 

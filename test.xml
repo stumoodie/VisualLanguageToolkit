@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epx:canvas xmlns:epx="http://www.pathwayeditor.org/Exchange"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Canvas.xsd"
+    name="Diagram name" lastCreationSerial="44">
+    <Grid snapToGrid="true" gridOn="true">
+        <GridSize width="10.0" height="10.0"/>
+    </Grid>
+    <Notation qualifiedName="org.pathwayeditor.stub.notation"
+        majorVersion="99" minorVersion="19" patchVersion="9" displayName="Stub Notation">
+        <Description>Stub notation description</Description>
+        <ObjectType uniqueId="3" name="Shape C" classification="Shape">
+            <description>Shape C Test ObjectType</description>
+        </ObjectType>
+        <ObjectType uniqueId="0" name="Root Object Type" classification="Root">
+            <description>Root Object Type Description</description>
+        </ObjectType>
+        <ObjectType uniqueId="5" name="Link A" classification="Link">
+            <description>Link A Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="8" name="Link D" classification="Link">
+            <description>Link D Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="6" name="Link B" classification="Link">
+            <description>Link B Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="1" name="Shape A" classification="Shape">
+            <description>Shape A Test ObjectType</description>
+        </ObjectType>
+        <ObjectType uniqueId="7" name="Link C" classification="Link">
+            <description>Link C Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="4" name="Shape D" classification="Shape">
+            <description>Shape D Test ObjectType</description>
+        </ObjectType>
+        <ObjectType uniqueId="2" name="Shape B" classification="Shape">
+            <description>Shape B Test ObjectType</description>
+        </ObjectType>
+    </Notation>
+    <CanvasSize width="10.0" height="10.0"/>
+    <Background red="100" green="100" blue="100"/>
+    <Model lastNodeIndex="16" lastEdgeIndex="8">
+        <RootNode nodeId="0">
+            <SubModel>
+                <ShapeNode nodeId="1">
+                    <SubModel>
+                        <ShapeNode nodeId="3">
+                            <SubModel>
+                                <LabelNode nodeId="15">
+                                    <SubModel/>
+                                    <LabelAttribute creationSerial="24"
+                                    lineStyle="SOLID"
+                                    lineWidth="1.0" noFill="true" noBorder="true">
+                                    <Location x="57.0" y="57.0"/>
+                                    <Size width="57.0" height="57.0"/>
+                                    <LineColour red="255"
+                                    green="255" blue="255"/>
+                                    <FillColour red="107"
+                                    green="107" blue="107"/>
+                                    <PropertyRef id="2"/>
+                                    </LabelAttribute>
+                                </LabelNode>
+                            </SubModel>
+                            <ShapeAttribute creationSerial="3"
+                                objectTypeId="4" lineWidth="3.0" lineStyle="DASH_DOT">
+                                <Location x="53.0" y="53.0"/>
+                                <Size width="53.0" height="53.0"/>
+                                <FillColour red="103" green="103" blue="103"/>
+                                <LineColour red="103" green="103" blue="103"/>
+                                <PropertyRef id="2"/>
+                                <FigureDefinition>curbounds rect</FigureDefinition>
+                            </ShapeAttribute>
+                        </ShapeNode>
+                        <ShapeNode nodeId="4">
+                            <SubModel>
+                                <LabelNode nodeId="16">
+                                    <SubModel/>
+                                    <LabelAttribute creationSerial="25"
+                                    lineStyle="SOLID"
+                                    lineWidth="1.0" noFill="true" noBorder="true">
+                                    <Location x="58.0" y="58.0"/>
+                                    <Size width="58.0" height="58.0"/>
+                                    <LineColour red="255"
+                                    green="255" blue="255"/>
+                                    <FillColour red="108"
+                                    green="108" blue="108"/>
+                                    <PropertyRef id="3"/>
+                                    </LabelAttribute>
+                                </LabelNode>
+                            </SubModel>
+                            <ShapeAttribute creationSerial="4"
+                                objectTypeId="3" lineWidth="4.0" lineStyle="DASH_DOT_DOT">
+                                <Location x="54.0" y="54.0"/>
+                                <Size width="54.0" height="54.0"/>
+                                <FillColour red="104" green="104" blue="104"/>
+                                <LineColour red="104" green="104" blue="104"/>
+                                <PropertyRef id="3"/>
+                                <FigureDefinition>curbounds rect</FigureDefinition>
+                            </ShapeAttribute>
+                        </ShapeNode>
+                        <LabelNode nodeId="9">
+                            <SubModel/>
+                            <LabelAttribute creationSerial="18"
+                                lineStyle="SOLID" lineWidth="1.0"
+                                noFill="true" noBorder="true">
+                                <Location x="51.0" y="51.0"/>
+                                <Size width="51.0" height="51.0"/>
+                                <LineColour red="255" green="255" blue="255"/>
+                                <FillColour red="101" green="101" blue="101"/>
+                                <PropertyRef id="1"/>
+                            </LabelAttribute>
+                        </LabelNode>
+                        <LinkEdge linkIdx="7" srcNodeIdx="1" tgtNodeIdx="1">
+                            <LinkAttribute creationSerial="16"
+                                lineStyle="DASH_DOT" lineWidth="18.0"
+                                objectTypeId="5" lastBendPointIndex="0">
+                                <LineColour red="108" green="108" blue="108"/>
+                                <srcTerminus creationSerial="40"
+                                    gap="15.0" endDecoratorType="DIAMOND">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="25.0" height="25.0"/>
+                                    <PropertyRef id="5"/>
+                                </srcTerminus>
+                                <tgtTerminus creationSerial="41"
+                                    gap="16.0" endDecoratorType="ARROW">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="26.0" height="26.0"/>
+                                    <PropertyRef id="6"/>
+                                </tgtTerminus>
+                                <PropertyRef id="4"/>
+                            </LinkAttribute>
+                        </LinkEdge>
+                        <LinkEdge linkIdx="8" srcNodeIdx="1" tgtNodeIdx="1">
+                            <LinkAttribute creationSerial="17"
+                                lineStyle="DASH_DOT_DOT"
+                                lineWidth="19.0" objectTypeId="5" lastBendPointIndex="0">
+                                <LineColour red="109" green="109" blue="109"/>
+                                <srcTerminus creationSerial="42"
+                                    gap="17.0" endDecoratorType="DIAMOND">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="27.0" height="27.0"/>
+                                    <PropertyRef id="8"/>
+                                </srcTerminus>
+                                <tgtTerminus creationSerial="43"
+                                    gap="18.0" endDecoratorType="ARROW">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="28.0" height="28.0"/>
+                                    <PropertyRef id="9"/>
+                                </tgtTerminus>
+                                <PropertyRef id="7"/>
+                            </LinkAttribute>
+                        </LinkEdge>
+                    </SubModel>
+                    <ShapeAttribute creationSerial="1" objectTypeId="1"
+                        lineWidth="1.0" lineStyle="SOLID">
+                        <Location x="51.0" y="51.0"/>
+                        <Size width="51.0" height="51.0"/>
+                        <FillColour red="101" green="101" blue="101"/>
+                        <LineColour red="101" green="101" blue="101"/>
+                        <PropertyRef id="1"/>
+                        <FigureDefinition>curbounds rect</FigureDefinition>
+                    </ShapeAttribute>
+                </ShapeNode>
+                <ShapeNode nodeId="2">
+                    <SubModel>
+                        <ShapeNode nodeId="5">
+                            <SubModel/>
+                            <ShapeAttribute creationSerial="5"
+                                objectTypeId="3" lineWidth="5.0" lineStyle="DOT">
+                                <Location x="55.0" y="55.0"/>
+                                <Size width="55.0" height="55.0"/>
+                                <FillColour red="105" green="105" blue="105"/>
+                                <LineColour red="105" green="105" blue="105"/>
+                                <PropertyRef id="11"/>
+                                <FigureDefinition>curbounds rect</FigureDefinition>
+                            </ShapeAttribute>
+                        </ShapeNode>
+                        <ShapeNode nodeId="6">
+                            <SubModel>
+                                <ShapeNode nodeId="7">
+                                    <SubModel>
+                                    <ShapeNode nodeId="8">
+                                    <SubModel/>
+                                    <ShapeAttribute
+                                    creationSerial="8"
+                                    objectTypeId="4"
+                                    lineWidth="8.0" lineStyle="DASH_DOT">
+                                    <Location x="58.0" y="58.0"/>
+                                    <Size width="58.0" height="58.0"/>
+                                    <FillColour red="108"
+                                    green="108" blue="108"/>
+                                    <LineColour red="108"
+                                    green="108" blue="108"/>
+                                    <PropertyRef id="14"/>
+                                    <FigureDefinition>curbounds rect</FigureDefinition>
+                                    </ShapeAttribute>
+                                    </ShapeNode>
+                                    </SubModel>
+                                    <ShapeAttribute creationSerial="7"
+                                    objectTypeId="2" lineWidth="7.0" lineStyle="DASHED">
+                                    <Location x="57.0" y="57.0"/>
+                                    <Size width="57.0" height="57.0"/>
+                                    <FillColour red="107"
+                                    green="107" blue="107"/>
+                                    <LineColour red="107"
+                                    green="107" blue="107"/>
+                                    <PropertyRef id="13"/>
+                                    <FigureDefinition>curbounds rect</FigureDefinition>
+                                    </ShapeAttribute>
+                                </ShapeNode>
+                                <LinkEdge linkIdx="4" srcNodeIdx="7" tgtNodeIdx="6">
+                                    <LinkAttribute creationSerial="13"
+                                    lineStyle="DOT" lineWidth="15.0"
+                                    objectTypeId="7" lastBendPointIndex="0">
+                                    <LineColour red="105"
+                                    green="105" blue="105"/>
+                                    <srcTerminus creationSerial="34"
+                                    gap="9.0" endDecoratorType="DIAMOND">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="19.0" height="19.0"/>
+                                    <PropertyRef id="16"/>
+                                    </srcTerminus>
+                                    <tgtTerminus creationSerial="35"
+                                    gap="10.0" endDecoratorType="ARROW">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="20.0" height="20.0"/>
+                                    <PropertyRef id="17"/>
+                                    </tgtTerminus>
+                                    <PropertyRef id="15"/>
+                                    </LinkAttribute>
+                                </LinkEdge>
+                                <LinkEdge linkIdx="5" srcNodeIdx="6" tgtNodeIdx="7">
+                                    <LinkAttribute creationSerial="14"
+                                    lineStyle="SOLID"
+                                    lineWidth="16.0"
+                                    objectTypeId="7" lastBendPointIndex="0">
+                                    <LineColour red="106"
+                                    green="106" blue="106"/>
+                                    <srcTerminus creationSerial="36"
+                                    gap="11.0" endDecoratorType="DIAMOND">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="21.0" height="21.0"/>
+                                    <PropertyRef id="19"/>
+                                    </srcTerminus>
+                                    <tgtTerminus creationSerial="37"
+                                    gap="12.0" endDecoratorType="ARROW">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="22.0" height="22.0"/>
+                                    <PropertyRef id="20"/>
+                                    </tgtTerminus>
+                                    <PropertyRef id="18"/>
+                                    </LinkAttribute>
+                                </LinkEdge>
+                            </SubModel>
+                            <ShapeAttribute creationSerial="6"
+                                objectTypeId="1" lineWidth="6.0" lineStyle="SOLID">
+                                <Location x="56.0" y="56.0"/>
+                                <Size width="56.0" height="56.0"/>
+                                <FillColour red="106" green="106" blue="106"/>
+                                <LineColour red="106" green="106" blue="106"/>
+                                <PropertyRef id="12"/>
+                                <FigureDefinition>curbounds rect</FigureDefinition>
+                            </ShapeAttribute>
+                        </ShapeNode>
+                        <LabelNode nodeId="12">
+                            <SubModel/>
+                            <LabelAttribute creationSerial="21"
+                                lineStyle="SOLID" lineWidth="1.0"
+                                noFill="true" noBorder="true">
+                                <Location x="54.0" y="54.0"/>
+                                <Size width="54.0" height="54.0"/>
+                                <LineColour red="255" green="255" blue="255"/>
+                                <FillColour red="104" green="104" blue="104"/>
+                                <PropertyRef id="10"/>
+                            </LabelAttribute>
+                        </LabelNode>
+                        <LinkEdge linkIdx="2" srcNodeIdx="2" tgtNodeIdx="6">
+                            <LinkAttribute creationSerial="11"
+                                lineStyle="DASH_DOT" lineWidth="13.0"
+                                objectTypeId="6" lastBendPointIndex="0">
+                                <LineColour red="103" green="103" blue="103"/>
+                                <srcTerminus creationSerial="30"
+                                    gap="5.0" endDecoratorType="DIAMOND">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="15.0" height="15.0"/>
+                                    <PropertyRef id="22"/>
+                                </srcTerminus>
+                                <tgtTerminus creationSerial="31"
+                                    gap="6.0" endDecoratorType="ARROW">
+                                    <Location x="0.0" y="0.0"/>
+                                    <DecoratorSize width="16.0" height="16.0"/>
+                                    <PropertyRef id="23"/>
+                                </tgtTerminus>
+                                <PropertyRef id="21"/>
+                            </LinkAttribute>
+                        </LinkEdge>
+                    </SubModel>
+                    <ShapeAttribute creationSerial="2" objectTypeId="3"
+                        lineWidth="2.0" lineStyle="DASHED">
+                        <Location x="52.0" y="52.0"/>
+                        <Size width="52.0" height="52.0"/>
+                        <FillColour red="102" green="102" blue="102"/>
+                        <LineColour red="102" green="102" blue="102"/>
+                        <PropertyRef id="10"/>
+                        <FigureDefinition>curbounds rect</FigureDefinition>
+                    </ShapeAttribute>
+                </ShapeNode>
+                <LabelNode nodeId="10">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="19"
+                        lineStyle="SOLID" lineWidth="1.0" noFill="true" noBorder="true">
+                        <Location x="52.0" y="52.0"/>
+                        <Size width="52.0" height="52.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="102" green="102" blue="102"/>
+                        <PropertyRef id="25"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LabelNode nodeId="11">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="20"
+                        lineStyle="SOLID" lineWidth="1.0" noFill="true" noBorder="true">
+                        <Location x="53.0" y="53.0"/>
+                        <Size width="53.0" height="53.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="103" green="103" blue="103"/>
+                        <PropertyRef id="24"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LabelNode nodeId="13">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="22"
+                        lineStyle="SOLID" lineWidth="1.0" noFill="true" noBorder="true">
+                        <Location x="55.0" y="55.0"/>
+                        <Size width="55.0" height="55.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="105" green="105" blue="105"/>
+                        <PropertyRef id="26"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LabelNode nodeId="14">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="23"
+                        lineStyle="SOLID" lineWidth="1.0" noFill="true" noBorder="true">
+                        <Location x="56.0" y="56.0"/>
+                        <Size width="56.0" height="56.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="106" green="106" blue="106"/>
+                        <PropertyRef id="27"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LinkEdge linkIdx="0" srcNodeIdx="1" tgtNodeIdx="2">
+                    <LinkAttribute creationSerial="9" lineStyle="SOLID"
+                        lineWidth="11.0" objectTypeId="5" lastBendPointIndex="1">
+                        <LineColour red="101" green="101" blue="101"/>
+                        <srcTerminus creationSerial="26" gap="1.0" endDecoratorType="DIAMOND">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="11.0" height="11.0"/>
+                            <PropertyRef id="25"/>
+                        </srcTerminus>
+                        <tgtTerminus creationSerial="27" gap="2.0" endDecoratorType="ARROW">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="12.0" height="12.0"/>
+                            <PropertyRef id="26"/>
+                        </tgtTerminus>
+                        <PropertyRef id="24"/>
+                        <BendPoint creationSerial="1" indexPosn="0">
+                            <Position x="51.0" y="51.0"/>
+                        </BendPoint>
+                    </LinkAttribute>
+                </LinkEdge>
+                <LinkEdge linkIdx="1" srcNodeIdx="2" tgtNodeIdx="1">
+                    <LinkAttribute creationSerial="10"
+                        lineStyle="DASHED" lineWidth="12.0"
+                        objectTypeId="6" lastBendPointIndex="1">
+                        <LineColour red="102" green="102" blue="102"/>
+                        <srcTerminus creationSerial="28" gap="3.0" endDecoratorType="DIAMOND">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="13.0" height="13.0"/>
+                            <PropertyRef id="28"/>
+                        </srcTerminus>
+                        <tgtTerminus creationSerial="29" gap="4.0" endDecoratorType="ARROW">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="14.0" height="14.0"/>
+                            <PropertyRef id="29"/>
+                        </tgtTerminus>
+                        <PropertyRef id="27"/>
+                        <BendPoint creationSerial="1" indexPosn="0">
+                            <Position x="52.0" y="52.0"/>
+                        </BendPoint>
+                    </LinkAttribute>
+                </LinkEdge>
+                <LinkEdge linkIdx="3" srcNodeIdx="2" tgtNodeIdx="4">
+                    <LinkAttribute creationSerial="12"
+                        lineStyle="DASH_DOT_DOT" lineWidth="14.0"
+                        objectTypeId="6" lastBendPointIndex="0">
+                        <LineColour red="104" green="104" blue="104"/>
+                        <srcTerminus creationSerial="32" gap="7.0" endDecoratorType="DIAMOND">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="17.0" height="17.0"/>
+                            <PropertyRef id="31"/>
+                        </srcTerminus>
+                        <tgtTerminus creationSerial="33" gap="8.0" endDecoratorType="ARROW">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="18.0" height="18.0"/>
+                            <PropertyRef id="32"/>
+                        </tgtTerminus>
+                        <PropertyRef id="30"/>
+                    </LinkAttribute>
+                </LinkEdge>
+                <LinkEdge linkIdx="6" srcNodeIdx="7" tgtNodeIdx="3">
+                    <LinkAttribute creationSerial="15"
+                        lineStyle="DASHED" lineWidth="17.0"
+                        objectTypeId="8" lastBendPointIndex="0">
+                        <LineColour red="107" green="107" blue="107"/>
+                        <srcTerminus creationSerial="38" gap="13.0" endDecoratorType="DIAMOND">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="23.0" height="23.0"/>
+                            <PropertyRef id="34"/>
+                        </srcTerminus>
+                        <tgtTerminus creationSerial="39" gap="14.0" endDecoratorType="ARROW">
+                            <Location x="0.0" y="0.0"/>
+                            <DecoratorSize width="24.0" height="24.0"/>
+                            <PropertyRef id="35"/>
+                        </tgtTerminus>
+                        <PropertyRef id="33"/>
+                    </LinkAttribute>
+                </LinkEdge>
+            </SubModel>
+            <rootAttribute creationSerial="44" objectTypeId="0">
+                <Location x="-8.988465674311579E307" y="-8.988465674311579E307"/>
+                <Size width="1.7976931348623157E308" height="1.7976931348623157E308"/>
+            </rootAttribute>
+        </RootNode>
+    </Model>
+    <PropertyList>
+        <TextAnnotationProperty id="1" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="4" name="RichTextProperty" displayName="RichTextProperty">richtextvalue</TextAnnotationProperty>
+        <TextAnnotationProperty id="5" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="7" name="RichTextProperty" displayName="RichTextProperty">richtextvalue</TextAnnotationProperty>
+        <TextAnnotationProperty id="8" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="12" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="13" name="RichTextProperty" displayName="RichTextProperty">richtextvalue</TextAnnotationProperty>
+        <TextAnnotationProperty id="16" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="19" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="22" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="24" name="RichTextProperty" displayName="RichTextProperty">richtextvalue</TextAnnotationProperty>
+        <TextAnnotationProperty id="25" name="TextProperty" displayName="TextProperty">textPropertyValue2</TextAnnotationProperty>
+        <TextAnnotationProperty id="28" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="31" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <TextAnnotationProperty id="34" name="TextProperty" displayName="TextProperty">textPropertyValue</TextAnnotationProperty>
+        <NumberAnnotationProperty id="6" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="9" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="15" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="17" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="18" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="20" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="21" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="23" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="26" name="NumberProperty"
+            displayName="NumberProperty" value="1"/>
+        <NumberAnnotationProperty id="27" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="29" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="30" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="32" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <NumberAnnotationProperty id="33" name="NumberProperty"
+            displayName="NumberProperty" value="2"/>
+        <NumberAnnotationProperty id="35" name="NumberProperty"
+            displayName="NumberProperty" value="99"/>
+        <ListAnnotationProperty id="2" name="ShapeLinkProperty" displayName="ShapeLinkProperty">
+            <ListItem idx="0" value="first in list 1"/>
+            <ListItem idx="1" value="second in list 1"/>
+        </ListAnnotationProperty>
+        <ListAnnotationProperty id="3" name="ShapeLinkProperty" displayName="ShapeLinkProperty">
+            <ListItem idx="0" value="first in list 2"/>
+            <ListItem idx="1" value="second in list 2"/>
+        </ListAnnotationProperty>
+        <ListAnnotationProperty id="10" name="ShapeLinkProperty" displayName="ShapeLinkProperty">
+            <ListItem idx="0" value="first in list 1"/>
+            <ListItem idx="1" value="second in list 1"/>
+        </ListAnnotationProperty>
+        <ListAnnotationProperty id="11" name="ShapeLinkProperty" displayName="ShapeLinkProperty">
+            <ListItem idx="0" value="first in list 2"/>
+            <ListItem idx="1" value="second in list 2"/>
+        </ListAnnotationProperty>
+        <ListAnnotationProperty id="14" name="ShapeLinkProperty" displayName="ShapeLinkProperty">
+            <ListItem idx="0" value="first in list 2"/>
+            <ListItem idx="1" value="second in list 2"/>
+        </ListAnnotationProperty>
+    </PropertyList>
+</epx:canvas>

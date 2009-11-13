@@ -67,9 +67,5 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	ILabelAttribute getLabel();
 	
 	
-	/**
-	 * Use the visitor pattern to implement actions on a annotation property type basis
-	 * @param visitor the visitor interface that implements the type specific action.
-	 */
 	void visit(IAnnotationPropertyVisitor visitor);
 }

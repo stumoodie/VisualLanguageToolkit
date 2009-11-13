@@ -44,7 +44,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 	private final INotationSubsystem notationSubsystem;
 	private final SessionFactory factory;
 	private HibNotation notation = null;
-	private final Map<IObjectType, HibObjectType> objectTypeMapping;
+	private final Map<Integer, HibObjectType> objectTypeMapping;
 	private boolean initialised = false;
 	private boolean initialisationfailed = false;
 	
@@ -54,7 +54,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 		
 		this.factory = factory;
 		this.notationSubsystem = notationSubsystem;
-		this.objectTypeMapping = new HashMap<IObjectType, HibObjectType>();
+		this.objectTypeMapping = new HashMap<Integer, HibObjectType>();
 	}
 
 	public void initialise() {
@@ -105,7 +105,7 @@ public class HibNotationFactory implements IHibNotationFactory {
 			for(HibObjectType hibObjectType : this.notation.getObjectTypes()){
 				if(syntaxService.containsObjectType(hibObjectType.getUniqueId())) {
 					IObjectType objectType = this.notationSubsystem.getSyntaxService().getObjectType(hibObjectType.getUniqueId());
-					this.objectTypeMapping.put(objectType, hibObjectType);
+					this.objectTypeMapping.put(objectType.getUniqueId(), hibObjectType);
 				}
 				else {
 					this.initialisationfailed = true;
@@ -145,13 +145,11 @@ public class HibNotationFactory implements IHibNotationFactory {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#getObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
-	public HibObjectType getObjectType(IObjectType objectType) {
+	public HibObjectType getObjectType(int uniqueId) {
 		HibObjectType retVal = null;
-		if(objectType != null) {
-			retVal = this.objectTypeMapping.get(objectType);
-		}
+		retVal = this.objectTypeMapping.get(uniqueId);
 		if(retVal == null) {
-			throw new IllegalArgumentException("No object type mapping exists for object type: " + objectType);
+			throw new IllegalArgumentException("No object type mapping exists for object type, id=" + uniqueId);
 		}
 		return retVal;
 	}
@@ -173,11 +171,9 @@ public class HibNotationFactory implements IHibNotationFactory {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory#containsObjectType(org.pathwayeditor.businessobjects.typedefn.IObjectType)
 	 */
-	public boolean containsObjectType(IObjectType objectType) {
+	public boolean containsObjectType(int uniqueId) {
 		boolean retVal = false;
-		if(objectType != null) {
-			retVal = this.objectTypeMapping.containsKey(objectType);
-		}
+		retVal = this.objectTypeMapping.containsKey(uniqueId);
 		return retVal;
 	}
 

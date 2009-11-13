@@ -91,5 +91,4 @@ public class HibIntegerProperty extends HibProperty implements IIntegerAnnotatio
 	public void visit(IAnnotationPropertyVisitor visitor) {
 		visitor.visitIntegerAnnotationProperty(this);
 	}
-
 }

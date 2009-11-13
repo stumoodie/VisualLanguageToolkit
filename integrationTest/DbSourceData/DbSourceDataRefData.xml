@@ -644,6 +644,14 @@
 			<value>100002</value>
 			<value>chips</value>
 		</row>
+		<row>
+			<value>100001</value>
+			<value>richtextvalue</value>
+		</row>
+		<row>
+			<value>100005</value>
+			<value>chips</value>
+		</row>
 	</table>
 	<table name="numberproperty">
 		<column>id</column>
@@ -672,18 +680,6 @@
 			<value>100004</value>
 			<value>1</value>
 			<value>second in list</value>
-		</row>
-	</table>
-	<table name="richtextProperty">
-		<column>id</column>
-		<column>rich_text_value</column>
-		<row>
-			<value>100001</value>
-			<value>richtextvalue</value>
-		</row>
-		<row>
-			<value>100005</value>
-			<value>chips</value>
 		</row>
 	</table>
 </dataset>

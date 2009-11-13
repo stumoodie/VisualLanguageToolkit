@@ -21,6 +21,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,6 +83,7 @@ public class HibLinkTerminusTest {
 			allowing(mockCanvas).getCanvasAttributes().add(with(any(HibCanvasAttribute.class))); will(returnValue(attributes));
 			
 			allowing(mockHibLink).getCanvas(); will(returnValue(mockCanvas));
+			allowing(mockHibLink).getLinkTermini(); will(returnValue(new ArrayList<HibLinkTerminus>()));
 			
 			allowing(mockTermDefn).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
@@ -91,7 +93,8 @@ public class HibLinkTerminusTest {
 			allowing(mockDefaults).propertyDefinitionIterator(); will(returnIterator());
 		}});
 		
-		linkTerminus = new HibLinkTerminus ( mockCanvas, EXPECTED_CREATION_SERIAL, mockHibLink, LINK_END_TYPE, mockTermDefn) ;
+		linkTerminus = new HibLinkTerminus ( mockCanvas, EXPECTED_CREATION_SERIAL, LINK_END_TYPE, mockTermDefn) ;
+		((HibLinkTerminus)linkTerminus).changeOwningLink(mockHibLink);
 	}
 
 	@After

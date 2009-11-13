@@ -21,8 +21,6 @@ package org.pathwayeditor.businessobjects.hibernate.helpers;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanPropertyDefinition;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlAnnotationProperty;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
@@ -37,7 +35,6 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibBooleanProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibIntegerProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibListProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRichTextProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
 
 /**
@@ -56,13 +53,13 @@ public class PropertyBuilder implements IPropertyBuilder {
 		return this.owner;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
-	 */
-	public IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn) {
-		IHtmlAnnotationProperty anHTMLProperty = new HibRichTextProperty(owner, propDefn);
-		return anHTMLProperty ;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
+//	 */
+//	public IHtmlAnnotationProperty createHtmlProperty(IHtmlPropertyDefinition propDefn) {
+//		IHtmlAnnotationProperty anHTMLProperty = new HibRichTextProperty(owner, propDefn);
+//		return anHTMLProperty ;
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hibernate.pojos.IPropertyVisitor#createPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition)
@@ -72,12 +69,12 @@ public class PropertyBuilder implements IPropertyBuilder {
 		return aTextProperty ;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
-	 */
-	public IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other) {
-		return new HibRichTextProperty(owner, (HibRichTextProperty)other);
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder#copyHtmlProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IHtmlPropertyDefinition)
+//	 */
+//	public IHtmlAnnotationProperty copyHtmlProperty(IHtmlAnnotationProperty other) {
+//		return new HibRichTextProperty(owner, (HibRichTextProperty)other);
+//	}
 
 
 	/* (non-Javadoc)

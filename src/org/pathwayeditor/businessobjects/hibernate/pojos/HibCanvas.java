@@ -25,8 +25,10 @@ import java.util.regex.Pattern;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
@@ -36,11 +38,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPrope
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableCanvasPropertyChangeItem;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
+import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 
+import uk.ed.inf.graph.util.IFilterCriteria;
 import uk.ed.inf.graph.util.IndexCounter;
+import uk.ed.inf.graph.util.impl.FilteredIterator;
 
 public class HibCanvas implements ICanvas, Serializable {
 	private static final long serialVersionUID = 807306412269098190L;
@@ -73,12 +78,55 @@ public class HibCanvas implements ICanvas, Serializable {
 	private IndexCounter creationSerialCounter = new IndexCounter();
 	private Set<HibCanvasAttribute> canvasAttributes = new HashSet<HibCanvasAttribute>(0);
 	private transient final ListenableCanvasPropertyChangeItem listenablePropertyChangeItem  = new ListenableCanvasPropertyChangeItem(this);
+	private final IFilterCriteria<HibCanvasAttribute> linkAttribCriteria;
+	private final IFilterCriteria<HibCanvasAttribute> labelAttribCriteria;
+	private final IFilterCriteria<HibCanvasAttribute> shapeAttribCriteria;
+	private final IFilterCriteria<HibCanvasAttribute> linkTermCriteria;
+	private final IFilterCriteria<HibCanvasAttribute> attribCriteria;
 
 	/**
 	 * Default constructor for use ONLY by hibernate.
 	 * @deprecated Use one of the other constructors to construct this class in application code.
 	 */
 	HibCanvas() {
+		this.linkAttribCriteria = new IFilterCriteria<HibCanvasAttribute>(){
+			public boolean matched(HibCanvasAttribute testObj) {
+				return testObj instanceof ILinkAttribute && !isDrawingElementRemoved(testObj);
+			}
+		};
+		this.labelAttribCriteria = new IFilterCriteria<HibCanvasAttribute>(){
+			public boolean matched(HibCanvasAttribute testObj) {
+				return testObj instanceof ILabelAttribute && !isDrawingElementRemoved(testObj);
+			}
+		};
+		this.shapeAttribCriteria = new IFilterCriteria<HibCanvasAttribute>(){
+			public boolean matched(HibCanvasAttribute testObj) {
+				return testObj instanceof IShapeAttribute && !isDrawingElementRemoved(testObj);
+			}
+		};
+		this.linkTermCriteria = new IFilterCriteria<HibCanvasAttribute>(){
+			public boolean matched(HibCanvasAttribute testObj) {
+				return testObj instanceof ILinkTerminus && !isDrawingElementRemoved(testObj);
+			}
+		};
+		this.attribCriteria = new IFilterCriteria<HibCanvasAttribute>(){
+			public boolean matched(HibCanvasAttribute testObj) {
+				return !isDrawingElementRemoved(testObj);
+			}
+		};
+	}
+	
+	private static boolean isDrawingElementRemoved(HibCanvasAttribute attrib){
+		boolean retVal = false;
+		if(attrib instanceof IDrawingNodeAttribute){
+			IDrawingNodeAttribute node = (IDrawingNodeAttribute)attrib;
+			retVal = node.getCurrentDrawingElement().isRemoved();
+		}
+		else if(attrib instanceof ILinkAttribute){
+			ILinkAttribute link = (ILinkAttribute)attrib;
+			retVal = link.getCurrentDrawingElement().isRemoved();
+		}
+		return retVal;
 	}
 
 	public HibCanvas(String repoName, int iNode, IHibNotationFactory hibNotationFactory, INotationSubsystem notationSubsystem,
@@ -315,6 +363,10 @@ public class HibCanvas implements ICanvas, Serializable {
 		return this.creationSerialCounter.getLastIndex();
 	}
 	
+	public void setCreationSerialCounter(IndexCounter newCounter){
+		this.creationSerialCounter = newCounter;
+	}
+
 	public IndexCounter getCreationSerialCounter(){
 		return this.creationSerialCounter;
 	}
@@ -569,5 +621,45 @@ public class HibCanvas implements ICanvas, Serializable {
 	 */
 	public int numCanvasAttributes() {
 		return this.canvasAttributes.size();
+	}
+
+	private <T extends ICanvasAttribute> Iterator<T> createAttribIter(IFilterCriteria<HibCanvasAttribute> criteria){
+		FilteredIterator<HibCanvasAttribute> filteredIter = new FilteredIterator<HibCanvasAttribute>(this.canvasAttributes.iterator(), criteria);
+		return new IterationCaster<T, HibCanvasAttribute>(filteredIter);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#canvasIterator()
+	 */
+	public Iterator<ICanvasAttribute> canvasAttributeIterator() {
+		return createAttribIter(this.attribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#linkAttributeIterator()
+	 */
+	public Iterator<ILinkAttribute> linkAttributeIterator() {
+		return createAttribIter(linkAttribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#linkTerminusIterator()
+	 */
+	public Iterator<ILinkTerminus> linkTerminusIterator() {
+		return createAttribIter(this.linkTermCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#shapeAttributeIterator()
+	 */
+	public Iterator<IShapeAttribute> shapeAttributeIterator() {
+		return createAttribIter(this.shapeAttribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#labelAttributeIterator()
+	 */
+	public Iterator<ILabelAttribute> labelAttributeIterator() {
+		return this.createAttribIter(labelAttribCriteria);
 	}
 }

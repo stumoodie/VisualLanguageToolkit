@@ -39,13 +39,10 @@ public interface IListAnnotationProperty extends IAnnotationProperty{
 	 */
 	List<String> getValue();
 	
-	
 	/**
 	 * Get the numerical value associated with this property.
 	 */
 	void addValue(String newValue);
 	
 	Iterator<String> getValueIterator();
-	
-	void setValue(List<String> value);
 }

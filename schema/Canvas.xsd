@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.pathwayeditor.org/Exchange"
+    xmlns="http://www.pathwayeditor.org/Exchange" version="1.0.0" attributeFormDefault="unqualified">
+    <xs:simpleType name="CanvasSerialType">
+        <xs:restriction base="xs:int"/>
+    </xs:simpleType>
+    <xs:simpleType name="LineStyleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SOLID"/>
+            <xs:enumeration value="DASHED"/>
+            <xs:enumeration value="DOT"/>
+            <xs:enumeration value="DASH_DOT"/>
+            <xs:enumeration value="DASH_DOT_DOT"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ObjectTypeClassificationType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Root"/>
+            <xs:enumeration value="Shape"/>
+            <xs:enumeration value="Link"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EndDecoratorTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DIAMOND"/>
+            <xs:enumeration value="ARROW"/>
+            <xs:enumeration value="TRIANGLE"/>
+            <xs:enumeration value="EMPTY_DIAMOND"/>
+            <xs:enumeration value="BAR"/>
+            <xs:enumeration value="DOUBLE_BAR"/>
+            <xs:enumeration value="DOUBLE_ARROW"/>
+            <xs:enumeration value="EMPTY_CIRCLE"/>
+            <xs:enumeration value="NONE"/>
+            <xs:enumeration value="SQUARE"/>
+            <xs:enumeration value="EMPTY_SQUARE"/>
+            <xs:enumeration value="EMPTY_TRIANGLE"/>
+            <xs:enumeration value="TRIANGLE_BAR"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType block="" name="CanvasAttributeType" abstract="true">
+        <xs:attribute name="creationSerial" type="CanvasSerialType" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="FigureDefinitionType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:complexType name="BendPointType">
+        <xs:sequence>
+            <xs:element name="Position" type="PointType"/>
+        </xs:sequence>
+        <xs:attribute name="creationSerial" type="xs:int" use="required"/>
+        <xs:attribute name="indexPosn" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PropertyType" block="">
+        <xs:attribute name="id" type="xs:int" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="displayName" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PropertyRefType">
+        <xs:attribute name="id" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ShapeAttributeType">
+        <xs:complexContent>
+            <xs:extension base="TypedDrawingNodeAttributeType">
+                <xs:sequence>
+                    <xs:element name="FillColour" type="ColourType"/>
+                    <xs:element name="LineColour" type="ColourType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="PropertyRef"
+                        type="PropertyRefType"/>
+                    <xs:element name="FigureDefinition" type="FigureDefinitionType"/>
+                </xs:sequence>
+                <xs:attribute name="lineWidth" type="xs:double"/>
+                <xs:attribute name="lineStyle" type="LineStyleType"> </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LinkAttributeType">
+        <xs:complexContent>
+            <xs:extension base="CanvasAttributeType">
+                <xs:sequence>
+                    <xs:element name="LineColour" type="ColourType"/>
+                    <xs:element name="srcTerminus" type="LinkTerminusType"/>
+                    <xs:element name="tgtTerminus" type="LinkTerminusType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="PropertyRef"
+                        type="PropertyRefType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="BendPoint"
+                        type="BendPointType"/>
+                </xs:sequence>
+                <xs:attribute name="lineStyle" type="LineStyleType" use="required"/>
+                <xs:attribute name="lineWidth" type="xs:double" use="required"/>
+                <xs:attribute name="objectTypeId" type="xs:int" use="required"/>
+                <xs:attribute name="lastBendPointIndex" type="xs:int" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LinkTerminusType">
+        <xs:complexContent>
+            <xs:extension base="CanvasAttributeType">
+                <xs:sequence>
+                    <xs:element name="Location" type="PointType"/>
+                    <xs:element name="DecoratorSize" type="DimensionType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="PropertyRef"
+                        type="PropertyRefType"/>
+                </xs:sequence>
+                <xs:attribute name="gap" type="xs:double" use="required"/>
+                <xs:attribute name="endDecoratorType" type="EndDecoratorTypeType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LabelAttributeType">
+        <xs:complexContent>
+            <xs:extension base="DrawingNodeAttributeType">
+                <xs:sequence>
+                    <xs:element name="LineColour" type="ColourType"/>
+                    <xs:element name="FillColour" type="ColourType"/>
+                    <xs:element name="PropertyRef" type="PropertyRefType"/>
+                </xs:sequence>
+                <xs:attribute name="lineStyle" type="LineStyleType" use="required"/>
+                <xs:attribute name="lineWidth" type="xs:double" use="required"/>
+                <xs:attribute name="noFill" type="xs:boolean" use="required"/>
+                <xs:attribute name="noBorder" type="xs:boolean" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType abstract="true" name="DrawingNodeAttributeType">
+        <xs:complexContent>
+            <xs:extension base="CanvasAttributeType">
+                <xs:sequence>
+                    <xs:element name="Location" type="PointType"/>
+                    <xs:element name="Size" type="DimensionType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RootAttributeType">
+        <xs:complexContent>
+            <xs:extension base="TypedDrawingNodeAttributeType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypedDrawingNodeAttributeType" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="DrawingNodeAttributeType">
+                <xs:attribute name="objectTypeId" type="xs:int" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ColourType">
+        <xs:attribute name="red" type="xs:int" use="required"/>
+        <xs:attribute name="green" type="xs:int" use="required"/>
+        <xs:attribute name="blue" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PointType">
+        <xs:attribute name="x" type="xs:double" use="required"/>
+        <xs:attribute name="y" type="xs:double" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionType">
+        <xs:attribute name="width" type="xs:double" use="required"/>
+        <xs:attribute name="height" type="xs:double" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ObjectTypeType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="uniqueId" type="xs:int" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="classification" type="ObjectTypeClassificationType" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="NotationType">
+        <xs:sequence>
+            <xs:element name="Description" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" name="ObjectType" type="ObjectTypeType"/>
+        </xs:sequence>
+        <xs:attribute name="qualifiedName" type="xs:string" use="required"/>
+        <xs:attribute name="majorVersion" type="xs:int" use="required"/>
+        <xs:attribute name="minorVersion" type="xs:int" use="required"/>
+        <xs:attribute name="patchVersion" type="xs:int" use="required"/>
+        <xs:attribute name="displayName" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ModelType">
+        <xs:sequence>
+            <xs:element name="RootNode" type="RootNodeType"/>
+        </xs:sequence>
+        <xs:attribute name="lastNodeIndex" type="xs:int" use="required"/>
+        <xs:attribute name="lastEdgeIndex" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="CompoundNodeType">
+        <xs:sequence>
+            <xs:element name="SubModel" type="SubModelType"/>
+        </xs:sequence>
+        <xs:attribute name="nodeId" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="RootNodeType">
+        <xs:complexContent>
+            <xs:extension base="CompoundNodeType">
+                <xs:sequence>
+                    <xs:element name="rootAttribute" type="RootAttributeType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ShapeNodeType">
+        <xs:complexContent>
+            <xs:extension base="CompoundNodeType">
+                <xs:sequence>
+                    <xs:element name="ShapeAttribute" type="ShapeAttributeType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LabelNodeType">
+        <xs:complexContent>
+            <xs:extension base="CompoundNodeType">
+                <xs:sequence>
+                    <xs:element name="LabelAttribute" type="LabelAttributeType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SubModelType">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ShapeNode" type="ShapeNodeType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="LabelNode" type="LabelNodeType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="LinkEdge" type="LinkEdgeType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="RootNode" type="RootNodeType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="LinkEdgeType">
+        <xs:sequence>
+            <xs:element name="LinkAttribute" type="LinkAttributeType"/>
+        </xs:sequence>
+        <xs:attribute name="linkIdx" type="xs:int" use="required"/>
+        <xs:attribute name="srcNodeIdx" type="xs:int" use="required"/>
+        <xs:attribute name="tgtNodeIdx" type="xs:int" use="required"/>
+    </xs:complexType>
+    <xs:complexType block="" mixed="true" name="TextAnnotationPropertyType">
+        <xs:complexContent mixed="true">
+            <xs:extension base="PropertyType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ListItemType">
+        <xs:attribute name="idx" type="xs:int" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ListAnnotationPropertyType">
+        <xs:complexContent>
+            <xs:extension base="PropertyType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="ListItem"
+                        type="ListItemType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NumberAnnotationPropertyType">
+        <xs:complexContent>
+            <xs:extension base="PropertyType">
+                <xs:attribute name="value" type="xs:decimal" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IntegerAnnotationPropertyType">
+        <xs:complexContent>
+            <xs:extension base="PropertyType">
+                <xs:attribute name="value" type="xs:int" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BooleanAnnotationPropertyType">
+        <xs:complexContent>
+            <xs:extension base="PropertyType">
+                <xs:attribute name="value" type="xs:boolean" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PropertyListType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="TextAnnotationProperty"
+                type="TextAnnotationPropertyType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="NumberAnnotationProperty"
+                type="NumberAnnotationPropertyType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="BooleanAnnotationProperty"
+                type="BooleanAnnotationPropertyType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="IntegerAnnotationProperty"
+                type="IntegerAnnotationPropertyType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ListAnnotationProperty"
+                type="ListAnnotationPropertyType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="canvas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Grid">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="GridSize" type="DimensionType"/>
+                        </xs:sequence>
+                        <xs:attribute name="snapToGrid" type="xs:boolean" use="required"/>
+                        <xs:attribute name="gridOn" type="xs:boolean" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Notation" type="NotationType"/>
+                <xs:element name="CanvasSize" type="DimensionType"/>
+                <xs:element form="unqualified" name="Background" type="ColourType"/>
+                <xs:element name="Model" type="ModelType"/>
+                <xs:element name="PropertyList" type="PropertyListType"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="lastCreationSerial" type="xs:int" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

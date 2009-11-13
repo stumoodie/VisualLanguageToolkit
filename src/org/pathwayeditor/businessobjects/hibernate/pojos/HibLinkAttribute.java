@@ -74,15 +74,18 @@ public class HibLinkAttribute extends HibAnnotatedCanvasAttribute implements ILi
 	 * @param objectType
 	 * @param hibObjectType
 	 */
-	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, ILinkObjectType objectType, HibObjectType hibObjectType) {
+	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, ILinkObjectType objectType, HibObjectType hibObjectType,
+			HibLinkTerminus srcTerminus, HibLinkTerminus tgtTerminus) {
 		super(hibCanvas, linkIndex, objectType.getDefaultAttributes());
 		this.objectType = objectType;
 		this.hibObjectType = hibObjectType;
 		// the ordering here is important as the code expects the SOURCe to be first. Not satisfactory
 		// FIXME: the following is very fragile. The LinkTermType is used later on to lookup the correct terminus.
 		// This is a bug waiting to happen and needs fixing.
-		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
-		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+//		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition()));
+//		this.linkTermini.add(new HibLinkTerminus(hibCanvas, hibCanvas.getCreationSerialCounter().nextIndex(), this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition()));
+		srcTerminus.changeOwningLink(this);
+		tgtTerminus.changeOwningLink(this);
 		addDefaults(objectType.getDefaultAttributes());
 	}
 
@@ -95,8 +98,8 @@ s	 */
 	public HibLinkAttribute(HibCanvas hibCanvas, int linkIndex, HibLinkAttribute otherAttribute) {
 		super(hibCanvas, linkIndex, otherAttribute);
 		this.objectType = otherAttribute.objectType;
-		this.hibObjectType = otherAttribute.hibObjectType;
-		this.lineColour = otherAttribute.getLineColor();
+		this.hibObjectType = hibCanvas.getModel().getHibNotationFactory().getObjectType(otherAttribute.hibObjectType.getUniqueId());
+		this.lineColour = otherAttribute.getLineColour();
 		this.lineStyle = otherAttribute.getLineStyle();
 		this.lineWidth = otherAttribute.getLineWidth();
 		for(HibLinkTerminus linkTerm : otherAttribute.getLinkTermini()){
@@ -141,27 +144,27 @@ s	 */
 //		this.getTargetTerminus().injectLinkTerminusDefaults(this.objectType.getTargetTerminusDefinition());
 //	}
 
-	public int getLineRed() {
+	int getLineRed() {
 		return this.lineColour.getRed();
 	}
 
-	public void setLineRed(int lineRed) {
+	void setLineRed(int lineRed) {
 		this.lineColour = this.lineColour.newRed(lineRed);
 	}
 
-	public int getLineGreen() {
+	int getLineGreen() {
 		return this.lineColour.getGreen();
 	}
 
-	public void setLineGreen(int lineGreen) {
+	void setLineGreen(int lineGreen) {
 		this.lineColour = this.lineColour.newGreen(lineGreen);
 	}
 
-	public int getLineBlue() {
+	int getLineBlue() {
 		return this.lineColour.getBlue();
 	}
 
-	public void setLineBlue(int lineBlue) {
+	void setLineBlue(int lineBlue) {
 		this.lineColour = this.lineColour.newBlue(lineBlue);
 	}
 
@@ -242,14 +245,14 @@ s	 */
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLineColor()
 	 */
-	public RGB getLineColor() {
+	public RGB getLineColour() {
 		return this.lineColour;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setLineColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
-	public void setLineColor(RGB newColor) {
+	public void setLineColour(RGB newColor) {
 		if ( newColor == null)
 			throw new IllegalArgumentException ("Line colour cannot be null") ;
 
@@ -293,12 +296,12 @@ s	 */
 	}
 
 	
-	void setLastBendPointSerial(int lastSerial) {
+	public void setLastBendPointSerial(int lastSerial) {
 		this.bendPointCounter = new IndexCounter(lastSerial);
 	}
 	
 
-	int getLastBendPointSerial() {
+	public int getLastBendPointSerial() {
 		return this.bendPointCounter.getLastIndex();
 	}
 	

@@ -27,9 +27,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
@@ -65,9 +65,9 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 		super();
 	}
 
-	public HibLinkTerminus(HibCanvas canvas, int creationSerial, HibLinkAttribute hibLinkAttribute, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
+	public HibLinkTerminus(HibCanvas canvas, int creationSerial, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
 		super(canvas, creationSerial, terminusDefn.getDefaultAttributes());
-		this.linkAttribute = hibLinkAttribute;
+		this.linkAttribute = null;
 		this.linkTermType = linkTermType;
 		this.terminusDefn = terminusDefn;
 		setDefaults(terminusDefn.getDefaultAttributes());
@@ -110,6 +110,16 @@ public class HibLinkTerminus extends HibAnnotatedCanvasAttribute implements ILin
 //	}
 	
 	void setOwningLink(HibLinkAttribute hibLinkAttribute) {
+		this.linkAttribute = hibLinkAttribute;
+	}
+	
+	public void changeOwningLink(HibLinkAttribute hibLinkAttribute){
+		if(this.linkAttribute != null){
+			this.linkAttribute.getLinkTermini().remove(this);
+		}
+		if(hibLinkAttribute != null){
+			hibLinkAttribute.getLinkTermini().add(this);
+		}
 		this.linkAttribute = hibLinkAttribute;
 	}
 

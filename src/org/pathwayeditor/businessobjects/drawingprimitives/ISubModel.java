@@ -152,7 +152,7 @@ public interface ISubModel extends ISubModelChangeListenee, ISuppressableChangeL
 	 * @return the iterator, which cannot be null.
 	 */
 	Iterator<IDrawingNode> drawingNodeIterator();
-	
+
 	/**
 	 * Traverses over all the shapes in the sub-model
 	 * @return the iterator, which cannot be null.

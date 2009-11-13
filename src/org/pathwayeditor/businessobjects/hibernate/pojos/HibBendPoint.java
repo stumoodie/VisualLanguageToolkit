@@ -74,13 +74,11 @@ public class HibBendPoint implements IBendPoint, Serializable {
 		this.owningLink = owningLink;
 	}
 
-	@SuppressWarnings("unused")
-	private int getIndexPos() {
+	public int getIndexPos() {
 		return this.indexPos;
 	}
 
-	@SuppressWarnings("unused")
-	private void setIndexPos(int indexPos) {
+	public void setIndexPos(int indexPos) {
 		this.indexPos = indexPos;
 	}
 

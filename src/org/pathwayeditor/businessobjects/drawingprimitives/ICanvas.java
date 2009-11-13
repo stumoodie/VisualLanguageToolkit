@@ -15,6 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.util.Iterator;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
@@ -200,6 +202,16 @@ public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableCha
 	 * @throws IllegalArgumentException if <code>containsLabelAttribute(attributeSerial) == false</code>.
 	 */
 	ILabelAttribute getLabelAttribute(int attributeSerial);
+	
+	Iterator<ICanvasAttribute> canvasAttributeIterator();
+	
+	Iterator<IShapeAttribute> shapeAttributeIterator();
+	
+	Iterator<ILabelAttribute> labelAttributeIterator();
+	
+	Iterator<ILinkAttribute> linkAttributeIterator();
+	
+	Iterator<ILinkTerminus> linkTerminusIterator();
 	
 	/**
 	 * Number of canvas attributes stored by this canvas.

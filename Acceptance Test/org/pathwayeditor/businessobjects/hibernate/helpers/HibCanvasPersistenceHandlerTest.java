@@ -107,14 +107,6 @@ public class HibCanvasPersistenceHandlerTest extends PojoXlsTester {
 	}
 	
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#getOwningMap()}.
-	 */
-	@Test
-	public void testGetOwningMap() {
-		assertEquals("expected map", this.mockMap, this.testInstance.getOwningMap());
-	}
-
-	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.hibernate.helpers.HibCanvasPersistenceHandler#loadCanvas()}.
 	 */
 	@Test

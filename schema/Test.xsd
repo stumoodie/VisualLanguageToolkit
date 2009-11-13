@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:epe="http://www.pathwayeditor.org/Exchange">
+    <xs:complexType name="ColourType">
+        <xs:attribute name="red" type="xs:nonNegativeInteger" use="required"/>
+        <xs:attribute name="green" type="xs:nonNegativeInteger" use="required"/>
+        <xs:attribute name="blue" type="xs:nonNegativeInteger" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="PointType">
+        <xs:attribute name="x" type="xs:decimal" use="required"/>
+        <xs:attribute name="y" type="xs:decimal" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionType">
+        <xs:attribute name="width" type="xs:decimal" use="required"/>
+        <xs:attribute name="height" type="xs:decimal" use="required"/>
+    </xs:complexType>
+    <xs:element name="Canvas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Grid">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="GridSize" type="DimensionType"/>
+                        </xs:sequence>
+                        <xs:attribute name="snapToGrid" type="xs:boolean" use="required"/>
+                        <xs:attribute name="gridOn" type="xs:boolean" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="CanvasSize" type="DimensionType"/>
+                <xs:element form="unqualified" name="Background" type="ColourType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
