@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <epx:canvas xmlns:epx="http://www.pathwayeditor.org/Exchange"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Canvas.xsd"
+    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange http://www.pathwayeditor.org/Exchange/Canvas.xsd"
     name="Diagram name" lastCreationSerial="44">
     <Grid snapToGrid="true" gridOn="true">
         <GridSize width="10.0" height="10.0"/>
@@ -9,29 +9,29 @@
     <Notation qualifiedName="org.pathwayeditor.stub.notation"
         majorVersion="99" minorVersion="19" patchVersion="9" displayName="Stub Notation">
         <Description>Stub notation description</Description>
-        <ObjectType uniqueId="3" name="Shape C" classification="Shape">
-            <description>Shape C Test ObjectType</description>
-        </ObjectType>
-        <ObjectType uniqueId="0" name="Root Object Type" classification="Root">
-            <description>Root Object Type Description</description>
-        </ObjectType>
         <ObjectType uniqueId="5" name="Link A" classification="Link">
             <description>Link A Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="6" name="Link B" classification="Link">
+            <description>Link B Object Type</description>
         </ObjectType>
         <ObjectType uniqueId="8" name="Link D" classification="Link">
             <description>Link D Object Type</description>
         </ObjectType>
-        <ObjectType uniqueId="6" name="Link B" classification="Link">
-            <description>Link B Object Type</description>
+        <ObjectType uniqueId="0" name="Root Object Type" classification="Root">
+            <description>Root Object Type Description</description>
+        </ObjectType>
+        <ObjectType uniqueId="3" name="Shape C" classification="Shape">
+            <description>Shape C Test ObjectType</description>
+        </ObjectType>
+        <ObjectType uniqueId="4" name="Shape D" classification="Shape">
+            <description>Shape D Test ObjectType</description>
         </ObjectType>
         <ObjectType uniqueId="1" name="Shape A" classification="Shape">
             <description>Shape A Test ObjectType</description>
         </ObjectType>
         <ObjectType uniqueId="7" name="Link C" classification="Link">
             <description>Link C Object Type</description>
-        </ObjectType>
-        <ObjectType uniqueId="4" name="Shape D" classification="Shape">
-            <description>Shape D Test ObjectType</description>
         </ObjectType>
         <ObjectType uniqueId="2" name="Shape B" classification="Shape">
             <description>Shape B Test ObjectType</description>

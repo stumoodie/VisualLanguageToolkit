@@ -74,7 +74,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/poi-3.2-FINAL/poi-3.2-FINAL-20081019.jar"/>
-	<classpathentry kind="lib" path="lib/castor-1.3/castor-1.3.jar" sourcepath="lib/castor-1.3/xml"/>
+	<classpathentry kind="lib" path="lib/castor-1.3/castor-1.3.jar" sourcepath="lib/castor-dist/castor-1.3/xml/src/main/java"/>
 	<classpathentry kind="lib" path="lib/castor-1.3/castor-1.3-core.jar"/>
 	<classpathentry kind="lib" path="lib/easymock-2.5.2/easymock-2.5.2.jar" sourcepath="lib/easymock-2.5.2/easymock-2.5.2-sources.jar">
 		<attributes>

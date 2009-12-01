@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <epx:canvas xmlns:epx="http://www.pathwayeditor.org/Exchange"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Canvas.xsd"
+    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange http://www.pathwayeditor.org/Exchange/Canvas.xsd"
     name="Diagram name" lastCreationSerial="44">
     <Grid snapToGrid="true" gridOn="true">
         <GridSize width="10.0" height="10.0"/>

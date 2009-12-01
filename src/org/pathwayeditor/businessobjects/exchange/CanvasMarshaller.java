@@ -139,9 +139,10 @@ public class CanvasMarshaller {
 	public void write(Writer writer) throws IOException{
 		XMLContext ctx = new XMLContext();
 		Marshaller m = ctx.createMarshaller();
-		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange file:/Users/smoodie/sfworkspace/BusinessObjects/schema/Canvas.xsd");
+		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange http://www.pathwayeditor.org/Exchange/Canvas.xsd");
 		m.setNamespaceMapping("epx", "http://www.pathwayeditor.org/Exchange");
 		m.setMarshalAsDocument(true);
+		m.setValidation(true);
 		m.setWriter(writer);
 		try {
 			m.marshal(xmlCanvas);

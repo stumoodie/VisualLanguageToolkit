@@ -19,6 +19,7 @@ package org.pathwayeditor.businessobjects.exchange;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.exolab.castor.util.DTDResolver;
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Unmarshaller;
 import org.exolab.castor.xml.ValidationException;
@@ -26,6 +27,7 @@ import org.exolab.castor.xml.XMLContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
+import org.xml.sax.EntityResolver;
 
 /**
  * @author smoodie
@@ -47,6 +49,9 @@ public class CanvasUnmarshaller {
 	public void read(Reader writer) throws IOException{
 		XMLContext ctx = new XMLContext();
 		Unmarshaller m = ctx.createUnmarshaller();
+		
+		EntityResolver resolver = new CanvasSchemaResolver();
+		m.setEntityResolver(new DTDResolver(resolver));
 		try {
 			m.setClass(Canvas.class);
 			xmlInstance = (Canvas)m.unmarshal(writer);
