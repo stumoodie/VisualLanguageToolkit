@@ -21,6 +21,31 @@ public class LineSegment {
 		this.terminus = new Point(endX, endY);
 	}
 	
+	
+	/**
+	 * Create a new line segment starting at the current line's origin and with the same unit vector,
+	 * but with a different magnitude.
+	 * @param length the length of the new line segment, which must be <code>> 0</code>.
+	 * @return the new line segment, which cannot be null
+	 */
+	public LineSegment newLineSegment(double length){
+		if(length <= 0.0) throw new IllegalArgumentException("length must be a positive non-zero value");
+	
+		double theta = this.angle();
+		double y = length * Math.sin(theta);
+		double x = length * Math.cos(theta);
+		
+		return new LineSegment(this.origin, this.origin.translate(x, y));
+	}
+	
+	/**
+	 * The inverted line segment.
+	 * @return return the reverse line segment to this one, with the origin and terminus swapped.
+	 */
+	public LineSegment invert(){
+		return new LineSegment(this.terminus, this.origin);
+	}
+	
 	/**
 	 * Determines the intersect point between this line and the line passed 
 	 * in as a parameter.  If they intersect, then true is returned and the 

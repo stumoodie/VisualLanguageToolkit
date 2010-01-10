@@ -24,6 +24,10 @@
 	<property name="source" value="1.5" />
 	<property name="bo.db.dir" value="DB" />
 
+	<property name="castor.schema.file" value="${src.dir}/org/pathwayeditor/businessobjects/exchange/Canvas.xsd" />
+	<property name="castor.build.file" value="schema/CanvasBinding.xml" />
+	<property name="castor.properties.file" value="${src.dir}/castorbuilder.properties" />
+
     <property name="grammar.name" value="DrawingVm.g"/>
     <property name="walker.name" value="TreeDrawingVm.g"/>
     <property name="package" value="org/pathwayeditor/figurevm"/>
@@ -336,15 +340,15 @@
 		<taskdef name="castor-srcgen"
 	             classname="org.castor.anttask.CastorCodeGenTask"
 	             classpathref="castor.class.path" />
-	    <castor-srcgen file="schema/Canvas.xsd"
+	    <castor-srcgen file="${castor.schema.file}"
 	                   todir="src"
 	                   package="org.pathwayeditor.businessobjects.exchange.castor"
 	                   types="j2"
 	    			   verbose="false"
 	    			   nodesc="false"
 	                   warnings="false"
-	    			   bindingfile="schema/CanvasBinding.xml"
-	    			   properties="${src.dir}/castorbuilder.properties"
+	    			   bindingfile="${castor.build.file}"
+	    			   properties="${castor.properties.file}"
 	    			   nameConflictStrategy="informViaLog"
 	    />
 	</target>
