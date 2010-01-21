@@ -139,7 +139,7 @@ public class FigureController implements IFigureController {
 		GraphicsInstructionList oldValue = this.builder.getFigureDefinition();
 		this.builder.generateFigure();
 		this.figureInstructions = this.builder.getFigureDefinition();
-		if(!this.requestedEnvelope.contains(this.getEnvelope())){
+		if(this.logger.isInfoEnabled() && !this.requestedEnvelope.contains(this.getEnvelope())){
 			StringBuilder buf = new StringBuilder(200);
 			buf.append("The convex hull (env=");
 			buf.append(this.getEnvelope());

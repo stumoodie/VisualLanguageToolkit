@@ -13,36 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-/**
- * 
- */
-package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee;
+package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.figure.geometry.Dimension;
-import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
  *
  */
-public interface IDrawingNodeAttribute extends ICanvasAttribute, IDrawingNodeAttributeListenee {
+public interface IDrawingNodeAttributeResizedEvent {
 
-	Point getLocation();
+	IDrawingNodeAttribute getAttibuteChanged();
+
+	Point getOriginChange();
 	
-	void setLocation(Point newLocation);
-	
-	Dimension getSize();
-	
-	void setSize(Dimension newSize);
-	
-	Envelope getBounds();
-	
-	void setBounds(Envelope newBounds);
-	
-	void translate(Point delta);
-	
-	void resize(Point locationDelta, Dimension sizeDelta);
-	
+	Dimension getSizeChange();
 }

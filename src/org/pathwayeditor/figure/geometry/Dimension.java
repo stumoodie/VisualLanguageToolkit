@@ -15,6 +15,14 @@ public class Dimension {
 		return new Dimension(this.width + widthOffset, this.height + heightOffset);
 	}
 	
+	public Dimension resize(Dimension sizeDelta){
+		return resize(sizeDelta.width, sizeDelta.height);
+	}
+	
+	public Dimension negate(){
+		return new Dimension(-this.width, -this.height);
+	}
+	
 	public double getWidth() {
 		return width;
 	}

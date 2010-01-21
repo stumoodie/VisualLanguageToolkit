@@ -120,6 +120,10 @@ public class Envelope {
 	public Envelope translate(Point translation) {
 		return new Envelope(this.origin.translate(translation), this.dim);
 	}
+	
+	public Envelope resize(Point translation, Dimension sizeDelta){
+		return new Envelope(this.origin.translate(translation), this.dim.resize(sizeDelta));
+	}
 
 	public Envelope changeOrigin(Point newLocation) {
 		return new Envelope(newLocation, this.getDimension());

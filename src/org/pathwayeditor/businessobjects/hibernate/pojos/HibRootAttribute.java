@@ -19,11 +19,14 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -45,6 +48,7 @@ public class HibRootAttribute extends HibCanvasAttribute implements IRootAttribu
 	private Point location = INITIAL_POS; 
 	private Dimension size = INITIAL_SIZE; 
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private transient final DrawingNodeAttributeListenerHandler listenerHandler = new DrawingNodeAttributeListenerHandler(this);
 
 	/**
 	 * @deprecated Only to be used by hibernate, not application code.
@@ -213,5 +217,40 @@ public class HibRootAttribute extends HibCanvasAttribute implements IRootAttribu
 
 	public void setListenersEnabled(boolean enabled) {
 		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#resize(org.pathwayeditor.figure.geometry.Point, org.pathwayeditor.figure.geometry.Dimension)
+	 */
+	public void resize(Point locationDelta, Dimension sizeDelta) {
+		// do nothing
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#translate(org.pathwayeditor.figure.geometry.Point)
+	 */
+	public void translate(Point delta) {
+		// do nothing
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.listenerHandler.addDrawingNodeAttributeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
+	 */
+	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
+		return this.listenerHandler.getDrawingNodeAttributeListeners();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.listenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
 }

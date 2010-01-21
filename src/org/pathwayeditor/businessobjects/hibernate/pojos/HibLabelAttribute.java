@@ -17,6 +17,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
@@ -24,7 +25,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
@@ -55,6 +58,7 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 //	private transient INodeObjectType objectType;
 //	private transient IConvexHull convexHull = null;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private transient final DrawingNodeAttributeListenerHandler nodeListenerHandler = new DrawingNodeAttributeListenerHandler(this); 
 
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -239,11 +243,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		}
 	}
 	
-//	public void setObjectType ( INodeObjectType nodeObjectType)
-//	{
-//		this.objectType = nodeObjectType ;
-//	}
-//
 	public void setLocation(Point location) {
 		if (location == null)
 			throw new IllegalArgumentException("location cannot be null.");
@@ -265,17 +264,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldValue, this.size);
 		}
 	}
-
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see
-//	 * org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#
-//	 * getObjectType()
-//	 */
-//	public INodeObjectType getObjectType() {
-//		return this.objectType;
-//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#hasProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
@@ -321,7 +309,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	}
 
 	public boolean isValid() {
-//		boolean objectTypeTest = this.getObjectType() != null;
 		boolean labelNodeTest = this.getCurrentDrawingElement() != null
 			&& this.getCurrentDrawingElement().getAttribute().equals(this);
 		// valid to have no visualisable label set if the label node has been removed
@@ -330,11 +317,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 			logger.error("attribute=" + this + ", labelnode set and points to this attribute=" + labelNodeTest
 					+ ", propertySet=" + propertySetTest);
 		}
-//		if(!objectTypeTest || !labelNodeTest || this.getVisualisableProperty() == null) {
-//			logger.error("attribute=" + this + " objectType set=" + objectTypeTest
-//					+ ", labelnode set and points to this attribute=" + labelNodeTest
-//					+ ", propertySet=" + propertySetTest);
-//		}
 		return propertySetTest && labelNodeTest && propertySetTest;
 	}
 
@@ -362,23 +344,6 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
 	}
-
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getConvexHull()
-//	 */
-//	public IConvexHull getConvexHull() {
-//		if(convexHull == null){
-//			this.convexHull = new RectangleHull(getBounds());
-//		}
-//		return this.convexHull;
-//	}
-
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setConvexHull(org.pathwayeditor.figure.geometry.IConvexHull)
-//	 */
-//	public void setConvexHull(IConvexHull newHull) {
-//		this.convexHull = newHull;
-//	}
 
 	public boolean areListenersEnabled() {
 		return this.listenablePropertyChangeItem.areListenersEnabled();
@@ -487,5 +452,60 @@ public class HibLabelAttribute extends HibCanvasAttribute implements Serializabl
 	@Override
 	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
 		// do nothing
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#resize(org.pathwayeditor.figure.geometry.Point, org.pathwayeditor.figure.geometry.Dimension)
+	 */
+	public void resize(Point locationDelta, Dimension sizeDelta) {
+		Point origPosition = this.position;
+		this.position = this.position.translate(locationDelta);
+		Dimension origSize = this.size;
+		this.size = this.size.resize(sizeDelta.getWidth(), sizeDelta.getHeight());
+		boolean posChanged = !this.position.equals(origPosition);
+		boolean sizeChange = !this.size.equals(origSize);
+		
+		if(posChanged || sizeChange){
+			this.nodeListenerHandler.notifyNodeResize(locationDelta, sizeDelta);
+		}
+		if(posChanged){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
+		}
+		if(sizeChange){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, origSize, this.size);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#translate(org.pathwayeditor.figure.geometry.Point)
+	 */
+	public void translate(Point delta) {
+		Point origPosition = this.position;
+		this.position = this.position.translate(delta);
+		if(!this.position.equals(origPosition)){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
+			this.nodeListenerHandler.notifyNodeTranslation(delta);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.nodeListenerHandler.addDrawingNodeAttributeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
+	 */
+	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
+		return this.nodeListenerHandler.getDrawingNodeAttributeListeners();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.nodeListenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
 }

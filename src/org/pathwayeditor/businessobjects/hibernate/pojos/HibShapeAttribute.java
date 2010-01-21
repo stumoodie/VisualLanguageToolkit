@@ -19,6 +19,7 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
@@ -26,7 +27,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
 import org.pathwayeditor.businessobjects.hibernate.helpers.InconsistentNotationDefinitionException;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
@@ -58,6 +61,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private HibShapeNode shapeNode;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private transient final DrawingNodeAttributeListenerHandler drawingNodeListenerHandler = new DrawingNodeAttributeListenerHandler(this);
 //	private transient IConvexHull hull = null;
 //	private IFigureController figureController = null;
 	
@@ -456,6 +460,61 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	@Override
 	public void injectObjectType(IObjectTypeInjector injector) throws InconsistentNotationDefinitionException {
 		injector.inject(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#resize(org.pathwayeditor.figure.geometry.Point, org.pathwayeditor.figure.geometry.Dimension)
+	 */
+	public void resize(Point locationDelta, Dimension sizeDelta) {
+		Point origPosition = this.position;
+		this.position = this.position.translate(locationDelta);
+		Dimension origSize = this.size;
+		this.size = this.size.resize(sizeDelta.getWidth(), sizeDelta.getHeight());
+		boolean posChanged = !this.position.equals(origPosition);
+		boolean sizeChange = !this.size.equals(origSize);
+		
+		if(posChanged || sizeChange){
+			this.drawingNodeListenerHandler.notifyNodeResize(locationDelta, sizeDelta);
+		}
+		if(posChanged){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
+		}
+		if(sizeChange){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, origSize, this.size);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#translate(org.pathwayeditor.figure.geometry.Point)
+	 */
+	public void translate(Point delta) {
+		Point origPosition = this.position;
+		this.position = this.position.translate(delta);
+		if(!this.position.equals(origPosition)){
+			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
+			this.drawingNodeListenerHandler.notifyNodeTranslation(delta);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.drawingNodeListenerHandler.addDrawingNodeAttributeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
+	 */
+	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
+		return this.drawingNodeListenerHandler.getDrawingNodeAttributeListeners();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
+	 */
+	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
+		this.drawingNodeListenerHandler.addDrawingNodeAttributeListener(listener);
 	}
 
 }
