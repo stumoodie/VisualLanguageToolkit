@@ -24,8 +24,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
  */
 public interface IModelChangeListener {
 
-	void nodeStructureChange(IModelNodeChangeEvent event);
-	
-	void edgeStructureChange(IModelEdgeChangeEvent event);
+	void modelStructureChange(IModelStructureChangeEvent event);
 	
 }

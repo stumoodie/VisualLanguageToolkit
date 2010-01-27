@@ -120,4 +120,12 @@ public abstract class HibCanvasAttribute implements ICanvasAttribute {
 		builder.append(")");
 		return builder.toString();
 	}
+	
+	public int compareTo(ICanvasAttribute other){
+		int retVal = this.getCanvas().compareTo(other.getCanvas());
+		if(retVal == 0){
+			retVal = Integer.valueOf(this.creationSerial).compareTo(Integer.valueOf(other.getCreationSerial())); 
+		}
+		return retVal;
+	}
 }

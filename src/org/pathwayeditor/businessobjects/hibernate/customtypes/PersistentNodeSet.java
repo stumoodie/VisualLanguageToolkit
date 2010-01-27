@@ -18,7 +18,7 @@ package org.pathwayeditor.businessobjects.hibernate.customtypes;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.engine.SessionImplementor;
 
-import uk.ed.inf.graph.basic.IBasicNode;
+import uk.ed.inf.graph.basic.INode;
 import uk.ed.inf.graph.util.INodeSet;
 
 @SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public class PersistentNodeSet extends PersistentSet implements INodeSet {
 		return nodeSet.contains(nodeIdx);
 	}
 
-	public IBasicNode get(int nodeIdx) {
+	public INode get(int nodeIdx) {
 		INodeSet nodeSet = (INodeSet)set; 
 		return nodeSet.get(nodeIdx);
 	}

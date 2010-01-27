@@ -21,7 +21,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
@@ -114,18 +113,9 @@ public class HibLabelNode extends HibCompoundNode implements ILabelNode {
 	 */
 	@Override
 	protected void removalAction(boolean removed) {
-		ModelStructureChangeType type;
-		if(removed){
-			type = ModelStructureChangeType.DELETED;
-			// remove the label from the associated property
-//			this.getAttribute().getVisualisableProperty().setLabel(null);
-		}
-		else{
-			type = ModelStructureChangeType.ADDED;
+		if(!removed){
 			this.labelAttribute.setCurrentDrawingElement(this);
-//			this.getAttribute().getVisualisableProperty().setLabel(this.getAttribute());
 		}
-		this.getParentNode().getSubModel().notifyNodeStructureChange(type, this);
 	}
 
 

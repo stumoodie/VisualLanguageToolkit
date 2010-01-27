@@ -22,7 +22,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -107,9 +106,6 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 		HibLinkTerminus tgtTerm = new HibLinkTerminus(canvas, canvas.getCreationSerialCounter().nextIndex(), LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		HibLinkAttribute linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.objectType, hibObjectType, srcTerm, tgtTerm);
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
-		((HibSubModel)owningGraph).notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
-		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
-		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 

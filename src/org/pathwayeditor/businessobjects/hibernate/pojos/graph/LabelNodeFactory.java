@@ -21,7 +21,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
@@ -61,7 +60,6 @@ public class LabelNodeFactory extends BaseCompoundNodeFactory implements ILabelN
 		else{
 			retVal = new HibLabelNode((HibCompoundNode)parent, nodeIndex, this.attribute);
 		}
-		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 

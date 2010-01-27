@@ -662,4 +662,15 @@ public class HibCanvas implements ICanvas, Serializable {
 	public Iterator<ILabelAttribute> labelAttributeIterator() {
 		return this.createAttribIter(labelAttribCriteria);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(ICanvas o) {
+		int retVal = this.getRepositoryName().compareTo(o.getRepositoryName());
+		if(retVal == 0){
+			retVal = Integer.valueOf(this.getINode()).compareTo(Integer.valueOf(o.getINode()));
+		}
+		return retVal;
+	}
 }

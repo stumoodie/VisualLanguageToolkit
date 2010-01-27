@@ -29,6 +29,8 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public interface IDrawingNodeAttribute extends ICanvasAttribute, IDrawingNodeAttributeListenee {
 
+	IDrawingNode getCurrentDrawingElement();
+
 	Point getLocation();
 	
 	void setLocation(Point newLocation);

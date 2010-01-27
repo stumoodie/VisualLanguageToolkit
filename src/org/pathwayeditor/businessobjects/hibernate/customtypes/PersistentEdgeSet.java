@@ -20,9 +20,8 @@ import java.util.SortedSet;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.engine.SessionImplementor;
 
-import uk.ed.inf.graph.basic.IBasicEdge;
-import uk.ed.inf.graph.basic.IBasicNode;
-import uk.ed.inf.graph.directed.IDirectedNode;
+import uk.ed.inf.graph.basic.IEdge;
+import uk.ed.inf.graph.basic.INode;
 import uk.ed.inf.graph.util.IDirectedEdgeSet;
 import uk.ed.inf.graph.util.IEdgeSet;
 
@@ -62,7 +61,7 @@ public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet
 		super(session, set);
 	}
 
-	public boolean contains(IBasicNode thisNode, IBasicNode thatNode) {
+	public boolean contains(INode thisNode, INode thatNode) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.contains(thisNode, thatNode);
 	}
@@ -72,34 +71,34 @@ public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet
 		return edgeSet.contains(edgeIdx);
 	}
 
-	public SortedSet get(IBasicNode thisNode, IBasicNode thatNode) {
+	public SortedSet get(INode thisNode, INode thatNode) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.get(thisNode, thatNode);
 	}
 
-	public IBasicEdge get(int edgeIdx) {
+	public IEdge get(int edgeIdx) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.get(edgeIdx);
 	}
 
-	public SortedSet getEdgesWith(IBasicNode thisNode, IBasicNode node) {
+	public SortedSet getEdgesWith(INode thisNode, INode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.getEdgesWith(thisNode, node);
 	}
 
-	public boolean hasEdgesWith(IBasicNode thisNode, IBasicNode node) {
+	public boolean hasEdgesWith(INode thisNode, INode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.hasEdgesWith(thisNode, node);
 	}
 
-	public boolean contains(IDirectedNode outNode, IDirectedNode inNode) {
-		IEdgeSet edgeSet = (IEdgeSet)set;
-		return edgeSet.contains(outNode, inNode);
-	}
-
-	public SortedSet get(IDirectedNode outNode, IDirectedNode inNode) {
-		IEdgeSet edgeSet = (IEdgeSet)set;
-		return edgeSet.get(outNode, inNode);
-	}
+//	public boolean contains(IDirectedNode outNode, IDirectedNode inNode) {
+//		IEdgeSet edgeSet = (IEdgeSet)set;
+//		return edgeSet.contains(outNode, inNode);
+//	}
+//
+//	public SortedSet get(IDirectedNode outNode, IDirectedNode inNode) {
+//		IEdgeSet edgeSet = (IEdgeSet)set;
+//		return edgeSet.get(outNode, inNode);
+//	}
 
 }

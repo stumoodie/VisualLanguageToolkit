@@ -28,9 +28,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableSubModelStructureChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableModelStructureChangeItem;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphMoveBuilder;
@@ -40,6 +39,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LinkEdgeChildFact
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 
+import uk.ed.inf.graph.compound.ISubCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -57,7 +57,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
 	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
-	private final ListenableSubModelStructureChangeItem listenerHandler = new ListenableSubModelStructureChangeItem(this);
+	private final ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem();
 
 	/**
 	 * Constructor should only be used by hiberate.
@@ -315,41 +315,6 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#addSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
-	 */
-	public void addSubModelNodeChangeListener(ISubModelChangeListener listener) {
-		this.listenerHandler.addSubModelNodeChangeListener(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#removeSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
-	 */
-	public void removeSubModelNodeChangeListener(ISubModelChangeListener listener) {
-		this.listenerHandler.removeSubModelNodeChangeListener(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#subModelNodeChangeListenerIterator()
-	 */
-	public Iterator<ISubModelChangeListener> subModelNodeChangeListenerIterator() {
-		return this.listenerHandler.subModelNodeChangeListenerIterator();
-	}
-
-	/**
-	 * Notify this submodel that a node has been chnged. Should be called by factories that add nodes to this
-	 * submodel.
-	 */
-	public void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode changedNode) {
-		this.listenerHandler.notifyNodeStructureChange(type, changedNode);
-		this.getModel().notifyNodeStructureChange(type, changedNode);
-	}
-
-	public void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
-		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
-		this.getModel().notifyEdgeStructureChange(type, changedEdge);
-	}
-
-	/* (non-Javadoc)
 	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#hasPassedAdditionalValidation()
 	 */
 	@Override
@@ -421,6 +386,47 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 */
 	public Iterator<IDrawingNode> preOrderTraveralIterator() {
 		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.getRootNode().preOrderIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyCopyOperationComplete(uk.ed.inf.graph.compound.ISubCompoundGraph, uk.ed.inf.graph.compound.ISubCompoundGraph)
+	 */
+	@Override
+	protected void notifyCopyOperationComplete(
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSubgraph,
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> copiedSubgraph) {
+		this.listenerHandler.notifyCopyOperationCompleted((IDrawingElementSelection)originalSubgraph, (IDrawingElementSelection)copiedSubgraph);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyMoveOperationComplete(uk.ed.inf.graph.compound.ISubCompoundGraph, uk.ed.inf.graph.compound.ISubCompoundGraph)
+	 */
+	@Override
+	protected void notifyMoveOperationComplete(
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSubgraph,
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> movedSubgraph) {
+		this.listenerHandler.notifyMoveOperationCompleted((IDrawingElementSelection)originalSubgraph, (IDrawingElementSelection)movedSubgraph);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#addModelChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener)
+	 */
+	public void addModelChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.addModelChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#modelChangeListenerIterator()
+	 */
+	public Iterator<IModelChangeListener> modelChangeListenerIterator() {
+		return this.listenerHandler.modelChangeListenerIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#removeModelChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener)
+	 */
+	public void removeModelChangeListener(IModelChangeListener listener) {
+		this.listenerHandler.removeModelChangeListener(listener);
 	}
 }
 

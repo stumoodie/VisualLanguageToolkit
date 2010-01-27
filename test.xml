@@ -9,8 +9,20 @@
     <Notation qualifiedName="org.pathwayeditor.stub.notation"
         majorVersion="99" minorVersion="19" patchVersion="9" displayName="Stub Notation">
         <Description>Stub notation description</Description>
+        <ObjectType uniqueId="0" name="Root Object Type" classification="Root">
+            <description>Root Object Type Description</description>
+        </ObjectType>
+        <ObjectType uniqueId="7" name="Link C" classification="Link">
+            <description>Link C Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="1" name="Shape A" classification="Shape">
+            <description>Shape A Test ObjectType</description>
+        </ObjectType>
         <ObjectType uniqueId="5" name="Link A" classification="Link">
             <description>Link A Object Type</description>
+        </ObjectType>
+        <ObjectType uniqueId="4" name="Shape D" classification="Shape">
+            <description>Shape D Test ObjectType</description>
         </ObjectType>
         <ObjectType uniqueId="6" name="Link B" classification="Link">
             <description>Link B Object Type</description>
@@ -18,20 +30,8 @@
         <ObjectType uniqueId="8" name="Link D" classification="Link">
             <description>Link D Object Type</description>
         </ObjectType>
-        <ObjectType uniqueId="0" name="Root Object Type" classification="Root">
-            <description>Root Object Type Description</description>
-        </ObjectType>
         <ObjectType uniqueId="3" name="Shape C" classification="Shape">
             <description>Shape C Test ObjectType</description>
-        </ObjectType>
-        <ObjectType uniqueId="4" name="Shape D" classification="Shape">
-            <description>Shape D Test ObjectType</description>
-        </ObjectType>
-        <ObjectType uniqueId="1" name="Shape A" classification="Shape">
-            <description>Shape A Test ObjectType</description>
-        </ObjectType>
-        <ObjectType uniqueId="7" name="Link C" classification="Link">
-            <description>Link C Object Type</description>
         </ObjectType>
         <ObjectType uniqueId="2" name="Shape B" classification="Shape">
             <description>Shape B Test ObjectType</description>

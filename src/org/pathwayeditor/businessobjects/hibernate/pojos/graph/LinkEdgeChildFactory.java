@@ -21,7 +21,6 @@ package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
@@ -74,9 +73,6 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 			linkAttribute = new HibLinkAttribute(canvas, edgeCreationSerial, this.getCurrentObjectType(), hibObjectType, srcTerm, tgtTerm);
 		}
 		HibLinkEdge retVal = new HibLinkEdge((HibSubModel)owningChildGraph, edgeIndex, (HibShapeNode)outNode, (HibShapeNode)inNode, linkAttribute);
-		this.subModel.notifyEdgeStructureChange(ModelStructureChangeType.ADDED, retVal);
-		((HibShapeNode)outNode).notifySourceEdgeChange(ModelStructureChangeType.ADDED, retVal);
-		((HibShapeNode)inNode).notifyTargetEdgeChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 

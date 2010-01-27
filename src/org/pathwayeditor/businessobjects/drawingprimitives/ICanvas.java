@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 
-public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableChangeListenee {
+public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableChangeListenee, Comparable<ICanvas> {
 	
 	/**
 	 * Gets the name of the canvas, which cannot be null.

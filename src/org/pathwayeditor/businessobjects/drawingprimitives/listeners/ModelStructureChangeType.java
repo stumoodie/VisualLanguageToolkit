@@ -23,5 +23,5 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
  *
  */
 public enum ModelStructureChangeType {
-	ADDED, DELETED
+	SELCTION_COPIED, SELECTION_MOVED, SELECTION_REMOVED 
 }

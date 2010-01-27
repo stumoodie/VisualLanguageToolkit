@@ -22,9 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
-import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection;
 
 /**
  * @author smoodie
@@ -32,12 +30,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
  */
 public final class ListenableModelStructureChangeItem implements IModelChangeListenee, ISuppressableChangeListenee {
 	private final List<IModelChangeListener> listeners;
-	private final IModel model;
 	private boolean enabled = true;
 	
-	public ListenableModelStructureChangeItem(IModel model){
+	public ListenableModelStructureChangeItem(){
 		this.listeners = new CopyOnWriteArrayList<IModelChangeListener>();
-		this.model = model;
 	}
 
 	/**
@@ -47,60 +43,72 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 		return this.listeners;
 	}
 
-	public final void fireNodeChange(IModelNodeChangeEvent evt){
+	public final void fireModelStructureChange(IModelStructureChangeEvent evt){
 		if(this.enabled){
 			for(IModelChangeListener listener : this.getListeners()){
-				listener.nodeStructureChange(evt);
+				listener.modelStructureChange(evt);
 			}
 		}
 	}
 	
-	public final void fireEdgeChange(IModelEdgeChangeEvent evt){
-		if(this.enabled){
-			for(IModelChangeListener listener : this.getListeners()){
-				listener.edgeStructureChange(evt);
+	public final void notifyCopyOperationCompleted(final IDrawingElementSelection source, final IDrawingElementSelection copiedSelection){
+		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
+
+			public ModelStructureChangeType getChangeType() {
+				return ModelStructureChangeType.SELCTION_COPIED;
 			}
-		}
+
+			public IDrawingElementSelection getChangedSelection() {
+				return copiedSelection;
+			}
+
+			public IDrawingElementSelection getOriginalSelection() {
+				return source;
+			}
+		};
+		fireModelStructureChange(event);
 	}
 	
-	public final void notifyNodeStructureChange(final ModelStructureChangeType type, final IDrawingNode changedNode){
-		IModelNodeChangeEvent event = new IModelNodeChangeEvent(){
+	
+	public final void notifyMoveOperationCompleted(final IDrawingElementSelection source,
+			final IDrawingElementSelection movedSelection){
+		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
 			public ModelStructureChangeType getChangeType() {
-				return type;
+				return ModelStructureChangeType.SELECTION_MOVED;
 			}
 
-			public IDrawingNode getChangedItem() {
-				return changedNode;
+			public IDrawingElementSelection getChangedSelection() {
+				return movedSelection;
 			}
 
-			public IModel getChangedModel() {
-				return model;
+			public IDrawingElementSelection getOriginalSelection() {
+				return source;
 			}
-			
 		};
-		fireNodeChange(event);
+		fireModelStructureChange(event);
 	}
-
-	public final void notifyEdgeStructureChange(final ModelStructureChangeType type, final ILinkEdge changedEdge){
-		IModelEdgeChangeEvent event = new IModelEdgeChangeEvent(){
+	
+	public final void notifyRemovalOperationCompleted(final IDrawingElementSelection removedSelection){
+		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
 			public ModelStructureChangeType getChangeType() {
-				return type;
+				return ModelStructureChangeType.SELECTION_REMOVED;
 			}
 
-			public ILinkEdge getChangedItem() {
-				return changedEdge;
+			public IDrawingElementSelection getChangedSelection() {
+				return null;
 			}
 
-			public IModel getChangedModel() {
-				return model;
+			public IDrawingElementSelection getOriginalSelection() {
+				return removedSelection;
 			}
-			
 		};
-		fireEdgeChange(event);
+		fireModelStructureChange(event);
 	}
-
+	
+	
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#addModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelNodeChangeListener)
 	 */

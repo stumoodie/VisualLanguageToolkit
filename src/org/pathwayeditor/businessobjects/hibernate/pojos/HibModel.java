@@ -29,7 +29,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableModelStructureChangeItem;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CanvasLinkEdgeFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.CompoundGraphCopyBuilder;
@@ -39,9 +38,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraphFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
-import org.pathwayeditor.figure.figuredefn.FigureGeometryFactory;
-import org.pathwayeditor.figure.figuredefn.IFigureGeometryFactory;
 
+import uk.ed.inf.graph.compound.ISubCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -64,11 +62,10 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	private IndexCounter edgeCntr = new IndexCounter(INIT_EDGE_IDX);
 	private HibCanvas canvas;
 	private IHibNotationFactory hibNotationFactory;
-	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem(this);
+	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem();
 	private final transient IndexCounter momentoCntr;
 	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
 	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
-	private final IFigureGeometryFactory figureGeometryFactory = new FigureGeometryFactory(this);
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -281,16 +278,6 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		this.hibNotationFactory = hibNotationFactory;
 	}
 
-	/**
-	 * Notifies the mode that there has been a structural change. Should be used by submodels to notify the
-	 * model that they have changes.
-	 * @param type the change type.
-	 * @param changedNode the node that has changes.
-	 */
-	void notifyNodeStructureChange(ModelStructureChangeType type, IDrawingNode changedNode){
-		this.listenerHandler.notifyNodeStructureChange(type, changedNode);
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListenee#addSubModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISubModelChangeListener)
 	 */
@@ -323,10 +310,6 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		builder.append(this.getNumEdges());
 		builder.append(")");
 		return builder.toString();
-	}
-
-	void notifyEdgeStructureChange(ModelStructureChangeType type, ILinkEdge changedEdge) {
-		this.listenerHandler.notifyEdgeStructureChange(type, changedEdge);
 	}
 
 	/* (non-Javadoc)
@@ -417,9 +400,21 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getFigureGeometryFactory()
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyCopyOperationComplete(uk.ed.inf.graph.compound.ISubCompoundGraph, uk.ed.inf.graph.compound.ISubCompoundGraph)
 	 */
-	public IFigureGeometryFactory getFigureGeometryFactory() {
-		return this.figureGeometryFactory;
+	@Override
+	protected void notifyCopyOperationComplete(
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSelection,
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> copiedSelection) {
+		this.listenerHandler.notifyCopyOperationCompleted((IDrawingElementSelection)originalSelection, (IDrawingElementSelection)copiedSelection);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyRemovalOperationComplete(uk.ed.inf.graph.compound.ISubCompoundGraph)
+	 */
+	@Override
+	protected void notifyRemovalOperationComplete(
+			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> subgraph) {
+		this.listenerHandler.notifyRemovalOperationCompleted((IDrawingElementSelection)subgraph);
 	}
 }

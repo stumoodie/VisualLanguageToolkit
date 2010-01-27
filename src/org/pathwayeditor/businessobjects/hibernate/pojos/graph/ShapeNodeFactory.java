@@ -19,7 +19,6 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.hibernate.pojos.graph;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ModelStructureChangeType;
 import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
@@ -66,7 +65,6 @@ public class ShapeNodeFactory extends BaseCompoundNodeFactory implements IShapeN
 			newAttribute = new HibShapeAttribute(canvas, canvas.getCreationSerialCounter().nextIndex(), shapeObjectType, hibObjectType);
 		}
 		HibShapeNode retVal = new HibShapeNode(hibParent, nodeIndex, newAttribute);
-		this.parent.getSubModel().notifyNodeStructureChange(ModelStructureChangeType.ADDED, retVal);
 		return retVal;
 	}
 

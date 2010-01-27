@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
  * @author smoodie
  *
  */
-public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee {
+public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee, Comparable<ICanvasAttribute> {
 	
 	/**
 	 * Get the Canvas related with this attribute. Cannot be null.
