@@ -81,7 +81,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/BusinessObjects/lib/easymock-2.5.2/easymock-2.5.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/postgres8.4-jdbc/postgresql-8.4-701.jdbc3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -95,14 +95,17 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 				if(linkAttribute.containsProperty(labelAttrib.getProperty())) {
 					// has the property so add label to selection nodes
 					this.getNodeList().add((BaseCompoundNode)labelNode);
+					this.getTopNodeList().add((BaseCompoundNode)labelNode);
 				}
 				else if(linkAttribute.getSourceTerminus().containsProperty(labelAttrib.getProperty())) {
 					// check source terminus for property
 					this.getNodeList().add((BaseCompoundNode)labelNode);
+					this.getTopNodeList().add((BaseCompoundNode)labelNode);
 				}
 				else if(linkAttribute.getTargetTerminus().containsProperty(labelAttrib.getProperty())) {
 					// check target terminus for property
 					this.getNodeList().add((BaseCompoundNode)labelNode);
+					this.getTopNodeList().add((BaseCompoundNode)labelNode);
 				}
 			}
 		}

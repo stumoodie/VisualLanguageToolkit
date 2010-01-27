@@ -5,25 +5,25 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-        <!-- property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
-        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property-->
+        <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:testDb</property>
         <!-- property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/testdb</property-->
         <!--  <property name="hibernate.connection.url">jdbc:hsqldb:hsql://localhost/epeDev</property>-->
         <!--  <property name="hibernate.connection.url">jdbc:hsqldb:mem:dev</property>-->
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://birch.inf.ed.ac.uk/idb</property>
+        <!--property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://birch.inf.ed.ac.uk/idb</property -->
 		<property name="c3p0.idle_test_period">0</property> <!-- seconds --> 
 		<property name="c3p0.max_size">3</property> 
 		<property name="c3p0.max_statements">0</property> 
 		<property name="c3p0.min_size">1</property> 
 		<property name="c3p0.timeout">0</property>
-		<!-- property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.connection.password"></property-->
-		<property name="hibernate.connection.username">idb_owner</property>
-        <property name="hibernate.connection.password">idb_owner</property>
+		<property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+		<!-- property name="hibernate.connection.username">idb_owner</property>
+        <property name="hibernate.connection.password">idb_owner</property -->
         <!--  property name="hibernate.connection.pool_size">5</property-->
-        <!-- property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property-->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+        <!-- property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property -->
         <property name="hibernate.show_sql">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <!--  property name="hibernate.jdbc.batch_size">1</property-->

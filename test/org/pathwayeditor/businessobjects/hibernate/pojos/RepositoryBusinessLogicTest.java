@@ -90,7 +90,7 @@ public class RepositoryBusinessLogicTest {
 	@Test
 	public void testIteratorFromRoot(){
 		Iterator<IRepositoryItem> iterRepoItem = this.testInstance1.getRootFolder().levelOrderIterator();
-		IRepositoryItem expectedArr[] = new IRepositoryItem[] { root, childOne, childFive, mapOne, childTwo, childSix,
+		IRepositoryItem expectedArr[] = new IRepositoryItem[] { root, childFive, childOne, mapOne, childTwo, childSix,
 								childThree, childFour, mapTwo, mapThree };
 		for(IRepositoryItem expectedItem : expectedArr){
 			assertTrue("next item available for:" + expectedItem, iterRepoItem.hasNext());

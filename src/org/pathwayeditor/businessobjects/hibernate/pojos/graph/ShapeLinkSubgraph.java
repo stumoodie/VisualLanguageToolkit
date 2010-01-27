@@ -49,6 +49,7 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 		super();
 		this.model = model;
 		this.createNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
+		this.createTopNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
 		this.createEdgeSet(new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>());
 		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
 			public boolean matched(BaseCompoundNode testObj) {

@@ -514,7 +514,7 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
 	 */
 	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
-		this.drawingNodeListenerHandler.addDrawingNodeAttributeListener(listener);
+		this.drawingNodeListenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
 
 }
