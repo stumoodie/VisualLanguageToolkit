@@ -33,6 +33,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	private HibSubModel owningChildGraph;
 	private HibLinkAttribute attribute;
 	private boolean removed;
+	private Integer level = null;
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -55,6 +56,7 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 		this.attribute = linkAttribute;
 		this.attribute.setCurrentEdge(this);
 		this.owningChildGraph.addNewEdge(this);
+		this.level  = this.owningChildGraph.getRootNode().getLevel()+1;
 	}
 	
 //	/**
@@ -266,6 +268,23 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	 */
 	public ISubModel getLabelSubModel() {
 		return this.getOwningSubModel();
+	}
+
+	public int getLevel() {
+		if(this.level == null){
+			this.level = Integer.valueOf(this.owningChildGraph.getRootNode().getLevel()+1);
+		}
+		return this.level.intValue();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#getUniqueIndex()
+	 */
+	public long getUniqueIndex() {
+		// shift this so that this index is guranteed to be unique compared to the node index
+		// which is not bit shifted
+		long retVal = this.getIndex() << Integer.SIZE;
+		return retVal;
 	}
 }
 

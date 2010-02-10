@@ -238,5 +238,9 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		}
 		return this.level.intValue();
 	}
+	
+	public long getUniqueIndex(){
+		return this.getIndex();
+	}
 
 }

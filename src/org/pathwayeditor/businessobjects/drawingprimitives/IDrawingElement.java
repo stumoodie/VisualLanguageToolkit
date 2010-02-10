@@ -31,12 +31,6 @@ public interface IDrawingElement {
 	 */
 	IModel getModel();
 	
-//	/**
-//	 * Get the model that a label should be added to for this drawing element.
-//	 * @return the appropriate sub-model, which cannot be null.
-//	 */
-//	ISubModel getLabelSubModel();
-	
 	/**
 	 * Get the attribute of the drawing element.
 	 * @return the attribute, which cannot be null.
@@ -61,4 +55,17 @@ public interface IDrawingElement {
 	 * @return the hash code.
 	 */
 	int hashCode();
+	
+	
+	/**
+	 * Get an index that is unique within the model.
+	 * @return the unique index.
+	 */
+	long getUniqueIndex();
+
+	/**
+	 * Get the level of this element in the tree of compounds nodes. For edges this 1 above the level of its owning node.
+	 * @return the level of the element.
+	 */
+	int getLevel();
 }
