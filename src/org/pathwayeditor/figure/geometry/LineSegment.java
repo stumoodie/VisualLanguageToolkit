@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class LineSegment {
-	private static final double LINE_WIDTH_TOL = 0.001;
+	private static final double LINE_WIDTH_TOL = 0.1;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final Point origin;
 	private final Point terminus;
@@ -99,14 +99,20 @@ public class LineSegment {
 		double v1_2 = theOrigin.getSqrDistance(theTerminus);
 		double v2_2 = theOrigin.getSqrDistance(aPoint);
 		// Now calculate the tolerance angle dependent on the thickness of the line
-		double halfLineHeight = (lineWidth/2) + LINE_WIDTH_TOL;
+		double halfLineHeight = (lineWidth/2);
+		halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
 		double sinTolAngleSqrd = (halfLineHeight * halfLineHeight) / v2_2; 
 		
 		// calc sin^2 Theta which equals the sqr of the cross product mag divides by the sqr mags of
 		// the vectors.
 		double sinThetaSqrd = (v_xy_cross_v_xp * v_xy_cross_v_xp) / (v1_2 * v2_2);
 		// if sin^2 Theta is less than the tolerance^2 then we call it contained
-		return sinThetaSqrd < sinTolAngleSqrd;
+		boolean retVal = sinThetaSqrd < sinTolAngleSqrd;
+		if(logger.isTraceEnabled()){
+			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinThetaSqrd=" + sinThetaSqrd + ",sinTolAngleSqrd=" + sinTolAngleSqrd + "lineWidth=" + lineWidth +
+					",halfLineWidth=" + halfLineHeight);
+		}
+		return retVal;
 //		double diff = theOrigin.getDistance(aPoint) + aPoint.getDistance(theTerminus) - length();
 //		return Math.abs(diff) < tolerance;
 	}
