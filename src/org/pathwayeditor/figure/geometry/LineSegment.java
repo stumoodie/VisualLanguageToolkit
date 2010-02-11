@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class LineSegment {
+	private static final double LINE_WIDTH_TOL = 0.001;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final Point origin;
 	private final Point terminus;
@@ -82,17 +83,32 @@ public class LineSegment {
 	 * Checks if this line segment contains the given point within a tolerance value.
 	 * 
 	 * @param aPoint <code>Point</code> to test if contained in this line.
-	 * @param tolerance int tolerance value for detecting the intersection.
-	 * 
+	 * @param lineWidth the width of the line to be tested. The thickness of the line is 
+	 * considered as part of the line for the pusposes of containment.
 	 * @return <code>boolean</code> <code>true</code> if the given point lies on this 
 	 * segment, <code>false</code> otherwise.
 	 */
-	public final boolean containsPoint(final Point aPoint, final double tolerance) {
+	public final boolean containsPoint(final Point aPoint, final double lineWidth) {
 		Point theOrigin = getOrigin();
 		Point theTerminus = getTerminus();
 
-		double diff = theOrigin.getDistance(aPoint) + aPoint.getDistance(theTerminus) - length();
-		return Math.abs(diff) < tolerance;
+		// Calc if on the line by getting the cross-product of the vector of the line and the vector
+		// from the origin to the point.
+		double v_xy_cross_v_xp = ((theTerminus.getX() - theOrigin.getX())*(aPoint.getY() - theOrigin.getY()))
+			- ((theTerminus.getY()-theOrigin.getY()) * (aPoint.getX() - theOrigin.getX()));
+		double v1_2 = theOrigin.getSqrDistance(theTerminus);
+		double v2_2 = theOrigin.getSqrDistance(aPoint);
+		// Now calculate the tolerance angle dependent on the thickness of the line
+		double halfLineHeight = (lineWidth/2) + LINE_WIDTH_TOL;
+		double sinTolAngleSqrd = (halfLineHeight * halfLineHeight) / v2_2; 
+		
+		// calc sin^2 Theta which equals the sqr of the cross product mag divides by the sqr mags of
+		// the vectors.
+		double sinThetaSqrd = (v_xy_cross_v_xp * v_xy_cross_v_xp) / (v1_2 * v2_2);
+		// if sin^2 Theta is less than the tolerance^2 then we call it contained
+		return sinThetaSqrd < sinTolAngleSqrd;
+//		double diff = theOrigin.getDistance(aPoint) + aPoint.getDistance(theTerminus) - length();
+//		return Math.abs(diff) < tolerance;
 	}
 
 	/**
