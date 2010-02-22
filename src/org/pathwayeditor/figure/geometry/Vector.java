@@ -116,4 +116,13 @@ public class Vector {
 		builder.append(")");
 		return builder.toString();
 	}
+
+	/**
+	 * Scales the vector so it has a magnitude commensurate with the scale factor. 
+	 * @param scaleFactor the scaleFactor which must be a positive nonzero number. 
+	 * @return the scaled vector
+	 */
+	public Vector scale(double scaleFactor) {
+		return new Vector(scaleFactor * this.getIMagnitude(), scaleFactor * this.getJMagnitude(), 0.0);
+	}
 }

@@ -233,12 +233,22 @@ public class LineSegment {
 		return new Vector(terminus.getX() - origin.getX(), terminus.getY() - origin.getY(), 0.0);
 	}
 	
+	/**
+	 * Gets the normal to this line on the left-hand-side of the line. This
+	 * has the same magnitude as the line segment.
+	 * @return the left hand normal of this line as a vector originating at the line's origin.
+	 */
 	public Vector getLeftHandNormal(){
 		double i = terminus.getX() - origin.getX();
 		double j = terminus.getY() - origin.getY();
 		return new Vector(-j, i, 0);
 	}
 
+	/**
+	 * Gets the normal to this line on the right-hand-side of the line. This
+	 * has the same magnitude as the line segment.
+	 * @return the right hand normal of this line as a vector originating at the line's origin.
+	 */
 	public Vector getRightHandNormal(){
 		double i = terminus.getX() - origin.getX();
 		double j = terminus.getY() - origin.getY();
