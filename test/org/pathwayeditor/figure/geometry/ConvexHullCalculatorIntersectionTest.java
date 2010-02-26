@@ -72,9 +72,28 @@ public class ConvexHullCalculatorIntersectionTest {
 	@Test
 	public void testNonOverlappingShape() throws IOException{
 //		this.otherInstance = this.otherInstance.translate(-1.0, 1.0);
-		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
-		renderer.writeAsPsFile(new File("test.ps"));
+//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+//		renderer.writeAsPsFile(new File("test.ps"));
 		assertFalse("Not Overlapping", this.testInstance.hullsIntersect(otherInstance));
 		assertFalse("Not Overlaping: reciprocal", this.otherInstance.hullsIntersect(this.testInstance));
+	}
+
+	@Test
+	public void testNonOverlappingReactangularShape() throws IOException{
+		IConvexHull rectHull = new RectangleHull(new Envelope(0.0, 20.0, 5.0, 5.0));
+		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, rectHull);
+		renderer.writeAsPsFile(new File("test.ps"));
+		assertFalse("Not Overlapping", this.testInstance.hullsIntersect(rectHull));
+		assertFalse("Not Overlaping: reciprocal", rectHull.hullsIntersect(this.testInstance));
+	}
+
+	@Test
+	public void testOverlappingReactangularShape() throws IOException{
+//		this.otherInstance = this.otherInstance.translate(-1.0, 1.0);
+		IConvexHull rectHull = new RectangleHull(new Envelope(10.0, 10.0, 5.0, 5.0));
+//		ConvexHullIntersectionRenderer renderer = new ConvexHullIntersectionRenderer(this.testInstance, this.otherInstance);
+//		renderer.writeAsPsFile(new File("test.ps"));
+		assertTrue("Overlapping", this.testInstance.hullsIntersect(rectHull));
+		assertTrue("Overlaping: reciprocal", rectHull.hullsIntersect(this.testInstance));
 	}
 }
