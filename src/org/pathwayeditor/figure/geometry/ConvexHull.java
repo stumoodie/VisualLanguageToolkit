@@ -78,7 +78,9 @@ public class ConvexHull implements IConvexHull {
 
 	public boolean containsPoint(Point p){
 		boolean retVal = false;
-		logger.debug("testing point: x=" + p.getX() + ",y=" + p.getY());
+		if(logger.isDebugEnabled()){
+			logger.debug("testing point: x=" + p.getX() + ",y=" + p.getY());
+		}
 		if(this.envelope.containsPoint(p)){
 			logger.trace("inside envelope");
 			retVal = true;
@@ -86,21 +88,33 @@ public class ConvexHull implements IConvexHull {
 			Point lastPoint = this.pointList.get(this.pointList.size()-1);
 			for(int i = 0 ; i < this.pointList.size() && retVal; i++){
 				Point currPoint = this.pointList.get(i);
-				logger.trace("Next point: Last point=" + lastPoint + ",curr point=" + currPoint);
+				if(logger.isTraceEnabled()){
+					logger.trace("Next point: Last point=" + lastPoint + ",curr point=" + currPoint);
+				}	
 				Vector edge = new Vector(currPoint.getX() - lastPoint.getX(), currPoint.getY() - lastPoint.getY(), 0);
-				logger.trace("Examining edge=" + edge);
+				if(logger.isTraceEnabled()){
+					logger.trace("Examining edge=" + edge);
+				}
 				Vector pointVect = new Vector(p.getX() - lastPoint.getX(), p.getY() - lastPoint.getY(), 0);
-				logger.trace("Examining pointVect=" + pointVect);
+				if(logger.isTraceEnabled()){
+					logger.trace("Examining pointVect=" + pointVect);
+				}
 				Vector crossProd = edge.crossProduct(pointVect);
-				logger.trace("Crossproduct=" + crossProd);
+				if(logger.isTraceEnabled()){
+					logger.trace("Crossproduct=" + crossProd);
+				}
 				if(crossProd.getKMagnitude() < 0){
-					logger.trace("Crossproduct is negative so not contained");
+					if(logger.isTraceEnabled()){
+						logger.trace("Crossproduct is negative so not contained");
+					}
 					retVal = false;
 				}
 				lastPoint = currPoint;
 			}
 		}
-		logger.trace("Contains point=" + retVal);
+		if(logger.isTraceEnabled()){
+			logger.trace("Contains point=" + retVal);
+		}
 		return retVal;
 	}
 	
@@ -135,7 +149,9 @@ public class ConvexHull implements IConvexHull {
 			// check if hulls overlap at all
 			retVal = this.testIntersection(otherHull);
 		}
-		logger.debug("Hulls intersect=" + retVal + ", this=" + this + ", other=" + otherHull);
+		if(logger.isDebugEnabled()){
+			logger.debug("Hulls intersect=" + retVal + ", this=" + this + ", other=" + otherHull);
+		}
 		return retVal;
 	}
 	
@@ -146,26 +162,39 @@ public class ConvexHull implements IConvexHull {
 
 	
 	private boolean testLines(List<LineSegment> lines, IConvexHull otherHull){
-		double min0 = Double.POSITIVE_INFINITY;
-		double max0 = Double.NEGATIVE_INFINITY;
-		double min1 = Double.POSITIVE_INFINITY;
-		double max1 = Double.NEGATIVE_INFINITY;
 		boolean retVal = true;
-//		Point thisHullCentre = this.getCentre();
-//		Point otherHullCentre = otherHull.getCentre();
+		if(logger.isTraceEnabled()){
+			logger.trace("Testing lines");
+			logger.trace("Comparing with hull=" + otherHull);
+		}
 		for (LineSegment line : lines) {
 			if(retVal){
-				logger.debug("Looking at line:" + line);
-				Vector outerNormal = line.getRightHandNormal().unitVector();
-				logger.trace("testLines: normal=" + outerNormal);
-				logger.debug("Testing this hull");
+				double min0 = Double.POSITIVE_INFINITY;
+				double max0 = Double.NEGATIVE_INFINITY;
+				double min1 = Double.POSITIVE_INFINITY;
+				double max1 = Double.NEGATIVE_INFINITY;
+				if(logger.isDebugEnabled()){
+					logger.debug("Looking at line:" + line);
+				}
+				Vector originalOuterNormal = line.getRightHandNormal(); 
+				Vector outerNormal = originalOuterNormal.unitVector();
+				if(logger.isTraceEnabled()){
+					logger.trace("testLines: normal=" + outerNormal);
+				}
+				if(logger.isDebugEnabled()){
+					logger.debug("Testing this hull");
+				}
 				for(Point p : this.pointList){
 					double projection = outerNormal.scalarProduct(new Vector(p.getX(), p.getY(), 0));
-					logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					if(logger.isTraceEnabled()){
+						logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					}
 					min0 = Math.min(min0, projection);
 					max0 = Math.max(max0, projection);
 				}
-				logger.trace("testLines: before offset: min0=" + min0 + ",max0=" + max0);
+				if(logger.isTraceEnabled()){
+					logger.trace("testLines: before offset: min0=" + min0 + ",max0=" + max0);
+				}
 //				double offset = thisHullCentre.getX() * outerNormal.getIMagnitude() + thisHullCentre.getY() * outerNormal.getJMagnitude();
 //				min0 += offset;
 //				max0 += offset;
@@ -174,15 +203,21 @@ public class ConvexHull implements IConvexHull {
 				while(otherHullPointIter.hasNext()){
 					Point p = otherHullPointIter.next();
 					double projection = outerNormal.scalarProduct(new Vector(p.getX(), p.getY(), 0));
-					logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					if(logger.isTraceEnabled()){
+						logger.trace("testLines: projection=" + projection + ", for p=" + p);
+					}
 					min1 = Math.min(min1, projection);
 					max1 = Math.max(max1, projection);
 				}
-				logger.trace("testLines: before offset: min1=" + min1 + ",max1=" + max1);
+				if(logger.isTraceEnabled()){
+					logger.trace("testLines: before offset: min1=" + min1 + ",max1=" + max1);
+				}
 //				offset = otherHullCentre.getX() * outerNormal.getIMagnitude() + otherHullCentre.getY() * outerNormal.getJMagnitude();
 //				min1 += offset;
 //				max1 += offset;
-				logger.debug("testLines: min0=" + min0 + ",max0=" + max0 + ",min1=" + min1 + ",max1=" + max1);
+				if(logger.isDebugEnabled()){
+					logger.debug("testLines: min0=" + min0 + ",max0=" + max0 + ",min1=" + min1 + ",max1=" + max1);
+				}
 				if(max0 < min1 || min0 > max1){
 					logger.debug("testLines: no intersection");
 					retVal = false;
