@@ -59,7 +59,9 @@ public class LineSegment {
 	 * or <code>null</code> if the calculation is not possible.
 	 */
 	public Point intersect(final LineSegment line, final double nTolerance) {
-		logger.debug("Looking for intersection between line this=" + this + ",other=" + line);
+		if(logger.isDebugEnabled()){
+			logger.debug("Looking for intersection between line this=" + this + ",other=" + line);
+		}
 		List<Point> intersections = getLinesIntersections(line);
 		if (intersections.size()>1) {
 			intersections.add(getOrigin());
@@ -68,14 +70,18 @@ public class LineSegment {
 		Point retVal = null;
 		for (int i=0; i<intersections.size() && retVal == null; i++) {
 			Point result = intersections.get(i);
-			logger.trace("Found intersection at:" + result);
+			if(logger.isTraceEnabled()){
+				logger.trace("Found intersection at:" + result);
+			}
 			if (containsPoint(result, nTolerance)
 					&& line.containsPoint(result, nTolerance)) {
 					logger.trace("Intersection point accepted: within line limits");
 					retVal = result;
 			}
 		}
-		logger.debug("Intersection point found=" + retVal);
+		if(logger.isDebugEnabled()){
+			logger.debug("Intersection point found=" + retVal);
+		}
 		return retVal;
 	}
 
@@ -91,30 +97,38 @@ public class LineSegment {
 	public final boolean containsPoint(final Point aPoint, final double lineWidth) {
 		Point theOrigin = getOrigin();
 		Point theTerminus = getTerminus();
-
+		double x1 = theTerminus.getX() - theOrigin.getX();
+		double y1 = theTerminus.getY()-theOrigin.getY();
+		double x2 = aPoint.getX() - theOrigin.getX();
+		double y2 = aPoint.getY() - theOrigin.getY();
 		// Calc if on the line by getting the cross-product of the vector of the line and the vector
 		// from the origin to the point.
-		double v_xy_cross_v_xp = ((theTerminus.getX() - theOrigin.getX())*(aPoint.getY() - theOrigin.getY()))
-			- ((theTerminus.getY()-theOrigin.getY()) * (aPoint.getX() - theOrigin.getX()));
-		double v1_2 = theOrigin.getSqrDistance(theTerminus);
-		double v2_2 = theOrigin.getSqrDistance(aPoint);
-		// Now calculate the tolerance angle dependent on the thickness of the line
-		double halfLineHeight = (lineWidth/2);
-		halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
-		double sinTolAngleSqrd = (halfLineHeight * halfLineHeight) / v2_2; 
-		
-		// calc sin^2 Theta which equals the sqr of the cross product mag divides by the sqr mags of
-		// the vectors.
-		double sinThetaSqrd = (v_xy_cross_v_xp * v_xy_cross_v_xp) / (v1_2 * v2_2);
-		// if sin^2 Theta is less than the tolerance^2 then we call it contained
-		boolean retVal = sinThetaSqrd < sinTolAngleSqrd;
+		double v_xy_cross_v_xp = (x1 * y2)	- (y1 * x2);
+		double v1 = theOrigin.getDistance(theTerminus);
+		double v2 = theOrigin.getDistance(aPoint);
+		// sine theta from cross-product
+		double sinTheta = v_xy_cross_v_xp / (v1 * v2);
+		// cos theta from scalar product
+		double cosTheta = (x1 * x2 + y1 * y2) / (v1 * v2);
+		// if both +ve then in 1st quadrant and so we should check tolerane
+		// otherwise there cannot be an intersection
+		boolean retVal = false;
+		if(sinTheta >= 0.0 && cosTheta >= 0.0){
+			// now check the length of the opposite side of the RHT and see if it is within the tolerance length
+			double adj = v2 * cosTheta;
+			// check adj length is less than length of line - i.e. is the point on the line
+			if(adj <= v1){
+				double opp = v2 * sinTheta;
+				double halfLineHeight = (lineWidth/2);
+				halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
+				retVal = opp < halfLineHeight;
+			}
+		}
 		if(logger.isTraceEnabled()){
-			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinThetaSqrd=" + sinThetaSqrd + ",sinTolAngleSqrd=" + sinTolAngleSqrd + "lineWidth=" + lineWidth +
-					",halfLineWidth=" + halfLineHeight);
+			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinTheta=" + sinTheta + ",cosTheta=" + cosTheta
+						+ "lineWidth=" + lineWidth);
 		}
 		return retVal;
-//		double diff = theOrigin.getDistance(aPoint) + aPoint.getDistance(theTerminus) - length();
-//		return Math.abs(diff) < tolerance;
 	}
 
 	/**
@@ -159,7 +173,7 @@ public class LineSegment {
 			}
 		}
 		else {
-			intersections.add(new Point(Math.round((c1*b2-b1*c2)/det), Math.round((a1*c2-c1*a2)/det)));
+			intersections.add(new Point((c1*b2-b1*c2)/det, (a1*c2-c1*a2)/det));
 		}
 		return intersections;
 	}
