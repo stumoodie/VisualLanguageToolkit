@@ -33,7 +33,7 @@ public class XMLMarshallingTest extends GenericXlsTester {
 
 	@Override
 	protected String getDbUnitDataFilePath() {
-		return "Acceptance Test/DBConsistencyTestSourceData/DBSourceData.xls";
+		return "Acceptance Test/org/pathwayeditor/businessobjects/exchange/DBSourceData.xls";
 	}
 
 	/* (non-Javadoc)
@@ -47,6 +47,9 @@ public class XMLMarshallingTest extends GenericXlsTester {
 		IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
 		map1Manager.open() ;
 		this.dbCanvas = map1Manager.getCanvas();
+//		ILinkTerminus att = (ILinkTerminus)this.dbCanvas.findAttribute(29);
+//		INumberAnnotationProperty prop = (INumberAnnotationProperty)att.getProperty("NumberProperty");
+//		prop.setValue(new BigDecimal("0.3837248374736e-10"));
 	}
 
 	/* (non-Javadoc)

@@ -99,7 +99,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 		prop.setId(++this.lastPropId);
 		prop.setName(property.getDefinition().getName());
 		prop.setDisplayName(property.getDefinition().getDisplayName());
-		prop.setValue(property.getValue());
+		prop.setValue(property.getValue().toString());
 		this.annotations.addNumberAnnotationProperty(prop);
 	}
 
