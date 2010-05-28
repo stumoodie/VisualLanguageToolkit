@@ -110,7 +110,9 @@ public class FigureBuilder {
 			this.graphicsInstructions.add(g.drawRectangle(x, y, width, height));
 		}
 		this.hullCalc.addRectangle(x, y, width, height);
-		logger.debug("drawRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		}
 	}
 
 	private void drawPoint(double x, double y){
@@ -119,11 +121,15 @@ public class FigureBuilder {
 			this.graphicsInstructions.add(g.drawPoint(x, y));
 		}
 		this.hullCalc.addPoint(x, y);
-		logger.debug("drawPoint: x=" + x + ", y=" + y);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawPoint: x=" + x + ", y=" + y);
+		}
 	}
 
 	private void drawArc(double x, double y, double width, double height, double offset, double length){
-		logger.debug("drawArc: requests x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawArc: requests x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		}
 		if(getFillColour() != null){
 			this.graphicsInstructions.add(g.fillArc(x, y, width, height, offset, length));
 		}
@@ -131,7 +137,9 @@ public class FigureBuilder {
 			this.graphicsInstructions.add(g.drawArc(x, y, width, height, offset, length));
 		}
 		this.hullCalc.addArc(x, y, width, height, offset, length);
-		logger.debug("drawArc: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawArc: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		}
 	}
 
 	private void drawPolygon(double[] pointArr){
@@ -147,7 +155,9 @@ public class FigureBuilder {
 		if(getLineColour() != null){
 			this.graphicsInstructions.add(g.drawPolygon(pointArr));
 		}
-		logger.debug("drawPolygon: points=" + pointArr);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawPolygon: points=" + pointArr);
+		}
 	}
 
 	private void drawPolyline(double[] pointArr){
@@ -160,7 +170,9 @@ public class FigureBuilder {
 		if(getLineColour() != null){
 			graphicsInstructions.add(g.drawPolyline(pointArr));
 		}
-		logger.debug("drawPolyline: points=" + pointArr);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawPolyline: points=" + pointArr);
+		}
 	}
 
 	private void drawOval(double x, double y, double width, double height){
@@ -171,20 +183,28 @@ public class FigureBuilder {
 			graphicsInstructions.add(g.drawOval(x, y, width, height));
 		}
 		this.hullCalc.addOval(x, y, width, height);
-		logger.debug("drawOval: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawOval: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height);
+		}
 	}
 
 	private void drawRoundedRectangle(double x, double y, double width, double height, double arcWidth, double arcHeight){
 		if(getFillColour() != null){
 			this.graphicsInstructions.add(g.fillRoundRectangle(x, y, width, height, arcWidth, arcHeight));
-			logger.debug("drawFill: fgCol=" + getLineColour() + ",bgCol=" + getFillColour());
+			if(logger.isDebugEnabled()){
+				logger.debug("drawFill: fgCol=" + getLineColour() + ",bgCol=" + getFillColour());
+			}
 		}
 		if(getLineColour() != null){
 			this.graphicsInstructions.add(g.drawRoundRectangle(x, y, width, height, arcWidth, arcHeight));
-			logger.debug("drawOutline: fgCol=" + getLineColour() + ",bgCol=" + getFillColour());
+			if(logger.isDebugEnabled()){
+				logger.debug("drawOutline: fgCol=" + getLineColour() + ",bgCol=" + getFillColour());
+			}
 		}
 		this.hullCalc.addRoundRectangle(x, y, width, height, arcWidth, arcHeight);
-		logger.debug("drawRoundedRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height + ", arcW=" + arcWidth + ", arcH=" + arcHeight);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawRoundedRectangle: x=" + x + ", y=" + y + ", w=" + width + ", h=" + height + ", arcW=" + arcWidth + ", arcH=" + arcHeight);
+		}
 	}
 
 
@@ -197,18 +217,24 @@ public class FigureBuilder {
 	}
 
 	private void drawLine(double xBegin, double yBegin, double xEnd, double yEnd){
-		logger.debug("drawLine: requests startX=" + xBegin + ", startY=" + yBegin
-				+ ", endX=" + xEnd + ", endY=" + yEnd);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawLine: requests startX=" + xBegin + ", startY=" + yBegin
+					+ ", endX=" + xEnd + ", endY=" + yEnd);
+		}
 		if(getLineColour() != null){
 			this.graphicsInstructions.add(g.drawLine(xBegin, yBegin, xEnd, yEnd));
 		}
 		this.hullCalc.addLine(xBegin, yBegin, xEnd, yEnd);
-		logger.debug("drawLine: startX=" + xBegin + ", startY=" + yBegin + ", endX=" + xEnd + ", endY=" + yEnd);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawLine: startX=" + xBegin + ", startY=" + yBegin + ", endX=" + xEnd + ", endY=" + yEnd);
+		}
 	}
 	
 	
 	private void drawText(double x, double y, TextAlignment alignment, String text){
-		logger.debug("drawText: requests x=" + x + ", y=" + y + ", text=" + text);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawText: requests x=" + x + ", y=" + y + ", text=" + text);
+		}
 		GraphicalTextAlignment graphicalAlign = getGraphicalAlignment(alignment);
 		if(getFillColour() != null){
 			this.graphicsInstructions.add(g.fillText(x, y, graphicalAlign, text));
@@ -216,7 +242,9 @@ public class FigureBuilder {
 		if(getLineColour() != null){
 			this.graphicsInstructions.add(g.drawText(x, y, graphicalAlign, text));
 		}
-		logger.debug("drawText: x=" + x + ", y=" + y);
+		if(logger.isDebugEnabled()){
+			logger.debug("drawText: x=" + x + ", y=" + y);
+		}
 	}
 
 	public GraphicalTextAlignment getGraphicalAlignment(TextAlignment textAlign){
@@ -353,13 +381,17 @@ public class FigureBuilder {
 			if(previousState.getFont().equals(currentState.getFont())){
 				graphicsInstructions.add(g.fillColour(currentState.getFillColour()));
 			}
-			logger.debug("restoreGraphicsState: restoring graphics state: lineW=" + currentState.getLineWidth() + ",lineCol=" + getLineColour() + ",fillCol=" + getFillColour());
+			if(logger.isDebugEnabled()){
+				logger.debug("restoreGraphicsState: restoring graphics state: lineW=" + currentState.getLineWidth() + ",lineCol=" + getLineColour() + ",fillCol=" + getFillColour());
+			}
 		}
 
 		public void saveGraphicsState() {
 			GraphicsState gState = new GraphicsState(currentState);
 			graphicsStack.push(gState);
-			logger.debug("saveGraphicsState: saving graphics state: lineW=" + currentState.getLineWidth() + ",lineCol=" + currentState.getLineColour() + ",fillCol=" + currentState.getFillColour());
+			if(logger.isDebugEnabled()){
+				logger.debug("saveGraphicsState: saving graphics state: lineW=" + currentState.getLineWidth() + ",lineCol=" + currentState.getLineColour() + ",fillCol=" + currentState.getFillColour());
+			}
 		}
 
 		public void setFillColour(int red, int green, int blue) {
@@ -468,17 +500,25 @@ public class FigureBuilder {
 	}
 
 	private void setCurrLineWidth(double lineWidth) {
-		logger.debug("setCurrLineWidth: requested lineWidth=" + lineWidth +")");
+		if(logger.isDebugEnabled()){
+			logger.debug("setCurrLineWidth: requested lineWidth=" + lineWidth +")");
+		}
 		graphicsInstructions.add(g.setLineWidth(lineWidth));
 		currentState.setLineWidth(lineWidth);
-		logger.debug("setCurrLineWidth: drawing lineWidth=" + lineWidth +")");
+		if(logger.isDebugEnabled()){
+			logger.debug("setCurrLineWidth: drawing lineWidth=" + lineWidth +")");
+		}
 	}
 
 	private double getCurLineWidth() {
 		double lineWidth = currentState.getLineWidth();
-		logger.debug("getCurrLineWidth: SWT lineWidth=" + lineWidth +")");
+		if(logger.isDebugEnabled()){
+			logger.debug("getCurrLineWidth: SWT lineWidth=" + lineWidth +")");
+		}
 		double retVal = lineWidth;
-		logger.debug("getCurrLineWidth: scaled lineWidth=" + retVal +")");
+		if(logger.isDebugEnabled()){
+			logger.debug("getCurrLineWidth: scaled lineWidth=" + retVal +")");
+		}
 		return retVal;
 	}
 	

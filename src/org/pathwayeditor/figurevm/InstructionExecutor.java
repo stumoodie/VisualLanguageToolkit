@@ -512,28 +512,36 @@ public class InstructionExecutor {
 		double angle = this.valueStack.pop().getDouble();
 		double result = Math.atan(Math.toRadians(angle));
 		this.valueStack.push(new Value(result));
-		logger.debug("processATan: angle=" + angle + ",result=" + result);
+		if(logger.isDebugEnabled()){
+			logger.debug("processATan: angle=" + angle + ",result=" + result);
+		}
 	}
 
 	private void processCos() {
 		double angle = this.valueStack.pop().getDouble();
 		double result = Math.cos(Math.toRadians(angle));
 		this.valueStack.push(new Value(result));
-		logger.debug("processCos: angle=" + angle + ",result=" + result);
+		if(logger.isDebugEnabled()){
+			logger.debug("processCos: angle=" + angle + ",result=" + result);
+		}
 	}
 
 	private void processSin() {
 		double angle = this.valueStack.pop().getDouble();
 		double result = Math.sin(Math.toRadians(angle));
 		this.valueStack.push(new Value(result));
-		logger.debug("processSin: angle=" + angle + ",result=" + result);
+		if(logger.isDebugEnabled()){
+			logger.debug("processSin: angle=" + angle + ",result=" + result);
+		}
 	}
 
 	private void processArray() {
 		int arrayLen = this.valueStack.pop().getInteger();
 		ValueList newList = new ValueList(arrayLen);
 		this.valueStack.push(new Value(newList));
-		logger.debug("processArray: new array=" + newList);
+		if(logger.isDebugEnabled()){
+			logger.debug("processArray: new array=" + newList);
+		}
 	}
 
 	private void processPut() {
@@ -542,7 +550,9 @@ public class InstructionExecutor {
 		ValueList listObject = this.valueStack.pop().getArray();
 		ValueList newList = listObject.put(idx, val);
 		this.valueStack.push(new Value(newList));
-		logger.debug("procesPut: new array=" + newList + ",idx=" + idx + ",orig array=" + listObject);
+		if(logger.isDebugEnabled()){
+			logger.debug("procesPut: new array=" + newList + ",idx=" + idx + ",orig array=" + listObject);
+		}
 	}
 
 	private void processGet() {
@@ -550,7 +560,9 @@ public class InstructionExecutor {
 		ValueList valueList = this.valueStack.pop().getArray();
 		Value val = valueList.get(idx);
 		this.valueStack.push(val);
-		logger.debug("procesGet: val=" + val + ",idx=" + idx + ",array=" + valueList);
+		if(logger.isDebugEnabled()){
+			logger.debug("procesGet: val=" + val + ",idx=" + idx + ",array=" + valueList);
+		}
 	}
 
 	private void processLength() {
@@ -569,7 +581,9 @@ public class InstructionExecutor {
 			newVal = new Value();
 		}
 		this.valueStack.push(newVal);
-		logger.debug("processLength:length=" + newVal + " for list=" + value);
+		if(logger.isDebugEnabled()){
+			logger.debug("processLength:length=" + newVal + " for list=" + value);
+		}
 	}
 
 	private void processRepeat() {
@@ -645,7 +659,9 @@ public class InstructionExecutor {
 		Value copy = new Value(orig);
 		this.valueStack.push(orig);
 		this.valueStack.push(copy);
-		logger.debug("Duplicated values in stack: orig=" + orig + ",copy=" + copy);
+		if(logger.isDebugEnabled()){
+			logger.debug("Duplicated values in stack: orig=" + orig + ",copy=" + copy);
+		}
 	}
 
 	private void processExch() {
@@ -654,7 +670,9 @@ public class InstructionExecutor {
 		Value instB = this.valueStack.pop();
 		this.valueStack.push(instA);
 		this.valueStack.push(instB);
-		logger.debug("Exchanged values in stack: lower=" + instA + ",higher=" + instB);
+		if(logger.isDebugEnabled()){
+			logger.debug("Exchanged values in stack: lower=" + instA + ",higher=" + instB);
+		}
 	}
 
 	private void processCurfontstyle() {
@@ -713,8 +731,10 @@ public class InstructionExecutor {
 			result = new Value(res);
 		}
 		this.valueStack.push(result);
-		logger.debug("Arithmetic op: " + op.getOpName() + " a=" + instA.getValue() + ",b=" + instB.getValue()
-				+ " : result=" + result);
+		if(logger.isDebugEnabled()){
+			logger.debug("Arithmetic op: " + op.getOpName() + " a=" + instA.getValue() + ",b=" + instB.getValue()
+					+ " : result=" + result);
+		}
 	}
 	
 	private void processDiv(){
@@ -994,7 +1014,9 @@ public class InstructionExecutor {
 		Value varValue = this.valueStack.pop(); 
 		String varName = this.valueStack.pop().getLiteralVariableName();
 		this.variableLookup.put(varName, varValue);
-		logger.debug("Define variable name=" + varName + ",value=" + varValue);
+		if(logger.isDebugEnabled()){
+			logger.debug("Define variable name=" + varName + ",value=" + varValue);
+		}
 	}
 
 	private double[] createPointArray(List<Double> pointList){
@@ -1053,12 +1075,16 @@ public class InstructionExecutor {
 				if(lookup.getType().equals(ValueType.PROCEDURE)){
 					InstructionExecutor arrayExec = new InstructionExecutor(lookup.getPackedArray(), this.valueStack,
 							variableLookup, bindLookup, opCodeHandler, errorHandler);
-					logger.debug("Executing procedure: name=" + inst.getValue() + ",stack=" + this.valueStack);
+					if(logger.isDebugEnabled()){
+						logger.debug("Executing procedure: name=" + inst.getValue() + ",stack=" + this.valueStack);
+					}
 					arrayExec.execute();
 				}
 				else{
 					this.valueStack.push(lookup);
-					logger.debug("Added to exanded variable to stack: name=" + inst.getValue() +",value=" + lookup.getValue());
+					if(logger.isDebugEnabled()){
+						logger.debug("Added to exanded variable to stack: name=" + inst.getValue() +",value=" + lookup.getValue());
+					}
 				}
 			}
 			else if(inst.getType().equals(InstructionType.BOUND_VALUE)){
@@ -1066,7 +1092,9 @@ public class InstructionExecutor {
 				Value lookup = this.bindLookup.get((String)inst.getValue());
 				if(lookup == null) throw new IllegalStateException("No binding found for name: " + inst.getValue());
 				this.valueStack.push(lookup);
-				logger.debug("Added bound value to stack: name=" + inst.getValue() + ",value=" + lookup.getValue());
+				if(logger.isDebugEnabled()){
+					logger.debug("Added bound value to stack: name=" + inst.getValue() + ",value=" + lookup.getValue());
+				}
 			}
 			else if(inst.getType().equals(InstructionType.RAW_ARRAY)){
 				// need to pop everything off the array and execute it.
@@ -1077,12 +1105,16 @@ public class InstructionExecutor {
 				arrayExec.execute();
 				ValueList valList = new ValueList(arrayStack);
 				this.valueStack.push(new Value(valList));
-				logger.debug("Added to stack: value=" + valList);
+				if(logger.isDebugEnabled()){
+					logger.debug("Added to stack: value=" + valList);
+				}
 			}
 			else{
 				Value val = inst.getTypedValue();
 				this.valueStack.push(val);
-				logger.debug("Added to stack: value=" + val);
+				if(logger.isDebugEnabled()){
+					logger.debug("Added to stack: value=" + val);
+				}
 			}
 		}
 	}
