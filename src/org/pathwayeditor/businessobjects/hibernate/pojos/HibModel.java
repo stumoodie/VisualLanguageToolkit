@@ -417,4 +417,24 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> subgraph) {
 		this.listenerHandler.notifyRemovalOperationCompleted((IDrawingElementSelection)subgraph);
 	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyNewEdge(uk.ed.inf.graph.compound.base.BaseCompoundEdge)
+	 */
+	@Override
+	public void notifyNewEdge(BaseCompoundEdge newEdge) {
+		ISelectionFactory fact = this.newSelectionFactory();
+		fact.addLink((ILinkEdge)newEdge);
+		this.listenerHandler.notifyNewEdge(fact.createGeneralSelection());
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyNewNode(uk.ed.inf.graph.compound.base.BaseCompoundNode)
+	 */
+	@Override
+	public void notifyNewNode(BaseCompoundNode newNode) {
+		ISelectionFactory fact = this.newSelectionFactory();
+		fact.addDrawingNode((IDrawingNode)newNode);
+		this.listenerHandler.notifyNewNode(fact.createGeneralSelection());
+	}
 }

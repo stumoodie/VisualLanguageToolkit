@@ -25,6 +25,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
@@ -427,6 +428,26 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 */
 	public void removeModelChangeListener(IModelChangeListener listener) {
 		this.listenerHandler.removeModelChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyNewEdge(uk.ed.inf.graph.compound.base.BaseCompoundEdge)
+	 */
+	@Override
+	public void notifyNewEdge(BaseCompoundEdge newEdge) {
+		ISelectionFactory fact = this.getModel().newSelectionFactory();
+		fact.addLink((ILinkEdge)newEdge);
+		this.listenerHandler.notifyNewEdge(fact.createGeneralSelection());
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyNewNode(uk.ed.inf.graph.compound.base.BaseCompoundNode)
+	 */
+	@Override
+	public void notifyNewNode(BaseCompoundNode newNode) {
+		ISelectionFactory fact = this.getModel().newSelectionFactory();
+		fact.addDrawingNode((IDrawingNode)newNode);
+		this.listenerHandler.notifyNewNode(fact.createGeneralSelection());
 	}
 }
 
