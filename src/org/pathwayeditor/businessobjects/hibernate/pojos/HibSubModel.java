@@ -52,7 +52,7 @@ import uk.ed.inf.graph.util.impl.NodeSet;
 
 public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubModel {
 	private final Logger logger = Logger.getLogger(this.getClass());
-	
+	private static final boolean DEBUG = false;
 	private Long id = null;
 	private HibCompoundNode rootNode;
 	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
@@ -213,7 +213,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 
 	public void copyHere(IDrawingElementSelection canvasObjectSelection) {
-		if(!canCopyHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be copied to this submodel");
+		if(DEBUG && !canCopyHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be copied to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.copyHere(subgraph);
 	}
@@ -264,7 +264,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 
 	public void moveHere(IDrawingElementSelection canvasObjectSelection) {
-		if(!canMoveHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be moved to this submodel");
+		if(DEBUG && !canMoveHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be moved to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.moveHere(subgraph);
 	}

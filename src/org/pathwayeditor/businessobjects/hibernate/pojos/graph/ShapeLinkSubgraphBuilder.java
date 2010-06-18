@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
@@ -88,26 +89,60 @@ public class ShapeLinkSubgraphBuilder extends BaseSubCompoundGraphBuilder {
 		for(BaseCompoundEdge edge : this.getEdgeList()) {
 			ILinkEdge linkEdge = (ILinkEdge)edge;
 			ILinkAttribute linkAttribute = linkEdge.getAttribute();
-			Iterator<ILabelNode> labelNodeIter = linkEdge.getOwningSubModel().labelIterator();
-			while(labelNodeIter.hasNext()) {
-				ILabelNode labelNode = labelNodeIter.next();
-				ILabelAttribute labelAttrib = labelNode.getAttribute();
-				if(linkAttribute.containsProperty(labelAttrib.getProperty())) {
-					// has the property so add label to selection nodes
-					this.getNodeList().add((BaseCompoundNode)labelNode);
-					this.getTopNodeList().add((BaseCompoundNode)labelNode);
-				}
-				else if(linkAttribute.getSourceTerminus().containsProperty(labelAttrib.getProperty())) {
-					// check source terminus for property
-					this.getNodeList().add((BaseCompoundNode)labelNode);
-					this.getTopNodeList().add((BaseCompoundNode)labelNode);
-				}
-				else if(linkAttribute.getTargetTerminus().containsProperty(labelAttrib.getProperty())) {
-					// check target terminus for property
-					this.getNodeList().add((BaseCompoundNode)labelNode);
-					this.getTopNodeList().add((BaseCompoundNode)labelNode);
+			{
+				Iterator<IAnnotationProperty> propIter = linkAttribute.propertyIterator();
+				while (propIter.hasNext()) {
+					IAnnotationProperty prop = propIter.next();
+					ILabelAttribute labelAtt = prop.getLabel();
+					if (labelAtt != null) {
+						ILabelNode labelNode = labelAtt.getCurrentDrawingElement();
+						this.getNodeList().add((BaseCompoundNode) labelNode);
+						this.getTopNodeList().add((BaseCompoundNode) labelNode);
+					}
 				}
 			}
+			{
+				Iterator<IAnnotationProperty> propSrcIter = linkAttribute.getSourceTerminus().propertyIterator();
+				while (propSrcIter.hasNext()) {
+					IAnnotationProperty prop = propSrcIter.next();
+					ILabelAttribute labelAtt = prop.getLabel();
+					if (labelAtt != null) {
+						ILabelNode labelNode = labelAtt.getCurrentDrawingElement();
+						this.getNodeList().add((BaseCompoundNode) labelNode);
+						this.getTopNodeList().add((BaseCompoundNode) labelNode);
+					}
+				}
+			}
+			{
+				Iterator<IAnnotationProperty> propTgtIter = linkAttribute.getTargetTerminus().propertyIterator();
+				while (propTgtIter.hasNext()) {
+					IAnnotationProperty prop = propTgtIter.next();
+					ILabelAttribute labelAtt = prop.getLabel();
+					if (labelAtt != null) {
+						ILabelNode labelNode = labelAtt.getCurrentDrawingElement();
+						this.getNodeList().add((BaseCompoundNode) labelNode);
+						this.getTopNodeList().add((BaseCompoundNode) labelNode);
+					}
+				}
+			}
+//			Iterator<ILabelNode> labelNodeIter = linkEdge.getOwningSubModel().labelIterator();
+//			while(labelNodeIter.hasNext()) {
+//				ILabelNode labelNode = labelNodeIter.next();
+//				ILabelAttribute labelAttrib = labelNode.getAttribute();
+//				if(linkAttribute.containsProperty(labelAttrib.getProperty())) {
+//					// has the property so add label to selection nodes
+//				}
+//				else if(linkAttribute.getSourceTerminus().containsProperty(labelAttrib.getProperty())) {
+//					// check source terminus for property
+//					this.getNodeList().add((BaseCompoundNode)labelNode);
+//					this.getTopNodeList().add((BaseCompoundNode)labelNode);
+//				}
+//				else if(linkAttribute.getTargetTerminus().containsProperty(labelAttrib.getProperty())) {
+//					// check target terminus for property
+//					this.getNodeList().add((BaseCompoundNode)labelNode);
+//					this.getTopNodeList().add((BaseCompoundNode)labelNode);
+//				}
+//			}
 		}
 	}
 
