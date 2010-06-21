@@ -114,6 +114,7 @@ public class LineSegment {
 		// otherwise there cannot be an intersection
 		boolean retVal = false;
 		if(sinTheta >= 0.0 && cosTheta >= 0.0){
+//		if(cosTheta >= 0.0){
 			// now check the length of the opposite side of the RHT and see if it is within the tolerance length
 			double adj = v2 * cosTheta;
 			// check adj length is less than length of line - i.e. is the point on the line

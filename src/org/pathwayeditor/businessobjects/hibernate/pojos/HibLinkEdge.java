@@ -240,15 +240,15 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("[model=");
-		builder.append(this.getModel());
-		builder.append(", index=");
+		builder.append("(index=");
 		builder.append(this.getIndex());
-		builder.append(", removed=");
+		builder.append(",uniqueIndex=");
+		builder.append(this.getUniqueIndex());
+		builder.append(",removed=");
 		builder.append(this.isRemoved());
-		builder.append(", attribute=");
-		builder.append(this.getAttribute());
-		builder.append("]");
+		builder.append(",attributeSerial=");
+		builder.append(this.getAttribute().getCreationSerial());
+		builder.append(")");
 		return builder.toString();
 	}
 
@@ -283,7 +283,8 @@ public class HibLinkEdge extends BaseCompoundEdge implements ILinkEdge {
 	public long getUniqueIndex() {
 		// shift this so that this index is guranteed to be unique compared to the node index
 		// which is not bit shifted
-		long retVal = this.getIndex() << Integer.SIZE;
+		long idx = this.getIndex();
+		long retVal = idx << Integer.SIZE;
 		return retVal;
 	}
 }

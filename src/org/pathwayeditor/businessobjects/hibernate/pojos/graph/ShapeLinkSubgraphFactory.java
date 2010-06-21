@@ -28,8 +28,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCompoundNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
-import uk.ed.inf.graph.compound.base.BaseCompoundNode;
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
 
 /**
@@ -92,14 +92,14 @@ public class ShapeLinkSubgraphFactory extends BaseSubCompoundGraphFactory implem
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory#drawingNodeIterator()
 	 */
 	public Iterator<IDrawingNode> drawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(super.nodeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory#linkEdgeIterator()
 	 */
 	public Iterator<ILinkEdge> linkEdgeIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(super.edgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(super.edgeIterator());
 	}
 
 	/* (non-Javadoc)

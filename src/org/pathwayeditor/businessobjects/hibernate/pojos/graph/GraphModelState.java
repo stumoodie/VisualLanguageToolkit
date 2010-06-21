@@ -24,22 +24,20 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IGraphMomento;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 import uk.ed.inf.bitstring.IBitString;
-import uk.ed.inf.graph.basic.IBasicGraph;
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
-import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.state.IGraphState;
+import uk.ed.inf.graph.state.IRestorableGraph;
 
 /**
  * @author smoodie
  *
  */
-public class GraphModelState implements IGraphMomento, IGraphState<BaseCompoundNode, BaseCompoundEdge> {
+public class GraphModelState implements IGraphMomento, IGraphState {
 	private final IModel model;
-	private final IGraphState<BaseCompoundNode, BaseCompoundEdge> state;
+	private final IGraphState state;
 	private final Date creationDate;
 	private final int versionNum;
 
-	public GraphModelState(IModel model, int versionNum, IGraphState<BaseCompoundNode, BaseCompoundEdge> state){
+	public GraphModelState(IModel model, int versionNum, IGraphState state){
 		this.state = state;
 		this.model = model;
 		this.creationDate = new Date();
@@ -50,7 +48,7 @@ public class GraphModelState implements IGraphMomento, IGraphState<BaseCompoundN
 		return this.state.getEdgeStates();
 	}
 
-	public IBasicGraph<BaseCompoundNode, BaseCompoundEdge> getGraph() {
+	public IRestorableGraph getGraph() {
 		return this.state.getGraph();
 	}
 

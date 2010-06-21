@@ -17,7 +17,8 @@ package org.pathwayeditor.businessobjects.hibernate.pojos;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.util.IDirectedEdgeSet;
 import uk.ed.inf.graph.util.INodeSet;
@@ -33,9 +34,9 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 	private HibCompoundNode hibParentNode = null;
 	private boolean removed;
 	private transient Integer level;
-	private INodeSet<BaseCompoundNode, BaseCompoundEdge> children = new NodeSet<BaseCompoundNode, BaseCompoundEdge>();
-	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> outEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
-	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> inEdges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
+	private INodeSet<ICompoundNode, ICompoundEdge> children = new NodeSet<ICompoundNode, ICompoundEdge>();
+	private IDirectedEdgeSet<ICompoundNode, ICompoundEdge> outEdges = new DirectedEdgeSet<ICompoundNode, ICompoundEdge>();
+	private IDirectedEdgeSet<ICompoundNode, ICompoundEdge> inEdges = new DirectedEdgeSet<ICompoundNode, ICompoundEdge>();
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -99,32 +100,32 @@ public abstract class HibCompoundNode extends BaseCompoundNode implements IDrawi
 		this.childCompoundGraph = value;
 	}
 	
-	void setChildren(INodeSet<BaseCompoundNode, BaseCompoundEdge> value) {
+	void setChildren(INodeSet<ICompoundNode, ICompoundEdge> value) {
 		this.children = value;
 		if(this.childCompoundGraph != null){
 			this.childCompoundGraph.setRootNode(this);
 		}
 	}
 
-	public INodeSet<BaseCompoundNode, BaseCompoundEdge> getChildren() {
+	public INodeSet<ICompoundNode, ICompoundEdge> getChildren() {
 		return this.children;
 	}
 
-	void setOutEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edgeSet) {
+	void setOutEdges(IDirectedEdgeSet<ICompoundNode, ICompoundEdge> edgeSet) {
 		this.outEdges = edgeSet;
 		this.createOutEdgeSet(this.outEdges);
 	}
 	
-	public IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getOutEdges() {
+	public IDirectedEdgeSet<ICompoundNode, ICompoundEdge> getOutEdges() {
 		return this.outEdges;
 	}
 	
-	void setInEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edgeSet) {
+	void setInEdges(IDirectedEdgeSet<ICompoundNode, ICompoundEdge> edgeSet) {
 		this.inEdges = edgeSet;
 		this.createInEdgeSet(this.inEdges);
 	}
 	
-	public IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getInEdges() {
+	public IDirectedEdgeSet<ICompoundNode, ICompoundEdge> getInEdges() {
 		return this.inEdges;
 	}
 	

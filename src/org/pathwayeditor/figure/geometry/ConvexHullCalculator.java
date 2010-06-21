@@ -134,16 +134,22 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 			double endAngle) {
 		double offsetRad = Math.toRadians(startAngle);
 		double lengthRad = Math.toRadians(endAngle);
-		logger.debug("polygonising arc: centre=(" + centreX + ", " + centreY + ") semiMajAx=" + semiMajorAxis + ", semiMinAx" + semiMinorAxis
-				+ ", startAngle=" + startAngle + ", endAngle=" + endAngle);
+		if(logger.isDebugEnabled()){
+			logger.debug("polygonising arc: centre=(" + centreX + ", " + centreY + ") semiMajAx=" + semiMajorAxis + ", semiMinAx" + semiMinorAxis
+					+ ", startAngle=" + startAngle + ", endAngle=" + endAngle);
+		}
 		double increment = Math.PI/ HALF_ELLIPSE_SEGS;
-		logger.trace("increment=" + Math.toDegrees(increment));
+		if(logger.isTraceEnabled()){
+			logger.trace("increment=" + Math.toDegrees(increment));
+		}
 		for (double angle = offsetRad; angle < lengthRad; angle += increment) {
 			double pointX = semiMajorAxis * Math.cos(angle) + centreX;
 			double pointY = semiMinorAxis * Math.sin(angle) + centreY;
 			Point arcPoint = new Point(pointX, pointY);
 			quickHull.addPoint(arcPoint);
-			logger.trace("adding arc point: angle=" + Math.toDegrees(angle) + ",point=" + arcPoint);
+			if(logger.isTraceEnabled()){
+				logger.trace("adding arc point: angle=" + Math.toDegrees(angle) + ",point=" + arcPoint);
+			}
 		}
 	}
 }

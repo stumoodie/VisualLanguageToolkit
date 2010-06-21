@@ -211,34 +211,46 @@ public class FigureDrawer {
 	 */
 	private void processLineStyle(LineStyle values) {
 		this.graphics.setLineStyle(values);
-		logger.debug("Setting line style=" + values);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting line style=" + values);
+		}
 	}
 
 	private void processLineWidth(Double width) {
 		this.graphics.setLineWidth(width);
-		logger.debug("Setting line width=" + width);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting line width=" + width);
+		}
 	}
 
 	private void processFontStyle(EnumSet<Style> values) {
 		this.currFont = this.currFont.newStyle(values);
 		this.graphics.setFont(this.currFont);
-		logger.debug("Setting font style=" + values);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting font style=" + values);
+		}
 	}
 
 	private void processFontSize(Double fontSize) {
 		this.currFont = this.currFont.newSize(fontSize);
 		this.graphics.setFont(this.currFont);
-		logger.debug("Setting font size=" + fontSize);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting font size=" + fontSize);
+		}
 	}
 
 	private void processFillColour(RGB colour) {
 		this.graphics.setFillColor(colour);
-		logger.debug("Setting fill colour=" + colour);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting fill colour=" + colour);
+		}
 	}
 
 	private void processLineColour(RGB colour) {
 		this.graphics.setLineColor(colour);
-		logger.debug("Setting line colour=" + colour);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting line colour=" + colour);
+		}
 	}
 
 	private void processFillText(List<Object> values) {
@@ -246,7 +258,9 @@ public class FigureDrawer {
 		GraphicalTextAlignment align = (GraphicalTextAlignment)values.get(TEXT_ALIGN_IDX);
 		String text = (String)values.get(TEXT_IDX);
 		this.graphics.fillString(text, p.getX(), p.getY(), align);
-		logger.debug("Fill text: text=" + text + ",pos=" + p);
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill text: text=" + text + ",pos=" + p);
+		}
 	}
 
 	private void processFillRoundedRect(List<Double> points) {
@@ -256,7 +270,9 @@ public class FigureDrawer {
 		double cw = scaledWidth(points.get(4));
 		double ch = scaledHeight(points.get(5));
 		this.graphics.fillRoundRectangle(p.getX(), p.getY(), w, h, cw, ch);
-		logger.debug("Fill rounded rect: pos=" + p + ",w=" + w + ",h=" + h + ",cw=" + cw + ",ch=" + ch);
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill rounded rect: pos=" + p + ",w=" + w + ",h=" + h + ",cw=" + cw + ",ch=" + ch);
+		}
 	}
 
 	private void processFillRect(List<Double> points) {
@@ -264,13 +280,17 @@ public class FigureDrawer {
 		double w = scaledWidth(points.get(2));
 		double h = scaledHeight(points.get(3));
 		this.graphics.fillRectangle(p.getX(), p.getY(), w, h);
-		logger.debug("Fill rect: pos=" + p + ",w=" + w + ",h=" + h);
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill rect: pos=" + p + ",w=" + w + ",h=" + h);
+		}
 	}
 
 	private void processFillPolygon(double[] doubleArray) {
 		double scaledArray[] = scalePointArray(doubleArray);
 		this.graphics.fillPolygon(scaledArray);
-		logger.debug("Fill polygon: points=" + Arrays.toString(scaledArray));
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill polygon: points=" + Arrays.toString(scaledArray));
+		}
 	}
 
 	private void processFillOval(List<Double> points) {
@@ -278,7 +298,9 @@ public class FigureDrawer {
 		double w = scaledWidth(points.get(2));
 		double h = scaledHeight(points.get(3));
 		this.graphics.fillOval(p.getX(), p.getY(), w, h);
-		logger.debug("Fill oval: pos=" + p + ",w=" + w + ",h=" + h);
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill oval: pos=" + p + ",w=" + w + ",h=" + h);
+		}
 	}
 
 	private void processFillArc(List<Double> points) {
@@ -288,7 +310,9 @@ public class FigureDrawer {
 		double start = points.get(4);
 		double length = points.get(5);
 		this.graphics.fillArc(p.getX(), p.getY(), w, h, start, length);
-		logger.debug("Fill arc: pos=" + p + ",w=" + w + ",h=" + h +",start=" + start + ",length=" + length);
+		if(logger.isDebugEnabled()){
+			logger.debug("Fill arc: pos=" + p + ",w=" + w + ",h=" + h +",start=" + start + ",length=" + length);
+		}
 	}
 
 	private void processDrawText(List<Object> values) {
@@ -296,7 +320,9 @@ public class FigureDrawer {
 		GraphicalTextAlignment align = (GraphicalTextAlignment)values.get(TEXT_ALIGN_IDX);
 		String text = (String)values.get(TEXT_IDX);
 		this.graphics.drawString(text, p.getX(), p.getY(), align);
-		logger.debug("Draw text: text=" + text + ",pos=" + p);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw text: text=" + text + ",pos=" + p);
+		}
 	}
 
 	private void processDrawRoundedRect(List<Double> points) {
@@ -306,7 +332,9 @@ public class FigureDrawer {
 		double cw = scaledWidth(points.get(4));
 		double ch = scaledHeight(points.get(5));
 		this.graphics.drawRoundRectangle(p.getX(), p.getY(), w, h, cw, ch);
-		logger.debug("Draw rounded rect: pos=" + p + ",w=" + w + ",h=" + h + ",cw=" + cw + ",ch=" + ch);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw rounded rect: pos=" + p + ",w=" + w + ",h=" + h + ",cw=" + cw + ",ch=" + ch);
+		}
 	}
 
 	private void processDrawRect(List<Double> points) {
@@ -314,25 +342,33 @@ public class FigureDrawer {
 		double w = scaledWidth(points.get(2));
 		double h = scaledHeight(points.get(3));
 		this.graphics.drawRectangle(p.getX(), p.getY(), w, h);
-		logger.debug("Draw rect: pos=" + p + ",w=" + w + ",h=" + h);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw rect: pos=" + p + ",w=" + w + ",h=" + h);
+		}
 	}
 
 	private void processDrawPolyline(double[] doubleArray) {
 		double scaledArray[] = scalePointArray(doubleArray);
 		this.graphics.drawPolyline(scaledArray);
-		logger.debug("Draw polyline: points=" + Arrays.toString(scaledArray));
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw polyline: points=" + Arrays.toString(scaledArray));
+		}
 	}
 
 	private void processDrawPolygon(double[] doubleArray) {
 		double scaledArray[] = scalePointArray(doubleArray);
 		this.graphics.drawPolygon(scaledArray);
-		logger.debug("Draw polygon: points=" + Arrays.toString(scaledArray));
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw polygon: points=" + Arrays.toString(scaledArray));
+		}
 	}
 
 	private void processDrawPoint(List<Double> valList) {
 		Point p = scaledPoint(valList.get(0), valList.get(1));
 		this.graphics.drawPoint(p.getX(), p.getY());
-		logger.debug("Draw point: pos=" + p);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw point: pos=" + p);
+		}
 	}
 
 	private void processDrawOval(List<Double> points) {
@@ -340,14 +376,18 @@ public class FigureDrawer {
 		double w = scaledWidth(points.get(2));
 		double h = scaledHeight(points.get(3));
 		this.graphics.drawOval(p.getX(), p.getY(), w, h);
-		logger.debug("Draw oval: pos=" + p + ",w=" + w + ",h=" + h);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw oval: pos=" + p + ",w=" + w + ",h=" + h);
+		}
 	}
 
 	private void processDrawLine(List<Double> valList) {
 		Point p1 = scaledPoint(valList.get(0), valList.get(1));
 		Point p2 = scaledPoint(valList.get(2), valList.get(3));
 		this.graphics.drawLine(p1.getX(), p1.getY(), p2.getX(), p2.getY());
-		logger.debug("Draw line: start=" + p1 + ",end=" + p2);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw line: start=" + p1 + ",end=" + p2);
+		}
 	}
 
 	private void processDrawArc(List<Double> points) {
@@ -357,7 +397,9 @@ public class FigureDrawer {
 		double start = points.get(4);
 		double length = points.get(5);
 		this.graphics.drawArc(p.getX(), p.getY(), w, h, start, length);
-		logger.debug("Draw arc: pos=" + p + ",w=" + w + ",h=" + h +",start=" + start + ",length=" + length);
+		if(logger.isDebugEnabled()){
+			logger.debug("Draw arc: pos=" + p + ",w=" + w + ",h=" + h +",start=" + start + ",length=" + length);
+		}
 	}
 
 	public GraphicsInstructionList getInstList() {

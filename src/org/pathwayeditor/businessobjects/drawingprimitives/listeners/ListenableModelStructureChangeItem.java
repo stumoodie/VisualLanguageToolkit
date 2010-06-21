@@ -55,7 +55,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
 			public ModelStructureChangeType getChangeType() {
-				return ModelStructureChangeType.SELCTION_COPIED;
+				return ModelStructureChangeType.SELECTION_COPIED;
 			}
 
 			public IDrawingElementSelection getChangedSelection() {
@@ -142,5 +142,41 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	 */
 	public void setListenersEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public void notifyNewEdge(final IDrawingElementSelection selection) {
+		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
+
+			public ModelStructureChangeType getChangeType() {
+				return ModelStructureChangeType.LINK_EDGE_CREATED;
+			}
+
+			public IDrawingElementSelection getChangedSelection() {
+				return selection;
+			}
+
+			public IDrawingElementSelection getOriginalSelection() {
+				return null;
+			}
+		};
+		fireModelStructureChange(event);
+	}
+
+	public void notifyNewNode(final IDrawingElementSelection selection) {
+		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
+
+			public ModelStructureChangeType getChangeType() {
+				return ModelStructureChangeType.DRAWING_NODE_CREATED;
+			}
+
+			public IDrawingElementSelection getChangedSelection() {
+				return selection;
+			}
+
+			public IDrawingElementSelection getOriginalSelection() {
+				return null;
+			}
+		};
+		fireModelStructureChange(event);
 	}
 }

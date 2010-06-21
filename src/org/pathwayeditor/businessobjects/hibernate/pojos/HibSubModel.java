@@ -25,6 +25,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
@@ -39,10 +40,10 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.LinkEdgeChildFact
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph;
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.ISubCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
-import uk.ed.inf.graph.compound.base.BaseCompoundNode;
 import uk.ed.inf.graph.util.IDirectedEdgeSet;
 import uk.ed.inf.graph.util.IFilterCriteria;
 import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
@@ -51,12 +52,12 @@ import uk.ed.inf.graph.util.impl.NodeSet;
 
 public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubModel {
 	private final Logger logger = Logger.getLogger(this.getClass());
-	
+	private static final boolean DEBUG = false;
 	private Long id = null;
 	private HibCompoundNode rootNode;
-	private IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> edges = new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>();
-	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
-	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
+	private IDirectedEdgeSet<ICompoundNode, ICompoundEdge> edges = new DirectedEdgeSet<ICompoundNode, ICompoundEdge>();
+	private final IFilterCriteria<ICompoundNode> labelCriteria;
+	private final IFilterCriteria<ICompoundNode> shapeCriteria;
 	private final ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem();
 
 	/**
@@ -66,15 +67,15 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	HibSubModel() {
 		super(new CompoundGraphCopyBuilder(), new CompoundGraphMoveBuilder());
 		this.rootNode = null;
-		this.createNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
+		this.createNodeSet(new NodeSet<ICompoundNode, ICompoundEdge>());
 		this.createEdgeSet(this.edges);
-		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.labelCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof ILabelNode;
 			}
 		};
-		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.shapeCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof IShapeNode;
 			}
 		};
@@ -92,12 +93,12 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 	
 	@Override
-	protected void addNewNode(BaseCompoundNode node) {
+	protected void addNewNode(ICompoundNode node) {
 		super.addNewNode(node);
 	}
 	
 	@Override
-	protected void addNewEdge(BaseCompoundEdge edge) {
+	protected void addNewEdge(ICompoundEdge edge) {
 		super.addNewEdge(edge);
 	}
 	
@@ -129,12 +130,12 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 		return rootNode;
 	}
 
-	void setEdges(IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> value) {
+	void setEdges(IDirectedEdgeSet<ICompoundNode, ICompoundEdge> value) {
 		this.edges = value;
 		this.createEdgeSet(this.edges);
 	}
 
-	IDirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge> getEdges() {
+	IDirectedEdgeSet<ICompoundNode, ICompoundEdge> getEdges() {
 		return this.edges;
 	}
 
@@ -212,7 +213,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 
 	public void copyHere(IDrawingElementSelection canvasObjectSelection) {
-		if(!canCopyHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be copied to this submodel");
+		if(DEBUG && !canCopyHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be copied to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.copyHere(subgraph);
 	}
@@ -254,23 +255,23 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 
 	public Iterator<ILabelNode> labelIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), labelCriteria);
-		return new IterationCaster<ILabelNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), labelCriteria);
+		return new IterationCaster<ILabelNode, ICompoundNode>(filteredIter);
 	}
 
 	public Iterator<ILinkEdge> linkIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.edgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(this.edgeIterator());
 	}
 
 	public void moveHere(IDrawingElementSelection canvasObjectSelection) {
-		if(!canMoveHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be moved to this submodel");
+		if(DEBUG && !canMoveHere(canvasObjectSelection)) throw new IllegalArgumentException("canvasObjectSelection cannot be moved to this submodel");
 		ShapeLinkSubgraph subgraph = (ShapeLinkSubgraph)canvasObjectSelection;
 		super.moveHere(subgraph);
 	}
 
 	public Iterator<IShapeNode> shapeNodeIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
-		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), shapeCriteria);
+		return new IterationCaster<IShapeNode, ICompoundNode>(filteredIter);
 	}
 
 	/* (non-Javadoc)
@@ -321,7 +322,7 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	protected boolean hasPassedAdditionalValidation() {
 		boolean retVal = true;
 		if(this.rootNode != null && this.edges != null && this.getRootNode().isValid()) {
-			for(BaseCompoundEdge edge : this.edges) {
+			for(ICompoundEdge edge : this.edges) {
 				HibLinkEdge linkEdge = (HibLinkEdge)edge;
 				if(!linkEdge.isValid()) {
 					logger.error("LinkEdge: " + edge + "is invalid.");
@@ -352,11 +353,11 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	}
 	
 	public Iterator<HibCompoundNode> allNodesIterator(){
-		return new IterationCaster<HibCompoundNode, BaseCompoundNode>(super.unfilteredNodeIterator());
+		return new IterationCaster<HibCompoundNode, ICompoundNode>(super.unfilteredNodeIterator());
 	}
 
 	public Iterator<HibLinkEdge> allEdgesIterator(){
-		return new IterationCaster<HibLinkEdge, BaseCompoundEdge>(super.unfilteredEdgeIterator());
+		return new IterationCaster<HibLinkEdge, ICompoundEdge>(super.unfilteredEdgeIterator());
 	}
 
 	public boolean areListenersEnabled() {
@@ -371,21 +372,21 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#drawingNodeIterator()
 	 */
 	public Iterator<IDrawingNode> drawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(super.nodeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#levelOrderTraveralIterator()
 	 */
 	public Iterator<IDrawingNode> levelOrderTraveralIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.getRootNode().levelOrderIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(this.getRootNode().levelOrderIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ISubModel#preOrderTraveralIterator()
 	 */
 	public Iterator<IDrawingNode> preOrderTraveralIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.getRootNode().preOrderIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(this.getRootNode().preOrderIterator());
 	}
 
 	/* (non-Javadoc)
@@ -393,8 +394,8 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 */
 	@Override
 	protected void notifyCopyOperationComplete(
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSubgraph,
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> copiedSubgraph) {
+			ISubCompoundGraph originalSubgraph,
+			ISubCompoundGraph copiedSubgraph) {
 		this.listenerHandler.notifyCopyOperationCompleted((IDrawingElementSelection)originalSubgraph, (IDrawingElementSelection)copiedSubgraph);
 	}
 
@@ -403,8 +404,8 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 */
 	@Override
 	protected void notifyMoveOperationComplete(
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSubgraph,
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> movedSubgraph) {
+			ISubCompoundGraph originalSubgraph,
+			ISubCompoundGraph movedSubgraph) {
 		this.listenerHandler.notifyMoveOperationCompleted((IDrawingElementSelection)originalSubgraph, (IDrawingElementSelection)movedSubgraph);
 	}
 
@@ -427,6 +428,26 @@ public class HibSubModel extends BaseChildCompoundGraph implements ILabelSubMode
 	 */
 	public void removeModelChangeListener(IModelChangeListener listener) {
 		this.listenerHandler.removeModelChangeListener(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyNewEdge(uk.ed.inf.graph.compound.base.ICompoundEdge)
+	 */
+	@Override
+	public void notifyNewEdge(ICompoundEdge newEdge) {
+		ISelectionFactory fact = this.getModel().newSelectionFactory();
+		fact.addLink((ILinkEdge)newEdge);
+		this.listenerHandler.notifyNewEdge(fact.createGeneralSelection());
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundGraph#notifyNewNode(uk.ed.inf.graph.compound.base.BaseCompoundNode)
+	 */
+	@Override
+	public void notifyNewNode(ICompoundNode newNode) {
+		ISelectionFactory fact = this.getModel().newSelectionFactory();
+		fact.addDrawingNode((IDrawingNode)newNode);
+		this.listenerHandler.notifyNewNode(fact.createGeneralSelection());
 	}
 }
 

@@ -71,9 +71,11 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 			BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibLinkEdge retVal = createCopyOfLinkEdge  ( ((HibLinkEdge)srcEdge).getAttribute() , (HibCompoundNode) outNode,
 				(HibCompoundNode) inNode , (HibSubModel) edgeOwner );
-		logger.debug("created dest edge: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
+		if(logger.isDebugEnabled()){
+			logger.debug("created dest edge: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
 					+ ") from src edge: (idx=" + srcEdge.getIndex() + ", att=" + ((HibLinkEdge)srcEdge).getAttribute().getCreationSerial()
-					+ ")");
+						+ ")");
+		}
 		return retVal;
 	}
 
@@ -88,17 +90,21 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 			HibShapeNode srcShapeNode = (HibShapeNode)srcNode;
 			HibShapeAttribute srcAttribute = srcShapeNode.getAttribute();
 			retVal = createCopyOfShapeNode(destHibParentNode, srcAttribute);
-			logger.debug("created shape node: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
-					+ ") from src edge: (idx=" + srcNode.getIndex() + ", att=" + ((HibCompoundNode)srcNode).getAttribute().getCreationSerial()
-					+ ")");
+			if(logger.isDebugEnabled()){
+				logger.debug("created shape node: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
+						+ ") from src edge: (idx=" + srcNode.getIndex() + ", att=" + ((HibCompoundNode)srcNode).getAttribute().getCreationSerial()
+						+ ")");
+			}
 		}
 		else if(srcNode instanceof ILabelNode){
 			HibLabelNode srcLabelNode = (HibLabelNode)srcNode;
 //			HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
 			retVal = createCopyOfLabelNode(destHibParentNode, srcLabelNode);
-			logger.debug("created label node: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
-					+ ") from src edge: (idx=" + srcNode.getIndex() + ", att=" + ((HibCompoundNode)srcNode).getAttribute().getCreationSerial()
-					+ ")");
+			if(logger.isDebugEnabled()){
+				logger.debug("created label node: (idx=" + retVal.getIndex() + ", att=" + retVal.getAttribute().getCreationSerial()
+						+ ") from src edge: (idx=" + srcNode.getIndex() + ", att=" + ((HibCompoundNode)srcNode).getAttribute().getCreationSerial()
+						+ ")");
+			}
 		}
 		return retVal;
 	}

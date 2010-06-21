@@ -33,6 +33,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
@@ -96,7 +97,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	 * @see uk.ed.inf.graph.compound.base.BaseChildCompoundEdgeFactory#setPair(uk.ed.inf.graph.compound.base.BaseCompoundNode, uk.ed.inf.graph.compound.base.BaseCompoundNode)
 	 */
 	@Override
-	public void setPair(BaseCompoundNode outNode, BaseCompoundNode inNode) {
+	public void setPair(ICompoundNode outNode, ICompoundNode inNode) {
 		if(!(outNode instanceof HibShapeNode) || !(inNode instanceof HibShapeNode)){
 			throw new ClassCastException("outNode and inNode must both be of type HibShapeNode");
 		}
@@ -209,7 +210,7 @@ public class LinkEdgeChildFactory extends BaseChildCompoundEdgeFactory implement
 	/* (non-Javadoc)
 	 * @see uk.ed.inf.graph.basic.IBasicEdgeFactory#isValidNodePair(uk.ed.inf.graph.basic.IBasicNode, uk.ed.inf.graph.basic.IBasicNode)
 	 */
-	public boolean isValidNodePair(BaseCompoundNode outNode, BaseCompoundNode inNode) {
+	public boolean isValidNodePair(ICompoundNode outNode, ICompoundNode inNode) {
 		boolean retVal = false;
 		if(super.isValidBaseNodePair(outNode, inNode)){
 			retVal = outNode instanceof HibShapeNode && inNode instanceof HibShapeNode;

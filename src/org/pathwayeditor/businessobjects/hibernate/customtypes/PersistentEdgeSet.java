@@ -20,8 +20,8 @@ import java.util.SortedSet;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.engine.SessionImplementor;
 
-import uk.ed.inf.graph.basic.IEdge;
-import uk.ed.inf.graph.basic.INode;
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.util.IDirectedEdgeSet;
 import uk.ed.inf.graph.util.IEdgeSet;
 
@@ -61,7 +61,7 @@ public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet
 		super(session, set);
 	}
 
-	public boolean contains(INode thisNode, INode thatNode) {
+	public boolean contains(ICompoundNode thisNode, ICompoundNode thatNode) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.contains(thisNode, thatNode);
 	}
@@ -71,22 +71,22 @@ public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet
 		return edgeSet.contains(edgeIdx);
 	}
 
-	public SortedSet get(INode thisNode, INode thatNode) {
+	public SortedSet get(ICompoundNode thisNode, ICompoundNode thatNode) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.get(thisNode, thatNode);
 	}
 
-	public IEdge get(int edgeIdx) {
+	public ICompoundEdge get(int edgeIdx) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.get(edgeIdx);
 	}
 
-	public SortedSet getEdgesWith(INode thisNode, INode node) {
+	public SortedSet getEdgesWith(ICompoundNode thisNode, ICompoundNode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.getEdgesWith(thisNode, node);
 	}
 
-	public boolean hasEdgesWith(INode thisNode, INode node) {
+	public boolean hasEdgesWith(ICompoundNode thisNode, ICompoundNode node) {
 		IEdgeSet edgeSet = (IEdgeSet)set;
 		return edgeSet.hasEdgesWith(thisNode, node);
 	}

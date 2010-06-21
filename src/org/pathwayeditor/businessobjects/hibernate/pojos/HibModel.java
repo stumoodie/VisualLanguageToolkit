@@ -39,6 +39,8 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.ISubCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
 import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
@@ -55,7 +57,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 //	private static final long serialVersionUID = 6646425760947242284L;
 	private final static int ROOT_NODE_IDX = 0;
 	private final static int INIT_EDGE_IDX = -1;
-	private ITree<BaseCompoundNode> tree = null;
+	private ITree<ICompoundNode> tree = null;
 	private Long id;
 	private HibRootNode rootNode;
 	private IndexCounter nodeCntr = new IndexCounter(ROOT_NODE_IDX);
@@ -64,8 +66,8 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	private IHibNotationFactory hibNotationFactory;
 	private ListenableModelStructureChangeItem listenerHandler = new ListenableModelStructureChangeItem();
 	private final transient IndexCounter momentoCntr;
-	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
-	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
+	private final IFilterCriteria<ICompoundNode> labelCriteria;
+	private final IFilterCriteria<ICompoundNode> shapeCriteria;
 	
 	/**
 	 * Default constructor that should only be used by hibernate.
@@ -74,13 +76,13 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	HibModel() {
 		super(new CompoundGraphCopyBuilder());
 		this.momentoCntr = new IndexCounter();
-		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.labelCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof ILabelNode;
 			}
 		};
-		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.shapeCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof IShapeNode;
 			}
 		};
@@ -93,20 +95,20 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		HibObjectType hibRootObjectType = hibNotationFactory.getObjectType(rootObjectType.getUniqueId());
 		this.rootNode = new HibRootNode(this, ROOT_NODE_IDX, new HibRootAttribute(this.canvas, this.canvas.getCreationSerialCounter().nextIndex(),
 				rootObjectType, hibRootObjectType));
-		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
+		this.tree = new GeneralTree<ICompoundNode>(this.rootNode);
 	}
 	
 	public HibModel(HibCanvas newCanvas, HibModel otherModel){
 		super(new CompoundGraphCopyBuilder(), otherModel);
 		this.canvas = newCanvas;
 		this.momentoCntr = new IndexCounter();
-		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.labelCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof ILabelNode;
 			}
 		};
-		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.shapeCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof IShapeNode;
 			}
 		};
@@ -139,7 +141,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	
 	void setRootNode(HibRootNode value) {
 		this.rootNode = value;
-		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
+		this.tree = new GeneralTree<ICompoundNode>(this.rootNode);
 	}
 	
 	public HibRootNode getRootNode() {
@@ -170,7 +172,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	}
 
 	@Override
-	protected ITree<BaseCompoundNode> getNodeTree() {
+	protected ITree<ICompoundNode> getNodeTree() {
 		return this.tree;
 	}
 
@@ -217,7 +219,7 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 		HibRootNode otherHibRootNode = (HibRootNode)otherRootNode;
 		HibRootAttribute copiedAttribute = new HibRootAttribute(this.getCanvas(), this.getCanvas().getCreationSerialCounter().nextIndex(), otherHibRootNode.getAttribute());
 		this.rootNode = new HibRootNode(this, newIndexValue, copiedAttribute);
-		this.tree = new GeneralTree<BaseCompoundNode>(this.rootNode);
+		this.tree = new GeneralTree<ICompoundNode>(this.rootNode);
 	}
 
 	/* (non-Javadoc)
@@ -254,14 +256,14 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#drawingNodeIterator()
 	 */
 	public Iterator<IDrawingNode> drawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(this.nodeIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(this.nodeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#linkEdgeIterator()
 	 */
 	public Iterator<ILinkEdge> linkEdgeIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.edgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(this.edgeIterator());
 	}
 
 	/**
@@ -332,8 +334,8 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#labelNodeIterator()
 	 */
 	public Iterator<ILabelNode> labelNodeIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), labelCriteria);
-		return new IterationCaster<ILabelNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), labelCriteria);
+		return new IterationCaster<ILabelNode, ICompoundNode>(filteredIter);
 	}
 
 	/* (non-Javadoc)
@@ -387,8 +389,8 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#shapeNodeIterator()
 	 */
 	public Iterator<IShapeNode> shapeNodeIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
-		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), shapeCriteria);
+		return new IterationCaster<IShapeNode, ICompoundNode>(filteredIter);
 	}
 
 	public boolean areListenersEnabled() {
@@ -404,8 +406,8 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	 */
 	@Override
 	protected void notifyCopyOperationComplete(
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> originalSelection,
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> copiedSelection) {
+			ISubCompoundGraph originalSelection,
+			ISubCompoundGraph copiedSelection) {
 		this.listenerHandler.notifyCopyOperationCompleted((IDrawingElementSelection)originalSelection, (IDrawingElementSelection)copiedSelection);
 	}
 
@@ -413,8 +415,27 @@ public class HibModel extends BaseCompoundGraph implements IModel {
 	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyRemovalOperationComplete(uk.ed.inf.graph.compound.ISubCompoundGraph)
 	 */
 	@Override
-	protected void notifyRemovalOperationComplete(
-			ISubCompoundGraph<? extends BaseCompoundNode, ? extends BaseCompoundEdge> subgraph) {
+	protected void notifyRemovalOperationComplete(ISubCompoundGraph subgraph) {
 		this.listenerHandler.notifyRemovalOperationCompleted((IDrawingElementSelection)subgraph);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyNewEdge(uk.ed.inf.graph.compound.base.BaseCompoundEdge)
+	 */
+	@Override
+	public void notifyNewEdge(BaseCompoundEdge newEdge) {
+		ISelectionFactory fact = this.newSelectionFactory();
+		fact.addLink((ILinkEdge)newEdge);
+		this.listenerHandler.notifyNewEdge(fact.createGeneralSelection());
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundGraph#notifyNewNode(uk.ed.inf.graph.compound.base.BaseCompoundNode)
+	 */
+	@Override
+	public void notifyNewNode(BaseCompoundNode newNode) {
+		ISelectionFactory fact = this.newSelectionFactory();
+		fact.addDrawingNode((IDrawingNode)newNode);
+		this.listenerHandler.notifyNewNode(fact.createGeneralSelection());
 	}
 }

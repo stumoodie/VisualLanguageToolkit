@@ -254,7 +254,7 @@
     <xs:complexType name="NumberAnnotationPropertyType">
         <xs:complexContent>
             <xs:extension base="PropertyType">
-                <xs:attribute name="value" type="xs:decimal" use="required"/>
+                <xs:attribute name="value" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>

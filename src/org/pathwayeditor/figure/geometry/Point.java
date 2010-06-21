@@ -79,8 +79,8 @@ public class Point {
 		return Math.sqrt(this.getSqrDistance(other));
 	}
 
-	public Point translate(double d, double e) {
-		return new Point(this.x + d, this.y + e);
+	public Point translate(double x, double y) {
+		return new Point(this.x + x, this.y + y);
 	}
 
 	public Point translate(Point t) {

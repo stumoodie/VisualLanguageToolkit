@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.exchange;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -235,7 +236,7 @@ public class CanvasBuilder {
 
 				public void visitNumberAnnotationProperty(INumberAnnotationProperty prop) {
 					NumberAnnotationProperty castXmlProp = (NumberAnnotationProperty)xmlProp;
-					prop.setValue(castXmlProp.getValue());
+					prop.setValue(new BigDecimal(castXmlProp.getValue()));
 				}
 
 				public void visitPlainTextAnnotationProperty(IPlainTextAnnotationProperty prop) {

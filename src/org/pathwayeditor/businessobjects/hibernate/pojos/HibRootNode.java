@@ -79,14 +79,14 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(model=");
-		builder.append(this.getModel());
-		builder.append(", index=");
+		builder.append("(index=");
 		builder.append(this.getIndex());
-		builder.append(", removed=");
+		builder.append(",uniqueIndex=");
+		builder.append(this.getUniqueIndex());
+		builder.append(",removed=");
 		builder.append(this.isRemoved());
-		builder.append(", attribute=");
-		builder.append(this.getAttribute());
+		builder.append(",attributeSerial=");
+		builder.append(this.getAttribute().getCreationSerial());
 		builder.append(")");
 		return builder.toString();
 	}

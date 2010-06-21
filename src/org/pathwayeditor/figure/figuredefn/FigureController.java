@@ -135,7 +135,9 @@ public class FigureController implements IFigureController {
 
 	public void generateFigureDefinition() {
 		this.builder.setEnvelope(requestedEnvelope);
-		logger.debug("Generating figure: env=" + this.requestedEnvelope);
+		if(logger.isDebugEnabled()){
+			logger.debug("Generating figure: env=" + this.requestedEnvelope);
+		}
 		GraphicsInstructionList oldValue = this.builder.getFigureDefinition();
 		this.builder.generateFigure();
 		this.figureInstructions = this.builder.getFigureDefinition();
@@ -147,7 +149,9 @@ public class FigureController implements IFigureController {
 			buf.append(this.requestedEnvelope);
 			logger.info(buf.toString());
 		}
-		logger.debug("Calcuated convex hull=" + this.getConvexHull());
+		if(logger.isDebugEnabled()){
+			logger.debug("Calcuated convex hull=" + this.getConvexHull());
+		}
 		this.notifyEvent(FigureChangeType.FIGURE_DEFN, oldValue,this.builder.getFigureDefinition());
 	}
 

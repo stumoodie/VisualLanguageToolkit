@@ -28,8 +28,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
-import uk.ed.inf.graph.compound.base.BaseCompoundNode;
+import uk.ed.inf.graph.compound.ICompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.base.BaseSubCompoundGraph;
 import uk.ed.inf.graph.util.IFilterCriteria;
 import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
@@ -42,22 +42,22 @@ import uk.ed.inf.graph.util.impl.NodeSet;
  */
 public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingElementSelection {
 	private final HibModel model;
-	private final IFilterCriteria<BaseCompoundNode> labelCriteria;
-	private final IFilterCriteria<BaseCompoundNode> shapeCriteria;
+	private final IFilterCriteria<ICompoundNode> labelCriteria;
+	private final IFilterCriteria<ICompoundNode> shapeCriteria;
 	
 	public ShapeLinkSubgraph(HibModel model) {
 		super();
 		this.model = model;
-		this.createNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
-		this.createTopNodeSet(new NodeSet<BaseCompoundNode, BaseCompoundEdge>());
-		this.createEdgeSet(new DirectedEdgeSet<BaseCompoundNode, BaseCompoundEdge>());
-		this.labelCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.createNodeSet(new NodeSet<ICompoundNode, ICompoundEdge>());
+		this.createTopNodeSet(new NodeSet<ICompoundNode, ICompoundEdge>());
+		this.createEdgeSet(new DirectedEdgeSet<ICompoundNode, ICompoundEdge>());
+		this.labelCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof ILabelNode;
 			}
 		};
-		this.shapeCriteria = new IFilterCriteria<BaseCompoundNode>(){
-			public boolean matched(BaseCompoundNode testObj) {
+		this.shapeCriteria = new IFilterCriteria<ICompoundNode>(){
+			public boolean matched(ICompoundNode testObj) {
 				return testObj instanceof IShapeNode;
 			}
 		};
@@ -75,7 +75,7 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#drawingNodeIterator()
 	 */
 	public Iterator<IDrawingNode> drawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.nodeIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(super.nodeIterator());
 	}
 
 	/* (non-Javadoc)
@@ -89,7 +89,7 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#linkEdgeIterator()
 	 */
 	public Iterator<ILinkEdge> linkEdgeIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(super.edgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(super.edgeIterator());
 	}
 
 	/* (non-Javadoc)
@@ -103,21 +103,21 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#topDrawingNodeIterator()
 	 */
 	public Iterator<IDrawingNode> topDrawingNodeIterator() {
-		return new IterationCaster<IDrawingNode, BaseCompoundNode>(super.topNodeIterator());
+		return new IterationCaster<IDrawingNode, ICompoundNode>(super.topNodeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#containsEdge(org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge)
 	 */
 	public boolean containsEdge(ILinkEdge linkEdge) {
-		return super.containsEdge((BaseCompoundEdge)linkEdge);
+		return super.containsEdge((ICompoundEdge)linkEdge);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#containsNode(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode)
 	 */
 	public boolean containsNode(IDrawingNode node) {
-		return super.containsNode((BaseCompoundNode)node);
+		return super.containsNode((ICompoundNode)node);
 	}
 
 	/* (non-Javadoc)
@@ -133,16 +133,16 @@ public class ShapeLinkSubgraph extends BaseSubCompoundGraph implements IDrawingE
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#shapeNodeIterator()
 	 */
 	public Iterator<IShapeNode> shapeNodeIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), shapeCriteria);
-		return new IterationCaster<IShapeNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), shapeCriteria);
+		return new IterationCaster<IShapeNode, ICompoundNode>(filteredIter);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#shapeNodeIterator()
 	 */
 	public Iterator<ILabelNode> labelNodeIterator() {
-		FilteredIterator<BaseCompoundNode> filteredIter = new FilteredIterator<BaseCompoundNode>(this.nodeIterator(), labelCriteria);
-		return new IterationCaster<ILabelNode, BaseCompoundNode>(filteredIter);
+		FilteredIterator<ICompoundNode> filteredIter = new FilteredIterator<ICompoundNode>(this.nodeIterator(), labelCriteria);
+		return new IterationCaster<ILabelNode, ICompoundNode>(filteredIter);
 	}
 
 }

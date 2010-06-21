@@ -31,7 +31,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.IterationCaster;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
+import uk.ed.inf.graph.compound.ICompoundEdge;
 
 /**
  * @author nhanlon
@@ -123,27 +123,27 @@ public class HibShapeNode extends HibCompoundNode implements IShapeNode {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#sourceLinkIterator()
 	 */
 	public Iterator<ILinkEdge> sourceLinkIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.getOutEdgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(this.getOutEdgeIterator());
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#targetLinkIterator()
 	 */
 	public Iterator<ILinkEdge> targetLinkIterator() {
-		return new IterationCaster<ILinkEdge, BaseCompoundEdge>(this.getInEdgeIterator());
+		return new IterationCaster<ILinkEdge, ICompoundEdge>(this.getInEdgeIterator());
 	}
 	
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(model=");
-		builder.append(this.getModel());
-		builder.append(", index=");
+		builder.append("(index=");
 		builder.append(this.getIndex());
-		builder.append(", removed=");
+		builder.append(",uniqueIndex=");
+		builder.append(this.getUniqueIndex());
+		builder.append(",removed=");
 		builder.append(this.isRemoved());
-		builder.append(", attribute=");
-		builder.append(this.getAttribute());
+		builder.append(",attributeSerial=");
+		builder.append(this.getAttribute().getCreationSerial());
 		builder.append(")");
 		return builder.toString();
 	}

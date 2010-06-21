@@ -34,6 +34,7 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
+import uk.ed.inf.graph.compound.ICompoundNode;
 import uk.ed.inf.graph.compound.base.BaseChildCompoundGraph;
 import uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory;
 import uk.ed.inf.graph.compound.base.BaseCompoundNode;
@@ -64,10 +65,10 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	 * @param outNode the source HibShapeNode of the link
 	 * @param inNode the target HibShapeNode of the link
 	 * @throws ClassCastException if outNode or inNode ar not of type HibShapeNode.
-	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory#setPair(BaseCompoundNode, BaseCompoundNode)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory#setPair(ICompoundNode, ICompoundNode)
 	 */
 	@Override
-	public void setPair(BaseCompoundNode outNode, BaseCompoundNode inNode){
+	public void setPair(ICompoundNode outNode, ICompoundNode inNode){
 		if(outNode == null || inNode == null) throw new NullPointerException("outNode and inNode cannot be null");
 		if(!(outNode instanceof HibShapeNode) || !(inNode instanceof HibShapeNode)){
 			throw new ClassCastException("parameters outNode and inNode must both be of type IShapeNode");
@@ -94,11 +95,10 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	}
 	
 	/* (non-Javadoc)
-	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory#newEdge(uk.ed.inf.graph.compound.base.BaseChildCompoundGraph, int, uk.ed.inf.graph.compound.base.BaseCompoundNode, uk.ed.inf.graph.compound.base.BaseCompoundNode)
+	 * @see uk.ed.inf.graph.compound.base.BaseCompoundEdgeFactory#newEdge(uk.ed.inf.graph.compound.base.BaseChildCompoundGraph, int, uk.ed.inf.graph.compound.base.ICompoundNode, uk.ed.inf.graph.compound.base.ICompoundNode)
 	 */
 	@Override
-	protected HibLinkEdge newEdge(BaseChildCompoundGraph owningGraph,
-			int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
+	protected HibLinkEdge newEdge(BaseChildCompoundGraph owningGraph, int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType.getUniqueId());
 		HibCanvas canvas = ((HibSubModel)owningGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
@@ -197,7 +197,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	/* (non-Javadoc)
 	 * @see uk.ed.inf.graph.basic.IBasicEdgeFactory#isValidNodePair(uk.ed.inf.graph.basic.IBasicNode, uk.ed.inf.graph.basic.IBasicNode)
 	 */
-	public boolean isValidNodePair(BaseCompoundNode outNode, BaseCompoundNode inNode) {
+	public boolean isValidNodePair(ICompoundNode outNode, ICompoundNode inNode) {
 		return outNode != null && inNode != null && outNode instanceof HibShapeNode
 		&& inNode instanceof HibShapeNode && outNode.getGraph().equals(this.getGraph())
 		&& inNode.getGraph().equals(outNode.getGraph());
