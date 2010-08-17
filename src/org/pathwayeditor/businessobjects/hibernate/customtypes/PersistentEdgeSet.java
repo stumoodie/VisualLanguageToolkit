@@ -20,10 +20,10 @@ import java.util.SortedSet;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.engine.SessionImplementor;
 
-import uk.ed.inf.graph.compound.ICompoundEdge;
-import uk.ed.inf.graph.compound.ICompoundNode;
-import uk.ed.inf.graph.util.IDirectedEdgeSet;
-import uk.ed.inf.graph.util.IEdgeSet;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.util.IDirectedEdgeSet;
+import uk.ac.ed.inf.graph.util.IEdgeSet;
 
 @SuppressWarnings("unchecked")
 public class PersistentEdgeSet extends PersistentSet implements IDirectedEdgeSet {

@@ -22,8 +22,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodePair;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
 
-import uk.ed.inf.graph.compound.base.BaseCompoundNodePair;
-
 /**
  * @author smoodie
  *

@@ -32,8 +32,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNumberProperty;
+import org.pathwayeditor.businessobjects.impl.AnnotatedCanvasAttribute;
+import org.pathwayeditor.businessobjects.impl.NumberProperty;
 
 /**
  * @author ntsorman
@@ -47,7 +47,7 @@ public class INumberAnnotationPropertyTest {
 	
 	private INumberAnnotationProperty numberProperty ;
 	private INumberPropertyDefinition mockPropDefn;
-	private HibAnnotatedCanvasAttribute mockCanvasAttribute;
+	private AnnotatedCanvasAttribute mockCanvasAttribute;
 	private static final String PROP_NAME = "propName";
 	private static final BigDecimal NUMBER_VALUE = new BigDecimal(10000000) ;
 	private static final BigDecimal OTHER_NUMBER_VALUE = new BigDecimal ( 1222121 ) ;
@@ -62,7 +62,7 @@ public class INumberAnnotationPropertyTest {
 			allowing(mockPropDefn).getDisplayName(); will(returnValue(PROP_NAME));
 		}});
 		
-		numberProperty = new HibNumberProperty (mockCanvasAttribute, mockPropDefn) ;
+		numberProperty = new NumberProperty (mockCanvasAttribute, mockPropDefn) ;
 	}
 
 	@After

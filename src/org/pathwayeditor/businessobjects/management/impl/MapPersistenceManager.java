@@ -62,6 +62,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#close()
 	 */
+	@Override
 	public void close(boolean force) {
 		if(force || !requestCancelStateChange(StateChange.CLOSED)) {
 			if(this.canvasPersistenceHandler.getLoadedCanvas() != null){
@@ -74,6 +75,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 		}
 	}
 
+	@Override
 	public void open() {
 		if (this.isOpen())
 			throw new IllegalStateException(MANAGER_ALREADY_OPEN);
@@ -92,6 +94,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#getCanvas()
 	 */
+	@Override
 	public ICanvas getCanvas() {
 		if (!this.isOpen())
 			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
@@ -108,6 +111,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#getOwningMap()
 	 */
+	@Override
 	public IMap getMap() {
 		return this.canvasPersistenceHandler.getOwningMap();
 	}
@@ -117,6 +121,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#isOpen()
 	 */
+	@Override
 	public boolean isOpen() {
 		return this.open.get();
 	}
@@ -126,6 +131,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#synchronise()
 	 */
+	@Override
 	public void synchronise() {
 		if (!this.isOpen())
 			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
@@ -138,6 +144,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IMapContentManager#addListener(org.pathwayeditor.businessobjects.bolayer.IPersistenceManagerListener)
 	 */
+	@Override
 	public void addListener(IPersistenceManagerStatusListener listener) {
 		if(listener == null) throw new IllegalArgumentException("listener cannot be null");
 		
@@ -166,6 +173,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * @seeorg.pathwayeditor.businessobjects.management.IMapContentPersistenceManager#createCanvas(org.pathwayeditor.businessobjects.notationsubsystem.
 	 * INotationSubsystem)
 	 */
+	@Override
 	public void createCanvas(INotationSubsystem notationSubsystem) {
 		if (notationSubsystem == null)
 			throw new IllegalArgumentException("notationSubsystem cannot be null");
@@ -184,6 +192,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	 * 
 	 * @see org.pathwayeditor.businessobjects.management.IMapPersistenceManager#doesCanvasExit()
 	 */
+	@Override
 	public boolean doesCanvasExist() {
 		if (!this.isOpen())
 				throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
@@ -194,6 +203,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IMapPersistenceManager#deleteCanvas()
 	 */
+	@Override
 	public void deleteCanvas() {
 		if(!this.isOpen())
 			throw new IllegalStateException(MANAGER_IS_NOT_OPEN);
@@ -205,6 +215,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#listenerIterator()
 	 */
+	@Override
 	public Iterator<IPersistenceManagerStatusListener> listenerIterator() {
 		return this.listeners.iterator();
 	}
@@ -212,6 +223,7 @@ public class MapPersistenceManager implements IMapPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)
 	 */
+	@Override
 	public void removeListener(IPersistenceManagerStatusListener listener) {
 		if(listener == null) throw new IllegalArgumentException("listener cannot be null");
 		

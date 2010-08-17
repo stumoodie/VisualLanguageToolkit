@@ -58,11 +58,13 @@ public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee
 	 * @param other
 	 * @return true if equal, false otherwise.
 	 */
+	@Override
 	boolean equals(Object other); 
 
 	/**
 	 * See <code>equals</code> for definition of identity.
 	 * @return the hash code.
 	 */
+	@Override
 	int hashCode();
 }

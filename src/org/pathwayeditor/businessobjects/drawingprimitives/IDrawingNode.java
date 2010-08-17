@@ -18,7 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 
 
@@ -28,21 +28,9 @@ import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
  */
 public interface IDrawingNode extends IDrawingElement {
 
-	int getIndex();
-	
-	ISubModel getSubModel();
-	
-	ITypedDrawingNode getParentNode();
-	
-	boolean isDescendent(IDrawingNode testNode);
-	
-	boolean canParent(IDrawingNode possibleChild);
-	
-	boolean canParent(INodeObjectType childType);
-	
-	boolean isValidChildOf(IDrawingNode possibleParent);
-	
-	boolean isValidChildOf(INodeObjectType parentType);
-	
+	@Override
 	IDrawingNodeAttribute getAttribute();
+	
+	@Override
+	ICompoundNode getCompoundGraphElement();
 }

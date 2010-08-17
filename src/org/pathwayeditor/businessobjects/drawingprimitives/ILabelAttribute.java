@@ -21,33 +21,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.figure.geometry.Dimension;
-import org.pathwayeditor.figure.geometry.Point;
 
 public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
-	
-	/**
-	 * Get the location of this LabelAttribute.
-	 * @return The location . Cannot be null.
-	 */
-	Point getLocation();
-
-	/**
-	 * Set the location for this LabelAttribute.
-	 * @throws IllegalArgumentException if the location is null.
-	 */
-	void setLocation (Point location) ;
-	
-	/**
-	 * Get the size of this LabelAttribute.
-	 * @return The size. Cannot be null.
-	 */
-	Dimension getSize();
-	
-	/**
-	 * Set the size for this LabelAttribute.
-	 * @throws IllegalArgumentException if the size is null.
-	 */
-	void setSize (Dimension size);
 	
 	/**
 	 * Get the property associated with the current Label
@@ -59,6 +34,7 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	 * Get the LabelNode of the current Label
 	 * @return The LabelNode. Cannot be null.
 	 */
+	@Override
 	ILabelNode getCurrentDrawingElement();
 	
 	
@@ -112,11 +88,13 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	 * @param other the other object to compare.
 	 * @return true is the business keys of both objects are the same, false otherwise. 
 	 */
+	@Override
 	boolean equals(Object other);
 	
 	/**
 	 * Gets a hash code based on the business key of this object. See {@link #equals(Object)}. 
 	 * @return the hash code.
 	 */
+	@Override
 	int hashCode();
 }

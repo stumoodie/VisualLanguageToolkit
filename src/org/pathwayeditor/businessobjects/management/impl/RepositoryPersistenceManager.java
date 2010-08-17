@@ -29,9 +29,9 @@ import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.ICanvasPersistenceHandlerFactory;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener;
+import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceHandler;
 import org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager;
-import org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener.StateChange;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
 import org.pathwayeditor.businessobjects.repository.IRepositoryItem;
@@ -72,6 +72,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#getRepository()
 	 */
+	@Override
 	public IRepository getRepository() {
 		if(!this.isOpen()) throw new IllegalStateException(MANAGER_NOT_OPEN);
 		
@@ -81,6 +82,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#isRepositoryOpen()
 	 */
+	@Override
 	public boolean isOpen() {
 		return this.open.get();
 	}
@@ -88,6 +90,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#openRepository()
 	 */
+	@Override
 	public void open()  {
 		if(isOpen()) throw new IllegalStateException(MANAGER_IS_ALREADY_OPEN);
 	
@@ -105,6 +108,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#closeRepository()
 	 */
+	@Override
 	public void close(boolean forceClose) {
 		if(forceClose || !requestCancelStateChange(StateChange.CLOSED)) {
 			this.repoPersistenceHandler.reset();
@@ -128,6 +132,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	 * 
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#synchroniseRepository(org.pathwayeditor.businessobjects.repository.IRepository)
 	 */
+	@Override
 	public void synchronise() {
 		if(!this.isOpen()) throw new IllegalStateException(MANAGER_NOT_OPEN);
 
@@ -137,6 +142,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IBusinessObjectFactory#canOpenCanvas(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
+	@Override
 	public boolean isValidMap(IMap map)  {
 		return map != null && map.getRepository().equals(this.getRepository());
 	}
@@ -144,6 +150,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.bolayer.IRepositoryManager#openMap(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
+	@Override
 	public IMapPersistenceManager getMapPersistenceManager(IMap map) {
 		if (!this.isOpen())
 			throw new IllegalStateException(MANAGER_NOT_OPEN);
@@ -170,6 +177,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#addListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)
 	 */
+	@Override
 	public void addListener(IPersistenceManagerStatusListener listener) {
 		if(listener == null) throw new IllegalArgumentException("listener cannot be null");
 		
@@ -179,6 +187,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#listenerIterator()
 	 */
+	@Override
 	public Iterator<IPersistenceManagerStatusListener> listenerIterator() {
 		return this.listeners.iterator();
 	}
@@ -186,6 +195,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IPersistenceManager#removeListener(org.pathwayeditor.businessobjects.management.IPersistenceManagerStatusListener)
 	 */
+	@Override
 	public void removeListener(IPersistenceManagerStatusListener listener) {
 		if(listener == null) throw new IllegalArgumentException("listener cannot be null");
 
@@ -195,6 +205,7 @@ public class RepositoryPersistenceManager implements IRepositoryPersistenceManag
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IRepositoryPersistenceManager#getMapPersistenceManager(java.lang.Long)
 	 */
+	@Override
 	public IMapPersistenceManager getMapPersistenceManager(int inode) {
 		IRepository repo = this.repoPersistenceHandler.getLoadedRepository();
 		IRepositoryItem item = repo.findRepositoryItemByINode(inode);

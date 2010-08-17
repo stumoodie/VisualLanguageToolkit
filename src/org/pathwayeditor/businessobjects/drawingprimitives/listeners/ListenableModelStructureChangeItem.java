@@ -54,14 +54,17 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	public final void notifyCopyOperationCompleted(final IDrawingElementSelection source, final IDrawingElementSelection copiedSelection){
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
+			@Override
 			public ModelStructureChangeType getChangeType() {
 				return ModelStructureChangeType.SELECTION_COPIED;
 			}
 
+			@Override
 			public IDrawingElementSelection getChangedSelection() {
 				return copiedSelection;
 			}
 
+			@Override
 			public IDrawingElementSelection getOriginalSelection() {
 				return source;
 			}
@@ -74,14 +77,17 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 			final IDrawingElementSelection movedSelection){
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
+			@Override
 			public ModelStructureChangeType getChangeType() {
 				return ModelStructureChangeType.SELECTION_MOVED;
 			}
 
+			@Override
 			public IDrawingElementSelection getChangedSelection() {
 				return movedSelection;
 			}
 
+			@Override
 			public IDrawingElementSelection getOriginalSelection() {
 				return source;
 			}
@@ -92,14 +98,17 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	public final void notifyRemovalOperationCompleted(final IDrawingElementSelection removedSelection){
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
+			@Override
 			public ModelStructureChangeType getChangeType() {
 				return ModelStructureChangeType.SELECTION_REMOVED;
 			}
 
+			@Override
 			public IDrawingElementSelection getChangedSelection() {
 				return null;
 			}
 
+			@Override
 			public IDrawingElementSelection getOriginalSelection() {
 				return removedSelection;
 			}
@@ -112,6 +121,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#addModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelNodeChangeListener)
 	 */
+	@Override
 	public void addModelChangeListener(IModelChangeListener listener) {
 		this.listeners.add(listener);
 	}
@@ -119,6 +129,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#modelNodeChangeListenerIterator()
 	 */
+	@Override
 	public Iterator<IModelChangeListener> modelChangeListenerIterator() {
 		return this.listeners.iterator();
 	}
@@ -126,6 +137,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#removeModelNodeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelNodeChangeListener)
 	 */
+	@Override
 	public void removeModelChangeListener(IModelChangeListener listener) {
 		this.listeners.remove(listener);
 	}
@@ -133,6 +145,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
 	 */
+	@Override
 	public boolean areListenersEnabled() {
 		return this.enabled;
 	}
@@ -140,6 +153,7 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
 	 */
+	@Override
 	public void setListenersEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -147,14 +161,17 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	public void notifyNewEdge(final IDrawingElementSelection selection) {
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
+			@Override
 			public ModelStructureChangeType getChangeType() {
 				return ModelStructureChangeType.LINK_EDGE_CREATED;
 			}
 
+			@Override
 			public IDrawingElementSelection getChangedSelection() {
 				return selection;
 			}
 
+			@Override
 			public IDrawingElementSelection getOriginalSelection() {
 				return null;
 			}
@@ -165,14 +182,17 @@ public final class ListenableModelStructureChangeItem implements IModelChangeLis
 	public void notifyNewNode(final IDrawingElementSelection selection) {
 		IModelStructureChangeEvent event = new IModelStructureChangeEvent(){
 
+			@Override
 			public ModelStructureChangeType getChangeType() {
 				return ModelStructureChangeType.DRAWING_NODE_CREATED;
 			}
 
+			@Override
 			public IDrawingElementSelection getChangedSelection() {
 				return selection;
 			}
 
+			@Override
 			public IDrawingElementSelection getOriginalSelection() {
 				return null;
 			}

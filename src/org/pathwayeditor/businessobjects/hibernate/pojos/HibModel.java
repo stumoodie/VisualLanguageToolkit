@@ -39,19 +39,15 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeLinkSubgraph
 import org.pathwayeditor.businessobjects.hibernate.pojos.graph.ShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
-import uk.ed.inf.graph.compound.ICompoundEdge;
-import uk.ed.inf.graph.compound.ICompoundNode;
-import uk.ed.inf.graph.compound.ISubCompoundGraph;
-import uk.ed.inf.graph.compound.base.BaseCompoundEdge;
-import uk.ed.inf.graph.compound.base.BaseCompoundGraph;
-import uk.ed.inf.graph.compound.base.BaseCompoundNode;
-import uk.ed.inf.graph.compound.base.BaseCompoundNodeFactory;
-import uk.ed.inf.graph.compound.base.BaseSubCompoundGraphFactory;
-import uk.ed.inf.graph.util.IFilterCriteria;
-import uk.ed.inf.graph.util.IndexCounter;
-import uk.ed.inf.graph.util.impl.FilteredIterator;
-import uk.ed.inf.tree.GeneralTree;
-import uk.ed.inf.tree.ITree;
+import src.uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import src.uk.ac.ed.inf.graph.compound.ICompoundNode;
+import src.uk.ac.ed.inf.graph.compound.ISubCompoundGraph;
+import src.uk.ac.ed.inf.graph.util.IFilterCriteria;
+import src.uk.ac.ed.inf.graph.util.IndexCounter;
+import src.uk.ac.ed.inf.graph.util.impl.FilteredIterator;
+import src.uk.ac.ed.inf.tree.GeneralTree;
+import src.uk.ac.ed.inf.tree.ITree;
+
 
 public class HibModel extends BaseCompoundGraph implements IModel {
 //	private static final long serialVersionUID = 6646425760947242284L;

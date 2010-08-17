@@ -41,14 +41,17 @@ public class ListenableFolder extends ListenableRepositoryItem {
 	public final void notifyDescendentChange(final ChangeType type, final IRepositoryItem changedItem, final IFolder changedFolder) {
 		IFolderContentChangeEvent event = new IFolderContentChangeEvent(){
 
+			@Override
 			public IRepositoryItem getChangedItem() {
 				return changedItem;
 			}
 
+			@Override
 			public ChangeType getChangeType() {
 				return type;
 			}
 
+			@Override
 			public IFolder getChangedFolder() {
 				return changedFolder;
 			}

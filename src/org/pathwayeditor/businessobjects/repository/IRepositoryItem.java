@@ -47,6 +47,7 @@ public interface IRepositoryItem extends Comparable<IRepositoryItem> {
 	 * @param object the other object to compare.
 	 * @return true if the repositories are equal and the inodes are identical, false otherwise.
 	 */
+	@Override
 	boolean equals(Object object);
 	
 	/**

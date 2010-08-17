@@ -13,17 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-/**
- * 
- */
-package org.pathwayeditor.businessobjects.drawingprimitives;
+
+package org.pathwayeditor.testfixture;
+
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
+
 
 /**
  * @author smoodie
  *
  */
-public interface ILabelSubModel extends ISubModel {
+public interface IDrawingNodeBuilder extends IObjectBuilder {
 
-	ILabelNodeFactory labelNodeFactory();
-	
+	IDrawingNode getNode();
+
 }

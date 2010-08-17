@@ -66,14 +66,17 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	public final void notifyNodeResize(final Point originDelta, final Dimension sizeDelta){
 		IDrawingNodeAttributeResizedEvent event = new IDrawingNodeAttributeResizedEvent() {
 
+			@Override
 			public IDrawingNodeAttribute getAttibuteChanged() {
 				return nodeAttribute;
 			}
 
+			@Override
 			public Point getOriginChange() {
 				return originDelta;
 			}
 
+			@Override
 			public Dimension getSizeChange() {
 				return sizeDelta;
 			}
@@ -84,10 +87,12 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	public final void notifyNodeTranslation(final Point delta){
 		IDrawingNodeAttributeTranslationEvent event = new IDrawingNodeAttributeTranslationEvent() {
 			
+			@Override
 			public Point getTranslationDelta() {
 				return delta;
 			}
 			
+			@Override
 			public IDrawingNodeAttribute getAttibuteChanged() {
 				return nodeAttribute;
 			}
@@ -98,6 +103,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
 	 */
+	@Override
 	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
 		this.listeners.add(listener);
 	}
@@ -105,6 +111,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
 	 */
+	@Override
 	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
 		return new ArrayList<IDrawingNodeAttributeListener>(this.listeners);
 	}
@@ -112,6 +119,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
 	 */
+	@Override
 	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
 		this.listeners.remove(listener);
 	}

@@ -14,7 +14,6 @@ import org.exolab.castor.xml.ValidationException;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.repository.IRepository;
@@ -72,7 +71,7 @@ public class XMLMarshallingTest extends GenericXlsTester {
 		Writer out = null;
 		try {
 			CanvasMarshaller builder = new CanvasMarshaller();
-			builder.setCanvas((HibCanvas)dbCanvas);
+			builder.setCanvas((Canvas)dbCanvas);
 			builder.buildCanvas();
 			Canvas xmlCanvas = builder.getCanvas();
 			xmlCanvas.validate();

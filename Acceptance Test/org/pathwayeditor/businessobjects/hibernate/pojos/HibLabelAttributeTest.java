@@ -75,7 +75,7 @@ public class HibLabelAttributeTest extends PojoXlsXmlTester {
 	 */
 	@Test
 	public final void testGetVisualisableProperty() {
-		HibProperty actualProp = this.testInstance.getProperty();
+		AnnotationProperty actualProp = this.testInstance.getProperty();
 		ICanvasAttribute owningAttribute = actualProp.getOwner();
 		assertEquals("expected owning attribute serial", EXPECTED_PROPERTY_OWNING_ATTR_SERIAL, owningAttribute.getCreationSerial());
 		assertEquals("expected property", EXPECTED_PROPERTY_ID, actualProp.getId());

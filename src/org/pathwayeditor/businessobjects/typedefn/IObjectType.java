@@ -54,11 +54,13 @@ public interface IObjectType extends Comparable<IObjectType> {
 	 * @param other the other object to compare.
 	 * @return true if equal based on above criteria, false otherwise.
 	 */
+	@Override
 	boolean equals(Object other);
 	
 	/**
 	 * Gets the hash code, which is based on the notation and uniqueId. 
 	 * @return the hashcode.
 	 */
+	@Override
 	int hashCode();
 }

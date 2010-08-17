@@ -56,18 +56,22 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 	public final void notifyPropertyChange(final CanvasAttributePropertyChange type, final Object oldValue, final Object newValue){
 		ICanvasAttributePropertyChangeEvent event = new ICanvasAttributePropertyChangeEvent(){
 
+			@Override
 			public ICanvasAttribute getAttribute(){
 				return attribute;
 			}
 			
+			@Override
 			public Object getNewValue() {
 				return newValue;
 			}
 
+			@Override
 			public Object getOldValue() {
 				return oldValue;
 			}
 
+			@Override
 			public CanvasAttributePropertyChange getPropertyChange() {
 				return type;
 			}
@@ -76,14 +80,17 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 		firePropertyChange(event);
 	}
 	
+	@Override
 	public final Iterator<ICanvasAttributePropertyChangeListener> listenerIterator(){
 		return this.listeners.iterator();
 	}
 	
+	@Override
 	public final void addChangeListener(ICanvasAttributePropertyChangeListener listener){
 		this.listeners.add(listener);
 	}
 
+	@Override
 	public final void removeChangeListener(ICanvasAttributePropertyChangeListener listener){
 		this.listeners.remove(listener);
 	}
@@ -91,6 +98,7 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
 	 */
+	@Override
 	public boolean areListenersEnabled() {
 		return this.enabled;
 	}
@@ -98,6 +106,7 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
 	 */
+	@Override
 	public void setListenersEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}

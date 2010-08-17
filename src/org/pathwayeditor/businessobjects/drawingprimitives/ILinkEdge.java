@@ -15,15 +15,11 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+
 
 
 public interface ILinkEdge extends IDrawingElement {
-	
-	/**
-	 * Gets the index number that Label has on the graph.
-	 * @return the number of links.
-	 */
-	int getIndex();
 	
 	/**
 	 * Gets the source shape of this link.
@@ -71,17 +67,15 @@ public interface ILinkEdge extends IDrawingElement {
 	 * Gets the {@link ILinkAttribute} relates to this LinkEdge. 
 	 * @return the ILinkAttribute. Cannot be null.
 	 */
+	@Override
 	ILinkAttribute getAttribute();
-	
-	/**
-	 * Get submodel that owns this linkedge.
-	 * @return the submodel, which cannot be null
-	 */
-	ISubModel getOwningSubModel();
 	
 	/**
 	 * Does this link have the same node as its source and target?
 	 * @return true if the source and target are the same, false otherwise.
 	 */
 	boolean isSelfEdge();
+	
+	@Override
+	ICompoundEdge getCompoundGraphElement();
 }

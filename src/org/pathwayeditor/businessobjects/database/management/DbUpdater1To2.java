@@ -26,6 +26,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	}
 	
 	
+	@Override
 	public void setConnectionManager(IDbConnectionManager dbManager){
 		this.connManager = dbManager;
 	}
@@ -33,6 +34,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbUpgrader#doUpgrade(java.sql.Connection)
 	 */
+	@Override
 	public void doUpgrade() throws SQLException {
 		if(!canDoUpgrade()) throw new IllegalStateException("Cannot perfrom upgrade on db version as set");
 
@@ -62,6 +64,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 		}
 	}
 	
+	@Override
 	public boolean canDoUpgrade() throws SQLException{
 		int currVersion = readDbVersion();
 
@@ -71,6 +74,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbUpgrader#setTargetVersion(int)
 	 */
+	@Override
 	public void setRequestedTargetVersion(int targetVersion) {
 		this.requestedTargetVersion = targetVersion;
 	}
@@ -79,6 +83,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbUpgrader#getTargetVersion()
 	 */
+	@Override
 	public int getRequestedTargetVersion() {
 		return (this.requestedTargetVersion == null) ? VERSION_NOT_SET : this.requestedTargetVersion;
 	}
@@ -110,6 +115,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbUpgrader#isUpgradeRequired()
 	 */
+	@Override
 	public boolean isUpgradeRequired() throws SQLException {
 		return !EXPECTED_TARGET.equals(readDbVersion());
 	}
@@ -118,6 +124,7 @@ public class DbUpdater1To2 implements IDbUpgrader {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbUpgrader#getConnectionManager()
 	 */
+	@Override
 	public IDbConnectionManager getConnectionManager() {
 		return this.connManager;
 	}

@@ -19,6 +19,7 @@ public final class FigureDefinition implements IFigureDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IFigureDefinition#iterator()
 	 */
+	@Override
 	public Iterator<Instruction> iterator(){
 		return this.instlist.iterator();
 	}
@@ -26,6 +27,7 @@ public final class FigureDefinition implements IFigureDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IFigureDefinition#getBindVariableNames()
 	 */
+	@Override
 	public Set<String> getBindVariableNames(){
 		Set<String> retVal = new TreeSet<String>();
 		for(Instruction inst : this.instlist){
@@ -51,6 +53,7 @@ public final class FigureDefinition implements IFigureDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IFigureDefinition#size()
 	 */
+	@Override
 	public int size(){
 		return this.instlist.size();
 	}
@@ -58,6 +61,7 @@ public final class FigureDefinition implements IFigureDefinition {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IFigureDefinition#get(int)
 	 */
+	@Override
 	public Instruction get(int index){
 		return this.instlist.get(index);
 	}

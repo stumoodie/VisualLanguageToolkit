@@ -33,13 +33,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibNotation;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.repository.IMap;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -79,15 +72,15 @@ public class ILinkAttributeTest {
 	private static final LineStyle LINE_STYLE = LineStyle.DASH_DOT ;
 	
 	private ILinkAttribute linkAttribute ;
-	private HibCanvas mockCanvas ;
+	private Canvas mockCanvas ;
 	private IBendPoint mockBendPoint1 ;
 	private IBendPoint mockBendPoint2 ;
 	private ILinkObjectType stubObjectType;
-//	private HibTextProperty textProperty ;
+//	private TextProperty textProperty ;
 	
 	@Before
 	public void setUp() throws Exception {
-//		mockCanvas = mockery.mock(HibCanvas.class , "hibCanvas") ;
+//		mockCanvas = mockery.mock(Canvas.class , "hibCanvas") ;
 //		final HibObjectType mockObjectType = mockery.mock(HibObjectType.class , "mockObjectType") ;
 //		final ILinkObjectType mockLinkObjectType = mockery.mock(ILinkObjectType.class, "mockLinkObjectType");
 //		final IDefaultLinkAttributes stubDefaults = new StubDefaultLinkAttributes();
@@ -100,7 +93,7 @@ public class ILinkAttributeTest {
 		INotationSubsystem stubNotationSubSystem = new StubNotationSubSystem();
 		IMap stubMap = new StubMap();
 		IHibNotationFactory notationFact = new StubHibNotationFactory();
-		mockCanvas = new HibCanvas(stubMap.getRepository().getName(), stubMap.getINode(), notationFact, stubNotationSubSystem, stubMap.getName());
+		mockCanvas = new Canvas(stubMap.getRepository().getName(), stubMap.getINode(), notationFact, stubNotationSubSystem, stubMap.getName());
 		HibObjectType objectType = new HibObjectType(StubLinkObjectType.EXPECTED_UNIQUE_ID, StubLinkObjectType.EXPECTED_NAME, StubLinkObjectType.EXPECTED_DESCRIPTION, ObjectTypeClassification.SHAPE);
 		HibNotation notation = notationFact.getNotation();
 		notation.addObjectType(objectType);
@@ -117,7 +110,7 @@ public class ILinkAttributeTest {
 		
 //		linkAttribute.setUrl(URL) ;
 		
-//		textProperty = new HibTextProperty () ;
+//		textProperty = new TextProperty () ;
 
 	}
 

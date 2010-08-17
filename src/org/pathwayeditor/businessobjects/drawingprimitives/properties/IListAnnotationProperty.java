@@ -31,12 +31,14 @@ public interface IListAnnotationProperty extends IAnnotationProperty{
 	 * Get the definition associated with this NumberProperty.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	IListPropertyDefinition getDefinition();
 	
 	/**
 	 * Get the numerical value associated with this property.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	List<String> getValue();
 	
 	/**

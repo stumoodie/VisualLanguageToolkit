@@ -41,7 +41,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 
-import uk.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author ntsorman
@@ -62,7 +62,7 @@ public class HibLinkTerminusTest {
 
 	private static final double DOUBLE_DELTA = 0.001; 
 
-	private HibCanvas mockCanvas;
+	private Canvas mockCanvas;
 	private HibLinkAttribute mockHibLink;
 	private ILinkTerminusDefinition mockTermDefn;
 	private ILinkTerminus linkTerminus;
@@ -74,7 +74,7 @@ public class HibLinkTerminusTest {
 		mockHibLink = mockery.mock(HibLinkAttribute.class , "mockHibLink") ;
 		mockTermDefn = mockery.mock(ILinkTerminusDefinition.class, "mockTermDefn");
 		mockDefaults = mockery.mock(ILinkTerminusDefaults.class, "mockDefaults");
-		mockCanvas = mockery.mock(HibCanvas.class, "mockCanvas");
+		mockCanvas = mockery.mock(Canvas.class, "mockCanvas");
 		
 		this.attributes = new HashSet<HibCanvasAttribute>();
 		

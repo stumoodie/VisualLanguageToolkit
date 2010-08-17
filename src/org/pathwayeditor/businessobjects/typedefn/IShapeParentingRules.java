@@ -21,5 +21,6 @@ public interface IShapeParentingRules extends IObjectTypeParentingRules {
 	 * Get object type that the rules belong to.
 	 * @return an valid instance that is guaranteed to be non-null.
 	 */
+	@Override
 	IShapeObjectType getObjectType();
 }

@@ -18,6 +18,6 @@ public interface IObjectTypeInjector {
 	
 	void inject(HibLinkTerminus attribute) throws InconsistentNotationDefinitionException;
 	
-	void inject(HibRootAttribute attribute) throws InconsistentNotationDefinitionException;
+	void inject(RootAttribute attribute) throws InconsistentNotationDefinitionException;
 	
 }

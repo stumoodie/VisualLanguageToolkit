@@ -27,11 +27,13 @@ public interface IShapeObjectType extends INodeObjectType {
 	 * Returns the unique identifier for the link object type, which must be a positive integer.
 	 * @return the unique id, which must comply with the postcondition: <code>getUniqueId() > 0</code>. 
 	 */
+	@Override
 	int getUniqueId();
 
 	/**
 	 * Get the parenting rules of the shape
 	 */
+	@Override
 	IShapeParentingRules getParentingRules();
 
 	/**

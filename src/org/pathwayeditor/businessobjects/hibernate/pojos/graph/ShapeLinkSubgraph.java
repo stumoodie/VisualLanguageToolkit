@@ -28,13 +28,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 
-import uk.ed.inf.graph.compound.ICompoundEdge;
-import uk.ed.inf.graph.compound.ICompoundNode;
-import uk.ed.inf.graph.compound.base.BaseSubCompoundGraph;
-import uk.ed.inf.graph.util.IFilterCriteria;
-import uk.ed.inf.graph.util.impl.DirectedEdgeSet;
-import uk.ed.inf.graph.util.impl.FilteredIterator;
-import uk.ed.inf.graph.util.impl.NodeSet;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.util.IFilterCriteria;
+import uk.ac.ed.inf.graph.util.impl.DirectedEdgeSet;
+import uk.ac.ed.inf.graph.util.impl.FilteredIterator;
 
 /**
  * @author smoodie

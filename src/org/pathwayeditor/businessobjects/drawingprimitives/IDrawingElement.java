@@ -18,6 +18,10 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+
 /**
  * Any element drawn on the canvas. 
  * @author smoodie
@@ -25,6 +29,8 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface IDrawingElement {
 
+	ICompoundGraphElement getCompoundGraphElement();
+	
 	/**
 	 * Get the model that owns this element.
 	 * @return the model, which cannot be null.
@@ -44,16 +50,25 @@ public interface IDrawingElement {
 	boolean isRemoved();
 	
 	/**
+	 * Marks the element as removed. This method should not be used directly by client code and it may leave the underlying graph
+	 * in a consistent state and may not be monitored by listeners. 
+	 * @param setRemoved sets whether the element is removed or not.
+	 */
+	void markRemoved(boolean setRemoved);
+
+	/**
 	 * identity based on the canvas and the attribute combination. 
 	 * @param other
 	 * @return true if objects are equal, false otherwise.
 	 */
+	@Override
 	boolean equals(Object other);
 	
 	/**
 	 * See equals for identity rules.
 	 * @return the hash code.
 	 */
+	@Override
 	int hashCode();
 	
 	
@@ -68,4 +83,23 @@ public interface IDrawingElement {
 	 * @return the level of the element.
 	 */
 	int getLevel();
+	
+	int getIndex();
+	
+	ISubModel getSubModel();
+	
+	IDrawingElement getParentNode();
+	
+	IParentingValidator getParentingValidator();
+	
+	boolean isDescendent(IDrawingNode testNode);
+	
+	boolean canParent(IDrawingElement possibleChild);
+	
+	boolean canParent(IObjectType childType);
+	
+	boolean isValidChildOf(IDrawingElement possibleParent);
+	
+	boolean isValidChildOf(IObjectType parentType);
+	
 }

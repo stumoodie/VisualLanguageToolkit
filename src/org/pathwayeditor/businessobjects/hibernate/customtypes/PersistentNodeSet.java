@@ -18,8 +18,8 @@ package org.pathwayeditor.businessobjects.hibernate.customtypes;
 import org.hibernate.collection.PersistentSet;
 import org.hibernate.engine.SessionImplementor;
 
-import uk.ed.inf.graph.compound.ICompoundNode;
-import uk.ed.inf.graph.util.INodeSet;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.util.INodeSet;
 
 @SuppressWarnings("unchecked")
 public class PersistentNodeSet extends PersistentSet implements INodeSet {

@@ -23,6 +23,8 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+
 
 /**
  * @author smoodie
@@ -157,4 +159,6 @@ public interface IModel extends IModelChangeListenee, ISuppressableChangeListene
 	 * @return the number of link edges.
 	 */
 	int numLinkEdges();
+	
+	ICompoundGraph getCompoundGraph();
 }

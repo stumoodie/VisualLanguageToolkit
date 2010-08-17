@@ -28,12 +28,14 @@ public class DbCompatabilityHandler implements IDbCompatibilityHandler {
 		this.requiredVersion = requiredVersion;
 	}
 	
+	@Override
 	public void addUpgrader(IDbUpgrader upgrader){
 		this.upgraders.add(upgrader);
 		upgrader.setConnectionManager(this.connManager);
 		upgrader.setRequestedTargetVersion(requiredVersion);
 	}
 	
+	@Override
 	public boolean isUpgradeRequired() throws SQLException {
 		boolean retVal = false;
 		Iterator<IDbUpgrader> iter = this.upgraders.iterator();
@@ -44,6 +46,7 @@ public class DbCompatabilityHandler implements IDbCompatibilityHandler {
 		return retVal;
 	}
 
+	@Override
 	public void upgrade() throws SQLException {
 		if(!canDoUpgrade()) throw new IllegalStateException("Can not upgrade");
 		
@@ -59,6 +62,7 @@ public class DbCompatabilityHandler implements IDbCompatibilityHandler {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDbCompatibilityHandler#canDoUpgrade()
 	 */
+	@Override
 	public boolean canDoUpgrade() throws SQLException {
 		boolean retVal = false;
 		Iterator<IDbUpgrader> iter = this.upgraders.iterator();

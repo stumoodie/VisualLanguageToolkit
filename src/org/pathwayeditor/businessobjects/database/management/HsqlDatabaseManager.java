@@ -42,6 +42,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDatabaseManager#getConnectionInfo()
 	 */
+	@Override
 	public IConnectionInfo getConnectionInfo() {
 		return this.connManager.getConnectionInfo();
 	}
@@ -49,6 +50,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDatabaseManager#isAlive()
 	 */
+	@Override
 	public boolean isAlive() {
 		return this.connManager.isAlive();
 	}
@@ -112,6 +114,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDatabaseManager#isStartupImplemented()
 	 */
+	@Override
 	public boolean isStartupImplemented() {
 		return true;
 	}
@@ -119,6 +122,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDatabaseManager#shutdown()
 	 */
+	@Override
 	public void shutdown() throws SQLException {
 		this.connManager.openConnection();
 		Connection conn = this.connManager.getConnection();
@@ -143,6 +147,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IDatabaseManager#startup()
 	 */
+	@Override
 	public void startup() throws SQLException {
 		this.connManager.doesTestConnectionSucceed();
 	}
@@ -150,6 +155,7 @@ public class HsqlDatabaseManager implements IDatabaseManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDatabaseManager#getConnectionManager()
 	 */
+	@Override
 	public IDbConnectionManager getConnectionManager() {
 		return this.connManager;
 	}

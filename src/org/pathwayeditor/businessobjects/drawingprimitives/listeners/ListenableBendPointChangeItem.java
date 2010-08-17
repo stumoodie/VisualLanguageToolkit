@@ -57,22 +57,27 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	public final void notifyPropertyChange(final BendPointChange type, final IBendPoint bp, final int oldIdxPos, final int newIdxPos){
 		IBendPointChangeEvent event = new IBendPointChangeEvent(){
 
+			@Override
 			public BendPointChange getChangeType() {
 				return type;
 			}
 
+			@Override
 			public int getNewIndexPos() {
 				return newIdxPos;
 			}
 
+			@Override
 			public int getOldIndexPos() {
 				return oldIdxPos;
 			}
 
+			@Override
 			public ILinkAttribute getLink() {
 				return linkAttribute;
 			}
 
+			@Override
 			public IBendPoint getBendPoint() {
 				return bp;
 			}
@@ -81,14 +86,17 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 		firePropertyChange(event);
 	}
 	
+	@Override
 	public final Iterator<IBendPointChangeListener> bendPointListenerIterator(){
 		return this.listeners.iterator();
 	}
 	
+	@Override
 	public final void addChangeListener(IBendPointChangeListener listener){
 		this.listeners.add(listener);
 	}
 
+	@Override
 	public final void removeChangeListener(IBendPointChangeListener listener){
 		this.listeners.remove(listener);
 	}
@@ -96,6 +104,7 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
 	 */
+	@Override
 	public boolean areListenersEnabled() {
 		return this.enabled;
 	}
@@ -103,6 +112,7 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
 	 */
+	@Override
 	public void setListenersEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}

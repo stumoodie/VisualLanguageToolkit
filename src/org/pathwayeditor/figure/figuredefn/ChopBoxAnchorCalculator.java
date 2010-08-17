@@ -38,23 +38,27 @@ public class ChopBoxAnchorCalculator implements IAnchorLocator {
     	this.shape = hull;
     }
 
+	@Override
 	public boolean canCalcAnchorPosition() {
 		return this.otherEndPoint != null;
 	}
 
 
 
+	@Override
 	public IConvexHull getOwningShapeHull() {
 		return this.shape;
 	}
 
 
+	@Override
 	public Point calcAnchorPosition() {
 		IConvexHull hull = this.shape;
 		return hull.getPointLineIntersects(this.otherEndPoint);
 	}
 
 
+	@Override
 	public void setOtherEndPoint(Point otherEndPoint) {
 		this.otherEndPoint = otherEndPoint;
 	}
@@ -65,6 +69,7 @@ public class ChopBoxAnchorCalculator implements IAnchorLocator {
 	}
 
 
+	@Override
 	public Point getOtherEndPoint() {
 		return this.otherEndPoint;
 	}

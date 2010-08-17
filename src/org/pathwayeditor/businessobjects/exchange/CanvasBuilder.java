@@ -26,10 +26,13 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty;
@@ -65,23 +68,6 @@ import org.pathwayeditor.businessobjects.exchange.castor.TextAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
-import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLabelNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkEdge;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkTerminus;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibProperty;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeNode;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibSubModel;
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -94,23 +80,23 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
-import uk.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
 public class CanvasBuilder {
-	private HibCanvas hibCanvas = null;
+	private ICanvas hibCanvas = null;
 	private final Canvas xmlInstance;
 	private final INotationSubsystemPool notationPool;
 	private final int iNode;
 	private final String repoName;
 	private IHibNotationFactory notationFactory;
 	private INotationSubsystem notationSubsystem;
-	private final Map<Integer, HibShapeNode> hibNodeMap;
+	private final Map<Integer, IShapeNode> hibNodeMap;
 	private final Map<Integer, PropertyType> xmlPropMap;
-	private final Map<Integer, HibProperty> hibPropMap;
+	private final Map<Integer, IAnnotationProperty> hibPropMap;
 	private final Map<EndDecoratorTypeType, LinkEndDecoratorShape> endDecMapping;
 	
 	public CanvasBuilder(String repoName, int iNode, Canvas xmlInstance, INotationSubsystemPool notationPool){
@@ -118,9 +104,9 @@ public class CanvasBuilder {
 		this.notationPool = notationPool;
 		this.repoName = repoName;
 		this.iNode = iNode;
-		this.hibNodeMap = new HashMap<Integer, HibShapeNode>();
+		this.hibNodeMap = new HashMap<Integer, IShapeNode>();
 		this.xmlPropMap = new HashMap<Integer, PropertyType>();
-		this.hibPropMap = new HashMap<Integer, HibProperty>();
+		this.hibPropMap = new HashMap<Integer, IAnnotationProperty>();
 		this.endDecMapping = new HashMap<EndDecoratorTypeType, LinkEndDecoratorShape>();
 		initEndDecMappings();
 	}
@@ -179,7 +165,7 @@ public class CanvasBuilder {
 	}
 	
 	
-	private HibLinkTerminus createLinkTerminus(LinkTerminusType xmlTerm, LinkTermType termType, ILinkTerminusDefinition defn){
+	private ILinkTerminus createLinkTerminus(LinkTerminusType xmlTerm, LinkTermType termType, ILinkTerminusDefinition defn){
 		HibLinkTerminus retVal = new HibLinkTerminus(this.hibCanvas, xmlTerm.getCreationSerial(), termType, defn);
 		retVal.setEndSize(createDimension(xmlTerm.getDecoratorSize()));
 		retVal.setLocation(createPoint(xmlTerm.getLocation()));
@@ -189,7 +175,7 @@ public class CanvasBuilder {
 		return retVal;
 	}
 
-	private void buildShapeAttributes(HibShapeAttribute shapeAttrib, ShapeAttribute xmlShapeAtt) {
+	private void buildShapeAttributes(ShapeAttribute shapeAttrib, ShapeAttribute xmlShapeAtt) {
 		Envelope bounds = new Envelope(xmlShapeAtt.getLocation().getX(), xmlShapeAtt.getLocation()
 				.getY(), xmlShapeAtt.getSize().getWidth(), xmlShapeAtt.getSize().getHeight());
 		shapeAttrib.setBounds(bounds);
@@ -203,10 +189,10 @@ public class CanvasBuilder {
 	}
 	
 	
-	private void buildAnnotationProperties(HibAnnotatedCanvasAttribute shapeAttrib, PropertyRef propIds[]){
+	private void buildAnnotationProperties(AnnotatedCanvasAttribute shapeAttrib, PropertyRef propIds[]){
 		for(PropertyRef propId : propIds){
 			final PropertyType xmlProp = this.xmlPropMap.get(propId.getId());
-			HibProperty hibProp = shapeAttrib.getProperty(xmlProp.getName());
+			AnnotationProperty hibProp = shapeAttrib.getProperty(xmlProp.getName());
 			hibProp.visit(new IAnnotationPropertyVisitor(){
 
 				public void visitBooleanAnnotationProperty(IBooleanAnnotationProperty prop) {
@@ -309,7 +295,7 @@ public class CanvasBuilder {
 	private HibShapeNode createShapeNode(HibSubModel owningSubModel, ShapeNode xmlNode){
 		int otId = xmlNode.getShapeAttribute().getObjectTypeId();
 		IShapeObjectType objectType = this.notationSubsystem.getSyntaxService().getShapeObjectType(otId);
-		HibShapeAttribute attribute = new HibShapeAttribute(this.hibCanvas, xmlNode.getShapeAttribute().getCreationSerial(),
+		ShapeAttribute attribute = new ShapeAttribute(this.hibCanvas, xmlNode.getShapeAttribute().getCreationSerial(),
 				objectType, this.notationFactory.getObjectType(otId));
 		buildShapeAttributes(attribute, xmlNode.getShapeAttribute());
 		HibShapeNode node = new HibShapeNode(owningSubModel.getRootNode(), xmlNode.getNodeId(), attribute);
@@ -350,7 +336,7 @@ public class CanvasBuilder {
 //	}
 
 	private HibLabelNode createLabelNode(HibSubModel owningSubModel, LabelNode xmlNode) {
-		HibProperty refProp = this.hibPropMap.get(xmlNode.getLabelAttribute().getPropertyRef().getId());
+		AnnotationProperty refProp = this.hibPropMap.get(xmlNode.getLabelAttribute().getPropertyRef().getId());
 		ILabelAttributeDefaults labelDefaults = refProp.getDefinition().getLabelDefaults();
 		HibLabelAttribute attribute = new HibLabelAttribute(this.hibCanvas, xmlNode.getLabelAttribute().getCreationSerial(), refProp, labelDefaults);
 		buildLabelAttributes(attribute, xmlNode.getLabelAttribute());

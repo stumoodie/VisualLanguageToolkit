@@ -317,7 +317,7 @@ public class FieldInspector {
 		if (firstList.size() != secondList.size())
 			return false;
 		if (firstList.size() != 1) {
-			if(firstList.get(0) instanceof HibShapeAttribute)
+			if(firstList.get(0) instanceof ShapeAttribute)
 				System.out.println("a");
 			Collections.sort(firstList);
 			Collections.sort(secondList);

@@ -24,5 +24,6 @@ public interface ILabelNode extends IDrawingNode, IZOrderedObject {
 	 * Gets the {@link ILabelAttribute} assosiated with the current label node.
 	 * @return the assosiated Label attribute.
 	 */
+	@Override
 	ILabelAttribute getAttribute();
 }

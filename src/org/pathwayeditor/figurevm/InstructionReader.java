@@ -16,14 +16,17 @@ public class InstructionReader implements Iterator<Instruction> {
 		}
 	}
 	
+	@Override
 	public boolean hasNext() {
 		return instIter.hasNext();
 	}
 
+	@Override
 	public Instruction next() {
 		return instIter.next();
 	}
 
+	@Override
 	public void remove() {
 		throw new UnsupportedOperationException("Removal not supported"); 
 	}

@@ -33,6 +33,7 @@ public class RepositoryLookupService implements IRepositoryLookupService {
 		this.callback = callback;
 	}
 	
+	@Override
 	public boolean isValidUri(URI hyperlink){
 		return hyperlink != null && hyperlink.getScheme().equals(SCHEMA_STR);
 	}
@@ -40,6 +41,7 @@ public class RepositoryLookupService implements IRepositoryLookupService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hyperlink.IRepositoryLookupService#findCanvas(java.net.URI)
 	 */
+	@Override
 	public ICanvas findCanvas(URI hyperlink) {
 		if(!isValidUri(hyperlink)) throw new IllegalArgumentException("the uri must be valid: " + hyperlink);
 		if(!hyperlink.isAbsolute()) throw new IllegalArgumentException("the uri must be absolute: " + hyperlink.toString());
@@ -124,6 +126,7 @@ public class RepositoryLookupService implements IRepositoryLookupService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hyperlink.IRepositoryLookupService#findCanvasObject(java.net.URI)
 	 */
+	@Override
 	public IDrawingElement findCanvasObject(URI hyperlink) {
 		ICanvas canvas = findCanvas(hyperlink);
 		IDrawingElement retVal = null;
@@ -156,6 +159,7 @@ public class RepositoryLookupService implements IRepositoryLookupService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hyperlink.IRepositoryLookupService#createAbsoluteUri(org.pathwayeditor.businessobjects.management.IMapPersistenceManager)
 	 */
+	@Override
 	public URI createAbsoluteUri(IMapPersistenceManager map) {
 		if(map.isOpen() == false) throw new IllegalArgumentException("Map manager must be open");
 		
@@ -174,6 +178,7 @@ public class RepositoryLookupService implements IRepositoryLookupService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.hyperlink.IRepositoryLookupService#createAbsoluteUri(org.pathwayeditor.businessobjects.management.IMapPersistenceManager, org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
 	 */
+	@Override
 	public URI createAbsoluteUri(IMapPersistenceManager map, IDrawingElement drawingElement) {
 		URI retVal = null;
 		try {

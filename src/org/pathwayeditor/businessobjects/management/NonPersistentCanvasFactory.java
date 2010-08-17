@@ -34,7 +34,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-import uk.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie

@@ -178,5 +178,6 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * Gets the link edge associated with the attribute.
 	 * @return the link edge, which cannot be null.
 	 */
+	@Override
 	ILinkEdge getCurrentDrawingElement();
 }

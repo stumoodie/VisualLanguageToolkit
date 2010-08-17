@@ -58,14 +58,17 @@ public class ListenableRepository {
 		for(IRepositoryChangeListener listener : this.listeners){
 			IRepositoryPropertyChangeEvent e = new IRepositoryPropertyChangeEvent(){
 
+				@Override
 				public Object getNewValue() {
 					return newValue;
 				}
 
+				@Override
 				public Object getOldValue() {
 					return oldValue;
 				}
 
+				@Override
 				public PropertyType getPropertyName() {
 					return type;
 				}

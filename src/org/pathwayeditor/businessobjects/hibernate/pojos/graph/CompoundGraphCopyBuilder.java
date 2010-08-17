@@ -149,7 +149,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 			throw new IllegalStateException("unrecognised element type");
 		}
 		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
-		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
+		Canvas destCanvas = (Canvas)destParentCanvasAttribute.getCanvas();
 		HibLabelAttribute srcAttribute = srcLabelNode.getAttribute();
 		HibLabelAttribute destAttribute = new HibLabelAttribute(destCanvas, destCanvas.getCreationSerialCounter().nextIndex(), srcAttribute, copiedProperty);
 		LabelNodeFactory fact = destHibParentNode.getChildCompoundGraph().labelNodeFactory();
@@ -184,14 +184,14 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	
 	private HibShapeNode createCopyOfShapeNode(HibCompoundNode destHibParentNode, HibShapeAttribute otherAttribute){
 		ICanvasAttribute destParentCanvasAttribute = destHibParentNode.getAttribute();
-		HibCanvas destCanvas = (HibCanvas)destParentCanvasAttribute.getCanvas();
+		Canvas destCanvas = (Canvas)destParentCanvasAttribute.getCanvas();
 		HibShapeAttribute destAttribute = new HibShapeAttribute(destCanvas, destCanvas.getCreationSerialCounter().nextIndex(), otherAttribute);
 		ShapeNodeFactory fact = destHibParentNode.getChildCompoundGraph().shapeNodeFactory();
 		fact.setAttribute(destAttribute);
 		return fact.createShapeNode();
 	}
 	
-	private HibLinkAttribute createCopyOfLinkAttribute(HibCanvas destCanvas, HibLinkAttribute srcAttribute){
+	private HibLinkAttribute createCopyOfLinkAttribute(Canvas destCanvas, HibLinkAttribute srcAttribute){
 		HibLinkAttribute retVal = new HibLinkAttribute ( destCanvas , destCanvas.getCreationSerialCounter().nextIndex() , srcAttribute) ;
 		this.copiedLinkAttributes.put(srcAttribute, retVal);
 		return retVal;
@@ -199,7 +199,7 @@ public class CompoundGraphCopyBuilder extends BaseGraphCopyBuilder {
 	
 	private HibLinkEdge createCopyOfLinkEdge ( HibLinkAttribute srcAttribute , BaseCompoundNode outNode,
 			BaseCompoundNode inNode , HibSubModel edgeOwner ) {
-		HibCanvas destCanvas = (HibCanvas)edgeOwner.getModel().getCanvas();
+		Canvas destCanvas = (Canvas)edgeOwner.getModel().getCanvas();
 		// use the cached copy of the lin k attribute if there is one
 		HibLinkAttribute destAttribute = this.copiedLinkAttributes.get(srcAttribute);
 		if(destAttribute == null){

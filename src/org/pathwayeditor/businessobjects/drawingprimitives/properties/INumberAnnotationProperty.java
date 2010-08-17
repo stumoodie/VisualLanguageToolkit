@@ -23,12 +23,14 @@ public interface INumberAnnotationProperty extends IAnnotationProperty {
 	 * Get the definition associated with this NumberProperty.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	INumberPropertyDefinition getDefinition();
 	
 	/**
 	 * Get the numerical value associated with this property.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	BigDecimal getValue();
 	
 	

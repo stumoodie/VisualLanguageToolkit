@@ -84,52 +84,64 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 		}
 	}
 	
+	@Override
 	public Instruction createArray(List<Instruction> instArray) {
 		return new Instruction(new FigureDefinition(instArray));
 	}
 
+	@Override
 	public Instruction createBoolean(String value) {
 		return new Instruction(new Value(Boolean.valueOf(value)));
 	}
 
+	@Override
 	public Instruction createBoundValue(String value) {
 		return new Instruction(InstructionType.BOUND_VALUE, value);
 	}
 
+	@Override
 	public Instruction createExpandedVarName(String value) {
 		return new Instruction(InstructionType.VARIABLE_NAME, value);
 	}
 
+	@Override
 	public Instruction createInteger(String value) {
 		return new Instruction(new Value(Integer.valueOf(value)));
 	}
 
+	@Override
 	public Instruction createInteger(Integer value) {
 		return new Instruction(new Value(value));
 	}
 
+	@Override
 	public Instruction createNull() {
 		return new Instruction(Value.NULL);
 	}
 
+	@Override
 	public Instruction createOpCode(String value) {
 		OpCodes opCode = this.opCodeLookup.get(value);
 		if(opCode == null) throw new IllegalArgumentException("Unrecognised opcode name: " + value);
 		return new Instruction(opCode);
 	}
 
+	@Override
 	public Instruction createReal(String value) {
 		return new Instruction(new Value(Double.valueOf(value)));
 	}
 
+	@Override
 	public Instruction createString(String value) {
 		return new Instruction(new Value(ValueType.STRING_LITERAL, value));
 	}
 
+	@Override
 	public Instruction createUnexpandedVarName(String value) {
 		return new Instruction(Value.createLiteralVariableName(value));
 	}
 
+	@Override
 	public Instruction createProcedure(List<Instruction> procList) {
 		return new Instruction(new Value(new FigureDefinition(procList)));
 	}

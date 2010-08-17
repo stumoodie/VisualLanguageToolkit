@@ -31,12 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibFolder;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibMap;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRepository;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibRootFolder;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.figure.geometry.Dimension;
 
@@ -88,7 +82,7 @@ public class ICanvasTest {
 		folder = new HibRootFolder (repository) ;
 		mapDiagram = new HibMap (folder, MAP_DIAGRAM_NAME) ;
 		IHibNotationFactory mockNotationSubsystem = this.mockery.mock(IHibNotationFactory.class, "HibNotation"); 
-		canvas = new HibCanvas (mapDiagram.getRepository().getName(), mapDiagram.getINode(), mockNotationSubsystem, mockContext, mapDiagram.getName());
+		canvas = new Canvas (mapDiagram.getRepository().getName(), mapDiagram.getINode(), mockNotationSubsystem, mockContext, mapDiagram.getName());
 		this.canvas.setGridSize(GRID_SIZE);
 		this.canvas.setGridEnabled(GRID_ENABLED);
 		this.canvas.setSnapToGrid(SNAP_TO_GRID_ENABLED);
@@ -118,16 +112,16 @@ public class ICanvasTest {
 	{
 		canvas.setCanvasSize(new Dimension (NEW_CANVAS_SIZE , NEW_CANVAS_SIZE)) ;
 		
-		assertEquals ( "height" , NEW_CANVAS_SIZE , ((HibCanvas)canvas).getCanvasHeight() ) ;
-		assertEquals ( "width" , NEW_CANVAS_SIZE , ((HibCanvas)canvas).getCanvasWidth() ) ;
+		assertEquals ( "height" , NEW_CANVAS_SIZE , ((Canvas)canvas).getCanvasHeight() ) ;
+		assertEquals ( "width" , NEW_CANVAS_SIZE , ((Canvas)canvas).getCanvasWidth() ) ;
 	}
 	
 	@Ignore @Test(expected=IllegalArgumentException.class)
 	public void testChangeCanvasSizeToNull () throws Exception
 	{
 		canvas.setCanvasSize(null) ;
-		assertEquals ( "height" , CANVAS_SIZE , ((HibCanvas)canvas).getCanvasHeight() ) ;
-		assertEquals ( "width" , CANVAS_SIZE , ((HibCanvas)canvas).getCanvasWidth() ) ;
+		assertEquals ( "height" , CANVAS_SIZE , ((Canvas)canvas).getCanvasHeight() ) ;
+		assertEquals ( "width" , CANVAS_SIZE , ((Canvas)canvas).getCanvasWidth() ) ;
 		
 	}
 	
@@ -136,9 +130,9 @@ public class ICanvasTest {
 	{
 		canvas.setBackgroundColour(new RGB(NEW_BACKGROUND_COLOR,NEW_BACKGROUND_COLOR,NEW_BACKGROUND_COLOR)) ;
 		
-		assertEquals ( "red" , NEW_BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundRed() ) ;
-		assertEquals ( "blue" , NEW_BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundBlue() ) ;
-		assertEquals ( "green" , NEW_BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundGreen() ) ;
+		assertEquals ( "red" , NEW_BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundRed() ) ;
+		assertEquals ( "blue" , NEW_BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundBlue() ) ;
+		assertEquals ( "green" , NEW_BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundGreen() ) ;
 	}
 	
 	@Ignore @Test(expected=IllegalArgumentException.class)
@@ -146,17 +140,17 @@ public class ICanvasTest {
 	{
 		canvas.setBackgroundColour(null) ;
 		
-		assertEquals ( "red" , BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundRed() ) ;
-		assertEquals ( "blue" , BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundBlue() ) ;
-		assertEquals ( "green" , BACKGROUND_COLOR , ((HibCanvas)canvas).getBackgroundGreen() ) ;
+		assertEquals ( "red" , BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundRed() ) ;
+		assertEquals ( "blue" , BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundBlue() ) ;
+		assertEquals ( "green" , BACKGROUND_COLOR , ((Canvas)canvas).getBackgroundGreen() ) ;
 	}
 	
 //	@Test
 //	public void testChangeGridSize () throws Exception
 //	{
 //		canvas.setGrid(NEW_GRID_SIZE, NEW_GRID_SIZE) ;
-//		assertEquals ( "height" , NEW_GRID_SIZE , ((HibCanvas)canvas).getGridX() ) ;
-//		assertEquals ( "width" , NEW_GRID_SIZE , ((HibCanvas)canvas).getGridY() ) ;
+//		assertEquals ( "height" , NEW_GRID_SIZE , ((Canvas)canvas).getGridX() ) ;
+//		assertEquals ( "width" , NEW_GRID_SIZE , ((Canvas)canvas).getGridY() ) ;
 //		
 //	}
 //	
@@ -164,16 +158,16 @@ public class ICanvasTest {
 //	public void testChangeGridSizeToLessThanZero () throws Exception
 //	{
 //		canvas.setGrid(LESS_THAN_ZERO_SIZE, LESS_THAN_ZERO_SIZE) ;
-//		assertEquals ( "height" , GRID_SIZE , ((HibCanvas)canvas).getGridX() ) ;
-//		assertEquals ( "width" , GRID_SIZE , ((HibCanvas)canvas).getGridY() ) ;
+//		assertEquals ( "height" , GRID_SIZE , ((Canvas)canvas).getGridX() ) ;
+//		assertEquals ( "width" , GRID_SIZE , ((Canvas)canvas).getGridY() ) ;
 //		
 //		canvas.setGrid(LESS_THAN_ZERO_SIZE, OTHER_GRID_SIZE) ;
-//		assertEquals ( "height" , GRID_SIZE , ((HibCanvas)canvas).getGridX() ) ;
-//		assertEquals ( "width" , GRID_SIZE , ((HibCanvas)canvas).getGridY() ) ;
+//		assertEquals ( "height" , GRID_SIZE , ((Canvas)canvas).getGridX() ) ;
+//		assertEquals ( "width" , GRID_SIZE , ((Canvas)canvas).getGridY() ) ;
 //		
 //		canvas.setGrid(OTHER_GRID_SIZE, LESS_THAN_ZERO_SIZE) ;
-//		assertEquals ( "height" , GRID_SIZE , ((HibCanvas)canvas).getGridX() ) ;
-//		assertEquals ( "width" , GRID_SIZE , ((HibCanvas)canvas).getGridY() ) ;
+//		assertEquals ( "height" , GRID_SIZE , ((Canvas)canvas).getGridX() ) ;
+//		assertEquals ( "width" , GRID_SIZE , ((Canvas)canvas).getGridY() ) ;
 //	}
 //	
 //	@Test

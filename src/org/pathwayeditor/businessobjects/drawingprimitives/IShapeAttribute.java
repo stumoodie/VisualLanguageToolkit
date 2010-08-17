@@ -29,6 +29,7 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITy
 	 * Gets the object type that is related with this shape.
 	 * @return the object type. Cannot be null.
 	 */
+	@Override
 	IShapeObjectType getObjectType();
 	
 
@@ -94,6 +95,7 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITy
 	 * Gets the shape node associated with the attribute.
 	 * @return the shape node, which cannot be null.
 	 */
+	@Override
 	IShapeNode getCurrentDrawingElement();
 	
 }

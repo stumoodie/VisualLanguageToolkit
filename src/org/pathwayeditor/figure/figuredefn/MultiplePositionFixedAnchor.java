@@ -15,23 +15,28 @@ public class MultiplePositionFixedAnchor implements IAnchorLocator {
 		this.shape = hull;
 	}
 	
+	@Override
 	public Point calcAnchorPosition(){
 		Point retVal = this.refAnchorPoints.nearestPointTo(this.otherEndPoint);
 		return retVal;
 	}
 
+	@Override
 	public boolean canCalcAnchorPosition() {
 		return this.otherEndPoint != null;
 	}
 
+	@Override
 	public IConvexHull getOwningShapeHull() {
 		return this.shape;
 	}
 
+	@Override
 	public void setOtherEndPoint(Point otherEndPoint) {
 		this.otherEndPoint  = otherEndPoint;
 	}
 
+	@Override
 	public Point getOtherEndPoint() {
 		return this.otherEndPoint;
 	}

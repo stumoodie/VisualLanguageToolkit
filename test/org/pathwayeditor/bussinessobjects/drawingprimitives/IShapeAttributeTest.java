@@ -39,9 +39,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibObjectType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibShapeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -83,22 +80,22 @@ public class IShapeAttributeTest {
 	@SuppressWarnings("unchecked")
 	@Before
 	public void setUp() throws Exception {
-		final HibCanvas mockCanvas = mockery.mock(HibCanvas.class , "mockCanvas") ;
+		final Canvas mockCanvas = mockery.mock(Canvas.class , "mockCanvas") ;
 		final IShapeObjectType mockObjectType = mockery.mock(IShapeObjectType.class, "mockObjectType");
 		HibObjectType hibObjectType = this.mockery.mock(HibObjectType.class, "hibObjectType");
 //		mockProperty = mockery.mock(IAnnotationProperty.class , "mockProperty") ;
 		final IShapeAttributeDefaults mockDefaults = new DefaultsStub();
-		final Set<HibShapeAttribute> mockAttributeSet = this.mockery.mock(Set.class, "mockAttributeSet");
+		final Set<ShapeAttribute> mockAttributeSet = this.mockery.mock(Set.class, "mockAttributeSet");
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockObjectType).getDefaultAttributes(); will(returnValue(mockDefaults));
 			
 			allowing(mockCanvas).getCanvasAttributes(); will(returnValue(mockAttributeSet));
 			
-			allowing(mockAttributeSet).add(with(any(HibShapeAttribute.class)));
+			allowing(mockAttributeSet).add(with(any(ShapeAttribute.class)));
 		}});
 		
-		shapeAttribute = new HibShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
+		shapeAttribute = new ShapeAttribute ( mockCanvas , CREATION_SERIAL, mockObjectType, hibObjectType) ;
 		shapeAttribute.setLocation(EXPECTED_INITIAL_LOCATION);
 		this.mockery.assertIsSatisfied();
 	}

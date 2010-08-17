@@ -22,14 +22,14 @@ import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
 
 /**
  * @author nhanlon
- *         Given a HibCanvas, iterate through its associated LinkAttributes, ensuring they (and their entities) are initialised by Hibernate and
+ *         Given a Canvas, iterate through its associated LinkAttributes, ensuring they (and their entities) are initialised by Hibernate and
  *         then injecting their properties with corresponding property definitions
  */
 public interface IAttributesForCanvasBuilder {
 	
 	/**
 	 * @param hibCanvas
-	 * Given a HibCanvas, iterate through its associated Attributes, ensuring they (and their entities) are initialised by Hibernate
+	 * Given a Canvas, iterate through its associated Attributes, ensuring they (and their entities) are initialised by Hibernate
 	 */
 	public void initAttributes(HibCanvas hibCanvas);
 	

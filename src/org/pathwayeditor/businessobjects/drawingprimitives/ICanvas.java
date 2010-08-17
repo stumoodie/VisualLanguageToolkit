@@ -20,8 +20,11 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.impl.IBusinessObjectGraphElementMapper;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.figure.geometry.Dimension;
+
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 
 public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableChangeListenee, Comparable<ICanvas> {
@@ -218,4 +221,8 @@ public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableCha
 	 * @return the number of canvas attributes.
 	 */
 	int numCanvasAttributes();
+
+	IndexCounter getCreationSerialCounter();
+	
+	IBusinessObjectGraphElementMapper getMapper();
 }

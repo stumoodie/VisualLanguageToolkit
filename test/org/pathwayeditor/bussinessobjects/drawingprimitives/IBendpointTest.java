@@ -29,8 +29,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**

@@ -51,15 +51,18 @@ public class ConvexHull implements IConvexHull {
 //	}
 	
 
+	@Override
 	public Point getOrigin(){
 		return this.envelope.getOrigin();
 	}
 	
 	
+	@Override
 	public Dimension getDimension(){
 		return this.envelope.getDimension();
 	}
 	
+	@Override
 	public Envelope getEnvelope(){
 		return this.envelope;
 	}
@@ -68,6 +71,7 @@ public class ConvexHull implements IConvexHull {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#iterator()
 	 */
+	@Override
 	public Iterator<Point> iterator(){
 		return this.pointList.iterator();
 	}
@@ -76,6 +80,7 @@ public class ConvexHull implements IConvexHull {
 //		return this.containsPoint(p.getX(), p.getY());
 //	}
 
+	@Override
 	public boolean containsPoint(Point p){
 		boolean retVal = false;
 		if(logger.isDebugEnabled()){
@@ -122,6 +127,7 @@ public class ConvexHull implements IConvexHull {
 //		return (ax - cx) * (by - cy) - (ay - cy) * (bx - cx);
 //	}
 
+	@Override
 	public IConvexHull changeEnvelope(Envelope newEnvelope){
 		IConvexHull retVal = this;
  		if(!this.envelope.equals(newEnvelope)){
@@ -143,6 +149,7 @@ public class ConvexHull implements IConvexHull {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#hullsIntersect(org.pathwayeditor.figure.customshape.IConvexHull)
 	 */
+	@Override
 	public boolean hullsIntersect(IConvexHull otherHull){
 		boolean retVal = false;
 		if(this.envelope.intersects(otherHull.getEnvelope())){
@@ -247,6 +254,7 @@ public class ConvexHull implements IConvexHull {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#getLines()
 	 */
+	@Override
 	public List<LineSegment> getLines() {
 		List<LineSegment>rc = new ArrayList<LineSegment>();
 		Point previous = this.pointList.get(this.pointList.size()-1);
@@ -262,14 +270,17 @@ public class ConvexHull implements IConvexHull {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.customshape.IConvexHull#getPoints()
 	 */
+	@Override
 	public List<Point> getPoints() {
 		return new ArrayList<Point>(this.pointList);
 	}
 
+	@Override
 	public Iterator<Point> pointIterator(){
 		return this.pointList.iterator();
 	}
 
+	@Override
 	public IConvexHull translate(double d, double e) {
 		List<Point> retVal = new ArrayList<Point>(this.pointList.size()); 
 		for(Point point : this.pointList){
@@ -278,6 +289,7 @@ public class ConvexHull implements IConvexHull {
 		return new ConvexHull(retVal);
 	}
 
+	@Override
 	public IConvexHull scale(double xScale, double yScale){
 		Point origin = this.getOrigin();
 		List<Point> retVal = new ArrayList<Point>(this.pointList.size()); 
@@ -291,6 +303,7 @@ public class ConvexHull implements IConvexHull {
 		return new ConvexHull(retVal);
 	}
 	
+	@Override
 	public IConvexHull scale(Dimension newDim){
 		Dimension currDim = this.getDimension();
 		double scaleX = newDim.getWidth()/currDim.getWidth();
@@ -303,7 +316,8 @@ public class ConvexHull implements IConvexHull {
 		return this.getPointLineIntersects(new Point(refX, refY));
 	}
 	
-    public Point getPointLineIntersects(Point reference) {
+    @Override
+	public Point getPointLineIntersects(Point reference) {
         Point c = getCentre();
         Point p;
         // this assumes that the point is outside the hull
@@ -342,7 +356,7 @@ public class ConvexHull implements IConvexHull {
                     dy02 = y0 - y2;
                     double d1 = dy02 * dx32 - dx02 * dy32,
                         d2 = dy02 * dx10 - dx02 * dy10;
-                    double k1 = (double) d1 / d, k2 = (double) d2 / d;
+                    double k1 = d1 / d, k2 = d2 / d;
                     if (k1 >= -0.000001f
                         && k1 <= 1.000001f
                         && k2 >= -0.000001f
@@ -362,7 +376,8 @@ public class ConvexHull implements IConvexHull {
         return c;
     }
 
-    public double getArea(){
+    @Override
+	public double getArea(){
 		int i, j, n = this.pointList.size();
 		double area = 0;
 
@@ -375,7 +390,8 @@ public class ConvexHull implements IConvexHull {
 		return (area);
     }
     
-    public Point getCentre() {
+    @Override
+	public Point getCentre() {
 		double cx = 0, cy = 0;
 		double area = getArea();
 		int n = this.pointList.size();
@@ -405,10 +421,12 @@ public class ConvexHull implements IConvexHull {
     }
 
 
+	@Override
 	public int numPoints() {
 		return this.pointList.size();
 	}
 
+	@Override
 	public IConvexHull translate(Point p) {
 		return this.translate(p.getX(), p.getY());
 	}

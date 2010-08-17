@@ -20,8 +20,6 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
-
 
 /**
  * @author smoodie
@@ -42,6 +40,4 @@ public interface IAnnotatedObject {
 	IAnnotationProperty getProperty(IPropertyDefinition propDefn);
 	
 	IAnnotationProperty getProperty(String propName);
-	
-	ILabelSubModel getLabelSubModel();
 }

@@ -33,7 +33,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
  *
  */
 public class HibRootNode extends HibCompoundNode implements IRootNode {
-	private HibRootAttribute canvasAttribute = null;
+	private RootAttribute canvasAttribute = null;
 	
 	/**
 	 * Constructor should only be used by hiberate.
@@ -61,7 +61,7 @@ public class HibRootNode extends HibCompoundNode implements IRootNode {
 		return this.canvasAttribute;
 	}
 
-	void setAttribute(HibRootAttribute rootAttribute) {
+	void setAttribute(RootAttribute rootAttribute) {
 		this.canvasAttribute = rootAttribute;
 	}
 	

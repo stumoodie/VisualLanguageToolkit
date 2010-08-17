@@ -104,11 +104,13 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, ICanv
 	 * @param other the other object to test.
 	 * @return true of the objects are equal based on the business key, false otherwise.
 	 */
+	@Override
 	boolean equals(Object other);
 
 	/**
 	 * The hash code is based on the same identity rules as {@link #equals(Object)}.
 	 * @return the hash code.
 	 */
+	@Override
 	int hashCode();
 }

@@ -26,6 +26,7 @@ import java.util.List;
  */
 public interface IListPropertyDefinition extends IPropertyDefinition {
 
+	@Override
 	List<String> getDefaultValue();
 	
 }

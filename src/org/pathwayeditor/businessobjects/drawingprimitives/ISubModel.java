@@ -23,6 +23,8 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
 
+import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
+
 /**
  * @author smoodie
  *
@@ -39,7 +41,7 @@ public interface ISubModel extends IModelChangeListenee, ISuppressableChangeList
 	 * Get the root node that owns this sub model. 
 	 * @return the root node, which cannot be null.
 	 */
-	IDrawingNode getRootNode();
+	IDrawingElement getRootNode();
 	
 	/**
 	 * A new instance of the shape node factory for this submodel.
@@ -47,11 +49,11 @@ public interface ISubModel extends IModelChangeListenee, ISuppressableChangeList
 	 */
 	IShapeNodeFactory shapeNodeFactory();
 	
-//	/**
-//	 * A new instance of the label node factory for this submodel.
-//	 * @return a new shape node instance, which cannot be null.
-//	 */
-//	ILabelNodeFactory labelNodeFactory();
+	/**
+	 * A new instance of the label node factory for this submodel.
+	 * @return a new shape node instance, which cannot be null.
+	 */
+	ILabelNodeFactory labelNodeFactory();
 	
 	/**
 	 * A new instance of the link edge factory for this submodel.
@@ -171,4 +173,5 @@ public interface ISubModel extends IModelChangeListenee, ISuppressableChangeList
 	 */
 	Iterator<ILabelNode> labelIterator();
 
+	IChildCompoundGraph getChildCompoundGraph();
 }

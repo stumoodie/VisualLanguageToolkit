@@ -48,6 +48,7 @@ public interface IShapeNode extends ITypedDrawingNode, IZOrderedObject, INodeCha
 	 * Gets the {@link IShapeAttribute} that is connected to the particular Shape Node.
 	 * @return the ShapeAttribute.
 	 */
+	@Override
 	IShapeAttribute getAttribute();
 	
 //	IShapeObjectType getObjectType();

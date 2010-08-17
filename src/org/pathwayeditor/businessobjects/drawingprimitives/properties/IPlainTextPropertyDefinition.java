@@ -17,6 +17,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 public interface IPlainTextPropertyDefinition extends IPropertyDefinition {
 
+	@Override
 	String getDefaultValue();
 	
 }

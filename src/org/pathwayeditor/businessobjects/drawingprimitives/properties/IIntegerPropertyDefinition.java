@@ -9,6 +9,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  */
 public interface IIntegerPropertyDefinition extends IPropertyDefinition {
 
+	@Override
 	Integer getDefaultValue();
 	
 }

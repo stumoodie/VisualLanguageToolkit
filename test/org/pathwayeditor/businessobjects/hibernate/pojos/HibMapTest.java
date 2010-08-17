@@ -35,7 +35,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import uk.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author ntsorman

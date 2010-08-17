@@ -51,5 +51,6 @@ public interface IGraphMomento {
 	 * @param other the other object to compare.
 	 * @return true is this momento and the other momento both have equal models and the same version num.
 	 */
+	@Override
 	boolean equals(Object other);
 }

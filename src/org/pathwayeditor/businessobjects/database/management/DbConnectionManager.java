@@ -32,6 +32,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#getConnectionInfo()
 	 */
+	@Override
 	public IConnectionInfo getConnectionInfo() {
 		return this.connectionInfo;
 	}
@@ -42,6 +43,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#isAlive()
 	 */
+	@Override
 	public boolean isAlive() {
 		boolean retVal = false;
 		try {
@@ -55,6 +57,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#doesTestConnectionSucceed()
 	 */
+	@Override
 	public boolean doesTestConnectionSucceed() throws SQLException{
 		boolean retVal = false;
 		ResultSet rs = null;
@@ -81,6 +84,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#openConnection()
 	 */
+	@Override
 	public void openConnection() throws SQLException{
 		try{
 			Class.forName(this.connectionInfo.getDriverName());
@@ -101,6 +105,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#getConnection()
 	 */
+	@Override
 	public Connection getConnection(){
 		return this.conn;
 	}
@@ -108,6 +113,7 @@ public class DbConnectionManager implements IDbConnectionManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.database.management.IDbConnectionManager#closeConnection()
 	 */
+	@Override
 	public void closeConnection() {
 		try {
 			if(this.conn != null){

@@ -9,8 +9,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  */
 public interface IBooleanAnnotationProperty extends IAnnotationProperty {
 
+	@Override
 	IBooleanPropertyDefinition getDefinition();
 	
+	@Override
 	Boolean getValue();
 	
 	void setValue(Boolean boolValue);

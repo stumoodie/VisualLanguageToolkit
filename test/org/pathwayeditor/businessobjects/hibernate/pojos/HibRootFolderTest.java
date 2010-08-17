@@ -37,7 +37,7 @@ import org.pathwayeditor.businessobjects.repository.IRepositoryItemChangeListene
 import org.pathwayeditor.businessobjects.repository.IRepositoryPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.repository.IRootFolder;
 
-import uk.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author ntsorman

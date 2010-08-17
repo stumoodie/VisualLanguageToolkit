@@ -16,10 +16,14 @@ import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
@@ -63,10 +67,6 @@ import org.pathwayeditor.businessobjects.exchange.castor.TgtTerminus;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
@@ -80,7 +80,7 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public class CanvasMarshaller {
 	private Canvas xmlCanvas;
-	private HibCanvas dbCanvas;
+	private ICanvas dbCanvas;
 	private final Map<IAnnotationProperty, PropertyRef> propMap;
 	private final AnnotationsBuilder builder;
 //	private final Map<ILabelAttribute, LabelNode> skippedLabels;
@@ -110,7 +110,7 @@ public class CanvasMarshaller {
 		endDecMapping.put(LinkEndDecoratorShape.TRIANGLE_BAR, EndDecoratorTypeType.TRIANGLE_BAR);
 	}
 	
-	public void setCanvas(HibCanvas dbCanvas){
+	public void setCanvas(ICanvas dbCanvas){
 		this.dbCanvas = dbCanvas;
 	}
 	
@@ -283,7 +283,7 @@ public class CanvasMarshaller {
 		return xmlAttrib;
 	}
 	
-	private LinkAttribute createLinkAttribute(HibLinkAttribute attrib) {
+	private LinkAttribute createLinkAttribute(ILinkAttribute attrib) {
 		LinkAttribute xmlAttrib = new LinkAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
 		xmlAttrib.setObjectTypeId(attrib.getObjectType().getUniqueId());
@@ -302,8 +302,10 @@ public class CanvasMarshaller {
 		return xmlAttrib;
 	}
 	
-	private void addBendPoints(HibLinkAttribute attrib, LinkAttribute xmlAttrib) {
-		for(HibBendPoint hibBendPoint : attrib.getBendPoints()){
+	private void addBendPoints(ILinkAttribute attrib, LinkAttribute xmlAttrib) {
+		 Iterator<IBendPoint> iter = attrib.bendPointIterator();
+		 while(iter.hasNext()){
+			IBendPoint hibBendPoint = iter.next();
 			BendPoint xmlBp = new BendPoint();
 			xmlBp.setCreationSerial(hibBendPoint.getCreationSerial());
 			xmlBp.setIndexPosn(hibBendPoint.getIndexPos());
@@ -345,7 +347,7 @@ public class CanvasMarshaller {
 	}
 	
 	private void createModel(){
-		HibModel dbModel = dbCanvas.getModel();
+		IModel dbModel = dbCanvas.getModel();
 		Model model = new Model();
 		model.setLastEdgeIndex(dbModel.getEdgeCounter().getLastIndex());
 		model.setLastNodeIndex(dbModel.getNodeCounter().getLastIndex());
@@ -413,7 +415,7 @@ public class CanvasMarshaller {
 		xmlLinkEdge.setLinkIdx(linkEdge.getIndex());
 		xmlLinkEdge.setSrcNodeIdx(linkEdge.getSourceShape().getIndex());
 		xmlLinkEdge.setTgtNodeIdx(linkEdge.getTargetShape().getIndex());
-		xmlLinkEdge.setLinkAttribute(createLinkAttribute((HibLinkAttribute)linkEdge.getAttribute()));
+		xmlLinkEdge.setLinkAttribute(createLinkAttribute(linkEdge.getAttribute()));
 		return xmlLinkEdge;
 	}
 	

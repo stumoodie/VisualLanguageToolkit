@@ -228,8 +228,8 @@ public class QuickHull {
 		int retValue = -1;
 		if (vIn == null || vOut == null)
 			return retValue;
-		double k = (double) (pRight.getY() - pLeft.getY())
-				/ (double) (pRight.getX() - pLeft.getX());
+		double k = (pRight.getY() - pLeft.getY())
+				/ (pRight.getX() - pLeft.getX());
 		double A = -k;
 		double B = 1;
 		double C = k * pLeft.getX() - pLeft.getY();
@@ -282,6 +282,7 @@ public class QuickHull {
 			this.pt = pt;
 		}
 
+		@Override
 		public int compareTo(AngleWrapper ac) {
 //			return (ac.angle < angle) ? -1 : (ac.angle > angle) ? 1 : 0;
 			return (ac.angle < angle) ? 1 : (ac.angle > angle) ? -1 : 0;

@@ -281,45 +281,55 @@ public class FigureBuilder {
 	
 	private class OpCodeHandler implements IOpCodeHandler {
 
+		@Override
 		public void handleArc(double x, double y, double width, double height,
 				double offset, double length) {
 			drawArc(x, y, width, height, offset, length);
 		}
 
+		@Override
 		public void handleLine(double startX, double startY, double endX,
 				double endY) {
 			drawLine(startX, startY, endX, endY);
 		}
 
+		@Override
 		public void handleOval(double x, double y, double width, double height) {
 			drawOval(x, y, width, height);
 		}
 
+		@Override
 		public void handlePoint(double x, double y) {
 			drawPoint(x, y);
 		}
 
+		@Override
 		public void handlePolygon(double[] pointArr) {
 			drawPolygon(pointArr);
 		}
 
+		@Override
 		public void handlePolyline(double[] pointArr) {
 			drawPolyline(pointArr);
 		}
 
+		@Override
 		public void handleRectangle(double x, double y, double width, double height) {
 			drawRectangle(x, y, width, height);
 		}
 
+		@Override
 		public void handleRoundRectangle(double x, double y, double width,
 				double height, double arcWidth, double arcHeight) {
 			drawRoundedRectangle(x, y, width, height, arcWidth, arcHeight);
 		}
 
+		@Override
 		public void handleText(double x, double y, TextAlignment alignment, String text) {
 			drawText(x, y, alignment, text);
 		}
 		
+		@Override
 		public List<Double> getCurBounds(){
 			final int numVariables = 4;
 			Envelope e = currentState.getEnvelope();
@@ -331,6 +341,7 @@ public class FigureBuilder {
 			return retVal;
 		}
 
+		@Override
 		public List<Integer> getCurFillColour() {
 			List<Integer> retVal = null;
 			if(getFillColour() != null){
@@ -339,11 +350,13 @@ public class FigureBuilder {
 			return retVal;
 		}
 
+		@Override
 		public double getCurFontSize() {
 			double fontSize = currentState.getFont().getFontSize();
 			return fontSize;
 		}
 
+		@Override
 		public String getCurFontStyle() {
 			EnumSet<Style> style = currentState.getFont().getStyle();
 			StringBuilder builder = new StringBuilder();
@@ -356,6 +369,7 @@ public class FigureBuilder {
 			return builder.toString();
 		}
 
+		@Override
 		public List<Integer> getCurLineColour() {
 			List<Integer> retVal = null;
 			if(getLineColour() != null){
@@ -364,6 +378,7 @@ public class FigureBuilder {
 			return retVal;
 		}
 
+		@Override
 		public void restoreGraphicsState() {
 			GraphicsState previousState = currentState;
 			currentState = graphicsStack.pop();
@@ -386,6 +401,7 @@ public class FigureBuilder {
 			}
 		}
 
+		@Override
 		public void saveGraphicsState() {
 			GraphicsState gState = new GraphicsState(currentState);
 			graphicsStack.push(gState);
@@ -394,12 +410,14 @@ public class FigureBuilder {
 			}
 		}
 
+		@Override
 		public void setFillColour(int red, int green, int blue) {
 			RGB newColour = new RGB(red, green, blue);
 			graphicsInstructions.add(g.fillColour(newColour));
 			currentState.setFillColour(newColour);
 		}
 
+		@Override
 		public void setFontSize(double fontSize) {
 			IFont f = currentState.getFont();
 			f = f.newSize(fontSize);
@@ -407,6 +425,7 @@ public class FigureBuilder {
 			currentState.setFont(f);
 		}
 
+		@Override
 		public void setFontStyle(String styleString) {
 			EnumSet<Style> style = EnumSet.noneOf(Style.class);
 			for(int i = 0; i < styleString.length(); i++){
@@ -423,24 +442,29 @@ public class FigureBuilder {
 			currentState.setFont(f);
 		}
 
+		@Override
 		public void setLineColour(int red, int green, int blue) {
 			RGB newCol = new RGB(red, green, blue);
 			graphicsInstructions.add(g.lineColour(newCol));
 			currentState.setLineColour(newCol);
 		}
 
+		@Override
 		public void setNoFill() {
 			currentState.setFillColour(null);
 		}
 
+		@Override
 		public void setNoLine() {
 			currentState.setLineColour(null);
 		}
 
+		@Override
 		public double currentLineWidth() {
 			return getCurLineWidth();
 		}
 
+		@Override
 		public void setLineWidth(double lineWidth) {
 			setCurrLineWidth(lineWidth);
 		}
@@ -448,6 +472,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
 		 */
+		@Override
 		public void setChopHullAnchor() {
 			anchorCalc = new ChopBoxAnchorCalculatorFactory();
 		}
@@ -455,6 +480,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
 		 */
+		@Override
 		public void setSemiFixedAnchorCode(PointList points) {
 			anchorCalc = new MultiplePositionFixedAnchorFactory(points);
 		}
@@ -462,6 +488,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds()
 		 */
+		@Override
 		public List<Double> getTextBounds(String text) {
 			return handleGetTextBounds(text);
 		}
@@ -578,6 +605,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
 		 */
+		@Override
 		public IAnchorLocator createAnchorLocator() {
 			return new ChopBoxAnchorCalculator(getConvexHull());
 		}
@@ -585,6 +613,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
+		@Override
 		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
 			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
 			return new ChopBoxAnchorCalculator(newHull);
@@ -605,6 +634,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
 		 */
+		@Override
 		public IAnchorLocator createAnchorLocator() {
 			return new MultiplePositionFixedAnchor(points, getConvexHull());
 		}
@@ -612,6 +642,7 @@ public class FigureBuilder {
 		/* (non-Javadoc)
 		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
+		@Override
 		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
 			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
 			Envelope oldBounds = getConvexHull().getEnvelope(); 

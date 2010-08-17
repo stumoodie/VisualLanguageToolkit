@@ -170,7 +170,7 @@ public class HibCanvasPersistenceHandler implements ICanvasPersistenceHandler {
 		}
 	}
 
-//	private void injectObjectType(HibCanvas hibCanvas, HibCanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {
+//	private void injectObjectType(Canvas hibCanvas, CanvasAttribute canvasAttribute) throws InconsistentNotationDefinitionException {
 //		HibObjectType hibObjectType = canvasAttribute.getHibObjectType();
 //		if(hibObjectType != null) {
 //			IObjectType objectType = hibCanvas.getNotationSubsystem().getSyntaxService().getObjectType(

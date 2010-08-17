@@ -74,14 +74,14 @@ public class HibShapeAttribute extends HibAnnotatedCanvasAttribute implements IS
 		super();
 	}
 
-	public HibShapeAttribute(HibCanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
+	public HibShapeAttribute(Canvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType, HibObjectType hibObjectType){
 		super(hibCanvas, creationSerial, shapeObjectType.getDefaultAttributes());
 		this.hibObjectType = hibObjectType;
 		this.shapeObjectType = shapeObjectType;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 	}
 	
-	public HibShapeAttribute(HibCanvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
+	public HibShapeAttribute(Canvas newCanvas, int newCreationSerial, HibShapeAttribute other) {
 		super(newCanvas, newCreationSerial, other);
 		this.position = other.position;
 		this.size = other.size;

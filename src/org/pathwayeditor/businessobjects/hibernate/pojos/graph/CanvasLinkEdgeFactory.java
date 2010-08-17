@@ -100,7 +100,7 @@ public class CanvasLinkEdgeFactory extends BaseCompoundEdgeFactory implements IL
 	@Override
 	protected HibLinkEdge newEdge(BaseChildCompoundGraph owningGraph, int edgeIndex, BaseCompoundNode outNode, BaseCompoundNode inNode) {
 		HibObjectType hibObjectType = this.hibNotationFactory.getObjectType(this.objectType.getUniqueId());
-		HibCanvas canvas = ((HibSubModel)owningGraph).getModel().getCanvas();
+		Canvas canvas = ((HibSubModel)owningGraph).getModel().getCanvas();
 		int edgeCreationSerial = canvas.getCreationSerialCounter().nextIndex();
 		HibLinkTerminus srcTerm = new HibLinkTerminus(canvas, canvas.getCreationSerialCounter().nextIndex(), LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
 		HibLinkTerminus tgtTerm = new HibLinkTerminus(canvas, canvas.getCreationSerialCounter().nextIndex(), LinkTermType.TARGET, objectType.getTargetTerminusDefinition());

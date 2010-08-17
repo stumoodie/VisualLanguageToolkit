@@ -20,6 +20,8 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
+import uk.ac.ed.inf.graph.compound.ISubCompoundGraph;
+
 /**
  * @author smoodie
  *
@@ -107,4 +109,6 @@ public interface IDrawingElementSelection {
 	 * @return true if dangling edges are present, false otherwise.
 	 */
 	boolean hasDanglingEdges();
+
+	ISubCompoundGraph getSubGraph();
 }

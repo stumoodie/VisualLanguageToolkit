@@ -22,6 +22,7 @@ public interface IFolder extends IRepositoryItem {
 	 * @return the path to this folder in the folder tree, starting from the root folder which has the path '/'; calling this provides a string which can be
 	 *  used by HibRepository's getFolderByPath() method  to return the given folder. Paths are NOT case sensitive.
 	 */
+	@Override
 	String getPath();
 	
 	/**

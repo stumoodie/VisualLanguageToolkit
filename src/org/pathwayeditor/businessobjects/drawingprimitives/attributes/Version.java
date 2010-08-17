@@ -67,6 +67,7 @@ public class Version implements Comparable<Version> {
 		return new Version(this.major, this.minor, newPatchVersion);
 	}
 	
+	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder();
 		builder.append(this.major);
@@ -108,6 +109,7 @@ public class Version implements Comparable<Version> {
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	@Override
 	public int compareTo(Version other) {
 		int retVal = 0;
 		if(this.major < other.major){

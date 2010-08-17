@@ -29,8 +29,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibAnnotatedCanvasAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibTextProperty;
+import org.pathwayeditor.businessobjects.impl.AnnotatedCanvasAttribute;
+import org.pathwayeditor.businessobjects.impl.TextProperty;
 
 /**
  * @author ntsorman
@@ -45,7 +45,7 @@ public class IPlainTextAnnotationPropertyTest {
 	
 	private IPlainTextAnnotationProperty textProperty ;
 	private IPlainTextPropertyDefinition mockPropDefn;
-	private HibAnnotatedCanvasAttribute mockCanvasAttribute;
+	private AnnotatedCanvasAttribute mockCanvasAttribute;
 	
 	private static final String PROP_NAME = "propName";
 	private static final String TEXT_VALUE = "text value" ;
@@ -54,7 +54,7 @@ public class IPlainTextAnnotationPropertyTest {
 	@Before
 	public void setUp() throws Exception {
 		mockPropDefn = this.mockery.mock(IPlainTextPropertyDefinition.class, "mockpropDefn");
-		mockCanvasAttribute = this.mockery.mock(HibAnnotatedCanvasAttribute.class, "mockCanvasAttribute");
+		mockCanvasAttribute = this.mockery.mock(AnnotatedCanvasAttribute.class, "mockCanvasAttribute");
 		
 		this.mockery.checking(new Expectations(){{
 			allowing(mockPropDefn).getName(); will(returnValue(PROP_NAME));
@@ -62,7 +62,7 @@ public class IPlainTextAnnotationPropertyTest {
 			allowing(mockPropDefn).getDisplayName(); will(returnValue(PROP_NAME));
 		}});
 		
-		textProperty = new HibTextProperty (mockCanvasAttribute, mockPropDefn) ;
+		textProperty = new TextProperty (mockCanvasAttribute, mockPropDefn) ;
 	}
 
 	@After
