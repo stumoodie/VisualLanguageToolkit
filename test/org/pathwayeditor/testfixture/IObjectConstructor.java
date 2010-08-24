@@ -16,15 +16,14 @@ limitations under the License.
 
 package org.pathwayeditor.testfixture;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-
 /**
  * @author smoodie
  *
  */
-public interface IShapeNodeBuilder extends IDrawingNodeBuilder {
+public interface IObjectConstructor<T> {
 
-	@Override
-	IShapeNode getNode();
-	
+	T create();
+
+	boolean build();
+
 }

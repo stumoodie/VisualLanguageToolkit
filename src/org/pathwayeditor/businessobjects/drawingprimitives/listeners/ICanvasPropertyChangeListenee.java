@@ -30,5 +30,11 @@ public interface ICanvasPropertyChangeListenee {
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
 	Iterator<ICanvasPropertyChangeListener> listenerIterator();
+	
+	/**
+	 * The number of listeners.
+	 * @return The number of listeners.
+	 */
+	int numChangeListeners();
 
 }

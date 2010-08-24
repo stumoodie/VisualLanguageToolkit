@@ -26,7 +26,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
+import org.pathwayeditor.testfixture.ComplexTestFixture;
+import org.pathwayeditor.testfixture.ITypedNodeConstructor;
+import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
@@ -37,8 +44,10 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 @RunWith(JMock.class)
 public class ShapeNodeTest {
 	private Mockery mockery;
-	private ICompoundNode mockCompoundNode;
 	private IShapeNode testInstance;
+	private ComplexTestFixture testFixture;
+	private NotationSubsystemFixture notationFixture;
+	private ICompoundNode expectedCompoundNode;
 
 	/**
 	 * @throws java.lang.Exception
@@ -46,8 +55,59 @@ public class ShapeNodeTest {
 	@Before
 	public void setUp() throws Exception {
 		this.mockery = new JUnit4Mockery();
-		this.mockCompoundNode = this.mockery.mock(ICompoundNode.class, "mockCompoundNode");
-		this.testInstance = new ShapeNode(this.mockCompoundNode);
+		this.notationFixture = new NotationSubsystemFixture(mockery);
+		this.notationFixture.buildFixture();
+		this.testFixture = new ComplexTestFixture(mockery, "", notationFixture.getNotationSubsystem());
+		this.testFixture.redefineElement(ComplexTestFixture.SHAPE_NODE1_ID, new ITypedNodeConstructor() {
+			
+			@Override
+			public ISubModel createSubModel(ITypedDrawingNode node) {
+				return node.getSubModel();
+			}
+			
+			@Override
+			public IShapeNodeFactory createShapeNodeFactory(ISubModel subModel) {
+				return subModel.shapeNodeFactory();
+			}
+			
+			@Override
+			public IShapeNode createShapeNode(ICompoundNode graphNode) {
+				expectedCompoundNode = graphNode;
+				testInstance = new ShapeNode(graphNode);
+				return testInstance;
+			}
+			
+			@Override
+			public ILinkEdgeFactory createLinkEdgeFactory(ISubModel subModel) {
+				return subModel.linkEdgeFactory();
+			}
+			
+			@Override
+			public ICompoundNode createCompoundNode() {
+				return null;
+			}
+			
+			@Override
+			public boolean buildSubModel(ISubModel submodel) {
+				return true;
+			}
+			
+			@Override
+			public boolean buildShapeNodeFactory(IShapeNodeFactory nodeFactory) {
+				return true;
+			}
+			
+			@Override
+			public boolean buildNode(ITypedDrawingNode node) {
+				return true;
+			}
+			
+			@Override
+			public boolean buildLinkFactory(ILinkEdgeFactory edgeFactory) {
+				return true;
+			}
+		});
+		this.testFixture.buildFixture();
 	}
 
 	/**
@@ -57,7 +117,8 @@ public class ShapeNodeTest {
 	public void tearDown() throws Exception {
 		this.testInstance = null;
 		this.mockery = null;
-		this.mockCompoundNode = null;
+		this.notationFixture = null;
+		this.testFixture = null;
 	}
 
 	/**
@@ -225,7 +286,7 @@ public class ShapeNodeTest {
 	 */
 	@Test
 	public void testGetCompoundGraphElement() {
-		assertEquals("expected node", this.mockCompoundNode, this.testInstance.getCompoundGraphElement());
+		assertEquals("expected node", this.expectedCompoundNode, this.testInstance.getCompoundGraphElement());
 	}
 
 }

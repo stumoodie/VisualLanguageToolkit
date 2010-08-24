@@ -51,5 +51,5 @@ public interface IBusinessObjectGraphElementMapper {
 
 	ILinkEdge getLinkEdge(ICompoundEdge compoundEdge);
 
-	IShapeNode createShapeNode(ICompoundNode newNode);
+	void registerElement(IDrawingElement drawingElement, ICompoundGraphElement graphElement);
 }

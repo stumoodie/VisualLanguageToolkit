@@ -110,4 +110,12 @@ public final class ListenableCanvasPropertyChangeItem	implements ICanvasProperty
 	public void setListenersEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListenee#numChangeListeners()
+	 */
+	@Override
+	public int numChangeListeners() {
+		return this.listeners.size();
+	}
 }

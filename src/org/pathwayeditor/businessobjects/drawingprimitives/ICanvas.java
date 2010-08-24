@@ -125,6 +125,8 @@ public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableCha
 	 */	
 	void setCanvasSize ( Dimension size ) ;
 	
+	IModel setModel(IModel model);
+	
 	/**
 	 * Get the model for this canvas.
 	 * @return the model associated with the canvas, which cannot be null. 
@@ -221,8 +223,12 @@ public interface ICanvas extends ICanvasPropertyChangeListenee, ISuppressableCha
 	 * @return the number of canvas attributes.
 	 */
 	int numCanvasAttributes();
+	
+	void addCanvasAttribute(ICanvasAttribute attribute);
 
 	IndexCounter getCreationSerialCounter();
 	
 	IBusinessObjectGraphElementMapper getMapper();
+
+	IRootAttribute getRootAttribute();
 }

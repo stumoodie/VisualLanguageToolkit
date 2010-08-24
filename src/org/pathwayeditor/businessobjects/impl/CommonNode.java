@@ -45,8 +45,7 @@ public abstract class CommonNode implements IDrawingNode {
 
 	@Override
 	public final ISubModel getSubModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getAttribute().getMapper().getSubModel(this.getCompoundGraphElement().getChildCompoundGraph());
 	}
 
 	@Override

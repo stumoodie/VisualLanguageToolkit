@@ -26,11 +26,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISelectionFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundGraph;
@@ -50,9 +50,9 @@ public class Model implements IModel {
 	private IFilterCriteria<ICompoundNode> labelCriteria;
 	private IFilterCriteria<ICompoundNode> shapeCriteria;
 	
-	public Model(ICanvas canvas, IRootObjectType rootObjectType){
+	public Model(ICanvas canvas, IRootAttribute rootAttribute){
 		this.canvas = canvas;
-		this.compoundGraph = new CompoundGraph(new RootAttribute(this.canvas, this.canvas.getCreationSerialCounter().nextIndex(), rootObjectType));
+		this.compoundGraph = new CompoundGraph(rootAttribute);
 		this.labelCriteria = new IFilterCriteria<ICompoundNode>(){
 			@Override
 			public boolean matched(ICompoundNode testObj) {
@@ -67,6 +67,14 @@ public class Model implements IModel {
 		};
 	}
 	
+//	/**
+//	 * @param canvas2
+//	 * @param graph
+//	 */
+//	public Model(Canvas canvas, Model otherModel) {
+//		// TODO Auto-generated constructor stub
+//	}
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee#addModelChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListener)
 	 */

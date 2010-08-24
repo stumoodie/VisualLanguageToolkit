@@ -16,11 +16,10 @@ limitations under the License.
 
 package org.pathwayeditor.testfixture;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
@@ -28,11 +27,11 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
  * @author smoodie
  *
  */
-public interface IShapeNodeConstructor {
+public interface ITypedNodeConstructor {
 
-	ISubModel createSubModel(IShapeNode node);
+	ISubModel createSubModel(ITypedDrawingNode node);
 	
-	IShapeNode createShapeNode(ICompoundNode graphNode);
+	ITypedDrawingNode createShapeNode(ICompoundNode graphNode);
 	
 	IShapeNodeFactory createShapeNodeFactory(ISubModel subModel);
 	
@@ -40,7 +39,7 @@ public interface IShapeNodeConstructor {
 	
 	ICompoundNode createCompoundNode();
 	
-	boolean buildNode(IDrawingNode node);
+	boolean buildNode(ITypedDrawingNode node);
 	
 	boolean buildSubModel(ISubModel submodel);
 	

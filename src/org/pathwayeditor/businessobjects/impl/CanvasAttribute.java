@@ -44,6 +44,7 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 	protected CanvasAttribute(ICanvas canvas, int creationSerial) {
 		this.canvas = canvas;
 		this.creationSerial = creationSerial;
+		this.canvas.addCanvasAttribute(this);
 	}
 	
 	@Override
@@ -119,5 +120,19 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 	@Override
 	public void setCurrentElement(ICompoundGraphElement newOwner) {
 		this.compoundGraphElement = newOwner;
+	}
+
+	@Override
+	public IBusinessObjectGraphElementMapper getMapper() {
+		return this.getCanvas().getMapper();
+	}
+	
+	@Override
+	public boolean isRemoved(){
+		boolean retVal = false;
+		if(this.compoundGraphElement != null){
+			retVal = this.compoundGraphElement.isRemoved();
+		}
+		return retVal;
 	}
 }

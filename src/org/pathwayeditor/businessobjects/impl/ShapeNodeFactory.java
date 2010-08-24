@@ -30,9 +30,11 @@ import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
  *
  */
 public class ShapeNodeFactory implements IShapeNodeFactory {
+	private final ITypedDrawingNode parentNode;
 	private final ICompoundNodeFactory nodeFactory;
 	
 	public ShapeNodeFactory(ITypedDrawingNode parentNode){
+		this.parentNode = parentNode;
 		this.nodeFactory = parentNode.getCompoundGraphElement().getChildCompoundGraph().nodeFactory();
 		this.nodeFactory.setAttributeFactory(new ShapeAttributeFactory(parentNode.getAttribute()));
 	}
@@ -46,7 +48,7 @@ public class ShapeNodeFactory implements IShapeNodeFactory {
 	 */
 	@Override
 	public ISubModel getOwningSubCanvas() {
-		return getAttributeFactory().getParentAttribute().getCanvas().getMapper().getSubModel(this.nodeFactory.getParentNode().getChildCompoundGraph());
+		return parentNode.getSubModel();
 	}
 
 	/* (non-Javadoc)
@@ -79,7 +81,9 @@ public class ShapeNodeFactory implements IShapeNodeFactory {
 	@Override
 	public IShapeNode createShapeNode() {
 		ICompoundNode newNode = this.nodeFactory.createNode();
-		return getAttributeFactory().getParentAttribute().getCanvas().getMapper().createShapeNode(newNode);
+		IShapeNode retVal = new ShapeNode(newNode);
+		retVal.getAttribute().getMapper().registerElement(retVal, newNode);
+		return retVal;
 	}
 
 }

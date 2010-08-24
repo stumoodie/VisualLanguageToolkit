@@ -18,6 +18,7 @@ package org.pathwayeditor.businessobjects.impl;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
@@ -40,7 +41,7 @@ public class ShapeNode extends TypedCommonNode implements IShapeNode {
 	}
 	
 	@Override
-	public ITypedDrawingNode getParentNode() {
+	public IDrawingElement getParentNode() {
 		ICompoundGraphElement parent = getCompoundGraphElement().getParent();
 		ITypedDrawingNodeAttribute att = (ITypedDrawingNodeAttribute)parent.getAttribute();
 		ITypedDrawingNode retVal = null;

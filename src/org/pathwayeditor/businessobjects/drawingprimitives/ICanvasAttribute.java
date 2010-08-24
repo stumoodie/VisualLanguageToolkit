@@ -19,6 +19,9 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
+import org.pathwayeditor.businessobjects.impl.IBusinessObjectGraphElementMapper;
+
+import uk.ac.ed.inf.graph.compound.IElementAttribute;
 
 
 
@@ -27,7 +30,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
  * @author smoodie
  *
  */
-public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee, Comparable<ICanvasAttribute> {
+public interface ICanvasAttribute extends IElementAttribute, ICanvasAttributePropertyChangeListenee, Comparable<ICanvasAttribute> {
 	
 	/**
 	 * Get the Canvas related with this attribute. Cannot be null.
@@ -53,6 +56,8 @@ public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee
 	 */
 	IDrawingElement getCurrentDrawingElement();
 	
+	IBusinessObjectGraphElementMapper getMapper();
+	
 	/**
 	 * The business key is the combination of canvas and creation serial.
 	 * @param other
@@ -67,4 +72,6 @@ public interface ICanvasAttribute extends ICanvasAttributePropertyChangeListenee
 	 */
 	@Override
 	int hashCode();
+	
+	boolean isRemoved();
 }

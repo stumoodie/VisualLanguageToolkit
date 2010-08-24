@@ -17,9 +17,9 @@ limitations under the License.
 package org.pathwayeditor.testfixture;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdgeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNode;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
@@ -27,17 +27,17 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
  * @author smoodie
  *
  */
-public class ShapeNodeBuilder implements IShapeNodeBuilder {
+public class TypedNodeBuilder implements ITypedNodeBuilder {
 	private final String elementId;
-	private IShapeNodeConstructor nodeConstructor;
-	private final IShapeNodeConstructor defaultConstructor;
+	private ITypedNodeConstructor nodeConstructor;
+	private final ITypedNodeConstructor defaultConstructor;
 	private ICompoundNode graphNode;
-	private IShapeNode shapeNode;
+	private ITypedDrawingNode shapeNode;
 	private ISubModel subModel;
 	private IShapeNodeFactory nodeFactory;
 	private ILinkEdgeFactory edgeFactory;
 
-	public ShapeNodeBuilder(String elementId, IShapeNodeConstructor constructor){
+	public TypedNodeBuilder(String elementId, ITypedNodeConstructor constructor){
 		this.elementId = elementId;
 		this.defaultConstructor = constructor;
 	}
@@ -91,11 +91,13 @@ public class ShapeNodeBuilder implements IShapeNodeBuilder {
 		}
 	}
 
-	public IShapeNodeConstructor getNodeConstructor() {
+	@Override
+	public ITypedNodeConstructor getNodeConstructor() {
 		return this.nodeConstructor;
 	}
 
-	public void setNodeConstructor(IShapeNodeConstructor nodeConstructor) {
+	@Override
+	public void setNodeConstructor(ITypedNodeConstructor nodeConstructor) {
 		this.nodeConstructor = nodeConstructor;
 	}
 
@@ -103,7 +105,7 @@ public class ShapeNodeBuilder implements IShapeNodeBuilder {
 	 * @see org.pathwayeditor.testfixture.IShapeNodeBuilder#getShapeNode()
 	 */
 	@Override
-	public IShapeNode getNode() {
+	public ITypedDrawingNode getNode() {
 		return this.shapeNode;
 	}
 

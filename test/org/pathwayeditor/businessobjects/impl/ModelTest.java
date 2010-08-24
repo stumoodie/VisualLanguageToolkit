@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 
 import uk.ac.ed.inf.graph.util.IndexCounter;
 
@@ -45,7 +45,7 @@ public class ModelTest {
 	private IModel testInstance;
 	private Mockery mockery;
 	private ICanvas mockCanvas;
-	private IRootObjectType mockRootObjectType;
+	private IRootAttribute mockRootObjectType;
 
 	/**
 	 * @throws java.lang.Exception
@@ -55,7 +55,7 @@ public class ModelTest {
 		this.mockery = new JUnit4Mockery();
 		
 		mockCanvas = this.mockery.mock(ICanvas.class, "mockCanvas");
-		mockRootObjectType = this.mockery.mock(IRootObjectType.class, "rootObjectType");
+		mockRootObjectType = this.mockery.mock(IRootAttribute.class, "rootObjectType");
 		final IndexCounter serialCounter = new IndexCounter();
 		this.mockery.checking(new Expectations(){{
 			allowing(mockCanvas).getCreationSerialCounter(); will(returnValue(serialCounter));
