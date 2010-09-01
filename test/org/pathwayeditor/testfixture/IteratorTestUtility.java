@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 
-public class IteratorTestUtility <I extends ICanvasAttribute> {
+public class IteratorTestUtility <I extends ICanvasElementAttribute> {
 	private final List<I> expectedResults;
 	
 	public IteratorTestUtility(I ... expectedResults){

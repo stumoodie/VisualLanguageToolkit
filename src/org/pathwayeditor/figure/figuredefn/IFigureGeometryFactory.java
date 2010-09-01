@@ -3,8 +3,8 @@
  */
 package org.pathwayeditor.figure.figuredefn;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
 /**
@@ -13,7 +13,7 @@ import org.pathwayeditor.figure.geometry.IConvexHull;
  */
 public interface IFigureGeometryFactory {
 
-	IFigureController getFigureController(IShapeNode node);
+	IFigureController getFigureController(IShapeAttribute node);
 	
-	IConvexHull getConvexHull(IDrawingNode node);
+	IConvexHull getConvexHull(IDrawingNodeAttribute node);
 }

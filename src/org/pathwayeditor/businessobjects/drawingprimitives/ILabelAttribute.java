@@ -31,16 +31,6 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	IAnnotationProperty getProperty();
 
 	/**
-	 * Get the LabelNode of the current Label
-	 * @return The LabelNode. Cannot be null.
-	 */
-	@Override
-	ILabelNode getCurrentDrawingElement();
-	
-	
-//	INodeObjectType getObjectType();
-	
-	/**
 	 * Get the background colour of this Label.
 	 * @return the RGB representation of the colour of the Label.
 	 */	

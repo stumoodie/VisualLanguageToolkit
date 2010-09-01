@@ -17,13 +17,11 @@ package org.pathwayeditor.businessobjects.impl;
 
 // Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
 
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
@@ -37,11 +35,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
-import uk.ac.ed.inf.graph.compound.ICompoundNode;
-
 public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAttribute {
-	private transient final Logger logger = Logger.getLogger(this.getClass());
-
 	private static final Point DEFAULT_POSITION = Point.ORIGIN;
 	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
 	private static final RGB DEFAULT_FILL = RGB.WHITE;
@@ -60,26 +54,27 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
 	private transient final DrawingNodeAttributeListenerHandler drawingNodeListenerHandler = new DrawingNodeAttributeListenerHandler(this);
-//	private transient IConvexHull hull = null;
-//	private IFigureController figureController = null;
+	private final IRootAttribute rootAttribute;
 	
 
-	public ShapeAttribute(ICanvas hibCanvas, int creationSerial, IShapeObjectType shapeObjectType){
-		super(hibCanvas, creationSerial, shapeObjectType.getDefaultAttributes());
+	public ShapeAttribute(IRootAttribute rootAttribute, int creationSerial, IShapeObjectType shapeObjectType){
+		super(creationSerial, shapeObjectType.getDefaultAttributes());
+		this.rootAttribute = rootAttribute;
 		this.shapeObjectType = shapeObjectType;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 	}
 	
-	public ShapeAttribute(ICanvas newCanvas, int newCreationSerial, ShapeAttribute other) {
-		super(newCanvas, newCreationSerial, other);
-		this.position = other.position;
-		this.size = other.size;
-		this.fillColour = other.fillColour;
-		this.lineColour = other.lineColour;
-		this.lineStyle = other.lineStyle;
-		this.lineWidth = other.lineWidth;
-		this.shapeObjectType = other.shapeObjectType;
-		this.figureDefn=other.figureDefn;
+	public ShapeAttribute(IRootAttribute rootAttribute, int newCreationSerial, IShapeAttribute other) {
+		super(newCreationSerial, other);
+		this.rootAttribute = rootAttribute;
+		this.position = other.getBounds().getOrigin();
+		this.size = other.getBounds().getDimension();
+		this.fillColour = other.getFillColour();
+		this.lineColour = other.getLineColour();
+		this.lineStyle = other.getLineStyle();
+		this.lineWidth = other.getLineWidth();
+		this.shapeObjectType = other.getObjectType();
+		this.figureDefn=other.getShapeDefinition();
 	}
 	
 	
@@ -135,22 +130,6 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLocation()
-	 */
-	@Override
-	public Point getLocation() {
-		return this.position;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getSize()
-	 */
-	@Override
-	public Dimension getSize() {
-		return this.size;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
 	 */
 	@Override
@@ -189,11 +168,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
-	 */
-	@Override
-	public void setLocation(Point newLocation) {
+	private void setLocation(Point newLocation) {
 		if ( newLocation == null )
 			throw new IllegalArgumentException ("the new location cannot be null") ;
 
@@ -204,11 +179,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
-	 */
-	@Override
-	public void setSize(Dimension size) {
+	private void setSize(Dimension size) {
 		if ( size == null )
 			throw new IllegalArgumentException ("Size cannot be null") ;
 
@@ -239,35 +210,8 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ChangeListenee#listenerIterator()
 	 */
 	@Override
-	public Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
-		return this.listenablePropertyChangeItem.listenerIterator();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute#getCurrentDrawingElement()
-	 */
-	@Override
-	public IShapeNode getCurrentDrawingElement() {
-		return this.getCanvas().getMapper().getShapeNode((ICompoundNode)this.getCurrentElement());
-	}
-
-	@Override
-	public boolean isValid() {
-		boolean objectTypeSet = this.getObjectType() != null;
-		boolean reciprocalAttributeSet = this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getAttribute() != null
-				&& this.getCurrentDrawingElement().getAttribute().equals(this);
-		boolean syntaxRulesCorrect = this.getCurrentDrawingElement() != null && this.getCurrentDrawingElement().getParentNode().canParent(this.getObjectType());
-		boolean propertiesValid = super.arePropertiesValid(this.getObjectType().getDefaultAttributes());
-		boolean retVal = false;
-		if(objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid){
-			retVal = true;
-		}
-		else{
-//		if (!objectTypeSet || !reciprocalAttributeSet || !syntaxRulesCorrect || !propertiesValid) {
-			logger.error("Attribute invalid, may be objecttypes or incompletely formed relationship with node");
-		}
-//		return objectTypeSet && reciprocalAttributeSet && syntaxRulesCorrect && propertiesValid;
-		return retVal;
+	public List<ICanvasAttributePropertyChangeListener> getChangeListeners() {
+		return this.listenablePropertyChangeItem.getChangeListeners();
 	}
 
 	/* (non-Javadoc)
@@ -287,16 +231,6 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 //		getFigureController().generateFigureDefinition();
 		this.setLocation(newBounds.getOrigin());
 		this.setSize(newBounds.getDimension());
-	}
-
-	@Override
-	public boolean areListenersEnabled() {
-		return this.listenablePropertyChangeItem.areListenersEnabled();
-	}
-
-	@Override
-	public void setListenersEnabled(boolean enabled) {
-		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
 
 	/* (non-Javadoc)
@@ -367,4 +301,19 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		this.drawingNodeListenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getRootAttribute()
+	 */
+	@Override
+	public IRootAttribute getRootAttribute() {
+		return this.rootAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
+	 */
+	@Override
+	public void visit(ICanvasElementAttributeVisitor visitor) {
+		visitor.visitShape(this);
+	}
 }

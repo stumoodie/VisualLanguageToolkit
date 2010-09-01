@@ -15,7 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 
 public interface INotationAutolayoutService extends INotationService {
 
@@ -28,6 +28,6 @@ public interface INotationAutolayoutService extends INotationService {
 	/**
 	 * @param canvas which will be laid out by this service
 	 */
-	void layout(ICanvas canvas);
+	void layout(IRootAttribute canvas);
 	
 }

@@ -20,10 +20,20 @@ package org.pathwayeditor.businessobjects.impl;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
@@ -34,35 +44,95 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
-import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
+import uk.ac.ed.inf.graph.util.IFilterCriteria;
+import uk.ac.ed.inf.graph.util.IndexCounter;
+import uk.ac.ed.inf.graph.util.impl.FilteredIterator;
 
 /**
  * @author smoodie
  *
  */
 public class RootAttribute extends CanvasAttribute implements IRootAttribute {
-	private static final Point INITIAL_POS = new Point(-0.5 * Double.MAX_VALUE, -0.5 *Double.MAX_VALUE);
-	private static final Dimension INITIAL_SIZE = new Dimension(Double.MAX_VALUE, Double.MAX_VALUE);
+	private static final int DEFAULT_BGD_GREEN = 255;
+	private static final int DEFAULT_BGD_BLUE = 255;
+	private static final int DEFAULT_BGD_RED = 255;
+	private static final int MIN_NAME_LEN = 1;
+	private static final Pattern NAME_REGEXP = Pattern.compile("(\\w.*\\w)|(\\w)");
+	public static final RGB DEFAULT_BACKGROUND_COLOUR = new RGB(DEFAULT_BGD_RED, DEFAULT_BGD_GREEN, DEFAULT_BGD_BLUE);
+	
+	private final IFilterCriteria<ICanvasElementAttribute> linkAttribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof ILinkAttribute;
+		}
+	};
+	private final IFilterCriteria<ICanvasElementAttribute> labelAttribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof ILabelAttribute;
+		}
+	};
+	private final IFilterCriteria<ICanvasElementAttribute> shapeAttribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof IShapeAttribute;
+		}
+	};
+	private final IFilterCriteria<ICanvasElementAttribute> linkTermCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof ILinkTerminus;
+		}
+	};
+	private final IFilterCriteria<ICanvasElementAttribute> attribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return true;
+		}
+	};
+
+	public static final Point INITIAL_POS = new Point(-0.5 * Double.MAX_VALUE, -0.5 *Double.MAX_VALUE);
+	public static final Dimension INITIAL_SIZE = new Dimension(Double.MAX_VALUE, Double.MAX_VALUE);
+	public static final int ROOT_IDX = 0;
 	private final IRootObjectType objectType;
 	private Point location = INITIAL_POS; 
 	private Dimension size = INITIAL_SIZE; 
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
-	private transient final DrawingNodeAttributeListenerHandler listenerHandler = new DrawingNodeAttributeListenerHandler(this);
+	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private final DrawingNodeAttributeListenerHandler listenerHandler = new DrawingNodeAttributeListenerHandler(this);
+	private RGB backgroundColour = DEFAULT_BACKGROUND_COLOUR;
+	private String name;
+//	private final IndexCounter creationSerialCounter;
+	private final SortedSet<ICanvasElementAttribute> canvasElementAttributes = new TreeSet<ICanvasElementAttribute>();
+	private final IAttributeFactoryFactory attributeFactoryFactory;
 
-	public RootAttribute(ICanvas canvas, int creationSerial, IRootObjectType objectType) {
-		super(canvas, creationSerial);
+	public RootAttribute(String name, IRootObjectType objectType) {
+		super(ROOT_IDX);
+		this.name = name;
 		this.objectType = objectType;
+		this.attributeFactoryFactory = new AttributeFactoryFactory(new IndexCounter(ROOT_IDX));
 	}
 
-	public RootAttribute(ICanvas canvas, int creationSerial, RootAttribute otherAttribute) {
-		super(canvas, creationSerial);
+	public RootAttribute(RootAttribute otherAttribute) {
+		super(ROOT_IDX);
 		this.objectType = otherAttribute.getObjectType();
+		this.backgroundColour = otherAttribute.backgroundColour;
+		this.name = otherAttribute.name;
+		this.location = otherAttribute.location;
+		this.size = otherAttribute.size;
+		this.attributeFactoryFactory = new AttributeFactoryFactory(new IndexCounter(ROOT_IDX));
 	}
 
-//	@Override
-//	public void injectObjectType(IObjectType objectType) throws InconsistentNotationDefinitionException {
-//		this.objectType = (IRootObjectType)objectType;
-//	}
+	@Override
+	public String getName() {
+		return this.name;
+	}
+	
+	@Override
+	public void setName(String name){
+		if(!isValidName(name)) throw new IllegalArgumentException("Invalid name: " + name);
+		
+		this.name = name;
+	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getObjectType()
@@ -72,37 +142,7 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		return this.objectType;
 	}
 
-	@Override
-	public IRootNode getCurrentDrawingElement() {
-		return this.getCanvas().getMapper().getRootNode((IRootCompoundNode)this.getCurrentElement());
-	}
-
-	@Override
-	public boolean isValid() {
-		return this.getObjectType() != null;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLocation()
-	 */
-	@Override
-	public Point getLocation() {
-		return this.location;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getSize()
-	 */
-	@Override
-	public Dimension getSize() {
-		return this.size;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLocation(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Location)
-	 */
-	@Override
-	public void setLocation(Point newLocation) {
+	private void setLocation(Point newLocation) {
 		Point oldLocation = this.location;
 		if(!oldLocation.equals(newLocation)){
 			this.location = newLocation;
@@ -110,11 +150,7 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setSize(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Size)
-	 */
-	@Override
-	public void setSize(Dimension newSize) {
+	private void setSize(Dimension newSize) {
 		Dimension oldSize = this.size;
 		if(!oldSize.equals(newSize)){
 			this.size = newSize;
@@ -130,12 +166,26 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		return new Envelope(this.location, this.size);
 	}
 
+	@Override
+	public RGB getBackgroundColour() {
+		return this.backgroundColour;
+	}
+
+	@Override
+	public void setBackgroundColour(RGB backgroundColour) {
+		if ( backgroundColour == null)
+			throw new IllegalArgumentException ( "BackgroundColor cannot be null") ;
+
+		RGB oldBackgroundColour = this.backgroundColour;
+		this.backgroundColour = backgroundColour;
+		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldBackgroundColour, this.backgroundColour);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setBounds(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Bounds)
 	 */
 	@Override
 	public void setBounds(Envelope newBounds) {
-//		this.convexHull = this.getConvexHull().changeEnvelope(newBounds);
 		setLocation(newBounds.getOrigin());
 		setSize(newBounds.getDimension());
 	}
@@ -145,26 +195,14 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		this.listenablePropertyChangeItem.addChangeListener(listener);
 	}
 
-	public boolean areListenersEnabled() {
-		return this.listenablePropertyChangeItem.areListenersEnabled();
-	}
-
 	@Override
-	public final Iterator<ICanvasAttributePropertyChangeListener> listenerIterator() {
-		return this.listenablePropertyChangeItem.listenerIterator();
-	}
-
-	public final void notifyPropertyChange(CanvasAttributePropertyChange type, Object oldValue, Object newValue) {
-		this.listenablePropertyChangeItem.notifyPropertyChange(type, oldValue, newValue);
+	public final List<ICanvasAttributePropertyChangeListener> getChangeListeners() {
+		return this.listenablePropertyChangeItem.getChangeListeners();
 	}
 
 	@Override
 	public final void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
 		this.listenablePropertyChangeItem.removeChangeListener(listener);
-	}
-
-	public void setListenersEnabled(boolean enabled) {
-		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
 	}
 
 	/* (non-Javadoc)
@@ -181,6 +219,170 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	@Override
 	public void translate(Point delta) {
 		// do nothing
+	}
+
+	@Override
+	public boolean isValidName(String name){
+		return checkValidName(name);
+	}
+	
+	public static boolean checkValidName(String name){
+		boolean retVal = false;
+		if(name != null && name.length() >= MIN_NAME_LEN){
+			// string not null and not empty
+			final Matcher matcher = NAME_REGEXP.matcher(name);
+			retVal = matcher.matches();
+		}
+		return retVal;
+	}
+	
+//	@Override
+//	public IndexCounter getCreationSerialCounter(){
+//		return this.creationSerialCounter;
+//	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLabelAttribute(int)
+	 */
+	@Override
+	public boolean containsLabelAttribute(int attributeSerial) {
+		return findAttribute(this.labelAttributeIterator(), attributeSerial) != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsLinkAttribute(int)
+	 */
+	@Override
+	public boolean containsLinkAttribute(int attributeSerial) {
+		return findAttribute(this.linkAttributeIterator(), attributeSerial) != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#containsShapeAttribute(int)
+	 */
+	@Override
+	public boolean containsShapeAttribute(int attributeSerial) {
+		return findAttribute(this.shapeAttributeIterator(), attributeSerial) != null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#findAttribute(int)
+	 */
+	@Override
+	public ICanvasElementAttribute findAttribute(int attributeSerial) {
+		ICanvasElementAttribute retVal = findAttribute(this.canvasAttributeIterator(), attributeSerial);
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLabelAttribute(int)
+	 */
+	@Override
+	public ILabelAttribute getLabelAttribute(int attributeSerial) {
+		ILabelAttribute retVal = (ILabelAttribute)findAttribute(this.labelAttributeIterator(), attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getLinkAttribute(int)
+	 */
+	@Override
+	public ILinkAttribute getLinkAttribute(int attributeSerial) {
+		ILinkAttribute retVal = (ILinkAttribute)findAttribute(this.linkAttributeIterator(), attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getShapeAttribute(int)
+	 */
+	@Override
+	public IShapeAttribute getShapeAttribute(int attributeSerial) {
+		IShapeAttribute retVal = (IShapeAttribute)findAttribute(this.shapeAttributeIterator(), attributeSerial);
+		if(retVal == null) {
+			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
+		}
+		return retVal;
+	}
+
+	private static <T extends ICanvasElementAttribute> T findAttribute(Iterator<T> searchIter, int creationSerial) {
+		T retVal = null;
+		while(searchIter.hasNext() && retVal == null){
+			T attribute = searchIter.next();
+			if(attribute.getCreationSerial() == creationSerial) {
+				retVal = attribute;
+			}
+		}
+		return retVal;  
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#numCanvasAttributes()
+	 */
+	@Override
+	public int numCanvasAttributes() {
+		int retVal = 0;
+		Iterator<ICanvasElementAttribute> iter = this.canvasAttributeIterator(); 
+		while(iter.hasNext()){
+			iter.next();
+			retVal++;
+		}
+		return retVal;
+	}
+
+	private <T extends ICanvasElementAttribute> Iterator<T> createAttribIter(IFilterCriteria<ICanvasElementAttribute> criteria){
+		FilteredIterator<ICanvasElementAttribute> filteredIter = new FilteredIterator<ICanvasElementAttribute>(this.canvasElementAttributes.iterator(), criteria);
+		return new IterationCaster<T, ICanvasElementAttribute>(filteredIter);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#canvasIterator()
+	 */
+	@Override
+	public Iterator<ICanvasElementAttribute> canvasAttributeIterator() {
+		return createAttribIter(this.attribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#linkAttributeIterator()
+	 */
+	@Override
+	public Iterator<ILinkAttribute> linkAttributeIterator() {
+		return createAttribIter(linkAttribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#linkTerminusIterator()
+	 */
+	@Override
+	public Iterator<ILinkTerminus> linkTerminusIterator() {
+		return createAttribIter(this.linkTermCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#shapeAttributeIterator()
+	 */
+	@Override
+	public Iterator<IShapeAttribute> shapeAttributeIterator() {
+		return createAttribIter(this.shapeAttribCriteria);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#labelAttributeIterator()
+	 */
+	@Override
+	public Iterator<ILabelAttribute> labelAttributeIterator() {
+		return this.createAttribIter(labelAttribCriteria);
+	}
+
+	@Override
+	public void addCanvasAttribute(ICanvasElementAttribute attribute) {
+		this.canvasElementAttributes.add(attribute);
 	}
 
 	/* (non-Javadoc)
@@ -206,4 +408,29 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
 		this.listenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getRootAttribute()
+	 */
+	@Override
+	public IRootAttribute getRootAttribute() {
+		return this;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#getAttributeFactoryFactory()
+	 */
+	@Override
+	public IAttributeFactoryFactory getAttributeFactoryFactory() {
+		return this.attributeFactoryFactory;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
+	 */
+	@Override
+	public void visit(ICanvasElementAttributeVisitor visitor) {
+		visitor.visitRoot(this);
+	}
+
 }

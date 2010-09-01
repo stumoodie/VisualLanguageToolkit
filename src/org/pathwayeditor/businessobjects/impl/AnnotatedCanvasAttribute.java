@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -38,8 +37,8 @@ public abstract class AnnotatedCanvasAttribute extends CanvasAttribute implement
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private Set<IAnnotationProperty> hibProperties = new HashSet<IAnnotationProperty>(0);
 
-	protected AnnotatedCanvasAttribute(ICanvas canvas, int creationSerial, IAnnotatedCanvasAttributeDefaults defaults) {
-		super(canvas, creationSerial);
+	protected AnnotatedCanvasAttribute(int creationSerial, IAnnotatedCanvasAttributeDefaults defaults) {
+		super(creationSerial);
 		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this);
 		final Iterator<IPropertyDefinition> propIter = defaults.propertyDefinitionIterator();
 		while(propIter.hasNext()){
@@ -49,10 +48,12 @@ public abstract class AnnotatedCanvasAttribute extends CanvasAttribute implement
 	}
 	
 
-	protected AnnotatedCanvasAttribute(ICanvas newCanvas, int newCreationSerial, AnnotatedCanvasAttribute other) {
-		super(newCanvas, newCreationSerial);
+	protected AnnotatedCanvasAttribute(int newCreationSerial, IAnnotatedObject other) {
+		super(newCreationSerial);
 		final IPropertyBuilder propertyBuilder = new PropertyBuilder(this);
-		for (IAnnotationProperty property : other.hibProperties) {
+		Iterator<IAnnotationProperty> iter = other.propertyIterator();
+		while(iter.hasNext()){
+			IAnnotationProperty property = iter.next();
 			IPropertyDefinition defn = property.getDefinition(); 
 			this.hibProperties.add(defn.copyProperty(propertyBuilder, property));
 		}

@@ -18,7 +18,8 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Iterator;
+import java.util.List;
+
 
 /**
  * @author smoodie
@@ -44,6 +45,6 @@ public interface ICanvasAttributePropertyChangeListenee {
 	 * Gets an iterator of listeners.
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
-	Iterator<ICanvasAttributePropertyChangeListener> listenerIterator();
+	List<ICanvasAttributePropertyChangeListener> getChangeListeners();
 	
 }

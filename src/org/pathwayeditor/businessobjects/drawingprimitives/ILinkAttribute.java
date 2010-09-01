@@ -26,11 +26,12 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotated
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnnotatedObject, ICanvasAttributePropertyChangeListenee, IBendPointChangeListenee, ISuppressableChangeListenee {
+public interface ILinkAttribute extends IZOrderedObject, ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributePropertyChangeListenee, IBendPointChangeListenee, ISuppressableChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.
 	 */
+	@Override
 	ILinkObjectType getObjectType();
 	
 	
@@ -172,12 +173,4 @@ public interface ILinkAttribute extends IZOrderedObject, ICanvasAttribute, IAnno
 	 * @throws IllegalArgumentException if the line width is invalid.
 	 */
 	void setLineWidth ( double lineWidth) ;
-	
-	
-	/**
-	 * Gets the link edge associated with the attribute.
-	 * @return the link edge, which cannot be null.
-	 */
-	@Override
-	ILinkEdge getCurrentDrawingElement();
 }

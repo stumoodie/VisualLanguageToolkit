@@ -53,7 +53,7 @@ public interface IPropertyDefinitionContainer {
 	 * @return the property definition with the given name, which cannot be null.
 	 * @throws IllegalArgumentException if <code>containsPropertyDefinition(name) == false</code.
 	 */
-	IPropertyDefinition getPropertyDefinition(String name);
+	<T extends IPropertyDefinition> T getPropertyDefinition(String name);
 	
 	/**
 	 * gets the number of property definitions held by this conbtainer.

@@ -49,6 +49,12 @@ public interface IObjectType extends Comparable<IObjectType> {
 	String getDescription();
 
 	/**
+	 * Get the parenting rules for this node object type, which must exist.
+	 * @return the parenting rules, which cannot be null.
+	 */
+	IObjectTypeParentingRules getParentingRules();
+	
+	/**
 	 * An object type is equal if it belongs to the same notation and has the same UniqueId().
 	 * Otherwise it should comply with the standard equals contract.
 	 * @param other the other object to compare.

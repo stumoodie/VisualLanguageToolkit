@@ -16,22 +16,12 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import uk.ac.ed.inf.graph.compound.IElementAttributeCopyFactory;
+
 /**
  * @author smoodie
  *
  */
-public interface IParentingValidator {
+public interface ILabelAttributeCopyFactory extends IElementAttributeCopyFactory {
 
-	boolean canReparentTo(ILabelNode possibleChild);
-	
-	boolean canReparentTo(ITypedDrawingNode possibleChild);
-	
-	boolean canReparentTo(ILinkEdge possibleChild);
-	
-	boolean isValidChildOf(ILabelNode possibleParent);
-	
-	boolean isValidChildOf(ITypedDrawingNode possibleParent);
-	
-	boolean isValidChildOf(ILinkEdge possibleParent);
-	
 }

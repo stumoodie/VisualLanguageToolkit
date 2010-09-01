@@ -25,11 +25,9 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 /**
  * @author smoodie
@@ -42,6 +40,8 @@ public class NotationSubsystemFixture {
 	public static final int SHAPE_TYPE_C_ID = 3;
 	public static final int LINK_TYPE_D_ID = 4;
 	public static final int LINK_TYPE_E_ID = 5;
+	public static final String SHAPE_TYPE_A_PROP_NAME = "shapeTypeAName";
+	public static final String SHAPE_TYPE_B_PROP_NAME = "shapeTypeBName";
 	
 	private final Mockery mockery;
 	private INotationSubsystem notationSubsystem;
@@ -53,9 +53,6 @@ public class NotationSubsystemFixture {
 	private ILinkObjectType linkTypeD;
 	private ILinkObjectType linkTypeE;
 	private IRootObjectParentingRules rootTypeParenting;
-	private IShapeParentingRules shapeTypeAParenting;
-	private IShapeParentingRules shapeTypeBParenting;
-	private IShapeParentingRules shapeTypeCParenting;
 	private ILinkConnectionRules linkTypeDConnections;
 	private ILinkConnectionRules linkTypeEConnections;
 	
@@ -71,18 +68,34 @@ public class NotationSubsystemFixture {
 		this.notationSubsystem = mockery.mock(INotationSubsystem.class, "notationSubsystem");
 		this.syntaxService = mockery.mock(INotationSyntaxService.class, "syntaxService");
 		this.rootType = mockery.mock(IRootObjectType.class, "rootType");
-		this.shapeTypeA = mockery.mock(IShapeObjectType.class, "shapeTypeA");
-		this.shapeTypeB = mockery.mock(IShapeObjectType.class, "shapeTypeB");
-		this.shapeTypeC = mockery.mock(IShapeObjectType.class, "shapeTypeC");
 		this.linkTypeD = mockery.mock(ILinkObjectType.class, "linkTypeD");
 		this.linkTypeE = mockery.mock(ILinkObjectType.class, "linkTypeE");
 		this.rootTypeParenting = mockery.mock(IRootObjectParentingRules.class, "rootTypeParenting");
-		this.shapeTypeAParenting = mockery.mock(IShapeParentingRules.class, "shapeTypeAParenting");
-		this.shapeTypeBParenting = mockery.mock(IShapeParentingRules.class, "shapeTypeBParenting");
-		this.shapeTypeCParenting = mockery.mock(IShapeParentingRules.class, "shapeTypeCParenting");
 		this.linkTypeDConnections = mockery.mock(ILinkConnectionRules.class, "linkTypeDConnections");
 		this.linkTypeEConnections = mockery.mock(ILinkConnectionRules.class, "linkTypeEConnections");
 		
+		MockShapeObjectTypeBuilder showObjectTypeABuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_A_ID, "shapeTypeA");
+		showObjectTypeABuilder.addTextProperty(SHAPE_TYPE_A_PROP_NAME, "PropNameAValue");
+		showObjectTypeABuilder.build();
+		this.shapeTypeA = showObjectTypeABuilder.getObjectType();
+		MockShapeObjectTypeBuilder showObjectTypeBBuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_B_ID, "shapeTypeB");
+		showObjectTypeBBuilder.addTextProperty(SHAPE_TYPE_B_PROP_NAME, "PropNameBValue");
+		showObjectTypeBBuilder.build();
+		this.shapeTypeB = showObjectTypeBBuilder.getObjectType();
+		MockShapeObjectTypeBuilder showObjectTypeCBuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_C_ID, "shapeTypeC");
+		showObjectTypeCBuilder.build();
+		this.shapeTypeC = showObjectTypeCBuilder.getObjectType();
+		showObjectTypeABuilder.buildParentingRules(shapeTypeA, shapeTypeC);
+		showObjectTypeBBuilder.buildParentingRules(shapeTypeA, shapeTypeB);
+		showObjectTypeCBuilder.buildParentingRules();
+		MockLinkObjectTypeBuilder linkTypeDBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_D_ID, linkTypeD, this.linkTypeDConnections);
+		linkTypeDBuilder.setSources(this.shapeTypeA);
+		linkTypeDBuilder.setTargets(this.shapeTypeA, this.shapeTypeB);
+		linkTypeDBuilder.build();
+		MockLinkObjectTypeBuilder linkTypeEBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_E_ID, linkTypeE, this.linkTypeEConnections);
+		linkTypeEBuilder.setSources(this.shapeTypeB);
+		linkTypeEBuilder.setTargets(this.shapeTypeA);
+		linkTypeEBuilder.build();
 		this.mockery.checking(new Expectations(){{
 			allowing(notationSubsystem).getSyntaxService(); will(returnValue(syntaxService));
 			
@@ -110,34 +123,8 @@ public class NotationSubsystemFixture {
 			allowing(rootTypeParenting).isValidChild(with(not(isOneOf(shapeTypeA, shapeTypeB, shapeTypeC)))); will(returnValue(false));
 			allowing(rootTypeParenting).isValidChild(with(isOneOf(shapeTypeA, shapeTypeB, shapeTypeC))); will(returnValue(true));
 		}});
-		
-		defineNodeObjectType(SHAPE_TYPE_A_ID, shapeTypeA, shapeTypeAParenting, shapeTypeA, shapeTypeC);
-		defineNodeObjectType(SHAPE_TYPE_A_ID, shapeTypeB, shapeTypeBParenting, shapeTypeA, shapeTypeB);
-		defineNodeObjectType(SHAPE_TYPE_A_ID, shapeTypeC, shapeTypeCParenting);
-		MockLinkObjectTypeBuilder linkTypeDBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_D_ID, linkTypeD, this.linkTypeDConnections);
-		linkTypeDBuilder.setSources(this.shapeTypeA);
-		linkTypeDBuilder.setTargets(this.shapeTypeA, this.shapeTypeB);
-		linkTypeDBuilder.build();
-		MockLinkObjectTypeBuilder linkTypeEBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_E_ID, linkTypeE, this.linkTypeEConnections);
-		linkTypeEBuilder.setSources(this.shapeTypeB);
-		linkTypeEBuilder.setTargets(this.shapeTypeA);
-		linkTypeEBuilder.build();
 	}
 
-	private void defineNodeObjectType(final int idx, final IShapeObjectType objectType, final IShapeParentingRules shapeTypeParenting, final INodeObjectType ... children){
-		this.mockery.checking(new Expectations(){{
-			allowing(objectType).getUniqueId(); will(returnValue(idx));
-			allowing(objectType).getSyntaxService(); will(returnValue(syntaxService));
-			allowing(objectType).getName(); will(returnValue("rootName"));
-			allowing(objectType).getDescription(); will(returnValue("Descn"));
-			allowing(objectType).getParentingRules(); will(returnValue(shapeTypeParenting));
-			
-			allowing(shapeTypeParenting).getObjectType(); will(returnValue(objectType));
-			allowing(shapeTypeParenting).isValidChild(with(not(isOneOf(children)))); will(returnValue(false));
-			allowing(shapeTypeParenting).isValidChild(with(isOneOf(children))); will(returnValue(true));
-		}});
-	}
-	
 	public INotationSubsystem getNotationSubsystem(){
 		return this.notationSubsystem;
 	}

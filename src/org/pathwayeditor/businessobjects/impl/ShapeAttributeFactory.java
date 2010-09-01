@@ -16,26 +16,32 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
-import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
+import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
-public class ShapeAttributeFactory implements IElementAttributeFactory {
+public class ShapeAttributeFactory implements IShapeAttributeFactory {
 	private IShapeObjectType shapeObjectType;
-	private final ITypedDrawingNodeAttribute parentAttribute;
+	private ICanvasElementAttribute destinationAttribute;
+	private final IndexCounter creationSerialCounter;
 	
-	
-	public ShapeAttributeFactory(ITypedDrawingNodeAttribute parentAttribute){
-		this.parentAttribute = parentAttribute;
+	public ShapeAttributeFactory(IndexCounter creationSerialCounter){
+		if(creationSerialCounter == null) throw new IllegalArgumentException("Creation serial cannot be null");
+		
+		this.destinationAttribute = null;
+		this.shapeObjectType = null;
+		this.creationSerialCounter = creationSerialCounter;
 	}
 	
+	@Override
 	public void setObjectType(IShapeObjectType objectType){
 		this.shapeObjectType = objectType;
 	}
@@ -45,25 +51,36 @@ public class ShapeAttributeFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		return this.shapeObjectType != null && this.parentAttribute != null &&
-			this.parentAttribute.getObjectType().getParentingRules().isValidChild(shapeObjectType);
+		return this.shapeObjectType != null && this.destinationAttribute != null &&
+			this.destinationAttribute.getObjectType().getParentingRules().isValidChild(shapeObjectType);
+	}
+
+	@Override
+	public IShapeAttribute createAttribute() {
+		if(!this.canCreateAttribute()) throw new IllegalStateException("cannot create attribute");
+	
+		return new ShapeAttribute(this.destinationAttribute.getRootAttribute(), creationSerialCounter.nextIndex(), shapeObjectType);
+	}
+
+	@Override
+	public IShapeObjectType getObjectType() {
+		return this.shapeObjectType;
 	}
 
 	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#createAttribute()
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setDestinationAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
 	 */
 	@Override
-	public IElementAttribute createAttribute() {
-		ICanvas canvas = this.parentAttribute.getCanvas();
-		return new ShapeAttribute(canvas, canvas.getCreationSerialCounter().nextIndex(), shapeObjectType);
+	public void setDestinationAttribute(IElementAttribute attribute) {
+		this.destinationAttribute = (ICanvasElementAttribute)attribute;
 	}
 
-	public ITypedDrawingNodeAttribute getParentAttribute(){
-		return this.parentAttribute;
-	}
-
-	public IShapeObjectType getObjectType() {
-		return this.shapeObjectType;
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getDestinationAttribute()
+	 */
+	@Override
+	public ICanvasElementAttribute getDestinationAttribute() {
+		return this.destinationAttribute;
 	}
 	
 }

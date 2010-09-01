@@ -18,8 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.impl;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -28,28 +27,17 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
  * @author smoodie
  *
  */
-public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttribute {
-	private final ICanvas canvas;
+public abstract class CanvasAttribute implements ICanvasElementAttribute, IElementAttribute {
 	private final int creationSerial;
 	private ICompoundGraphElement compoundGraphElement;
-	
-	public abstract boolean isValid();
-	
 	
 	/**
 	 * The normal constructor for this class to be used by classes extending this class in application code;
 	 * @param canvas the canvas to which this attribute belongs, which should not be null.
 	 * @param creationSerial the creation serial number that uniquely identifies this attribute within the canvas.
 	 */
-	protected CanvasAttribute(ICanvas canvas, int creationSerial) {
-		this.canvas = canvas;
+	protected CanvasAttribute(int creationSerial) {
 		this.creationSerial = creationSerial;
-		this.canvas.addCanvasAttribute(this);
-	}
-	
-	@Override
-	public ICanvas getCanvas() {
-		return this.canvas;
 	}
 	
 	@Override
@@ -61,7 +49,6 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.canvas == null) ? 0 : this.canvas.hashCode());
 		result = prime * result + this.creationSerial;
 		return result;
 	}
@@ -73,14 +60,9 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof ICanvasAttribute))
+		if (!(obj instanceof ICanvasElementAttribute))
 			return false;
-		ICanvasAttribute other = (ICanvasAttribute) obj;
-		if (this.canvas == null) {
-			if (other.getCanvas() != null)
-				return false;
-		} else if (!this.canvas.equals(other.getCanvas()))
-			return false;
+		ICanvasElementAttribute other = (ICanvasElementAttribute) obj;
 		if (this.creationSerial != other.getCreationSerial())
 			return false;
 		return true;
@@ -89,20 +71,15 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(canvas=");
-		builder.append(this.getCanvas());
-		builder.append(", serial=");
+		builder.append("(serial=");
 		builder.append(this.getCreationSerial());
 		builder.append(")");
 		return builder.toString();
 	}
 	
 	@Override
-	public int compareTo(ICanvasAttribute other){
-		int retVal = this.getCanvas().compareTo(other.getCanvas());
-		if(retVal == 0){
-			retVal = Integer.valueOf(this.creationSerial).compareTo(Integer.valueOf(other.getCreationSerial())); 
-		}
+	public int compareTo(ICanvasElementAttribute other){
+		int retVal = Integer.valueOf(this.creationSerial).compareTo(Integer.valueOf(other.getCreationSerial())); 
 		return retVal;
 	}
 
@@ -123,13 +100,8 @@ public abstract class CanvasAttribute implements ICanvasAttribute, IElementAttri
 	}
 
 	@Override
-	public IBusinessObjectGraphElementMapper getMapper() {
-		return this.getCanvas().getMapper();
-	}
-	
-	@Override
 	public boolean isRemoved(){
-		boolean retVal = false;
+		boolean retVal = true;
 		if(this.compoundGraphElement != null){
 			retVal = this.compoundGraphElement.isRemoved();
 		}

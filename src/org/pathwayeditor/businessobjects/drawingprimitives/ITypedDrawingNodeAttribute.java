@@ -11,6 +11,6 @@ import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
  */
 public interface ITypedDrawingNodeAttribute extends IDrawingNodeAttribute {
 
+	@Override
 	INodeObjectType getObjectType();
-	
 }

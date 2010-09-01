@@ -19,7 +19,7 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.impl.IBusinessObjectGraphElementMapper;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 
@@ -30,33 +30,17 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
  * @author smoodie
  *
  */
-public interface ICanvasAttribute extends IElementAttribute, ICanvasAttributePropertyChangeListenee, Comparable<ICanvasAttribute> {
+public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttributePropertyChangeListenee, Comparable<ICanvasElementAttribute> {
 	
-	/**
-	 * Get the Canvas related with this attribute. Cannot be null.
-	 * @return the Canvas. Cannot be null.
-	 */	
-	ICanvas getCanvas();
-
+	IRootAttribute getRootAttribute();
+	
+	IObjectType getObjectType();
+	
 	/**
 	 * Get the Creation serial of this attribute. Cannot be null.
 	 * @return the serial number, greater that 0.
 	 */	
 	int getCreationSerial();	
-	
-//	/**
-//	 * The object type associated with the drawing node
-//	 * @return the object type, which cannot be null.
-//	 */
-//	IObjectType getObjectType();
-	
-	/**
-	 * Gets the drawing elements associated with the attribute.
-	 * @return the drawing element, which cannot be null.
-	 */
-	IDrawingElement getCurrentDrawingElement();
-	
-	IBusinessObjectGraphElementMapper getMapper();
 	
 	/**
 	 * The business key is the combination of canvas and creation serial.
@@ -74,4 +58,9 @@ public interface ICanvasAttribute extends IElementAttribute, ICanvasAttributePro
 	int hashCode();
 	
 	boolean isRemoved();
+
+	/**
+	 * @param iCanvasElementAttributeVisitor
+	 */
+	void visit(ICanvasElementAttributeVisitor visitor);
 }

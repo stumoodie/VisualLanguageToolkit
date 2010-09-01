@@ -18,11 +18,11 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 
 /**
  * @author smoodie
@@ -30,10 +30,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
  */
 public final class ListenablePropertyChangeItem	implements ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 	private final List<ICanvasAttributePropertyChangeListener> listeners;
-	private final ICanvasAttribute attribute;
+	private final ICanvasElementAttribute attribute;
 	private boolean enabled = true; 
 	
-	public ListenablePropertyChangeItem(ICanvasAttribute attribute){
+	public ListenablePropertyChangeItem(ICanvasElementAttribute attribute){
 		this.listeners = new CopyOnWriteArrayList<ICanvasAttributePropertyChangeListener>();
 		this.attribute = attribute;
 	}
@@ -57,7 +57,7 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 		ICanvasAttributePropertyChangeEvent event = new ICanvasAttributePropertyChangeEvent(){
 
 			@Override
-			public ICanvasAttribute getAttribute(){
+			public ICanvasElementAttribute getAttribute(){
 				return attribute;
 			}
 			
@@ -81,8 +81,8 @@ public final class ListenablePropertyChangeItem	implements ICanvasAttributePrope
 	}
 	
 	@Override
-	public final Iterator<ICanvasAttributePropertyChangeListener> listenerIterator(){
-		return this.listeners.iterator();
+	public final List<ICanvasAttributePropertyChangeListener> getChangeListeners(){
+		return new ArrayList<ICanvasAttributePropertyChangeListener>(this.listeners);
 	}
 	
 	@Override

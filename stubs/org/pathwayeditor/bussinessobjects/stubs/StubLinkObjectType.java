@@ -26,6 +26,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubLinkAttributeDefaultsWithRichText;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubSourceLinkTerminusDefinition;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubTargetLinkTerminusDefinition;
@@ -111,6 +112,15 @@ public class StubLinkObjectType implements ILinkObjectType {
 	 */
 	public int getUniqueId() {
 		return EXPECTED_UNIQUE_ID;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getParentingRules()
+	 */
+	@Override
+	public IObjectTypeParentingRules getParentingRules() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

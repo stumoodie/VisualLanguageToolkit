@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkTerminus extends IAnnotatedObject, ICanvasElementAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 
 	/**
 	 * The link attribute that owns this terminus. 

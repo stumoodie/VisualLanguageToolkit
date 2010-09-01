@@ -27,19 +27,8 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author smoodie
  *
  */
-public interface IDrawingNodeAttribute extends ICanvasAttribute, IDrawingNodeAttributeListenee {
+public interface IDrawingNodeAttribute extends ICanvasElementAttribute, IDrawingNodeAttributeListenee {
 
-	@Override
-	IDrawingNode getCurrentDrawingElement();
-
-	Point getLocation();
-	
-	void setLocation(Point newLocation);
-	
-	Dimension getSize();
-	
-	void setSize(Dimension newSize);
-	
 	Envelope getBounds();
 	
 	void setBounds(Envelope newBounds);
