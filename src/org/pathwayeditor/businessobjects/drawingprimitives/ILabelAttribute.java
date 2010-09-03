@@ -22,7 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressab
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.figure.geometry.Dimension;
 
-public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
 	
 	/**
 	 * Get the property associated with the current Label

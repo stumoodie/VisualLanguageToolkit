@@ -22,7 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressab
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends IZOrderedObject, ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributePropertyChangeListenee,
+public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributePropertyChangeListenee,
 	ISuppressableChangeListenee  {
 	/**
 	 * Gets the Object type related to this Link.
