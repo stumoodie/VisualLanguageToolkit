@@ -16,19 +16,17 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
-import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
  *
  */
-public interface IDrawingNodeAttributeResizedEvent {
+public interface ICanvasAttributeTranslationEvent {
 
-	IDrawingNodeAttribute getAttibuteChanged();
-
-	Point getOriginChange();
+	ICanvasElementAttribute getAttibuteChanged();
 	
-	Dimension getSizeChange();
+	Point getTranslationDelta();
+	
 }

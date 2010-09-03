@@ -17,12 +17,11 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.figure.geometry.Dimension;
 
-public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributeChangeListenee {
 	
 	/**
 	 * Get the property associated with the current Label

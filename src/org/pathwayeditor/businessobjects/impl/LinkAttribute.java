@@ -25,9 +25,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
@@ -46,7 +46,7 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private final ILinkTerminus srcTerminus;
 	private final ILinkTerminus tgtTerminus;
-	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
+	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
 	private final IRootAttribute rootAttribute;
 	private final IBendPointContainer lineSegement;
 	
@@ -109,7 +109,7 @@ s	 */
 		
 		LineStyle oldValue = this.lineStyle;
 		this.lineStyle = lineStyle;
-		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ s	 */
 		
 		double oldValue = this.lineWidth;
 		this.lineWidth = lineWidth;
-		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 	}
 
 	/* (non-Javadoc)
@@ -145,7 +145,7 @@ s	 */
 
 		RGB oldValue = this.lineColour;
 		this.lineColour = newColor;
-		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.lineStyle);
+		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.lineColour);
 	}
 
 	/* (non-Javadoc)
@@ -169,24 +169,24 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	@Override
-	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.addChangeListener(listener);
+	public void addChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#getChangeListeners()
 	 */
 	@Override
-	public List<ICanvasAttributePropertyChangeListener> getChangeListeners() {
-		return this.listenablePropertyChangeItem.getChangeListeners();
+	public List<ICanvasAttributeChangeListener> getChangeListeners() {
+		return this.canvasAttributeChangeListenerHelper.getChangeListeners();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	@Override
-	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.removeChangeListener(listener);
+	public void removeChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
 	}
 
 //	/* (non-Javadoc)
@@ -215,16 +215,6 @@ s	 */
 //		}
 //	}
 
-	@Override
-	public boolean areListenersEnabled() {
-		return this.listenablePropertyChangeItem.areListenersEnabled();
-	}
-
-	@Override
-	public void setListenersEnabled(boolean enabled) {
-		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#getRootAttribute()
 	 */

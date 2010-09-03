@@ -418,36 +418,43 @@ public class InstructionExecutor {
 			}
 		});
 		this.opCodeLookup.put(OpCodes.FLOOR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processFloor();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.NEG, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processNeg();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ABS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processAbs();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_BOUNDS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurBounds();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ANCHOR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetAnchor();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CVS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCvs();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.TEXTBOUNDS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processTextBounds();
 			}
@@ -797,14 +804,17 @@ public class InstructionExecutor {
 	private void processDiv(){
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a/b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a/b;
 			}
 
+			@Override
 			public String getOpName() {
 				return "div";
 			}
@@ -815,14 +825,17 @@ public class InstructionExecutor {
 	private void processMul() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a*b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a*b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "mul";
 			}
@@ -833,14 +846,17 @@ public class InstructionExecutor {
 	private void processSub() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a-b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a-b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "sub";
 			}
@@ -851,14 +867,17 @@ public class InstructionExecutor {
 	private void processAdd() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a+b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a+b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "add";
 			}
@@ -1125,7 +1144,7 @@ public class InstructionExecutor {
 			}
 			else if(inst.getType().equals(InstructionType.VARIABLE_NAME)){
 				// lookup variable
-				Value lookup = this.variableLookup.get((String)inst.getValue());
+				Value lookup = this.variableLookup.get(inst.getValue());
 				if(lookup == null)
 					throw new IllegalStateException("No variable name found matching: " + inst.getValue());
 				
@@ -1146,7 +1165,7 @@ public class InstructionExecutor {
 			}
 			else if(inst.getType().equals(InstructionType.BOUND_VALUE)){
 				// lookup variable
-				Value lookup = this.bindLookup.get((String)inst.getValue());
+				Value lookup = this.bindLookup.get(inst.getValue());
 				if(lookup == null) throw new IllegalStateException("No binding found for name: " + inst.getValue());
 				this.valueStack.push(lookup);
 				if(logger.isDebugEnabled()){

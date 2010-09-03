@@ -38,9 +38,16 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeResizedEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeTranslationEvent;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
+import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
@@ -56,10 +63,13 @@ public class LinkAttributeTest {
 	private static final RGB EXPECTED_LINE_COLOUR = RGB.GREEN;
 	private static final LineStyle EXPECTED_LINE_STYLE = LineStyle.DASH_DOT;
 	private static final double EXPECTED_LINE_WIDTH = 3.9;
+	private static final int EXPECTED_NUM_LISTENERS = 1;
 	private Mockery mockery;
 	private ILinkAttribute testInstance;
 	private NotationSubsystemFixture notationFixture;
 	private CanvasTestFixture testFixture;
+	private ICanvasAttributeChangeListener testListener;
+	private ICanvasAttributePropertyChangeEvent propChangeEvent = null;
 
 	/**
 	 * @throws java.lang.Exception
@@ -73,6 +83,23 @@ public class LinkAttributeTest {
 		this.testFixture.buildFixture();
 		INotationSyntaxService syntaxService = this.notationFixture.getNotationSubsystem().getSyntaxService();
 		this.testInstance = new LinkAttribute(this.testFixture.getRootAttribute(), EXPECTED_IDX, syntaxService.getLinkObjectType(CanvasTestFixture.LINK1_ATT_OT));
+		this.testListener = new ICanvasAttributeChangeListener() {
+
+			@Override
+			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				propChangeEvent = e;
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
+			}
+			
+		};
+		this.testInstance.addChangeListener(this.testListener);
 	}
 
 	/**
@@ -84,6 +111,7 @@ public class LinkAttributeTest {
 		this.mockery = null;
 		this.notationFixture = null;
 		this.testInstance = null;
+		this.testListener = null;
 	}
 
 	/**
@@ -113,6 +141,9 @@ public class LinkAttributeTest {
 		assertFalse("not same colour", expectedVal.equals(EXPECTED_LINE_STYLE));
 		this.testInstance.setLineStyle(expectedVal);
 		assertEquals("expected val", expectedVal, this.testInstance.getLineStyle());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
+				EXPECTED_LINE_STYLE, expectedVal);
+		validator.validateEvent(propChangeEvent);
 	}
 	
 	public void testGetbendPointContainer(){
@@ -134,7 +165,11 @@ public class LinkAttributeTest {
 	public void testSetLineWidth() {
 		double expectedValue = 1.9382;
 		this.testInstance.setLineWidth(expectedValue);
+		assertFalse("diff new val", EXPECTED_LINE_WIDTH == expectedValue);
 		assertEquals("expected val", expectedValue, this.testInstance.getLineWidth(), DIFF_THRESHOLD);
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
+				EXPECTED_LINE_WIDTH, expectedValue);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -154,6 +189,9 @@ public class LinkAttributeTest {
 		assertFalse("not same colour", expectedLineColour.equals(EXPECTED_LINE_COLOUR));
 		this.testInstance.setLineColour(expectedLineColour);
 		assertEquals("line colour", expectedLineColour, this.testInstance.getLineColour());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
+				EXPECTED_LINE_COLOUR, expectedLineColour);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -173,11 +211,28 @@ public class LinkAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener)}.
 	 */
 	@Test
 	public void testAddChangeListenerICanvasAttributePropertyChangeListener() {
-		fail("Not yet implemented"); // TODO
+		this.testInstance.addChangeListener(new ICanvasAttributeChangeListener() {
+			
+			@Override
+			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+				
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
+				
+			}
+		});
+		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS+1, this.testInstance.getChangeListeners().size());
 	}
 
 	/**
@@ -185,31 +240,19 @@ public class LinkAttributeTest {
 	 */
 	@Test
 	public void testGetChangeListeners() {
-		fail("Not yet implemented"); // TODO
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>(this.testListener);
+		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener)}.
 	 */
 	@Test
 	public void testRemoveChangeListenerICanvasAttributePropertyChangeListener() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#areListenersEnabled()}.
-	 */
-	@Test
-	public void testAreListenersEnabled() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#setListenersEnabled(boolean)}.
-	 */
-	@Test
-	public void testSetListenersEnabled() {
-		fail("Not yet implemented"); // TODO
+		this.testInstance.removeChangeListener(testListener);
+		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS-1, this.testInstance.getChangeListeners().size());
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>();
+		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 
 	/**

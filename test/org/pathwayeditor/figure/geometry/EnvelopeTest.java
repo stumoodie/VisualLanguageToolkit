@@ -6,10 +6,8 @@ package org.pathwayeditor.figure.geometry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -108,22 +106,6 @@ public class EnvelopeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#transformPointToNewEnvelope(org.pathwayeditor.figure.geometry.Point, org.pathwayeditor.figure.geometry.Envelope)}.
-	 */
-	@Ignore @Test
-	public void testTransformPointToNewEnvelope() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#equals(java.lang.Object)}.
-	 */
-	@Ignore @Test
-	public void testEqualsObject() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#getHorizontalCorner()}.
 	 */
 	@Test
@@ -145,14 +127,6 @@ public class EnvelopeTest {
 	@Test
 	public void testGetDiagonalCorner() {
 		assertEquals("expected value", EXPECTED_DIAGONAL_CORNER, this.testInstance.getDiagonalCorner());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#containsPoint(org.pathwayeditor.figure.geometry.Point)}.
-	 */
-	@Ignore @Test
-	public void testContainsPoint() {
-		fail("Not yet implemented");
 	}
 
 	/**
@@ -222,28 +196,4 @@ public class EnvelopeTest {
 		assertEquals("expected transformed envelope", expectedEnv, actualEnv);
 	}
 	
-	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#translate(org.pathwayeditor.figure.geometry.Point)}.
-	 */
-	@Ignore @Test
-	public void testTranslate() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#changeOrigin(org.pathwayeditor.figure.geometry.Point)}.
-	 */
-	@Ignore @Test
-	public void testChangeOrigin() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.figure.geometry.Envelope#changeDimension(org.pathwayeditor.figure.geometry.Dimension)}.
-	 */
-	@Ignore @Test
-	public void testChangeDimension() {
-		fail("Not yet implemented");
-	}
-
 }

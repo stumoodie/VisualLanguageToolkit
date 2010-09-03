@@ -29,10 +29,9 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author smoodie
  *
  */
-public final class ListenableBendPointChangeItem implements IBendPointChangeListenee, ISuppressableChangeListenee {
+public final class ListenableBendPointChangeItem implements IBendPointChangeListenee {
 	private final List<IBendPointChangeListener> listeners;
 	private final IBendPointContainer linkAttribute;
-	private boolean enabled = true; 
 	
 	public ListenableBendPointChangeItem(IBendPointContainer linkAttribute){
 		this.listeners = new CopyOnWriteArrayList<IBendPointChangeListener>();
@@ -47,18 +46,14 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	}
 
 	public final void firePropertyChange(IBendPointChangeEvent evt){
-		if(enabled){
-			for(IBendPointChangeListener listener : this.getListeners()){
-				listener.propertyChange(evt);
-			}
+		for(IBendPointChangeListener listener : this.getListeners()){
+			listener.propertyChange(evt);
 		}
 	}
 	
 	public final void fireLocationChange(IBendPointLocationChangeEvent evt){
-		if(enabled){
-			for(IBendPointChangeListener listener : this.getListeners()){
-				listener.locationChange(evt);
-			}
+		for(IBendPointChangeListener listener : this.getListeners()){
+			listener.locationChange(evt);
 		}
 	}
 	
@@ -134,21 +129,5 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	@Override
 	public final void removeChangeListener(IBendPointChangeListener listener){
 		this.listeners.remove(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
-	 */
-	@Override
-	public boolean areListenersEnabled() {
-		return this.enabled;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
-	 */
-	@Override
-	public void setListenersEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 }

@@ -18,7 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -30,7 +30,7 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
  * @author smoodie
  *
  */
-public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttributePropertyChangeListenee, Comparable<ICanvasElementAttribute> {
+public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttributeChangeListenee, Comparable<ICanvasElementAttribute> {
 	
 	IRootAttribute getRootAttribute();
 	

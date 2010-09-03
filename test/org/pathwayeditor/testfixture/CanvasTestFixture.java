@@ -40,6 +40,8 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.util.IndexCounter;
+
 /**
  * @author smoodie
  *
@@ -61,7 +63,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 	public static final int SHAPE1_ATT_OT = 1;
 	public static final int SHAPE2_ATT_OT = 2;
 	public static final int LINK1_ATT_OT = 4;
-
+	public static final int INDEX_COUNTER_IDX = 100;
 	private static final String ELEMENT_CREATION_ORDER[] = { ROOT_ATT_ID, SHAPE1_ATT_ID, SHAPE2_ATT_ID, LABEL9_ATT_ID, LINK1_ATT_ID };
 
 	private INotationSubsystem notationSubsystem;
@@ -125,7 +127,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 				rootAttribute = mockery.mock(IRootAttribute.class, createMockName("rootAttribute"));
 				final Point location = new Point(-12.0, -10.0);
 				final Dimension size = new Dimension(400.0, 200.0);
-//				final IndexCounter serialCounter = new IndexCounter(SERIAL_CTR_IDX);
+				final IndexCounter serialCounter = new IndexCounter(INDEX_COUNTER_IDX);
 				mockery.checking(new Expectations(){{
 					allowing(rootAttribute).getCreationSerial(); will(returnValue(ROOT_ATT_IDX));
 					allowing(rootAttribute).getObjectType(); will(returnValue(notationSubsystem.getSyntaxService().getRootObjectType()));
@@ -140,7 +142,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 					allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
 					allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
 					allowing(rootAttribute).numCanvasAttributes(); will(returnValue(NUM_ATTRIBUTES));
-//					allowing(rootAttribute).getCreationSerialCounter(); will(returnValue(serialCounter));
+					allowing(rootAttribute).getCreationSerialCounter(); will(returnValue(serialCounter));
 				}});
 				return rootAttribute;
 			}
@@ -214,6 +216,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 					allowing(labelAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
 					allowing(labelAttribute).compareTo(with(any(IShapeAttribute.class))); will(returnValue(1));
 					allowing(labelAttribute).compareTo(with(any(IRootAttribute.class))); will(returnValue(1));
+					allowing(labelAttribute).getMinimumSize(); will(returnValue(new Dimension(10, 11)));
 				}});
 				return labelAttribute;
 			}

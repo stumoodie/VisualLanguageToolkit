@@ -13,11 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
+
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.geometry.Point;
 
-public interface ICanvasAttributePropertyChangeListener {
+/**
+ * @author smoodie
+ *
+ */
+public interface ICanvasAttributeResizedEvent {
 
-	void propertyChange(ICanvasAttributePropertyChangeEvent e);
+	ICanvasElementAttribute getAttibuteChanged();
 
+	Point getOriginChange();
+	
+	Dimension getSizeChange();
 }

@@ -221,8 +221,6 @@ public class Envelope {
 	 * @return the envelope.
 	 */
 	public Envelope deltaResize(double deltaX, double deltaY, double deltaWidth, double deltaHeight) {
-		double w = this.dim.getWidth();
-		double h = this.dim.getHeight();
 		return new Envelope(this.origin.translate(deltaX, deltaY), this.dim.expand(deltaWidth, deltaHeight));
 	}
 }

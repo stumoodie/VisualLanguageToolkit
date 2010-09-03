@@ -38,14 +38,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeResizedEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeTranslationEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeResizedEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeTranslationEvent;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.IObjectConstructor;
@@ -70,9 +71,11 @@ public class RootAttributeTest {
 	private IRootAttribute testInstance;
 	private NotationSubsystemFixture notationFixture;
 	private Mockery mockery;
-	private ICanvasAttributePropertyChangeListener testListener;
+	private ICanvasAttributeChangeListener testListener;
 	private CanvasTestFixture testFixture;
-	private IDrawingNodeAttributeListener testDrawingNodeListener;
+	private ICanvasAttributeTranslationEvent translationEvent = null;
+	private ICanvasAttributeResizedEvent resizedEvent = null;
+	private ICanvasAttributePropertyChangeEvent propChangeEvent = null;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -104,27 +107,25 @@ public class RootAttributeTest {
 			
 		});
 		this.testFixture.buildFixture();
-		this.testListener = new ICanvasAttributePropertyChangeListener() {
+		this.testListener = new ICanvasAttributeChangeListener() {
 
 			@Override
 			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				propChangeEvent = e;
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+				translationEvent = e;
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
+				resizedEvent = e;
 			}
 			
 		};
 		this.testInstance.addChangeListener(this.testListener);
-		this.testDrawingNodeListener = new IDrawingNodeAttributeListener() {
-
-			@Override
-			public void nodeTranslated(IDrawingNodeAttributeTranslationEvent e) {
-				
-			}
-
-			@Override
-			public void nodeResized(IDrawingNodeAttributeResizedEvent e) {
-				
-			}
-		};
-		this.testInstance.addDrawingNodeAttributeListener(testDrawingNodeListener);
 	}
 
 	/**
@@ -134,7 +135,6 @@ public class RootAttributeTest {
 	public void tearDown() throws Exception {
 		this.mockery = null;
 		this.testInstance = null;
-		this.testDrawingNodeListener = null;
 		this.testListener = null;
 		this.testFixture = null;
 	}
@@ -180,6 +180,9 @@ public class RootAttributeTest {
 		assertFalse("not same as default", RootAttribute.DEFAULT_BACKGROUND_COLOUR.equals(newCol));
 		this.testInstance.setBackgroundColour(newCol);
 		assertEquals("expected bg col", newCol, this.testInstance.getBackgroundColour());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
+				RootAttribute.DEFAULT_BACKGROUND_COLOUR, newCol);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -191,15 +194,27 @@ public class RootAttributeTest {
 		assertFalse("not default", EXPECTED_BOUNDS.equals(newBounds));
 		this.testInstance.setBounds(newBounds);
 		assertEquals("bounds set", newBounds, this.testInstance.getBounds());
-		
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
+				EXPECTED_BOUNDS, newBounds);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	@Test
 	public void testAddChangeListener() {
-		this.testInstance.addChangeListener(new ICanvasAttributePropertyChangeListener() {
+		this.testInstance.addChangeListener(new ICanvasAttributeChangeListener() {
 			
 			@Override
 			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+				
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
 				
 			}
 		});
@@ -208,7 +223,7 @@ public class RootAttributeTest {
 
 	@Test
 	public void testGetChangeListeners() {
-		GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener>(this.testListener);
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>(this.testListener);
 		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 
@@ -216,7 +231,7 @@ public class RootAttributeTest {
 	public void testRemoveChangeListener() {
 		this.testInstance.removeChangeListener(testListener);
 		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS-1, this.testInstance.getChangeListeners().size());
-		GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener>();
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>();
 		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 	
@@ -227,6 +242,7 @@ public class RootAttributeTest {
 	public void testResize() {
 		this.testInstance.resize(new Point(25, 10), new Dimension(9, 12));
 		assertEquals("no resize", EXPECTED_BOUNDS, this.testInstance.getBounds());
+		assertNull("not event set", this.resizedEvent);
 	}
 
 	/**
@@ -236,6 +252,7 @@ public class RootAttributeTest {
 	public void testTranslate() {
 		this.testInstance.translate(new Point(103.0, -38762.0));
 		assertEquals("no translation", EXPECTED_BOUNDS, this.testInstance.getBounds());
+		assertNull("not event set", this.translationEvent);
 	}
 
 	/**
@@ -275,40 +292,6 @@ public class RootAttributeTest {
 //		assertEquals("expected counter", this.testCounter, this.testInstance.getCreationSerialCounter());
 //	}
 
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)}.
-	 */
-	@Test
-	public void testAddDrawingNodeAttributeListener() {
-		this.testInstance.addDrawingNodeAttributeListener(new IDrawingNodeAttributeListener() {
-			@Override
-			public void nodeTranslated(IDrawingNodeAttributeTranslationEvent e) {
-			}
-			@Override
-			public void nodeResized(IDrawingNodeAttributeResizedEvent e) {
-			}
-		});
-		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS+1, this.testInstance.getDrawingNodeAttributeListeners().size());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getDrawingNodeAttributeListeners()}.
-	 */
-	@Test
-	public void testGetDrawingNodeAttributeListeners() {
-		GeneralIteratorTestUtility<IDrawingNodeAttributeListener> testIter = new GeneralIteratorTestUtility<IDrawingNodeAttributeListener>(this.testDrawingNodeListener);
-		testIter.testIterator(this.testInstance.getDrawingNodeAttributeListeners().iterator());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)}.
-	 */
-	@Test
-	public void testRemoveDrawingNodeAttributeListener() {
-		this.testInstance.removeDrawingNodeAttributeListener(testDrawingNodeListener);
-		assertTrue("listeners removed", this.testInstance.getDrawingNodeAttributeListeners().isEmpty());
-	}
-
 	@Test(expected=UnsupportedOperationException.class)
 	public void testElementAttributeCopyFactory(){
 		this.testInstance.elementAttributeCopyFactory();
@@ -337,6 +320,9 @@ public class RootAttributeTest {
 		this.testInstance.setName(VALID_CANVAS_NAME);
 		assertEquals("expected name", VALID_CANVAS_NAME, this.testInstance.getName());
 		assertFalse("expecte to have changed", EXPECTED_NAME.equals(this.testInstance.getName()));
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.NAME,
+				EXPECTED_NAME, VALID_CANVAS_NAME);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	@Test

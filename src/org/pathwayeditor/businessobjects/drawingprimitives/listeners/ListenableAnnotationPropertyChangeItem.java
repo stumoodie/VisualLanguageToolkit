@@ -28,9 +28,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
  * @author smoodie
  *
  */
-public final class ListenableAnnotationPropertyChangeItem	implements IAnnotationPropertyChangeListenee, ISuppressableChangeListenee {
+public final class ListenableAnnotationPropertyChangeItem	implements IAnnotationPropertyChangeListenee {
 	private final List<IAnnotationPropertyChangeListener> listeners;
-	private boolean enabled = true; 
 	private IAnnotationProperty annot;
 	
 	public ListenableAnnotationPropertyChangeItem(IAnnotationProperty annot){
@@ -46,10 +45,8 @@ public final class ListenableAnnotationPropertyChangeItem	implements IAnnotation
 	}
 
 	public final void firePropertyChange(IAnnotationPropertyChangeEvent evt){
-		if(enabled){
-			for(IAnnotationPropertyChangeListener listener : this.getListeners()){
-				listener.propertyChange(evt);
-			}
+		for(IAnnotationPropertyChangeListener listener : this.getListeners()){
+			listener.propertyChange(evt);
 		}
 	}
 	
@@ -90,19 +87,4 @@ public final class ListenableAnnotationPropertyChangeItem	implements IAnnotation
 		this.listeners.remove(listener);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
-	 */
-	@Override
-	public boolean areListenersEnabled() {
-		return this.enabled;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
-	 */
-	@Override
-	public void setListenersEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
 }

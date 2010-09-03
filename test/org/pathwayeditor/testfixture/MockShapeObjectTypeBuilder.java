@@ -210,7 +210,7 @@ public class MockShapeObjectTypeBuilder {
 			allowing(retVal).getLineColour(); will(returnValue(RGB.BLUE));
 			allowing(retVal).getLineStyle(); will(returnValue(LineStyle.SOLID));
 			allowing(retVal).getLineWidth(); will(returnValue(2.3));
-			allowing(retVal).getMinimumSize(); will(returnValue(20.0));
+			allowing(retVal).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));
 			allowing(retVal).hasNoBorder(); will(returnValue(false));
 			allowing(retVal).hasNoFill(); will(returnValue(false));
 			allowing(retVal).getLabelLocationPolicy(); will(returnValue(LabelLocationPolicy.CENTRE));

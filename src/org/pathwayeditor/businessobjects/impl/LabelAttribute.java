@@ -22,11 +22,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
@@ -42,8 +40,6 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	private static final int DEFAULT_HEIGHT = 1;
 	private static final int DEFAULT_WIDTH = 1;
 
-	private Point position = new Point(DEFAULT_X, DEFAULT_Y);
-	private Dimension size = new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	private IAnnotationProperty visualisableProperty;
 	private RGB background;
 	private RGB foreground;
@@ -51,8 +47,8 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	private boolean noFill;
 	private double lineWidth;
 	private LineStyle lineStyle = LineStyle.SOLID;
-	private transient final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
-	private transient final DrawingNodeAttributeListenerHandler nodeListenerHandler = new DrawingNodeAttributeListenerHandler(this);
+	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
+	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
 	private IRootAttribute rootAttribute; 
 
 	public LabelAttribute(IRootAttribute hibCanvas, int creationSerial, IAnnotationProperty property,	ILabelAttributeDefaults labelDefaults) {
@@ -67,8 +63,6 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		super(creationSerial);
 		this.rootAttribute = hibCanvas;
 		this.visualisableProperty = copiedProperty;
-		this.position = otherAttribute.getBounds().getOrigin();
-		this.size = otherAttribute.getBounds().getDimension();
 		this.background = otherAttribute.getBackgroundColor();
 		this.foreground = otherAttribute.getForegroundColor();
 		this.lineStyle = otherAttribute.getLineStyle();
@@ -76,10 +70,10 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.noBorder = otherAttribute.hasNoBorder();
 		this.noFill = otherAttribute.hasNoFill();
 		this.visualisableProperty.setLabel(this);
+		this.boundsDelegate.setBounds(otherAttribute.getBounds());
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
-		this.size = new Dimension(0, 0);
 		this.background = labelDefaults.getFillColour();
 		this.foreground = labelDefaults.getLineColour();
 		this.lineStyle = labelDefaults.getLineStyle();
@@ -108,54 +102,54 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		if(this.background != color){
 			RGB oldColour = this.background;
 			this.background = color;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldColour, this.background);
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldColour, this.background);
 		}
 	}
 	
-	private void setLocation(Point location) {
-		if (location == null)
-			throw new IllegalArgumentException("location cannot be null.");
-
-		if(!this.position.equals(location)){
-			Point oldValue = this.position;
-			this.position = location;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldValue, this.position);
-		}
-	}
-
-	private void setSize(Dimension size) {
-		if (size == null)
-			throw new IllegalArgumentException("size cannot be null.");
-
-		if(!this.size.equals(size)){
-			Dimension oldValue = this.size;
-			this.size = size;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldValue, this.size);
-		}
-	}
+//	private void setLocation(Point location) {
+//		if (location == null)
+//			throw new IllegalArgumentException("location cannot be null.");
+//
+//		if(!this.position.equals(location)){
+//			Point oldValue = this.position;
+//			this.position = location;
+//			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, this.position);
+//		}
+//	}
+//
+//	private void setSize(Dimension size) {
+//		if (size == null)
+//			throw new IllegalArgumentException("size cannot be null.");
+//
+//		if(!this.size.equals(size)){
+//			Dimension oldValue = this.size;
+//			this.size = size;
+//			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldValue, this.size);
+//		}
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	@Override
-	public void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.addChangeListener(listener);
+	public void addChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#listenerIterator()
 	 */
 	@Override
-	public List<ICanvasAttributePropertyChangeListener> getChangeListeners() {
-		return this.listenablePropertyChangeItem.getChangeListeners();
+	public List<ICanvasAttributeChangeListener> getChangeListeners() {
+		return this.canvasAttributeChangeListenerHelper.getChangeListeners();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	@Override
-	public void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.removeChangeListener(listener);
+	public void removeChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -163,7 +157,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public Envelope getBounds() {
-		return new Envelope(this.position, this.size);
+		return this.boundsDelegate.getBounds();
 	}
 
 	/* (non-Javadoc)
@@ -171,18 +165,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void setBounds(Envelope newBounds) {
-		this.setLocation(newBounds.getOrigin());
-		this.setSize(newBounds.getDimension());
-	}
-
-	@Override
-	public boolean areListenersEnabled() {
-		return this.listenablePropertyChangeItem.areListenersEnabled();
-	}
-
-	@Override
-	public void setListenersEnabled(boolean enabled) {
-		this.listenablePropertyChangeItem.setListenersEnabled(enabled);
+		this.boundsDelegate.setBounds(newBounds);
 	}
 
 	/* (non-Javadoc)
@@ -201,16 +184,16 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		if(this.foreground != color){
 			RGB oldValue = this.foreground;
 			this.foreground = color;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.foreground);
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.foreground);
 		}
 	}
 
 	@Override
-	public void setNoBorder(boolean noBorder){
-		if(this.noBorder != noBorder){
+	public void setNoBorder(boolean noBorderEnabled){
+		if(this.noBorder != noBorderEnabled){
 			boolean oldValue = this.noBorder;
-			this.noBorder = noBorder;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.NO_BORDER, oldValue, this.noBorder);
+			this.noBorder = noBorderEnabled;
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.NO_BORDER, oldValue, this.noBorder);
 		}
 	}
 	
@@ -224,11 +207,11 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	}
 
 	@Override
-	public void setNoFill(boolean noFill){
-		if(this.noFill != noFill){
+	public void setNoFill(boolean noFillEnabled){
+		if(this.noFill != noFillEnabled){
 			boolean oldValue = this.noFill;
-			this.noFill = noFill;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.NO_FILL, oldValue, this.noFill);
+			this.noFill = noFillEnabled;
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.NO_FILL, oldValue, this.noFill);
 		}
 	}
 	
@@ -261,7 +244,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		if(!this.lineStyle.equals(lineStyle)){
 			LineStyle oldValue = this.lineStyle;
 			this.lineStyle = lineStyle;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
 		}
 	}
 
@@ -273,7 +256,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		if(this.lineWidth != lineWidth){
 			double oldValue = this.lineWidth;
 			this.lineWidth = lineWidth;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
+			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
 		}
 	}
 
@@ -290,22 +273,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void resize(Point locationDelta, Dimension sizeDelta) {
-		Point origPosition = this.position;
-		this.position = this.position.translate(locationDelta);
-		Dimension origSize = this.size;
-		this.size = this.size.resize(sizeDelta.getWidth(), sizeDelta.getHeight());
-		boolean posChanged = !this.position.equals(origPosition);
-		boolean sizeChange = !this.size.equals(origSize);
-		
-		if(posChanged || sizeChange){
-			this.nodeListenerHandler.notifyNodeResize(locationDelta, sizeDelta);
-		}
-		if(posChanged){
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
-		}
-		if(sizeChange){
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, origSize, this.size);
-		}
+		this.boundsDelegate.resize(locationDelta, sizeDelta);
 	}
 
 	/* (non-Javadoc)
@@ -313,36 +281,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void translate(Point delta) {
-		Point origPosition = this.position;
-		this.position = this.position.translate(delta);
-		if(!this.position.equals(origPosition)){
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, origPosition, this.position);
-			this.nodeListenerHandler.notifyNodeTranslation(delta);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
-	 */
-	@Override
-	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
-		this.nodeListenerHandler.addDrawingNodeAttributeListener(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
-	 */
-	@Override
-	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
-		return this.nodeListenerHandler.getDrawingNodeAttributeListeners();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
-	 */
-	@Override
-	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
-		this.nodeListenerHandler.removeDrawingNodeAttributeListener(listener);
+		this.boundsDelegate.translate(delta);
 	}
 
 	/* (non-Javadoc)

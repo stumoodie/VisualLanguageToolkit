@@ -35,11 +35,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenablePropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
@@ -91,14 +89,12 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	public static final Dimension INITIAL_SIZE = new Dimension(Double.MAX_VALUE, Double.MAX_VALUE);
 	public static final int ROOT_IDX = 0;
 	private final IRootObjectType objectType;
-	private Point location = INITIAL_POS; 
-	private Dimension size = INITIAL_SIZE; 
-	private final ListenablePropertyChangeItem listenablePropertyChangeItem = new ListenablePropertyChangeItem(this);
-	private final DrawingNodeAttributeListenerHandler listenerHandler = new DrawingNodeAttributeListenerHandler(this);
+	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
 	private RGB backgroundColour = DEFAULT_BACKGROUND_COLOUR;
 	private String name;
 	private final IndexCounter creationSerialCounter;
 	private final SortedSet<ICanvasElementAttribute> canvasElementAttributes = new TreeSet<ICanvasElementAttribute>();
+	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(INITIAL_POS, INITIAL_SIZE), canvasAttributeChangeListenerHelper);
 
 	public RootAttribute(String name, IRootObjectType objectType) {
 		super(ROOT_IDX);
@@ -112,9 +108,8 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		this.objectType = otherAttribute.getObjectType();
 		this.backgroundColour = otherAttribute.backgroundColour;
 		this.name = otherAttribute.name;
-		this.location = otherAttribute.location;
-		this.size = otherAttribute.size;
 		this.creationSerialCounter = new IndexCounter(ROOT_IDX);
+		this.boundsDelegate.setBounds(otherAttribute.getBounds());
 	}
 
 	@Override
@@ -126,7 +121,11 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	public void setName(String name){
 		if(!isValidName(name)) throw new IllegalArgumentException("Invalid name: " + name);
 		
-		this.name = name;
+		if(!this.name.equals(name)){
+			String oldValue = this.name;
+			this.name = name;
+			canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.NAME, oldValue, this.name);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -137,28 +136,12 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		return this.objectType;
 	}
 
-	private void setLocation(Point newLocation) {
-		Point oldLocation = this.location;
-		if(!oldLocation.equals(newLocation)){
-			this.location = newLocation;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.LOCATION, oldLocation, newLocation);
-		}
-	}
-
-	private void setSize(Dimension newSize) {
-		Dimension oldSize = this.size;
-		if(!oldSize.equals(newSize)){
-			this.size = newSize;
-			this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldSize, newSize);
-		}
-	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getBounds()
 	 */
 	@Override
 	public Envelope getBounds() {
-		return new Envelope(this.location, this.size);
+		return this.boundsDelegate.getBounds();
 	}
 
 	@Override
@@ -173,7 +156,7 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 
 		RGB oldBackgroundColour = this.backgroundColour;
 		this.backgroundColour = backgroundColour;
-		this.listenablePropertyChangeItem.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldBackgroundColour, this.backgroundColour);
+		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldBackgroundColour, this.backgroundColour);
 	}
 
 	/* (non-Javadoc)
@@ -181,23 +164,22 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	 */
 	@Override
 	public void setBounds(Envelope newBounds) {
-		setLocation(newBounds.getOrigin());
-		setSize(newBounds.getDimension());
+		this.boundsDelegate.setBounds(newBounds);
 	}
 
 	@Override
-	public final void addChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.addChangeListener(listener);
+	public final void addChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.addChangeListener(listener);
 	}
 
 	@Override
-	public final List<ICanvasAttributePropertyChangeListener> getChangeListeners() {
-		return this.listenablePropertyChangeItem.getChangeListeners();
+	public final List<ICanvasAttributeChangeListener> getChangeListeners() {
+		return this.canvasAttributeChangeListenerHelper.getChangeListeners();
 	}
 
 	@Override
-	public final void removeChangeListener(ICanvasAttributePropertyChangeListener listener) {
-		this.listenablePropertyChangeItem.removeChangeListener(listener);
+	public final void removeChangeListener(ICanvasAttributeChangeListener listener) {
+		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -370,30 +352,6 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	@Override
 	public void addCanvasAttribute(ICanvasElementAttribute attribute) {
 		this.canvasElementAttributes.add(attribute);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
-	 */
-	@Override
-	public void addDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
-		this.listenerHandler.addDrawingNodeAttributeListener(listener);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#getDrawingNodeAttributeListeners()
-	 */
-	@Override
-	public List<IDrawingNodeAttributeListener> getDrawingNodeAttributeListeners() {
-		return this.listenerHandler.getDrawingNodeAttributeListeners();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)
-	 */
-	@Override
-	public void removeDrawingNodeAttributeListener(IDrawingNodeAttributeListener listener) {
-		this.listenerHandler.removeDrawingNodeAttributeListener(listener);
 	}
 
 	/* (non-Javadoc)

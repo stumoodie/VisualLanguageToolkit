@@ -47,7 +47,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 		return this.listeners;
 	}
 
-	public final void fireNodeResizeEvent(IDrawingNodeAttributeResizedEvent evt){
+	public final void fireNodeResizeEvent(ICanvasAttributeResizedEvent evt){
 		if(enabled){
 			for(IDrawingNodeAttributeListener listener : this.getListeners()){
 				listener.nodeResized(evt);
@@ -55,7 +55,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 		}
 	}
 	
-	public final void fireNodeTranslationEvent(IDrawingNodeAttributeTranslationEvent evt){
+	public final void fireNodeTranslationEvent(ICanvasAttributeTranslationEvent evt){
 		if(enabled){
 			for(IDrawingNodeAttributeListener listener : this.getListeners()){
 				listener.nodeTranslated(evt);
@@ -64,7 +64,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	}
 	
 	public final void notifyNodeResize(final Point originDelta, final Dimension sizeDelta){
-		IDrawingNodeAttributeResizedEvent event = new IDrawingNodeAttributeResizedEvent() {
+		ICanvasAttributeResizedEvent event = new ICanvasAttributeResizedEvent() {
 
 			@Override
 			public IDrawingNodeAttribute getAttibuteChanged() {
@@ -85,7 +85,7 @@ public final class DrawingNodeAttributeListenerHandler	implements IDrawingNodeAt
 	}
 
 	public final void notifyNodeTranslation(final Point delta){
-		IDrawingNodeAttributeTranslationEvent event = new IDrawingNodeAttributeTranslationEvent() {
+		ICanvasAttributeTranslationEvent event = new ICanvasAttributeTranslationEvent() {
 			
 			@Override
 			public Point getTranslationDelta() {

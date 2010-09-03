@@ -31,9 +31,9 @@ public IFigureDefinition getInstructions(){
     return new FigureDefinition(this.allInstructions);
 }
 
-private void addInstructions(List<Instruction> insts){
-    this.allInstructions.addAll(insts);
-}
+//private void addInstructions(List<Instruction> insts){
+//    this.allInstructions.addAll(insts);
+//}
 
 private void addInstruction(Instruction inst){
     this.allInstructions.add(inst);

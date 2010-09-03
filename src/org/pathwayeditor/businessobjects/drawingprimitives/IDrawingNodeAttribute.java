@@ -18,7 +18,6 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListenee;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
@@ -27,7 +26,7 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author smoodie
  *
  */
-public interface IDrawingNodeAttribute extends ICanvasElementAttribute, IDrawingNodeAttributeListenee {
+public interface IDrawingNodeAttribute extends ICanvasElementAttribute {
 
 	Envelope getBounds();
 	

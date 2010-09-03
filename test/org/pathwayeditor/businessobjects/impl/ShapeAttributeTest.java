@@ -41,11 +41,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeResizedEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeTranslationEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeResizedEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeTranslationEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -55,7 +55,10 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
+import org.pathwayeditor.testfixture.CanvasResizeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
+import org.pathwayeditor.testfixture.CanvasTranslationEventValidator;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.IObjectConstructor;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -83,8 +86,10 @@ public class ShapeAttributeTest {
 	private String expectedShapeDefn;
 	private Dimension expectedSize;
 	private Envelope expectedBounds;
-	private ICanvasAttributePropertyChangeListener testListener;
-	private IDrawingNodeAttributeListener testDrawingNodeListener;
+	private ICanvasAttributeChangeListener testListener;
+	private ICanvasAttributeTranslationEvent translationEvent = null;
+	private ICanvasAttributeResizedEvent resizedEvent = null;
+	private ICanvasAttributePropertyChangeEvent propChangeEvent = null;
 
 	/**
 	 * @throws java.lang.Exception
@@ -123,27 +128,25 @@ public class ShapeAttributeTest {
 			
 		});
 		this.testFixture.buildFixture();
-		this.testListener = new ICanvasAttributePropertyChangeListener() {
+		this.testListener = new ICanvasAttributeChangeListener() {
 
 			@Override
 			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				propChangeEvent = e;
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+				translationEvent = e;
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
+				resizedEvent = e;
 			}
 			
 		};
 		this.testInstance.addChangeListener(this.testListener);
-		this.testDrawingNodeListener = new IDrawingNodeAttributeListener() {
-
-			@Override
-			public void nodeTranslated(IDrawingNodeAttributeTranslationEvent e) {
-				
-			}
-
-			@Override
-			public void nodeResized(IDrawingNodeAttributeResizedEvent e) {
-				
-			}
-		};
-		this.testInstance.addDrawingNodeAttributeListener(testDrawingNodeListener);
 	}
 
 	/**
@@ -198,6 +201,9 @@ public class ShapeAttributeTest {
 		this.testInstance.setLineWidth(newLineWidth);
 		assertFalse("new value different", Math.abs(this.expectedLineWidth - newLineWidth) < DOUBLE_EQUIVALENCE_THRESH);
 		assertEquals("new line width", newLineWidth, this.testInstance.getLineWidth(), DOUBLE_EQUIVALENCE_THRESH);
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
+				this.expectedLineWidth, newLineWidth);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -225,6 +231,9 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedFillColour.equals(newColour));
 		this.testInstance.setFillColour(newColour);
 		assertEquals("expected fill colour", newColour, this.testInstance.getFillColour());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
+				this.expectedFillColour, newColour);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -236,6 +245,9 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedLineColour.equals(newColour));
 		this.testInstance.setLineColour(newColour);
 		assertEquals("expected line colour", newColour, this.testInstance.getLineColour());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
+				this.expectedLineColour, newColour);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -247,14 +259,27 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedLineStyle.equals(newLineStyle));
 		this.testInstance.setLineStyle(newLineStyle);
 		assertEquals("expected line colour", newLineStyle, this.testInstance.getLineStyle());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
+				this.expectedLineStyle, newLineStyle);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	@Test
 	public void testAddChangeListener() {
-		this.testInstance.addChangeListener(new ICanvasAttributePropertyChangeListener() {
+		this.testInstance.addChangeListener(new ICanvasAttributeChangeListener() {
 			
 			@Override
 			public void propertyChange(ICanvasAttributePropertyChangeEvent e) {
+				
+			}
+
+			@Override
+			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+				
+			}
+
+			@Override
+			public void nodeResized(ICanvasAttributeResizedEvent e) {
 				
 			}
 		});
@@ -263,7 +288,7 @@ public class ShapeAttributeTest {
 
 	@Test
 	public void testGetChangeListeners() {
-		GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener>(this.testListener);
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>(this.testListener);
 		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 
@@ -271,7 +296,7 @@ public class ShapeAttributeTest {
 	public void testRemoveChangeListener() {
 		this.testInstance.removeChangeListener(testListener);
 		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS-1, this.testInstance.getChangeListeners().size());
-		GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributePropertyChangeListener>();
+		GeneralIteratorTestUtility<ICanvasAttributeChangeListener> testIter = new GeneralIteratorTestUtility<ICanvasAttributeChangeListener>();
 		testIter.testIterator(this.testInstance.getChangeListeners().iterator());
 	}
 	
@@ -292,6 +317,9 @@ public class ShapeAttributeTest {
 		this.testInstance.setBounds(newBounds);
 		assertFalse("no bounds", this.expectedBounds.equals(newBounds));
 		assertEquals("new bounds", newBounds, this.testInstance.getBounds());
+		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
+				this.expectedBounds, newBounds);
+		validator.validateEvent(propChangeEvent);
 	}
 
 	/**
@@ -312,6 +340,8 @@ public class ShapeAttributeTest {
 		Envelope resizeBounds = this.expectedBounds.resize(transln, sizeDelta);
 		this.testInstance.resize(transln, sizeDelta);
 		assertEquals("expected bounds", resizeBounds, this.testInstance.getBounds());
+		CanvasResizeEventValidator validator = new CanvasResizeEventValidator(this.testInstance, transln, sizeDelta);
+		validator.validateEvent(resizedEvent);
 	}
 
 	/**
@@ -323,40 +353,8 @@ public class ShapeAttributeTest {
 		Envelope movedBounds = this.expectedBounds.translate(transln);
 		this.testInstance.translate(transln);
 		assertEquals("expected bounds", movedBounds, this.testInstance.getBounds());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#addDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)}.
-	 */
-	@Test
-	public void testAddDrawingNodeAttributeListener() {
-		this.testInstance.addDrawingNodeAttributeListener(new IDrawingNodeAttributeListener() {
-			@Override
-			public void nodeTranslated(IDrawingNodeAttributeTranslationEvent e) {
-			}
-			@Override
-			public void nodeResized(IDrawingNodeAttributeResizedEvent e) {
-			}
-		});
-		assertEquals("expected num listeners", EXPECTED_NUM_LISTENERS+1, this.testInstance.getDrawingNodeAttributeListeners().size());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getDrawingNodeAttributeListeners()}.
-	 */
-	@Test
-	public void testGetDrawingNodeAttributeListeners() {
-		GeneralIteratorTestUtility<IDrawingNodeAttributeListener> testIter = new GeneralIteratorTestUtility<IDrawingNodeAttributeListener>(this.testDrawingNodeListener);
-		testIter.testIterator(this.testInstance.getDrawingNodeAttributeListeners().iterator());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#removeDrawingNodeAttributeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IDrawingNodeAttributeListener)}.
-	 */
-	@Test
-	public void testRemoveDrawingNodeAttributeListener() {
-		this.testInstance.removeDrawingNodeAttributeListener(testDrawingNodeListener);
-		assertTrue("listeners removed", this.testInstance.getDrawingNodeAttributeListeners().isEmpty());
+		CanvasTranslationEventValidator validator = new CanvasTranslationEventValidator(this.testInstance, transln);
+		validator.validateEvent(translationEvent);
 	}
 
 	/**

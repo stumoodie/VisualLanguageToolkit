@@ -17,13 +17,11 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributePropertyChangeListenee,
-	ISuppressableChangeListenee  {
+public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributeChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
 	 * @return the object type.
