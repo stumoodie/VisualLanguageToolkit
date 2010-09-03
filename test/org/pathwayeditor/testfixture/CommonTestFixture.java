@@ -93,7 +93,7 @@ public abstract class CommonTestFixture {
 		if(!prefix.isEmpty()){
 			buf.append(prefix);
 			buf.append(Character.toUpperCase(name.charAt(0)));
-			buf.append(name, 1, name.length()-1);
+			buf.append(name, 1, name.length());
 		}
 		else{
 			buf.append(name);

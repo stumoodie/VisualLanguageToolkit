@@ -28,4 +28,9 @@ public interface ILabelAttributeFactory extends IElementAttributeFactory {
 
 	void setProperty(IAnnotationProperty annotationProperty);
 
+	IAnnotationProperty getProperty();
+	
+	@Override
+	ILabelAttribute createAttribute();
+	
 }

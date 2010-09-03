@@ -16,6 +16,8 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
@@ -24,4 +26,19 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
  */
 public interface ILinkAttributeFactory extends IElementAttributeFactory {
 
+	@Override
+	ILinkAttribute createAttribute();
+	
+	void setObjectType(ILinkObjectType objectType);
+	
+	ILinkObjectType getObjectType();
+	
+	void setSource(IShapeAttribute src);
+	
+	IShapeAttribute getSource();
+	
+	void setTarget(IShapeAttribute tgt);
+	
+	IShapeAttribute getTarget();
+	
 }

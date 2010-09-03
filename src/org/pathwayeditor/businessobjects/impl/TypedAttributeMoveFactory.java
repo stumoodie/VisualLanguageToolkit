@@ -17,37 +17,29 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.impl;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
-import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
-public class LabelAttributeCopyFactory implements IElementAttributeFactory {
-	private final IndexCounter creationSerialCounter;
-	private final IAnnotationProperty labelProperty;
-	private IAnnotatedObject destinationAttribute;
-	
-	/**
-	 * @param creationSerialCounter
-	 */
-	public LabelAttributeCopyFactory(IndexCounter creationSerialCounter, IAnnotationProperty labelProperty) {
-		this.creationSerialCounter = creationSerialCounter;
-		this.labelProperty = labelProperty;
-	}
+public class TypedAttributeMoveFactory implements IElementAttributeFactory {
+	private final ICanvasElementAttribute attributeToMove;
+	private ICanvasElementAttribute destination;
 
+	public TypedAttributeMoveFactory(ICanvasElementAttribute attributeToMove){
+		this.attributeToMove = attributeToMove;
+	}
+	
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#canCreateAttribute()
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		return this.labelProperty != null && this.destinationAttribute != null;
+		return this.attributeToMove != null && this.destination != null
+		&& this.destination.getObjectType().getParentingRules().isValidChild(this.attributeToMove.getObjectType());
 	}
 
 	/* (non-Javadoc)
@@ -55,24 +47,23 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public void setDestinationAttribute(IElementAttribute attribute) {
-		this.destinationAttribute = (IAnnotatedObject)attribute;
+		this.destination = (ICanvasElementAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getDestinationAttribute()
 	 */
 	@Override
-	public IAnnotatedObject getDestinationAttribute() {
-		return this.destinationAttribute;
+	public ICanvasElementAttribute getDestinationAttribute() {
+		return this.destination;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#createAttribute()
 	 */
 	@Override
-	public ILabelAttribute createAttribute() {
-		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
-		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getRootAttribute(), creationSerialCounter.nextIndex(), this.labelProperty.getLabel(), copiedProp);
+	public IElementAttribute createAttribute() {
+		return this.attributeToMove;
 	}
 
 }

@@ -25,14 +25,15 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.DrawingNodeAttributeListenerHandler;
@@ -44,6 +45,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 import uk.ac.ed.inf.graph.util.IFilterCriteria;
 import uk.ac.ed.inf.graph.util.IndexCounter;
 import uk.ac.ed.inf.graph.util.impl.FilteredIterator;
@@ -78,12 +80,6 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 			return testObj instanceof IShapeAttribute;
 		}
 	};
-	private final IFilterCriteria<ICanvasElementAttribute> linkTermCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
-		@Override
-		public boolean matched(ICanvasElementAttribute testObj) {
-			return testObj instanceof ILinkTerminus;
-		}
-	};
 	private final IFilterCriteria<ICanvasElementAttribute> attribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
 		@Override
 		public boolean matched(ICanvasElementAttribute testObj) {
@@ -101,15 +97,14 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	private final DrawingNodeAttributeListenerHandler listenerHandler = new DrawingNodeAttributeListenerHandler(this);
 	private RGB backgroundColour = DEFAULT_BACKGROUND_COLOUR;
 	private String name;
-//	private final IndexCounter creationSerialCounter;
+	private final IndexCounter creationSerialCounter;
 	private final SortedSet<ICanvasElementAttribute> canvasElementAttributes = new TreeSet<ICanvasElementAttribute>();
-	private final IAttributeFactoryFactory attributeFactoryFactory;
 
 	public RootAttribute(String name, IRootObjectType objectType) {
 		super(ROOT_IDX);
 		this.name = name;
 		this.objectType = objectType;
-		this.attributeFactoryFactory = new AttributeFactoryFactory(new IndexCounter(ROOT_IDX));
+		this.creationSerialCounter = new IndexCounter(ROOT_IDX);
 	}
 
 	public RootAttribute(RootAttribute otherAttribute) {
@@ -119,7 +114,7 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		this.name = otherAttribute.name;
 		this.location = otherAttribute.location;
 		this.size = otherAttribute.size;
-		this.attributeFactoryFactory = new AttributeFactoryFactory(new IndexCounter(ROOT_IDX));
+		this.creationSerialCounter = new IndexCounter(ROOT_IDX);
 	}
 
 	@Override
@@ -357,14 +352,6 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#linkTerminusIterator()
-	 */
-	@Override
-	public Iterator<ILinkTerminus> linkTerminusIterator() {
-		return createAttribIter(this.linkTermCriteria);
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#shapeAttributeIterator()
 	 */
 	@Override
@@ -418,19 +405,59 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#getAttributeFactoryFactory()
-	 */
-	@Override
-	public IAttributeFactoryFactory getAttributeFactoryFactory() {
-		return this.attributeFactoryFactory;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
 	 */
 	@Override
 	public void visit(ICanvasElementAttributeVisitor visitor) {
 		visitor.visitRoot(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute#shapeAttributeFactory()
+	 */
+	@Override
+	public IShapeAttributeFactory shapeAttributeFactory() {
+		return new ShapeAttributeFactory(this.creationSerialCounter);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute#linkAttributeFactory()
+	 */
+	@Override
+	public ILinkAttributeFactory linkAttributeFactory() {
+		return new LinkAttributeFactory(this.creationSerialCounter);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#labelAttributeFactory()
+	 */
+	@Override
+	public ILabelAttributeFactory labelAttributeFactory() {
+		return new LabelAttributeFactory(this.creationSerialCounter);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeCopyFactory()
+	 */
+	@Override
+	public IElementAttributeFactory elementAttributeCopyFactory() {
+		throw new UnsupportedOperationException("The root attribute should never be copied in this way");
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeMoveFactory()
+	 */
+	@Override
+	public IElementAttributeFactory elementAttributeMoveFactory() {
+		throw new UnsupportedOperationException("The root attribute should never be moved in this way");
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#getCreationSerialCounter()
+	 */
+	@Override
+	public IndexCounter getCreationSerialCounter() {
+		return this.creationSerialCounter;
 	}
 
 }

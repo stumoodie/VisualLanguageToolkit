@@ -8,6 +8,8 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
+import uk.ac.ed.inf.graph.util.IndexCounter;
+
 /**
  * @author smoodie
  *
@@ -106,10 +108,12 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute {
 	
 	Iterator<ILinkAttribute> linkAttributeIterator();
 	
-	Iterator<ILinkTerminus> linkTerminusIterator();
+	IShapeAttributeFactory shapeAttributeFactory();
 	
-	IAttributeFactoryFactory getAttributeFactoryFactory();
-	
+	ILinkAttributeFactory linkAttributeFactory();
+
+	ILabelAttributeFactory labelAttributeFactory();
+
 	/**
 	 * Number of canvas attributes stored by this canvas.
 	 * @return the number of canvas attributes.
@@ -118,7 +122,7 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute {
 	
 	void addCanvasAttribute(ICanvasElementAttribute attribute);
 
-//	IndexCounter getCreationSerialCounter();
+	IndexCounter getCreationSerialCounter();
 
 	@Override
 	IRootObjectType getObjectType();

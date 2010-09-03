@@ -16,36 +16,29 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
-import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
-public class LinkAttributeCopyFactory implements IElementAttributeFactory {
-	private final IndexCounter creationSerialCounter;
-	private final ILinkAttribute attributeToCopy;
-	private ICanvasElementAttribute destination;
-
-	/**
-	 * @param creationSerialCounter
-	 */
-	public LinkAttributeCopyFactory(IndexCounter creationSerialCounter, ILinkAttribute attributeToCopy) {
-		this.creationSerialCounter = creationSerialCounter;
-		this.attributeToCopy = attributeToCopy;
+public class ElementAttributeMoveFactory implements IElementAttributeFactory {
+	private final IElementAttribute attributeToMove;
+	private IElementAttribute destinationAttribute;
+	
+	
+	public ElementAttributeMoveFactory(IElementAttribute attributeToMove){
+		this.attributeToMove = attributeToMove;
+		this.destinationAttribute = null;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#canCreateAttribute()
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		return this.attributeToCopy != null && this.destination != null;
+		return this.destinationAttribute != null && this.attributeToMove != null;
 	}
 
 	/* (non-Javadoc)
@@ -53,23 +46,23 @@ public class LinkAttributeCopyFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public void setDestinationAttribute(IElementAttribute attribute) {
-		this.destination = (ICanvasElementAttribute)attribute;
+		this.destinationAttribute = attribute;
 	}
 
 	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getDestinationAttribute()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeMoveFactory#getDestinationAttribute()
 	 */
 	@Override
-	public ICanvasElementAttribute getDestinationAttribute() {
-		return this.destination;
+	public IElementAttribute getDestinationAttribute() {
+		return this.destinationAttribute;
 	}
 
 	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#createAttribute()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeMoveFactory#createAttribute()
 	 */
 	@Override
-	public ILinkAttribute createAttribute() {
-		return new LinkAttribute(destination.getRootAttribute(), this.creationSerialCounter.nextIndex(), this.attributeToCopy);
+	public IElementAttribute createAttribute() {
+		return this.attributeToMove;
 	}
 
 }

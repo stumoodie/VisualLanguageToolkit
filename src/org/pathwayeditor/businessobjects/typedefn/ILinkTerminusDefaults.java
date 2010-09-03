@@ -28,7 +28,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
  * @author smoodie
  *
  */
-public interface ILinkTerminusDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer {
+public interface ILinkTerminusDefaults {
 	/**
 	 * Get the offset value. The default is zero.
 	 * @return the gap size, which cannot be negative: <code>getGap() >= 0</code>.

@@ -35,7 +35,6 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -310,14 +309,16 @@ public class RootAttributeTest {
 		assertTrue("listeners removed", this.testInstance.getDrawingNodeAttributeListeners().isEmpty());
 	}
 
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getAttributeFactoryFactory()}.
-	 */
-	@Test
-	public void testAttributeFactoryFactory() {
-		assertNotNull("factory exists", this.testInstance.getAttributeFactoryFactory());
+	@Test(expected=UnsupportedOperationException.class)
+	public void testElementAttributeCopyFactory(){
+		this.testInstance.elementAttributeCopyFactory();
 	}
-
+	
+	@Test(expected=UnsupportedOperationException.class)
+	public void testElementAttributeMoveFactory(){
+		this.testInstance.elementAttributeMoveFactory();
+	}
+	
 	/**
 	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getRootAttribute()}.
 	 */
@@ -354,12 +355,6 @@ public class RootAttributeTest {
 	public void testLinkAttributeIterator() {
 		IteratorTestUtility<ILinkAttribute> iterTest = new IteratorTestUtility<ILinkAttribute>(this.testFixture.getObjectArray(new ILinkAttribute[0], CanvasTestFixture.LINK1_ATT_ID));
 		iterTest.testSortedIterator(this.testInstance.linkAttributeIterator());
-	}
-
-	@Test
-	public void testLinkTerminusIterator() {
-		IteratorTestUtility<ILinkTerminus> iterTest = new IteratorTestUtility<ILinkTerminus>(this.testFixture.getObjectArray(new ILinkTerminus[0]));
-		iterTest.testSortedIterator(this.testInstance.linkTerminusIterator());
 	}
 
 	@Test
@@ -483,4 +478,21 @@ public class RootAttributeTest {
 	public void testGetCurrentElement(){
 		assertNull("no current element", this.testInstance.getCurrentElement());
 	}
+
+	/**
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#linkAttributeFactory()}.
+	 */
+	@Test
+	public void testLinkAttributeFactory() {
+		assertNotNull("link att factory exists", this.testInstance.linkAttributeFactory());
+	}
+
+	/**
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#labelAttributeFactory()}.
+	 */
+	@Test
+	public void testLabelAttributeFactory() {
+		assertNotNull("label att factory exists", this.testInstance.labelAttributeFactory());
+	}
+
 }

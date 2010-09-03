@@ -35,6 +35,8 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
+
 public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAttribute {
 	private static final Point DEFAULT_POSITION = Point.ORIGIN;
 	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
@@ -315,5 +317,21 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	@Override
 	public void visit(ICanvasElementAttributeVisitor visitor) {
 		visitor.visitShape(this);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeCopyFactory()
+	 */
+	@Override
+	public IElementAttributeFactory elementAttributeCopyFactory() {
+		return new ShapeAttributeCopyFactory(this.rootAttribute.getCreationSerialCounter(), this);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeMoveFactory()
+	 */
+	@Override
+	public IElementAttributeFactory elementAttributeMoveFactory() {
+		return new TypedAttributeMoveFactory(this);
 	}
 }

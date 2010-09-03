@@ -24,20 +24,8 @@ public interface IAttributeFactoryFactory {
 
 	IShapeAttributeFactory shapeAttributeFactory();
 	
-	IShapeAttributeCopyFactory shapeAttributeCopyFactory();
-	
-	IShapeAttributeMoveFactory shapeAttributeMoveFactory();
-	
 	ILinkAttributeFactory linkAttributeFactory();
 
-	ILinkAttributeCopyFactory linkAttributeCopyFactory();
-	
-	ILinkAttributeMoveFactory linkAttributeMoveFactory();
-	
 	ILabelAttributeFactory labelAttributeFactory();
 
-	ILabelAttributeCopyFactory labelAttributeCopyFactory();
-	
-	ILabelAttributeMoveFactory labelAttributeMoveFactory();
-	
 }

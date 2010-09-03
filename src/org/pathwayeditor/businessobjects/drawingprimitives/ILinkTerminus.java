@@ -15,16 +15,16 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.util.List;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkTerminus extends IAnnotatedObject, ICanvasElementAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkTerminus {
 
 	/**
 	 * The link attribute that owns this terminus. 
@@ -97,7 +97,7 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasElementAttribute
 	 */
 	void setLocation(Point location);
 	
-	Point getReferencePoint();
+//	Point getReferencePoint();
 	
 	/**
 	 * Identity is based on the owningLink and the link end type.
@@ -113,4 +113,10 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasElementAttribute
 	 */
 	@Override
 	int hashCode();
+	
+	void addLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
+	
+	void removeLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
+	
+	List<ILinkTerminusChangeListener> getLinkTerminusChangeListeners();
 }

@@ -17,15 +17,6 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.impl;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeCopyFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeMoveFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeCopyFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeMoveFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeCopyFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeMoveFactory;
 
 import uk.ac.ed.inf.graph.util.IndexCounter;
 
@@ -41,81 +32,4 @@ public class AttributeFactoryFactory implements IAttributeFactoryFactory {
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute#shapeAttributeFactory()
-	 */
-	@Override
-	public IShapeAttributeFactory shapeAttributeFactory() {
-		return new ShapeAttributeFactory(this.creationSerialCounter);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute#linkAttributeFactory()
-	 */
-	@Override
-	public ILinkAttributeFactory linkAttributeFactory() {
-		return new LinkAttributeFactory(this.creationSerialCounter);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#labelAttributeFactory()
-	 */
-	@Override
-	public ILabelAttributeFactory labelAttributeFactory() {
-		return new LabelAttributeFactory(this.creationSerialCounter);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#shapeAttributeCopyFactory()
-	 */
-	@Override
-	public IShapeAttributeCopyFactory shapeAttributeCopyFactory() {
-		return new ShapeAttributeCopyFactory(this.creationSerialCounter);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#linkAttributeCopyFactory()
-	 */
-	@Override
-	public ILinkAttributeCopyFactory linkAttributeCopyFactory() {
-		return new LinkAttributeCopyFactory(this.creationSerialCounter);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#labelAttributeCopyFactory()
-	 */
-	@Override
-	public ILabelAttributeCopyFactory labelAttributeCopyFactory() {
-		return new LabelAttributeCopyFactory(this.creationSerialCounter);
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory#shapeAttributeMoveFactory()
-	 */
-	@Override
-	public IShapeAttributeMoveFactory shapeAttributeMoveFactory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory#linkAttributeMoveFactory()
-	 */
-	@Override
-	public ILinkAttributeMoveFactory linkAttributeMoveFactory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAttributeFactoryFactory#labelAttributeMoveFactory()
-	 */
-	@Override
-	public ILabelAttributeMoveFactory labelAttributeMoveFactory() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

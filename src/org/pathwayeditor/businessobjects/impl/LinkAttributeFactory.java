@@ -16,7 +16,11 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.util.IndexCounter;
@@ -26,12 +30,12 @@ import uk.ac.ed.inf.graph.util.IndexCounter;
  *
  */
 public class LinkAttributeFactory implements ILinkAttributeFactory {
-
 	private final IndexCounter creationSerialCounter;
+	private ICanvasElementAttribute destination;
+	private ILinkObjectType objectType;
+	private IShapeAttribute source;
+	private IShapeAttribute target;
 
-	/**
-	 * @param rootAttribute
-	 */
 	public LinkAttributeFactory(IndexCounter creationSerialCounter) {
 		this.creationSerialCounter = creationSerialCounter;
 	}
@@ -41,8 +45,8 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.objectType != null && this.destination != null && this.source != null && this.target != null
+			&& this.objectType.getLinkConnectionRules().isValidTarget(source.getObjectType(), target.getObjectType());
 	}
 
 	/* (non-Javadoc)
@@ -50,8 +54,7 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public void setDestinationAttribute(IElementAttribute attribute) {
-		// TODO Auto-generated method stub
-		
+		this.destination = (ICanvasElementAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
@@ -59,17 +62,63 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public IElementAttribute getDestinationAttribute() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.destination;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#createAttribute()
 	 */
 	@Override
-	public IElementAttribute createAttribute() {
-		// TODO Auto-generated method stub
-		return null;
+	public ILinkAttribute createAttribute() {
+		return new LinkAttribute(this.destination.getRootAttribute(), this.creationSerialCounter.nextIndex(), this.objectType);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#setObjectType(org.pathwayeditor.businessobjects.typedefn.ILinkObjectType)
+	 */
+	@Override
+	public void setObjectType(ILinkObjectType objectType) {
+		this.objectType = objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#getObjectType()
+	 */
+	@Override
+	public ILinkObjectType getObjectType() {
+		return this.objectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#setSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute)
+	 */
+	@Override
+	public void setSource(IShapeAttribute src) {
+		this.source = src;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#getSource()
+	 */
+	@Override
+	public IShapeAttribute getSource() {
+		return this.source;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#setTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute)
+	 */
+	@Override
+	public void setTarget(IShapeAttribute tgt) {
+		this.target = tgt;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#getTarget()
+	 */
+	@Override
+	public IShapeAttribute getTarget() {
+		return this.target;
 	}
 
 }

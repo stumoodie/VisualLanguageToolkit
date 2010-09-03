@@ -182,4 +182,13 @@ public class TestProperty implements IAnnotationProperty {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#setLabel(org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute)
+	 */
+	@Override
+	public void setLabel(ILabelAttribute label) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

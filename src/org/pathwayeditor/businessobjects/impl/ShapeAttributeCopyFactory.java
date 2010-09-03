@@ -19,22 +19,22 @@ package org.pathwayeditor.businessobjects.impl;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeCopyFactory;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
-public class ShapeAttributeCopyFactory implements IShapeAttributeCopyFactory {
-	private IShapeAttribute sourceAttribute;
+public class ShapeAttributeCopyFactory implements IElementAttributeFactory {
+	private final IShapeAttribute sourceAttribute;
 	private ICanvasElementAttribute destnAttibute;
 	private final IndexCounter creationSerialCounter;
 	
-	public ShapeAttributeCopyFactory(IndexCounter creationSerialCounter){
-		this.sourceAttribute = null;
+	public ShapeAttributeCopyFactory(IndexCounter creationSerialCounter, IShapeAttribute sourceAttribute){
+		this.sourceAttribute = sourceAttribute;
 		this.creationSerialCounter = creationSerialCounter;
 	}
 	
@@ -69,22 +69,6 @@ public class ShapeAttributeCopyFactory implements IShapeAttributeCopyFactory {
 	@Override
 	public ICanvasElementAttribute getDestinationAttribute() {
 		return this.destnAttibute;
-	}
-
-	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeCopyFactory#setElementToCopy(uk.ac.ed.inf.graph.compound.IElementAttribute)
-	 */
-	@Override
-	public void setElementToCopy(IElementAttribute attributeToCopy) {
-		this.sourceAttribute = (IShapeAttribute)attributeToCopy;
-	}
-
-	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeCopyFactory#getElementToCopy()
-	 */
-	@Override
-	public IShapeAttribute getElementToCopy() {
-		return this.sourceAttribute;
 	}
 
 }

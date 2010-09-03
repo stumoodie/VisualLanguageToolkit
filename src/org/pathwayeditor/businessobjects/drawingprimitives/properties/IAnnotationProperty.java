@@ -66,6 +66,7 @@ public interface IAnnotationProperty extends IAnnotationPropertyChangeListenee {
 	 */
 	ILabelAttribute getLabel();
 	
+	void setLabel(ILabelAttribute label);
 	
 	void visit(IAnnotationPropertyVisitor visitor);
 }

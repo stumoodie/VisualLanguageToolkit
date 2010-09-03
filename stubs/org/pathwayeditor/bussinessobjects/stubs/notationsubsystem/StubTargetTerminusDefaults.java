@@ -19,7 +19,6 @@ limitations under the License.
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -68,24 +67,11 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 		return EXPECTED_OFFSET;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getPropertiesIterator()
-	 */
-	@Override
-	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		return this.propertyDefinitionList.iterator();
-	}
-
 	/**
 	 * @return
 	 */
 	private HashSet<IPropertyDefinition> getpropdefns() {
 		return this.propertyDefinitionList;
-	}
-
-	@Override
-	public boolean containsPropertyDefinition(String name) {
-		return findPropDefn(name) != null;
 	}
 
 	IPropertyDefinition findPropDefn(String name){
@@ -99,19 +85,4 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 		return retVal;
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T extends IPropertyDefinition> T  getPropertyDefinition(String name) {
-		return (T)findPropDefn(name);
-	}
-
-	@Override
-	public int numPropertyDefinitions() {
-		return this.getpropdefns().size();
-	}
-
-	@Override
-	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
-		return propDefn != null && this.getpropdefns().contains(propDefn);
-	}
 }

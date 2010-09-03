@@ -58,7 +58,7 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	int hashCode();
 	
 	boolean isRemoved();
-
+	
 	/**
 	 * @param iCanvasElementAttributeVisitor
 	 */

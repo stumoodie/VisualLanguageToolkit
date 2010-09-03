@@ -16,6 +16,8 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
@@ -28,6 +30,8 @@ import uk.ac.ed.inf.graph.util.IndexCounter;
  */
 public class LabelAttributeFactory implements ILabelAttributeFactory {
 	private final IndexCounter creationSerialCounter;
+	private IAnnotationProperty annotationProperty;
+	private ICanvasElementAttribute destination;
 
 	/**
 	 * @param creationSerialCounter
@@ -41,8 +45,7 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	 */
 	@Override
 	public void setProperty(IAnnotationProperty annotationProperty) {
-		// TODO Auto-generated method stub
-
+		this.annotationProperty = annotationProperty;
 	}
 
 	/* (non-Javadoc)
@@ -50,8 +53,7 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.destination != null && this.annotationProperty != null && this.annotationProperty.canVisualiseProperty();
 	}
 
 	/* (non-Javadoc)
@@ -59,26 +61,32 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	 */
 	@Override
 	public void setDestinationAttribute(IElementAttribute attribute) {
-		// TODO Auto-generated method stub
-		
+		this.destination = (ICanvasElementAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getDestinationAttribute()
 	 */
 	@Override
-	public IElementAttribute getDestinationAttribute() {
-		// TODO Auto-generated method stub
-		return null;
+	public ICanvasElementAttribute getDestinationAttribute() {
+		return this.destination;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#createAttribute()
 	 */
 	@Override
-	public IElementAttribute createAttribute() {
-		// TODO Auto-generated method stub
-		return null;
+	public ILabelAttribute createAttribute() {
+		return new LabelAttribute(this.destination.getRootAttribute(), this.creationSerialCounter.nextIndex(), this.annotationProperty,
+				this.annotationProperty.getDefinition().getLabelDefaults());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory#getProperty()
+	 */
+	@Override
+	public IAnnotationProperty getProperty() {
+		return this.annotationProperty;
 	}
 
 }

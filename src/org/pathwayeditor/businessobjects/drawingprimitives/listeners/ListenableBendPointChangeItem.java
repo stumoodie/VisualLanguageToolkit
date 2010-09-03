@@ -22,8 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
@@ -31,10 +31,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
  */
 public final class ListenableBendPointChangeItem implements IBendPointChangeListenee, ISuppressableChangeListenee {
 	private final List<IBendPointChangeListener> listeners;
-	private final ILinkAttribute linkAttribute;
+	private final IBendPointContainer linkAttribute;
 	private boolean enabled = true; 
 	
-	public ListenableBendPointChangeItem(ILinkAttribute linkAttribute){
+	public ListenableBendPointChangeItem(IBendPointContainer linkAttribute){
 		this.listeners = new CopyOnWriteArrayList<IBendPointChangeListener>();
 		this.linkAttribute = linkAttribute;
 	}
@@ -54,7 +54,42 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 		}
 	}
 	
-	public final void notifyPropertyChange(final BendPointChange type, final IBendPoint bp, final int oldIdxPos, final int newIdxPos){
+	public final void fireLocationChange(IBendPointLocationChangeEvent evt){
+		if(enabled){
+			for(IBendPointChangeListener listener : this.getListeners()){
+				listener.locationChange(evt);
+			}
+		}
+	}
+	
+	public final void notifyPropertyChange(final int idx, final Point oldLocation, final Point newLocation){
+		IBendPointLocationChangeEvent event = new IBendPointLocationChangeEvent(){
+
+			@Override
+			public Point getNewPosition() {
+				return newLocation;
+			}
+
+			@Override
+			public Point getOldPosition() {
+				return oldLocation;
+			}
+
+			@Override
+			public IBendPointContainer getOwningLink() {
+				return linkAttribute;
+			}
+
+			@Override
+			public int getBendPointIndex() {
+				return idx;
+			}
+
+		};
+		fireLocationChange(event);
+	}
+	
+	public final void notifyPropertyChange(final BendPointChange type, final Point bp, final int oldIdxPos, final int newIdxPos){
 		IBendPointChangeEvent event = new IBendPointChangeEvent(){
 
 			@Override
@@ -73,12 +108,12 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 			}
 
 			@Override
-			public ILinkAttribute getLink() {
+			public IBendPointContainer getLink() {
 				return linkAttribute;
 			}
 
 			@Override
-			public IBendPoint getBendPoint() {
+			public Point getBendPoint() {
 				return bp;
 			}
 

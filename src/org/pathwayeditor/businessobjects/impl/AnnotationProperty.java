@@ -72,6 +72,11 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 		}
 	}
 	
+	@Override
+	public void setLabel(ILabelAttribute label){
+		this.labelAttribute = label;
+	}
+	
 	protected ListenableAnnotationPropertyChangeItem getListenerHandler(){
 		return this.listenerHandler;
 	}
@@ -80,7 +85,7 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 		if(this.labelAttribute == null){
 			ICompoundNodeFactory fact = this.owner.getCurrentElement().getChildCompoundGraph().nodeFactory();
 			IRootAttribute rootAttribute = ((ICanvasElementAttribute)this.owner.getCurrentElement().getAttribute()).getRootAttribute();
-			ILabelAttributeFactory labelAttFact = rootAttribute.getAttributeFactoryFactory().labelAttributeFactory();
+			ILabelAttributeFactory labelAttFact = rootAttribute.labelAttributeFactory();
 			labelAttFact.setDestinationAttribute(owner);
 			labelAttFact.setProperty(this);
 			fact.setAttributeFactory(labelAttFact);
