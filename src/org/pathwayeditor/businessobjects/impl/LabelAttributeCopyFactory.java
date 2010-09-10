@@ -33,6 +33,8 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	private final IndexCounter creationSerialCounter;
 	private final IAnnotationProperty labelProperty;
 	private IAnnotatedObject destinationAttribute;
+	private IElementAttribute outAttribute;
+	private IElementAttribute inAttribute;
 	
 	/**
 	 * @param creationSerialCounter
@@ -73,6 +75,38 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	public ILabelAttribute createAttribute() {
 		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
 		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getRootAttribute(), creationSerialCounter.nextIndex(), this.labelProperty.getLabel(), copiedProp);
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setOutAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setOutAttribute(IElementAttribute attribute) {
+		this.outAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
+	 */
+	@Override
+	public IElementAttribute getOutAttribute() {
+		return this.outAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setInAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setInAttribute(IElementAttribute attribute) {
+		this.inAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
+	 */
+	@Override
+	public IElementAttribute getInAttribute() {
+		return this.inAttribute;
 	}
 
 }

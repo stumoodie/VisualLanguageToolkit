@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
+import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
 import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
@@ -126,4 +127,7 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute {
 
 	@Override
 	IRootObjectType getObjectType();
+	
+	@Override
+	IRootCompoundNode getCurrentElement();
 }

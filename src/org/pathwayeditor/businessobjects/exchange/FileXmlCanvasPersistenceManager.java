@@ -25,26 +25,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
-import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.hibernate.helpers.IHibNotationFactory;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
+import org.pathwayeditor.businessobjects.impl.RootAttribute;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
-import org.pathwayeditor.businessobjects.management.NonPersistentCanvasFactory;
-import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 
 /**
  * @author smoodie
  *
  */
 public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
-	private ICanvas canvas = null;
+	private ICompoundGraph canvas = null;
 	private final INotationSubsystemPool subsystemPool;
 	
 	public FileXmlCanvasPersistenceManager(INotationSubsystemPool subsystemPool){
@@ -54,73 +48,85 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.exchange.XmlPersistenceManager#createNewCanvasStream(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
 	 */
+	@Override
 	public void createNewCanvasStream(final INotationSubsystem notationSubsystem, String canvasName) {
-		NonPersistentCanvasFactory fact = NonPersistentCanvasFactory.getInstance();
-		fact.setCanvasName(canvasName);
-		fact.setNotationSubsystem(notationSubsystem);
-		IHibNotationFactory hibNotationFactory = new XmlNotationFactory(new INotationDelegate() {
-
-			public INotation getNotation() {
-				return notationSubsystem.getNotation();
-			}
-
-			public int numObjectTypes() {
-				return notationSubsystem.getSyntaxService().numObjectTypes();
-			}
-
-			public Iterator<IObjectInfo> objectTypeIterator() {
-				final Iterator<IObjectType> objectTypeIter = notationSubsystem.getSyntaxService().objectTypeIterator();
-				return new Iterator<IObjectInfo>() {
-
-					public boolean hasNext() {
-						return objectTypeIter.hasNext();
-					}
-
-					public IObjectInfo next() {
-						final IObjectType xmlObjectType = objectTypeIter.next();
-						return new IObjectInfo() {
-
-							public ObjectTypeClassification getClassification() {
-								ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
-								if (xmlObjectType instanceof IRootObjectType) {
-									classn = ObjectTypeClassification.ROOTOBJECT;
-								} else if (xmlObjectType instanceof IShapeObjectType) {
-									classn = ObjectTypeClassification.LINK;
-								}
-								return classn;
-							}
-
-							public String getDescription() {
-								return xmlObjectType.getDescription();
-							}
-
-							public String getName() {
-								return xmlObjectType.getName();
-							}
-
-							public int getUniqueId() {
-								return xmlObjectType.getUniqueId();
-							}
-
-						};
-					}
-
-					public void remove() {
-						throw new UnsupportedOperationException("Removal is not supported");
-					}
-
-				};
-			}
-
-		});
-		canvas = new HibCanvas(canvasName, 0, hibNotationFactory, notationSubsystem, canvasName);
+//		NonPersistentCanvasFactory fact = NonPersistentCanvasFactory.getInstance();
+//		fact.setCanvasName(canvasName);
+//		fact.setNotationSubsystem(notationSubsystem);
+//		IHibNotationFactory hibNotationFactory = new XmlNotationFactory(new INotationDelegate() {
+//
+//			@Override
+//			public INotation getNotation() {
+//				return notationSubsystem.getNotation();
+//			}
+//
+//			@Override
+//			public int numObjectTypes() {
+//				return notationSubsystem.getSyntaxService().numObjectTypes();
+//			}
+//
+//			@Override
+//			public Iterator<IObjectInfo> objectTypeIterator() {
+//				final Iterator<IObjectType> objectTypeIter = notationSubsystem.getSyntaxService().objectTypeIterator();
+//				return new Iterator<IObjectInfo>() {
+//
+//					@Override
+//					public boolean hasNext() {
+//						return objectTypeIter.hasNext();
+//					}
+//
+//					@Override
+//					public IObjectInfo next() {
+//						final IObjectType xmlObjectType = objectTypeIter.next();
+//						return new IObjectInfo() {
+//
+//							@Override
+//							public ObjectTypeClassification getClassification() {
+//								ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
+//								if (xmlObjectType instanceof IRootObjectType) {
+//									classn = ObjectTypeClassification.ROOTOBJECT;
+//								} else if (xmlObjectType instanceof IShapeObjectType) {
+//									classn = ObjectTypeClassification.LINK;
+//								}
+//								return classn;
+//							}
+//
+//							@Override
+//							public String getDescription() {
+//								return xmlObjectType.getDescription();
+//							}
+//
+//							@Override
+//							public String getName() {
+//								return xmlObjectType.getName();
+//							}
+//
+//							@Override
+//							public int getUniqueId() {
+//								return xmlObjectType.getUniqueId();
+//							}
+//
+//						};
+//					}
+//
+//					@Override
+//					public void remove() {
+//						throw new UnsupportedOperationException("Removal is not supported");
+//					}
+//
+//				};
+//			}
+//
+//		});
+		canvas = new CompoundGraph(new RootAttribute(canvasName, notationSubsystem.getSyntaxService().getRootObjectType()));
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.exchange.XmlPersistenceManager#readCanvasStream(java.io.InputStream)
 	 */
+	@Override
 	public void readCanvasFromStream(InputStream in) throws IOException {
-		CanvasUnmarshaller unmarshaller = new CanvasUnmarshaller(this.subsystemPool, "XMLFile", 0);
+		CanvasUnmarshaller unmarshaller = new CanvasUnmarshaller(this.subsystemPool);
 		unmarshaller.read(new BufferedReader(new InputStreamReader(in)));
 		in.close();
 		unmarshaller.buildCanvas();
@@ -130,9 +136,10 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.exchange.XmlPersistenceManager#streamCanvas()
 	 */
+	@Override
 	public InputStream writeCanvasToStream() throws IOException {
 		CanvasMarshaller marshaller = new CanvasMarshaller();
-		marshaller.setCanvas((HibCanvas)this.canvas);
+		marshaller.setCanvas(this.canvas);
 		marshaller.buildCanvas();
 		File tmpFile = null;
 		Writer tmpFileOut = null;
@@ -155,7 +162,8 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.exchange.IXmlPersistenceManager#getCurrentCanvas()
 	 */
-	public ICanvas getCurrentCanvas() {
+	@Override
+	public ICompoundGraph getCurrentCanvas() {
 		return this.canvas;
 	}
 

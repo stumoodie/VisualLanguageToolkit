@@ -32,6 +32,8 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 	private IShapeObjectType shapeObjectType;
 	private ICanvasElementAttribute destinationAttribute;
 	private final IndexCounter creationSerialCounter;
+	private IElementAttribute outAttribute;
+	private IElementAttribute inAttribute;
 	
 	public ShapeAttributeFactory(IndexCounter creationSerialCounter){
 		if(creationSerialCounter == null) throw new IllegalArgumentException("Creation serial cannot be null");
@@ -83,4 +85,36 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 		return this.destinationAttribute;
 	}
 	
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setOutAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setOutAttribute(IElementAttribute attribute) {
+		this.outAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
+	 */
+	@Override
+	public IElementAttribute getOutAttribute() {
+		return this.outAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setInAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setInAttribute(IElementAttribute attribute) {
+		this.inAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
+	 */
+	@Override
+	public IElementAttribute getInAttribute() {
+		return this.inAttribute;
+	}
+
 }

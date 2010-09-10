@@ -50,6 +50,7 @@ import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
 /**
@@ -82,6 +83,10 @@ public class LinkAttributeTest {
 		this.testFixture = new CanvasTestFixture(mockery, "", notationFixture.getNotationSubsystem());
 		this.testFixture.buildFixture();
 		INotationSyntaxService syntaxService = this.notationFixture.getNotationSubsystem().getSyntaxService();
+		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
+		this.mockery.checking(new Expectations(){{
+			one(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
+		}});
 		this.testInstance = new LinkAttribute(this.testFixture.getRootAttribute(), EXPECTED_IDX, syntaxService.getLinkObjectType(CanvasTestFixture.LINK1_ATT_OT));
 		this.testListener = new ICanvasAttributeChangeListener() {
 
@@ -325,7 +330,7 @@ public class LinkAttributeTest {
 	 */
 	@Test
 	public void testSetCurrentElement() {
-		ICompoundGraphElement expectedElement = this.mockery.mock(ICompoundGraphElement.class, "expectedElement");
+		ICompoundEdge expectedElement = this.mockery.mock(ICompoundEdge.class, "expectedElement");
 		this.testInstance.setCurrentElement(expectedElement);
 		assertEquals("expected element", expectedElement, this.testInstance.getCurrentElement());
 	}

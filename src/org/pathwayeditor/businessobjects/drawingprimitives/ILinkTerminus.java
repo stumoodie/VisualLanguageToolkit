@@ -104,14 +104,14 @@ public interface ILinkTerminus {
 	 * @param other the other object to test.
 	 * @return true of the objects are equal based on the business key, false otherwise.
 	 */
-	@Override
+//	@Override
 	boolean equals(Object other);
 
 	/**
 	 * The hash code is based on the same identity rules as {@link #equals(Object)}.
 	 * @return the hash code.
 	 */
-	@Override
+//	@Override
 	int hashCode();
 	
 	void addLinkTerminusChangeListener(ILinkTerminusChangeListener listener);

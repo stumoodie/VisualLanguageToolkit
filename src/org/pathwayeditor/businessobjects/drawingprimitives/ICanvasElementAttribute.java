@@ -47,14 +47,14 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	 * @param other
 	 * @return true if equal, false otherwise.
 	 */
-	@Override
+//	@Override
 	boolean equals(Object other); 
 
 	/**
 	 * See <code>equals</code> for definition of identity.
 	 * @return the hash code.
 	 */
-	@Override
+//	@Override
 	int hashCode();
 	
 	boolean isRemoved();

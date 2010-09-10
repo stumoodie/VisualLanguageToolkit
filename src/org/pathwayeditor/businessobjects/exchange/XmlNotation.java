@@ -31,22 +31,27 @@ public class XmlNotation implements INotation {
 		this.notn = xmlNotation;
 	}
 	
+	@Override
 	public String getDescription() {
 		return notn.getDescription();
 	}
 
+	@Override
 	public String getDisplayName() {
 		return notn.getDisplayName();
 	}
 
+	@Override
 	public String getQualifiedName() {
 		return notn.getQualifiedName();
 	}
 
+	@Override
 	public Version getVersion() {
 		return new Version(notn.getMajorVersion(), notn.getMinorVersion(), notn.getPatchVersion());
 	}
 
+	@Override
 	public int compareTo(INotation o) {
 		int retVal = notn.getQualifiedName().compareTo(o.getQualifiedName());
 		if(retVal == 0){

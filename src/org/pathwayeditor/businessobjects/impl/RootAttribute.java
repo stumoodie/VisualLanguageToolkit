@@ -44,6 +44,7 @@ import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
+import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
 import uk.ac.ed.inf.graph.util.IFilterCriteria;
 import uk.ac.ed.inf.graph.util.IndexCounter;
 import uk.ac.ed.inf.graph.util.impl.FilteredIterator;
@@ -418,4 +419,8 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 		return this.creationSerialCounter;
 	}
 
+	@Override
+	public IRootCompoundNode getCurrentElement(){
+		return (IRootCompoundNode)super.getCurrentElement();
+	}
 }

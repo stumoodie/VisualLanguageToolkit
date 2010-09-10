@@ -16,7 +16,6 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.exchange;
 
-import org.pathwayeditor.businessobjects.hibernate.pojos.ObjectTypeClassification;
 
 /**
  * @author smoodie

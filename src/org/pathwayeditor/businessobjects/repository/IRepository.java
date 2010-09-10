@@ -119,7 +119,7 @@ public interface IRepository {
 	 * @return true if the objects are identical of have the same name, false
 	 *         otherwise.
 	 */
-	@Override
+//	@Override
 	boolean equals(Object other);
 	
 	void addChangeListener(IRepositoryChangeListener listener);

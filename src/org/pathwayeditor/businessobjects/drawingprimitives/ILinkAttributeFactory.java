@@ -32,13 +32,11 @@ public interface ILinkAttributeFactory extends IElementAttributeFactory {
 	void setObjectType(ILinkObjectType objectType);
 	
 	ILinkObjectType getObjectType();
-	
-	void setSource(IShapeAttribute src);
-	
-	IShapeAttribute getSource();
-	
-	void setTarget(IShapeAttribute tgt);
-	
-	IShapeAttribute getTarget();
+
+	@Override
+	IShapeAttribute getOutAttribute();
+
+	@Override
+	IShapeAttribute getInAttribute();
 	
 }

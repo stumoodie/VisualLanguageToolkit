@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -27,6 +28,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -42,7 +44,7 @@ import uk.ac.ed.inf.graph.util.IndexCounter;
 @RunWith(JMock.class)
 public class ShapeAttributeFactoryParentingCopyTest {
 	private Mockery mockery;
-	private CanvasTestFixture testFactory;
+	private CanvasTestFixture testFixture;
 	private NotationSubsystemFixture notationSubsystemFixture;
 	private IShapeAttributeFactory testInstance;
 	private IShapeAttribute expectedParentAttribute;
@@ -56,9 +58,9 @@ public class ShapeAttributeFactoryParentingCopyTest {
 		this.mockery = new JUnit4Mockery();
 		this.notationSubsystemFixture = new NotationSubsystemFixture(mockery); 
 		this.notationSubsystemFixture.buildFixture();
-		this.testFactory = new CanvasTestFixture(mockery, "", notationSubsystemFixture.getNotationSubsystem());
-		this.testFactory.buildFixture();
-		this.expectedParentAttribute = this.testFactory.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
+		this.testFixture = new CanvasTestFixture(mockery, "", notationSubsystemFixture.getNotationSubsystem());
+		this.testFixture.buildFixture();
+		this.expectedParentAttribute = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		this.testInstance = new ShapeAttributeFactory(new IndexCounter());
 		this.expectedObjectType = notationSubsystemFixture.getNotationSubsystem().getSyntaxService().getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_C_ID);
 		this.testInstance.setDestinationAttribute(expectedParentAttribute);
@@ -71,7 +73,7 @@ public class ShapeAttributeFactoryParentingCopyTest {
 	@After
 	public void tearDown() throws Exception {
 		this.mockery = null;
-		this.testFactory = null;
+		this.testFixture = null;
 		this.notationSubsystemFixture = null;
 		this.testInstance = null;
 		this.expectedParentAttribute = null;
@@ -99,6 +101,10 @@ public class ShapeAttributeFactoryParentingCopyTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
+		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
+		this.mockery.checking(new Expectations(){{
+			one(rootAtt).addCanvasAttribute(with(any(IShapeAttribute.class)));
+		}});
 		IShapeAttribute newAtt = this.testInstance.createAttribute();
 		assertNotNull("new instance not null", newAtt);
 	}

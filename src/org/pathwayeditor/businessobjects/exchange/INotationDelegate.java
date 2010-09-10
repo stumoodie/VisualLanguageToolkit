@@ -16,8 +16,6 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.exchange;
 
-import java.util.Iterator;
-
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 
 /**
@@ -28,7 +26,7 @@ public interface INotationDelegate {
 
 	INotation getNotation();
 	
-	Iterator<IObjectInfo> objectTypeIterator();
+//	Iterator<IObjectInfo> objectTypeIterator();
 	
 	int numObjectTypes();
 	

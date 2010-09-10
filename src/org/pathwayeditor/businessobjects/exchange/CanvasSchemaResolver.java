@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
  *
  */
 class CanvasSchemaResolver implements EntityResolver {
+	@Override
 	public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
 		InputStream in = this.getClass().getResourceAsStream("Canvas.xsd");
 		return new InputSource(in);

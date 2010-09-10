@@ -33,6 +33,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAttribute {
@@ -60,6 +61,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		this.rootAttribute = rootAttribute;
 		this.shapeObjectType = shapeObjectType;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
+		this.rootAttribute.addCanvasAttribute(this);
 	}
 	
 	public ShapeAttribute(IRootAttribute rootAttribute, int newCreationSerial, IShapeAttribute other) {
@@ -72,6 +74,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		this.lineWidth = other.getLineWidth();
 		this.shapeObjectType = other.getObjectType();
 		this.figureDefn=other.getShapeDefinition();
+		this.rootAttribute.addCanvasAttribute(this);
 	}
 	
 	
@@ -259,5 +262,10 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	@Override
 	public IElementAttributeFactory elementAttributeMoveFactory() {
 		return new TypedAttributeMoveFactory(this);
+	}
+
+	@Override
+	public ICompoundNode getCurrentElement(){
+		return (ICompoundNode)super.getCurrentElement();
 	}
 }

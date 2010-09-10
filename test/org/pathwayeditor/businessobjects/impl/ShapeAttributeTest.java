@@ -63,7 +63,7 @@ import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.IObjectConstructor;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
  * @author smoodie
@@ -110,13 +110,15 @@ public class ShapeAttributeTest {
 		this.expectedSize = this.expectedObjectType.getDefaultAttributes().getSize();
 		this.expectedBounds = new Envelope(Point.ORIGIN, expectedSize);
 		final IPlainTextPropertyDefinition shapeTypeAPropDefn = this.expectedObjectType.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
-		this.mockery.checking(new Expectations(){{
-			exactly(1).of(shapeTypeAPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeAPropDefn));
-//			exactly(1).of(shapeTypeBPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeBPropDefn));
-		}});
 		this.testFixture.redefineBuilder(CanvasTestFixture.SHAPE1_ATT_ID, new IObjectConstructor<IShapeAttribute>(){
 			@Override
 			public IShapeAttribute create() {
+				final IRootAttribute rootAtt = testFixture.getRootAttribute();
+				mockery.checking(new Expectations(){{
+					exactly(1).of(shapeTypeAPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeAPropDefn));
+//					exactly(1).of(shapeTypeBPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeBPropDefn));
+					one(rootAtt).addCanvasAttribute(with(any(IShapeAttribute.class)));
+				}});
 				testInstance = new ShapeAttribute(testFixture.getRootAttribute(), CanvasTestFixture.SHAPE1_ATT_IDX, expectedObjectType);
 				return testInstance;
 			}
@@ -478,7 +480,7 @@ public class ShapeAttributeTest {
 	 */
 	@Test
 	public void testSetCurrentElement() {
-		ICompoundGraphElement testElement = this.mockery.mock(ICompoundGraphElement.class, "testElement");
+		ICompoundNode testElement = this.mockery.mock(ICompoundNode.class, "testElement");
 		this.mockery.checking(new Expectations(){{
 		}});
 		this.testInstance.setCurrentElement(testElement);

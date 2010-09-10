@@ -20,12 +20,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -60,6 +63,10 @@ public class LinkAttributeCopyFactoryTest {
 		this.linkToCopy = this.testFixture.getObject(CanvasTestFixture.LINK1_ATT_ID);
 		this.testInstance = new LinkAttributeCopyFactory(new IndexCounter(1010), linkToCopy);
 		this.testInstance.setDestinationAttribute(this.otherFixture.getRootAttribute());
+		IShapeAttribute shape1Att = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
+		IShapeAttribute shape2Att = this.testFixture.getObject(CanvasTestFixture.SHAPE2_ATT_ID);
+		this.testInstance.setOutAttribute(shape1Att);
+		this.testInstance.setInAttribute(shape2Att);
 	}
 
 	/**
@@ -105,6 +112,10 @@ public class LinkAttributeCopyFactoryTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
+		final IRootAttribute rootAtt = this.otherFixture.getRootAttribute();
+		this.mockery.checking(new Expectations(){{
+			one(rootAtt).addCanvasAttribute(with(any(ILabelAttribute.class)));
+		}});
 		ILinkAttribute newAtt = (ILinkAttribute)this.testInstance.createAttribute();
 		assertNotNull("exists", newAtt);
 		assertEquals("expected too att", this.otherFixture.getRootAttribute(), newAtt.getRootAttribute());

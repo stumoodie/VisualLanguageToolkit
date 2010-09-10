@@ -32,6 +32,8 @@ public class ShapeAttributeCopyFactory implements IElementAttributeFactory {
 	private final IShapeAttribute sourceAttribute;
 	private ICanvasElementAttribute destnAttibute;
 	private final IndexCounter creationSerialCounter;
+	private IElementAttribute outAttribute;
+	private IElementAttribute inAttribute;
 	
 	public ShapeAttributeCopyFactory(IndexCounter creationSerialCounter, IShapeAttribute sourceAttribute){
 		this.sourceAttribute = sourceAttribute;
@@ -69,6 +71,38 @@ public class ShapeAttributeCopyFactory implements IElementAttributeFactory {
 	@Override
 	public ICanvasElementAttribute getDestinationAttribute() {
 		return this.destnAttibute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setOutAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setOutAttribute(IElementAttribute attribute) {
+		this.outAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
+	 */
+	@Override
+	public IElementAttribute getOutAttribute() {
+		return this.outAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setInAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setInAttribute(IElementAttribute attribute) {
+		this.inAttribute = attribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
+	 */
+	@Override
+	public IElementAttribute getInAttribute() {
+		return this.inAttribute;
 	}
 
 }

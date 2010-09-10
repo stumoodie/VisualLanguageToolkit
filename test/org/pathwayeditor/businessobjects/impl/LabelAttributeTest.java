@@ -52,7 +52,7 @@ import org.pathwayeditor.testfixture.CanvasTranslationEventValidator;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
  * @author smoodie
@@ -90,8 +90,10 @@ public class LabelAttributeTest {
 		this.testFixture.buildFixture();
 		IShapeAttribute shapeAtt = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		expectedProp = shapeAtt.getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
+		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
 		this.mockery.checking(new Expectations(){{
 			one(expectedProp).setLabel(with(any(ILabelAttribute.class)));
+			one(rootAtt).addCanvasAttribute(with(any(ILabelAttribute.class)));
 		}});
 		this.testInstance = new LabelAttribute(this.testFixture.getRootAttribute(), EXPECTED_IDX, expectedProp, expectedProp.getDefinition().getLabelDefaults());
 		this.testListener = new ICanvasAttributeChangeListener() {
@@ -453,7 +455,7 @@ public class LabelAttributeTest {
 	 */
 	@Test
 	public void testSetCurrentElement() {
-		ICompoundGraphElement testElement = this.mockery.mock(ICompoundGraphElement.class, "testElement");
+		ICompoundNode testElement = this.mockery.mock(ICompoundNode.class, "testElement");
 		this.mockery.checking(new Expectations(){{
 		}});
 		this.testInstance.setCurrentElement(testElement);

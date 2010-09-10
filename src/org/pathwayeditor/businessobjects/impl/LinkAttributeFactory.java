@@ -90,34 +90,34 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#setSource(org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setOutAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
 	 */
 	@Override
-	public void setSource(IShapeAttribute src) {
-		this.source = src;
+	public void setOutAttribute(IElementAttribute attribute) {
+		this.source = (IShapeAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#getSource()
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
 	 */
 	@Override
-	public IShapeAttribute getSource() {
+	public IShapeAttribute getOutAttribute() {
 		return this.source;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#setTarget(org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setInAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
 	 */
 	@Override
-	public void setTarget(IShapeAttribute tgt) {
-		this.target = tgt;
+	public void setInAttribute(IElementAttribute attribute) {
+		this.target = (IShapeAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory#getTarget()
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
 	 */
 	@Override
-	public IShapeAttribute getTarget() {
+	public IShapeAttribute getInAttribute() {
 		return this.target;
 	}
 

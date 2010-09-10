@@ -22,6 +22,8 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+
 /**
  * @author smoodie
  *
@@ -36,4 +38,7 @@ public interface IDrawingNodeAttribute extends ICanvasElementAttribute {
 	
 	void resize(Point locationDelta, Dimension sizeDelta);
 	
+	
+	@Override
+	ICompoundNode getCurrentElement();
 }

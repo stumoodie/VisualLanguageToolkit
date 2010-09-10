@@ -32,6 +32,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
@@ -57,6 +58,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.visualisableProperty = property;
 		this.visualisableProperty.setLabel(this);
 		populateDefaults(labelDefaults);
+		this.rootAttribute.addCanvasAttribute(this);
 	}
 
 	public LabelAttribute(IRootAttribute hibCanvas, int creationSerial, ILabelAttribute otherAttribute, IAnnotationProperty copiedProperty) {
@@ -71,6 +73,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.noFill = otherAttribute.hasNoFill();
 		this.visualisableProperty.setLabel(this);
 		this.boundsDelegate.setBounds(otherAttribute.getBounds());
+		this.rootAttribute.addCanvasAttribute(this);
 	}
 
 	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
@@ -332,4 +335,8 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		return new ElementAttributeMoveFactory(this);
 	}
 
+	@Override
+	public ICompoundNode getCurrentElement(){
+		return (ICompoundNode)super.getCurrentElement();
+	}
 }

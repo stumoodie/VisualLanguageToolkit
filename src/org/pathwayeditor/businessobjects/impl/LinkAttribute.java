@@ -31,6 +31,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttribute {
@@ -58,6 +59,7 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 		this.tgtTerminus = new LinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		this.lineSegement = new BendPointContainer(this);
 		addDefaults(objectType.getDefaultAttributes());
+		this.rootAttribute.addCanvasAttribute(this);
 	}
 
 	/**
@@ -76,6 +78,7 @@ s	 */
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.lineSegement = new BendPointContainer(this, otherAttribute.getBendPointContainer());
+		this.rootAttribute.addCanvasAttribute(this);
 //		Iterator<Point> bpIter = otherAttribute.bendPointIterator();
 //		while(bpIter.hasNext()){
 //			Point otherBp = bpIter.next();
@@ -256,4 +259,8 @@ s	 */
 	}
 
 
+	@Override
+	public ICompoundEdge getCurrentElement(){
+		return (ICompoundEdge)super.getCurrentElement();
+	}
 }

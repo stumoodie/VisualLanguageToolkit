@@ -21,6 +21,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+
 public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributeChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
@@ -82,4 +84,7 @@ public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObjec
 	void setLineWidth ( double lineWidth) ;
 	
 	IBendPointContainer getBendPointContainer();
+	
+	@Override
+	ICompoundEdge getCurrentElement();
 }

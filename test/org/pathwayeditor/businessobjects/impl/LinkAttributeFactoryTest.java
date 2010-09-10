@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
@@ -29,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -60,8 +62,8 @@ public class LinkAttributeFactoryTest {
 		this.testInstance = new LinkAttributeFactory(new IndexCounter());
 		shapeAttributeSrc = canvasTestFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		shapeAttributeTgt = canvasTestFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
-		this.testInstance.setSource(shapeAttributeSrc);
-		this.testInstance.setTarget(shapeAttributeTgt);
+		this.testInstance.setOutAttribute(shapeAttributeSrc);
+		this.testInstance.setInAttribute(shapeAttributeTgt);
 		this.testInstance.setDestinationAttribute(canvasTestFixture.getRootAttribute());
 		this.testInstance.setObjectType(notationFixture.getNotationSubsystem().getSyntaxService().getLinkObjectType(NotationSubsystemFixture.LINK_TYPE_D_ID));
 	}
@@ -104,19 +106,19 @@ public class LinkAttributeFactoryTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttributeFactory#getSource()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttributeFactory#getOutAttribute()}.
 	 */
 	@Test
-	public void testGetSource() {
-		assertEquals("expected", this.shapeAttributeSrc, this.testInstance.getSource());
+	public void testGetOutAttribute() {
+		assertEquals("expected", this.shapeAttributeSrc, this.testInstance.getOutAttribute());
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttributeFactory#getTarget()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttributeFactory#getInAttribute()}.
 	 */
 	@Test
-	public void testGetTarget() {
-		assertEquals("expected", this.shapeAttributeTgt, this.testInstance.getTarget());
+	public void testGetInAttribute() {
+		assertEquals("expected", this.shapeAttributeTgt, this.testInstance.getInAttribute());
 	}
 
 	
@@ -125,6 +127,10 @@ public class LinkAttributeFactoryTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
+		final IRootAttribute rootAtt = this.canvasTestFixture.getRootAttribute();
+		this.mockery.checking(new Expectations(){{
+			allowing(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
+		}});
 		ILinkAttribute actualAtt = this.testInstance.createAttribute();
 		assertNotNull("created", actualAtt);
 	}

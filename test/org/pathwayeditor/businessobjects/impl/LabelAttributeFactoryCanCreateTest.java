@@ -30,6 +30,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
@@ -107,8 +109,10 @@ public class LabelAttributeFactoryCanCreateTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
+		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
 		this.mockery.checking(new Expectations(){{
 			one(prop).setLabel(with(any(ILabelAttribute.class)));
+			allowing(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
 		}});
 		ILabelAttribute labelAtt = this.testInstance.createAttribute();
 		assertNotNull("exists", labelAtt);

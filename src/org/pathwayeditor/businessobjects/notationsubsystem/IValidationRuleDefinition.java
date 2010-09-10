@@ -100,13 +100,13 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
      * @param other the other object to compare, which can be null.
      * @return true if the objects are equal with the same id, false otherwise.
      */
-    @Override
+//    @Override
 	boolean equals(Object other);
     
     /**
      * Provides a hash code that matches the object equivalence defined in equals(). 
      * @return the hash code.
      */
-    @Override
+//    @Override
 	int hashCode();
 }

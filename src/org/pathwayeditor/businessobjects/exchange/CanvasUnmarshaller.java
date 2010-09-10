@@ -24,10 +24,11 @@ import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Unmarshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.xml.sax.EntityResolver;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author smoodie
@@ -36,14 +37,14 @@ import org.xml.sax.EntityResolver;
 public class CanvasUnmarshaller {
 	private Canvas xmlInstance = null;
 	private INotationSubsystemPool notationPool;
-	private final String repoName;
-	private final int iNode;
+//	private final String repoName;
+//	private final int iNode;
 	private CanvasBuilder builder = null;
 
-	public CanvasUnmarshaller(INotationSubsystemPool notationPool, String name, int iNode){
+	public CanvasUnmarshaller(INotationSubsystemPool notationPool){
 		this.notationPool = notationPool;
-		this.repoName = name;
-		this.iNode = iNode;
+//		this.repoName = name;
+//		this.iNode = iNode;
 	}
 	
 	public void read(Reader writer) throws IOException{
@@ -66,14 +67,14 @@ public class CanvasUnmarshaller {
 	public void buildCanvas(){
 		if(this.xmlInstance == null) throw new IllegalStateException("File has not been read");
 
-		this.builder = new CanvasBuilder(this.repoName, this.iNode, xmlInstance, notationPool);
+		this.builder = new CanvasBuilder(xmlInstance, notationPool);
 		builder.buildNotation();
 		builder.buildCanvas();
 		builder.buildModel();
 	}
 	
 	
-	public ICanvas getCanvas(){
+	public ICompoundGraph getCanvas(){
 		if(this.builder == null) throw new IllegalStateException("Canvas not build from XML document");
 		
 		return this.builder.getCanvas();

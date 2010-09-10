@@ -52,13 +52,13 @@ public interface IValidationRuleConfig extends Comparable <IValidationRuleConfig
 	 * @param other the other object to compare, which can be null.
 	 * @return true if the objects are the same, with equal rule definitions, false otherwise.
 	 */
-	@Override
+//	@Override
 	boolean equals(Object other);
 	
 	/**
 	 * Gets a hashcode that is consistent with equals behaviour.
 	 * @return the has code.
 	 */
-	@Override
+//	@Override
 	int hashCode();
 }

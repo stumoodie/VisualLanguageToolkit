@@ -89,4 +89,34 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 		return this.annotationProperty;
 	}
 
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setOutAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setOutAttribute(IElementAttribute attribute) {
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
+	 */
+	@Override
+	public IElementAttribute getOutAttribute() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#setInAttribute(uk.ac.ed.inf.graph.compound.IElementAttribute)
+	 */
+	@Override
+	public void setInAttribute(IElementAttribute attribute) {
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
+	 */
+	@Override
+	public IElementAttribute getInAttribute() {
+		return null;
+	}
+
 }
