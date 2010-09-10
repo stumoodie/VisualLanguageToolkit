@@ -191,7 +191,7 @@
                                         <FigureDefinition>curbounds rect</FigureDefinition>
                                     </ShapeAttribute>
                                 </ShapeNode>
-                                <LinkEdge linkIdx="4" srcNodeIdx="6" tgtNodeIdx="6">
+                                <LinkEdge linkIdx="4" srcNodeIdx="7" tgtNodeIdx="6">
                                     <LinkAttribute creationSerial="13" lineStyle="DOT"
                                         lineWidth="15.0" objectTypeId="7" lastBendPointIndex="0">
                                         <LineColour red="105" green="105" blue="105"/>
@@ -210,7 +210,7 @@
                                         <PropertyRef id="15"/>
                                     </LinkAttribute>
                                 </LinkEdge>
-                                <LinkEdge linkIdx="5" srcNodeIdx="6" tgtNodeIdx="6">
+                                <LinkEdge linkIdx="5" srcNodeIdx="6" tgtNodeIdx="7">
                                     <LinkAttribute creationSerial="14" lineStyle="SOLID"
                                         lineWidth="16.0" objectTypeId="7" lastBendPointIndex="0">
                                         <LineColour red="106" green="106" blue="106"/>
@@ -251,7 +251,7 @@
                                 <PropertyRef id="10"/>
                             </LabelAttribute>
                         </LabelNode>
-                        <LinkEdge linkIdx="2" srcNodeIdx="2" tgtNodeIdx="2">
+                        <LinkEdge linkIdx="2" srcNodeIdx="2" tgtNodeIdx="6">
                             <LinkAttribute creationSerial="11" lineStyle="DASH_DOT" lineWidth="13.0"
                                 objectTypeId="6" lastBendPointIndex="0">
                                 <LineColour red="103" green="103" blue="103"/>
@@ -280,6 +280,39 @@
                         <FigureDefinition>curbounds rect</FigureDefinition>
                     </ShapeAttribute>
                 </ShapeNode>
+                <LabelNode nodeId="10">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="19" lineStyle="SOLID" lineWidth="1.0"
+                        noFill="true" noBorder="true">
+                        <Location x="52.0" y="52.0"/>
+                        <Size width="52.0" height="52.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="102" green="102" blue="102"/>
+                        <PropertyRef id="25"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LabelNode nodeId="11">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="20" lineStyle="SOLID" lineWidth="1.0"
+                        noFill="true" noBorder="true">
+                        <Location x="53.0" y="53.0"/>
+                        <Size width="53.0" height="53.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="103" green="103" blue="103"/>
+                        <PropertyRef id="24"/>
+                    </LabelAttribute>
+                </LabelNode>
+                <LabelNode nodeId="13">
+                    <SubModel/>
+                    <LabelAttribute creationSerial="22" lineStyle="SOLID" lineWidth="1.0"
+                        noFill="true" noBorder="true">
+                        <Location x="55.0" y="55.0"/>
+                        <Size width="55.0" height="55.0"/>
+                        <LineColour red="255" green="255" blue="255"/>
+                        <FillColour red="105" green="105" blue="105"/>
+                        <PropertyRef id="26"/>
+                    </LabelAttribute>
+                </LabelNode>
                 <LabelNode nodeId="14">
                     <SubModel/>
                     <LabelAttribute creationSerial="23" lineStyle="SOLID" lineWidth="1.0"
