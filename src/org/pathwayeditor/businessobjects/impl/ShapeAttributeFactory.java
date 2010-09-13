@@ -34,6 +34,7 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 	private final IndexCounter creationSerialCounter;
 	private IElementAttribute outAttribute;
 	private IElementAttribute inAttribute;
+	private Integer preferredCreationSerial;
 	
 	public ShapeAttributeFactory(IndexCounter creationSerialCounter){
 		if(creationSerialCounter == null) throw new IllegalArgumentException("Creation serial cannot be null");
@@ -61,7 +62,11 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 	public IShapeAttribute createAttribute() {
 		if(!this.canCreateAttribute()) throw new IllegalStateException("cannot create attribute");
 	
-		return new ShapeAttribute(this.destinationAttribute.getRootAttribute(), creationSerialCounter.nextIndex(), shapeObjectType);
+		Integer currSerial = this.preferredCreationSerial;
+		if(currSerial == null){
+			currSerial = creationSerialCounter.nextIndex();
+		}
+		return new ShapeAttribute(this.destinationAttribute.getRootAttribute(), currSerial.intValue(), shapeObjectType);
 	}
 
 	@Override
@@ -115,6 +120,22 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 	@Override
 	public IElementAttribute getInAttribute() {
 		return this.inAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#setPreferredCreationSerial(int)
+	 */
+	@Override
+	public void setPreferredCreationSerial(Integer creationSerial) {
+		this.preferredCreationSerial = creationSerial;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#getPreferredCreationSerial()
+	 */
+	@Override
+	public Integer getPreferredCreationSerial() {
+		return this.preferredCreationSerial;
 	}
 
 }

@@ -26,6 +26,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
@@ -61,7 +62,20 @@ public class LinkAttributeCopyFactoryTest {
 		this.otherFixture = new CanvasTestFixture(mockery, "other", notationFixture.getNotationSubsystem());
 		this.otherFixture.buildFixture();
 		this.linkToCopy = this.testFixture.getObject(CanvasTestFixture.LINK1_ATT_ID);
-		this.testInstance = new LinkAttributeCopyFactory(new IndexCounter(1010), linkToCopy);
+		final IndexCounter idxCntr = new IndexCounter(1010);
+		ICanvasAttributeSequence seq = new ICanvasAttributeSequence() {
+			
+			@Override
+			public int next() {
+				return idxCntr.nextIndex();
+			}
+			
+			@Override
+			public int getCurrent() {
+				return idxCntr.getLastIndex();
+			}
+		};
+		this.testInstance = new LinkAttributeCopyFactory(seq, linkToCopy);
 		this.testInstance.setDestinationAttribute(this.otherFixture.getRootAttribute());
 		IShapeAttribute shape1Att = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		IShapeAttribute shape2Att = this.testFixture.getObject(CanvasTestFixture.SHAPE2_ATT_ID);

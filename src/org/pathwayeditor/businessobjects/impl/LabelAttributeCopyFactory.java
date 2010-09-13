@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
@@ -23,24 +24,23 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
-import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
  *
  */
 public class LabelAttributeCopyFactory implements IElementAttributeFactory {
-	private final IndexCounter creationSerialCounter;
+	private final ICanvasAttributeSequence creationSerialCounter;
 	private final IAnnotationProperty labelProperty;
 	private IAnnotatedObject destinationAttribute;
 	private IElementAttribute outAttribute;
 	private IElementAttribute inAttribute;
 	
 	/**
-	 * @param creationSerialCounter
+	 * @param iCanvasAttributeSequence
 	 */
-	public LabelAttributeCopyFactory(IndexCounter creationSerialCounter, IAnnotationProperty labelProperty) {
-		this.creationSerialCounter = creationSerialCounter;
+	public LabelAttributeCopyFactory(ICanvasAttributeSequence iCanvasAttributeSequence, IAnnotationProperty labelProperty) {
+		this.creationSerialCounter = iCanvasAttributeSequence;
 		this.labelProperty = labelProperty;
 	}
 
@@ -74,7 +74,7 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	@Override
 	public ILabelAttribute createAttribute() {
 		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
-		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getRootAttribute(), creationSerialCounter.nextIndex(), this.labelProperty.getLabel(), copiedProp);
+		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getRootAttribute(), creationSerialCounter.next(), this.labelProperty.getLabel(), copiedProp);
 	}
 
 	/* (non-Javadoc)

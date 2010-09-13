@@ -9,7 +9,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
-import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
  * @author smoodie
@@ -105,9 +104,15 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute {
 	
 	Iterator<IShapeAttribute> shapeAttributeIterator();
 	
+	int numShapeAttributes();
+	
 	Iterator<ILabelAttribute> labelAttributeIterator();
 	
+	int numLabelAttributes();
+	
 	Iterator<ILinkAttribute> linkAttributeIterator();
+	
+	int numLinkAttributes();
 	
 	IShapeAttributeFactory shapeAttributeFactory();
 	
@@ -123,7 +128,7 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute {
 	
 	void addCanvasAttribute(ICanvasElementAttribute attribute);
 
-	IndexCounter getCreationSerialCounter();
+	ICanvasAttributeSequence getCreationSerialCounter();
 
 	@Override
 	IRootObjectType getObjectType();

@@ -24,6 +24,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.api.Action;
 import org.jmock.api.Invocation;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -127,7 +128,17 @@ public class CanvasTestFixture extends CommonTestFixture {
 				rootAttribute = mockery.mock(IRootAttribute.class, createMockName("rootAttribute"));
 				final Point location = new Point(-12.0, -10.0);
 				final Dimension size = new Dimension(400.0, 200.0);
-				final IndexCounter serialCounter = new IndexCounter(INDEX_COUNTER_IDX);
+				final IndexCounter idx = new IndexCounter(INDEX_COUNTER_IDX);
+				final ICanvasAttributeSequence serialCounter = new ICanvasAttributeSequence(){
+					@Override
+					public int getCurrent() {
+						return idx.getLastIndex();
+					}
+					@Override
+					public int next() {
+						return idx.nextIndex();
+					}
+				};
 				mockery.checking(new Expectations(){{
 					allowing(rootAttribute).getCreationSerial(); will(returnValue(ROOT_ATT_IDX));
 					allowing(rootAttribute).getObjectType(); will(returnValue(notationSubsystem.getSyntaxService().getRootObjectType()));

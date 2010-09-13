@@ -25,6 +25,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
@@ -98,10 +99,14 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(INITIAL_POS, INITIAL_SIZE), canvasAttributeChangeListenerHelper);
 
 	public RootAttribute(String name, IRootObjectType objectType) {
-		super(ROOT_IDX);
+		this(ROOT_IDX, name, objectType, ROOT_IDX);
+	}
+
+	public RootAttribute(int creationSerial, String name, IRootObjectType objectType, int lastSequencesIndex) {
+		super(creationSerial);
 		this.name = name;
 		this.objectType = objectType;
-		this.creationSerialCounter = new IndexCounter(ROOT_IDX);
+		this.creationSerialCounter = new IndexCounter(lastSequencesIndex);
 	}
 
 	public RootAttribute(RootAttribute otherAttribute) {
@@ -415,12 +420,57 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#getCreationSerialCounter()
 	 */
 	@Override
-	public IndexCounter getCreationSerialCounter() {
-		return this.creationSerialCounter;
+	public ICanvasAttributeSequence getCreationSerialCounter() {
+		return new ICanvasAttributeSequence(){
+
+			@Override
+			public int getCurrent() {
+				return creationSerialCounter.getLastIndex();
+			}
+
+			@Override
+			public int next() {
+				return creationSerialCounter.nextIndex();
+			}
+			
+		};
 	}
 
 	@Override
 	public IRootCompoundNode getCurrentElement(){
 		return (IRootCompoundNode)super.getCurrentElement();
+	}
+
+	private static int attributesCounter(Iterator<? extends ICanvasElementAttribute> iter){
+		int retVal = 0;
+		while(iter.hasNext()){
+			iter.next();
+			retVal++;
+		}
+		return retVal;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#numShapeAttributes()
+	 */
+	@Override
+	public int numShapeAttributes() {
+		return attributesCounter(this.shapeAttributeIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#numLabelAttributes()
+	 */
+	@Override
+	public int numLabelAttributes() {
+		return attributesCounter(this.labelAttributeIterator());
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#numLinkAttributes()
+	 */
+	@Override
+	public int numLinkAttributes() {
+		return attributesCounter(this.linkAttributeIterator());
 	}
 }

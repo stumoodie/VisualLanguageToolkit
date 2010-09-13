@@ -186,7 +186,7 @@ public class CanvasMarshaller {
 //		canvasSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		xmlCanvas.setCanvasSize(canvasSize);
 		xmlCanvas.setName(dbCanvas.getName());
-		xmlCanvas.setLastCreationSerial(dbCanvas.getCreationSerialCounter().getLastIndex());
+		xmlCanvas.setLastCreationSerial(dbCanvas.getCreationSerialCounter().getCurrent());
 	}
 	
 	private void setNotation(){

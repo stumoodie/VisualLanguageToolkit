@@ -32,6 +32,7 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	private final IndexCounter creationSerialCounter;
 	private IAnnotationProperty annotationProperty;
 	private ICanvasElementAttribute destination;
+	private Integer preferredCreationSerial = null;
 
 	/**
 	 * @param creationSerialCounter
@@ -77,7 +78,11 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	 */
 	@Override
 	public ILabelAttribute createAttribute() {
-		return new LabelAttribute(this.destination.getRootAttribute(), this.creationSerialCounter.nextIndex(), this.annotationProperty,
+		Integer currSerial = this.preferredCreationSerial;
+		if(currSerial == null){
+			currSerial = creationSerialCounter.nextIndex();
+		}
+		return new LabelAttribute(this.destination.getRootAttribute(), currSerial.intValue(), this.annotationProperty,
 				this.annotationProperty.getDefinition().getLabelDefaults());
 	}
 
@@ -117,6 +122,22 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	@Override
 	public IElementAttribute getInAttribute() {
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#setPreferredCreationSerial(int)
+	 */
+	@Override
+	public void setPreferredCreationSerial(Integer creationSerial) {
+		this.preferredCreationSerial = creationSerial;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#getPreferredCreationSerial()
+	 */
+	@Override
+	public Integer getPreferredCreationSerial() {
+		return this.preferredCreationSerial;
 	}
 
 }

@@ -16,33 +16,24 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
  * @author smoodie
  *
  */
-public interface IShapeAttributeFactory extends ICanvasAttributeFactory {
+public interface ICanvasAttributeFactory extends IElementAttributeFactory {
 
 	/**
-	 * Get the object type of the new shape attribute to be created.
-	 * @return the object type 
+	 * Sets the creation serial to use when creating the attribute. This value is ignored if this value is not set.
+	 * @param creationSerial
 	 */
-	IShapeObjectType getObjectType();
-
-	/**
-	 * Get the attribute that will be the parent of the newly created attribute
-	 * @return the attribute, which cannot be null.
-	 */
-	@Override
-	ICanvasElementAttribute getDestinationAttribute();
-
-	/**
-	 * @param objectType
-	 */
-	void setObjectType(IShapeObjectType objectType);
+	void setPreferredCreationSerial(Integer creationSerial);
 	
-	@Override
-	IShapeAttribute createAttribute();
-
+	/**
+	 * The value currently set as the preferred creation serial. 
+	 * @return the value of the currently preferred creation serial, which may be null.
+	 */
+	Integer getPreferredCreationSerial();
+	
 }

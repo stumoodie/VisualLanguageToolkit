@@ -16,33 +16,14 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-
 /**
  * @author smoodie
  *
  */
-public interface IShapeAttributeFactory extends ICanvasAttributeFactory {
+public interface ICanvasAttributeSequence {
 
-	/**
-	 * Get the object type of the new shape attribute to be created.
-	 * @return the object type 
-	 */
-	IShapeObjectType getObjectType();
-
-	/**
-	 * Get the attribute that will be the parent of the newly created attribute
-	 * @return the attribute, which cannot be null.
-	 */
-	@Override
-	ICanvasElementAttribute getDestinationAttribute();
-
-	/**
-	 * @param objectType
-	 */
-	void setObjectType(IShapeObjectType objectType);
+	int getCurrent();
 	
-	@Override
-	IShapeAttribute createAttribute();
-
+	int next();
+	
 }

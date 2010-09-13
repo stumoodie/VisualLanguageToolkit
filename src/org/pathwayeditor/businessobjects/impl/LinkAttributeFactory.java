@@ -35,6 +35,7 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	private ILinkObjectType objectType;
 	private IShapeAttribute source;
 	private IShapeAttribute target;
+	private Integer preferredCreationSerial;
 
 	public LinkAttributeFactory(IndexCounter creationSerialCounter) {
 		this.creationSerialCounter = creationSerialCounter;
@@ -70,7 +71,11 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public ILinkAttribute createAttribute() {
-		return new LinkAttribute(this.destination.getRootAttribute(), this.creationSerialCounter.nextIndex(), this.objectType);
+		Integer currSerial = this.preferredCreationSerial;
+		if(currSerial == null){
+			currSerial = creationSerialCounter.nextIndex();
+		}
+		return new LinkAttribute(this.destination.getRootAttribute(), currSerial.intValue(), this.objectType);
 	}
 
 	/* (non-Javadoc)
@@ -119,6 +124,22 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	@Override
 	public IShapeAttribute getInAttribute() {
 		return this.target;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#setPreferredCreationSerial(int)
+	 */
+	@Override
+	public void setPreferredCreationSerial(Integer creationSerial) {
+		this.preferredCreationSerial = creationSerial;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeFactory#getPreferredCreationSerial()
+	 */
+	@Override
+	public Integer getPreferredCreationSerial() {
+		return this.preferredCreationSerial;
 	}
 
 }

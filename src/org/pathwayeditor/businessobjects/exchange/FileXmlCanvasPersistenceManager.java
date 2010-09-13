@@ -126,11 +126,11 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	 */
 	@Override
 	public void readCanvasFromStream(InputStream in) throws IOException {
-		CanvasUnmarshaller unmarshaller = new CanvasUnmarshaller(this.subsystemPool);
+		ModelUnmarshaller unmarshaller = new ModelUnmarshaller(this.subsystemPool);
 		unmarshaller.read(new BufferedReader(new InputStreamReader(in)));
 		in.close();
-		unmarshaller.buildCanvas();
-		this.canvas = unmarshaller.getCanvas();
+		unmarshaller.build();
+		this.canvas = unmarshaller.getModel();
 	}
 
 	/* (non-Javadoc)

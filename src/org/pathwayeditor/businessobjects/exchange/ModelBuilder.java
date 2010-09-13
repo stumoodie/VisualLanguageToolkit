@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
@@ -85,6 +86,7 @@ import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundEdgeFactory;
 import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
 import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
@@ -93,13 +95,11 @@ import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
  * @author smoodie
  *
  */
-public class CanvasBuilder {
-	private ICompoundGraph hibCanvas = null;
+public class ModelBuilder {
+	private final Logger logger = Logger.getLogger(this.getClass());
+	private ICompoundGraph graph = null;
 	private final Canvas xmlInstance;
 	private final INotationSubsystemPool notationPool;
-//	private final int iNode;
-//	private final String repoName;
-//	private IHibNotationFactory notationFactory;
 	private INotationSubsystem notationSubsystem;
 	private final Map<Integer, ICompoundNode> hibNodeMap;
 	private final Map<Integer, PropertyType> xmlPropMap;
@@ -107,11 +107,9 @@ public class CanvasBuilder {
 	private final Map<EndDecoratorTypeType, LinkEndDecoratorShape> endDecMapping;
 	private INotation notation;
 	
-	public CanvasBuilder(Canvas xmlInstance, INotationSubsystemPool notationPool){
+	public ModelBuilder(Canvas xmlInstance, INotationSubsystemPool notationPool){
 		this.xmlInstance = xmlInstance;
 		this.notationPool = notationPool;
-//		this.repoName = repoName;
-//		this.iNode = iNode;
 		this.hibNodeMap = new HashMap<Integer, ICompoundNode>();
 		this.xmlPropMap = new HashMap<Integer, PropertyType>();
 		this.hibPropMap = new HashMap<Integer, IAnnotationProperty>();
@@ -137,29 +135,28 @@ public class CanvasBuilder {
 	
 	public void buildCanvas(){
 		this.notationSubsystem = notationPool.getSubsystem(this.notation);
-		this.hibCanvas = new CompoundGraph(new org.pathwayeditor.businessobjects.impl.RootAttribute(xmlInstance.getName(), notationSubsystem.getSyntaxService().getRootObjectType()));
-//		this.hibCanvas.setCreationSerialCounter(new IndexCounter(this.xmlInstance.getLastCreationSerial()));
-		IRootAttribute iCanvas = (IRootAttribute)hibCanvas.getRoot().getAttribute();
+		Model xmlModel = this.xmlInstance.getModel();
+		RootNode xmlRootNode = xmlModel.getRootNode();
+		RootAttribute xmlRootAttribute = xmlRootNode.getRootAttribute();
+		int serialIdx = xmlRootAttribute.getCreationSerial();
+		int lastSerialIdx = xmlInstance.getLastCreationSerial();
+		org.pathwayeditor.businessobjects.impl.RootAttribute rootAtt = new org.pathwayeditor.businessobjects.impl.RootAttribute(serialIdx, xmlInstance.getName(), notationSubsystem.getSyntaxService().getRootObjectType(), lastSerialIdx); 
+		this.graph = new CompoundGraph(rootAtt);
+		IRootAttribute iCanvas = (IRootAttribute)graph.getRoot().getAttribute();
 		iCanvas.setBackgroundColour(createColour(this.xmlInstance.getBackground()));
-//		iCanvas.setBounds(createDimension(this.xmlInstance.getCanvasSize()));
-//		iCanvas.setGridSize(createDimension(this.xmlInstance.getGrid().getGridSize()));
-//		iCanvas.setGridEnabled(this.xmlInstance.getGrid().isGridOn());
-//		iCanvas.setSnapToGrid(xmlInstance.getGrid().isSnapToGrid());
+		if(logger.isDebugEnabled()){
+			logger.debug("Created model: " + graph + " with root=" + iCanvas);
+		}
 	}
 	
 	public void buildNotation(){
-//		INotationDelegate delegate = new XmlNotationDeletgate();
-//		this.notation = delegate.getNotation();
 		this.notation = new XmlNotation(xmlInstance.getNotation());
-//		notationFactory = new XmlNotationFactory(new XmlNotationDeletgate());
-//		notationFactory.initialise();
 	}
 	
 	private void buildLinkAttributes(ILinkAttribute linkAttrib, LinkAttribute xmlLinkAtt) {
 		linkAttrib.setLineColour(createColour(xmlLinkAtt.getLineColour()));
 		linkAttrib.setLineWidth(xmlLinkAtt.getLineWidth());
 		linkAttrib.setLineStyle(createLineStyle(xmlLinkAtt.getLineStyle()));
-//		linkAttrib.setLastBendPointSerial(xmlLinkAtt.getLastBendPointIndex());
 		SortedSet<BendPoint> sortedBps = new TreeSet<BendPoint>(new Comparator<BendPoint>(){
 
 			@Override
@@ -172,31 +169,24 @@ public class CanvasBuilder {
 		for(BendPoint xmlBendPoint : sortedBps){
 			Point bp = createPoint(xmlBendPoint.getPosition());
 			bpContainer.createNewBendPoint(bp);
-//			HibBendPoint hibBp = new HibBendPoint(linkAttrib, xmlBendPoint.getCreationSerial(), createPoint(xmlBendPoint.getPosition()));
-//			hibBp.setIndexPos(xmlBendPoint.getIndexPosn());
-//			linkAttrib.getBendPoints().add(hibBp);
 		}
 		buildAnnotationProperties(linkAttrib, xmlLinkAtt.getPropertyRef());
 	}
 	
 	
-	private ILinkTerminus createLinkTerminus(LinkTerminusType xmlTerm, ILinkTerminus retVal){
-//		ILinkTerminus retVal = new HibLinkTerminus(this.hibCanvas, xmlTerm.getCreationSerial(), termType, defn);
+	private ILinkTerminus defineLinkTerminus(LinkTerminusType xmlTerm, ILinkTerminus retVal){
 		retVal.setEndSize(createDimension(xmlTerm.getDecoratorSize()));
 		retVal.setLocation(createPoint(xmlTerm.getLocation()));
 		retVal.setGap(xmlTerm.getGap());
 		retVal.setEndDecoratorType(this.endDecMapping.get(xmlTerm.getEndDecoratorType()));
-//		buildAnnotationProperties(retVal, xmlTerm.getPropertyRef());
 		return retVal;
 	}
 
-	private void buildShapeAttributes(IShapeAttribute shapeAttrib, ShapeAttribute xmlShapeAtt) {
+	private void defineShapeAttributes(IShapeAttribute shapeAttrib, ShapeAttribute xmlShapeAtt) {
 		Envelope bounds = new Envelope(createPoint(xmlShapeAtt.getLocation()), createPoint(xmlShapeAtt.getLocation()));
 		shapeAttrib.setBounds(bounds);
 		shapeAttrib.setFillColour(createColour(xmlShapeAtt.getFillColour()));
 		shapeAttrib.setLineColour(createColour(xmlShapeAtt.getLineColour()));
-//		shapeAttribsetSize(createDimension(xmlShapeAtt.getSize()));
-//		shapeAttrib.setLocation(createPoint(xmlShapeAtt.getLocation()));
 		shapeAttrib.setLineWidth(xmlShapeAtt.getLineWidth());
 		shapeAttrib.setLineStyle(createLineStyle(xmlShapeAtt.getLineStyle()));
 		buildAnnotationProperties(shapeAttrib, xmlShapeAtt.getPropertyRef());
@@ -225,12 +215,10 @@ public class CanvasBuilder {
 				public void visitListAnnotationProperty(IListAnnotationProperty prop) {
 					ListAnnotationProperty castXmlProp = (ListAnnotationProperty)xmlProp;
 					SortedSet<ListItem> sortedList = new TreeSet<ListItem>(new Comparator<ListItem>(){
-
 						@Override
 						public int compare(ListItem arg0, ListItem arg1) {
 							return arg0.getIdx() < arg1.getIdx() ? -1 : (arg0.getIdx() > arg1.getIdx() ? 1 : 0);
 						}
-						
 					});
 					sortedList.addAll(Arrays.asList(castXmlProp.getListItem()));
 					for(ListItem item : sortedList){
@@ -263,24 +251,35 @@ public class CanvasBuilder {
 	
 	public void buildModel(){
 		storeAnnotationProperties();
-//		IRootObjectType rootObjectType = this.notationSubsystem.getSyntaxService().getRootObjectType();
-//		HibModel model = new HibModel(this.hibCanvas, rootObjectType, this.notationFactory);
-//		HibRootNode hibRootNode = model.getRootNode();
-//		HibRootAttribute hibRootAttribute = hibRootNode.getAttribute();
-//		this.hibCanvas.setGraph(model);
 		Model xmlModel = this.xmlInstance.getModel();
-//		model.setEdgeCounter(new IndexCounter(xmlModel.getLastEdgeIndex()));
-//		model.setNodeCounter(new IndexCounter(xmlModel.getLastNodeIndex()));
 		RootNode xmlRootNode = xmlModel.getRootNode();
 		RootAttribute xmlRootAttribute = xmlRootNode.getRootAttribute();
-		IRootAttribute hibRootAttribute = (IRootAttribute)this.hibCanvas.getRoot().getAttribute();
+		IRootAttribute hibRootAttribute = (IRootAttribute)this.graph.getRoot().getAttribute();
 		buildRootAttribute(hibRootAttribute, xmlRootAttribute);
-		buildChildShapeNodes(this.hibCanvas.getRoot().getChildCompoundGraph(), xmlRootNode.getSubModel());
+		buildChildShapeNodes(this.graph.getRoot().getChildCompoundGraph(), xmlRootNode.getSubModel());
 //		buildChildLinkEdges(hibRootNode.getSubModel(), xmlRootNode.getSubModel());
-//		buildChildLabelNodes(hibRootNode.getSubModel(), xmlRootNode.getSubModel());
+		buildChildLabelNodes(xmlRootNode.getSubModel());
 	}
 	
 	
+	private void buildChildLabelNodes(SubModel xmlSubModel) {
+		for(LabelNode xmlNode : xmlSubModel.getLabelNode()){
+			int propId = xmlNode.getLabelAttribute().getPropertyRef().getId();
+			IAnnotationProperty refProp = this.hibPropMap.get(propId);
+			if(refProp != null){
+				createLabelNode(xmlNode, refProp);
+			}
+			else {
+				StringBuilder buf = new StringBuilder("Cannot find object property, so ignoring. Id=");
+				buf.append(propId);
+				logger.warn(buf.toString());
+			}
+		}
+		for(ShapeNode xmlNode : xmlSubModel.getShapeNode()){
+			buildChildLabelNodes(xmlNode.getSubModel());
+		}
+	}
+
 	private void storeAnnotationProperties() {
 		PropertyList list = this.xmlInstance.getPropertyList();
 		for(BooleanAnnotationProperty xmlProp : list.getBooleanAnnotationProperty()){
@@ -308,41 +307,30 @@ public class CanvasBuilder {
 		for(LinkEdge xmlEdge : xmlSubModel.getLinkEdge()){
 			createLinkEdge(owningSubModel, xmlEdge);
 		}
-		for(LabelNode xmlNode : xmlSubModel.getLabelNode()){
-			createLabelNode(owningSubModel, xmlNode);
-		}
 	}
 	
 	private ICompoundNode createShapeNode(IChildCompoundGraph owningSubModel, ShapeNode xmlNode){
 		int otId = xmlNode.getShapeAttribute().getObjectTypeId();
 		IShapeObjectType objectType = this.notationSubsystem.getSyntaxService().getShapeObjectType(otId);
-		IRootAttribute rootAtt = (IRootAttribute)this.hibCanvas.getRoot().getAttribute();
+		IRootAttribute rootAtt = (IRootAttribute)this.graph.getRoot().getAttribute();
 		IShapeAttributeFactory attFact = rootAtt.shapeAttributeFactory();
 		attFact.setDestinationAttribute(owningSubModel.getRoot().getAttribute());
 		attFact.setObjectType(objectType);
+		attFact.setPreferredCreationSerial(xmlNode.getShapeAttribute().getCreationSerial());
 		ICompoundNodeFactory compoundNodeFact = owningSubModel.nodeFactory();
-//		ShapeAttribute attribute = new ShapeAttribute(this.hibCanvas, xmlNode.getShapeAttribute().getCreationSerial(),
-//				objectType, this.notationFactory.getObjectType(otId));
 		compoundNodeFact.setAttributeFactory(attFact);
 		ICompoundNode node = compoundNodeFact.createNode();
 		IShapeAttribute attribute = (IShapeAttribute)node.getAttribute();
-		buildShapeAttributes(attribute, xmlNode.getShapeAttribute());
-//		HibShapeNode node = new HibShapeNode(owningSubModel.getRootNode(), xmlNode.getNodeId(), attribute);
+		defineShapeAttributes(attribute, xmlNode.getShapeAttribute());
+		if(logger.isDebugEnabled()){
+			logger.debug("Created shape node: " + node);
+		}
 		this.hibNodeMap.put(xmlNode.getNodeId(), node);
 		return node;
 	}
 	
-//	private void buildChildLinkEdges(HibSubModel parentNode, SubModel xmlSubModel) {
-//		for(LinkEdge xmlEdge : xmlSubModel.getLinkEdge()){
-//			createLinkEdge(parentNode, xmlEdge);
-//		}
-//		for(ShapeNode xmlNode : xmlSubModel.getShapeNode()){
-//			buildChildLinkEdges(this.hibNodeMap.get(xmlNode.getNodeId()).getSubModel(), xmlNode.getSubModel());
-//		}
-//	}
-	
 	private IRootAttribute getRootAttribute(){
-		return (IRootAttribute)this.hibCanvas.getRoot().getAttribute();
+		return (IRootAttribute)this.graph.getRoot().getAttribute();
 	}
 
 	private ICompoundEdge createLinkEdge(IChildCompoundGraph owningSubModel, LinkEdge xmlNode){
@@ -351,6 +339,7 @@ public class CanvasBuilder {
 		ILinkAttributeFactory attFact = getRootAttribute().linkAttributeFactory();
 		attFact.setDestinationAttribute(owningSubModel.getRoot().getAttribute());
 		attFact.setObjectType(objectType);
+		attFact.setPreferredCreationSerial(xmlNode.getLinkAttribute().getCreationSerial());
 		ICompoundNode srcNode = this.hibNodeMap.get(xmlNode.getSrcNodeIdx());
 		ICompoundNode tgtNode = this.hibNodeMap.get(xmlNode.getTgtNodeIdx());
 		ICompoundEdgeFactory edgeFactory = owningSubModel.edgeFactory();
@@ -358,40 +347,30 @@ public class CanvasBuilder {
 		edgeFactory.setAttributeFactory(attFact);
 		ICompoundEdge node = edgeFactory.createEdge(); 
 		ILinkAttribute linkAtt = (ILinkAttribute)node.getAttribute();
-		createLinkTerminus(xmlNode.getLinkAttribute().getSrcTerminus(), linkAtt.getSourceTerminus()); 
-		createLinkTerminus(xmlNode.getLinkAttribute().getTgtTerminus(), linkAtt.getTargetTerminus()); 
-//		HibLinkAttribute attribute = new HibLinkAttribute(this.hibCanvas, xmlNode.getLinkAttribute().getCreationSerial(),
-//				objectType, this.notationFactory.getObjectType(otId), srcTerm, tgtTerm);
+		defineLinkTerminus(xmlNode.getLinkAttribute().getSrcTerminus(), linkAtt.getSourceTerminus()); 
+		defineLinkTerminus(xmlNode.getLinkAttribute().getTgtTerminus(), linkAtt.getTargetTerminus()); 
 		buildLinkAttributes(linkAtt, xmlNode.getLinkAttribute());
-//		HibShapeNode srcNode = this.hibNodeMap.get(xmlNode.getSrcNodeIdx());
-//		HibShapeNode tgtNode = this.hibNodeMap.get(xmlNode.getTgtNodeIdx());
-//		HibLinkEdge node = new HibLinkEdge(owningSubModel, xmlNode.getLinkIdx(), srcNode, tgtNode, attribute);
+		if(logger.isDebugEnabled()){
+			logger.debug("Created link edge: " + node);
+		}
 		return node;
 	}
 	
-//	private void buildChildLabelNodes(HibSubModel parentNode, SubModel xmlSubModel) {
-//		for(LabelNode xmlEdge : xmlSubModel.getLabelNode()){
-//			createLabelNode(parentNode, xmlEdge);
-//		}
-//		for(ShapeNode xmlNode : xmlSubModel.getShapeNode()){
-//			buildChildLabelNodes(this.hibNodeMap.get(xmlNode.getNodeId()).getSubModel(), xmlNode.getSubModel());
-//		}
-//	}
-
-	private ICompoundNode createLabelNode(IChildCompoundGraph owningSubModel, LabelNode xmlNode) {
-		IAnnotationProperty refProp = this.hibPropMap.get(xmlNode.getLabelAttribute().getPropertyRef().getId());
-//		ILabelAttributeDefaults labelDefaults = refProp.getDefinition().getLabelDefaults();
-		IRootAttribute rootAtt = (IRootAttribute)this.hibCanvas.getRoot().getAttribute();
+	private ICompoundNode createLabelNode(LabelNode xmlNode, IAnnotationProperty refProp) {
+		ICompoundGraphElement parent = refProp.getOwner().getCurrentElement();  
+		IRootAttribute rootAtt = (IRootAttribute)this.graph.getRoot().getAttribute();
 		ILabelAttributeFactory labelFact = rootAtt.labelAttributeFactory();
-		labelFact.setDestinationAttribute(owningSubModel.getRoot().getAttribute());
+		labelFact.setDestinationAttribute(parent.getAttribute());
 		labelFact.setProperty(refProp);
-		ICompoundNodeFactory nodeFact = owningSubModel.nodeFactory();
+		labelFact.setPreferredCreationSerial(xmlNode.getLabelAttribute().getCreationSerial());
+		ICompoundNodeFactory nodeFact = parent.getChildCompoundGraph().nodeFactory();
 		nodeFact.setAttributeFactory(labelFact);
 		ICompoundNode node = nodeFact.createNode();
 		ILabelAttribute attribute = (ILabelAttribute)node.getAttribute();
-//		IComNode node = new HibLabelNode(owningSubModel.getRootNode(), xmlNode.getNodeId(), attribute);
-//		ILabelAttribute attribute = new org.pathwayeditor.businessobjects.impl.LabelAttribute(rootAtt, xmlNode.getLabelAttribute().getCreationSerial(), refProp, labelDefaults);
 		buildLabelAttributes(attribute, xmlNode.getLabelAttribute());
+		if(logger.isDebugEnabled()){
+			logger.debug("Created label node: " + node);
+		}
 		return node;
 	}
 
@@ -400,8 +379,6 @@ public class CanvasBuilder {
 		attribute.setForegroundColor(createColour(xmlLabelAttribute.getLineColour()));
 		Envelope bounds = new Envelope(createPoint(xmlLabelAttribute.getLocation()), 
 				createDimension(xmlLabelAttribute.getSize()));
-//		attribute.setLocation(createPoint(xmlLabelAttribute.getLocation()));
-//		attribute.setSize(createDimension(xmlLabelAttribute.getSize()));
 		attribute.setBounds(bounds);
 		attribute.setLineStyle(createLineStyle(xmlLabelAttribute.getLineStyle()));
 		attribute.setNoBorder(xmlLabelAttribute.isNoBorder());
@@ -424,8 +401,8 @@ public class CanvasBuilder {
 		return new RGB(red, green, blue);
 	}
 
-	public ICompoundGraph getCanvas() {
-		return this.hibCanvas;
+	public ICompoundGraph getGraph() {
+		return this.graph;
 	}
 	
 	private LineStyle createLineStyle(LineStyleType xmlLineStyle){
@@ -445,102 +422,4 @@ public class CanvasBuilder {
 		return retVal;
 	}
 	
-//	private class XmlNotationDeletgate implements INotationDelegate {
-//
-//		@Override
-//		public INotation getNotation() {
-//			return new XmlNotation(xmlInstance.getNotation());
-//		}
-//
-////		@Override
-////		public Iterator<IObjectInfo> objectTypeIterator() {
-////			List<IObjectInfo> list = Collections.emptyList();
-////			return list.iterator();
-////		}
-//
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#numObjectTypes()
-//		 */
-//		@Override
-//		public int numObjectTypes() {
-//			return 0;
-//		}
-//		
-//	}
-	
-//	private class XmlNotationDeletgate implements INotationDelegate {
-//		
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#getNotation()
-//		 */
-//		@Override
-//		public INotation getNotation() {
-//			return new XmlNotation(xmlInstance.getNotation());
-//		}
-//
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#numObjectTypes()
-//		 */
-//		@Override
-//		public int numObjectTypes() {
-//			return xmlInstance.getNotation().getObjectTypeCount();
-//		}
-//
-//		/* (non-Javadoc)
-//		 * @see org.pathwayeditor.businessobjects.exchange.INotationDelegate#objectTypeIterator()
-//		 */
-//		@Override
-//		public Iterator<IObjectInfo> objectTypeIterator() {
-//			final Iterator<ObjectType> objectTypeIter = Arrays.asList(xmlInstance.getNotation().getObjectType()).iterator();
-//			return new Iterator<IObjectInfo>(){
-//
-//				@Override
-//				public boolean hasNext() {
-//					return objectTypeIter.hasNext();
-//				}
-//
-//				@Override
-//				public IObjectInfo next() {
-//					final ObjectType xmlObjectType = objectTypeIter.next();
-//					return new IObjectInfo(){
-//
-//						@Override
-//						public ObjectTypeClassification getClassification() {
-//							ObjectTypeClassification classn = ObjectTypeClassification.SHAPE;
-//							if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.ROOT)){
-//								classn = ObjectTypeClassification.ROOTOBJECT;
-//							}
-//							else if(xmlObjectType.getClassification().equals(ObjectTypeClassificationType.LINK)){
-//								classn = ObjectTypeClassification.LINK;
-//							}
-//							return classn;
-//						}
-//
-//						@Override
-//						public String getDescription() {
-//							return xmlObjectType.getDescription();
-//						}
-//
-//						@Override
-//						public String getName() {
-//							return xmlObjectType.getName();
-//						}
-//
-//						@Override
-//						public int getUniqueId() {
-//							return xmlObjectType.getUniqueId();
-//						}
-//						
-//					};
-//				}
-//
-//				@Override
-//				public void remove() {
-//					throw new UnsupportedOperationException("Removal is not supported");
-//				}
-//				
-//			};
-//		}
-//		
-//	}
 }

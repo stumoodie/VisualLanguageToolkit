@@ -18,13 +18,11 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
-import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
-
 /**
  * @author smoodie
  *
  */
-public interface ILinkAttributeFactory extends IElementAttributeFactory {
+public interface ILinkAttributeFactory extends ICanvasAttributeFactory {
 
 	@Override
 	ILinkAttribute createAttribute();

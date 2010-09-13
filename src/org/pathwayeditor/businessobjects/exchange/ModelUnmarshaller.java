@@ -34,14 +34,12 @@ import uk.ac.ed.inf.graph.compound.ICompoundGraph;
  * @author smoodie
  *
  */
-public class CanvasUnmarshaller {
+public class ModelUnmarshaller {
 	private Canvas xmlInstance = null;
 	private INotationSubsystemPool notationPool;
-//	private final String repoName;
-//	private final int iNode;
-	private CanvasBuilder builder = null;
+	private ModelBuilder builder = null;
 
-	public CanvasUnmarshaller(INotationSubsystemPool notationPool){
+	public ModelUnmarshaller(INotationSubsystemPool notationPool){
 		this.notationPool = notationPool;
 //		this.repoName = name;
 //		this.iNode = iNode;
@@ -64,20 +62,20 @@ public class CanvasUnmarshaller {
 	}
 
 
-	public void buildCanvas(){
+	public void build(){
 		if(this.xmlInstance == null) throw new IllegalStateException("File has not been read");
 
-		this.builder = new CanvasBuilder(xmlInstance, notationPool);
+		this.builder = new ModelBuilder(xmlInstance, notationPool);
 		builder.buildNotation();
 		builder.buildCanvas();
 		builder.buildModel();
 	}
 	
 	
-	public ICompoundGraph getCanvas(){
+	public ICompoundGraph getModel(){
 		if(this.builder == null) throw new IllegalStateException("Canvas not build from XML document");
 		
-		return this.builder.getCanvas();
+		return this.builder.getGraph();
 	}
 	
 }

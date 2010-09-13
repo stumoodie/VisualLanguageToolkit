@@ -33,7 +33,7 @@ public class StubHtmlPropertyDefinition implements IPlainTextPropertyDefinition 
 	public static final String DEFAULT_VALUE = "<html><head><title>Default Property Value</title></head><body><h1>Default Property</h1></body></html>";
 	public static final String NAME = "RichTextProperty";
 	public static final boolean IS_EDITABLE = true;
-	public static final boolean IS_VISUALISABLE = false;
+	public static final boolean IS_VISUALISABLE = true;
 
 	private final ILabelAttributeDefaults labelDefaults;
 	

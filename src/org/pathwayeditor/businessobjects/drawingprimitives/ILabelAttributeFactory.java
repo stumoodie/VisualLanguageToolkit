@@ -18,13 +18,11 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
-import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
-
 /**
  * @author smoodie
  *
  */
-public interface ILabelAttributeFactory extends IElementAttributeFactory {
+public interface ILabelAttributeFactory extends ICanvasAttributeFactory {
 
 	void setProperty(IAnnotationProperty annotationProperty);
 
