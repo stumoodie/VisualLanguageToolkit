@@ -119,8 +119,8 @@ public class CanvasMarshaller {
 		this.graph = dbCanvas;
 	}
 	
-	public ICompoundGraph getCanvas(){
-		return this.graph;
+	public Canvas getCanvas(){
+		return this.xmlCanvas;
 	}
 
 

@@ -45,9 +45,9 @@ import org.pathwayeditor.figure.geometry.Dimension;
 public class MockShapeObjectTypeBuilder {
 	private interface IPropValueCreator {
 		
-		IPlainTextPropertyDefinition createDefn(String name, String value);
+		IPlainTextPropertyDefinition createDefn(String name, String value, boolean isVisualisable, boolean isAlwaysDisplayed);
 		
-		INumberPropertyDefinition createDefn(String name, Number value);
+		INumberPropertyDefinition createDefn(String name, Number value, boolean isVisualisable, boolean isAlwaysDisplayed);
 		
 	}
 	
@@ -107,7 +107,7 @@ public class MockShapeObjectTypeBuilder {
 	
 	
 	
-	public void addTextProperty(final String name, final String value){
+	public void addTextProperty(final String name, final String value, final boolean isVisualisable, final boolean isAlwaysDisplayed){
 		this.propCreationDefs.add(new IPropValues<String>() {
 
 			@Override
@@ -122,7 +122,7 @@ public class MockShapeObjectTypeBuilder {
 
 			@Override
 			public IPropertyDefinition create(IPropValueCreator propValueCreator) {
-				return propValueCreator.createDefn(name, value);
+				return propValueCreator.createDefn(name, value, isVisualisable, isAlwaysDisplayed);
 			}
 		});
 	}
@@ -166,7 +166,7 @@ public class MockShapeObjectTypeBuilder {
 		for(IPropValues<? extends Object> propCreationValue : this.propCreationDefs){
 			this.propertyDefs.add(propCreationValue.create(new IPropValueCreator() {
 				@Override
-				public INumberPropertyDefinition createDefn(final String name, final Number value) {
+				public INumberPropertyDefinition createDefn(final String name, final Number value, final boolean isVisualisable, final boolean isAlwaysDisplayed) {
 					final String propName = createPropName(name);
 					final INumberPropertyDefinition propDefn = mockery.mock(INumberPropertyDefinition.class, propName);
 					final ILabelAttributeDefaults labelDefaults = createLabelDefaults(propName);
@@ -175,13 +175,15 @@ public class MockShapeObjectTypeBuilder {
 						allowing(propDefn).getDisplayName(); will(returnValue(name));
 						allowing(propDefn).getDefaultValue(); will(returnValue(value));
 						allowing(propDefn).getLabelDefaults(); will(returnValue(labelDefaults));
+						allowing(propDefn).isAlwaysDisplayed(); will(returnValue(isAlwaysDisplayed));
+						allowing(propDefn).isVisualisable(); will(returnValue(isVisualisable));
 						allowing(shapeAttributeDefaults).getPropertyDefinition(propName); will(returnValue(propDefn));
 					}});
 					return propDefn;
 				}
 				
 				@Override
-				public IPlainTextPropertyDefinition createDefn(final String name, final String value) {
+				public IPlainTextPropertyDefinition createDefn(final String name, final String value, final boolean isVisualisable, final boolean isAlwaysDisplayed) {
 					final String propName = createPropName(name);
 					final IPlainTextPropertyDefinition propDefn = mockery.mock(IPlainTextPropertyDefinition.class, propName);
 					final ILabelAttributeDefaults labelDefaults = createLabelDefaults(propName);
@@ -190,6 +192,8 @@ public class MockShapeObjectTypeBuilder {
 						allowing(propDefn).getDisplayName(); will(returnValue(name));
 						allowing(propDefn).getDefaultValue(); will(returnValue(value));
 						allowing(propDefn).getLabelDefaults(); will(returnValue(labelDefaults));
+						allowing(propDefn).isAlwaysDisplayed(); will(returnValue(isAlwaysDisplayed));
+						allowing(propDefn).isVisualisable(); will(returnValue(isVisualisable));
 						allowing(shapeAttributeDefaults).getPropertyDefinition(propName); will(returnValue(propDefn));
 					}});
 					return propDefn;

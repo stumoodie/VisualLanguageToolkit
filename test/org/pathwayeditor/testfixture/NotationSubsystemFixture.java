@@ -68,11 +68,11 @@ public class NotationSubsystemFixture {
 		this.rootTypeParenting = mockery.mock(IRootObjectParentingRules.class, "rootTypeParenting");
 		
 		MockShapeObjectTypeBuilder showObjectTypeABuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_A_ID, "shapeTypeA");
-		showObjectTypeABuilder.addTextProperty(SHAPE_TYPE_A_PROP_NAME, "PropNameAValue");
+		showObjectTypeABuilder.addTextProperty(SHAPE_TYPE_A_PROP_NAME, "PropNameAValue", true, true);
 		showObjectTypeABuilder.build();
 		this.shapeTypeA = showObjectTypeABuilder.getObjectType();
 		MockShapeObjectTypeBuilder showObjectTypeBBuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_B_ID, "shapeTypeB");
-		showObjectTypeBBuilder.addTextProperty(SHAPE_TYPE_B_PROP_NAME, "PropNameBValue");
+		showObjectTypeBBuilder.addTextProperty(SHAPE_TYPE_B_PROP_NAME, "PropNameBValue", true, false);
 		showObjectTypeBBuilder.build();
 		this.shapeTypeB = showObjectTypeBBuilder.getObjectType();
 		MockShapeObjectTypeBuilder showObjectTypeCBuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_C_ID, "shapeTypeC");

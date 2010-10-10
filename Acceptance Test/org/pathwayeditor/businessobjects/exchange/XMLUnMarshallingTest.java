@@ -31,19 +31,7 @@ import uk.ac.ed.inf.graph.compound.IRootChildCompoundGraph;
  *
  */
 public class XMLUnMarshallingTest {
-//	/**
-//	 * 
-//	 */
-//	private static final String EXPECTED_PRECISE_NUMBER = "0.3837248374736e-10";
-//	/**
-//	 * 
-//	 */
 	private static final String TEST_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/exchange/testFixedEdges.xml";
-//	private static final String SOURCE_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/exchange/DBSourceData.xls";
-//	private static final String DELTA_FILE = "Acceptance Test/org/pathwayeditor/businessobjects/exchange/UnmarshalledExpected.xls";
-//	private static final String REPOSITORY_NAME ="repo name" ;
-//	private static final int MAP_INODE = 5;
-//	private IRepository repository;
 	private INotationSubsystemPool stubNotationPool;
 	private ModelUnmarshaller builder;
 	private ICompoundGraph model;
