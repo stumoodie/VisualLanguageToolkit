@@ -70,7 +70,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 	private INotationSubsystem notationSubsystem;
 	private IRootAttribute rootAttribute;
 	
-	public class CreatePropertyAction implements Action {
+	public static class CreatePropertyAction implements Action {
 		private IPlainTextPropertyDefinition defn;
 		
 		public CreatePropertyAction(IPlainTextPropertyDefinition builder){
@@ -91,7 +91,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 		
 	}
 	
-	public Action buildTextProperty(IPlainTextPropertyDefinition defn){
+	public static Action buildTextProperty(IPlainTextPropertyDefinition defn){
 		return new CreatePropertyAction(defn);
 	}
 

@@ -19,8 +19,16 @@ package org.pathwayeditor.testfixture;
 import static org.hamcrest.Matchers.isOneOf;
 import static org.hamcrest.Matchers.not;
 
+import org.hamcrest.Description;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.jmock.api.Action;
+import org.jmock.api.Invocation;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -52,6 +60,35 @@ public class NotationSubsystemFixture {
 	private ILinkObjectType linkTypeD;
 	private ILinkObjectType linkTypeE;
 	private IRootObjectParentingRules rootTypeParenting;
+	private INotation notation;
+	
+	public static class CreatePropertyAction implements Action {
+//		private IPlainTextPropertyDefinition defn;
+		
+		public CreatePropertyAction(){
+//			this.defn = builder;
+		}
+		
+		@Override
+		public void describeTo(Description descn) {
+			descn.appendText("get removal state");
+		}
+
+		@Override
+		public IPlainTextAnnotationProperty invoke(Invocation invocation) throws Throwable {
+			IPropertyBuilder builder = (IPropertyBuilder)invocation.getParameter(0);
+			IPlainTextPropertyDefinition testPropDefn = (IPlainTextPropertyDefinition)invocation.getInvokedObject();
+//			IPlainTextAnnotationProperty retVal = builder.createPlainTextProperty(this.defn);
+			IPlainTextAnnotationProperty retVal = builder.createPlainTextProperty(testPropDefn);
+			return retVal;
+		}
+		
+	}
+	
+	public static Action buildTextProperty(){
+		return new CreatePropertyAction();
+	}
+
 	
 	public NotationSubsystemFixture(Mockery mockery){
 		this.mockery = mockery;
@@ -66,6 +103,7 @@ public class NotationSubsystemFixture {
 		this.syntaxService = mockery.mock(INotationSyntaxService.class, "syntaxService");
 		this.rootType = mockery.mock(IRootObjectType.class, "rootType");
 		this.rootTypeParenting = mockery.mock(IRootObjectParentingRules.class, "rootTypeParenting");
+		this.notation = mockery.mock(INotation.class, "notation");
 		
 		MockShapeObjectTypeBuilder showObjectTypeABuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_A_ID, "shapeTypeA");
 		showObjectTypeABuilder.addTextProperty(SHAPE_TYPE_A_PROP_NAME, "PropNameAValue", true, true);
@@ -107,6 +145,13 @@ public class NotationSubsystemFixture {
 			allowing(syntaxService).getObjectType(SHAPE_TYPE_C_ID); will(returnValue(shapeTypeC));
 			allowing(syntaxService).getObjectType(LINK_TYPE_D_ID); will(returnValue(linkTypeD));
 			allowing(syntaxService).getObjectType(LINK_TYPE_E_ID); will(returnValue(linkTypeE));
+			allowing(syntaxService).objectTypeIterator(); will(returnIterator(rootType, shapeTypeA, shapeTypeB, shapeTypeC, linkTypeD, linkTypeE));
+			allowing(syntaxService).getNotation(); will(returnValue(notation));
+			
+			allowing(notation).getDescription(); will(returnValue("Test Fixture Notation"));
+			allowing(notation).getDisplayName(); will(returnValue("Fixture Notation"));
+			allowing(notation).getQualifiedName(); will(returnValue("org.pathwayeditor.businessobjects.notation.testfixture"));
+			allowing(notation).getVersion(); will(returnValue(new Version(1, 0, 0)));
 			
 			allowing(rootType).getUniqueId(); will(returnValue(ROOT_TYPE_ID));
 			allowing(rootType).getSyntaxService(); will(returnValue(syntaxService));

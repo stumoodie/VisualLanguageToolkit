@@ -11,6 +11,7 @@ import java.io.Writer;
 
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.ValidationException;
+import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
@@ -19,6 +20,8 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.impl.RootAttribute;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
@@ -47,7 +50,11 @@ public class XMLMarshallingTest {
 		INotationSyntaxService syntaxService = notationFixture.getNotationSubsystem().getSyntaxService();
 		IRootAttribute rootAtt = new RootAttribute("testModel", syntaxService.getRootObjectType());
 		this.graph = new CompoundGraph(rootAtt);
-		IShapeObjectType shapeOt = syntaxService.getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_A_ID);
+		final IShapeObjectType shapeOt = syntaxService.getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_A_ID);
+		final IPropertyDefinition shapeTypeAName = shapeOt.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
+		this.mockery.checking(new Expectations(){{
+			allowing(shapeTypeAName).createProperty(with(any(IPropertyBuilder.class))); will(NotationSubsystemFixture.buildTextProperty());
+		}});
 		IShapeAttributeFactory shapeAttFact = rootAtt.shapeAttributeFactory();
 		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getRoot(), shapeOt);
 		shapeBuilder.setName("S1");
