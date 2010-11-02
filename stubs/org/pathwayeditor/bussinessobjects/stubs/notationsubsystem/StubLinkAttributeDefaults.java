@@ -159,10 +159,9 @@ public abstract class StubLinkAttributeDefaults implements ILinkAttributeDefault
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#getPropertyDefinition(java.lang.String)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends IPropertyDefinition> T  getPropertyDefinition(String name) {
-		return (T)findPropDefn(name);
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
 	}
 
 	/* (non-Javadoc)

@@ -138,7 +138,7 @@ public class StubDefaultLinkAttributes implements ILinkAttributeDefaults {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IPropertyDefinitionContainer#getPropertyDefinition(java.lang.String)
 	 */
 	@Override
-	public <T extends IPropertyDefinition> T  getPropertyDefinition(String name) {
+	public IPropertyDefinition  getPropertyDefinition(String name) {
 		throw new IllegalArgumentException();
 	}
 

@@ -15,7 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 public interface INotationAutolayoutService extends INotationService {
 
@@ -28,6 +28,6 @@ public interface INotationAutolayoutService extends INotationService {
 	/**
 	 * @param canvas which will be laid out by this service
 	 */
-	void layout(IRootAttribute canvas);
+	void layout(ICompoundGraph canvas);
 	
 }

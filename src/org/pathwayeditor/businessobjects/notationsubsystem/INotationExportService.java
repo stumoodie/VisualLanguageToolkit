@@ -17,8 +17,9 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.io.File;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.repository.IMap;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 public interface INotationExportService extends INotationService {
     
@@ -50,6 +51,6 @@ public interface INotationExportService extends INotationService {
 	 * @param exportFile A {@link File}
 	 * @throws ExportServiceException
 	 */
-	void exportMap(IRootAttribute canvas, File exportFile) throws ExportServiceException;
+	void exportMap(ICompoundGraph canvas, File exportFile) throws ExportServiceException;
 	
 }

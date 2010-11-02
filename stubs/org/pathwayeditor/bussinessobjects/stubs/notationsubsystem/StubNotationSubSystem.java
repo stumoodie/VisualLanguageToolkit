@@ -22,7 +22,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationConversionService;
@@ -32,6 +31,8 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationPluginServic
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
+
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author smoodie
@@ -141,7 +142,7 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#registerCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	@Override
-	public void registerCanvas(IRootAttribute canvasToRegister) {
+	public void registerCanvas(ICompoundGraph canvasToRegister) {
 		
 	}
 
@@ -149,7 +150,7 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#unregisterCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	@Override
-	public void unregisterCanvas(IRootAttribute canvasToRegister) {
+	public void unregisterCanvas(ICompoundGraph canvasToRegister) {
 	}
 
 }

@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.io.File;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 public interface INotationImportService extends INotationService {
 	/**
@@ -47,5 +47,5 @@ public interface INotationImportService extends INotationService {
 	 * @throws IllegalArgumentException if <code>canvas == null || canvas.isEmpty() == false</code>
 	 * @throws IllegalArgumentException if <code>importFile == null || importFile.canRead() == false</code>
 	 */
-	void importToCanvas(File importFile, IRootAttribute canvas) throws ImportServiceException;
+	void importToCanvas(File importFile, ICompoundGraph canvas) throws ImportServiceException;
 }

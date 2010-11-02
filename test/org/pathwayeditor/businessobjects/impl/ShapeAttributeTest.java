@@ -109,7 +109,7 @@ public class ShapeAttributeTest {
 		this.expectedShapeDefn = this.expectedObjectType.getDefaultAttributes().getShapeDefinition();
 		this.expectedSize = this.expectedObjectType.getDefaultAttributes().getSize();
 		this.expectedBounds = new Envelope(Point.ORIGIN, expectedSize);
-		final IPlainTextPropertyDefinition shapeTypeAPropDefn = this.expectedObjectType.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
+		final IPlainTextPropertyDefinition shapeTypeAPropDefn = (IPlainTextPropertyDefinition)this.expectedObjectType.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
 		this.testFixture.redefineBuilder(CanvasTestFixture.SHAPE1_ATT_ID, new IObjectConstructor<IShapeAttribute>(){
 			@Override
 			public IShapeAttribute create() {
@@ -441,7 +441,7 @@ public class ShapeAttributeTest {
 		IPropertyDefinition expectedProperty = expectedObjectType.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME); 
 		assertTrue("prop exists", this.testInstance.containsProperty(expectedProperty));
 		IShapeObjectType shapeTypeB = notationFixture.getNotationSubsystem().getSyntaxService().getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_B_ID);
-		final IPlainTextPropertyDefinition shapeTypeBPropDefn = shapeTypeB.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_B_PROP_NAME);
+		final IPlainTextPropertyDefinition shapeTypeBPropDefn = (IPlainTextPropertyDefinition)shapeTypeB.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_B_PROP_NAME);
 		assertFalse("no prop exists", this.testInstance.containsProperty(shapeTypeBPropDefn));
 	}
 

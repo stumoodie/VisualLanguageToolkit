@@ -111,10 +111,9 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 		return retVal;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends IPropertyDefinition> T  getPropertyDefinition(String name) {
-		return (T)findPropDefn(name);
+	public IPropertyDefinition getPropertyDefinition(String name) {
+		return findPropDefn(name);
 	}
 
 	@Override
