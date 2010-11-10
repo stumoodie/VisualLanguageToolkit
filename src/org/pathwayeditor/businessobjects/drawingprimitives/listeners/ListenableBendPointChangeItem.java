@@ -103,7 +103,7 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 			}
 
 			@Override
-			public IBendPointContainer getLink() {
+			public IBendPointContainer getBendPointContainer() {
 				return linkAttribute;
 			}
 

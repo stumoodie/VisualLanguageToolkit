@@ -26,6 +26,7 @@ import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
+import org.pathwayeditor.businessobjects.management.ModelFactory;
 import org.xml.sax.EntityResolver;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraph;
@@ -65,7 +66,7 @@ public class ModelUnmarshaller {
 	public void build(){
 		if(this.xmlInstance == null) throw new IllegalStateException("File has not been read");
 
-		this.builder = new ModelBuilder(xmlInstance, notationPool);
+		this.builder = new ModelBuilder(xmlInstance, notationPool, new ModelFactory());
 		builder.buildNotation();
 		builder.buildCanvas();
 		builder.buildModel();

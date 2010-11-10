@@ -13,21 +13,30 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
+/**
+ * 
+ */
+package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
-import org.pathwayeditor.figure.geometry.Point;
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
+/**
+ * Any element drawn on the canvas. 
+ * @author smoodie
+ *
+ */
+public interface IDrawingElement {
 
-public interface IBendPointChangeEvent {
-
-	BendPointChange getChangeType();
+	int getLevel();
 	
-	IBendPointContainer getBendPointContainer();
+	long getUniqueIndex();
 	
-	Point getBendPoint();
-	
-	int getOldIndexPos();
+	/**
+	 * Get the attribute of the drawing element.
+	 * @return the attribute, which cannot be null.
+	 */
+	ICanvasElementAttribute getAttribute();
 
-	int getNewIndexPos();
+	ICompoundGraphElement getGraphElement();
+
 }

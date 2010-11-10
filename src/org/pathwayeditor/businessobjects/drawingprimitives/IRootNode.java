@@ -13,21 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
+package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
-import org.pathwayeditor.figure.geometry.Point;
+import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
 
 
-public interface IBendPointChangeEvent {
-
-	BendPointChange getChangeType();
+/**
+ * @author smoodie
+ *
+ */
+public interface IRootNode extends ITypedDrawingNode {
 	
-	IBendPointContainer getBendPointContainer();
+	@Override
+	IRootAttribute getAttribute();
 	
-	Point getBendPoint();
+	@Override
+	IRootCompoundNode getGraphElement();
 	
-	int getOldIndexPos();
-
-	int getNewIndexPos();
 }

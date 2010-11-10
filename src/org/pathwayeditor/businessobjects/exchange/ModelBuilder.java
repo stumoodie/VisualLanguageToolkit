@@ -72,6 +72,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.SubModel;
 import org.pathwayeditor.businessobjects.exchange.castor.TextAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
+import org.pathwayeditor.businessobjects.management.IModelFactory;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
@@ -89,7 +90,6 @@ import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
-import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 
 /**
  * @author smoodie
@@ -106,10 +106,12 @@ public class ModelBuilder {
 	private final Map<Integer, IAnnotationProperty> hibPropMap;
 	private final Map<EndDecoratorTypeType, LinkEndDecoratorShape> endDecMapping;
 	private INotation notation;
+	private IModelFactory modelFactory;
 	
-	public ModelBuilder(Canvas xmlInstance, INotationSubsystemPool notationPool){
+	public ModelBuilder(Canvas xmlInstance, INotationSubsystemPool notationPool, IModelFactory modelFactory){
 		this.xmlInstance = xmlInstance;
 		this.notationPool = notationPool;
+		this.modelFactory = modelFactory;
 		this.hibNodeMap = new HashMap<Integer, ICompoundNode>();
 		this.xmlPropMap = new HashMap<Integer, PropertyType>();
 		this.hibPropMap = new HashMap<Integer, IAnnotationProperty>();
@@ -140,8 +142,13 @@ public class ModelBuilder {
 		RootAttribute xmlRootAttribute = xmlRootNode.getRootAttribute();
 		int serialIdx = xmlRootAttribute.getCreationSerial();
 		int lastSerialIdx = xmlInstance.getLastCreationSerial();
-		org.pathwayeditor.businessobjects.impl.RootAttribute rootAtt = new org.pathwayeditor.businessobjects.impl.RootAttribute(serialIdx, xmlInstance.getName(), notationSubsystem.getSyntaxService().getRootObjectType(), lastSerialIdx); 
-		this.graph = new CompoundGraph(rootAtt);
+//		org.pathwayeditor.businessobjects.impl.RootAttribute rootAtt = new org.pathwayeditor.businessobjects.impl.RootAttribute(serialIdx, xmlInstance.getName(), notationSubsystem.getSyntaxService().getRootObjectType(), lastSerialIdx); 
+//		this.graph = new CompoundGraph(rootAtt);
+		this.modelFactory.setRootCreationSerial(serialIdx);
+		this.modelFactory.setLastCreationSerial(lastSerialIdx);
+		this.modelFactory.setName(xmlInstance.getName());
+		this.modelFactory.setRootObjectType(notationSubsystem.getSyntaxService().getRootObjectType());
+		this.graph = this.modelFactory.createModel();
 		IRootAttribute iCanvas = (IRootAttribute)graph.getRoot().getAttribute();
 		iCanvas.setBackgroundColour(createColour(this.xmlInstance.getBackground()));
 		if(logger.isDebugEnabled()){
@@ -183,7 +190,7 @@ public class ModelBuilder {
 	}
 
 	private void defineShapeAttributes(IShapeAttribute shapeAttrib, ShapeAttribute xmlShapeAtt) {
-		Envelope bounds = new Envelope(createPoint(xmlShapeAtt.getLocation()), createPoint(xmlShapeAtt.getLocation()));
+		Envelope bounds = new Envelope(createPoint(xmlShapeAtt.getLocation()), createDimension(xmlShapeAtt.getSize()));
 		shapeAttrib.setBounds(bounds);
 		shapeAttrib.setFillColour(createColour(xmlShapeAtt.getFillColour()));
 		shapeAttrib.setLineColour(createColour(xmlShapeAtt.getLineColour()));

@@ -19,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
@@ -55,7 +54,7 @@ public class XMLMarshallingTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(shapeTypeAName).createProperty(with(any(IPropertyBuilder.class))); will(NotationSubsystemFixture.buildTextProperty());
 		}});
-		IShapeAttributeFactory shapeAttFact = rootAtt.shapeAttributeFactory();
+//		IShapeAttributeFactory shapeAttFact = rootAtt.shapeAttributeFactory();
 		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getRoot(), shapeOt);
 		shapeBuilder.setName("S1");
 		shapeBuilder.build();
@@ -63,11 +62,11 @@ public class XMLMarshallingTest {
 		((IShapeAttribute)shape1Node.getAttribute()).getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME).setDisplayed(true);
 		shapeBuilder.setName("S2");
 		shapeBuilder.build();
-		ICompoundNode shape2Node = shapeBuilder.getNode();
+//		ICompoundNode shape2Node = shapeBuilder.getNode();
 		shapeBuilder.setParent(shape1Node);
 		shapeBuilder.setName("S3");
 		shapeBuilder.build();
-		ICompoundNode shape3Node = shapeBuilder.getNode();
+//		ICompoundNode shape3Node = shapeBuilder.getNode();
 	}
 	
 	

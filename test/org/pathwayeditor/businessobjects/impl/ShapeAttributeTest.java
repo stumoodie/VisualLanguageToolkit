@@ -115,7 +115,7 @@ public class ShapeAttributeTest {
 			public IShapeAttribute create() {
 				final IRootAttribute rootAtt = testFixture.getRootAttribute();
 				mockery.checking(new Expectations(){{
-					exactly(1).of(shapeTypeAPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeAPropDefn));
+					exactly(1).of(shapeTypeAPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(CanvasTestFixture.buildTextProperty(shapeTypeAPropDefn));
 //					exactly(1).of(shapeTypeBPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeBPropDefn));
 					one(rootAtt).addCanvasAttribute(with(any(IShapeAttribute.class)));
 				}});

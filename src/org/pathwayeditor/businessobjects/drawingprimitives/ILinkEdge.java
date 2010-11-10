@@ -13,21 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
+package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
-import org.pathwayeditor.figure.geometry.Point;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 
-public interface IBendPointChangeEvent {
 
-	BendPointChange getChangeType();
+public interface ILinkEdge extends IDrawingElement {
 	
-	IBendPointContainer getBendPointContainer();
+	/**
+	 * Gets the {@link ILinkAttribute} relates to this LinkEdge. 
+	 * @return the ILinkAttribute. Cannot be null.
+	 */
+	@Override
+	ILinkAttribute getAttribute();
 	
-	Point getBendPoint();
-	
-	int getOldIndexPos();
+	@Override
+	ICompoundEdge getGraphElement();
 
-	int getNewIndexPos();
+	ICompoundNode getSourceShape();
+
+	ICompoundNode getTargetShape();
+	
 }
