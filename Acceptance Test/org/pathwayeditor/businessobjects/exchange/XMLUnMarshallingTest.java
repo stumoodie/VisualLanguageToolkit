@@ -14,14 +14,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.bussinessobjects.stubs.notationsubsystem.StubNotationSubsystemPool;
 
 import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IRootChildCompoundGraph;
 
@@ -34,7 +33,7 @@ public class XMLUnMarshallingTest {
 	private static final String TEST_FILE_NAME = "Acceptance Test/org/pathwayeditor/businessobjects/exchange/testFixedEdges.xml";
 	private INotationSubsystemPool stubNotationPool;
 	private ModelUnmarshaller builder;
-	private ICompoundGraph model;
+	private IModel model;
 
 	@Before
 	public void setUp() throws Exception{
@@ -62,22 +61,22 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedModelStatistics(){
-		IRootAttribute rootAtt = (IRootAttribute)model.getRoot().getAttribute();
-		assertEquals("expected num canvas attribs", 23, rootAtt.numCanvasAttributes());
+		IModel rootAtt = model;
+		assertEquals("expected num canvas attribs", 24, rootAtt.numCanvasAttributes());
 		assertEquals("expected num shape attribs", 8, rootAtt.numShapeAttributes());
 		assertEquals("expected num label attribs", 6, rootAtt.numLabelAttributes());
 		assertEquals("expected num link attribs", 9, rootAtt.numLinkAttributes());
-		assertEquals("expected num elements", 24, model.numElements());
-		assertEquals("expected num nodes", 15, model.numNodes());
-		assertEquals("expected num edges", 9, model.numEdges());
+		assertEquals("expected num elements", 24, model.numDrawingElements());
+		assertEquals("expected num nodes", 15, model.numDrawingNodes());
+		assertEquals("expected num edges", 9, model.numLinkEdges());
 	}
 	
 	
 	@Test
 	public void expectedRootChildGraphStats(){
-		assertNotNull("att exists", this.model.getRoot().getAttribute());
-		assertNotNull("node exists", this.model.getRoot().getAttribute().getCurrentElement());
-		IRootChildCompoundGraph rootChild =this.model.getRoot().getChildCompoundGraph();
+		assertNotNull("att exists", this.model.getRootAttribute());
+		assertNotNull("node exists", this.model.getRootAttribute().getCurrentElement());
+		IRootChildCompoundGraph rootChild =this.model.getGraph().getRoot().getChildCompoundGraph();
 		assertEquals("expected num elements", 6, rootChild.numElements());
 		assertEquals("expected num nodes", 2, rootChild.numNodes());
 		assertEquals("expected num edges", 4, rootChild.numEdges());
@@ -86,7 +85,7 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedShapeAttribute1ChildGraphStats(){
-		IRootAttribute rootAtt = (IRootAttribute)model.getRoot().getAttribute();
+		IModel rootAtt = model;
 		IShapeAttribute shape = (IShapeAttribute)rootAtt.findAttribute(1);
 		assertNotNull("att exists", shape);
 		ICompoundNode node = shape.getCurrentElement();
@@ -101,7 +100,7 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedShapeAttribute2ChildGraphStats(){
-		IRootAttribute rootAtt = (IRootAttribute)model.getRoot().getAttribute();
+		IModel rootAtt = model;
 		IShapeAttribute shape = (IShapeAttribute)rootAtt.findAttribute(2);
 		assertNotNull("att exists", shape);
 		ICompoundNode node = shape.getCurrentElement();
@@ -116,7 +115,7 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedLinkAttribute9ChildGraphStats(){
-		IRootAttribute rootAtt = (IRootAttribute)model.getRoot().getAttribute();
+		IModel rootAtt = model;
 		ILinkAttribute shape = (ILinkAttribute)rootAtt.findAttribute(9);
 		assertNotNull("att exists", shape);
 		ICompoundEdge node = shape.getCurrentElement();
@@ -131,7 +130,7 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedLabelAttribute20ChildGraphStats(){
-		IRootAttribute rootAtt = (IRootAttribute)model.getRoot().getAttribute();
+		IModel rootAtt = model;
 		ILabelAttribute shape = (ILabelAttribute)rootAtt.findAttribute(20);
 		assertNotNull("att exists", shape);
 		ICompoundNode node = shape.getCurrentElement();

@@ -24,14 +24,12 @@ import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -169,14 +167,10 @@ public class MockShapeObjectTypeBuilder {
 				public INumberPropertyDefinition createDefn(final String name, final Number value, final boolean isVisualisable, final boolean isAlwaysDisplayed) {
 					final String propName = createPropName(name);
 					final INumberPropertyDefinition propDefn = mockery.mock(INumberPropertyDefinition.class, propName);
-					final ILabelAttributeDefaults labelDefaults = createLabelDefaults(propName);
 					mockery.checking(new Expectations(){{
 						allowing(propDefn).getName(); will(returnValue(name));
 						allowing(propDefn).getDisplayName(); will(returnValue(name));
 						allowing(propDefn).getDefaultValue(); will(returnValue(value));
-						allowing(propDefn).getLabelDefaults(); will(returnValue(labelDefaults));
-						allowing(propDefn).isAlwaysDisplayed(); will(returnValue(isAlwaysDisplayed));
-						allowing(propDefn).isVisualisable(); will(returnValue(isVisualisable));
 						allowing(shapeAttributeDefaults).getPropertyDefinition(propName); will(returnValue(propDefn));
 					}});
 					return propDefn;
@@ -186,14 +180,10 @@ public class MockShapeObjectTypeBuilder {
 				public IPlainTextPropertyDefinition createDefn(final String name, final String value, final boolean isVisualisable, final boolean isAlwaysDisplayed) {
 					final String propName = createPropName(name);
 					final IPlainTextPropertyDefinition propDefn = mockery.mock(IPlainTextPropertyDefinition.class, propName);
-					final ILabelAttributeDefaults labelDefaults = createLabelDefaults(propName);
 					mockery.checking(new Expectations(){{
 						allowing(propDefn).getName(); will(returnValue(propName));
 						allowing(propDefn).getDisplayName(); will(returnValue(name));
 						allowing(propDefn).getDefaultValue(); will(returnValue(value));
-						allowing(propDefn).getLabelDefaults(); will(returnValue(labelDefaults));
-						allowing(propDefn).isAlwaysDisplayed(); will(returnValue(isAlwaysDisplayed));
-						allowing(propDefn).isVisualisable(); will(returnValue(isVisualisable));
 						allowing(shapeAttributeDefaults).getPropertyDefinition(propName); will(returnValue(propDefn));
 					}});
 					return propDefn;
@@ -203,34 +193,34 @@ public class MockShapeObjectTypeBuilder {
 	}
 
 
-	/**
-	 * @param propDefn
-	 * @return
-	 */
-	protected ILabelAttributeDefaults createLabelDefaults(String name) {
-		final ILabelAttributeDefaults retVal = mockery.mock(ILabelAttributeDefaults.class, createLabelAttDefsName(name));
-		mockery.checking(new Expectations(){{
-			allowing(retVal).getFillColour(); will(returnValue(RGB.RED));
-			allowing(retVal).getLineColour(); will(returnValue(RGB.BLUE));
-			allowing(retVal).getLineStyle(); will(returnValue(LineStyle.SOLID));
-			allowing(retVal).getLineWidth(); will(returnValue(2.3));
-			allowing(retVal).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));
-			allowing(retVal).hasNoBorder(); will(returnValue(false));
-			allowing(retVal).hasNoFill(); will(returnValue(false));
-			allowing(retVal).getLabelLocationPolicy(); will(returnValue(LabelLocationPolicy.CENTRE));
-		}});
-		return retVal;
-	}
+//	/**
+//	 * @param propDefn
+//	 * @return
+//	 */
+//	protected ILabelAttributeDefaults createLabelDefaults(String name) {
+//		final ILabelAttributeDefaults retVal = mockery.mock(ILabelAttributeDefaults.class, createLabelAttDefsName(name));
+//		mockery.checking(new Expectations(){{
+//			allowing(retVal).getFillColour(); will(returnValue(RGB.RED));
+//			allowing(retVal).getLineColour(); will(returnValue(RGB.BLUE));
+//			allowing(retVal).getLineStyle(); will(returnValue(LineStyle.SOLID));
+//			allowing(retVal).getLineWidth(); will(returnValue(2.3));
+//			allowing(retVal).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));
+//			allowing(retVal).hasNoBorder(); will(returnValue(false));
+//			allowing(retVal).hasNoFill(); will(returnValue(false));
+//			allowing(retVal).getLabelLocationPolicy(); will(returnValue(LabelLocationPolicy.CENTRE));
+//		}});
+//		return retVal;
+//	}
 
-	/**
-	 * @param name
-	 * @return
-	 */
-	private String createLabelAttDefsName(String name) {
-		StringBuilder buf = new StringBuilder(this.objectTypeName);
-		buf.append(name);
-		return buf.toString();
-	}
+//	/**
+//	 * @param name
+//	 * @return
+//	 */
+//	private String createLabelAttDefsName(String name) {
+//		StringBuilder buf = new StringBuilder(this.objectTypeName);
+//		buf.append(name);
+//		return buf.toString();
+//	}
 
 	public void buildParentingRules(final INodeObjectType ... children) {
 		this.shapeTypeParenting = this.mockery.mock(IShapeParentingRules.class, createParentingRulesName());

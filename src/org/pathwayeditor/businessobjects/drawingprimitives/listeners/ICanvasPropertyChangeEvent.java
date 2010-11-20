@@ -13,15 +13,31 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-/**
- * @author smoodie
- *
- */
-public enum CanvasPropertyChange {
-	GRID_SIZE, GRID_SHOWN, SNAP_TO_GRID_ENABLED, BACKGROUND_COLOUR, CANVAS_SIZE, NAME
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+
+
+public interface ICanvasPropertyChangeEvent {
+
+	ICanvas getCanvas();
+	
+	/**
+	 * Gets the old property value. 
+	 * @return the old property value, which can be null if the old value was null.
+	 */
+	Object getOldValue();
+	
+	/**
+	 * Gets the new property value. 
+	 * @return the new property value, which can be null if the new value was null.
+	 */
+	Object getNewValue();
+	
+	/**
+	 * Get the type of the property.
+	 * @return the type of the property, which cannot be null.
+	 */
+	CanvasPropertyChange getPropertyChange();
+	
 }

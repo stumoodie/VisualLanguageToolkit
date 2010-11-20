@@ -20,6 +20,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.util.IndexCounter;
@@ -33,6 +34,7 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	private IAnnotationProperty annotationProperty;
 	private ICanvasElementAttribute destination;
 	private Integer preferredCreationSerial = null;
+	private ILabelObjectType objectType;
 
 	/**
 	 * @param creationSerialCounter
@@ -54,7 +56,8 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	 */
 	@Override
 	public boolean canCreateAttribute() {
-		return this.destination != null && this.annotationProperty != null && this.annotationProperty.canVisualiseProperty();
+		return this.destination != null && this.annotationProperty != null && this.objectType != null
+			&& this.objectType.getSyntaxService().isVisualisableProperty(this.annotationProperty.getDefinition());
 	}
 
 	/* (non-Javadoc)
@@ -82,8 +85,7 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 		if(currSerial == null){
 			currSerial = creationSerialCounter.nextIndex();
 		}
-		return new LabelAttribute(this.destination.getRootAttribute(), currSerial.intValue(), this.annotationProperty,
-				this.annotationProperty.getDefinition().getLabelDefaults());
+		return new LabelAttribute(this.destination.getModel(), currSerial.intValue(), this.annotationProperty, this.objectType);
 	}
 
 	/* (non-Javadoc)
@@ -138,6 +140,22 @@ public class LabelAttributeFactory implements ILabelAttributeFactory {
 	@Override
 	public Integer getPreferredCreationSerial() {
 		return this.preferredCreationSerial;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory#setLabelObjectType(org.pathwayeditor.businessobjects.typedefn.ILabelObjectType)
+	 */
+	@Override
+	public void setLabelObjectType(ILabelObjectType labelObjectType) {
+		this.objectType = labelObjectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory#getLabelObjectType()
+	 */
+	@Override
+	public ILabelObjectType getLabelObjectType() {
+		return this.objectType;
 	}
 
 }

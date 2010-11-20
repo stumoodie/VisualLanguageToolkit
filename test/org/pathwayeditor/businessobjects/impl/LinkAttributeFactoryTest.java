@@ -30,7 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -64,7 +64,7 @@ public class LinkAttributeFactoryTest {
 		shapeAttributeTgt = canvasTestFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		this.testInstance.setOutAttribute(shapeAttributeSrc);
 		this.testInstance.setInAttribute(shapeAttributeTgt);
-		this.testInstance.setDestinationAttribute(canvasTestFixture.getRootAttribute());
+		this.testInstance.setDestinationAttribute(canvasTestFixture.getModel().getRootAttribute());
 		this.testInstance.setObjectType(notationFixture.getNotationSubsystem().getSyntaxService().getLinkObjectType(NotationSubsystemFixture.LINK_TYPE_D_ID));
 	}
 
@@ -102,7 +102,7 @@ public class LinkAttributeFactoryTest {
 	 */
 	@Test
 	public void testGetDestinationAttribute() {
-		assertEquals("expected", this.canvasTestFixture.getRootAttribute(), this.testInstance.getDestinationAttribute());
+		assertEquals("expected", this.canvasTestFixture.getModel().getRootAttribute(), this.testInstance.getDestinationAttribute());
 	}
 
 	/**
@@ -127,9 +127,9 @@ public class LinkAttributeFactoryTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
-		final IRootAttribute rootAtt = this.canvasTestFixture.getRootAttribute();
+		final IModel mockModel = this.canvasTestFixture.getModel();
 		this.mockery.checking(new Expectations(){{
-			allowing(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
+			allowing(mockModel).addCanvasAttribute(with(any(ILinkAttribute.class)));
 		}});
 		ILinkAttribute actualAtt = this.testInstance.createAttribute();
 		assertNotNull("created", actualAtt);

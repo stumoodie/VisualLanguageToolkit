@@ -26,19 +26,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Writer;
 
-import org.pathwayeditor.businessobjects.impl.RootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.impl.Model;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
-import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 
 /**
  * @author smoodie
  *
  */
 public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
-	private ICompoundGraph canvas = null;
+	private IModel canvas = null;
 	private final INotationSubsystemPool subsystemPool;
 	
 	public FileXmlCanvasPersistenceManager(INotationSubsystemPool subsystemPool){
@@ -118,7 +116,7 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 //			}
 //
 //		});
-		canvas = new CompoundGraph(new RootAttribute(canvasName, notationSubsystem.getSyntaxService().getRootObjectType()));
+		canvas = new Model(canvasName, notationSubsystem);
 	}
 
 	/* (non-Javadoc)
@@ -139,7 +137,7 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	@Override
 	public InputStream writeCanvasToStream() throws IOException {
 		CanvasMarshaller marshaller = new CanvasMarshaller();
-		marshaller.setCanvas(this.canvas);
+		marshaller.setModel(this.canvas);
 		marshaller.buildCanvas();
 		File tmpFile = null;
 		Writer tmpFileOut = null;
@@ -163,7 +161,7 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	 * @see org.pathwayeditor.businessobjects.exchange.IXmlPersistenceManager#getCurrentCanvas()
 	 */
 	@Override
-	public ICompoundGraph getCurrentCanvas() {
+	public IModel getCurrentCanvas() {
 		return this.canvas;
 	}
 

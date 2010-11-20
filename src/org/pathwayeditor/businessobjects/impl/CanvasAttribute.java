@@ -19,6 +19,7 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.impl;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -28,6 +29,7 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
  *
  */
 public abstract class CanvasAttribute implements ICanvasElementAttribute, IElementAttribute {
+	private final IModel canvas;
 	private final int creationSerial;
 	private ICompoundGraphElement compoundGraphElement;
 	
@@ -36,8 +38,10 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 	 * @param canvas the canvas to which this attribute belongs, which should not be null.
 	 * @param creationSerial the creation serial number that uniquely identifies this attribute within the canvas.
 	 */
-	protected CanvasAttribute(int creationSerial) {
+	protected CanvasAttribute(IModel canvas, int creationSerial) {
+		this.canvas = canvas;
 		this.creationSerial = creationSerial;
+		this.canvas.addCanvasAttribute(this);
 	}
 	
 	@Override
@@ -106,5 +110,10 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 			retVal = this.compoundGraphElement.isRemoved();
 		}
 		return retVal;
+	}
+	
+	@Override
+	public final IModel getModel(){
+		return this.canvas;
 	}
 }

@@ -27,14 +27,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
  * @author smoodie
  *
  */
-public class CanvasPropertyChangeEventValidator {
+public class CanvasAttributePropertyChangeEventValidator {
 	private final ICanvasElementAttribute expectedAttribute;
 	private final CanvasAttributePropertyChange propChange;
 	private final Object oldValue;
 	private final Object newValue;
 
 
-	public CanvasPropertyChangeEventValidator(ICanvasElementAttribute testInstance, CanvasAttributePropertyChange propChange, Object oldValue, Object newValue){
+	public CanvasAttributePropertyChangeEventValidator(ICanvasElementAttribute testInstance, CanvasAttributePropertyChange propChange, Object oldValue, Object newValue){
 		this.expectedAttribute = testInstance;
 		this.propChange = propChange;
 		this.oldValue = oldValue;

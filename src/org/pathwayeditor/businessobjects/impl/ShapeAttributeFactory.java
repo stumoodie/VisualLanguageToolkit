@@ -66,7 +66,7 @@ public class ShapeAttributeFactory implements IShapeAttributeFactory {
 		if(currSerial == null){
 			currSerial = creationSerialCounter.nextIndex();
 		}
-		return new ShapeAttribute(this.destinationAttribute.getRootAttribute(), currSerial.intValue(), shapeObjectType);
+		return new ShapeAttribute(this.destinationAttribute.getModel(), currSerial.intValue(), shapeObjectType);
 	}
 
 	@Override

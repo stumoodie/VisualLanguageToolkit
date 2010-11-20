@@ -18,7 +18,6 @@ package org.pathwayeditor.businessobjects.impl;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
@@ -92,42 +91,6 @@ public class TestProperty implements IAnnotationProperty {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
-	 */
-	@Override
-	public boolean canVisualiseProperty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#isDisplayed()
-	 */
-	@Override
-	public boolean isDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#setDisplayed(boolean)
-	 */
-	@Override
-	public void setDisplayed(boolean displayed) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#getLabel()
-	 */
-	@Override
-	public ILabelAttribute getLabel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)
 	 */
 	@Override
@@ -180,15 +143,6 @@ public class TestProperty implements IAnnotationProperty {
 			return false;
 		}
 		return true;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#setLabel(org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute)
-	 */
-	@Override
-	public void setLabel(ILabelAttribute label) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -29,6 +29,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -50,17 +51,17 @@ import org.pathwayeditor.figure.geometry.Point;
 public class LinkAttributeBuilder {
 	private final Mockery mockery;
 	private final String name;
-	private IRootAttribute rootAttribute;
+	private IModel canvas;
 	private int idx;
 	private ILinkObjectType objectType;
 	private ILinkAttribute linkAttribute;
 	private List<IAnnotationProperty> props = new LinkedList<IAnnotationProperty>();
 	private List<Point> bpLocations = new LinkedList<Point>();
 	
-	public LinkAttributeBuilder(Mockery mockery, String name, ILinkObjectType objectType, IRootAttribute rootAttribute, int idx){
+	public LinkAttributeBuilder(Mockery mockery, String name, ILinkObjectType objectType, IModel canvas, int idx){
 		this.mockery = mockery;
 		this.name = name;
-		this.rootAttribute = rootAttribute;
+		this.canvas = canvas;
 		this.idx = idx;
 		this.objectType = objectType;
 	}
@@ -121,7 +122,7 @@ public class LinkAttributeBuilder {
 		final ILinkTerminus tgtTerm = mockery.mock(ILinkTerminus.class, name + "TgtTerm");
 		mockery.checking(new Expectations(){{
 			allowing(linkAttribute).getCreationSerial(); will(returnValue(idx));
-			allowing(linkAttribute).getRootAttribute(); will(returnValue(rootAttribute));
+			allowing(linkAttribute).getModel(); will(returnValue(canvas));
 			allowing(linkAttribute).isRemoved(); will(returnValue(false));
 			allowing(linkAttribute).compareTo(linkAttribute); will(returnValue(0));
 			allowing(linkAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(1));
@@ -176,7 +177,6 @@ public class LinkAttributeBuilder {
 		final IPlainTextAnnotationProperty prop = mockery.mock(IPlainTextAnnotationProperty.class, createPropName(defn.getName()));
 		mockery.checking(new Expectations(){{
 			allowing(prop).getDefinition(); will(returnValue(defn));
-			allowing(prop).canVisualiseProperty(); will(returnValue(true));
 			allowing(prop).getOwner(); will(returnValue(linkAttribute));
 		}});
 		props.add(prop);

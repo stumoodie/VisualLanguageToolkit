@@ -16,12 +16,9 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.management;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.impl.RootAttribute;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
-import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.impl.Model;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
  * @author smoodie
@@ -29,7 +26,7 @@ import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
  */
 public class ModelFactory implements IModelFactory {
 
-	private IRootObjectType rootObjectType;
+	private INotationSubsystem rootObjectType;
 	private String name;
 	private int lastSerialIdx;
 	private int serialIdx;
@@ -64,17 +61,16 @@ public class ModelFactory implements IModelFactory {
 	}
 	
 	@Override
-	public void setRootObjectType(IRootObjectType rootObjectType){
-		this.rootObjectType = rootObjectType;
+	public void setNotationSubsystem(INotationSubsystem notationSubsystem){
+		this.rootObjectType = notationSubsystem;
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.management.IModelFactory#createModel()
 	 */
 	@Override
-	public ICompoundGraph createModel() {
-		IRootAttribute rootAtt = new RootAttribute(serialIdx,name, rootObjectType, lastSerialIdx); 
-		return new CompoundGraph(rootAtt);
+	public IModel createModel() {
+		return new Model(this.name, this.rootObjectType, this.serialIdx, this.lastSerialIdx);
 	}
 
 	/* (non-Javadoc)
@@ -105,7 +101,7 @@ public class ModelFactory implements IModelFactory {
 	 * @see org.pathwayeditor.businessobjects.management.IModelFactory#getRootObjectType()
 	 */
 	@Override
-	public IRootObjectType getRootObjectType() {
+	public INotationSubsystem getNotationSubsystem() {
 		return this.rootObjectType;
 	}
 

@@ -32,7 +32,7 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
  */
 public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttributeChangeListenee, Comparable<ICanvasElementAttribute> {
 	
-	IRootAttribute getRootAttribute();
+	IModel getModel();
 	
 	IObjectType getObjectType();
 	
@@ -41,21 +41,6 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	 * @return the serial number, greater that 0.
 	 */	
 	int getCreationSerial();	
-	
-	/**
-	 * The business key is the combination of canvas and creation serial.
-	 * @param other
-	 * @return true if equal, false otherwise.
-	 */
-//	@Override
-	boolean equals(Object other); 
-
-	/**
-	 * See <code>equals</code> for definition of identity.
-	 * @return the hash code.
-	 */
-//	@Override
-	int hashCode();
 	
 	boolean isRemoved();
 	

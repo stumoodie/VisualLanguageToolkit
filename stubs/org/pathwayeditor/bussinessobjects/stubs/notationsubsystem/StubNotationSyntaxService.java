@@ -25,9 +25,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -39,6 +41,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  */
 public class StubNotationSyntaxService implements INotationSyntaxService {
 	private static final int NUM_ROOT_OTS = 1;
+	private static final int LABEL_ID = 9;
 	private final INotationSubsystem notationSubsystem ;
 	private final IRootObjectType rootObjectType;
 	private final IShapeObjectType shapeAObjectType;
@@ -51,6 +54,8 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	private final ILinkObjectType linkDObjectType;
 	private final Map<Integer, IShapeObjectType> shapes;
 	private final Map<Integer, ILinkObjectType> links;
+	private final Map<IPropertyDefinition, ILabelObjectType> labels;
+	private final ILabelObjectType labelObjectType;
 	
 	public StubNotationSyntaxService(INotationSubsystem notationSubsystem){
 		this.notationSubsystem = notationSubsystem;
@@ -73,6 +78,12 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		this.links.put(this.linkBObjectType.getUniqueId(), this.linkBObjectType);
 		this.links.put(this.linkCObjectType.getUniqueId(), this.linkCObjectType);
 		this.links.put(this.linkDObjectType.getUniqueId(), this.linkDObjectType);
+		this.labels = new HashMap<IPropertyDefinition, ILabelObjectType>();
+		this.labelObjectType = new StubLabelObjectType(this, LABEL_ID);
+		this.labels.put(new StubNumberPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubListPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubHtmlPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubTextPropertyDefinition(), this.labelObjectType);
 	}
 	
 	/* (non-Javadoc)
@@ -237,5 +248,29 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	@Override
 	public int numObjectTypes(){
 		return this.numLinkObjectTypes() + this.numShapeObjectTypes() + NUM_ROOT_OTS;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLabelObjectType(int)
+	 */
+	@Override
+	public ILabelObjectType getLabelObjectType(int uniqueId) {
+		return this.labelObjectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLabelObjectTypeByProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	@Override
+	public ILabelObjectType getLabelObjectTypeByProperty(IPropertyDefinition propDefn) {
+		return this.labels.get(propDefn);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#isVisualisableProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	@Override
+	public boolean isVisualisableProperty(IPropertyDefinition propDefn) {
+		return true;
 	}
 }

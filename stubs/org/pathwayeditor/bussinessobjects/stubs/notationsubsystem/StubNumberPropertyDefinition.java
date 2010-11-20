@@ -24,23 +24,20 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 /**
  * @author smoodie
  *
  */
-public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
+public class StubNumberPropertyDefinition extends StubPropertyDefinition implements INumberPropertyDefinition {
 	public static final BigDecimal DEFAULT_VALUE = new BigDecimal(2468);
 	public static final String NAME = "NumberProperty";
 	public static final boolean IS_EDITABLE = false;
-	public static final boolean IS_VISUALISABLE = true;
-
-	private final ILabelAttributeDefaults labelDefaults;
+	private final BigDecimal value;
 
 	public StubNumberPropertyDefinition(){
-		this.labelDefaults = new StubLabelAttributeDefaults();
+		super(NAME, IS_EDITABLE);
+		this.value = DEFAULT_VALUE;
 	}
 	
 	/* (non-Javadoc)
@@ -64,69 +61,7 @@ public class StubNumberPropertyDefinition implements INumberPropertyDefinition {
 	 */
 	@Override
 	public BigDecimal getDefaultValue() {
-		return DEFAULT_VALUE;
+		return value;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#getLabelDefaults()
-	 */
-	@Override
-	public ILabelAttributeDefaults getLabelDefaults() {
-		return this.labelDefaults;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#getName()
-	 */
-	@Override
-	public String getName() {
-		return NAME;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isEditable()
-	 */
-	@Override
-	public boolean isEditable() {
-		return IS_EDITABLE;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isVisualisable()
-	 */
-	@Override
-	public boolean isVisualisable() {
-		return IS_VISUALISABLE;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition#isDisplayed()
-	 */
-	@Override
-	public boolean isAlwaysDisplayed() {
-		return false;
-	}
-
-	@Override
-	public String getDisplayName() {
-		return NAME;
-	}
-	
-
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	public int compareTo(IPropertyDefinition o) {
-		return this.getName().compareTo(o.getName());
-	}
-
-	@Override
-	public String toString(){
-		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
-		builder.append("(");
-		builder.append("name=");
-		builder.append(this.getName());
-		builder.append(")");
-		return builder.toString();
-	}
 }

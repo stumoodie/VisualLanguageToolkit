@@ -13,27 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
+package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
+public interface ICanvasPropertyChangeListener {
 
-/**
- * @author smoodie
- *
- */
-public interface ILabelAttributeFactory extends ICanvasAttributeFactory {
+	void propertyChange(ICanvasPropertyChangeEvent e);
 
-	void setProperty(IAnnotationProperty annotationProperty);
-
-	IAnnotationProperty getProperty();
-	
-	void setLabelObjectType(ILabelObjectType labelObjectType);
-	
-	ILabelObjectType getLabelObjectType();
-	
-	@Override
-	ILabelAttribute createAttribute();
-	
 }

@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -45,7 +46,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeTranslationEvent;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
+import org.pathwayeditor.testfixture.CanvasAttributePropertyChangeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -83,11 +84,11 @@ public class LinkAttributeTest {
 		this.testFixture = new CanvasTestFixture(mockery, "", notationFixture.getNotationSubsystem());
 		this.testFixture.buildFixture();
 		INotationSyntaxService syntaxService = this.notationFixture.getNotationSubsystem().getSyntaxService();
-		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
+		final IModel rootAtt = this.testFixture.getModel();
 		this.mockery.checking(new Expectations(){{
 			one(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
 		}});
-		this.testInstance = new LinkAttribute(this.testFixture.getRootAttribute(), EXPECTED_IDX, syntaxService.getLinkObjectType(CanvasTestFixture.LINK1_ATT_OT));
+		this.testInstance = new LinkAttribute(this.testFixture.getModel(), EXPECTED_IDX, syntaxService.getLinkObjectType(CanvasTestFixture.LINK1_ATT_OT));
 		this.testListener = new ICanvasAttributeChangeListener() {
 
 			@Override
@@ -146,7 +147,7 @@ public class LinkAttributeTest {
 		assertFalse("not same colour", expectedVal.equals(EXPECTED_LINE_STYLE));
 		this.testInstance.setLineStyle(expectedVal);
 		assertEquals("expected val", expectedVal, this.testInstance.getLineStyle());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
 				EXPECTED_LINE_STYLE, expectedVal);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -172,7 +173,7 @@ public class LinkAttributeTest {
 		this.testInstance.setLineWidth(expectedValue);
 		assertFalse("diff new val", EXPECTED_LINE_WIDTH == expectedValue);
 		assertEquals("expected val", expectedValue, this.testInstance.getLineWidth(), DIFF_THRESHOLD);
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
 				EXPECTED_LINE_WIDTH, expectedValue);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -194,7 +195,7 @@ public class LinkAttributeTest {
 		assertFalse("not same colour", expectedLineColour.equals(EXPECTED_LINE_COLOUR));
 		this.testInstance.setLineColour(expectedLineColour);
 		assertEquals("line colour", expectedLineColour, this.testInstance.getLineColour());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
 				EXPECTED_LINE_COLOUR, expectedLineColour);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -261,11 +262,11 @@ public class LinkAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#getRootAttribute()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#getModel()}.
 	 */
 	@Test
-	public void testGetRootAttribute() {
-		assertEquals("root att", this.testFixture.getRootAttribute(), this.testInstance.getRootAttribute());
+	public void testGetModel() {
+		assertEquals("root att", this.testFixture.getModel(), this.testInstance.getModel());
 	}
 
 	/**

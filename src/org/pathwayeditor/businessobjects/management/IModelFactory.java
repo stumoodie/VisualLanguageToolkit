@@ -16,9 +16,8 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.management;
 
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
  * @author smoodie
@@ -47,12 +46,12 @@ public interface IModelFactory {
 	
 	String getName();
 
-	void setRootObjectType(IRootObjectType rootObjectType);
+	void setNotationSubsystem(INotationSubsystem notationSubsystem);
 
-	IRootObjectType getRootObjectType();
+	INotationSubsystem getNotationSubsystem();
 	
 	boolean canCreateModel();
 	
-	ICompoundGraph createModel();
+	IModel createModel();
 
 }

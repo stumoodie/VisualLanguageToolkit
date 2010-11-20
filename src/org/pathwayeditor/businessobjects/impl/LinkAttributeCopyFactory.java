@@ -74,7 +74,7 @@ public class LinkAttributeCopyFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public ILinkAttribute createAttribute() {
-		return new LinkAttribute(destination.getRootAttribute(), this.creationSerialCounter.next(), this.attributeToCopy);
+		return new LinkAttribute(destination.getModel(), this.creationSerialCounter.next(), this.attributeToCopy);
 	}
 
 	/* (non-Javadoc)

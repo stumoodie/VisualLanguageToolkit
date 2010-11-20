@@ -26,11 +26,13 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
@@ -76,6 +78,7 @@ import org.pathwayeditor.businessobjects.management.IModelFactory;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
@@ -86,7 +89,6 @@ import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundEdgeFactory;
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
@@ -97,7 +99,7 @@ import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
  */
 public class ModelBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());
-	private ICompoundGraph graph = null;
+	private IModel graph = null;
 	private final Canvas xmlInstance;
 	private final INotationSubsystemPool notationPool;
 	private INotationSubsystem notationSubsystem;
@@ -147,9 +149,9 @@ public class ModelBuilder {
 		this.modelFactory.setRootCreationSerial(serialIdx);
 		this.modelFactory.setLastCreationSerial(lastSerialIdx);
 		this.modelFactory.setName(xmlInstance.getName());
-		this.modelFactory.setRootObjectType(notationSubsystem.getSyntaxService().getRootObjectType());
+		this.modelFactory.setNotationSubsystem(notationSubsystem);
 		this.graph = this.modelFactory.createModel();
-		IRootAttribute iCanvas = (IRootAttribute)graph.getRoot().getAttribute();
+		ICanvas iCanvas = this.graph.getRootAttribute();
 		iCanvas.setBackgroundColour(createColour(this.xmlInstance.getBackground()));
 		if(logger.isDebugEnabled()){
 			logger.debug("Created model: " + graph + " with root=" + iCanvas);
@@ -261,9 +263,9 @@ public class ModelBuilder {
 		Model xmlModel = this.xmlInstance.getModel();
 		RootNode xmlRootNode = xmlModel.getRootNode();
 		RootAttribute xmlRootAttribute = xmlRootNode.getRootAttribute();
-		IRootAttribute hibRootAttribute = (IRootAttribute)this.graph.getRoot().getAttribute();
+		IRootAttribute hibRootAttribute = (IRootAttribute)this.graph.getGraph().getRoot().getAttribute();
 		buildRootAttribute(hibRootAttribute, xmlRootAttribute);
-		buildChildShapeNodes(this.graph.getRoot().getChildCompoundGraph(), xmlRootNode.getSubModel());
+		buildChildShapeNodes(this.graph.getGraph().getRoot().getChildCompoundGraph(), xmlRootNode.getSubModel());
 //		buildChildLinkEdges(hibRootNode.getSubModel(), xmlRootNode.getSubModel());
 		buildChildLabelNodes(xmlRootNode.getSubModel());
 	}
@@ -319,7 +321,7 @@ public class ModelBuilder {
 	private ICompoundNode createShapeNode(IChildCompoundGraph owningSubModel, ShapeNode xmlNode){
 		int otId = xmlNode.getShapeAttribute().getObjectTypeId();
 		IShapeObjectType objectType = this.notationSubsystem.getSyntaxService().getShapeObjectType(otId);
-		IRootAttribute rootAtt = (IRootAttribute)this.graph.getRoot().getAttribute();
+		IModel rootAtt = this.graph;
 		IShapeAttributeFactory attFact = rootAtt.shapeAttributeFactory();
 		attFact.setDestinationAttribute(owningSubModel.getRoot().getAttribute());
 		attFact.setObjectType(objectType);
@@ -336,14 +338,15 @@ public class ModelBuilder {
 		return node;
 	}
 	
-	private IRootAttribute getRootAttribute(){
-		return (IRootAttribute)this.graph.getRoot().getAttribute();
-	}
+//	private IRootAttribute getRootAttribute(){
+//		return (IRootAttribute)this.graph.getRoot().getAttribute();
+//	}
 
 	private ICompoundEdge createLinkEdge(IChildCompoundGraph owningSubModel, LinkEdge xmlNode){
 		int otId = xmlNode.getLinkAttribute().getObjectTypeId();
 		ILinkObjectType objectType = this.notationSubsystem.getSyntaxService().getLinkObjectType(otId);
-		ILinkAttributeFactory attFact = getRootAttribute().linkAttributeFactory();
+		IModel canvas = this.graph;
+		ILinkAttributeFactory attFact = canvas.linkAttributeFactory();
 		attFact.setDestinationAttribute(owningSubModel.getRoot().getAttribute());
 		attFact.setObjectType(objectType);
 		attFact.setPreferredCreationSerial(xmlNode.getLinkAttribute().getCreationSerial());
@@ -365,10 +368,13 @@ public class ModelBuilder {
 	
 	private ICompoundNode createLabelNode(LabelNode xmlNode, IAnnotationProperty refProp) {
 		ICompoundGraphElement parent = refProp.getOwner().getCurrentElement();  
-		IRootAttribute rootAtt = (IRootAttribute)this.graph.getRoot().getAttribute();
+		IModel rootAtt = this.graph;
+//		IRootAttribute rootAtt = (IRootAttribute)this.graph.getRoot().getAttribute();
 		ILabelAttributeFactory labelFact = rootAtt.labelAttributeFactory();
 		labelFact.setDestinationAttribute(parent.getAttribute());
 		labelFact.setProperty(refProp);
+		ILabelObjectType labelOt = this.notationSubsystem.getSyntaxService().getLabelObjectTypeByProperty(refProp.getDefinition());
+		labelFact.setLabelObjectType(labelOt);
 		labelFact.setPreferredCreationSerial(xmlNode.getLabelAttribute().getCreationSerial());
 		ICompoundNodeFactory nodeFact = parent.getChildCompoundGraph().nodeFactory();
 		nodeFact.setAttributeFactory(labelFact);
@@ -408,7 +414,7 @@ public class ModelBuilder {
 		return new RGB(red, green, blue);
 	}
 
-	public ICompoundGraph getGraph() {
+	public IModel getGraph() {
 		return this.graph;
 	}
 	

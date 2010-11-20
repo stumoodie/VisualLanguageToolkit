@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
@@ -76,7 +76,7 @@ public class LinkAttributeCopyFactoryTest {
 			}
 		};
 		this.testInstance = new LinkAttributeCopyFactory(seq, linkToCopy);
-		this.testInstance.setDestinationAttribute(this.otherFixture.getRootAttribute());
+		this.testInstance.setDestinationAttribute(this.otherFixture.getModel().getRootAttribute());
 		IShapeAttribute shape1Att = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		IShapeAttribute shape2Att = this.testFixture.getObject(CanvasTestFixture.SHAPE2_ATT_ID);
 		this.testInstance.setOutAttribute(shape1Att);
@@ -118,7 +118,7 @@ public class LinkAttributeCopyFactoryTest {
 	 */
 	@Test
 	public void testGetDestinationAttribute() {
-		assertEquals("expected", this.otherFixture.getRootAttribute(), this.testInstance.getDestinationAttribute());
+		assertEquals("expected", this.otherFixture.getModel().getRootAttribute(), this.testInstance.getDestinationAttribute());
 	}
 
 	/**
@@ -126,13 +126,13 @@ public class LinkAttributeCopyFactoryTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
-		final IRootAttribute rootAtt = this.otherFixture.getRootAttribute();
+		final IModel rootAtt = this.otherFixture.getModel();
 		this.mockery.checking(new Expectations(){{
 			one(rootAtt).addCanvasAttribute(with(any(ILabelAttribute.class)));
 		}});
 		ILinkAttribute newAtt = (ILinkAttribute)this.testInstance.createAttribute();
 		assertNotNull("exists", newAtt);
-		assertEquals("expected too att", this.otherFixture.getRootAttribute(), newAtt.getRootAttribute());
+		assertEquals("expected too att", this.otherFixture.getModel(), newAtt.getModel());
 	}
 
 }

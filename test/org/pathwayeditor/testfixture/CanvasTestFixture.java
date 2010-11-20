@@ -28,6 +28,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSeque
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -48,7 +49,8 @@ import uk.ac.ed.inf.graph.util.IndexCounter;
  *
  */
 public class CanvasTestFixture extends CommonTestFixture {
-	public static final int NUM_ATTRIBUTES = 4;
+	public static final int NUM_ATTRIBUTES = 5;
+	public static final String MODEL_ID = "model";
 	public static final String ROOT_ATT_ID = "rootAttribute1";
 	public static final String SHAPE1_ATT_ID = "shapeAttribute1";
 	public static final String SHAPE2_ATT_ID = "shapeAttribute2";
@@ -65,10 +67,12 @@ public class CanvasTestFixture extends CommonTestFixture {
 	public static final int SHAPE2_ATT_OT = 2;
 	public static final int LINK1_ATT_OT = 4;
 	public static final int INDEX_COUNTER_IDX = 100;
-	private static final String ELEMENT_CREATION_ORDER[] = { ROOT_ATT_ID, SHAPE1_ATT_ID, SHAPE2_ATT_ID, LABEL9_ATT_ID, LINK1_ATT_ID };
-
+	private static final String ELEMENT_CREATION_ORDER[] = { MODEL_ID, ROOT_ATT_ID, SHAPE1_ATT_ID, SHAPE2_ATT_ID, LABEL9_ATT_ID, LINK1_ATT_ID };
+//	private static final String ELEMENT_CREATION_ORDER[] = { MODEL_ID, SHAPE1_ATT_ID, SHAPE2_ATT_ID, LABEL9_ATT_ID, LINK1_ATT_ID };
+	
 	private INotationSubsystem notationSubsystem;
-	private IRootAttribute rootAttribute;
+//	private IRootAttribute rootAttribute;
+//	private IModel mockModel;
 	
 	public static class CreatePropertyAction implements Action {
 		private IPlainTextPropertyDefinition defn;
@@ -120,47 +124,83 @@ public class CanvasTestFixture extends CommonTestFixture {
 	}
 
 	private final IObjectBuilder objectBuilders[] = new IObjectBuilder[]{ 
+			new GeneralBuilder<IModel>(MODEL_ID, new IObjectConstructor<IModel>(){
+
+				@Override
+				public IModel create() {
+					Mockery mockery = getMockery();
+					final IModel mockModel = mockery.mock(IModel.class, createMockName("model"));
+					final IndexCounter idx = new IndexCounter(INDEX_COUNTER_IDX);
+					final ICanvasAttributeSequence serialCounter = new ICanvasAttributeSequence(){
+						@Override
+						public int getCurrent() {
+							return idx.getLastIndex();
+						}
+						@Override
+						public int next() {
+							return idx.nextIndex();
+						}
+					};
+//					final IRootAttribute rootAttribute = mockery.mock(IRootAttribute.class, createMockName("rootAttribute"));
+//					final Point location = new Point(-12.0, -10.0);
+//					final Dimension size = new Dimension(400.0, 200.0);
+					mockery.checking(new Expectations(){{
+						allowing(mockModel).getName(); will(returnValue("Mock Canvas"));
+						allowing(mockModel).numCanvasAttributes(); will(returnValue(NUM_ATTRIBUTES));
+						allowing(mockModel).getCreationSerialCounter(); will(returnValue(serialCounter));
+					
+//						allowing(rootAttribute).getCreationSerial(); will(returnValue(ROOT_ATT_IDX));
+//						allowing(rootAttribute).getObjectType(); will(returnValue(notationSubsystem.getSyntaxService().getRootObjectType()));
+//						allowing(rootAttribute).getBounds(); will(returnValue(new Envelope(location, size)));
+//						allowing(rootAttribute).getModel(); will(returnValue(mockModel));
+//						allowing(rootAttribute).isRemoved(); will(returnValue(false));
+//						allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
+//						allowing(rootAttribute).compareTo(with(any(IShapeAttribute.class))); will(returnValue(-1));
+//						allowing(rootAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(-1));
+//						allowing(rootAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
+//						allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
+//						allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
+					}});
+					return mockModel;
+				}
+
+				@Override
+				public boolean build() {
+					getMockery().checking(new Expectations(){{
+					}});
+					return true;
+				}
+				
+			}),
 		new GeneralBuilder<IRootAttribute>(ROOT_ATT_ID, new IObjectConstructor<IRootAttribute>(){
 
 			@Override
 			public IRootAttribute create() {
 				Mockery mockery = getMockery();
-				rootAttribute = mockery.mock(IRootAttribute.class, createMockName("rootAttribute"));
+				final IRootAttribute rootAttribute = mockery.mock(IRootAttribute.class, createMockName("rootAttribute"));
 				final Point location = new Point(-12.0, -10.0);
 				final Dimension size = new Dimension(400.0, 200.0);
-				final IndexCounter idx = new IndexCounter(INDEX_COUNTER_IDX);
-				final ICanvasAttributeSequence serialCounter = new ICanvasAttributeSequence(){
-					@Override
-					public int getCurrent() {
-						return idx.getLastIndex();
-					}
-					@Override
-					public int next() {
-						return idx.nextIndex();
-					}
-				};
+				final IModel mockModel = getObject(MODEL_ID);
 				mockery.checking(new Expectations(){{
 					allowing(rootAttribute).getCreationSerial(); will(returnValue(ROOT_ATT_IDX));
 					allowing(rootAttribute).getObjectType(); will(returnValue(notationSubsystem.getSyntaxService().getRootObjectType()));
 					allowing(rootAttribute).getBounds(); will(returnValue(new Envelope(location, size)));
-					allowing(rootAttribute).getRootAttribute(); will(returnValue(rootAttribute));
+					allowing(rootAttribute).getModel(); will(returnValue(mockModel));
 					allowing(rootAttribute).isRemoved(); will(returnValue(false));
 					allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
 					allowing(rootAttribute).compareTo(with(any(IShapeAttribute.class))); will(returnValue(-1));
 					allowing(rootAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(-1));
 					allowing(rootAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
-					allowing(rootAttribute).getName(); will(returnValue("Mock Canvas"));
-					allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
 					allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
-					allowing(rootAttribute).numCanvasAttributes(); will(returnValue(NUM_ATTRIBUTES));
-					allowing(rootAttribute).getCreationSerialCounter(); will(returnValue(serialCounter));
+					allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
+
+					allowing(mockModel).getRootAttribute(); will(returnValue(rootAttribute));
 				}});
 				return rootAttribute;
 			}
 
 			@Override
 			public boolean build() {
-//				final IRootAttribute rootAttribute = getObject(ROOT_ATT_ID);
 				getMockery().checking(new Expectations(){{
 				}});
 				return true;
@@ -173,9 +213,9 @@ public class CanvasTestFixture extends CommonTestFixture {
 			public IShapeAttribute create() {
 				Mockery mockery = getMockery();
 				final IShapeObjectType objectType = notationSubsystem.getSyntaxService().getShapeObjectType(SHAPE1_ATT_OT);
-				final IRootAttribute rootAttribute = getObject(ROOT_ATT_ID);
+				IModel mockModel = getObject(MODEL_ID);
 				ShapeAttributeBuilder builder = new ShapeAttributeBuilder(mockery, createMockName(SHAPE1_ATT_ID), objectType,
-						rootAttribute, SHAPE1_ATT_IDX);
+						mockModel, SHAPE1_ATT_IDX);
 				builder.build();
 				IShapeAttribute shapeAttribute = builder.getAttribute(); 
 				return shapeAttribute;
@@ -195,9 +235,9 @@ public class CanvasTestFixture extends CommonTestFixture {
 			public IShapeAttribute create() {
 				Mockery mockery = getMockery();
 				final IShapeObjectType objectType = notationSubsystem.getSyntaxService().getShapeObjectType(SHAPE2_ATT_OT);
-				final IRootAttribute rootAttribute = getObject(ROOT_ATT_ID);
+				IModel mockModel = getObject(MODEL_ID);
 				ShapeAttributeBuilder builder = new ShapeAttributeBuilder(mockery, createMockName(SHAPE2_ATT_ID), objectType,
-						rootAttribute, SHAPE2_ATT_IDX);
+						mockModel, SHAPE2_ATT_IDX);
 				builder.build();
 				IShapeAttribute shapeAttribute = builder.getAttribute(); 
 				return shapeAttribute;
@@ -217,11 +257,11 @@ public class CanvasTestFixture extends CommonTestFixture {
 				final ILabelAttribute labelAttribute = mockery.mock(ILabelAttribute.class, createMockName(LABEL9_ATT_ID));
 				final Point location = new Point(24.0, 20.0);
 				final Dimension size = new Dimension(21.0, 22.0);
-				final IRootAttribute rootAttribute = getObject(ROOT_ATT_ID);
+				final IModel mockModel = getObject(MODEL_ID);
 				mockery.checking(new Expectations(){{
 					allowing(labelAttribute).getCreationSerial(); will(returnValue(LABEL9_ATT_IDX));
 					allowing(labelAttribute).getBounds(); will(returnValue(new Envelope(location, size)));
-					allowing(labelAttribute).getRootAttribute(); will(returnValue(rootAttribute));
+					allowing(labelAttribute).getModel(); will(returnValue(mockModel));
 					allowing(labelAttribute).isRemoved(); will(returnValue(false));
 					allowing(labelAttribute).compareTo(labelAttribute); will(returnValue(0));
 					allowing(labelAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
@@ -248,9 +288,9 @@ public class CanvasTestFixture extends CommonTestFixture {
 			public ILinkAttribute create() {
 				Mockery mockery = getMockery();
 				final ILinkObjectType objectType = notationSubsystem.getSyntaxService().getLinkObjectType(LINK1_ATT_OT);
-				final IRootAttribute rootAttribute = getObject(ROOT_ATT_ID);
+				IModel mockModel = getObject(MODEL_ID);
 				LinkAttributeBuilder builder = new LinkAttributeBuilder(mockery, createMockName(LINK1_ATT_ID), objectType,
-						rootAttribute, LINK1_ATT_IDX);
+						mockModel, LINK1_ATT_IDX);
 				builder.addBendPoint(new Point(2832.0, 2827.0));
 				builder.build();
 				ILinkAttribute linkAttribute = builder.getAttribute();
@@ -308,8 +348,8 @@ public class CanvasTestFixture extends CommonTestFixture {
 		return ELEMENT_CREATION_ORDER;
 	}
 
-	public IRootAttribute getRootAttribute() {
-		return rootAttribute;
+	public IModel getModel() {
+		return getObject(MODEL_ID);
 	}
 
 }

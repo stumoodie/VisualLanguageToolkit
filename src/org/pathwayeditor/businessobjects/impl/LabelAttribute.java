@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttri
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
-import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
@@ -50,20 +50,19 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
 	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
-	private IRootAttribute rootAttribute; 
+	private final ILabelObjectType objectType;
 
-	public LabelAttribute(IRootAttribute hibCanvas, int creationSerial, IAnnotationProperty property,	ILabelAttributeDefaults labelDefaults) {
-		super(creationSerial);
-		this.rootAttribute = hibCanvas;
+	public LabelAttribute(IModel hibCanvas, int creationSerial, IAnnotationProperty property,	ILabelObjectType labelObjectType) {
+		super(hibCanvas, creationSerial);
 		this.visualisableProperty = property;
-		this.visualisableProperty.setLabel(this);
-		populateDefaults(labelDefaults);
-		this.rootAttribute.addCanvasAttribute(this);
+//		this.visualisableProperty.setLabel(this);
+		this.objectType = labelObjectType;
+		populateDefaults();
 	}
 
-	public LabelAttribute(IRootAttribute hibCanvas, int creationSerial, ILabelAttribute otherAttribute, IAnnotationProperty copiedProperty) {
-		super(creationSerial);
-		this.rootAttribute = hibCanvas;
+	public LabelAttribute(IModel hibCanvas, int creationSerial, ILabelAttribute otherAttribute, IAnnotationProperty copiedProperty) {
+		super(hibCanvas, creationSerial);
+		this.objectType = otherAttribute.getObjectType();
 		this.visualisableProperty = copiedProperty;
 		this.background = otherAttribute.getBackgroundColor();
 		this.foreground = otherAttribute.getForegroundColor();
@@ -71,12 +70,12 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.lineWidth = otherAttribute.getLineWidth();
 		this.noBorder = otherAttribute.hasNoBorder();
 		this.noFill = otherAttribute.hasNoFill();
-		this.visualisableProperty.setLabel(this);
+//		this.visualisableProperty.setLabel(this);
 		this.boundsDelegate.setBounds(otherAttribute.getBounds());
-		this.rootAttribute.addCanvasAttribute(this);
 	}
 
-	private void populateDefaults(ILabelAttributeDefaults labelDefaults) {
+	private void populateDefaults() {
+		ILabelAttributeDefaults labelDefaults = this.objectType.getDefaultAttributes();
 		this.background = labelDefaults.getFillColour();
 		this.foreground = labelDefaults.getLineColour();
 		this.lineStyle = labelDefaults.getLineStyle();
@@ -268,7 +267,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public Dimension getMinimumSize() {
-		return this.visualisableProperty.getDefinition().getLabelDefaults().getMinimumSize();
+		return this.objectType.getDefaultAttributes().getMinimumSize();
 	}
 
 	/* (non-Javadoc)
@@ -288,19 +287,11 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#getRootAttribute()
-	 */
-	@Override
-	public IRootAttribute getRootAttribute() {
-		return this.rootAttribute;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#getObjectType()
 	 */
 	@Override
-	public IObjectType getObjectType() {
-		return null;
+	public ILabelObjectType getObjectType() {
+		return this.objectType;
 	}
 
 	/* (non-Javadoc)
@@ -324,7 +315,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new LabelAttributeCopyFactory(this.rootAttribute.getCreationSerialCounter(), this.visualisableProperty);
+		return new LabelAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this.visualisableProperty);
 	}
 
 	/* (non-Javadoc)

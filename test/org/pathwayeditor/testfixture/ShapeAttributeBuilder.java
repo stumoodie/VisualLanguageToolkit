@@ -26,6 +26,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -46,16 +47,16 @@ import org.pathwayeditor.figure.geometry.Point;
 public class ShapeAttributeBuilder {
 	private final Mockery mockery;
 	private final String name;
-	private IRootAttribute rootAttribute;
+	private IModel canvas;
 	private int idx;
 	private IShapeObjectType objectType;
 	private IShapeAttribute shapeAttribute;
 	private List<IAnnotationProperty> props = new LinkedList<IAnnotationProperty>();
 	
-	public ShapeAttributeBuilder(Mockery mockery, String name, IShapeObjectType objectType, IRootAttribute rootAttribute, int idx){
+	public ShapeAttributeBuilder(Mockery mockery, String name, IShapeObjectType objectType, IModel canvas, int idx){
 		this.mockery = mockery;
 		this.name = name;
-		this.rootAttribute = rootAttribute;
+		this.canvas = canvas;
 		this.idx = idx;
 		this.objectType = objectType;
 	}
@@ -68,7 +69,7 @@ public class ShapeAttributeBuilder {
 			allowing(shapeAttribute).getCreationSerial(); will(returnValue(idx));
 			allowing(shapeAttribute).getObjectType(); will(returnValue(objectType));
 			allowing(shapeAttribute).getBounds(); will(returnValue(new Envelope(location, size)));
-			allowing(shapeAttribute).getRootAttribute(); will(returnValue(rootAttribute));
+			allowing(shapeAttribute).getModel(); will(returnValue(canvas));
 			allowing(shapeAttribute).isRemoved(); will(returnValue(false));
 			allowing(shapeAttribute).compareTo(shapeAttribute); will(returnValue(0));
 			allowing(shapeAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
@@ -100,7 +101,6 @@ public class ShapeAttributeBuilder {
 		final String propName = defn.getName();
 		mockery.checking(new Expectations(){{
 			allowing(prop).getDefinition(); will(returnValue(defn));
-			allowing(prop).canVisualiseProperty(); will(returnValue(true));
 			allowing(prop).getOwner(); will(returnValue(shapeAttribute));
 			allowing(shapeAttribute).getProperty(with(equalTo(propName))); will(returnValue(prop));
 			allowing(shapeAttribute).getProperty(with(defn)); will(returnValue(prop));

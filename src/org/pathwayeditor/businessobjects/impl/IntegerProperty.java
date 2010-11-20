@@ -72,15 +72,15 @@ public class IntegerProperty extends AnnotationProperty implements IIntegerAnnot
 		this.propertyDefinition = (IIntegerPropertyDefinition) propertyDefinition;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
-	 */
-	@Override
-	public boolean canVisualiseProperty() {
-		return this.propertyDefinition.isVisualisable();
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
+//	 */
+//	@Override
+//	public boolean canVisualiseProperty() {
+//		return this.propertyDefinition.isVisualisable();
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)

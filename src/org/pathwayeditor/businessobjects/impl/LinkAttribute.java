@@ -21,7 +21,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -48,18 +48,15 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 	private final ILinkTerminus srcTerminus;
 	private final ILinkTerminus tgtTerminus;
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final IRootAttribute rootAttribute;
 	private final IBendPointContainer lineSegement;
 	
-	public LinkAttribute(IRootAttribute hibCanvas, int linkIndex, ILinkObjectType objectType) {
-		super(linkIndex, objectType.getDefaultAttributes());
-		this.rootAttribute = hibCanvas;
+	public LinkAttribute(IModel hibCanvas, int linkIndex, ILinkObjectType objectType) {
+		super(hibCanvas, linkIndex, objectType.getDefaultAttributes());
 		this.objectType = objectType;
 		this.srcTerminus = new LinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
 		this.tgtTerminus = new LinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		this.lineSegement = new BendPointContainer(this);
 		addDefaults(objectType.getDefaultAttributes());
-		this.rootAttribute.addCanvasAttribute(this);
 	}
 
 	/**
@@ -68,9 +65,8 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 	 * @param linkIndex
 	 * @param otherAttribute
 s	 */
-	public LinkAttribute(IRootAttribute hibCanvas, int linkIndex, ILinkAttribute otherAttribute) {
-		super(linkIndex, otherAttribute);
-		this.rootAttribute = hibCanvas;
+	public LinkAttribute(IModel hibCanvas, int linkIndex, ILinkAttribute otherAttribute) {
+		super(hibCanvas, linkIndex, otherAttribute);
 		this.objectType = otherAttribute.getObjectType();
 		this.lineColour = otherAttribute.getLineColour();
 		this.lineStyle = otherAttribute.getLineStyle();
@@ -78,7 +74,6 @@ s	 */
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.lineSegement = new BendPointContainer(this, otherAttribute.getBendPointContainer());
-		this.rootAttribute.addCanvasAttribute(this);
 //		Iterator<Point> bpIter = otherAttribute.bendPointIterator();
 //		while(bpIter.hasNext()){
 //			Point otherBp = bpIter.next();
@@ -219,14 +214,6 @@ s	 */
 //	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#getRootAttribute()
-	 */
-	@Override
-	public IRootAttribute getRootAttribute() {
-		return this.rootAttribute;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
 	 */
 	@Override
@@ -243,14 +230,6 @@ s	 */
 	}
 
 	/* (non-Javadoc)
-	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeCopyFactory()
-	 */
-	@Override
-	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new LinkAttributeCopyFactory(this.rootAttribute.getCreationSerialCounter(), this);
-	}
-
-	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeMoveFactory()
 	 */
 	@Override
@@ -262,5 +241,13 @@ s	 */
 	@Override
 	public ICompoundEdge getCurrentElement(){
 		return (ICompoundEdge)super.getCurrentElement();
+	}
+
+	/* (non-Javadoc)
+	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#elementAttributeCopyFactory()
+	 */
+	@Override
+	public IElementAttributeFactory elementAttributeCopyFactory() {
+		return new LinkAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this);
 	}
 }

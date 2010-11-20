@@ -35,7 +35,7 @@ public class ShapeNodeFactoryFacade implements IShapeNodeFactory {
 	public ShapeNodeFactoryFacade(ICompoundNodeFactory shapeCompoundNodeFactory){
 		this.shapeCompoundNodeFactory = shapeCompoundNodeFactory;
 		IRootAttribute rootAttribute = (IRootAttribute)this.shapeCompoundNodeFactory.getGraph().getRoot().getAttribute();
-		IShapeAttributeFactory shapeAttributeFactory = rootAttribute.shapeAttributeFactory();
+		IShapeAttributeFactory shapeAttributeFactory = rootAttribute.getModel().shapeAttributeFactory();
 		shapeCompoundNodeFactory.setAttributeFactory(shapeAttributeFactory);
 	}
 	

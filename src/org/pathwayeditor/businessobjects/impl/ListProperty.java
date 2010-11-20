@@ -92,13 +92,13 @@ public class ListProperty extends AnnotationProperty implements IListAnnotationP
 		this.propertyDefinition = (IListPropertyDefinition) propertyDefinition;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
-	 */
-	@Override
-	public boolean canVisualiseProperty() {
-		return this.propertyDefinition.isVisualisable();
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
+//	 */
+//	@Override
+//	public boolean canVisualiseProperty() {
+//		return this.propertyDefinition.isVisualisable();
+//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)

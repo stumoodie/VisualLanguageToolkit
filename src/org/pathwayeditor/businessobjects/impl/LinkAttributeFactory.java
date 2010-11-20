@@ -75,7 +75,7 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 		if(currSerial == null){
 			currSerial = creationSerialCounter.nextIndex();
 		}
-		return new LinkAttribute(this.destination.getRootAttribute(), currSerial.intValue(), this.objectType);
+		return new LinkAttribute(this.destination.getModel(), currSerial.intValue(), this.objectType);
 	}
 
 	/* (non-Javadoc)

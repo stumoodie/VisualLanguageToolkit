@@ -28,9 +28,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -47,6 +49,7 @@ public class NotationSubsystemFixture {
 	public static final int SHAPE_TYPE_C_ID = 3;
 	public static final int LINK_TYPE_D_ID = 4;
 	public static final int LINK_TYPE_E_ID = 5;
+	public static final int LABEL_TYPE_ID = 6;
 	public static final String SHAPE_TYPE_A_PROP_NAME = "shapeTypeAName";
 	public static final String SHAPE_TYPE_B_PROP_NAME = "shapeTypeBName";
 	
@@ -61,6 +64,7 @@ public class NotationSubsystemFixture {
 	private ILinkObjectType linkTypeE;
 	private IRootObjectParentingRules rootTypeParenting;
 	private INotation notation;
+	private ILabelObjectType labelObjectType;
 	
 	public static class CreatePropertyAction implements Action {
 //		private IPlainTextPropertyDefinition defn;
@@ -78,7 +82,6 @@ public class NotationSubsystemFixture {
 		public IPlainTextAnnotationProperty invoke(Invocation invocation) throws Throwable {
 			IPropertyBuilder builder = (IPropertyBuilder)invocation.getParameter(0);
 			IPlainTextPropertyDefinition testPropDefn = (IPlainTextPropertyDefinition)invocation.getInvokedObject();
-//			IPlainTextAnnotationProperty retVal = builder.createPlainTextProperty(this.defn);
 			IPlainTextAnnotationProperty retVal = builder.createPlainTextProperty(testPropDefn);
 			return retVal;
 		}
@@ -129,7 +132,11 @@ public class NotationSubsystemFixture {
 		linkTypeEBuilder.setTargets(this.shapeTypeA);
 		linkTypeEBuilder.build();
 		this.linkTypeE = linkTypeEBuilder.getObjectType();
+		MockLabelObjectTypeBuilder labelTypeBuilder = new MockLabelObjectTypeBuilder(mockery, syntaxService, LABEL_TYPE_ID, "labelType");
+		labelTypeBuilder.build();
+		this.labelObjectType = labelTypeBuilder.getObjectType();
 		this.mockery.checking(new Expectations(){{
+			allowing(notationSubsystem).getNotation(); will(returnValue(notation));
 			allowing(notationSubsystem).getSyntaxService(); will(returnValue(syntaxService));
 			
 			allowing(syntaxService).getNotationSubsystem(); will(returnValue(notationSubsystem));
@@ -147,6 +154,9 @@ public class NotationSubsystemFixture {
 			allowing(syntaxService).getObjectType(LINK_TYPE_E_ID); will(returnValue(linkTypeE));
 			allowing(syntaxService).objectTypeIterator(); will(returnIterator(rootType, shapeTypeA, shapeTypeB, shapeTypeC, linkTypeD, linkTypeE));
 			allowing(syntaxService).getNotation(); will(returnValue(notation));
+			allowing(syntaxService).getLabelObjectType(LABEL_TYPE_ID); will(returnValue(labelObjectType));
+			allowing(syntaxService).getLabelObjectTypeByProperty(with(any(IPropertyDefinition.class))); will(returnValue(labelObjectType));
+			allowing(syntaxService).isVisualisableProperty(with(any(IPropertyDefinition.class))); will(returnValue(true));
 			
 			allowing(notation).getDescription(); will(returnValue("Test Fixture Notation"));
 			allowing(notation).getDisplayName(); will(returnValue("Fixture Notation"));

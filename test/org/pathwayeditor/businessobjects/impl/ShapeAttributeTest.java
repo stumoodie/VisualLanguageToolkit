@@ -37,6 +37,7 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -55,7 +56,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
+import org.pathwayeditor.testfixture.CanvasAttributePropertyChangeEventValidator;
 import org.pathwayeditor.testfixture.CanvasResizeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.CanvasTranslationEventValidator;
@@ -113,13 +114,13 @@ public class ShapeAttributeTest {
 		this.testFixture.redefineBuilder(CanvasTestFixture.SHAPE1_ATT_ID, new IObjectConstructor<IShapeAttribute>(){
 			@Override
 			public IShapeAttribute create() {
-				final IRootAttribute rootAtt = testFixture.getRootAttribute();
+				final IModel rootAtt = testFixture.getModel();
 				mockery.checking(new Expectations(){{
 					exactly(1).of(shapeTypeAPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(CanvasTestFixture.buildTextProperty(shapeTypeAPropDefn));
 //					exactly(1).of(shapeTypeBPropDefn).createProperty(with(any(IPropertyBuilder.class))); will(testFixture.buildTextProperty(shapeTypeBPropDefn));
 					one(rootAtt).addCanvasAttribute(with(any(IShapeAttribute.class)));
 				}});
-				testInstance = new ShapeAttribute(testFixture.getRootAttribute(), CanvasTestFixture.SHAPE1_ATT_IDX, expectedObjectType);
+				testInstance = new ShapeAttribute(testFixture.getModel(), CanvasTestFixture.SHAPE1_ATT_IDX, expectedObjectType);
 				return testInstance;
 			}
 
@@ -163,7 +164,7 @@ public class ShapeAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#ShapeAttribute(org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute, int, org.pathwayeditor.businessobjects.impl.ShapeAttribute)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#ShapeAttribute(org.pathwayeditor.businessobjects.drawingprimitives.IModel, int, org.pathwayeditor.businessobjects.impl.ShapeAttribute)}.
 	 */
 	@Test(expected=NullPointerException.class)
 	public void testShapeAttributeIRootAttributeIntShapeAttribute() {
@@ -203,7 +204,7 @@ public class ShapeAttributeTest {
 		this.testInstance.setLineWidth(newLineWidth);
 		assertFalse("new value different", Math.abs(this.expectedLineWidth - newLineWidth) < DOUBLE_EQUIVALENCE_THRESH);
 		assertEquals("new line width", newLineWidth, this.testInstance.getLineWidth(), DOUBLE_EQUIVALENCE_THRESH);
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_WIDTH,
 				this.expectedLineWidth, newLineWidth);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -233,7 +234,7 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedFillColour.equals(newColour));
 		this.testInstance.setFillColour(newColour);
 		assertEquals("expected fill colour", newColour, this.testInstance.getFillColour());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
 				this.expectedFillColour, newColour);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -247,7 +248,7 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedLineColour.equals(newColour));
 		this.testInstance.setLineColour(newColour);
 		assertEquals("expected line colour", newColour, this.testInstance.getLineColour());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
 				this.expectedLineColour, newColour);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -261,7 +262,7 @@ public class ShapeAttributeTest {
 		assertFalse("new value different", this.expectedLineStyle.equals(newLineStyle));
 		this.testInstance.setLineStyle(newLineStyle);
 		assertEquals("expected line colour", newLineStyle, this.testInstance.getLineStyle());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_STYLE,
 				this.expectedLineStyle, newLineStyle);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -319,7 +320,7 @@ public class ShapeAttributeTest {
 		this.testInstance.setBounds(newBounds);
 		assertFalse("no bounds", this.expectedBounds.equals(newBounds));
 		assertEquals("new bounds", newBounds, this.testInstance.getBounds());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
 				this.expectedBounds, newBounds);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -360,12 +361,12 @@ public class ShapeAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#getRootAttribute()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#getModel()}.
 	 */
 	@Test
-	public void testGetRootAttribute() {
-		IRootAttribute rootAtt = this.testFixture.getObject(CanvasTestFixture.ROOT_ATT_ID);
-		assertEquals("expected root att", rootAtt, this.testInstance.getRootAttribute());
+	public void testGetModel() {
+		IModel rootAtt = this.testFixture.getModel();
+		assertEquals("expected root att", rootAtt, this.testInstance.getModel());
 	}
 
 	/**

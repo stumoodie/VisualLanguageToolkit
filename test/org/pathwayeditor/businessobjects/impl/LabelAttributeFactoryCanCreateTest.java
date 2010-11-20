@@ -31,9 +31,11 @@ import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
@@ -67,6 +69,9 @@ public class LabelAttributeFactoryCanCreateTest {
 		prop = shapeAtt.getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
 		this.testInstance.setProperty(prop);
 		this.testInstance.setDestinationAttribute(shapeAtt);
+		INotationSyntaxService syntaxService = this.notationFixture.getNotationSubsystem().getSyntaxService();
+		ILabelObjectType labelObjectType = syntaxService.getLabelObjectType(NotationSubsystemFixture.LABEL_TYPE_ID);
+		this.testInstance.setLabelObjectType(labelObjectType);
 	}
 
 	/**
@@ -109,9 +114,8 @@ public class LabelAttributeFactoryCanCreateTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
-		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
+		final IModel rootAtt = this.testFixture.getModel();
 		this.mockery.checking(new Expectations(){{
-			one(prop).setLabel(with(any(ILabelAttribute.class)));
 			allowing(rootAtt).addCanvasAttribute(with(any(ILinkAttribute.class)));
 		}});
 		ILabelAttribute labelAtt = this.testInstance.createAttribute();

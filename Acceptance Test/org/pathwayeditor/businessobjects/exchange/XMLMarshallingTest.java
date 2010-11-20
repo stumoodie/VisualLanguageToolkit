@@ -17,19 +17,16 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
-import org.pathwayeditor.businessobjects.impl.RootAttribute;
+import org.pathwayeditor.businessobjects.impl.Model;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
-import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 
 
 /**
@@ -37,7 +34,7 @@ import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
  *
  */
 public class XMLMarshallingTest {
-	private ICompoundGraph graph;
+	private IModel graph;
 	private Mockery mockery;
 
 	
@@ -47,19 +44,19 @@ public class XMLMarshallingTest {
 		NotationSubsystemFixture notationFixture = new NotationSubsystemFixture(mockery);
 		notationFixture.buildFixture();
 		INotationSyntaxService syntaxService = notationFixture.getNotationSubsystem().getSyntaxService();
-		IRootAttribute rootAtt = new RootAttribute("testModel", syntaxService.getRootObjectType());
-		this.graph = new CompoundGraph(rootAtt);
+//		IRootAttribute rootAtt = new RootAttribute("testModel", syntaxService.getRootObjectType());
+		this.graph = new Model("testModel", notationFixture.getNotationSubsystem());
 		final IShapeObjectType shapeOt = syntaxService.getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_A_ID);
 		final IPropertyDefinition shapeTypeAName = shapeOt.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
 		this.mockery.checking(new Expectations(){{
 			allowing(shapeTypeAName).createProperty(with(any(IPropertyBuilder.class))); will(NotationSubsystemFixture.buildTextProperty());
 		}});
 //		IShapeAttributeFactory shapeAttFact = rootAtt.shapeAttributeFactory();
-		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getRoot(), shapeOt);
+		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getGraph().getRoot(), shapeOt);
 		shapeBuilder.setName("S1");
 		shapeBuilder.build();
 		ICompoundNode shape1Node = shapeBuilder.getNode();
-		((IShapeAttribute)shape1Node.getAttribute()).getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME).setDisplayed(true);
+//		((IShapeAttribute)shape1Node.getAttribute()).getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME).setDisplayed(true);
 		shapeBuilder.setName("S2");
 		shapeBuilder.build();
 //		ICompoundNode shape2Node = shapeBuilder.getNode();
@@ -81,9 +78,9 @@ public class XMLMarshallingTest {
 		Writer out = null;
 		try {
 			CanvasMarshaller builder = new CanvasMarshaller();
-			builder.setCanvas(graph);
+			builder.setModel(graph);
 			builder.buildCanvas();
-			Canvas xmlCanvas = builder.getCanvas();
+			Canvas xmlCanvas = builder.getXmlTopLevel();
 			xmlCanvas.validate();
 			assertTrue("valid XML", xmlCanvas.isValid());
 			out = new FileWriter("test.xml");

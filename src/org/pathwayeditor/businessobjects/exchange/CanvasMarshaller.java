@@ -18,11 +18,13 @@ import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -83,9 +85,10 @@ import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
  *
  */
 public class CanvasMarshaller {
+	private static final Dimension DEFAULT_GRID_SIZE = new Dimension(10, 10);
 	private Canvas xmlCanvas;
 //	private IRootAttribute dbCanvas;
-	private ICompoundGraph graph;
+	private IModel graph;
 	private final Map<IAnnotationProperty, PropertyRef> propMap;
 	private final AnnotationsBuilder builder;
 //	private final Map<ILabelAttribute, LabelNode> skippedLabels;
@@ -115,14 +118,18 @@ public class CanvasMarshaller {
 		endDecMapping.put(LinkEndDecoratorShape.TRIANGLE_BAR, EndDecoratorTypeType.TRIANGLE_BAR);
 	}
 	
-	public void setCanvas(ICompoundGraph dbCanvas){
+	public void setModel(IModel dbCanvas){
 		this.graph = dbCanvas;
 	}
 	
-	public Canvas getCanvas(){
-		return this.xmlCanvas;
+	public IModel getModel(){
+		return this.graph;
 	}
 
+	
+	public Canvas getXmlTopLevel(){
+		return this.xmlCanvas;
+	}
 
 	public void buildCanvas(){
 		if(this.graph == null) throw new IllegalStateException("No canvas has been set");
@@ -159,7 +166,7 @@ public class CanvasMarshaller {
 	}
 	
 	private void setCanvasGraphicalProperties(){
-		IRootAttribute dbCanvas = (IRootAttribute)this.graph.getRoot().getAttribute();
+		ICanvas dbCanvas = this.graph.getRootAttribute();
 		Background bgrd = new Background();
 		bgrd.setBlue(dbCanvas.getBackgroundColour().getBlue());
 		bgrd.setRed(dbCanvas.getBackgroundColour().getRed());
@@ -171,28 +178,27 @@ public class CanvasMarshaller {
 		grid.setGridOn(false);
 		grid.setSnapToGrid(false);
 		GridSize gridSize = new GridSize();
-		Dimension canvasGridSize = dbCanvas.getBounds().getDimension();
+		Dimension canvasGridSize = DEFAULT_GRID_SIZE;
 //		gridSize.setHeight(dbCanvas.getCanvasSize().getHeight());
 //		gridSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		gridSize.setHeight(canvasGridSize.getHeight());
 		gridSize.setWidth(canvasGridSize.getWidth());
 		grid.setGridSize(gridSize);
 		xmlCanvas.setGrid(grid);
-		Dimension canvasDim = dbCanvas.getBounds().getDimension();
+		Dimension canvasDim = dbCanvas.getCanvasBounds().getDimension();
 		CanvasSize canvasSize = new CanvasSize();
 		canvasSize.setHeight(canvasDim.getHeight());
 		canvasSize.setWidth(canvasDim.getWidth());
 //		canvasSize.setHeight(dbCanvas.getCanvasSize().getHeight());
 //		canvasSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		xmlCanvas.setCanvasSize(canvasSize);
-		xmlCanvas.setName(dbCanvas.getName());
-		xmlCanvas.setLastCreationSerial(dbCanvas.getCreationSerialCounter().getCurrent());
+		xmlCanvas.setName(this.graph.getName());
+		xmlCanvas.setLastCreationSerial(this.graph.getCreationSerialCounter().getCurrent());
 	}
 	
 	private void setNotation(){
-		IRootAttribute dbCanvas = (IRootAttribute)this.graph.getRoot().getAttribute();
 		Notation notation = new Notation();
-		INotation dbNotation = dbCanvas.getObjectType().getSyntaxService().getNotation();
+		INotation dbNotation = this.graph.getNotationSubsystem().getNotation();
 		notation.setQualifiedName(dbNotation.getQualifiedName());
 		notation.setMajorVersion(dbNotation.getVersion().getMajorVersion());
 		notation.setMinorVersion(dbNotation.getVersion().getMinorVersion());
@@ -200,7 +206,7 @@ public class CanvasMarshaller {
 		notation.setDisplayName(dbNotation.getDisplayName());
 		notation.setDescription(dbNotation.getDescription());
 		xmlCanvas.setNotation(notation);
-		Iterator<IObjectType> iter = dbCanvas.getObjectType().getSyntaxService().objectTypeIterator();
+		Iterator<IObjectType> iter = this.graph.getNotationSubsystem().getSyntaxService().objectTypeIterator();
 		while(iter.hasNext()){
 			IObjectType objectType = iter.next();
 			ObjectType xmlObjectType = createObjectType(objectType);
@@ -377,8 +383,7 @@ public class CanvasMarshaller {
 	}
 	
 	private void createModel(){
-//		IModel dbModel = dbCanvas.getModel();
-		ICompoundGraph dbModel = this.graph;
+		ICompoundGraph dbModel = this.graph.getGraph();
 		Model model = new Model();
 		model.setLastEdgeIndex(dbModel.numEdges());
 		model.setLastNodeIndex(dbModel.numNodes());

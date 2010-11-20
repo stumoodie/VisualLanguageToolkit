@@ -19,6 +19,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributeChangeListenee {
@@ -29,6 +30,9 @@ public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttribute
 	 */
 	IAnnotationProperty getProperty();
 
+	@Override
+	ILabelObjectType getObjectType();
+	
 	/**
 	 * Get the background colour of this Label.
 	 * @return the RGB representation of the colour of the Label.
@@ -70,20 +74,4 @@ public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttribute
 	public void setLineStyle(LineStyle lineStyle);
 	
 	public Dimension getMinimumSize();
-	
-	/**
-	 * Test if the label attribute is that same as the other label. Bases on its associated
-	 * property, which is the business key of this object.
-	 * @param other the other object to compare.
-	 * @return true is the business keys of both objects are the same, false otherwise. 
-	 */
-	@Override
-	boolean equals(Object other);
-	
-	/**
-	 * Gets a hash code based on the business key of this object. See {@link #equals(Object)}. 
-	 * @return the hash code.
-	 */
-	@Override
-	int hashCode();
 }

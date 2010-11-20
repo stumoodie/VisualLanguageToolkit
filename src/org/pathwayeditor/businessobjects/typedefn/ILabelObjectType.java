@@ -23,5 +23,11 @@ package org.pathwayeditor.businessobjects.typedefn;
 public interface ILabelObjectType extends INodeObjectType {
 
 	ILabelAttributeDefaults getDefaultAttributes();
+
+	/**
+	 * Is the property always shown or displayed.
+	 * @return true if it is always displayed, false otherwise.
+	 */
+	boolean isAlwaysDisplayed();
 	
 }

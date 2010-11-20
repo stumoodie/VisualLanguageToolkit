@@ -16,7 +16,7 @@ public class LinkEdgeFactoryFacade implements ILinkEdgeFactory {
 	public LinkEdgeFactoryFacade(ICompoundEdgeFactory compoundEdge){
 		this.compoundEdge = compoundEdge;
 		IRootAttribute rootAttribute = (IRootAttribute)compoundEdge.getGraph().getRoot().getAttribute();
-		this.compoundEdge.setAttributeFactory(rootAttribute.linkAttributeFactory());
+		this.compoundEdge.setAttributeFactory(rootAttribute.getModel().linkAttributeFactory());
 	}
 	
 	@Override

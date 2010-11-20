@@ -20,7 +20,7 @@ package org.pathwayeditor.businessobjects.impl;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -52,21 +52,17 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private transient final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final IRootAttribute rootAttribute;
 	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_POSITION, DEFAULT_SIZE), canvasAttributeChangeListenerHelper);
 	
 
-	public ShapeAttribute(IRootAttribute rootAttribute, int creationSerial, IShapeObjectType shapeObjectType){
-		super(creationSerial, shapeObjectType.getDefaultAttributes());
-		this.rootAttribute = rootAttribute;
+	public ShapeAttribute(IModel canvas, int creationSerial, IShapeObjectType shapeObjectType){
+		super(canvas, creationSerial, shapeObjectType.getDefaultAttributes());
 		this.shapeObjectType = shapeObjectType;
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
-		this.rootAttribute.addCanvasAttribute(this);
 	}
 	
-	public ShapeAttribute(IRootAttribute rootAttribute, int newCreationSerial, IShapeAttribute other) {
-		super(newCreationSerial, other);
-		this.rootAttribute = rootAttribute;
+	public ShapeAttribute(IModel canvas, int newCreationSerial, IShapeAttribute other) {
+		super(canvas, newCreationSerial, other);
 		this.boundsDelegate.setBounds(other.getBounds());
 		this.fillColour = other.getFillColour();
 		this.lineColour = other.getLineColour();
@@ -74,7 +70,6 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		this.lineWidth = other.getLineWidth();
 		this.shapeObjectType = other.getObjectType();
 		this.figureDefn=other.getShapeDefinition();
-		this.rootAttribute.addCanvasAttribute(this);
 	}
 	
 	
@@ -233,14 +228,6 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute#getRootAttribute()
-	 */
-	@Override
-	public IRootAttribute getRootAttribute() {
-		return this.rootAttribute;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
 	 */
 	@Override
@@ -253,7 +240,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new ShapeAttributeCopyFactory(this.rootAttribute.getCreationSerialCounter(), this);
+		return new ShapeAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this);
 	}
 
 	/* (non-Javadoc)

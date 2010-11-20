@@ -60,7 +60,7 @@ public class ShapeAttributeMoveFactoryDifferentRootTest {
 		this.attributeToMove = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
 		this.testInstance = new TypedAttributeMoveFactory(attributeToMove);
 //		this.testInstance.setElementToMove(attributeToMove);
-		this.testInstance.setDestinationAttribute(this.otherFixture.getRootAttribute());
+		this.testInstance.setDestinationAttribute(this.otherFixture.getModel().getRootAttribute());
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class ShapeAttributeMoveFactoryDifferentRootTest {
 	 */
 	@Test
 	public void testGetDestinationAttribute() {
-		assertEquals("expected", this.otherFixture.getRootAttribute(), this.testInstance.getDestinationAttribute());
+		assertEquals("expected", this.otherFixture.getModel().getRootAttribute(), this.testInstance.getDestinationAttribute());
 	}
 
 }

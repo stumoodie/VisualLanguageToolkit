@@ -74,7 +74,7 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	@Override
 	public ILabelAttribute createAttribute() {
 		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
-		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getRootAttribute(), creationSerialCounter.next(), this.labelProperty.getLabel(), copiedProp);
+		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getModel(), creationSerialCounter.next(), (ILabelAttribute)this.outAttribute, copiedProp);
 	}
 
 	/* (non-Javadoc)

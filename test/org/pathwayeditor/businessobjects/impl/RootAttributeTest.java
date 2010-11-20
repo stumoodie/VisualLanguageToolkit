@@ -16,11 +16,8 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -32,25 +29,25 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeResizedEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeTranslationEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListener;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
-import org.pathwayeditor.testfixture.CanvasPropertyChangeEventValidator;
+import org.pathwayeditor.testfixture.CanvasAttributePropertyChangeEventValidator;
+import org.pathwayeditor.testfixture.CanvasOnlyPropertyChangeEventValidator;
 import org.pathwayeditor.testfixture.CanvasTestFixture;
 import org.pathwayeditor.testfixture.GeneralIteratorTestUtility;
 import org.pathwayeditor.testfixture.IObjectConstructor;
-import org.pathwayeditor.testfixture.IteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
 /**
@@ -59,23 +56,18 @@ import org.pathwayeditor.testfixture.NotationSubsystemFixture;
  */
 @RunWith(JMock.class)
 public class RootAttributeTest {
-	private static final String INVALID_NAME1 = " ajhd";
-	private static final String INVALID_NAME2 = "ajhd ";
-	private static final String INVALID_NAME3 = "&ajhd";
-	private static final String VALID_CANVAS_NAME = "12weabdsvAHSGH 3 AJHD  AJJ_16472";
-	private static final String EXPECTED_NAME = "TEST CANVAS";
 	private static final Envelope EXPECTED_BOUNDS = new Envelope(RootAttribute.INITIAL_POS, RootAttribute.INITIAL_SIZE);
-	private static final int EXPECTED_NUM_ATTS = 3;
-	private static final int MISSING_ATT_IDX = -1;
 	private static final int EXPECTED_NUM_LISTENERS = 1;
 	private IRootAttribute testInstance;
 	private NotationSubsystemFixture notationFixture;
 	private Mockery mockery;
 	private ICanvasAttributeChangeListener testListener;
+	private ICanvasPropertyChangeListener testCanvasListener;
 	private CanvasTestFixture testFixture;
 	private ICanvasAttributeTranslationEvent translationEvent = null;
 	private ICanvasAttributeResizedEvent resizedEvent = null;
 	private ICanvasAttributePropertyChangeEvent propChangeEvent = null;
+	private ICanvasPropertyChangeEvent canvasChangeEvent = null;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -90,18 +82,16 @@ public class RootAttributeTest {
 
 			@Override
 			public IRootAttribute create() {
-				testInstance = new RootAttribute(EXPECTED_NAME, notationFixture.getNotationSubsystem().getSyntaxService().getRootObjectType());
+				final IModel model = testFixture.getObject(CanvasTestFixture.MODEL_ID); 
+				mockery.checking(new Expectations(){{
+					one(model).addCanvasAttribute(with(any(IRootAttribute.class)));
+				}});
+				testInstance = new RootAttribute(model, CanvasTestFixture.ROOT_ATT_IDX, notationFixture.getNotationSubsystem().getSyntaxService().getRootObjectType());
 				return testInstance;
 			}
 
 			@Override
 			public boolean build() {
-				IShapeAttribute shape1Att = testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
-				testInstance.addCanvasAttribute(shape1Att);
-				ILabelAttribute label9Att = testFixture.getObject(CanvasTestFixture.LABEL9_ATT_ID);
-				testInstance.addCanvasAttribute(label9Att);
-				ILinkAttribute link1Att = testFixture.getObject(CanvasTestFixture.LINK1_ATT_ID);
-				testInstance.addCanvasAttribute(link1Att);
 				return true;
 			}
 			
@@ -126,6 +116,15 @@ public class RootAttributeTest {
 			
 		};
 		this.testInstance.addChangeListener(this.testListener);
+		this.testCanvasListener = new ICanvasPropertyChangeListener() {
+
+			@Override
+			public void propertyChange(ICanvasPropertyChangeEvent e) {
+				canvasChangeEvent = e;
+			}
+
+		};
+		this.testInstance.addCanvasPropertyChangeListener(testCanvasListener);
 	}
 
 	/**
@@ -137,14 +136,6 @@ public class RootAttributeTest {
 		this.testInstance = null;
 		this.testListener = null;
 		this.testFixture = null;
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getName()}.
-	 */
-	@Test
-	public void testGetName() {
-		assertEquals("expected name", EXPECTED_NAME, this.testInstance.getName());
 	}
 
 	/**
@@ -180,9 +171,9 @@ public class RootAttributeTest {
 		assertFalse("not same as default", RootAttribute.DEFAULT_BACKGROUND_COLOUR.equals(newCol));
 		this.testInstance.setBackgroundColour(newCol);
 		assertEquals("expected bg col", newCol, this.testInstance.getBackgroundColour());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
+		CanvasOnlyPropertyChangeEventValidator validator = new CanvasOnlyPropertyChangeEventValidator(this.testInstance, CanvasPropertyChange.BACKGROUND_COLOUR,
 				RootAttribute.DEFAULT_BACKGROUND_COLOUR, newCol);
-		validator.validateEvent(propChangeEvent);
+		validator.validateEvent(canvasChangeEvent);
 	}
 
 	/**
@@ -194,7 +185,7 @@ public class RootAttributeTest {
 		assertFalse("not default", EXPECTED_BOUNDS.equals(newBounds));
 		this.testInstance.setBounds(newBounds);
 		assertEquals("bounds set", newBounds, this.testInstance.getBounds());
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
+		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.BOUNDS,
 				EXPECTED_BOUNDS, newBounds);
 		validator.validateEvent(propChangeEvent);
 	}
@@ -255,34 +246,6 @@ public class RootAttributeTest {
 		assertNull("not event set", this.translationEvent);
 	}
 
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#isValidName(java.lang.String)}.
-	 */
-	@Test
-	public void testIsValidName() {
-		assertFalse("is invalid when null", this.testInstance.isValidName(null));
-		assertFalse("is invalid when empty string", this.testInstance.isValidName(""));
-		assertTrue("is valid name", this.testInstance.isValidName(VALID_CANVAS_NAME));
-		assertFalse("is invalid name", this.testInstance.isValidName(INVALID_NAME1));
-		assertFalse("is invalid name", this.testInstance.isValidName(INVALID_NAME2));
-		assertFalse("is invalid name", this.testInstance.isValidName(INVALID_NAME3));
-		assertTrue("is valid name", this.testInstance.isValidName(EXPECTED_NAME));
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#checkValidName(java.lang.String)}.
-	 */
-	@Test
-	public void testCheckValidName() {
-		assertFalse("is invalid when null", RootAttribute.checkValidName(null));
-		assertFalse("is invalid when empty string", RootAttribute.checkValidName(""));
-		assertTrue("is valid name", RootAttribute.checkValidName(VALID_CANVAS_NAME));
-		assertFalse("is invalid name", RootAttribute.checkValidName(INVALID_NAME1));
-		assertFalse("is invalid name", RootAttribute.checkValidName(INVALID_NAME2));
-		assertFalse("is invalid name", RootAttribute.checkValidName(INVALID_NAME3));
-		assertTrue("is valid name", RootAttribute.checkValidName(EXPECTED_NAME));
-	}
-
 
 //	/**
 //	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getCreationSerialCounter()}.
@@ -302,159 +265,17 @@ public class RootAttributeTest {
 		this.testInstance.elementAttributeMoveFactory();
 	}
 	
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#getRootAttribute()}.
-	 */
-	@Test
-	public void testGetRootAttribute() {
-		assertEquals("expected root att", this.testInstance, this.testInstance.getRootAttribute());
-	}
-	
 	@Test
 	public void testGetCreationSerial(){
 		assertEquals("expected creation serial", RootAttribute.ROOT_IDX, this.testInstance.getCreationSerial());
 	}
 
-	@Test
-	public void testSetName() {
-		this.testInstance.setName(VALID_CANVAS_NAME);
-		assertEquals("expected name", VALID_CANVAS_NAME, this.testInstance.getName());
-		assertFalse("expecte to have changed", EXPECTED_NAME.equals(this.testInstance.getName()));
-		CanvasPropertyChangeEventValidator validator = new CanvasPropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.NAME,
-				EXPECTED_NAME, VALID_CANVAS_NAME);
-		validator.validateEvent(propChangeEvent);
-	}
-
-	@Test
-	public void testNumCanvasAttributes() {
-		assertEquals("expected num attributes", EXPECTED_NUM_ATTS, this.testInstance.numCanvasAttributes());
-	}
-
-	@Test
-	public void testCanvasAttributeIterator() {
-		IteratorTestUtility<ICanvasElementAttribute> iterTest = new IteratorTestUtility<ICanvasElementAttribute>(this.testFixture.getObjectArray(new ICanvasElementAttribute[0], CanvasTestFixture.SHAPE1_ATT_ID,
-				CanvasTestFixture.LABEL9_ATT_ID, CanvasTestFixture.LINK1_ATT_ID));
-		iterTest.testSortedIterator(this.testInstance.canvasAttributeIterator());
-	}
-
-	@Test
-	public void testLinkAttributeIterator() {
-		IteratorTestUtility<ILinkAttribute> iterTest = new IteratorTestUtility<ILinkAttribute>(this.testFixture.getObjectArray(new ILinkAttribute[0], CanvasTestFixture.LINK1_ATT_ID));
-		iterTest.testSortedIterator(this.testInstance.linkAttributeIterator());
-	}
-
-	@Test
-	public void testShapeAttributeIterator() {
-		IteratorTestUtility<IShapeAttribute> iterTest = new IteratorTestUtility<IShapeAttribute>(this.testFixture.getObjectArray(new IShapeAttribute[0], CanvasTestFixture.SHAPE1_ATT_ID));
-		iterTest.testSortedIterator(this.testInstance.shapeAttributeIterator());
-	}
-
-	@Test
-	public void testLabelAttributeIterator() {
-		IteratorTestUtility<ILabelAttribute> iterTest = new IteratorTestUtility<ILabelAttribute>(this.testFixture.getObjectArray(new ILabelAttribute[0], CanvasTestFixture.LABEL9_ATT_ID));
-		iterTest.testSortedIterator(this.testInstance.labelAttributeIterator());
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetLabelAttributeWrongType() {
-		this.testInstance.getLabelAttribute(CanvasTestFixture.SHAPE1_ATT_IDX);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetLabelAttributeNoAtt() {
-		this.testInstance.getLabelAttribute(MISSING_ATT_IDX);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetLinkAttributeWrongType() {
-		this.testInstance.getLinkAttribute(CanvasTestFixture.SHAPE1_ATT_IDX);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetLinkAttributeNoAtt() {
-		this.testInstance.getLinkAttribute(MISSING_ATT_IDX);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetShapeAttributeWrongType() {
-		this.testInstance.getShapeAttribute(CanvasTestFixture.LINK1_ATT_IDX);
-	}
-
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetShapeAttributeNoAtt() {
-		this.testInstance.getShapeAttribute(MISSING_ATT_IDX);
-	}
-
-	@Test
-	public void testContainsLabelAttribute() {
-		assertTrue("has att", this.testInstance.containsLabelAttribute(CanvasTestFixture.LABEL9_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLabelAttribute(MISSING_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLabelAttribute(CanvasTestFixture.ROOT_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLabelAttribute(CanvasTestFixture.SHAPE1_ATT_IDX));
-	}
-
-	@Test
-	public void testContainsLinkAttribute() {
-		assertTrue("has att", this.testInstance.containsLinkAttribute(CanvasTestFixture.LINK1_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLinkAttribute(MISSING_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLinkAttribute(CanvasTestFixture.ROOT_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsLinkAttribute(CanvasTestFixture.SHAPE1_ATT_IDX));
-	}
-
-	@Test
-	public void testContainsShapeAttribute() {
-		assertTrue("has att", this.testInstance.containsShapeAttribute(CanvasTestFixture.SHAPE1_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsShapeAttribute(MISSING_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsShapeAttribute(CanvasTestFixture.ROOT_ATT_IDX));
-		assertFalse("no att", this.testInstance.containsShapeAttribute(CanvasTestFixture.LINK1_ATT_IDX));
-	}
-
-	@Test
-	public void testFindAttribute() {
-		ICanvasElementAttribute expectedAtt = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
-		assertEquals("expected value", expectedAtt, this.testInstance.findAttribute(CanvasTestFixture.SHAPE1_ATT_IDX));
-		assertNull("no value found", this.testInstance.findAttribute(MISSING_ATT_IDX));
-	}
-
-	@Test
-	public void testGetLabelAttribute() {
-		ICanvasElementAttribute expectedAtt = this.testFixture.getObject(CanvasTestFixture.LABEL9_ATT_ID);
-		assertEquals("expected value", expectedAtt, this.testInstance.getLabelAttribute(CanvasTestFixture.LABEL9_ATT_IDX));
-	}
-
-	@Test
-	public void testGetLinkAttribute() {
-		ICanvasElementAttribute expectedAtt = this.testFixture.getObject(CanvasTestFixture.LINK1_ATT_ID);
-		assertEquals("expected value", expectedAtt, this.testInstance.getLinkAttribute(CanvasTestFixture.LINK1_ATT_IDX));
-	}
-
-	@Test
-	public void testGetShapeAttribute() {
-		ICanvasElementAttribute expectedAtt = this.testFixture.getObject(CanvasTestFixture.SHAPE1_ATT_ID);
-		assertEquals("expected value", expectedAtt, this.testInstance.getShapeAttribute(CanvasTestFixture.SHAPE1_ATT_IDX));
-	}
 
 	@Test
 	public void testCompareTo() {
 		assertEquals("compare to self", 0, this.testInstance.compareTo(testInstance));
 	}
 
-	@Test
-	public void testAddCanvasAttribute() {
-		final ICanvasElementAttribute newCanvasAttribute = this.mockery.mock(ICanvasElementAttribute.class, "newCanvasAttribute");
-		final int newIdx = EXPECTED_NUM_ATTS+1;
-		this.mockery.checking(new Expectations(){{
-			allowing(newCanvasAttribute).getCreationSerial(); will(returnValue(newIdx));
-			allowing(newCanvasAttribute).getRootAttribute(); will(returnValue(testInstance));
-			allowing(newCanvasAttribute).compareTo(with(not(equalTo(newCanvasAttribute)))); will(returnValue(1));
-			allowing(newCanvasAttribute).compareTo(with(equalTo(newCanvasAttribute))); will(returnValue(0));
-			allowing(newCanvasAttribute).isRemoved(); will(returnValue(false));
-		}});
-		this.testInstance.addCanvasAttribute(newCanvasAttribute);
-		assertEquals("found att", newCanvasAttribute, this.testInstance.findAttribute(newIdx));
-		assertEquals("num atts expected", EXPECTED_NUM_ATTS+1, this.testInstance.numCanvasAttributes());
-	}
-	
 	@Test
 	public void testIsRemoved(){
 		assertTrue("removed", this.testInstance.isRemoved());
@@ -463,22 +284,6 @@ public class RootAttributeTest {
 	@Test
 	public void testGetCurrentElement(){
 		assertNull("no current element", this.testInstance.getCurrentElement());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#linkAttributeFactory()}.
-	 */
-	@Test
-	public void testLinkAttributeFactory() {
-		assertNotNull("link att factory exists", this.testInstance.linkAttributeFactory());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#labelAttributeFactory()}.
-	 */
-	@Test
-	public void testLabelAttributeFactory() {
-		assertNotNull("label att factory exists", this.testInstance.labelAttributeFactory());
 	}
 
 }

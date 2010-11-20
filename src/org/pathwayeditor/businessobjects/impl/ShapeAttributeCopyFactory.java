@@ -54,7 +54,7 @@ public class ShapeAttributeCopyFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public IShapeAttribute createAttribute() {
-		return new ShapeAttribute(this.destnAttibute.getRootAttribute(), creationSerialCounter.next(), this.sourceAttribute);
+		return new ShapeAttribute(this.destnAttibute.getModel(), creationSerialCounter.next(), this.sourceAttribute);
 	}
 
 	/* (non-Javadoc)

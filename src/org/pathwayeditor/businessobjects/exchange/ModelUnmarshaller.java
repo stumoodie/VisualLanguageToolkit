@@ -24,12 +24,11 @@ import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Unmarshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.management.ModelFactory;
 import org.xml.sax.EntityResolver;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author smoodie
@@ -73,7 +72,7 @@ public class ModelUnmarshaller {
 	}
 	
 	
-	public ICompoundGraph getModel(){
+	public IModel getModel(){
 		if(this.builder == null) throw new IllegalStateException("Canvas not build from XML document");
 		
 		return this.builder.getGraph();

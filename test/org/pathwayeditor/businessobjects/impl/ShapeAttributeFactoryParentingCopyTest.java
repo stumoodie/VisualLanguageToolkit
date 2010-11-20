@@ -28,7 +28,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -101,7 +101,7 @@ public class ShapeAttributeFactoryParentingCopyTest {
 	 */
 	@Test
 	public void testCreateAttribute() {
-		final IRootAttribute rootAtt = this.testFixture.getRootAttribute();
+		final IModel rootAtt = this.testFixture.getModel();
 		this.mockery.checking(new Expectations(){{
 			one(rootAtt).addCanvasAttribute(with(any(IShapeAttribute.class)));
 		}});

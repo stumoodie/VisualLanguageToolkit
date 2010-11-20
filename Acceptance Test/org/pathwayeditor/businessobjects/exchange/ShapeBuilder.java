@@ -52,7 +52,7 @@ public class ShapeBuilder {
 	
 	public void build(){
 		ICanvasElementAttribute canvasAtt = (ICanvasElementAttribute)this.parent.getAttribute();
-		IShapeAttributeFactory shapeAttFact = canvasAtt.getRootAttribute().shapeAttributeFactory();
+		IShapeAttributeFactory shapeAttFact = canvasAtt.getModel().shapeAttributeFactory();
 		shapeAttFact.setObjectType(objectType);
 		ICompoundNodeFactory nodeFactory = parent.getChildCompoundGraph().nodeFactory();
 		nodeFactory.setAttributeFactory(shapeAttFact);

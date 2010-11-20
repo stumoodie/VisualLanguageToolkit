@@ -15,7 +15,6 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
-import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 
 public interface IPropertyDefinition {
 	/**
@@ -38,24 +37,10 @@ public interface IPropertyDefinition {
 	String getDisplayName();
 	
 	/**
-	 * Is the property visualisable
-	 * @return True if it is, false otherwise.
-	 */
-	boolean isVisualisable();
-
-	/**
-	 * Should this property be always displayed?
-	 * @return true if yes, false otherwise
-	 */
-	boolean isAlwaysDisplayed();
-	
-	/**
 	 * Is the property editable?
 	 * @return True if it is, false otherwise.
 	 */
 	boolean isEditable();
-	
-	ILabelAttributeDefaults getLabelDefaults();
 	
 	/**
 	 * A method to create the property using the visitor pattern. 
@@ -69,17 +54,5 @@ public interface IPropertyDefinition {
 	 * @return the copied annotation property.
 	 */
 	IAnnotationProperty copyProperty(IPropertyBuilder propertyBuilder, IAnnotationProperty otherProperty);
-	
-//	/**
-//	 * Provides a string describing what the valid property should look like.
-//	 * @return the valid property description which cannot be null.
-//	 */
-//	String getValidPropertyInformation();
-//	
-//	/**
-//	 * Gets a validator that is used to check the validity of the annotation property
-//	 * @return the validator, which cannot be null.
-//	 */
-//	IAnnotationPropertyValidator getValidator();
 	
 }

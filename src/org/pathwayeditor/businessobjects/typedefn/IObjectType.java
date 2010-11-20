@@ -18,8 +18,12 @@ package org.pathwayeditor.businessobjects.typedefn;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 
 /**
+ * IObjectType
+ * 
+ * An object type is equal if it belongs to the same notation and has the same UniqueId().
+ * Otherwise it should comply with the standard equals contract.
+
  * @author smoodie
- *
  */
 public interface IObjectType extends Comparable<IObjectType> {
 
@@ -55,18 +59,7 @@ public interface IObjectType extends Comparable<IObjectType> {
 	IObjectTypeParentingRules getParentingRules();
 	
 	/**
-	 * An object type is equal if it belongs to the same notation and has the same UniqueId().
-	 * Otherwise it should comply with the standard equals contract.
 	 * @param other the other object to compare.
 	 * @return true if equal based on above criteria, false otherwise.
 	 */
-//	@Override
-	boolean equals(Object other);
-	
-	/**
-	 * Gets the hash code, which is based on the notation and uniqueId. 
-	 * @return the hashcode.
-	 */
-//	@Override
-	int hashCode();
 }
