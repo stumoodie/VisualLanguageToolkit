@@ -96,24 +96,7 @@ public interface ILinkTerminus {
 	 * throws IllegalArgumentExtension if <code>location == null</code>.
 	 */
 	void setLocation(Point location);
-	
-//	Point getReferencePoint();
-	
-	/**
-	 * Identity is based on the owningLink and the link end type.
-	 * @param other the other object to test.
-	 * @return true of the objects are equal based on the business key, false otherwise.
-	 */
-//	@Override
-	boolean equals(Object other);
-
-	/**
-	 * The hash code is based on the same identity rules as {@link #equals(Object)}.
-	 * @return the hash code.
-	 */
-//	@Override
-	int hashCode();
-	
+		
 	void addLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
 	void removeLinkTerminusChangeListener(ILinkTerminusChangeListener listener);

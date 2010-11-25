@@ -39,16 +39,20 @@ public interface IRootAttribute extends ITypedDrawingNodeAttribute, ICanvas {
 	 * Set the background color of this Canvas.
 	 * @throws IllegalArgumentException if value is null.
 	 */	
+	@Override
 	void setBackgroundColour(RGB backgroundColour);
 	
 	/**
 	 * Get the background color of this Canvas.
 	 * @return the RGB representation of the color of the Canvas.
 	 */	
+	@Override
 	RGB getBackgroundColour();
 
+	@Override
 	Envelope getCanvasBounds();
 	
+	@Override
 	void setCanvasBounds(Envelope canvasBounds);
 	
 //	/**

@@ -58,6 +58,7 @@ public abstract class StubPropertyDefinition implements IPropertyDefinition {
 	/* (non-Javadoc)
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
+	@Override
 	public final int compareTo(IPropertyDefinition o) {
 		return this.name.compareTo(o.getName());
 	}

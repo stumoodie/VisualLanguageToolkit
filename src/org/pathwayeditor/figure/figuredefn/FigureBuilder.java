@@ -23,8 +23,8 @@ import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
-import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
 import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
+import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
 
 public class FigureBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());

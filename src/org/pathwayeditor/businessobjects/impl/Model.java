@@ -178,7 +178,7 @@ public class Model implements IModel {
 	 */
 	@Override
 	public ILabelAttribute getLabelAttribute(int attributeSerial) {
-		ILabelAttribute retVal = (ILabelAttribute)findAttribute(this.labelAttributeIterator(), attributeSerial);
+		ILabelAttribute retVal = findAttribute(this.labelAttributeIterator(), attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}
@@ -190,7 +190,7 @@ public class Model implements IModel {
 	 */
 	@Override
 	public ILinkAttribute getLinkAttribute(int attributeSerial) {
-		ILinkAttribute retVal = (ILinkAttribute)findAttribute(this.linkAttributeIterator(), attributeSerial);
+		ILinkAttribute retVal = findAttribute(this.linkAttributeIterator(), attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}
@@ -202,7 +202,7 @@ public class Model implements IModel {
 	 */
 	@Override
 	public IShapeAttribute getShapeAttribute(int attributeSerial) {
-		IShapeAttribute retVal = (IShapeAttribute)findAttribute(this.shapeAttributeIterator(), attributeSerial);
+		IShapeAttribute retVal = findAttribute(this.shapeAttributeIterator(), attributeSerial);
 		if(retVal == null) {
 			throw new IllegalArgumentException("attributeSerial must refer to an attribute contained by this canvas");
 		}

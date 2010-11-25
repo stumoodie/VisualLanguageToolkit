@@ -46,19 +46,4 @@ public interface IValidationRuleConfig extends Comparable <IValidationRuleConfig
 	 */
 	void setRuleEnforcement(RuleEnforcement ruleEnforcement);
 
-	/**
-	 * The validation rules specifies the business key of the object. Objects with the same rule are equivalent.
-	 * Follows the standard equals contract. 
-	 * @param other the other object to compare, which can be null.
-	 * @return true if the objects are the same, with equal rule definitions, false otherwise.
-	 */
-//	@Override
-	boolean equals(Object other);
-	
-	/**
-	 * Gets a hashcode that is consistent with equals behaviour.
-	 * @return the has code.
-	 */
-//	@Override
-	int hashCode();
 }
