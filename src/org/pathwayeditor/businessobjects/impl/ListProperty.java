@@ -31,13 +31,13 @@ public class ListProperty extends AnnotationProperty implements IListAnnotationP
 	private IListPropertyDefinition propertyDefinition;
 	
 	public ListProperty(AnnotatedCanvasAttribute owner, IListPropertyDefinition propDefn) {
-		super(owner, propDefn);
+		super(owner);
 		this.values = new ArrayList<String>();
 		this.propertyDefinition = propDefn;
 	}
 
 	public ListProperty(AnnotatedCanvasAttribute owner, ListProperty other) {
-		super(owner, other);
+		super(owner);
 		this.propertyDefinition = other.propertyDefinition;
 		this.values = new ArrayList<String>(other.values);
 	}

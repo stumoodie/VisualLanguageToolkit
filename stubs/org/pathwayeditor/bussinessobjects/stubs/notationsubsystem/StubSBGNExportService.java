@@ -20,12 +20,11 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.io.File;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.ExportServiceException;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author nhanlon
@@ -42,7 +41,7 @@ public class StubSBGNExportService implements INotationExportService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationExportService#exportMap(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas, java.io.File)
 	 */
 	@Override
-	public void exportMap(ICompoundGraph map, File exportFile) throws ExportServiceException {
+	public void exportMap(IModel map, File exportFile) throws ExportServiceException {
 		System.out.println("Map " + map + " was exported to " + exportFile.getAbsolutePath());
 	}
 

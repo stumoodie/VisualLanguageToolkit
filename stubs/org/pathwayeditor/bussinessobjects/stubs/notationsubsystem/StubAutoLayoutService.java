@@ -18,11 +18,10 @@ limitations under the License.
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author smoodie
@@ -58,7 +57,7 @@ public class StubAutoLayoutService implements INotationAutolayoutService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutService#layout(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	@Override
-	public void layout(ICompoundGraph canvas) {
+	public void layout(IModel canvas) {
 		System.out.println("Canvas " + canvas + " laid out.");
 	}
 

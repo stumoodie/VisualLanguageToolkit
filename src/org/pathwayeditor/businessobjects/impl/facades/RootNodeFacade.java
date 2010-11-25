@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl.facades;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 
@@ -92,6 +93,14 @@ public class RootNodeFacade implements IRootNode {
 	@Override
 	public long getUniqueIndex() {
 		return this.compoundRootNode.getIndex();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#isDescendent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
+	 */
+	@Override
+	public boolean isDescendent(IDrawingElement testElement) {
+		return this.compoundRootNode.isDescendent(testElement.getGraphElement());
 	}
 
 }

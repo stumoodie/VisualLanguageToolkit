@@ -33,18 +33,22 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 //	private ILabelAttribute labelAttribute = null;
 	private final IAnnotatedObject owner;
 	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem(this);
-	private IPropertyDefinition propDefn;
+//	private IPropertyDefinition propDefn;
 
-
-	protected AnnotationProperty(IAnnotatedObject owner, IPropertyDefinition propDefn) {
+	protected AnnotationProperty(IAnnotatedObject owner) {
 		this.owner = owner;
-		this.propDefn = propDefn;
 	}
 
-	protected AnnotationProperty(IAnnotatedObject newOwner, AnnotationProperty other) {
-		this.owner = newOwner;
-		this.propDefn = other.propDefn;
-	}
+//
+//	protected AnnotationProperty(IAnnotatedObject owner, IPropertyDefinition propDefn) {
+//		this.owner = owner;
+//		this.propDefn = propDefn;
+//	}
+//
+//	protected AnnotationProperty(IAnnotatedObject newOwner, AnnotationProperty other) {
+//		this.owner = newOwner;
+//		this.propDefn = other.propDefn;
+//	}
 	
 	protected abstract void setPropertyDefinition(IPropertyDefinition definition);
 
@@ -150,7 +154,7 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.owner == null) ? 0 : this.owner.hashCode());
-		result = prime * result + ((this.propDefn == null) ? 0 : this.propDefn.hashCode());
+		result = prime * result + ((this.getDefinition() == null) ? 0 : this.getDefinition().hashCode());
 		return result;
 	}
 
@@ -162,22 +166,22 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof AnnotationProperty)) {
+		if (!(obj instanceof IAnnotationProperty)) {
 			return false;
 		}
-		AnnotationProperty other = (AnnotationProperty) obj;
+		IAnnotationProperty other = (IAnnotationProperty) obj;
 		if (this.owner == null) {
-			if (other.owner != null) {
+			if (other.getOwner() != null) {
 				return false;
 			}
-		} else if (!this.owner.equals(other.owner)) {
+		} else if (!this.owner.equals(other.getOwner())) {
 			return false;
 		}
-		if (this.propDefn == null) {
-			if (other.propDefn != null) {
+		if (this.getDefinition() == null) {
+			if (other.getDefinition() != null) {
 				return false;
 			}
-		} else if (!this.propDefn.equals(other.propDefn)) {
+		} else if (!this.getDefinition().equals(other.getDefinition())) {
 			return false;
 		}
 		return true;

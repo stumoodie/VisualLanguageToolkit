@@ -25,13 +25,13 @@ public class IntegerProperty extends AnnotationProperty implements IIntegerAnnot
 	private IIntegerPropertyDefinition propertyDefinition;
 
 	public IntegerProperty(AnnotatedCanvasAttribute owner, IIntegerPropertyDefinition propDefn) {
-		super(owner, propDefn);
+		super(owner);
 		this.propertyDefinition = propDefn;
 		this.numberValue = propDefn.getDefaultValue();
 	}
 
 	public IntegerProperty(AnnotatedCanvasAttribute newOwner, IntegerProperty other) {
-		super(newOwner, other);
+		super(newOwner);
 		numberValue = other.numberValue;
 		this.propertyDefinition = other.propertyDefinition;
 	}

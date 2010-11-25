@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.Set;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 /**
  * This interfaces provides a client with access to the services provided by a context adapter. It will typically
@@ -27,9 +27,9 @@ import uk.ac.ed.inf.graph.compound.ICompoundGraph;
  */
 public interface INotationSubsystem {
 
-	void registerCanvas(ICompoundGraph canvasToRegister);
+	void registerCanvas(IModel canvasToRegister);
 	
-	void unregisterCanvas(ICompoundGraph canvasToRegister);
+	void unregisterCanvas(IModel canvasToRegister);
 
 	/**
 	 * The context (graphical notation) that is defined by this context adapter and for which the services

@@ -18,9 +18,8 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 import java.util.Date;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * Provides a snapshot of the validation status of a map.
@@ -47,7 +46,7 @@ public interface IValidationReport {
 	 * generated.
 	 * @return an {@link IRootAttribute}, never null
 	 */
-	ICompoundGraph getCanvas();
+	IModel getCanvas();
 	
 	/**
 	 * Returns an immutable<code>List</code> of individual validation errors and warnings.

@@ -20,13 +20,12 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author smoodie
@@ -46,7 +45,7 @@ public class StubNotationValidationService implements INotationValidationService
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getMapBeingValidated()
 	 */
 	@Override
-	public ICompoundGraph getCanvasBeingValidated() {
+	public IModel getCanvasBeingValidated() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
@@ -94,7 +93,7 @@ public class StubNotationValidationService implements INotationValidationService
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#setMapToValidate(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	@Override
-	public void setCanvasToValidate(ICompoundGraph mapToValidate) {
+	public void setCanvasToValidate(IModel mapToValidate) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 

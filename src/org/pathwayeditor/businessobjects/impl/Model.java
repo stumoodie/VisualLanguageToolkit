@@ -32,11 +32,14 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.impl.facades.SubModelFacade;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 import uk.ac.ed.inf.graph.util.IFilterCriteria;
@@ -462,5 +465,31 @@ public class Model implements IModel {
 	@Override
 	public Iterator<ICompoundNode> drawingNodeIterator() {
 		return this.compoundGraph.nodeIterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#getLabelForProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
+	 */
+	@Override
+	public ILabelAttribute getLabelForProperty(final IAnnotationProperty annotationProperty) {
+		ICanvasElementAttribute attrib = (ICanvasElementAttribute)annotationProperty.getOwner();
+		ICompoundGraphElement graphElement = attrib.getCurrentElement();
+		Iterator<ICompoundNode> childIter = new SubModelFacade(graphElement.getChildCompoundGraph()).labelIterator();
+		ILabelAttribute retVal = null;
+		while(childIter.hasNext() && retVal == null){
+			ILabelAttribute nodeAtt = (ILabelAttribute)childIter.next().getAttribute();
+			if(nodeAtt.getProperty().equals(annotationProperty)){
+				retVal = nodeAtt;
+			}
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#hasLabelForProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty)
+	 */
+	@Override
+	public boolean hasLabelForProperty(IAnnotationProperty annotationProperty) {
+		return getLabelForProperty(annotationProperty) != null;
 	}
 }

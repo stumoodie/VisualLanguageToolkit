@@ -20,11 +20,10 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.io.File;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
-
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 
 /**
  * @author nhanlon
@@ -66,7 +65,7 @@ public class StubSBMLImportService implements INotationImportService {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationImportService#importMap(java.io.File, org.pathwayeditor.businessobjects.repository.IFolder)
 	 */
 	@Override
-	public void importToCanvas(File importFile, ICompoundGraph saveLocation) {
+	public void importToCanvas(File importFile, IModel saveLocation) {
 		System.out.println("File " + importFile.getAbsolutePath() + " was imported");
 	}
 

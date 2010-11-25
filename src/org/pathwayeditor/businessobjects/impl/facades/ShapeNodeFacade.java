@@ -18,6 +18,7 @@ package org.pathwayeditor.businessobjects.impl.facades;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
 
@@ -111,6 +112,30 @@ public class ShapeNodeFacade implements IShapeNode {
 	@Override
 	public long getUniqueIndex() {
 		return this.graphShapeNode.getIndex();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumSourceLinks()
+	 */
+	@Override
+	public int getNumSourceLinks() {
+		return this.graphShapeNode.getOutDegree();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode#getNumTargetLinks()
+	 */
+	@Override
+	public int getNumTargetLinks() {
+		return this.graphShapeNode.getInDegree();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#isDescendent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
+	 */
+	@Override
+	public boolean isDescendent(IDrawingElement testElement) {
+		return this.graphShapeNode.isDescendent(testElement.getGraphElement());
 	}
 
 }

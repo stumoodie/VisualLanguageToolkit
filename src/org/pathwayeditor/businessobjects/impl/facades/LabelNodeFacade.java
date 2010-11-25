@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl.facades;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
 
@@ -93,6 +94,14 @@ public class LabelNodeFacade implements ILabelNode {
 			return false;
 		}
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#isDescendent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
+	 */
+	@Override
+	public boolean isDescendent(IDrawingElement testElement) {
+		return this.graphElement.isDescendent(testElement.getGraphElement());
 	}
 
 }

@@ -94,4 +94,12 @@ public class DrawingElementFacade implements IDrawingElement {
 		return this.graphElement.getIndex();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#isDescendent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
+	 */
+	@Override
+	public boolean isDescendent(IDrawingElement testElement) {
+		return this.graphElement.isDescendent(testElement.getGraphElement());
+	}
+
 }

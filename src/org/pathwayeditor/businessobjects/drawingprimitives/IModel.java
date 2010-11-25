@@ -20,6 +20,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
@@ -196,4 +197,8 @@ public interface IModel {
 	int numLinkAttributes();
 
 	INotationSubsystem getNotationSubsystem();
+	
+	ILabelAttribute getLabelForProperty(IAnnotationProperty annotationProperty);
+	
+	boolean hasLabelForProperty(IAnnotationProperty annotationProperty);
 }

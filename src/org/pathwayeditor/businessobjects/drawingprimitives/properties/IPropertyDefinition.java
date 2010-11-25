@@ -16,7 +16,7 @@ limitations under the License.
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 
-public interface IPropertyDefinition {
+public interface IPropertyDefinition extends Comparable<IPropertyDefinition> {
 	/**
 	 * The property value as an object appropriate for its type.
 	 * This can be redefined by implementing classes. 

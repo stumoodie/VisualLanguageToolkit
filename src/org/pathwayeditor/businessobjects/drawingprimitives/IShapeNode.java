@@ -31,5 +31,14 @@ public interface IShapeNode extends ITypedDrawingNode {
 
 	Iterator<ICompoundEdge> sourceLinkIterator();
 
+	int getNumSourceLinks();
+
 	Iterator<ICompoundEdge> targetLinkIterator();
+	
+	/**
+	 * Gets the number of the links that are targeting this Shape node.
+	 * @return the number of links.
+	 */
+	int getNumTargetLinks();
+	
 }

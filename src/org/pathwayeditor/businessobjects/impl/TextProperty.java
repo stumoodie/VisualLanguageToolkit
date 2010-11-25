@@ -27,13 +27,13 @@ public class TextProperty extends AnnotationProperty implements IPlainTextAnnota
 	private IPlainTextPropertyDefinition propertyDefinition;
 
 	public TextProperty(AnnotatedCanvasAttribute owner,IPlainTextPropertyDefinition defn) {
-		super(owner, defn);
+		super(owner);
 		this.propertyDefinition = defn;
 		this.textValue = defn.getDefaultValue();
 	}
 
 	public TextProperty(AnnotatedCanvasAttribute newOwner, TextProperty other) {
-		super(newOwner, other);
+		super(newOwner);
 		this.propertyDefinition = other.propertyDefinition;
 		this.textValue = other.textValue;
 	}

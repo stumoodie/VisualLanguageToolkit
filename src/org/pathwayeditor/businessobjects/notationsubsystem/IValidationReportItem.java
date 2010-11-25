@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
 /**
  * Encapsulates information about a single rule validation problem.
@@ -33,7 +33,7 @@ public interface IValidationReportItem {
 	 * Can return null if no single identifiable map object is responsible for the validation problem.
 	 * @return the object causing the validation error, or null if there is none or more than one.
 	 */
-	ICanvasElementAttribute getInvalidObject();
+	ICompoundGraphElement getInvalidObject();
 	
 	
 	/**

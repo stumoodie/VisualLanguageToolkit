@@ -19,8 +19,8 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 
 /**
  * @author smoodie
@@ -80,11 +80,11 @@ public class StubLabelObjectType implements ILabelObjectType {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getParentingRules()
 	 */
 	@Override
-	public IObjectTypeParentingRules getParentingRules() {
-		return new IObjectTypeParentingRules(){
+	public ILabelObjectTypeParentingRules getParentingRules() {
+		return new ILabelObjectTypeParentingRules(){
 
 			@Override
-			public IObjectType getObjectType() {
+			public ILabelObjectType getObjectType() {
 				return StubLabelObjectType.this;
 			}
 

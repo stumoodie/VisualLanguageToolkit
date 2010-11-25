@@ -13,21 +13,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-package org.pathwayeditor.businessobjects.notationsubsystem;
+/**
+ * 
+ */
+package org.pathwayeditor.businessobjects.typedefn;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
-
-public interface INotationAutolayoutService extends INotationService {
+/**
+ * @author smoodie
+ *
+ */
+public interface ILabelObjectTypeParentingRules extends IObjectTypeParentingRules {
 
 	/**
-	 * The CA does not need to implement the auto-layout service. This method tests is it is implemented.
-	 * @return true if service is implemented, false otherwise.
+	 * Get object type that the rules belong to.
+	 * @return an valid instance that is guaranteed to be non-null.
 	 */
-	boolean isImplemented();
-	
-	/**
-	 * @param canvas which will be laid out by this service
-	 */
-	void layout(IModel canvas);
+	@Override
+	ILabelObjectType getObjectType();
 	
 }

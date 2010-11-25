@@ -39,4 +39,6 @@ public interface IDrawingElement {
 
 	ICompoundGraphElement getGraphElement();
 
+	boolean isDescendent(IDrawingElement testElement);
+	
 }

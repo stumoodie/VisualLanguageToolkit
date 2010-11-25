@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl.facades;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 
@@ -97,6 +98,15 @@ public class DrawingNodeFacade implements IDrawingNode {
 	@Override
 	public long getUniqueIndex() {
 		return this.graphNode.getIndex();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement#isDescendent(org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElement)
+	 */
+	@Override
+	public boolean isDescendent(IDrawingElement testElement) {
+		return this.graphNode.isDescendent(testElement.getGraphElement());
 	}
 
 }

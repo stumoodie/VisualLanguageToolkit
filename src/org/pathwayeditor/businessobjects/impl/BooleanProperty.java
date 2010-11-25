@@ -26,13 +26,13 @@ public class BooleanProperty extends AnnotationProperty implements IBooleanAnnot
 	private IBooleanPropertyDefinition propertyDefinition;
 
 	public BooleanProperty(AnnotatedCanvasAttribute owner, IBooleanPropertyDefinition propDefn) {
-		super(owner, propDefn);
+		super(owner);
 		this.propertyDefinition = propDefn;
 		this.boolValue = propDefn.getDefaultValue();
 	}
 
 	public BooleanProperty(AnnotatedCanvasAttribute newOwner, BooleanProperty other) {
-		super(newOwner, other);
+		super(newOwner);
 		boolValue = other.boolValue;
 		this.propertyDefinition = other.propertyDefinition;
 	}

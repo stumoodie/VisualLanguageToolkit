@@ -27,13 +27,13 @@ public class NumberProperty extends AnnotationProperty implements INumberAnnotat
 	private INumberPropertyDefinition propertyDefinition;
 
 	public NumberProperty(AnnotatedCanvasAttribute owner, INumberPropertyDefinition propDefn) {
-		super(owner, propDefn);
+		super(owner);
 		this.propertyDefinition = propDefn;
 		this.numberValue = propDefn.getDefaultValue();
 	}
 
 	public NumberProperty(AnnotatedCanvasAttribute newOwner, NumberProperty other) {
-		super(newOwner, other);
+		super(newOwner);
 		numberValue = other.numberValue;
 		this.propertyDefinition = other.propertyDefinition;
 	}

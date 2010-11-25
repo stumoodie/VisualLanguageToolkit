@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.Set;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 public interface INotationValidationService extends INotationService {
 
@@ -42,7 +42,7 @@ public interface INotationValidationService extends INotationService {
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 * @throws IllegalArgumentException if <code>mapToValidate == null</code>.
 	 */
-	void setCanvasToValidate(ICompoundGraph canvasToValidate);
+	void setCanvasToValidate(IModel canvasToValidate);
 	
 	/**
 	 * Provides the map that is being validated. Will return null if no map is currently being validated.
@@ -52,7 +52,7 @@ public interface INotationValidationService extends INotationService {
 	 * @return the canvas being validated or null if none set.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	ICompoundGraph getCanvasBeingValidated();
+	IModel getCanvasBeingValidated();
 	
 	/**
 	 * Tests if the validator is ready to perform a validation. This requires that a validator has been implemented
