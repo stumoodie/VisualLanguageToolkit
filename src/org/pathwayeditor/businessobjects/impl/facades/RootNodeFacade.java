@@ -103,4 +103,14 @@ public class RootNodeFacade implements IRootNode {
 		return this.compoundRootNode.isDescendent(testElement.getGraphElement());
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.compoundRootNode);
+		buf.append(")");
+		return buf.toString();
+	}
 }

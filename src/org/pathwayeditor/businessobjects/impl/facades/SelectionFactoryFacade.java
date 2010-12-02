@@ -107,4 +107,14 @@ public class SelectionFactoryFacade implements ISelectionFactory {
 		return true;
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.subCompoundGraphFactory);
+		buf.append(")");
+		return buf.toString();
+	}
 }

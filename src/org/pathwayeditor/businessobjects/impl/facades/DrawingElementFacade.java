@@ -102,4 +102,14 @@ public class DrawingElementFacade implements IDrawingElement {
 		return this.graphElement.isDescendent(testElement.getGraphElement());
 	}
 
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.graphElement);
+		buf.append(")");
+		return buf.toString();
+	}
+	
 }

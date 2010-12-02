@@ -87,4 +87,14 @@ public class LinkEdgeFactoryFacade implements ILinkEdgeFactory {
 		return this.compoundEdge;
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.compoundEdge);
+		buf.append(")");
+		return buf.toString();
+	}
 }

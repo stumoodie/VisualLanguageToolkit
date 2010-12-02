@@ -117,4 +117,14 @@ public class ShapeNodeFactoryFacade implements IShapeNodeFactory {
 		return true;
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.shapeCompoundNodeFactory);
+		buf.append(")");
+		return buf.toString();
+	}
 }

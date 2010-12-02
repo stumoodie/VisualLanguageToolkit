@@ -109,4 +109,14 @@ public class DrawingNodeFacade implements IDrawingNode {
 		return this.graphNode.isDescendent(testElement.getGraphElement());
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.graphNode);
+		buf.append(")");
+		return buf.toString();
+	}
 }

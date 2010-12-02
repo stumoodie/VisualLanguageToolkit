@@ -120,4 +120,14 @@ public class LinkEdgeFacade implements ILinkEdge {
 		return this.linkEdge.isDescendent(testElement.getGraphElement());
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.linkEdge);
+		buf.append(")");
+		return buf.toString();
+	}
 }

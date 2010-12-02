@@ -183,4 +183,14 @@ public class SubModelFacade implements ISubModel {
 		return this.childCompoundGraph;
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.childCompoundGraph);
+		buf.append(")");
+		return buf.toString();
+	}
 }

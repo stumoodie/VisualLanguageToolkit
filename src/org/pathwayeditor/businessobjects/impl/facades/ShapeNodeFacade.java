@@ -138,4 +138,14 @@ public class ShapeNodeFacade implements IShapeNode {
 		return this.graphShapeNode.isDescendent(testElement.getGraphElement());
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
+		buf.append("(");
+		buf.append("element=");
+		buf.append(this.graphShapeNode);
+		buf.append(")");
+		return buf.toString();
+	}
 }
