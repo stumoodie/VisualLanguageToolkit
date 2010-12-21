@@ -240,7 +240,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new ShapeAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this);
+		return new ShapeAttributeCopyFactory(this);
 	}
 
 	/* (non-Javadoc)

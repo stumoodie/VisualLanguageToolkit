@@ -78,6 +78,10 @@ public class Envelope {
 		return origin;
 	}
 	
+	public Point getCentre(){
+		return new Point(origin.getX() + dim.getWidth()/2, origin.getY() + dim.getHeight()/2);
+	}
+	
 	/**
 	 * Tests whether the <code>other</code> intersects with this one. 
 	 * @param other the other envelope, which can be null.

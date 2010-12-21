@@ -315,7 +315,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new LabelAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this.visualisableProperty);
+		return new LabelAttributeCopyFactory(this.visualisableProperty);
 	}
 
 	/* (non-Javadoc)

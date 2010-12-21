@@ -31,6 +31,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
+import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
@@ -187,32 +188,6 @@ s	 */
 		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
 	}
 
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#addbendPoint(org.pathwayeditor.businessobjects.drawingprimitives.attributes.IBendPoint, int)
-//	 */
-//	@Override
-//	public void changeBendPointPosition(IBendPoint bendPoint, int indexPos) {
-//		if(!this.containsBendPoint(bendPoint)) throw new IllegalArgumentException("bendPoint must be contained by this attribute");
-//
-//		if(indexPos >= this.bendPoints.size() || indexPos < 0){
-//			throw new IndexOutOfBoundsException("list size= " + this.bendPoints.size() + ", no bendpoint at position: " + indexPos);
-//		}
-//		else{
-//			int oldIdx = this.bendPoints.indexOf(bendPoint);
-//			if(indexPos < this.bendPoints.size()-1) {
-//				this.bendPoints.remove(oldIdx);
-//				// insert at new position
-//				this.bendPoints.add(indexPos, (BendPoint)bendPoint);
-//			}
-//			else {
-//				this.bendPoints.remove(oldIdx);
-//				// we want to add it to the end of the list so we append it bp to the list.
-//				this.bendPoints.add((BendPoint)bendPoint);
-//			}
-//			this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_REINDEXED, bendPoint, oldIdx, indexPos);
-//		}
-//	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#visit(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor)
 	 */
@@ -248,6 +223,10 @@ s	 */
 	 */
 	@Override
 	public IElementAttributeFactory elementAttributeCopyFactory() {
-		return new LinkAttributeCopyFactory(this.getModel().getCreationSerialCounter(), this);
+		LinkAttributeCopyFactory retVal = new LinkAttributeCopyFactory(this);
+		CompoundNodePair pair = this.getCurrentElement().getConnectedNodes();
+		retVal.setInAttribute(pair.getInNode().getAttribute());
+		retVal.setOutAttribute(pair.getOutNode().getAttribute());
+		return retVal;
 	}
 }

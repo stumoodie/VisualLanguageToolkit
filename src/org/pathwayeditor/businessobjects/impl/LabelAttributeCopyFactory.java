@@ -16,9 +16,9 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
@@ -30,17 +30,13 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
  *
  */
 public class LabelAttributeCopyFactory implements IElementAttributeFactory {
-	private final ICanvasAttributeSequence creationSerialCounter;
 	private final IAnnotationProperty labelProperty;
 	private IAnnotatedObject destinationAttribute;
 	private IElementAttribute outAttribute;
 	private IElementAttribute inAttribute;
 	
-	/**
-	 * @param iCanvasAttributeSequence
-	 */
-	public LabelAttributeCopyFactory(ICanvasAttributeSequence iCanvasAttributeSequence, IAnnotationProperty labelProperty) {
-		this.creationSerialCounter = iCanvasAttributeSequence;
+
+	public LabelAttributeCopyFactory(IAnnotationProperty labelProperty) {
 		this.labelProperty = labelProperty;
 	}
 
@@ -74,7 +70,8 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	@Override
 	public ILabelAttribute createAttribute() {
 		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
-		return new LabelAttribute(((ICanvasElementAttribute)this.destinationAttribute).getModel(), creationSerialCounter.next(), (ILabelAttribute)this.outAttribute, copiedProp);
+		IModel model = ((ICanvasElementAttribute)this.destinationAttribute).getModel();
+		return new LabelAttribute(model, model.getCreationSerialCounter().next(), (ILabelAttribute)this.outAttribute, copiedProp);
 	}
 
 	/* (non-Javadoc)

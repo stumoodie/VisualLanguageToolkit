@@ -16,9 +16,9 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.impl;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -29,17 +29,12 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
  *
  */
 public class LinkAttributeCopyFactory implements IElementAttributeFactory {
-	private final ICanvasAttributeSequence creationSerialCounter;
 	private final ILinkAttribute attributeToCopy;
 	private ICanvasElementAttribute destination;
 	private IShapeAttribute outAttribute;
 	private IShapeAttribute inAttribute;
 
-	/**
-	 * @param iCanvasAttributeSequence
-	 */
-	public LinkAttributeCopyFactory(ICanvasAttributeSequence iCanvasAttributeSequence, ILinkAttribute attributeToCopy) {
-		this.creationSerialCounter = iCanvasAttributeSequence;
+	public LinkAttributeCopyFactory(ILinkAttribute attributeToCopy) {
 		this.attributeToCopy = attributeToCopy;
 	}
 
@@ -74,7 +69,8 @@ public class LinkAttributeCopyFactory implements IElementAttributeFactory {
 	 */
 	@Override
 	public ILinkAttribute createAttribute() {
-		return new LinkAttribute(destination.getModel(), this.creationSerialCounter.next(), this.attributeToCopy);
+		IModel model = destination.getModel();
+		return new LinkAttribute(model, model.getCreationSerialCounter().next(), this.attributeToCopy);
 	}
 
 	/* (non-Javadoc)
