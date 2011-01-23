@@ -97,7 +97,7 @@ public class LinkAttributeTest {
 			}
 
 			@Override
-			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+			public void elementTranslated(ICanvasAttributeTranslationEvent e) {
 			}
 
 			@Override
@@ -229,7 +229,7 @@ public class LinkAttributeTest {
 			}
 
 			@Override
-			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+			public void elementTranslated(ICanvasAttributeTranslationEvent e) {
 				
 			}
 

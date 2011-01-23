@@ -87,7 +87,7 @@ public final class CanvasAttributeChangeListenerHelper implements ICanvasAttribu
 	
 	public final void fireNodeTranslationEvent(ICanvasAttributeTranslationEvent evt){
 		for(ICanvasAttributeChangeListener listener : this.getListeners()){
-			listener.nodeTranslated(evt);
+			listener.elementTranslated(evt);
 		}
 	}
 

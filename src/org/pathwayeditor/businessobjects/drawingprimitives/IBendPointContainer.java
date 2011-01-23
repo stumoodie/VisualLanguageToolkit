@@ -85,4 +85,9 @@ public interface IBendPointContainer extends IBendPointChangeListenee  {
 	
 	void translateBendPoint(int idx, Point translation);
 
+	/**
+	 * @param delta
+	 */
+	void translateAll(Point delta);
+
 }

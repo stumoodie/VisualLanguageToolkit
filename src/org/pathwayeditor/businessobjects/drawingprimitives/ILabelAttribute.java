@@ -15,6 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.text.Format;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
@@ -65,13 +67,32 @@ public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttribute
 	
 	boolean hasNoBorder();
 	
-	public double getLineWidth();
+	double getLineWidth();
 	
-	public void setLineWidth(double lineWidth);
+	void setLineWidth(double lineWidth);
 	
-	public LineStyle getLineStyle();
+	LineStyle getLineStyle();
 	
-	public void setLineStyle(LineStyle lineStyle);
+	void setLineStyle(LineStyle lineStyle);
 	
-	public Dimension getMinimumSize();
+	Dimension getMinimumSize();
+	
+	/**
+	 * Provides a string that the label should display. If a format has been specified then this format
+	 * is used to format the property value to be displayed. 
+	 * @return the string which cannot be null.
+	 */
+	String getDisplayedContent();
+	
+	/**
+	 * Sets a format to use when displaying a label
+	 * @param displayFormat
+	 */
+	void setDisplayFormat(Format displayFormat);
+
+	/**
+	 * Gets the display format to use when displaying a label
+	 * @return the display format
+	 */
+	Format getDisplayFormat();
 }

@@ -20,6 +20,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 
@@ -35,6 +36,8 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	IModel getModel();
 	
 	IObjectType getObjectType();
+	
+	void translate(Point delta);
 	
 	/**
 	 * Get the Creation serial of this attribute. Cannot be null.

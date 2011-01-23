@@ -33,7 +33,7 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public class BendPointContainer implements IBendPointContainer {
 	private final ListenableBendPointChangeItem listenableBendPointChangeItem = new ListenableBendPointChangeItem(this);
-	private final List<Point> bendPoints;
+	private List<Point> bendPoints;
 	private final ILinkAttribute linkAttribute;
 
 	/**
@@ -157,8 +157,8 @@ public class BendPointContainer implements IBendPointContainer {
 	 */
 	@Override
 	public void translateBendPoint(int idx, Point translation) {
-		Point bp = this.bendPoints.get(idx);
 		if(!translation.equals(Point.ORIGIN)){
+			Point bp = this.bendPoints.get(idx);
 			Point newLocation = bp.translate(translation);
 			this.bendPoints.set(idx, newLocation);
 			this.listenableBendPointChangeItem.notifyPropertyChange(idx, bp, newLocation);
@@ -171,6 +171,30 @@ public class BendPointContainer implements IBendPointContainer {
 	@Override
 	public ILinkAttribute getLinkAttribute() {
 		return this.linkAttribute;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer#translateAll(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void translateAll(Point translation) {
+		if(!translation.equals(Point.ORIGIN)){
+			List<Point> newBendPoints = new LinkedList<Point>();
+			for(Point bp : this.bendPoints){
+				Point newLocation = bp.translate(translation);
+				newBendPoints.add(newLocation);
+			}
+			List<Point> oldPoints = this.bendPoints;
+			this.bendPoints = newBendPoints;
+			this.listenableBendPointChangeItem.notifyTranslation(translation, oldPoints, newBendPoints);
+			Iterator<Point> oldBpIter = oldPoints.iterator();
+			Iterator<Point> newBpIter = newBendPoints.iterator();
+			for(int i = 0; i < this.bendPoints.size(); i++){
+				Point oldPoint = oldBpIter.next();
+				Point newPoint = newBpIter.next();
+				this.listenableBendPointChangeItem.notifyPropertyChange(i, oldPoint, newPoint);
+			}
+		}
 	}
 
 }

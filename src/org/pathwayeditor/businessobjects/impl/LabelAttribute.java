@@ -15,6 +15,7 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.impl;
 
+import java.text.Format;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
@@ -51,6 +52,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
 	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
 	private final ILabelObjectType objectType;
+	private Format displayFormat;
 
 	public LabelAttribute(IModel hibCanvas, int creationSerial, IAnnotationProperty property,	ILabelObjectType labelObjectType) {
 		super(hibCanvas, creationSerial);
@@ -329,5 +331,36 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	@Override
 	public ICompoundNode getCurrentElement(){
 		return (ICompoundNode)super.getCurrentElement();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getDisplayedContent()
+	 */
+	@Override
+	public String getDisplayedContent() {
+		String retVal;
+		if(this.displayFormat == null){
+			retVal = this.visualisableProperty.getValue().toString();
+		}
+		else{
+			retVal = this.displayFormat.format(this.visualisableProperty.getValue());
+		}
+		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setDisplayFormat(java.text.Format)
+	 */
+	@Override
+	public void setDisplayFormat(Format displayFormat) {
+		this.displayFormat = displayFormat;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getDisplayFormat()
+	 */
+	@Override
+	public Format getDisplayFormat() {
+		return this.displayFormat;
 	}
 }

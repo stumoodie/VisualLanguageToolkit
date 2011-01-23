@@ -43,6 +43,18 @@ public interface IDrawingElementSelection {
 	Iterator<ICompoundNode> topDrawingNodeIterator();
 
 	/**
+	 * Get the number of edges that for the head of a tree of the selected nodes in the compound graph.
+	 * @return the number of top nodes.
+	 */
+	int numTopLinkEdges();
+	
+	/**
+	 * Iterator for the top edges in the selection tree.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<ICompoundEdge> topLinkEdgesIterator();
+
+	/**
 	 * Test if this selection is a consistent snapshot of the model. The selection may become inconsistent if any of the nodes
 	 * are removed from the model. 
 	 * @return true it is consistent, false otherwise.

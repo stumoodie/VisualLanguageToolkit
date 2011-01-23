@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusTranslationEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusValueChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.LinkTerminusChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
@@ -202,8 +203,7 @@ public class LinkTerminus implements ILinkTerminus {
 		ILinkTerminusDefinition retVal = this.getOwningLink().getObjectType()
 				.getTargetTerminusDefinition();
 		if (this.getLinkTermType() == LinkTermType.SOURCE) {
-			retVal = this.getOwningLink().getObjectType()
-					.getSourceTerminusDefinition();
+			retVal = this.getOwningLink().getObjectType().getSourceTerminusDefinition();
 		}
 		return retVal;
 	}
@@ -228,47 +228,6 @@ public class LinkTerminus implements ILinkTerminus {
 		}
 	}
 
-//	@Override
-//	public Point getReferencePoint() {
-//		Point retVal = null;
-//		if(this.linkTermType.equals(LinkTermType.SOURCE)){
-//			retVal = getSrcReferencePoint();
-//		}
-//		else{
-//			retVal = getTgtReferencePoint();
-//		}
-//		return retVal;
-//	}
-//
-//	private static final int FIRST_PB_IDX = 0;
-//	private Point getSrcReferencePoint(){
-//		ILinkAttribute linkAtt = this.getOwningLink();
-//		Point retVal = null;
-//		if(linkAtt.numBendPoints() > 0){
-//			IBendPoint bp = linkAtt.getBendPoint(FIRST_PB_IDX);
-//			retVal = bp.getLocation();
-//		}
-//		else{
-//			retVal = linkAtt.getTargetTerminus().getLocation();
-//		}
-//		return retVal;
-//	}
-//
-//	private Point getTgtReferencePoint(){
-//		ILinkAttribute linkAtt = this.getOwningLink();
-//		Point retVal = null;
-//		int numBendPoints = linkAtt.numBendPoints(); 
-//		if(numBendPoints > 0){
-//			IBendPoint bp = linkAtt.getBendPoint(numBendPoints - 1);
-//			retVal = bp.getLocation();
-//		}
-//		else{
-//			retVal = linkAtt.getSourceTerminus().getLocation();
-//		}
-//		return retVal;
-//	}
-
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#addLinkTerminusChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener)
 	 */
@@ -291,5 +250,51 @@ public class LinkTerminus implements ILinkTerminus {
 	@Override
 	public List<ILinkTerminusChangeListener> getLinkTerminusChangeListeners() {
 		return new ArrayList<ILinkTerminusChangeListener>(this.listeners);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus#translate(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void translate(Point delta) {
+		if(delta.equals(Point.ORIGIN)){
+			Point oldLocation = this.location.translate(delta);
+			notifyTranslation(delta, oldLocation, this.location);
+			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.location);
+		}
+	}
+
+	/**
+	 * 
+	 * @param delta
+	 * @param oldLocation
+	 * @param newLocation
+	 */
+	private void notifyTranslation(final Point delta, final Point oldLocation, final Point newLocation) {
+		final ILinkTerminusTranslationEvent e = new ILinkTerminusTranslationEvent() {
+			
+			@Override
+			public Point getOldLocation() {
+				return oldLocation;
+			}
+			
+			@Override
+			public Point getNewLocation() {
+				return newLocation;
+			}
+			
+			@Override
+			public ILinkTerminus getChangedLinkTerminus() {
+				return LinkTerminus.this;
+			}
+			
+			@Override
+			public Point getChangeDelta() {
+				return delta;
+			}
+		};
+		for(ILinkTerminusChangeListener listener : this.listeners){
+			listener.terminusTranslated(e);
+		}
 	}
 }

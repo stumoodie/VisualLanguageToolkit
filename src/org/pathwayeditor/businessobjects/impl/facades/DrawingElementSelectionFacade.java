@@ -201,4 +201,22 @@ public class DrawingElementSelectionFacade implements IDrawingElementSelection {
 		buf.append(")");
 		return buf.toString();
 	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#numTopLinkEdges()
+	 */
+	@Override
+	public int numTopLinkEdges() {
+		return this.subCompoundGraph.getNumTopEdges();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingElementSelection#topLinkEdgesIterator()
+	 */
+	@Override
+	public Iterator<ICompoundEdge> topLinkEdgesIterator() {
+		return this.subCompoundGraph.topEdgeIterator();
+	}
 }

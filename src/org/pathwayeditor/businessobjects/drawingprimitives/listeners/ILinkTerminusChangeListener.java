@@ -16,6 +16,7 @@ limitations under the License.
 
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
+
 /**
  * @author smoodie
  *
@@ -23,5 +24,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 public interface ILinkTerminusChangeListener {
 	
 	void valueChangeEvent(ILinkTerminusValueChangeEvent e);
+
+	void terminusTranslated(ILinkTerminusTranslationEvent e);
 
 }

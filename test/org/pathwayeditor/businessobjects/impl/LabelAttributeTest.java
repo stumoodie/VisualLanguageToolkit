@@ -107,7 +107,7 @@ public class LabelAttributeTest {
 			}
 
 			@Override
-			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+			public void elementTranslated(ICanvasAttributeTranslationEvent e) {
 				translationEvent = e;
 			}
 
@@ -164,7 +164,7 @@ public class LabelAttributeTest {
 			}
 
 			@Override
-			public void nodeTranslated(ICanvasAttributeTranslationEvent e) {
+			public void elementTranslated(ICanvasAttributeTranslationEvent e) {
 				
 			}
 

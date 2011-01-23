@@ -30,6 +30,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttri
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
+import org.pathwayeditor.figure.geometry.Point;
 
 import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
@@ -49,14 +50,14 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 	private final ILinkTerminus srcTerminus;
 	private final ILinkTerminus tgtTerminus;
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final IBendPointContainer lineSegement;
+	private final IBendPointContainer bpContainer;
 	
 	public LinkAttribute(IModel hibCanvas, int linkIndex, ILinkObjectType objectType) {
 		super(hibCanvas, linkIndex, objectType.getDefaultAttributes());
 		this.objectType = objectType;
 		this.srcTerminus = new LinkTerminus(this, LinkTermType.SOURCE, objectType.getSourceTerminusDefinition());
 		this.tgtTerminus = new LinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
-		this.lineSegement = new BendPointContainer(this);
+		this.bpContainer = new BendPointContainer(this);
 		addDefaults(objectType.getDefaultAttributes());
 	}
 
@@ -74,7 +75,7 @@ s	 */
 		this.lineWidth = otherAttribute.getLineWidth();
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
-		this.lineSegement = new BendPointContainer(this, otherAttribute.getBendPointContainer());
+		this.bpContainer = new BendPointContainer(this, otherAttribute.getBendPointContainer());
 //		Iterator<Point> bpIter = otherAttribute.bendPointIterator();
 //		while(bpIter.hasNext()){
 //			Point otherBp = bpIter.next();
@@ -201,7 +202,7 @@ s	 */
 	 */
 	@Override
 	public IBendPointContainer getBendPointContainer() {
-		return this.lineSegement;
+		return this.bpContainer;
 	}
 
 	/* (non-Javadoc)
@@ -228,5 +229,16 @@ s	 */
 		retVal.setInAttribute(pair.getInNode().getAttribute());
 		retVal.setOutAttribute(pair.getOutNode().getAttribute());
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#translate(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void translate(Point delta) {
+		this.bpContainer.translateAll(delta);
+		this.srcTerminus.translate(delta);
+		this.tgtTerminus.translate(delta);
+		this.canvasAttributeChangeListenerHelper.notifyNodeTranslation(delta);
 	}
 }

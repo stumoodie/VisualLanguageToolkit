@@ -20,7 +20,7 @@ public interface ICanvasAttributeChangeListener {
 
 	void propertyChange(ICanvasAttributePropertyChangeEvent e);
 
-	void nodeTranslated(ICanvasAttributeTranslationEvent e);
+	void elementTranslated(ICanvasAttributeTranslationEvent e);
 
 	void nodeResized(ICanvasAttributeResizedEvent e);
 

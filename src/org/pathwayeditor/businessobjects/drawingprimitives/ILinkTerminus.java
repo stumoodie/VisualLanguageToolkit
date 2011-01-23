@@ -102,4 +102,9 @@ public interface ILinkTerminus {
 	void removeLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
 	List<ILinkTerminusChangeListener> getLinkTerminusChangeListeners();
+
+	/**
+	 * @param delta
+	 */
+	void translate(Point delta);
 }

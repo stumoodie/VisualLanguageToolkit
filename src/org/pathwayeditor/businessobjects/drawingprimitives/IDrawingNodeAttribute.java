@@ -34,8 +34,6 @@ public interface IDrawingNodeAttribute extends ICanvasElementAttribute {
 	
 	void setBounds(Envelope newBounds);
 	
-	void translate(Point delta);
-	
 	void resize(Point locationDelta, Dimension sizeDelta);
 	
 	

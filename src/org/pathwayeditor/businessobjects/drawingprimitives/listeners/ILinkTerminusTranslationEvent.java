@@ -13,15 +13,24 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
+
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.figure.geometry.Point;
 
-public interface IBendPointChangeListener {
+/**
+ * @author smoodie
+ *
+ */
+public interface ILinkTerminusTranslationEvent {
 
-	void propertyChange(IBendPointChangeEvent e);
+	Point getOldLocation();
 
-	void locationChange(IBendPointLocationChangeEvent e);
+	Point getNewLocation();
 
-	void translationChange(IBendPointTranslationEvent e);
+	ILinkTerminus getChangedLinkTerminus();
+
+	Point getChangeDelta();
 
 }
