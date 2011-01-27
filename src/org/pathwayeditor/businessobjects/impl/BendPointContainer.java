@@ -148,8 +148,8 @@ public class BendPointContainer implements IBendPointContainer {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#bendPointListenerIterator()
 	 */
 	@Override
-	public Iterator<IBendPointChangeListener> bendPointListenerIterator() {
-		return this.listenableBendPointChangeItem.bendPointListenerIterator();
+	public List<IBendPointChangeListener> bendPointListeners() {
+		return this.listenableBendPointChangeItem.bendPointListeners();
 	}
 
 	/* (non-Javadoc)
@@ -186,7 +186,7 @@ public class BendPointContainer implements IBendPointContainer {
 			}
 			List<Point> oldPoints = this.bendPoints;
 			this.bendPoints = newBendPoints;
-			this.listenableBendPointChangeItem.notifyTranslation(translation, oldPoints, newBendPoints);
+//			this.listenableBendPointChangeItem.notifyTranslation(translation, oldPoints, newBendPoints);
 			Iterator<Point> oldBpIter = oldPoints.iterator();
 			Iterator<Point> newBpIter = newBendPoints.iterator();
 			for(int i = 0; i < this.bendPoints.size(); i++){
