@@ -27,7 +27,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.figure.geometry.Point;
@@ -236,9 +238,44 @@ s	 */
 	 */
 	@Override
 	public void translate(Point delta) {
+		// suppress listeners as only want the link listeners to fire when the whole link is translated
+		
+		List<IBendPointChangeListener> bpListeners = this.bpContainer.bendPointListeners();
+		List<ILinkTerminusChangeListener> srcTermListeners = this.srcTerminus.getLinkTerminusChangeListeners();
+		List<ILinkTerminusChangeListener> tgtTermListeners = this.tgtTerminus.getLinkTerminusChangeListeners();
+		suppressBpListeners(bpListeners);
+		suppressLinkTermListeners(this.srcTerminus, srcTermListeners);
+		suppressLinkTermListeners(this.tgtTerminus, tgtTermListeners);
 		this.bpContainer.translateAll(delta);
 		this.srcTerminus.translate(delta);
 		this.tgtTerminus.translate(delta);
+		restoreBpListeners(bpListeners);
+		restoreLinkTermListeners(this.srcTerminus, srcTermListeners);
+		restoreLinkTermListeners(this.tgtTerminus, tgtTermListeners);
 		this.canvasAttributeChangeListenerHelper.notifyNodeTranslation(delta);
+	}
+	
+	private void restoreLinkTermListeners(ILinkTerminus term, List<ILinkTerminusChangeListener> termListeners) {
+		for(ILinkTerminusChangeListener listener : termListeners){
+			term.addLinkTerminusChangeListener(listener);
+		}
+	}
+
+	private void suppressLinkTermListeners(ILinkTerminus term, List<ILinkTerminusChangeListener> termListeners) {
+		for(ILinkTerminusChangeListener listener : termListeners){
+			term.removeLinkTerminusChangeListener(listener);
+		}
+	}
+
+	private void suppressBpListeners(List<IBendPointChangeListener> bpListeners){
+		for(IBendPointChangeListener listener : bpListeners){
+			this.bpContainer.removeChangeListener(listener);
+		}
+	}
+	
+	private void restoreBpListeners(List<IBendPointChangeListener> bpListeners){
+		for(IBendPointChangeListener listener : bpListeners){
+			this.bpContainer.addChangeListener(listener);
+		}
 	}
 }
