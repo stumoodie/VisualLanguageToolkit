@@ -24,7 +24,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusTranslationEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusValueChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.LinkTerminusChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
@@ -259,42 +258,42 @@ public class LinkTerminus implements ILinkTerminus {
 	public void translate(Point delta) {
 		if(delta.equals(Point.ORIGIN)){
 			Point oldLocation = this.location.translate(delta);
-			notifyTranslation(delta, oldLocation, this.location);
+//			notifyTranslation(delta, oldLocation, this.location);
 			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.location);
 		}
 	}
 
-	/**
-	 * 
-	 * @param delta
-	 * @param oldLocation
-	 * @param newLocation
-	 */
-	private void notifyTranslation(final Point delta, final Point oldLocation, final Point newLocation) {
-		final ILinkTerminusTranslationEvent e = new ILinkTerminusTranslationEvent() {
-			
-			@Override
-			public Point getOldLocation() {
-				return oldLocation;
-			}
-			
-			@Override
-			public Point getNewLocation() {
-				return newLocation;
-			}
-			
-			@Override
-			public ILinkTerminus getChangedLinkTerminus() {
-				return LinkTerminus.this;
-			}
-			
-			@Override
-			public Point getChangeDelta() {
-				return delta;
-			}
-		};
-		for(ILinkTerminusChangeListener listener : this.listeners){
-			listener.terminusTranslated(e);
-		}
-	}
+//	/**
+//	 * 
+//	 * @param delta
+//	 * @param oldLocation
+//	 * @param newLocation
+//	 */
+//	private void notifyTranslation(final Point delta, final Point oldLocation, final Point newLocation) {
+//		final ILinkTerminusTranslationEvent e = new ILinkTerminusTranslationEvent() {
+//			
+//			@Override
+//			public Point getOldLocation() {
+//				return oldLocation;
+//			}
+//			
+//			@Override
+//			public Point getNewLocation() {
+//				return newLocation;
+//			}
+//			
+//			@Override
+//			public ILinkTerminus getChangedLinkTerminus() {
+//				return LinkTerminus.this;
+//			}
+//			
+//			@Override
+//			public Point getChangeDelta() {
+//				return delta;
+//			}
+//		};
+//		for(ILinkTerminusChangeListener listener : this.listeners){
+//			listener.terminusTranslated(e);
+//		}
+//	}
 }
