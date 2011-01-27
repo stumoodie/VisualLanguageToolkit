@@ -39,14 +39,16 @@ public class FlatLineSegmentTest {
 
 	@Test
 	public final void testContainsPoint() {
-		assertTrue("contained point", this.testInstance.containsPoint(CONTAINED_POINT, 0.001));
-		assertFalse("not contained point", this.testInstance.containsPoint(NOT_CONTAINED_POINT, 0.01));
-		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, 1.1), 0.2));
-		assertTrue("not contained point", this.testInstance.containsPoint(new Point(2.1, 1.1), 0.2));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 1.1), 0.1));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(2.1, 1.1), 0.1));
+		assertTrue("contained point", this.testInstance.containsPoint(CONTAINED_POINT));
+		assertTrue("contained point", this.testInstance.containsPoint(ORIGIN));
+		assertTrue("contained point", this.testInstance.containsPoint(END));
+		assertFalse("not contained point", this.testInstance.containsPoint(NOT_CONTAINED_POINT));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(1.0, 1.0)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(12.1, 1.0)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 1.1)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(2.1, 1.1)));
 //		assertFalse("not contained point", this.testInstance.containsPoint(new Point(2.1, 1.1), 0.19));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 7.0), 0.01));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 7.0)));
 	}
 
 	@Test
