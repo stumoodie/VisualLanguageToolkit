@@ -18,8 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -118,8 +117,8 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	}
 	
 	@Override
-	public final Iterator<IBendPointChangeListener> bendPointListenerIterator(){
-		return this.listeners.iterator();
+	public final List<IBendPointChangeListener> bendPointListeners(){
+		return new ArrayList<IBendPointChangeListener>(this.listeners);
 	}
 	
 	@Override
@@ -132,54 +131,54 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 		this.listeners.remove(listener);
 	}
 
-	/**
-	 * @param oldPoints
-	 * @param newBendPoints
-	 */
-	public void notifyTranslation(final Point delta, final List<Point> oldPoints, final List<Point> newBendPoints) {
-		IBendPointTranslationEvent event = new IBendPointTranslationEvent(){
+//	/**
+//	 * @param oldPoints
+//	 * @param newBendPoints
+//	 */
+//	public void notifyTranslation(final Point delta, final List<Point> oldPoints, final List<Point> newBendPoints) {
+//		IBendPointTranslationEvent event = new IBendPointTranslationEvent(){
+//
+//			@Override
+//			public int numPoints(){
+//				return newBendPoints.size();
+//			}
+//			
+//			@Override
+//			public Iterator<Point> newPointIterator() {
+//				return newBendPoints.iterator();
+//			}
+//
+//			@Override
+//			public Iterator<Point> oldPointIterator() {
+//				return oldPoints.iterator();
+//			}
+//
+//			@Override
+//			public IBendPointContainer getBendPointContainer() {
+//				return linkAttribute;
+//			}
+//
+//			@Override
+//			public Point getDelta() {
+//				return delta;
+//			}
+//
+//		};
+//		fireTranslationEvent(event);
+//	}
 
-			@Override
-			public int numPoints(){
-				return newBendPoints.size();
-			}
-			
-			@Override
-			public Iterator<Point> newPointIterator() {
-				return newBendPoints.iterator();
-			}
+//	/**
+//	 * @param event
+//	 */
+//	public void fireTranslationEvent(IBendPointTranslationEvent event) {
+//		for(IBendPointChangeListener listener : this.getListeners()){
+//			listener.translationChange(event);
+//		}
+//	}
 
-			@Override
-			public Iterator<Point> oldPointIterator() {
-				return oldPoints.iterator();
-			}
-
-			@Override
-			public IBendPointContainer getBendPointContainer() {
-				return linkAttribute;
-			}
-
-			@Override
-			public Point getDelta() {
-				return delta;
-			}
-
-		};
-		fireTranslationEvent(event);
-	}
-
-	/**
-	 * @param event
-	 */
-	public void fireTranslationEvent(IBendPointTranslationEvent event) {
-		for(IBendPointChangeListener listener : this.getListeners()){
-			listener.translationChange(event);
-		}
-	}
-
-	public void notifyTranslation(Point delta, Point oldLocn, Point newLocn) {
-		List<Point> oldBendPoints = Arrays.asList(new Point[] { oldLocn }); 
-		List<Point> newBendPoints = Arrays.asList(new Point[] { newLocn });
-		notifyTranslation(delta, oldBendPoints, newBendPoints);
-	}
+//	public void notifyTranslation(Point delta, Point oldLocn, Point newLocn) {
+//		List<Point> oldBendPoints = Arrays.asList(new Point[] { oldLocn }); 
+//		List<Point> newBendPoints = Arrays.asList(new Point[] { newLocn });
+//		notifyTranslation(delta, oldBendPoints, newBendPoints);
+//	}
 }

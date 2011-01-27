@@ -25,6 +25,4 @@ public interface ILinkTerminusChangeListener {
 	
 	void valueChangeEvent(ILinkTerminusValueChangeEvent e);
 
-	void terminusTranslated(ILinkTerminusTranslationEvent e);
-
 }

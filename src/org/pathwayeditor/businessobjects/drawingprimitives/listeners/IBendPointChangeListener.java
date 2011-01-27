@@ -22,6 +22,6 @@ public interface IBendPointChangeListener {
 
 	void locationChange(IBendPointLocationChangeEvent e);
 
-	void translationChange(IBendPointTranslationEvent e);
+//	void translationChange(IBendPointTranslationEvent e);
 
 }

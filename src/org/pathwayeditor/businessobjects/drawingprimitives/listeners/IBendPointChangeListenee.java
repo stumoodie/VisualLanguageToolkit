@@ -3,7 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Iterator;
+import java.util.List;
+
 
 /**
  * @author smoodie
@@ -26,9 +27,9 @@ public interface IBendPointChangeListenee {
 	void removeChangeListener(IBendPointChangeListener listener);
 	
 	/**
-	 * Gets an iterator of listeners.
+	 * Gets the list of listeners.
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
-	Iterator<IBendPointChangeListener> bendPointListenerIterator();
+	List<IBendPointChangeListener> bendPointListeners();
 
 }
