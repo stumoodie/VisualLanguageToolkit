@@ -256,8 +256,9 @@ public class LinkTerminus implements ILinkTerminus {
 	 */
 	@Override
 	public void translate(Point delta) {
-		if(delta.equals(Point.ORIGIN)){
-			Point oldLocation = this.location.translate(delta);
+		if(!delta.equals(Point.ORIGIN)){
+			Point oldLocation = this.location;
+			this.location = this.location.translate(delta);
 //			notifyTranslation(delta, oldLocation, this.location);
 			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.location);
 		}
