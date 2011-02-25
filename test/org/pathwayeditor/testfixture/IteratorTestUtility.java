@@ -1,3 +1,6 @@
+/*
+Copyright 2009-2011, Court of the University of Edinburgh
+*/
 package org.pathwayeditor.testfixture;
 
 import static org.junit.Assert.assertEquals;
