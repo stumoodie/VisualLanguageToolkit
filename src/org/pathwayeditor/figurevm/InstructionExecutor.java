@@ -76,321 +76,385 @@ public class InstructionExecutor {
 	
 	private void initOpCodes(){
 		this.opCodeLookup.put(OpCodes.ARC, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processArc();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.OVAL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processOval();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.RECT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processRect();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.RRECT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processRRect();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.DEF, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processDef();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LINE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLine();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.POINT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processPoint();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.PGON, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processPgon();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.PLINE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processPline();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.TEXT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processText();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.EXIT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processExit();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.EQ, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processEq();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.NE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processNe();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLt();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.GT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processGt();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLe();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.GE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processGe();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.IFELSE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processIfelse();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.IF, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processIf();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_FILL_COL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetfillcol();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_FILL_COL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurfillcol();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_FONT_SIZE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetfontsize();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_FONT_SIZE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurfontsize();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_FONT_STYLE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetfontstyle();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_FONT_STYLE, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurfontstyle();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_LINE_COL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetlinecol();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_LINE_COL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurlinecol();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ADD, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processAdd();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SUB, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSub();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.MUL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processMul();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.DIV, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processDiv();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.AND, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processAnd();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.NOT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processNot();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.OR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processOr();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.EXCH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processExch();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.DUP, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processDup();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.GPOP, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				popGraphicsState();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.GPUSH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				pushGraphicsState();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CURR_LINE_WIDTH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				currLineWidth();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_LINE_WIDTH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				setLineWidth();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_LINE_WIDTH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				setLineWidth();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.FOR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processFor();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.FORALL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processForall();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.REPEAT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processRepeat();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LENGTH, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLength();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.GET, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processGet();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.PUT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processPut();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ARRAY, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processArray();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SIN, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSin();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.COS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCos();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ATAN, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processAtan();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SQRT, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSqrt();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LN, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLn();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.LOG, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processLog();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.EXP, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processExp();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ROUND, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processRound();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CEIL, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCeil();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.FLOOR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processFloor();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.NEG, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processNeg();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ABS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processAbs();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CUR_BOUNDS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCurBounds();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.ANCHOR, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processSetAnchor();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.CVS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processCvs();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.TEXTBOUNDS, new IOpCodeLookup(){
+			@Override
 			public void processOpCode() {
 				processTextBounds();
 			}
@@ -740,14 +804,17 @@ public class InstructionExecutor {
 	private void processDiv(){
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a/b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a/b;
 			}
 
+			@Override
 			public String getOpName() {
 				return "div";
 			}
@@ -758,14 +825,17 @@ public class InstructionExecutor {
 	private void processMul() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a*b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a*b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "mul";
 			}
@@ -776,14 +846,17 @@ public class InstructionExecutor {
 	private void processSub() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a-b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a-b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "sub";
 			}
@@ -794,14 +867,17 @@ public class InstructionExecutor {
 	private void processAdd() {
 		processArithmeticOp(new ArithmaticOp(){
 
+			@Override
 			public Double doubleOp(Double a, Double b) {
 				return a+b;
 			}
 
+			@Override
 			public Integer integerOp(Integer a, Integer b) {
 				return a+b;
 			}
 			
+			@Override
 			public String getOpName() {
 				return "add";
 			}
@@ -1068,7 +1144,7 @@ public class InstructionExecutor {
 			}
 			else if(inst.getType().equals(InstructionType.VARIABLE_NAME)){
 				// lookup variable
-				Value lookup = this.variableLookup.get((String)inst.getValue());
+				Value lookup = this.variableLookup.get(inst.getValue());
 				if(lookup == null)
 					throw new IllegalStateException("No variable name found matching: " + inst.getValue());
 				
@@ -1089,7 +1165,7 @@ public class InstructionExecutor {
 			}
 			else if(inst.getType().equals(InstructionType.BOUND_VALUE)){
 				// lookup variable
-				Value lookup = this.bindLookup.get((String)inst.getValue());
+				Value lookup = this.bindLookup.get(inst.getValue());
 				if(lookup == null) throw new IllegalStateException("No binding found for name: " + inst.getValue());
 				this.valueStack.push(lookup);
 				if(logger.isDebugEnabled()){

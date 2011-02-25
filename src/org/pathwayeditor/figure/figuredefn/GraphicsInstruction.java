@@ -32,7 +32,7 @@ public class GraphicsInstruction {
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> getList() {
-		return (List)this.value;
+		return (List<T>)this.value;
 
 	}
 	public double[] getDoubleArray() {
@@ -45,7 +45,7 @@ public class GraphicsInstruction {
 
 	@SuppressWarnings("unchecked")
 	public <E extends Enum<E>> EnumSet<E> getEnumSet() {
-		return (EnumSet)this.value;
+		return (EnumSet<E>)this.value;
 	}
 	
 	@Override

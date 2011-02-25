@@ -23,5 +23,5 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
  *
  */
 public enum CanvasPropertyChange {
-	GRID_SIZE, GRID_SHOWN, SNAP_TO_GRID_ENABLED, BACKGROUND_COLOUR, CANVAS_SIZE
+	GRID_SIZE, GRID_SHOWN, SNAP_TO_GRID_ENABLED, BACKGROUND_COLOUR, CANVAS_SIZE, NAME
 }

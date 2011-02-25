@@ -17,6 +17,8 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -112,6 +114,12 @@ public interface INotationSyntaxService extends INotationService {
 	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	IObjectType getObjectType(int uniqueId);
+	
+	ILabelObjectType getLabelObjectType(int uniqueId);
+	
+	ILabelObjectType getLabelObjectTypeByProperty(IPropertyDefinition propDefn);
+	
+	boolean isVisualisableProperty(IPropertyDefinition propDefn); 
 	
 	int numShapeObjectTypes();
 	

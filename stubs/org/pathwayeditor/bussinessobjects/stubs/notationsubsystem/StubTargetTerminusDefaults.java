@@ -19,7 +19,6 @@ limitations under the License.
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.HashSet;
-import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
@@ -47,6 +46,7 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndDecoratorType()
 	 */
+	@Override
 	public LinkEndDecoratorShape getEndDecoratorType() {
 		return EXPECTED_END_DEC;
 	}
@@ -54,6 +54,7 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getEndSize()
 	 */
+	@Override
 	public Dimension getEndSize() {
 		return EXPECTED_END_SIZE;
 	}
@@ -61,15 +62,9 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getGap()
 	 */
+	@Override
 	public double getGap() {
 		return EXPECTED_OFFSET;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults#getPropertiesIterator()
-	 */
-	public Iterator<IPropertyDefinition> propertyDefinitionIterator() {
-		return this.propertyDefinitionList.iterator();
 	}
 
 	/**
@@ -77,10 +72,6 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 	 */
 	private HashSet<IPropertyDefinition> getpropdefns() {
 		return this.propertyDefinitionList;
-	}
-
-	public boolean containsPropertyDefinition(String name) {
-		return findPropDefn(name) != null;
 	}
 
 	IPropertyDefinition findPropDefn(String name){
@@ -94,15 +85,4 @@ public class StubTargetTerminusDefaults implements ILinkTerminusDefaults {
 		return retVal;
 	}
 	
-	public IPropertyDefinition getPropertyDefinition(String name) {
-		return findPropDefn(name);
-	}
-
-	public int numPropertyDefinitions() {
-		return this.getpropdefns().size();
-	}
-
-	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
-		return propDefn != null && this.getpropdefns().contains(propDefn);
-	}
 }

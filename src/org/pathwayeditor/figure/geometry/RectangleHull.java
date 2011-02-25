@@ -23,70 +23,87 @@ public class RectangleHull implements IConvexHull {
 		this.hull = new ConvexHull(points);
 	}
 
+	@Override
 	public IConvexHull changeEnvelope(Envelope newEnvelope) {
 		return this.hull.changeEnvelope(newEnvelope);
 	}
 
+	@Override
 	public boolean containsPoint(Point p) {
 		return this.hull.containsPoint(p);
 	}
 
+	@Override
 	public double getArea() {
 		return this.hull.getArea();
 	}
 
+	@Override
 	public Point getCentre() {
 		return this.hull.getCentre();
 	}
 
+	@Override
 	public Dimension getDimension() {
 		return this.hull.getDimension();
 	}
 
+	@Override
 	public Envelope getEnvelope() {
 		return this.hull.getEnvelope();
 	}
 
+	@Override
 	public List<LineSegment> getLines() {
 		return this.hull.getLines();
 	}
 
+	@Override
 	public Point getOrigin() {
 		return this.hull.getOrigin();
 	}
 
+	@Override
 	public Point getPointLineIntersects(Point reference) {
 		return this.hull.getPointLineIntersects(reference);
 	}
 
+	@Override
 	public List<Point> getPoints() {
 		return this.hull.getPoints();
 	}
 
+	@Override
 	public boolean hullsIntersect(IConvexHull otherHull) {
 		return this.hull.hullsIntersect(otherHull);
 	}
 
+	@Override
 	public Iterator<Point> iterator() {
 		return this.hull.iterator();
 	}
 
+	@Override
 	public int numPoints() {
 		return this.hull.numPoints();
 	}
 
+	@Override
 	public Iterator<Point> pointIterator() {
 		return this.hull.pointIterator();
 	}
 
+	@Override
 	public IConvexHull scale(Dimension newDim) {
 		return this.hull.scale(newDim);
 	}
 
+	@Override
 	public IConvexHull scale(double scale, double scale2) {
 		return this.hull.scale(scale, scale2);
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder buf = new StringBuilder(this.getClass().getSimpleName());
 		buf.append("(bounds=");
@@ -95,10 +112,12 @@ public class RectangleHull implements IConvexHull {
 		return this.hull.toString();
 	}
 
+	@Override
 	public IConvexHull translate(double d, double e) {
 		return this.hull.translate(d, e);
 	}
 
+	@Override
 	public IConvexHull translate(Point p) {
 		return this.hull.translate(p);
 	}

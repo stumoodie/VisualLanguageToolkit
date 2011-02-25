@@ -20,17 +20,15 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.compound.ISubCompoundGraph;
+
 /**
  * @author smoodie
  *
  */
 public interface IDrawingElementSelection {
-
-	/**
-	 * Get the model that this is a snapshot of.
-	 * @return the model, which cannot be null.
-	 */
-	IModel getModel();
 
 	/**
 	 * Get the number of nodes that form the head of a tree of the selected nodes in the compound graph.
@@ -42,7 +40,19 @@ public interface IDrawingElementSelection {
 	 * Iterator for the top nodes in the selection tree.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IDrawingNode> topDrawingNodeIterator();
+	Iterator<ICompoundNode> topDrawingNodeIterator();
+
+	/**
+	 * Get the number of edges that for the head of a tree of the selected nodes in the compound graph.
+	 * @return the number of top nodes.
+	 */
+	int numTopLinkEdges();
+	
+	/**
+	 * Iterator for the top edges in the selection tree.
+	 * @return the iterator, which cannot be null.
+	 */
+	Iterator<ICompoundEdge> topLinkEdgesIterator();
 
 	/**
 	 * Test if this selection is a consistent snapshot of the model. The selection may become inconsistent if any of the nodes
@@ -61,19 +71,19 @@ public interface IDrawingElementSelection {
 	 * Iterates over all the drawing nodes in this selection.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IDrawingNode> drawingNodeIterator();
+	Iterator<ICompoundNode> drawingNodeIterator();
 	
 	/**
 	 * Iterates over all the shape nodes in this selection.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IShapeNode> shapeNodeIterator();
+	Iterator<ICompoundNode> shapeNodeIterator();
 	
 	/**
 	 * Iterates over all the label nodes in this selection.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<ILabelNode> labelNodeIterator();
+	Iterator<ICompoundNode> labelNodeIterator();
 	
 	/**
 	 * Get the number of edges in the graph.
@@ -85,7 +95,7 @@ public interface IDrawingElementSelection {
 	 * Iterates over all the drawing nodes in this selection.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<ILinkEdge> linkEdgeIterator();
+	Iterator<ICompoundEdge> linkEdgeIterator();
 
 	/**
 	 * Tests if this selection contains the given node.
@@ -107,4 +117,6 @@ public interface IDrawingElementSelection {
 	 * @return true if dangling edges are present, false otherwise.
 	 */
 	boolean hasDanglingEdges();
+	
+	ISubCompoundGraph getSubgraph();
 }

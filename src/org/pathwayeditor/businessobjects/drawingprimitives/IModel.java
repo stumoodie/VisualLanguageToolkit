@@ -20,112 +20,82 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 
 /**
  * @author smoodie
  *
  */
-public interface IModel extends IModelChangeListenee, ISuppressableChangeListenee {
+public interface IModel {
 
 	/**
-	 * Gets the map that owns this model.
-	 * @return the owning map, which cannot be null.
+	 * Gets the name of the canvas, which cannot be null.
+	 * @return the name of the canvas, which cannot be null or an empty string.
 	 */
-	ICanvas getCanvas();
+	String getName();
 	
 	/**
-	 * Returns the root node of the compound graph representation held by this model.
-	 * @return the root node, which will always be the same object, cannot be deleted and will not be null.
+	 * Tests if the name can be used as a valid canvas name.
+	 * @param name the name to be tested, can be null.
+	 * @return true if the name is valid, false otherwise.
 	 */
-	IRootNode getRootNode();
+	boolean isValidName(String name);
 	
 	/**
-	 * Create a copy of this model and add it to the given map.
-	 * @param canvas the canvas that will own the copied model. This cannot be the same canvas that owns this model. 
-	 * @return The newly created model.
-	 * @throws IllegalArgumentException if <code>getCanvas().equals(canvas)</code>.
+	 * Sets the canvas name.
+	 * @param name the new name for the canvas, which must be valid.
+	 * @throws IllegalArgumentException if <code>isValidName(name) == false</code>
 	 */
-	IModel createCopy(ICanvas canvas);
+	void setName(String name);
 	
+	IShapeAttributeFactory shapeAttributeFactory();
+	
+	ILinkAttributeFactory linkAttributeFactory();
+
+	ILabelAttributeFactory labelAttributeFactory();
+
+	IRootAttribute getRootAttribute();
+
 	/**
-	 * Get a new linkEdge factory for this model. Can create a new linkEdge between any two shape nodes in
-	 * the model. 
-	 * @return a new instance of the factory, cannot be null.
+	 * Number of canvas attributes stored by this canvas.
+	 * @return the number of canvas attributes.
 	 */
-	ILinkEdgeFactory linkEdgeFactory();
+	int numCanvasAttributes();
 	
-	/**
-	 * Gets the current state of the model as a momento object that can be used to restore the state of the
-	 *  graph.  
-	 * @return the momento, which cannot be null.
-	 */
-	IGraphMomento getCurrentState();
-	
-	/**
-	 * Restores the model to the state stored in the given momento object.
-	 * @param stateToRestore the momento of the model state it is to be restored to.
-	 */
-	void restoreToState(IGraphMomento stateToRestore);
-	
-	/**
-	 * Get a new instance of the shape node and link edge selection class that is used in
-	 * removal and copy operations.
-	 * @return the new instance, and which cannot be null.
-	 */
-	ISelectionFactory newSelectionFactory();
-	
-	/**
-	 * Tests if the selection can be removed from the model.
-	 * @param selection the selection, which can be null.
-	 * @return true if the removal will succeed, false otherwise.
-	 */
-	boolean canRemoveSelection(IDrawingElementSelection selection);
-	
-	/**
-	 * Remove the nodes and edges in the model specified in the given selection.
-	 * In addition to the specified nodes and edges child nodes and edges of selected nodes and 
-	 * incident edges between selected nodes and their children will also be removed.
-	 * @param selection the selection of nodes and edges to be removed.
-	 * @throws IllegalArgumentException if <code>canRemoveSelection(selection) == false</code>.
-	 */
-	void removeSubgraph(IDrawingElementSelection selection);
-	
+	void addCanvasAttribute(ICanvasElementAttribute attribute);
+
+	ICanvasAttributeSequence getCreationSerialCounter();
+
 	/**
 	 * Returns all the drawing nodes in this model.
 	 * @return the drawing node iterator.
 	 */
-	Iterator<IDrawingNode> drawingNodeIterator();
+	Iterator<ICompoundNode> drawingNodeIterator();
 	
 	/**
 	 * Returns a shape node iterator for all the shape nodes held in this model.
 	 * @return the shape node iterator, which cannot be null.
 	 */
-	Iterator<IShapeNode> shapeNodeIterator();
+	Iterator<ICompoundNode> shapeNodeIterator();
 	
 	
 	/**
 	 * Returns an iterator for all the label nodes held in this model.
 	 * @return the label node iterator, which cannot be null.
 	 */
-	Iterator<ILabelNode> labelNodeIterator();
+	Iterator<ICompoundNode> labelNodeIterator();
 	
 	/**
 	 * Returns an iterator for all the link edges in this model
 	 * @return the link edge iterator.
 	 */
-	Iterator<ILinkEdge> linkEdgeIterator();
-	
-	/**
-	 * Tests that the model is self-consistent and correctly initialised from persistent storage (if
-	 * applicable). Once loaded from persistent storage or if created using the interface APIs, then
-	 * a model should always be valid. Therefore this method should mainly be used testing and debugging
-	 * purposes.   
-	 * @return true if the model is self-consistent and maintains referential integrity, false otherwise.
-	 */
-	boolean isValid();
+	Iterator<ICompoundEdge> linkEdgeIterator();
 	
 	/**
 	 * Provides the number of drawing elements in this model.
@@ -157,4 +127,78 @@ public interface IModel extends IModelChangeListenee, ISuppressableChangeListene
 	 * @return the number of link edges.
 	 */
 	int numLinkEdges();
+
+	ICompoundGraph getGraph();
+	
+	/**
+	 * Find an attribute that matches the serial number.
+	 * @param attributeSerial the serial number. 
+	 * @return The canvas attribute with the serial number matching <code>attributeSerial</code> or null if no matching attribute serial can be found. 
+	 */
+	ICanvasElementAttribute findAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a link attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsLinkAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the link attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the link attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsLinkAttribute(attributeSerial) == false</code>.
+	 */
+	ILinkAttribute getLinkAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a shape attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsShapeAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the shape attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the shape attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsShapeAttribute(attributeSerial) == false</code>.
+	 */
+	IShapeAttribute getShapeAttribute(int attributeSerial);
+
+	/**
+	 * Tests if the canvas contains a label attribute matching the serial number.
+	 * @param attributeSerial the serial number.
+	 * @return true if it contains the attribute, false otherwise.
+	 */
+	boolean containsLabelAttribute(int attributeSerial);
+	
+	/**
+	 * Gets the label attribute matching the serial number.
+	 * @param attributeSerial the serial number that uniquely identifies the link attribute.
+	 * @return the label attribute, which cannot be null.
+	 * @throws IllegalArgumentException if <code>containsLabelAttribute(attributeSerial) == false</code>.
+	 */
+	ILabelAttribute getLabelAttribute(int attributeSerial);
+	
+	Iterator<ICanvasElementAttribute> canvasAttributeIterator();
+	
+	Iterator<IShapeAttribute> shapeAttributeIterator();
+	
+	int numShapeAttributes();
+	
+	Iterator<ILabelAttribute> labelAttributeIterator();
+	
+	int numLabelAttributes();
+	
+	Iterator<ILinkAttribute> linkAttributeIterator();
+	
+	int numLinkAttributes();
+
+	INotationSubsystem getNotationSubsystem();
+	
+	ILabelAttribute getLabelForProperty(IAnnotationProperty annotationProperty);
+	
+	boolean hasLabelForProperty(IAnnotationProperty annotationProperty);
 }

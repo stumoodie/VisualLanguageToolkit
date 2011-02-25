@@ -18,6 +18,8 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+
 /**
  * Any element drawn on the canvas. 
  * @author smoodie
@@ -25,47 +27,18 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface IDrawingElement {
 
-	/**
-	 * Get the model that owns this element.
-	 * @return the model, which cannot be null.
-	 */
-	IModel getModel();
+	int getLevel();
+	
+	long getUniqueIndex();
 	
 	/**
 	 * Get the attribute of the drawing element.
 	 * @return the attribute, which cannot be null.
 	 */
-	ICanvasAttribute getAttribute();
+	ICanvasElementAttribute getAttribute();
 
-	/**
-	 * Tests if this element has been removed from the canvas.
-	 * @return true if it has, false otherwise.
-	 */
-	boolean isRemoved();
-	
-	/**
-	 * identity based on the canvas and the attribute combination. 
-	 * @param other
-	 * @return true if objects are equal, false otherwise.
-	 */
-	boolean equals(Object other);
-	
-	/**
-	 * See equals for identity rules.
-	 * @return the hash code.
-	 */
-	int hashCode();
-	
-	
-	/**
-	 * Get an index that is unique within the model.
-	 * @return the unique index.
-	 */
-	long getUniqueIndex();
+	ICompoundGraphElement getGraphElement();
 
-	/**
-	 * Get the level of this element in the tree of compounds nodes. For edges this 1 above the level of its owning node.
-	 * @return the level of the element.
-	 */
-	int getLevel();
+	boolean isDescendent(IDrawingElement testElement);
+	
 }

@@ -17,12 +17,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 
 
-public interface ILabelNode extends IDrawingNode, IZOrderedObject {
+public interface ILabelNode extends IDrawingNode {
 
 	
 	/**
 	 * Gets the {@link ILabelAttribute} assosiated with the current label node.
 	 * @return the assosiated Label attribute.
 	 */
+	@Override
 	ILabelAttribute getAttribute();
 }

@@ -18,23 +18,22 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * @author smoodie
  *
  */
-public final class ListenableBendPointChangeItem implements IBendPointChangeListenee, ISuppressableChangeListenee {
+public final class ListenableBendPointChangeItem implements IBendPointChangeListenee {
 	private final List<IBendPointChangeListener> listeners;
-	private final ILinkAttribute linkAttribute;
-	private boolean enabled = true; 
+	private final IBendPointContainer linkAttribute;
 	
-	public ListenableBendPointChangeItem(ILinkAttribute linkAttribute){
+	public ListenableBendPointChangeItem(IBendPointContainer linkAttribute){
 		this.listeners = new CopyOnWriteArrayList<IBendPointChangeListener>();
 		this.linkAttribute = linkAttribute;
 	}
@@ -47,33 +46,69 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	}
 
 	public final void firePropertyChange(IBendPointChangeEvent evt){
-		if(enabled){
-			for(IBendPointChangeListener listener : this.getListeners()){
-				listener.propertyChange(evt);
-			}
+		for(IBendPointChangeListener listener : this.getListeners()){
+			listener.propertyChange(evt);
 		}
 	}
 	
-	public final void notifyPropertyChange(final BendPointChange type, final IBendPoint bp, final int oldIdxPos, final int newIdxPos){
+	public final void fireLocationChange(IBendPointLocationChangeEvent evt){
+		for(IBendPointChangeListener listener : this.getListeners()){
+			listener.locationChange(evt);
+		}
+	}
+	
+	public final void notifyPropertyChange(final int idx, final Point oldLocation, final Point newLocation){
+		IBendPointLocationChangeEvent event = new IBendPointLocationChangeEvent(){
+
+			@Override
+			public Point getNewPosition() {
+				return newLocation;
+			}
+
+			@Override
+			public Point getOldPosition() {
+				return oldLocation;
+			}
+
+			@Override
+			public IBendPointContainer getOwningLink() {
+				return linkAttribute;
+			}
+
+			@Override
+			public int getBendPointIndex() {
+				return idx;
+			}
+
+		};
+		fireLocationChange(event);
+	}
+	
+	public final void notifyPropertyChange(final BendPointChange type, final Point bp, final int oldIdxPos, final int newIdxPos){
 		IBendPointChangeEvent event = new IBendPointChangeEvent(){
 
+			@Override
 			public BendPointChange getChangeType() {
 				return type;
 			}
 
+			@Override
 			public int getNewIndexPos() {
 				return newIdxPos;
 			}
 
+			@Override
 			public int getOldIndexPos() {
 				return oldIdxPos;
 			}
 
-			public ILinkAttribute getLink() {
+			@Override
+			public IBendPointContainer getBendPointContainer() {
 				return linkAttribute;
 			}
 
-			public IBendPoint getBendPoint() {
+			@Override
+			public Point getBendPoint() {
 				return bp;
 			}
 
@@ -81,29 +116,69 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 		firePropertyChange(event);
 	}
 	
-	public final Iterator<IBendPointChangeListener> bendPointListenerIterator(){
-		return this.listeners.iterator();
+	@Override
+	public final List<IBendPointChangeListener> bendPointListeners(){
+		return new ArrayList<IBendPointChangeListener>(this.listeners);
 	}
 	
+	@Override
 	public final void addChangeListener(IBendPointChangeListener listener){
 		this.listeners.add(listener);
 	}
 
+	@Override
 	public final void removeChangeListener(IBendPointChangeListener listener){
 		this.listeners.remove(listener);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#areListenersEnabled()
-	 */
-	public boolean areListenersEnabled() {
-		return this.enabled;
-	}
+//	/**
+//	 * @param oldPoints
+//	 * @param newBendPoints
+//	 */
+//	public void notifyTranslation(final Point delta, final List<Point> oldPoints, final List<Point> newBendPoints) {
+//		IBendPointTranslationEvent event = new IBendPointTranslationEvent(){
+//
+//			@Override
+//			public int numPoints(){
+//				return newBendPoints.size();
+//			}
+//			
+//			@Override
+//			public Iterator<Point> newPointIterator() {
+//				return newBendPoints.iterator();
+//			}
+//
+//			@Override
+//			public Iterator<Point> oldPointIterator() {
+//				return oldPoints.iterator();
+//			}
+//
+//			@Override
+//			public IBendPointContainer getBendPointContainer() {
+//				return linkAttribute;
+//			}
+//
+//			@Override
+//			public Point getDelta() {
+//				return delta;
+//			}
+//
+//		};
+//		fireTranslationEvent(event);
+//	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee#setListenersEnabled(boolean)
-	 */
-	public void setListenersEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+//	/**
+//	 * @param event
+//	 */
+//	public void fireTranslationEvent(IBendPointTranslationEvent event) {
+//		for(IBendPointChangeListener listener : this.getListeners()){
+//			listener.translationChange(event);
+//		}
+//	}
+
+//	public void notifyTranslation(Point delta, Point oldLocn, Point newLocn) {
+//		List<Point> oldBendPoints = Arrays.asList(new Point[] { oldLocn }); 
+//		List<Point> newBendPoints = Arrays.asList(new Point[] { newLocn });
+//		notifyTranslation(delta, oldBendPoints, newBendPoints);
+//	}
 }

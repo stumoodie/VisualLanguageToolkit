@@ -18,7 +18,7 @@ limitations under the License.
  */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import java.util.Iterator;
+import uk.ac.ed.inf.graph.compound.ISubCompoundGraphFactory;
 
 /**
  * @author smoodie
@@ -40,24 +40,30 @@ public interface ISelectionFactory {
 	 */
 	void addLink(ILinkEdge selectedLink);
 	
-	/**
-	 * Iterator over all the drawing nodes added to this selection factory. 
-	 * @return the iterator, which cannot be null.
-	 */
-	Iterator<IDrawingNode> drawingNodeIterator();
+//	/**
+//	 * Iterator over all the drawing nodes added to this selection factory. 
+//	 * @return the iterator, which cannot be null.
+//	 */
+//	Iterator<ICompoundNode> drawingNodeIterator();
+//	
+//	/**
+//	 * Gets the number of drawing nodes added to this factory.
+//	 * @return the number of drawing nodes.
+//	 */
+//	int numDrawingNodes();
+//	
+//	/**
+//	 * Iterator over all the link edges added to this selection factory. 
+//	 * @return the iterator, which cannot be null.
+//	 */
+//	Iterator<ICompoundEdge> linkEdgeIterator();
 	
-	/**
-	 * Gets the number of drawing nodes added to this factory.
-	 * @return the number of drawing nodes.
-	 */
-	int numDrawingNodes();
-	
-	/**
-	 * Iterator over all the link edges added to this selection factory. 
-	 * @return the iterator, which cannot be null.
-	 */
-	Iterator<ILinkEdge> linkEdgeIterator();
-	
+//	/**
+//	 * Gets the number of link edges added to this factory.
+//	 * @return the number of link edges.
+//	 */
+//	int numLinkEdges();
+
 	/**
 	 * Creates a new selection object based on the nodes and edges added to this factory.
 	 * It is effectively a "view" of the model. A general selection is suitable for removal operations
@@ -74,15 +80,5 @@ public interface ISelectionFactory {
 	 */
 	IDrawingElementSelection createEdgeExcludedSelection();
 	
-	/**
-	 * Gets the number of link edges added to this factory.
-	 * @return the number of link edges.
-	 */
-	int numLinkEdges();
-	
-	/**
-	 * Gets the model that this selection refers to.
-	 * @return the model which cannot be null.
-	 */
-	IModel getModel();
+	ISubCompoundGraphFactory getSubgraphFactory();
 }

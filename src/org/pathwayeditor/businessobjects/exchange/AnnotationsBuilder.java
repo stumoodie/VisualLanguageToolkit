@@ -45,6 +45,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitBooleanProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IBooleanAnnotationProperty)
 	 */
+	@Override
 	public void visitBooleanAnnotationProperty(IBooleanAnnotationProperty property) {
 		BooleanAnnotationProperty prop = new BooleanAnnotationProperty();
 		prop.setId(++this.lastPropId);
@@ -63,6 +64,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitIntegerProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAnnotationProperty)
 	 */
+	@Override
 	public void visitIntegerAnnotationProperty(IIntegerAnnotationProperty property) {
 		IntegerAnnotationProperty prop = new IntegerAnnotationProperty();
 		prop.setId(++this.lastPropId);
@@ -75,6 +77,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitListProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty)
 	 */
+	@Override
 	public void visitListAnnotationProperty(IListAnnotationProperty property) {
 		ListAnnotationProperty prop = new ListAnnotationProperty();
 		prop.setId(++this.lastPropId);
@@ -94,6 +97,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitNumberProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty)
 	 */
+	@Override
 	public void visitNumberAnnotationProperty(INumberAnnotationProperty property) {
 		NumberAnnotationProperty prop = new NumberAnnotationProperty();
 		prop.setId(++this.lastPropId);
@@ -106,6 +110,7 @@ public class AnnotationsBuilder implements IAnnotationPropertyVisitor {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor#visitPlainTextProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty)
 	 */
+	@Override
 	public void visitPlainTextAnnotationProperty(IPlainTextAnnotationProperty property) {
 		TextAnnotationProperty prop = new TextAnnotationProperty();
 		prop.setId(++this.lastPropId);

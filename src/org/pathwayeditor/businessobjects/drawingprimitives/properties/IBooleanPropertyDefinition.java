@@ -9,6 +9,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
  */
 public interface IBooleanPropertyDefinition extends IPropertyDefinition {
 
+	@Override
 	Boolean getDefaultValue();
 	
 }

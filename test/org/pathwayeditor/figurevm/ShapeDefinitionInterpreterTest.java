@@ -59,10 +59,12 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
             ShapeDefinitionInterpreter interpreter = new ShapeDefinitionInterpreter(instructions, testHarness,
             		new IInterpreterErrorHandler() {
 
+						@Override
 						public void reportError(String msg) {
 							System.err.println("Error: " + msg);
 						}
 
+						@Override
 						public void reportError(ErrorCode errorCode, Value value) {
 							System.err.println("Error: Code=" + errorCode + ", value=" + value);
 						}
@@ -78,37 +80,45 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
         System.exit(0);
 	}
 
+	@Override
 	public void handleArc(double x, double y, double width, double height,
 			double offset, double length) {
 		System.out.println("Arc(" + x + ", " + y + ", " + width + ", " + height
 				+ ", " + offset + ", " + length + ")");
 	}
 
+	@Override
 	public void handleLine(double startX, double startY, double endX,
 			double endY) {
 		System.out.println("Line(" + startX + ", " + startY + ", " + endX + ", " + endX + ")");
 	}
 
+	@Override
 	public void handleOval(double x, double y, double width, double height) {
 		System.out.println("Oval(" + x + ", " + y + ", " + width + ", " + height + ")");
 	}
 
+	@Override
 	public void handlePoint(double x, double y) {
 		System.out.println("Point(" + x + ", " + y + ")");
 	}
 
+	@Override
 	public void handlePolygon(double[] pointArr) {
 		System.out.println("Polygon(" + Arrays.toString(pointArr) + ")");
 	}
 
+	@Override
 	public void handlePolyline(double[] pointArr) {
 		System.out.println("Polyline(" + Arrays.toString(pointArr) + ")");
 	}
 
+	@Override
 	public void handleRectangle(double x, double y, double width, double height) {
 		System.out.println("Rectangle(" + x + ", " + y + ", " + width + ", " + height + ")");
 	}
 
+	@Override
 	public void handleRoundRectangle(double x, double y, double width,
 			double height, double arcWidth, double arcHeight) {
 		System.out.println("RReactangle(" + x + ", " + y + ", " + width + ", " + height
@@ -116,14 +126,17 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		
 	}
 
+	@Override
 	public void handleText(double x, double y, TextAlignment align, String text) {
 		System.out.println("Text(" + x + ", " + y + ", align=" + align + ",text=" + text + ")");
 	}
 
+	@Override
 	public void setNoFill() {
 		System.out.println("SetNoFill()");
 	}
 
+	@Override
 	public void setFillColour(int red, int green, int blue) {
 		print("setFillColour(" + red + ", " + green + ", " + blue + ")");
 	}
@@ -132,55 +145,67 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		System.out.println(string);
 	}
 
+	@Override
 	public List<Integer> getCurFillColour() {
 		print("getFillColour()");
 		return Arrays.asList(new Integer[] { 20, 30, 50 });
 	}
 
+	@Override
 	public List<Integer> getCurLineColour() {
 		print("getLineColour()");
 		return Arrays.asList(new Integer[] { 20, 30, 50 });
 	}
 
+	@Override
 	public void setLineColour(int red, int green, int blue) {
 		print("setLineColour(" + red + ", " + green + ", " + blue + ")");
 	}
 
+	@Override
 	public void setNoLine() {
 		print("setNoLine()");
 	}
 
+	@Override
 	public double getCurFontSize() {
 		print("getCurFontSize()");
 		return 12;
 	}
 
+	@Override
 	public String getCurFontStyle() {
 		print("getCurFontStyle()");
 		return "I";
 	}
 
+	@Override
 	public void setFontStyle(String styleString) {
 		print("setFontStyle(" + styleString + ")");
 	}
 
+	@Override
 	public void setFontSize(double fontSize) {
 		print("setFontSize(" + fontSize + ")");
 	}
 
+	@Override
 	public void restoreGraphicsState() {
 		print("popGraphicsState()");
 	}
 
+	@Override
 	public void saveGraphicsState() {
 		print("pushGraphicsState()");
 	}
 
+	@Override
 	public double currentLineWidth() {
 		print("currentLineWidth()");
 		return 1;
 	}
 
+	@Override
 	public void setLineWidth(double lineWidth) {
 		print("setLineWidth(" + lineWidth + ")");
 	}
@@ -188,6 +213,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getCurBounds()
 	 */
+	@Override
 	public List<Double> getCurBounds() {
 		print("curBounds()");
 		Double retVal[] = new Double[]{ 0.0, 1.0, 2.0, 3.0 };
@@ -197,6 +223,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
 	 */
+	@Override
 	public void setChopHullAnchor() {
 		print("setChopHullAnchor()");
 	}
@@ -204,6 +231,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
 	 */
+	@Override
 	public void setSemiFixedAnchorCode(PointList points) {
 		print("setSemiFixedAnchorCode(" + points.toString() + ")");
 	}
@@ -211,6 +239,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds(java.lang.String)
 	 */
+	@Override
 	public List<Double> getTextBounds(String text) {
         System.setProperty("java.awt.headless", "true");
     	Font f = new Font("Arial", Font.ITALIC, 12);

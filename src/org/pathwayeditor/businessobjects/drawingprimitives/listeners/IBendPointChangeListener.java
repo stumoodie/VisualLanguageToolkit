@@ -20,4 +20,8 @@ public interface IBendPointChangeListener {
 
 	void propertyChange(IBendPointChangeEvent e);
 
+	void locationChange(IBendPointLocationChangeEvent e);
+
+//	void translationChange(IBendPointTranslationEvent e);
+
 }

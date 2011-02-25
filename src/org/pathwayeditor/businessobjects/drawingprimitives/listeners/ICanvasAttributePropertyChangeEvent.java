@@ -15,12 +15,12 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 
 
 public interface ICanvasAttributePropertyChangeEvent {
 
-	ICanvasAttribute getAttribute();
+	ICanvasElementAttribute getAttribute();
 	
 	/**
 	 * Gets the old property value. 

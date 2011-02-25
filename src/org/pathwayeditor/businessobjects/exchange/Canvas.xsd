@@ -159,7 +159,7 @@
     </xs:complexType>
     <xs:complexType name="ObjectTypeType">
         <xs:sequence>
-            <xs:element name="description" type="xs:string"/>
+            <xs:element name="description" type="DescriptionType"/>
         </xs:sequence>
         <xs:attribute name="uniqueId" type="xs:int" use="required"/>
         <xs:attribute name="name" type="xs:string" use="required"/>
@@ -167,7 +167,7 @@
     </xs:complexType>
     <xs:complexType name="NotationType">
         <xs:sequence>
-            <xs:element name="Description" type="xs:string"/>
+            <xs:element name="Description" type="DescriptionType"/>
             <xs:element maxOccurs="unbounded" name="ObjectType" type="ObjectTypeType"/>
         </xs:sequence>
         <xs:attribute name="qualifiedName" type="xs:string" use="required"/>
@@ -308,4 +308,7 @@
             <xs:attribute name="lastCreationSerial" type="xs:int" use="required"/>
         </xs:complexType>
     </xs:element>
+    <xs:simpleType name="DescriptionType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
 </xs:schema>

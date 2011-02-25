@@ -13,25 +13,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. 
 */
-/**
- * 
- */
+
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+
+import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
  * @author smoodie
  *
  */
 public interface IShapeNodeFactory {
-	
-	/**
-	 * Get the sub-canvas that this shape node will be draw on.
-	 * @return the owning subcanvas.
-	 */
-	ISubModel getOwningSubCanvas();
-	
+
 	/**
 	 * Sets the object type to be used when creating the shape node. It must be a valid
 	 * object type for this sub-canvas.
@@ -60,4 +55,7 @@ public interface IShapeNodeFactory {
 	 */
 	IShapeNode createShapeNode();
 
+	ICompoundNodeFactory getGraphElementFactory();
+	
+	IElementAttributeFactory getElementAttributeFactory();
 }

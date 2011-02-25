@@ -15,17 +15,17 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPoint;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.figure.geometry.Point;
 
 
 public interface IBendPointChangeEvent {
 
 	BendPointChange getChangeType();
 	
-	ILinkAttribute getLink();
+	IBendPointContainer getBendPointContainer();
 	
-	IBendPoint getBendPoint();
+	Point getBendPoint();
 	
 	int getOldIndexPos();
 

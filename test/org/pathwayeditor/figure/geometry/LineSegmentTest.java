@@ -39,10 +39,16 @@ public class LineSegmentTest {
 
 	@Test
 	public final void testContainsPoint() {
-		assertTrue("contained point", this.testInstance.containsPoint(CONTAINED_POINT, 0.001));
-		assertFalse("not contained point", this.testInstance.containsPoint(NOT_CONTAINED_POINT, 0.01));
-		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, 6.2), 0.4));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 7.0), 0.01));
+		assertTrue("contained point", this.testInstance.containsPoint(CONTAINED_POINT));
+		assertFalse("not contained point", this.testInstance.containsPoint(NOT_CONTAINED_POINT));
+		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, 6.0)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.01)));
+		assertTrue("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.000001)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.00001)));
+		assertTrue("contained point", this.testInstance.containsPoint(ORIGIN));
+		assertTrue("contained point", this.testInstance.containsPoint(END));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 7.0)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(13.0, 12.0)));
 	}
 
 	@Test

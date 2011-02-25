@@ -3,7 +3,8 @@
  */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import java.util.Iterator;
+import java.util.List;
+
 
 /**
  * @author smoodie
@@ -16,19 +17,19 @@ public interface ICanvasPropertyChangeListenee {
 	 * @param listener the listener to be added, which cannot be null.
 	 * @throws IllegalArgumentException if <code>listener</code> is null.
 	 */
-	void addChangeListener(ICanvasPropertyChangeListener listener);
+	void addCanvasPropertyChangeListener(ICanvasPropertyChangeListener listener);
 	
 	/**
 	 * Remove the property change listener.
 	 * @param listener the listener to be removed, which cannot be null.
 	 * @throws IllegalArgumentException if <code>listener</code> is null.
 	 */
-	void removeChangeListener(ICanvasPropertyChangeListener listener);
+	void removeCanvasPropertyChangeListener(ICanvasPropertyChangeListener listener);
 	
 	/**
 	 * Gets an iterator of listeners.
 	 * @return The list of listeners which can be modified without affecting this instance.
 	 */
-	Iterator<ICanvasPropertyChangeListener> listenerIterator();
+	List<ICanvasPropertyChangeListener> getCanvasPropertyChangeListeners();
 
 }

@@ -78,6 +78,10 @@ public class Envelope {
 		return origin;
 	}
 	
+	public Point getCentre(){
+		return new Point(origin.getX() + dim.getWidth()/2, origin.getY() + dim.getHeight()/2);
+	}
+	
 	/**
 	 * Tests whether the <code>other</code> intersects with this one. 
 	 * @param other the other envelope, which can be null.
@@ -221,8 +225,6 @@ public class Envelope {
 	 * @return the envelope.
 	 */
 	public Envelope deltaResize(double deltaX, double deltaY, double deltaWidth, double deltaHeight) {
-		double w = this.dim.getWidth();
-		double h = this.dim.getHeight();
 		return new Envelope(this.origin.translate(deltaX, deltaY), this.dim.expand(deltaWidth, deltaHeight));
 	}
 }

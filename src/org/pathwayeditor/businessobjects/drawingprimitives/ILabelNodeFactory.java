@@ -25,11 +25,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
  *
  */
 public interface ILabelNodeFactory {
-	/**
-	 * The sub-canvas that this label will be drawn on.
-	 * @return the owning sub-canvas, which cannot be null.
-	 */
-	ISubModel getOwningSubCanvas();
 
 	/**
 	 * The property that this label will be displaying.

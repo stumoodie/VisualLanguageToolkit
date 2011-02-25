@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.io.File;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 public interface INotationImportService extends INotationService {
 	/**
@@ -47,5 +47,5 @@ public interface INotationImportService extends INotationService {
 	 * @throws IllegalArgumentException if <code>canvas == null || canvas.isEmpty() == false</code>
 	 * @throws IllegalArgumentException if <code>importFile == null || importFile.canRead() == false</code>
 	 */
-	void importToCanvas(File importFile, ICanvas canvas) throws ImportServiceException;
+	void importToCanvas(File importFile, IModel canvas) throws ImportServiceException;
 }

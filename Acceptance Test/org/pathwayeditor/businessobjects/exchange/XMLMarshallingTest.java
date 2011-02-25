@@ -11,59 +11,65 @@ import java.io.Writer;
 
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.ValidationException;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.management.IMapPersistenceManager;
-import org.pathwayeditor.businessobjects.repository.IMap;
-import org.pathwayeditor.businessobjects.repository.IRepository;
-import org.pathwayeditor.testutils.GenericXlsTester;
+import org.pathwayeditor.businessobjects.impl.Model;
+import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.testfixture.NotationSubsystemFixture;
+
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 
 /**
  * @author smoodie
  *
  */
-public class XMLMarshallingTest extends GenericXlsTester {
-	private static final String REPOSITORY_NAME ="repo name" ;
-	private static final String MAP_PATH = "/subfolder1/Diagram name";
-	private IRepository repository;
-	private ICanvas dbCanvas ;
+public class XMLMarshallingTest {
+	private IModel graph;
+	private Mockery mockery;
 
-	@Override
-	protected String getDbUnitDataFilePath() {
-		return "Acceptance Test/org/pathwayeditor/businessobjects/exchange/DBSourceData.xls";
+	
+	@Before
+	public void setUp(){
+		this.mockery = new JUnit4Mockery();
+		NotationSubsystemFixture notationFixture = new NotationSubsystemFixture(mockery);
+		notationFixture.buildFixture();
+		INotationSyntaxService syntaxService = notationFixture.getNotationSubsystem().getSyntaxService();
+//		IRootAttribute rootAtt = new RootAttribute("testModel", syntaxService.getRootObjectType());
+		this.graph = new Model("testModel", notationFixture.getNotationSubsystem());
+		final IShapeObjectType shapeOt = syntaxService.getShapeObjectType(NotationSubsystemFixture.SHAPE_TYPE_A_ID);
+		final IPropertyDefinition shapeTypeAName = shapeOt.getDefaultAttributes().getPropertyDefinition(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
+		this.mockery.checking(new Expectations(){{
+			allowing(shapeTypeAName).createProperty(with(any(IPropertyBuilder.class))); will(NotationSubsystemFixture.buildTextProperty());
+		}});
+//		IShapeAttributeFactory shapeAttFact = rootAtt.shapeAttributeFactory();
+		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getGraph().getRoot(), shapeOt);
+		shapeBuilder.setName("S1");
+		shapeBuilder.build();
+		ICompoundNode shape1Node = shapeBuilder.getNode();
+//		((IShapeAttribute)shape1Node.getAttribute()).getProperty(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME).setDisplayed(true);
+		shapeBuilder.setName("S2");
+		shapeBuilder.build();
+//		ICompoundNode shape2Node = shapeBuilder.getNode();
+		shapeBuilder.setParent(shape1Node);
+		shapeBuilder.setName("S3");
+		shapeBuilder.build();
+//		ICompoundNode shape3Node = shapeBuilder.getNode();
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.testutils.GenericXlsTester#doAdditionalSetUp()
-	 */
-	@Override
-	protected void doAdditionalSetUp() {
-		repository = this.getRepositoryPersistenceManager().getRepository();
-		IMap map = (IMap)repository.findRepositoryItemByPath(MAP_PATH);
+	
+	
+	@After
+	public void tearDown(){
 		
-		IMapPersistenceManager map1Manager = this.getRepositoryPersistenceManager().getMapPersistenceManager(map);
-		map1Manager.open() ;
-		this.dbCanvas = map1Manager.getCanvas();
-//		ILinkTerminus att = (ILinkTerminus)this.dbCanvas.findAttribute(29);
-//		INumberAnnotationProperty prop = (INumberAnnotationProperty)att.getProperty("NumberProperty");
-//		prop.setValue(new BigDecimal("0.3837248374736e-10"));
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.testutils.GenericXlsTester#doAdditionalTearDown()
-	 */
-	@Override
-	protected void doAdditionalTearDown() {
-		this.repository =null;
-		this.dbCanvas = null;
-	}
-
-	@Override
-	protected String getTestRepositoryName() {
-		return REPOSITORY_NAME ;
 	}
 	
 	
@@ -72,9 +78,9 @@ public class XMLMarshallingTest extends GenericXlsTester {
 		Writer out = null;
 		try {
 			CanvasMarshaller builder = new CanvasMarshaller();
-			builder.setCanvas((HibCanvas)dbCanvas);
+			builder.setModel(graph);
 			builder.buildCanvas();
-			Canvas xmlCanvas = builder.getCanvas();
+			Canvas xmlCanvas = builder.getXmlTopLevel();
 			xmlCanvas.validate();
 			assertTrue("valid XML", xmlCanvas.isValid());
 			out = new FileWriter("test.xml");

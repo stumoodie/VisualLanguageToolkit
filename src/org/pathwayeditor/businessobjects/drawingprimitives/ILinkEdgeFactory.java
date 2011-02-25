@@ -20,18 +20,15 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
+import uk.ac.ed.inf.graph.compound.ICompoundEdgeFactory;
+
 /**
  * @author smoodie
  *
  */
 public interface ILinkEdgeFactory {
 
-	/**
-	 * Get the sub-canvas that will own the newly created edge
-	 * @return the owning sub-canvas, which cannot be null.
-	 * @throws IllegalArgumentException 
-	 */
-	ISubModel getOwningSubCanvas();
+	ICompoundEdgeFactory getGraphEdgeFactory();
 	
 	/**
 	 * Tests if the source and target node pair are non-null and belong to the same canvas as this
@@ -59,12 +56,6 @@ public interface ILinkEdgeFactory {
 	 * @return the current object type, which can be null.
 	 */
 	ILinkObjectType getCurrentObjectType();
-	
-	/**
-	 * Returns the currently set node pair.
-	 * @return the current node pair, or null of no node pair is set.
-	 */
-	IShapeNodePair getShapeNodePair();
 	
 	/**
 	 * Tests if the link can be created given the nodes that are specified and the object type.

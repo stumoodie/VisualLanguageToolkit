@@ -9,6 +9,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface ITypedDrawingNode extends IDrawingNode {
 
+	@Override
 	ITypedDrawingNodeAttribute getAttribute();
 	
 }

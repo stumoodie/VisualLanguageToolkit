@@ -15,6 +15,8 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
+
 
 /**
  * @author smoodie
@@ -22,6 +24,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
  */
 public interface IRootNode extends ITypedDrawingNode {
 	
+	@Override
 	IRootAttribute getAttribute();
+	
+	@Override
+	IRootCompoundNode getGraphElement();
 	
 }

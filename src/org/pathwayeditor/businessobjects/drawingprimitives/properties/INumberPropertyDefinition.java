@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 public interface INumberPropertyDefinition extends IPropertyDefinition {
 
+	@Override
 	BigDecimal getDefaultValue();
 	
 }

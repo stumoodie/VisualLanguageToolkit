@@ -17,7 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 /**
  * This interfaces provides a client with access to the services provided by a context adapter. It will typically
@@ -27,9 +27,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
  */
 public interface INotationSubsystem {
 
-	void registerCanvas(ICanvas canvasToRegister);
+	void registerCanvas(IModel canvasToRegister);
 	
-	void unregisterCanvas(ICanvas canvasToRegister);
+	void unregisterCanvas(IModel canvasToRegister);
 
 	/**
 	 * The context (graphical notation) that is defined by this context adapter and for which the services

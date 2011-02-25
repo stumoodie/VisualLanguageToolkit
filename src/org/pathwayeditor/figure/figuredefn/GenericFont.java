@@ -23,18 +23,22 @@ public class GenericFont implements IFont {
 		this.styles = EnumSet.copyOf(other.getStyle());
 	}
 
+	@Override
 	public double getFontSize() {
 		return this.size;
 	}
 
+	@Override
 	public EnumSet<Style> getStyle() {
 		return EnumSet.copyOf(this.styles);
 	}
 
+	@Override
 	public IFont newSize(double fontSize) {
 		return new GenericFont(fontSize, this.styles);
 	}
 
+	@Override
 	public IFont newStyle(EnumSet<Style> style) {
 		return new GenericFont(this.size, styles);
 	}

@@ -41,6 +41,7 @@ public class FigureDrawer {
 		this.opCodeLookup = new HashMap<GraphicsOpCode, IGraphicsOpCodeAction>();
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_ARC, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> valList = inst.getList();
 				processDrawArc(valList);
@@ -49,6 +50,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_LINE, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> valList = inst.getList();
 				processDrawLine(valList);
@@ -57,6 +59,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_OVAL, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> valList = inst.getList();
 				processDrawOval(valList);
@@ -65,6 +68,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_POINT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> valList = inst.getList();
 				processDrawPoint(valList);
@@ -73,6 +77,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_POLYGON, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				processDrawPolygon(inst.getDoubleArray());
 			}
@@ -80,6 +85,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_POLYLINE, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				processDrawPolyline(inst.getDoubleArray());
 			}
@@ -87,6 +93,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_RECT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processDrawRect(points);
@@ -95,6 +102,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_RRECT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processDrawRoundedRect(points);
@@ -103,6 +111,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.DRAW_TEXT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Object> values = inst.getList();
 				processDrawText(values);
@@ -111,6 +120,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_ARC, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processFillArc(points);
@@ -119,6 +129,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_OVAL, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processFillOval(points);
@@ -127,6 +138,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_POLYGON, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				processFillPolygon(inst.getDoubleArray());
 			}
@@ -134,6 +146,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_RECT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processFillRect(points);
@@ -142,6 +155,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_RRECT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Double> points = inst.getList();
 				processFillRoundedRect(points);
@@ -150,6 +164,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_TEXT, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				List<Object> values = inst.getList();
 				processFillText(values);
@@ -158,6 +173,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.LINE_COLOUR, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				RGB colour = inst.getRGB();
 				processLineColour(colour);
@@ -166,6 +182,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FILL_COLOUR, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				RGB colour = inst.getRGB();
 				processFillColour(colour);
@@ -174,6 +191,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FONT_SIZE, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				Double values = inst.getTypedValue();
 				processFontSize(values);
@@ -182,6 +200,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.FONT_STYLE, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				EnumSet<Style> values = inst.getEnumSet();
 				processFontStyle(values);
@@ -190,6 +209,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.LINE_WIDTH, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				Double values = inst.getTypedValue();
 				processLineWidth(values);
@@ -198,6 +218,7 @@ public class FigureDrawer {
 		});
 		this.opCodeLookup.put(GraphicsOpCode.LINE_STYLE, new IGraphicsOpCodeAction(){
 
+			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
 				LineStyle values = inst.getTypedValue();
 				processLineStyle(values);

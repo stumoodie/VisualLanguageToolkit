@@ -20,14 +20,14 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelSubModel;
+import uk.ac.ed.inf.graph.compound.IElementAttribute;
 
 
 /**
  * @author smoodie
  *
  */
-public interface IAnnotatedObject {
+public interface IAnnotatedObject extends IElementAttribute {
 
 	Iterator<IAnnotationProperty> propertyIterator();
 
@@ -43,5 +43,6 @@ public interface IAnnotatedObject {
 	
 	IAnnotationProperty getProperty(String propName);
 	
-	ILabelSubModel getLabelSubModel();
+//	ILabelAttributeFactory labelAttributeFactory();
+	
 }

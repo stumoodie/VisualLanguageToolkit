@@ -16,19 +16,23 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		this.quickHull = new QuickHull();
 	}
 
+	@Override
 	public void reset() {
 		this.quickHull = new QuickHull();
 		this.hull = null;
 	}
 	
+	@Override
 	public void addPoint(Point p) {
 		this.addPoint(p.getX(), p.getY());
 	}
 
+	@Override
 	public void addPoint(double x, double y) {
 		this.quickHull.addPoint(new Point(x, y));
 	}
 
+	@Override
 	public void calculate() {
 		if(this.quickHull.isEmpty()) throw new IllegalStateException("No points present to generate hull");
 		this.quickHull.calculateConvexHull();
@@ -36,15 +40,18 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		this.hull = unscaledHull;
 	}
 
+	@Override
 	public IConvexHull getConvexHull() {
 		if(this.hull == null) throw new IllegalStateException("No hull has been created");
 		return this.hull;
 	}
 
+	@Override
 	public List<Point> getOriginalPoints() {
 		return new ArrayList<Point>(this.quickHull.getOriginalPoints());
 	}
 
+	@Override
 	public void addArc(double x, double y, double width, double height,
 			double offset, double length) {
 		double offsetRad = Math.toRadians(offset);
@@ -55,6 +62,7 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		}
 	}
 
+	@Override
 	public void addLine(double startX, double startY, double endX,
 			double endY) {
 		quickHull.addPoint(new Point(startX, startY));
@@ -75,6 +83,7 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		}
 	}
 
+	@Override
 	public void addOval(double x, double y, double width, double height) {
 		drawOval(x, y, width, height);
 	}
@@ -87,10 +96,12 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		return new Point(pointX, pointY);
 	}
 
+	@Override
 	public void addPolygon(double[] pointArr) {
 		drawPolygon(pointArr);
 	}
 
+	@Override
 	public void addPolyline(double[] pointArr) {
 		drawPolygon(pointArr);
 	}
@@ -102,10 +113,12 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 		}
 	}
 	
+	@Override
 	public void addRectangle(double x, double y, double width, double height) {
 		drawRectangle(x, y, width, height);
 	}
 
+	@Override
 	public void addRoundRectangle(double x, double y, double width,
 			double height, double arcWidth, double arcHeight) {
 		double a = arcWidth / 2;

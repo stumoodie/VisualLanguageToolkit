@@ -19,7 +19,7 @@ package org.pathwayeditor.businessobjects.exchange;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
@@ -32,7 +32,7 @@ public interface IXmlPersistenceManager {
 	 * Gets the current canvas, which may be <code>null</code> if no canvas has been created or read.
 	 * @return The current canvas.
 	 */
-	ICanvas getCurrentCanvas();
+	IModel getCurrentCanvas();
 	
 	/**
 	 * Creates a new canvas replacing any canvas that is currently set.

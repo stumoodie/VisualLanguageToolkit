@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
 import java.util.Iterator;

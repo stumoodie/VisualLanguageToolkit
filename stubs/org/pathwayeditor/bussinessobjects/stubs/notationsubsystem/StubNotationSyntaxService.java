@@ -25,9 +25,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
@@ -39,6 +41,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  */
 public class StubNotationSyntaxService implements INotationSyntaxService {
 	private static final int NUM_ROOT_OTS = 1;
+	private static final int LABEL_ID = 9;
 	private final INotationSubsystem notationSubsystem ;
 	private final IRootObjectType rootObjectType;
 	private final IShapeObjectType shapeAObjectType;
@@ -51,6 +54,8 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	private final ILinkObjectType linkDObjectType;
 	private final Map<Integer, IShapeObjectType> shapes;
 	private final Map<Integer, ILinkObjectType> links;
+	private final Map<IPropertyDefinition, ILabelObjectType> labels;
+	private final ILabelObjectType labelObjectType;
 	
 	public StubNotationSyntaxService(INotationSubsystem notationSubsystem){
 		this.notationSubsystem = notationSubsystem;
@@ -73,11 +78,18 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		this.links.put(this.linkBObjectType.getUniqueId(), this.linkBObjectType);
 		this.links.put(this.linkCObjectType.getUniqueId(), this.linkCObjectType);
 		this.links.put(this.linkDObjectType.getUniqueId(), this.linkDObjectType);
+		this.labels = new HashMap<IPropertyDefinition, ILabelObjectType>();
+		this.labelObjectType = new StubLabelObjectType(this, LABEL_ID);
+		this.labels.put(new StubNumberPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubListPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubHtmlPropertyDefinition(), this.labelObjectType);
+		this.labels.put(new StubTextPropertyDefinition(), this.labelObjectType);
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService#getRootMapObjectType()
 	 */
+	@Override
 	public IRootObjectType getRootObjectType() {
 		return this.rootObjectType;
 	}
@@ -85,6 +97,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService#linkTypeIterator()
 	 */
+	@Override
 	public Iterator<ILinkObjectType> linkTypeIterator() {
 		return this.links.values().iterator();
 	}
@@ -92,6 +105,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationSyntaxService#shapeTypeIterator()
 	 */
+	@Override
 	public Iterator<IShapeObjectType> shapeTypeIterator() {
 		return this.shapes.values().iterator();
 	}
@@ -99,6 +113,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationService#getNotation()
 	 */
+	@Override
 	public INotation getNotation() {
 		return this.notationSubsystem.getNotation();
 	}
@@ -106,6 +121,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.contextadapter.INotationService#getNotationSubsystem()
 	 */
+	@Override
 	public INotationSubsystem getNotationSubsystem() {
 		return this.notationSubsystem;
 	}
@@ -113,6 +129,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#containsLinkObjectType(int)
 	 */
+	@Override
 	public boolean containsLinkObjectType(int uniqueID) {
 		return this.links.containsKey(uniqueID);
 	}
@@ -120,6 +137,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#containsObjectType(int)
 	 */
+	@Override
 	public boolean containsObjectType(int uniqueID) {
 		return this.links.containsKey(uniqueID) || this.shapes.containsKey(uniqueID) || this.rootObjectType.getUniqueId() == uniqueID;
 	}
@@ -127,6 +145,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#containsShapeObjectType(int)
 	 */
+	@Override
 	public boolean containsShapeObjectType(int uniqueID) {
 		return this.shapes.containsKey(uniqueID);
 	}
@@ -134,6 +153,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLinkObjectType(int)
 	 */
+	@Override
 	public ILinkObjectType getLinkObjectType(int uniqueId) {
 		ILinkObjectType retVal=this.links.get(uniqueId);
 		if(retVal==null)// for object types that are present in setup data but not used in any test...
@@ -144,6 +164,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getObjectType(int)
 	 */
+	@Override
 	public IObjectType getObjectType(int uniqueId) {
 		IObjectType retVal = this.shapes.get(uniqueId);
 		if(retVal == null){
@@ -160,6 +181,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getShapeObjectType(int)
 	 */
+	@Override
 	public IShapeObjectType getShapeObjectType(int uniqueId) {
 		IShapeObjectType retVal = this.shapes.get(uniqueId);
 		if(retVal == null)
@@ -171,6 +193,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#objectTypeIterator()
 	 */
+	@Override
 	public Iterator<IObjectType> objectTypeIterator() {
 		Set<IObjectType> retVal = new HashSet<IObjectType>(this.shapes.values());
 		retVal.addAll(this.links.values());
@@ -192,6 +215,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findLinkObjectTypeByName(java.lang.String)
 	 */
+	@Override
 	public ILinkObjectType findLinkObjectTypeByName(String name) {
 		return findObjectTypeByName(this.links.values(), name);
 	}
@@ -199,6 +223,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#findShapeObjectTypeByName(java.lang.String)
 	 */
+	@Override
 	public IShapeObjectType findShapeObjectTypeByName(String name) {
 		return findObjectTypeByName(this.shapes.values(), name);
 	}
@@ -206,6 +231,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numLinkObjectTypes()
 	 */
+	@Override
 	public int numLinkObjectTypes() {
 		return this.links.size();
 	}
@@ -213,12 +239,38 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numShapeObjectTypes()
 	 */
+	@Override
 	public int numShapeObjectTypes() {
 		return this.shapes.size();
 	}
 
 
+	@Override
 	public int numObjectTypes(){
 		return this.numLinkObjectTypes() + this.numShapeObjectTypes() + NUM_ROOT_OTS;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLabelObjectType(int)
+	 */
+	@Override
+	public ILabelObjectType getLabelObjectType(int uniqueId) {
+		return this.labelObjectType;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLabelObjectTypeByProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	@Override
+	public ILabelObjectType getLabelObjectTypeByProperty(IPropertyDefinition propDefn) {
+		return this.labels.get(propDefn);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#isVisualisableProperty(org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition)
+	 */
+	@Override
+	public boolean isVisualisableProperty(IPropertyDefinition propDefn) {
+		return true;
 	}
 }

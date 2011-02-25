@@ -17,18 +17,18 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITypedDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface IShapeAttribute extends  IAnnotatedObject, ITypedDrawingNodeAttribute, ICanvasAttributeChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
 	
 	/**
 	 * Gets the object type that is related with this shape.
 	 * @return the object type. Cannot be null.
 	 */
+	@Override
 	IShapeObjectType getObjectType();
 	
 
@@ -89,11 +89,5 @@ public interface IShapeAttribute extends  IZOrderedObject, IAnnotatedObject, ITy
 	 * @throws IllegalArgumentException if lineStyle is null.
 	 */
 	void setLineStyle(LineStyle lineStyle);
-	
-	/**
-	 * Gets the shape node associated with the attribute.
-	 * @return the shape node, which cannot be null.
-	 */
-	IShapeNode getCurrentDrawingElement();
 	
 }

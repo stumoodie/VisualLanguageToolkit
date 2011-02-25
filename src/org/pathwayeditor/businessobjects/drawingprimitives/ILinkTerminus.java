@@ -15,16 +15,16 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.util.List;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
+public interface ILinkTerminus {
 
 	/**
 	 * The link attribute that owns this terminus. 
@@ -96,19 +96,15 @@ public interface ILinkTerminus extends IAnnotatedObject, ICanvasAttribute, ICanv
 	 * throws IllegalArgumentExtension if <code>location == null</code>.
 	 */
 	void setLocation(Point location);
+		
+	void addLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
-	Point getReferencePoint();
+	void removeLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
-	/**
-	 * Identity is based on the owningLink and the link end type.
-	 * @param other the other object to test.
-	 * @return true of the objects are equal based on the business key, false otherwise.
-	 */
-	boolean equals(Object other);
+	List<ILinkTerminusChangeListener> getLinkTerminusChangeListeners();
 
 	/**
-	 * The hash code is based on the same identity rules as {@link #equals(Object)}.
-	 * @return the hash code.
+	 * @param delta
 	 */
-	int hashCode();
+	void translate(Point delta);
 }

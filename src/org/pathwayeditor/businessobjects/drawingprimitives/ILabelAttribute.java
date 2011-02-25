@@ -15,39 +15,16 @@ limitations under the License.
 */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
+import java.text.Format;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
-import org.pathwayeditor.figure.geometry.Point;
 
-public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute, ICanvasAttributePropertyChangeListenee, ISuppressableChangeListenee {
-	
-	/**
-	 * Get the location of this LabelAttribute.
-	 * @return The location . Cannot be null.
-	 */
-	Point getLocation();
-
-	/**
-	 * Set the location for this LabelAttribute.
-	 * @throws IllegalArgumentException if the location is null.
-	 */
-	void setLocation (Point location) ;
-	
-	/**
-	 * Get the size of this LabelAttribute.
-	 * @return The size. Cannot be null.
-	 */
-	Dimension getSize();
-	
-	/**
-	 * Set the size for this LabelAttribute.
-	 * @throws IllegalArgumentException if the size is null.
-	 */
-	void setSize (Dimension size);
+public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributeChangeListenee {
 	
 	/**
 	 * Get the property associated with the current Label
@@ -55,14 +32,8 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	 */
 	IAnnotationProperty getProperty();
 
-	/**
-	 * Get the LabelNode of the current Label
-	 * @return The LabelNode. Cannot be null.
-	 */
-	ILabelNode getCurrentDrawingElement();
-	
-	
-//	INodeObjectType getObjectType();
+	@Override
+	ILabelObjectType getObjectType();
 	
 	/**
 	 * Get the background colour of this Label.
@@ -96,27 +67,32 @@ public interface ILabelAttribute extends IZOrderedObject, IDrawingNodeAttribute,
 	
 	boolean hasNoBorder();
 	
-	public double getLineWidth();
+	double getLineWidth();
 	
-	public void setLineWidth(double lineWidth);
+	void setLineWidth(double lineWidth);
 	
-	public LineStyle getLineStyle();
+	LineStyle getLineStyle();
 	
-	public void setLineStyle(LineStyle lineStyle);
+	void setLineStyle(LineStyle lineStyle);
 	
-	public Dimension getMinimumSize();
-	
-	/**
-	 * Test if the label attribute is that same as the other label. Bases on its associated
-	 * property, which is the business key of this object.
-	 * @param other the other object to compare.
-	 * @return true is the business keys of both objects are the same, false otherwise. 
-	 */
-	boolean equals(Object other);
+	Dimension getMinimumSize();
 	
 	/**
-	 * Gets a hash code based on the business key of this object. See {@link #equals(Object)}. 
-	 * @return the hash code.
+	 * Provides a string that the label should display. If a format has been specified then this format
+	 * is used to format the property value to be displayed. 
+	 * @return the string which cannot be null.
 	 */
-	int hashCode();
+	String getDisplayedContent();
+	
+	/**
+	 * Sets a format to use when displaying a label
+	 * @param displayFormat
+	 */
+	void setDisplayFormat(Format displayFormat);
+
+	/**
+	 * Gets the display format to use when displaying a label
+	 * @return the display format
+	 */
+	Format getDisplayFormat();
 }

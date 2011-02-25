@@ -58,12 +58,4 @@ public interface INotation extends Comparable<INotation> {
 	 * @param other the other object to test.
 	 * @return true if the qualified names and version numbers of both notations are the same, false otherwise.
 	 */
-	boolean equals(Object other);
-	
-	/**
-	 * Return the hash code using the identity rules that applies to {@link #equals(Object)}
-	 * @return the hash code.
-	 */
-	int hashCode();
-
 }

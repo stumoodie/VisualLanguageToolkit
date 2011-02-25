@@ -6,7 +6,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class LineSegment {
-	private static final double LINE_WIDTH_TOL = 0.1;
+//	private static final double LINE_WIDTH_TOL = 0.1;
+	private static final double DOUBLE_ROUNDING_ERROR_TOL = 0.0001;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final Point origin;
 	private final Point terminus;
@@ -54,11 +55,11 @@ public class LineSegment {
 	 * If they don't intersect, then the method returns <code>false</code>.
 	 * 
 	 * @param line <code>MyLine</code> to test the intersection against.
-	 * @param nTolerance int tolerance value for detecting the intersection.
+	 * @param nTolerance tolerance value for detecting the intersection.
 	 * @return <code>Point</code> that represents the intersection with this line, 
 	 * or <code>null</code> if the calculation is not possible.
 	 */
-	public Point intersect(final LineSegment line, final double nTolerance) {
+	public Point intersect(final LineSegment line, double nTolerance) {
 		if(logger.isDebugEnabled()){
 			logger.debug("Looking for intersection between line this=" + this + ",other=" + line);
 		}
@@ -73,8 +74,7 @@ public class LineSegment {
 			if(logger.isTraceEnabled()){
 				logger.trace("Found intersection at:" + result);
 			}
-			if (containsPoint(result, nTolerance)
-					&& line.containsPoint(result, nTolerance)) {
+			if(containsPoint(result) && line.containsPoint(result)) {
 					logger.trace("Intersection point accepted: within line limits");
 					retVal = result;
 			}
@@ -85,53 +85,99 @@ public class LineSegment {
 		return retVal;
 	}
 
-	/**
-	 * Checks if this line segment contains the given point within a tolerance value.
-	 * 
-	 * @param aPoint <code>Point</code> to test if contained in this line.
-	 * @param lineWidth the width of the line to be tested. The thickness of the line is 
-	 * considered as part of the line for the pusposes of containment.
-	 * @return <code>boolean</code> <code>true</code> if the given point lies on this 
-	 * segment, <code>false</code> otherwise.
-	 */
-	public final boolean containsPoint(final Point aPoint, final double lineWidth) {
+	
+	public boolean intersectsWithCircle(Point centre, double radius){
 		Point theOrigin = getOrigin();
 		Point theTerminus = getTerminus();
-		double x1 = theTerminus.getX() - theOrigin.getX();
-		double y1 = theTerminus.getY()-theOrigin.getY();
-		double x2 = aPoint.getX() - theOrigin.getX();
-		double y2 = aPoint.getY() - theOrigin.getY();
-		// Calc if on the line by getting the cross-product of the vector of the line and the vector
-		// from the origin to the point.
-		double v_xy_cross_v_xp = (x1 * y2)	- (y1 * x2);
-		double v1 = theOrigin.getDistance(theTerminus);
-		double v2 = theOrigin.getDistance(aPoint);
-		// sine theta from cross-product
-		double sinTheta = v_xy_cross_v_xp / (v1 * v2);
-		// cos theta from scalar product
-		double cosTheta = (x1 * x2 + y1 * y2) / (v1 * v2);
-		// if both +ve then in 1st quadrant and so we should check tolerane
-		// otherwise there cannot be an intersection
-		boolean retVal = false;
-		if(sinTheta >= 0.0 && cosTheta >= 0.0){
-//		if(cosTheta >= 0.0){
-			// now check the length of the opposite side of the RHT and see if it is within the tolerance length
-			double adj = v2 * cosTheta;
-			// check adj length is less than length of line - i.e. is the point on the line
-			if(adj <= v1){
-				double opp = v2 * sinTheta;
-				double halfLineHeight = (lineWidth/2);
-				halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
-				retVal = opp < halfLineHeight;
-			}
-		}
-		if(logger.isTraceEnabled()){
-			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinTheta=" + sinTheta + ",cosTheta=" + cosTheta
-						+ "lineWidth=" + lineWidth);
+		double x1 = theOrigin.getX();
+		double y1 = theOrigin.getY();
+		double x2 = theTerminus.getX();
+		double y2 = theTerminus.getY();
+		double x3 = centre.getX();
+		double y3 = centre.getY();
+		
+		double a = pow2(x2-x1) + pow2(y2-y1);
+		double b = 2*((x2-x1)*(x1-x3)+(y2-y1)*(y1-y3));
+		double c = pow2(x3) + pow2(y3) + pow2(x1) + pow2(y1) - 2*(x3*x1+y3*y1) - pow2(radius);
+		double determinant = pow2(b) - 4 * a * c;
+		boolean retVal = true;
+		if(determinant < 0){
+			retVal = false;
 		}
 		return retVal;
 	}
+	
+	
+	private static double pow2(double value){
+		return value * value;
+	}
+	
+//	/**
+//	 * Checks if this line segment contains the given point within a tolerance value.
+//	 * 
+//	 * @param aPoint <code>Point</code> to test if contained in this line.
+//	 * @param lineWidth the width of the line to be tested. The thickness of the line is 
+//	 * considered as part of the line for the pusposes of containment.
+//	 * @return <code>boolean</code> <code>true</code> if the given point lies on this 
+//	 * segment, <code>false</code> otherwise.
+//	 */
+//	public final boolean containsPoint(final Point aPoint, final double lineWidth) {
+//		Point theOrigin = getOrigin();
+//		Point theTerminus = getTerminus();
+//		double x1 = theTerminus.getX() - theOrigin.getX();
+//		double y1 = theTerminus.getY()-theOrigin.getY();
+//		double x2 = aPoint.getX() - theOrigin.getX();
+//		double y2 = aPoint.getY() - theOrigin.getY();
+//		// Calc if on the line by getting the cross-product of the vector of the line and the vector
+//		// from the origin to the point.
+//		double v_xy_cross_v_xp = (x1 * y2)	- (y1 * x2);
+//		double v1 = theOrigin.getDistance(theTerminus);
+//		double v2 = theOrigin.getDistance(aPoint);
+//		// sine theta from cross-product
+//		double sinTheta = v_xy_cross_v_xp / (v1 * v2);
+//		// cos theta from scalar product
+//		double cosTheta = (x1 * x2 + y1 * y2) / (v1 * v2);
+//		// if both +ve then in 1st quadrant and so we should check tolerane
+//		// otherwise there cannot be an intersection
+//		boolean retVal = false;
+//		if(sinTheta >= 0.0 && cosTheta >= 0.0){
+////		if(cosTheta >= 0.0){
+//			// now check the length of the opposite side of the RHT and see if it is within the tolerance length
+//			double adj = v2 * cosTheta;
+//			// check adj length is less than length of line - i.e. is the point on the line
+//			if(adj <= v1){
+//				double opp = v2 * sinTheta;
+//				double halfLineHeight = (lineWidth/2);
+//				halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
+//				retVal = opp < halfLineHeight;
+//			}
+//		}
+//		if(logger.isTraceEnabled()){
+//			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinTheta=" + sinTheta + ",cosTheta=" + cosTheta
+//						+ "lineWidth=" + lineWidth);
+//		}
+//		return retVal;
+//	}
 
+	public boolean containsPoint(Point aPoint){
+		Point theOrigin = getOrigin();
+		Point theTerminus = getTerminus();
+		double x1 = theOrigin.getX();
+		double y1 = theOrigin.getY();
+		double x2 = theTerminus.getX();
+		double y2 = theTerminus.getY();
+		double x3 = aPoint.getX();
+		double y3 = aPoint.getY();
+		boolean retVal = false;
+		// check first if the point can possibly lie between the 2 points of the line. 
+		if(((x3 >= x1 && x3 <= x2) || (x3 >= x2 && x3 <= x1)) &&
+				((y3 >= y1 && y3 <= y2) || (y3 >= y2 && y3 <= y1))){
+			double det = Math.abs(x1*(y2 - y3) - y1*(x2 - x3) + (x2*y3) - (y2*x3));
+			retVal = det < DOUBLE_ROUNDING_ERROR_TOL;
+		}
+		return retVal;
+	}
+	
 	/**
 	 * Calculate the length of the line segment.
 	 * 

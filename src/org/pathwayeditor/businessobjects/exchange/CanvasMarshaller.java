@@ -6,6 +6,7 @@ package org.pathwayeditor.businessobjects.exchange;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,15 +17,16 @@ import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILabelNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ILinkEdge;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IRootNode;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNode;
-import org.pathwayeditor.businessobjects.drawingprimitives.ISubModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -63,10 +65,6 @@ import org.pathwayeditor.businessobjects.exchange.castor.TgtTerminus;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibBendPoint;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibCanvas;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibLinkAttribute;
-import org.pathwayeditor.businessobjects.hibernate.pojos.HibModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
@@ -74,13 +72,23 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
+import uk.ac.ed.inf.graph.compound.CompoundNodePair;
+import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
+
 /**
  * @author smoodie
  *
  */
 public class CanvasMarshaller {
+	private static final Dimension DEFAULT_GRID_SIZE = new Dimension(10, 10);
 	private Canvas xmlCanvas;
-	private HibCanvas dbCanvas;
+//	private IRootAttribute dbCanvas;
+	private IModel graph;
 	private final Map<IAnnotationProperty, PropertyRef> propMap;
 	private final AnnotationsBuilder builder;
 //	private final Map<ILabelAttribute, LabelNode> skippedLabels;
@@ -110,17 +118,21 @@ public class CanvasMarshaller {
 		endDecMapping.put(LinkEndDecoratorShape.TRIANGLE_BAR, EndDecoratorTypeType.TRIANGLE_BAR);
 	}
 	
-	public void setCanvas(HibCanvas dbCanvas){
-		this.dbCanvas = dbCanvas;
+	public void setModel(IModel dbCanvas){
+		this.graph = dbCanvas;
 	}
 	
-	public Canvas getCanvas(){
+	public IModel getModel(){
+		return this.graph;
+	}
+
+	
+	public Canvas getXmlTopLevel(){
 		return this.xmlCanvas;
 	}
 
-
 	public void buildCanvas(){
-		if(this.dbCanvas == null) throw new IllegalStateException("No canvas has been set");
+		if(this.graph == null) throw new IllegalStateException("No canvas has been set");
 		try{
 			xmlCanvas = new Canvas();
 			setCanvasGraphicalProperties();
@@ -154,30 +166,39 @@ public class CanvasMarshaller {
 	}
 	
 	private void setCanvasGraphicalProperties(){
+		ICanvas dbCanvas = this.graph.getRootAttribute();
 		Background bgrd = new Background();
 		bgrd.setBlue(dbCanvas.getBackgroundColour().getBlue());
 		bgrd.setRed(dbCanvas.getBackgroundColour().getRed());
 		bgrd.setGreen(dbCanvas.getBackgroundColour().getGreen());
 		xmlCanvas.setBackground(bgrd);
 		Grid grid = new Grid();
-		grid.setGridOn(dbCanvas.isGridEnabled());
-		grid.setSnapToGrid(dbCanvas.isSnapToGridOn());
+//		grid.setGridOn(dbCanvas.isGridEnabled());
+//		grid.setSnapToGrid(dbCanvas.isSnapToGridOn());
+		grid.setGridOn(false);
+		grid.setSnapToGrid(false);
 		GridSize gridSize = new GridSize();
-		gridSize.setHeight(dbCanvas.getCanvasSize().getHeight());
-		gridSize.setWidth(dbCanvas.getCanvasSize().getWidth());
+		Dimension canvasGridSize = DEFAULT_GRID_SIZE;
+//		gridSize.setHeight(dbCanvas.getCanvasSize().getHeight());
+//		gridSize.setWidth(dbCanvas.getCanvasSize().getWidth());
+		gridSize.setHeight(canvasGridSize.getHeight());
+		gridSize.setWidth(canvasGridSize.getWidth());
 		grid.setGridSize(gridSize);
 		xmlCanvas.setGrid(grid);
+		Dimension canvasDim = dbCanvas.getCanvasBounds().getDimension();
 		CanvasSize canvasSize = new CanvasSize();
-		canvasSize.setHeight(dbCanvas.getCanvasSize().getHeight());
-		canvasSize.setWidth(dbCanvas.getCanvasSize().getWidth());
+		canvasSize.setHeight(canvasDim.getHeight());
+		canvasSize.setWidth(canvasDim.getWidth());
+//		canvasSize.setHeight(dbCanvas.getCanvasSize().getHeight());
+//		canvasSize.setWidth(dbCanvas.getCanvasSize().getWidth());
 		xmlCanvas.setCanvasSize(canvasSize);
-		xmlCanvas.setName(dbCanvas.getName());
-		xmlCanvas.setLastCreationSerial(dbCanvas.getCreationSerialCounter().getLastIndex());
+		xmlCanvas.setName(this.graph.getName());
+		xmlCanvas.setLastCreationSerial(this.graph.getCreationSerialCounter().getCurrent());
 	}
 	
 	private void setNotation(){
 		Notation notation = new Notation();
-		INotation dbNotation = dbCanvas.getNotationSubsystem().getNotation();
+		INotation dbNotation = this.graph.getNotationSubsystem().getNotation();
 		notation.setQualifiedName(dbNotation.getQualifiedName());
 		notation.setMajorVersion(dbNotation.getVersion().getMajorVersion());
 		notation.setMinorVersion(dbNotation.getVersion().getMinorVersion());
@@ -185,7 +206,7 @@ public class CanvasMarshaller {
 		notation.setDisplayName(dbNotation.getDisplayName());
 		notation.setDescription(dbNotation.getDescription());
 		xmlCanvas.setNotation(notation);
-		Iterator<IObjectType> iter = dbCanvas.getNotationSubsystem().getSyntaxService().objectTypeIterator();
+		Iterator<IObjectType> iter = this.graph.getNotationSubsystem().getSyntaxService().objectTypeIterator();
 		while(iter.hasNext()){
 			IObjectType objectType = iter.next();
 			ObjectType xmlObjectType = createObjectType(objectType);
@@ -205,8 +226,8 @@ public class CanvasMarshaller {
 		RootAttribute xmlRootAtt = new RootAttribute();
 		xmlRootAtt.setObjectTypeId(rootAttribute.getObjectType().getUniqueId());
 		xmlRootAtt.setCreationSerial(rootAttribute.getCreationSerial());
-		xmlRootAtt.setLocation(createLocation(new Location(), rootAttribute.getLocation()));
-		xmlRootAtt.setSize(createSize(new Size(), rootAttribute.getSize()));
+		xmlRootAtt.setLocation(createLocation(new Location(), rootAttribute.getBounds().getOrigin()));
+		xmlRootAtt.setSize(createSize(new Size(), rootAttribute.getBounds().getDimension()));
 		return xmlRootAtt;
 	}
 	
@@ -248,8 +269,8 @@ public class CanvasMarshaller {
 	private ShapeAttribute createShapeAttribute(IShapeAttribute attrib) {
 		ShapeAttribute xmlAttrib = new ShapeAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
-		xmlAttrib.setLocation(createLocation(new Location(), attrib.getLocation()));
-		xmlAttrib.setSize(createSize(new Size(), attrib.getSize()));
+		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
+		xmlAttrib.setSize(createSize(new Size(), attrib.getBounds().getDimension()));
 		xmlAttrib.setObjectTypeId(attrib.getObjectType().getUniqueId());
 		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getFillColour()));
 		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
@@ -270,27 +291,28 @@ public class CanvasMarshaller {
 	private LabelAttribute createLabelAttribute(ILabelAttribute attrib) {
 		LabelAttribute xmlAttrib = new LabelAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
-		xmlAttrib.setLocation(createLocation(new Location(), attrib.getLocation()));
+		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
 		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getBackgroundColor()));
 		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getForegroundColor()));
 		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
 		xmlAttrib.setLineWidth(attrib.getLineWidth());
 		xmlAttrib.setNoBorder(attrib.hasNoBorder());
 		xmlAttrib.setNoFill(attrib.hasNoFill());
-		xmlAttrib.setSize(createSize(new Size(), attrib.getSize()));
-		xmlAttrib.setLocation(createLocation(new Location(), attrib.getLocation()));
+		xmlAttrib.setSize(createSize(new Size(), attrib.getBounds().getDimension()));
+		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
 		xmlAttrib.setPropertyRef(this.propMap.get(attrib.getProperty()));
 		return xmlAttrib;
 	}
 	
-	private LinkAttribute createLinkAttribute(HibLinkAttribute attrib) {
+	private LinkAttribute createLinkAttribute(ILinkAttribute attrib) {
 		LinkAttribute xmlAttrib = new LinkAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
 		xmlAttrib.setObjectTypeId(attrib.getObjectType().getUniqueId());
 		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
 		xmlAttrib.setLineWidth(attrib.getLineWidth());
 		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
-		xmlAttrib.setLastBendPointIndex(attrib.getLastBendPointSerial());
+//		xmlAttrib.setLastBendPointIndex(attrib.getLastBendPointSerial());
+		xmlAttrib.setLastBendPointIndex(attrib.getBendPointContainer().numBendPoints());
 		addBendPoints(attrib, xmlAttrib);
 		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
 		SrcTerminus srcTerminus = new SrcTerminus();
@@ -302,19 +324,35 @@ public class CanvasMarshaller {
 		return xmlAttrib;
 	}
 	
-	private void addBendPoints(HibLinkAttribute attrib, LinkAttribute xmlAttrib) {
-		for(HibBendPoint hibBendPoint : attrib.getBendPoints()){
+	private void addBendPoints(ILinkAttribute attrib, LinkAttribute xmlAttrib) {
+		IBendPointContainer bpContainer = attrib.getBendPointContainer();
+		Iterator<Point> iter = bpContainer.bendPointIterator();
+		int bpIdx = 0;
+		while(iter.hasNext()){
+			Point hibBendPoint = iter.next();
 			BendPoint xmlBp = new BendPoint();
-			xmlBp.setCreationSerial(hibBendPoint.getCreationSerial());
-			xmlBp.setIndexPosn(hibBendPoint.getIndexPos());
-			xmlBp.setPosition(createLocation(new Position(), hibBendPoint.getLocation()));
+			xmlBp.setCreationSerial(bpIdx);
+			xmlBp.setIndexPosn(bpIdx);
+			xmlBp.setPosition(createLocation(new Position(), hibBendPoint));
 			xmlAttrib.addBendPoint(xmlBp);
 		}
+//		Iterator<IBendPoint> iter = attrib.bendPointIterator();
+//		while(iter.hasNext()){
+//			IBendPoint hibBendPoint = iter.next();
+//			BendPoint xmlBp = new BendPoint();
+//			xmlBp.setCreationSerial(hibBendPoint.getCreationSerial());
+//			xmlBp.setIndexPosn(hibBendPoint.getIndexPos());
+//			xmlBp.setPosition(createLocation(new Position(), hibBendPoint.getLocation()));
+//			xmlAttrib.addBendPoint(xmlBp);
+//		}
 	}
 
 	private void addLinkTermini(ILinkTerminus attrib, LinkTerminusType xmlAttrib){
-		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
-		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
+		xmlAttrib.setCreationSerial(attrib.getOwningLink().getCreationSerial());
+		List<IAnnotationProperty> emptyPropList = Collections.emptyList();
+		xmlAttrib.setPropertyRef(createAnnotations(emptyPropList.iterator()));
+//		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
+//		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
 		xmlAttrib.setLocation(createLocation(new Location(), attrib.getLocation()));
 		xmlAttrib.setDecoratorSize(createSize(new DecoratorSize(), attrib.getEndSize()));
 		xmlAttrib.setGap(attrib.getGap());
@@ -345,51 +383,72 @@ public class CanvasMarshaller {
 	}
 	
 	private void createModel(){
-		HibModel dbModel = dbCanvas.getModel();
+		ICompoundGraph dbModel = this.graph.getGraph();
 		Model model = new Model();
-		model.setLastEdgeIndex(dbModel.getEdgeCounter().getLastIndex());
-		model.setLastNodeIndex(dbModel.getNodeCounter().getLastIndex());
+		model.setLastEdgeIndex(dbModel.numEdges());
+		model.setLastNodeIndex(dbModel.numNodes());
 		xmlCanvas.setModel(model);
-		IRootNode dbRootNode = dbModel.getRootNode();
+		IRootCompoundNode dbRootNode = dbModel.getRoot();
 		RootNode rootNode = createRootNode(dbRootNode); 
 		model.setRootNode(rootNode);
 		SubModel submodel = new SubModel();
 		submodel.addRootNode(rootNode);
 		rootNode.setSubModel(submodel);
-		addSubmodel(submodel, dbRootNode.getSubModel());
+		addSubmodel(submodel, dbRootNode.getChildCompoundGraph());
 		this.xmlCanvas.setModel(model);
 	}
 	
-	private RootNode createRootNode(IRootNode dbRootNode){
+	private RootNode createRootNode(IRootCompoundNode dbRootNode){
 		RootNode rootNode = new RootNode();
 		rootNode.setNodeId(dbRootNode.getIndex());
-		RootAttribute rootAttribute = addRootAttribute(dbRootNode.getAttribute());
+		RootAttribute rootAttribute = addRootAttribute((IRootAttribute)dbRootNode.getAttribute());
 		rootNode.setRootAttribute(rootAttribute);
 		SubModel childModel = new SubModel();
 		rootNode.setSubModel(childModel);
 		return rootNode;
 	}
 	
-	private void addSubmodel(SubModel xmlSubmodel, ISubModel submodel){
-		Iterator<IShapeNode> shapeIter = submodel.shapeNodeIterator();
+	private void addSubmodel(final SubModel xmlSubmodel, IChildCompoundGraph submodel){
+		Iterator<ICompoundGraphElement> shapeIter = submodel.elementIterator();
 		while(shapeIter.hasNext()){
-			IShapeNode node = shapeIter.next();
-			ShapeNode xmlNode = createShapeNode(node);
-			xmlSubmodel.addShapeNode(xmlNode);
-			addSubmodel(xmlNode.getSubModel(), node.getSubModel());
+			ICompoundGraphElement node = shapeIter.next();
+			ICanvasElementAttribute elementAtt = (ICanvasElementAttribute)node.getAttribute();
+			elementAtt.visit(new ICanvasElementAttributeVisitor(){
+
+				@Override
+				public void visitRoot(IRootAttribute attribute) {
+				}
+
+				@Override
+				public void visitShape(IShapeAttribute attribute) {
+					ICompoundNode shapeNode = attribute.getCurrentElement();
+					ShapeNode xmlNode = createShapeNode(shapeNode);
+					xmlSubmodel.addShapeNode(xmlNode);
+					addSubmodel(xmlNode.getSubModel(), shapeNode.getChildCompoundGraph());
+				}
+
+				@Override
+				public void visitLink(ILinkAttribute attribute) {
+//					ILinkEdge edge = linkIter.next();
+					LinkEdge xmlNode = createLinkEdge(attribute.getCurrentElement());
+					xmlSubmodel.addLinkEdge(xmlNode);
+				}
+
+				@Override
+				public void visitLabel(ILabelAttribute attribute) {
+//					ILabelNode node = labelIter.next();
+					LabelNode xmlNode = createLabelNode(attribute.getCurrentElement());
+					xmlSubmodel.addLabelNode(xmlNode);
+				}
+				
+			});
 		}
-		Iterator<ILinkEdge> linkIter = submodel.linkIterator();
-		while(linkIter.hasNext()){
-			ILinkEdge edge = linkIter.next();
-			LinkEdge xmlNode = createLinkEdge(edge);
-			xmlSubmodel.addLinkEdge(xmlNode);
-		}
-		Iterator<ILabelNode> labelIter = submodel.labelIterator();
-		while(labelIter.hasNext()){
-			ILabelNode node = labelIter.next();
-			LabelNode xmlNode = createLabelNode(node);
-			xmlSubmodel.addLabelNode(xmlNode);
-		}
+//		Iterator<ILinkEdge> linkIter = submodel.linkIterator();
+//		while(linkIter.hasNext()){
+//		}
+//		Iterator<ILabelNode> labelIter = submodel.labelIterator();
+//		while(labelIter.hasNext()){
+//		}
 	}
 	
 //	private void addShapeSubmodel(SubModel xmlSubmodel, IShapeNode shapeNode){
@@ -408,12 +467,16 @@ public class CanvasMarshaller {
 //	private void addLinkSubmodel(SubModel xmlSubmodel, ILinkEdge node){
 //	}
 	
-	private LinkEdge createLinkEdge(ILinkEdge linkEdge){
+	private LinkEdge createLinkEdge(ICompoundEdge linkEdge){
 		LinkEdge xmlLinkEdge = new LinkEdge();
 		xmlLinkEdge.setLinkIdx(linkEdge.getIndex());
-		xmlLinkEdge.setSrcNodeIdx(linkEdge.getSourceShape().getIndex());
-		xmlLinkEdge.setTgtNodeIdx(linkEdge.getTargetShape().getIndex());
-		xmlLinkEdge.setLinkAttribute(createLinkAttribute((HibLinkAttribute)linkEdge.getAttribute()));
+		CompoundNodePair nodePair = linkEdge.getConnectedNodes();
+		xmlLinkEdge.setSrcNodeIdx(nodePair.getOutNode().getIndex());
+		xmlLinkEdge.setTgtNodeIdx(nodePair.getInNode().getIndex());
+		xmlLinkEdge.setLinkAttribute(createLinkAttribute((ILinkAttribute)linkEdge.getAttribute()));
+//		xmlLinkEdge.setSrcNodeIdx(linkEdge.getSourceShape().getIndex());
+//		xmlLinkEdge.setTgtNodeIdx(linkEdge.getTargetShape().getIndex());
+//		xmlLinkEdge.setLinkAttribute(createLinkAttribute(linkEdge.getAttribute()));
 		return xmlLinkEdge;
 	}
 	
@@ -424,23 +487,23 @@ public class CanvasMarshaller {
 //		}
 //	}
 	
-	private LabelNode createLabelNode(ILabelNode labelNode){
+	private LabelNode createLabelNode(ICompoundNode labelNode){
 		LabelNode xmlNode = new LabelNode();
 		SubModel childModel = new SubModel();
 		xmlNode.setSubModel(childModel);
 		xmlNode.setNodeId(labelNode.getIndex());
 //		this.skippedLabels.put(labelNode.getAttribute(), xmlNode);
-		LabelAttribute labelAttribute = createLabelAttribute(labelNode.getAttribute());
+		LabelAttribute labelAttribute = createLabelAttribute((ILabelAttribute)labelNode.getAttribute());
 		xmlNode.setLabelAttribute(labelAttribute);
 		return xmlNode;
 	}
 	
-	private ShapeNode createShapeNode(IShapeNode shapeNode){
+	private ShapeNode createShapeNode(ICompoundNode shapeNode){
 		ShapeNode xmlNode = new ShapeNode();
 		SubModel childModel = new SubModel();
 		xmlNode.setSubModel(childModel);
 		xmlNode.setNodeId(shapeNode.getIndex());
-		ShapeAttribute attribute = createShapeAttribute(shapeNode.getAttribute());
+		ShapeAttribute attribute = createShapeAttribute((IShapeAttribute)shapeNode.getAttribute());
 		xmlNode.setShapeAttribute(attribute);
 		return xmlNode;
 	}

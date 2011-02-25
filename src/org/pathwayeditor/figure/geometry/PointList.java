@@ -54,6 +54,7 @@ public class PointList {
 		return this.points.containsAll(c);
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		return this.points.equals(o);
 	}
@@ -62,6 +63,7 @@ public class PointList {
 		return this.points.get(index);
 	}
 
+	@Override
 	public int hashCode() {
 		return this.points.hashCode();
 	}

@@ -26,12 +26,14 @@ public interface IPlainTextAnnotationProperty extends IAnnotationProperty {
 	 * Get the definition associated with this PlainTextProperty.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	IPlainTextPropertyDefinition getDefinition();
 	
 	/**
 	 * Get the textual value associated with this property.
 	 * @return The property definition instance. Cannot be null.
 	 */
+	@Override
 	String getValue();
 	
 	/**

@@ -17,8 +17,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 import java.io.File;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
-import org.pathwayeditor.businessobjects.repository.IMap;
+import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 public interface INotationExportService extends INotationService {
     
@@ -46,10 +45,10 @@ public interface INotationExportService extends INotationService {
 	 * Exports a map to file. It is the client's responsibility to ensure the
 	 * <code>exportFile</code> parameter is a valid writable file. Inclusion of a suffix is optional.
 	 * Implementations do not have to enforce that  getRecommendedSuffix() is appended.
-	 * @param map An {@link IMap} object
+	 * @param map An {@link IModel} object
 	 * @param exportFile A {@link File}
 	 * @throws ExportServiceException
 	 */
-	void exportMap(ICanvas canvas, File exportFile) throws ExportServiceException;
+	void exportMap(IModel canvas, File exportFile) throws ExportServiceException;
 	
 }

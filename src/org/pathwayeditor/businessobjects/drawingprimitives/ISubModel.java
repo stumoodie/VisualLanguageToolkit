@@ -20,89 +20,16 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IModelChangeListenee;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ISuppressableChangeListenee;
+import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
+import uk.ac.ed.inf.graph.compound.ICompoundEdge;
+import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
  * @author smoodie
  *
  */
-public interface ISubModel extends IModelChangeListenee, ISuppressableChangeListenee {
+public interface ISubModel {
 
-	/**
-	 * Get model that this belongs to.
-	 * @return the owning model, which cannot be null.
-	 */
-	IModel getModel();
-
-	/**
-	 * Get the root node that owns this sub model. 
-	 * @return the root node, which cannot be null.
-	 */
-	IDrawingNode getRootNode();
-	
-	/**
-	 * A new instance of the shape node factory for this submodel.
-	 * @return a new shape node instance, which cannot be null.
-	 */
-	IShapeNodeFactory shapeNodeFactory();
-	
-//	/**
-//	 * A new instance of the label node factory for this submodel.
-//	 * @return a new shape node instance, which cannot be null.
-//	 */
-//	ILabelNodeFactory labelNodeFactory();
-	
-	/**
-	 * A new instance of the link edge factory for this submodel.
-	 * @return a new shape node instance, which cannot be null.
-	 */
-	ILinkEdgeFactory linkEdgeFactory();
-	
-	/**
-	 * Is this submodel a valid destination for the copy? This requires that the sub-model is
-	 * empty and that it belongs to the same model as this one, or that the model
-	 * uses the same notation subsystem. Also the selection cannot have any dangling links.
-	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
-	 * @return true if the selection can be copied here, false otherwise.
-	 */
-	boolean canCopyHere(IDrawingElementSelection canvasObjectSelection);
-	
-	/**
-	 * Copy the selected objects to this.
-	 * @param canvasObjectSelection the selection of nodes and links that is to be copied.
-	 * @throws IllegalArgumentException if <code>canCopyHere(canvasObjectSelection)==false</code>.
-	 */
-	void copyHere(IDrawingElementSelection canvasObjectSelection); 
-	
-	/**
-	 * Gets a selection of the elements that were created by the copy operation. 
-	 * @return the drawing selection, which will be empty if no copy operation has taken place. 
-	 */
-	IDrawingElementSelection getCopiedElements();
-	
-	/**
-	 * Tests if the selection can be moved to this SubModel. To no this non of the
-	 * selected objects can be owned by this subModel or its children. This will return
-	 * true only if the move will succeed. Also the selection cannot have any dangling links.
-	 * @param canvasObjectSelection
-	 * @return true if the selection can be moved here, false otherwise.
-	 */
-	boolean canMoveHere(IDrawingElementSelection canvasObjectSelection);
-	
-	/**
-	 * Move this selection to the submodel provided.
-	 * @param canvasObjectSelection
-	 * @throws IllegalArgumentException if <code>canMoveHere(canvasObjectSelection)==false</code>.
-	 */
-	void moveHere(IDrawingElementSelection canvasObjectSelection); 
-	
-	/**
-	 * Gets a selection of the elements that were created by the move operation. 
-	 * @return the drawing selection, which will be empty if no move operation has taken place. 
-	 */
-	IDrawingElementSelection getMovedElements();
-	
 	/**
 	 * Returns the number of drawing elements that are owned by this submodel.
 	 * @return the number of drawing elements.
@@ -135,40 +62,29 @@ public interface ISubModel extends IModelChangeListenee, ISuppressableChangeList
 	
 	
 	/**
-	 * Does tree traversal taking the current node then each of the child subtrees in turn.
-	 * @return the iterator, which cannot be null.
-	 */
-	Iterator<IDrawingNode> preOrderTraveralIterator();
-	
-	/**
-	 * Does tree traversal taking the current node then each of the child nodes at the next level
-	 * traversing the nodes in each level of the tree in turn.
-	 * @return the iterator, which cannot be null.
-	 */
-	Iterator<IDrawingNode> levelOrderTraveralIterator();
-	
-	/**
 	 * Iterators over all the drawing nodes in this submodel 
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IDrawingNode> drawingNodeIterator();
+	Iterator<ICompoundNode> drawingNodeIterator();
 
 	/**
 	 * Traverses over all the shapes in the sub-model
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<IShapeNode> shapeNodeIterator();
+	Iterator<ICompoundNode> shapeNodeIterator();
 	
 	/**
 	 * Traverses over the list of links in this sub-model.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<ILinkEdge> linkIterator();
+	Iterator<ICompoundEdge> linkIterator();
 
 	/**
 	 * Traverses over the labels in this sub-model.
 	 * @return the iterator, which cannot be null.
 	 */
-	Iterator<ILabelNode> labelIterator();
+	Iterator<ICompoundNode> labelIterator();
+
+	IChildCompoundGraph getChildCompoundGraph();
 
 }
