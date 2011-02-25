@@ -1,9 +1,19 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
 
+/**
+ * 
+ * MultiplePositionFixedAnchor
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class MultiplePositionFixedAnchor implements IAnchorLocator {
 	private final PointList refAnchorPoints;
 	private final IConvexHull shape;

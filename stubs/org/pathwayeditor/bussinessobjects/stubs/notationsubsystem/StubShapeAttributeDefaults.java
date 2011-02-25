@@ -28,7 +28,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefaults {

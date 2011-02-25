@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface ICanvasPropertyChangeListenee {

@@ -8,7 +8,7 @@ package org.pathwayeditor.figure.geometry;
  * The class is immutable so all API methods that could modify the envelope, in fact return a new instance. This means that envelopes can
  * be shared with no danger of unexpected modification by another object. 
  * 
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 

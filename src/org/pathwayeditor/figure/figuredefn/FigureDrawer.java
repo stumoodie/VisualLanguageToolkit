@@ -1,3 +1,7 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.Arrays;
@@ -15,6 +19,11 @@ import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Point;
 
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class FigureDrawer {
 	private static final int TEXT_X_IDX = 0;
 	private static final int TEXT_Y_IDX = 1;

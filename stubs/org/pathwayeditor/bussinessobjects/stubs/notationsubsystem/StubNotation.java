@@ -22,7 +22,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubNotation implements INotation {

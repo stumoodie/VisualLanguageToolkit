@@ -6,7 +6,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IAnnotationPropertyChangeEvent  {

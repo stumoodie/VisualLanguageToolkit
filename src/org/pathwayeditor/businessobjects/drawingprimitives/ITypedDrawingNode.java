@@ -4,7 +4,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface ITypedDrawingNode extends IDrawingNode {

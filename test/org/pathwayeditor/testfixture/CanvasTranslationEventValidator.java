@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class CanvasTranslationEventValidator {

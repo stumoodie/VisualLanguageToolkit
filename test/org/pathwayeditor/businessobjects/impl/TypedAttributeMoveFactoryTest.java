@@ -34,7 +34,7 @@ import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 @RunWith(JMock.class)

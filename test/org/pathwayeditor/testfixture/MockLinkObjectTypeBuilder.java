@@ -40,7 +40,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class MockLinkObjectTypeBuilder {

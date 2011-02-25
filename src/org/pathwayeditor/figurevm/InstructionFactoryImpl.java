@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.HashMap;
@@ -8,6 +11,13 @@ import org.pathwayeditor.figurevm.Instruction.InstructionType;
 import org.pathwayeditor.figurevm.Instruction.OpCodes;
 import org.pathwayeditor.figurevm.Value.ValueType;
 
+/**
+ * 
+ * InstructionFactoryImpl
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class InstructionFactoryImpl implements IInstructionFactory {
 	private final Map<String, OpCodes> opCodeLookup;
 	private static final Object[][] opCodeTable = {

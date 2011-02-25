@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubShapeAObjectType implements IShapeObjectType {

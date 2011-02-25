@@ -6,7 +6,7 @@ package org.pathwayeditor.figure.figuredefn;
 import org.pathwayeditor.figure.geometry.Envelope;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IAnchorLocatorFactory {

@@ -1,17 +1,6 @@
 /*
-Copyright 2009, Court of the University of Edinburgh
+Copyright 2009-2011, Court of the University of Edinburgh
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License. 
 */
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
@@ -22,11 +11,19 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointC
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
- * @author smoodie
+ * IBendPointContainer is an interface defining a container for bend points that is associated with a ILinkAttribute.
+ * This allows the manipulation of and access to bend points.
+ * Bend points are indexed from 0 to N-1 - similar to an array.
+ * 
+ * @author Stuart Moodie
  *
  */
 public interface IBendPointContainer extends IBendPointChangeListenee  {
 
+	/**
+	 * Gets the link attribute that this bend-point container is associated with.
+	 * @return the link attriobute which should not be null.
+	 */
 	ILinkAttribute getLinkAttribute();
 	
 	/**
@@ -80,13 +77,18 @@ public interface IBendPointContainer extends IBendPointChangeListenee  {
 	 * @param index the index position.
 	 * @throws IllegalArgumentException if <code>containsBendPoint(index) == false</code>. 
 	 */
-	
 	void removeBendPoint(int index);
 	
+	/**
+	 * Translate the bendpoint to a new point.
+	 * @param idx the index of the bend-point.
+	 * @param translation the translation, which should be null.
+	 */
 	void translateBendPoint(int idx, Point translation);
 
 	/**
-	 * @param delta
+	 * Translates all bendpoint by the displacement specified by <code>delta</code>.
+	 * @param delta the amount to translate all the bendpoints, which should not be null.
 	 */
 	void translateAll(Point delta);
 

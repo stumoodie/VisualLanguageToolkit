@@ -1,7 +1,17 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.List;
 
+/**
+ * 
+ * IInstructionFactory
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IInstructionFactory {
 
 	Instruction createReal(String value);

@@ -55,7 +55,7 @@ import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 @RunWith(JMock.class)

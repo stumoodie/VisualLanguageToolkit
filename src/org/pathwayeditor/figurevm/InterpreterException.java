@@ -1,7 +1,17 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import org.pathwayeditor.figurevm.Instruction.OpCodes;
 
+/**
+ * 
+ * InterpreterException
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class InterpreterException extends RuntimeException {
 	private final OpCodes opCode;
 	

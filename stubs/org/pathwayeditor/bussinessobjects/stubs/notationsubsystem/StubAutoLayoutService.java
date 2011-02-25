@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationAutolayoutSe
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubAutoLayoutService implements INotationAutolayoutService {

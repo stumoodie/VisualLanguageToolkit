@@ -1,3 +1,7 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.Iterator;
@@ -13,6 +17,11 @@ import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figurevm.IFigureDefinition;
 
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class FigureController implements IFigureController {
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private final Logger logger = Logger.getLogger(this.getClass());

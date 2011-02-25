@@ -4,7 +4,7 @@
 package org.pathwayeditor.figure.figuredefn;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IFigureChangeEvent {

@@ -3,7 +3,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 import java.util.Iterator;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IAnnotationPropertyChangeListenee {

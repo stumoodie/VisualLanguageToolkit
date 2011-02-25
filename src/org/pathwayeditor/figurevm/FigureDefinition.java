@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.ArrayList;
@@ -9,6 +12,13 @@ import java.util.TreeSet;
 import org.pathwayeditor.figurevm.Instruction.InstructionType;
 import org.pathwayeditor.figurevm.Value.ValueType;
 
+/**
+ * 
+ * FigureDefinition
+ *
+ * @author Stuart Moodie
+ *
+ */
 public final class FigureDefinition implements IFigureDefinition {
 	private final List<Instruction> instlist;
 	

@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.EnumSet;
@@ -5,7 +8,11 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 
-
+/**
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class GraphicsInstruction {
 	public enum GraphicsOpCode {
 		DRAW_RECT, FILL_RECT, DRAW_RRECT, FILL_RRECT, DRAW_OVAL, FILL_OVAL, DRAW_ARC, FILL_ARC,

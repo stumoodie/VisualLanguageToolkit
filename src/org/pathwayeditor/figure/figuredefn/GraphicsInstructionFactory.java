@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.ArrayList;
@@ -10,7 +13,11 @@ import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlig
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicsOpCode;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 
-
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class GraphicsInstructionFactory {
 
 	private static GraphicsInstructionFactory anInstance = null;

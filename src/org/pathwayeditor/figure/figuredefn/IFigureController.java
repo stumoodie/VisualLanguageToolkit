@@ -1,3 +1,7 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.Iterator;
@@ -8,6 +12,13 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
+/**
+ * 
+ * IFigureController
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IFigureController {
 
 	void setRequestedEnvelope(Envelope newEnvelope);

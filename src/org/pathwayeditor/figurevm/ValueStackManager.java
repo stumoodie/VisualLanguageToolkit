@@ -1,57 +1,27 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.Stack;
 
 
+/**
+ * 
+ * ValueStackManager
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class ValueStackManager {
 	private final Stack<Value> stack;
-//	private final Map<String, Instruction> variablelookup;
-//	private final Map<String, Instruction> bindinglookup;
 	
-	public ValueStackManager(){ //Map<String, Instruction> variableLookup, Map<String, Instruction> bindingLookup){
+	public ValueStackManager(){
 		this.stack = new Stack<Value>();
-//		this.variablelookup = variableLookup;
-//		this.bindinglookup = bindingLookup;
 	}
-	
-//	public ValueStackManager(InstructionList instrList, Map<String, Instruction> variableLookup, Map<String, Instruction> bindingLookup){
-//		this(variableLookup, bindingLookup);
-//		Iterator<Instruction> listIter = instrList.iterator();
-//		while(listIter.hasNext()){
-//			Instruction inst = listIter.next();
-//			this.stack.insertElementAt(inst, 0);
-//		}
-//	}
-	
-//	private Instruction getExpandedInstruction(Instruction retVal){
-//		if(retVal.getType().equals(InstructionType.BOUND_VALUE)){
-//			Instruction lookup = this.bindinglookup.get((String)retVal.getValue());
-//			if(lookup == null) throw new IllegalStateException("No binding found for name: " + retVal.getValue());
-//			retVal = lookup;
-//		}
-//		else if(retVal.getType().equals(InstructionType.NAME)){
-//			Instruction lookup = this.variablelookup.get((String)retVal.getValue());
-//			if(lookup == null) throw new IllegalStateException("No variable name found matching: " + retVal.getValue());
-//			retVal = lookup;
-//		}
-//		return retVal;
-//	}
 	
 	public Value pop(){
 		return this.stack.pop();
-		//return getExpandedInstruction(this.stack.pop());
-//		Instruction retVal = this.stack.pop();
-//		if(retVal.getType().equals(InstructionType.BOUND_VALUE)){
-//			Instruction lookup = this.bindinglookup.get((String)retVal.getValue());
-//			if(lookup == null) throw new IllegalStateException("No binding found for name: " + retVal.getValue());
-//			retVal = lookup;
-//		}
-//		else if(retVal.getType().equals(InstructionType.NAME)){
-//			Instruction lookup = this.variablelookup.get((String)retVal.getValue());
-//			if(lookup == null) throw new IllegalStateException("No variable name found matching: " + retVal.getValue());
-//			retVal = lookup;
-//		}
-//		return retVal;
 	}
 	
 	public Integer popInteger(){

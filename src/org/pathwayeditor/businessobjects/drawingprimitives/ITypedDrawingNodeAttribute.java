@@ -6,7 +6,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface ITypedDrawingNodeAttribute extends IDrawingNodeAttribute {

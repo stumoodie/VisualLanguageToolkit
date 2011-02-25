@@ -1,7 +1,17 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import org.pathwayeditor.figurevm.Instruction.InstructionType;
 
+/**
+ * 
+ * UnexpectedInstructionType
+ *
+ * @author Stuart Moodie
+ *
+ */
 public final class UnexpectedInstructionType extends RuntimeException {
 	private static final long serialVersionUID = 5431620131639720529L;
 	private final InstructionType expectedInstruction;

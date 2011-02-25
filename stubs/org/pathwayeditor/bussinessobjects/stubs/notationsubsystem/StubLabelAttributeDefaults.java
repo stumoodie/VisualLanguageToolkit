@@ -27,7 +27,7 @@ import org.pathwayeditor.figure.figuredefn.IFont;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {

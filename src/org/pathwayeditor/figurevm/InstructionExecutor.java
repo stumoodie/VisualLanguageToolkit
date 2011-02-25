@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.HashMap;
@@ -14,6 +17,13 @@ import org.pathwayeditor.figurevm.Instruction.InstructionType;
 import org.pathwayeditor.figurevm.Instruction.OpCodes;
 import org.pathwayeditor.figurevm.Value.ValueType;
 
+/**
+ * 
+ * InstructionExecutor
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class InstructionExecutor {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	

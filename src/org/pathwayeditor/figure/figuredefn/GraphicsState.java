@@ -1,9 +1,18 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.Envelope;
 
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class GraphicsState {
 	private static final double DEFAULT_LINE_WIDTH = 1;
 	private RGB fill; 

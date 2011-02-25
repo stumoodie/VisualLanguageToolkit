@@ -6,7 +6,7 @@ package org.pathwayeditor.figure.geometry;
 
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class EnvelopeConvexHullBuilder  {

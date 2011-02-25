@@ -23,7 +23,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelObjectTypeParentingRules
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubLabelObjectType implements ILabelObjectType {

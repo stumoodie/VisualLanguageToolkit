@@ -18,7 +18,7 @@ package org.pathwayeditor.testfixture;
 
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class GeneralBuilder<T> implements IRedefinableBuilder<T> {

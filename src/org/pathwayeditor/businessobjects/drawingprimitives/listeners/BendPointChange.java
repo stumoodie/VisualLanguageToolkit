@@ -4,7 +4,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public enum BendPointChange {

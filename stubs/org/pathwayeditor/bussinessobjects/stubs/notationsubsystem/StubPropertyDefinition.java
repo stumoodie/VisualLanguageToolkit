@@ -21,7 +21,7 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public abstract class StubPropertyDefinition implements IPropertyDefinition {

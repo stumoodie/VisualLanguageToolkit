@@ -1,3 +1,7 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.businessobjects.impl.facades;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
@@ -9,6 +13,13 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.ICompoundEdgeFactory;
+
+/**
+ * 
+ * 
+ * @author Stuart Moodie
+ *
+ */
 
 public class LinkEdgeFactoryFacade implements ILinkEdgeFactory {
 	private ICompoundEdgeFactory compoundEdge;

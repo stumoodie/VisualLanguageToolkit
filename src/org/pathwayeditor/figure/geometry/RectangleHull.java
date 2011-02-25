@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.figure.geometry;
 
@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class RectangleHull implements IConvexHull {

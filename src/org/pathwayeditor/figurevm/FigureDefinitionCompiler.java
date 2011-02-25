@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.Iterator;
@@ -8,6 +11,13 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 
+/**
+ * 
+ * FigureDefinitionCompiler
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class FigureDefinitionCompiler {
 	private final String figureDefinition;
     private TreeDrawingVm walker = null;

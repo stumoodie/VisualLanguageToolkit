@@ -22,7 +22,7 @@ import java.util.Map;
 import org.jmock.Mockery;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public abstract class CommonTestFixture {

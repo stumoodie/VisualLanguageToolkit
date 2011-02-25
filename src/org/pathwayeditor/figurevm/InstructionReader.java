@@ -1,7 +1,17 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.Iterator;
 
+/**
+ * 
+ * InstructionReader
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class InstructionReader implements Iterator<Instruction> {
 	private final Iterator<Instruction> instIter;
 	

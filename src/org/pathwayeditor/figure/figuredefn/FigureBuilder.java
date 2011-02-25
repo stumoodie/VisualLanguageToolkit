@@ -1,3 +1,7 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
+
 package org.pathwayeditor.figure.figuredefn;
 
 import java.awt.Font;
@@ -25,6 +29,12 @@ import org.pathwayeditor.figurevm.IFigureDefinition;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
 import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
+
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 
 public class FigureBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());

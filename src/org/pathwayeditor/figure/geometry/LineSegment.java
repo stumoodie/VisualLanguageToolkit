@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
 import java.util.ArrayList;
@@ -5,8 +8,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * LineSegment
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class LineSegment {
-//	private static final double LINE_WIDTH_TOL = 0.1;
 	private static final double DOUBLE_ROUNDING_ERROR_TOL = 0.0001;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final Point origin;

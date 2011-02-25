@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.jmock.Expectations;
@@ -57,7 +56,7 @@ import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class LabelAttributeTest {
@@ -465,12 +464,12 @@ public class LabelAttributeTest {
 		assertEquals("expected node", testElement, this.testInstance.getCurrentElement());
 	}
 
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.CanvasAttribute#isRemoved()}.
-	 */
-	@Test
-	public void testIsRemoved() {
-		assertTrue("is removed", this.testInstance.isRemoved());
-	}
+//	/**
+//	 * Test method for {@link org.pathwayeditor.businessobjects.impl.CanvasAttribute#isRemoved()}.
+//	 */
+//	@Test
+//	public void testIsRemoved() {
+//		assertTrue("is removed", this.testInstance.isRemoved());
+//	}
 
 }

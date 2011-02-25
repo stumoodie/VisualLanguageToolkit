@@ -1,13 +1,21 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 
+ * IConvexHull
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IConvexHull {
 
 	Iterator<Point> iterator();
-
-//	boolean containsPoint(double x, double y);
 
 	boolean containsPoint(Point p);
 
@@ -20,8 +28,6 @@ public interface IConvexHull {
 	Iterator<Point> pointIterator();
 	
 	Point getPointLineIntersects(Point reference);
-	
-//	Point getPointLineIntersects(double refX, double refY);
 	
 	Point getCentre();
 	

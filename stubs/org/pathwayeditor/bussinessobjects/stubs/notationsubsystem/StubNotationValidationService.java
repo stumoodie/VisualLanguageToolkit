@@ -28,7 +28,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.IValidationReport;
 import org.pathwayeditor.businessobjects.notationsubsystem.IValidationRuleDefinition;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubNotationValidationService implements INotationValidationService {

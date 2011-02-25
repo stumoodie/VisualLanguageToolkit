@@ -21,7 +21,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.PropertyList;
 import org.pathwayeditor.businessobjects.exchange.castor.TextAnnotationProperty;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class AnnotationsBuilder implements IAnnotationPropertyVisitor {

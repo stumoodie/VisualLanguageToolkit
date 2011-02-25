@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.figurevm;
 
@@ -7,7 +7,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * @author smoodie
+ * 
+ * IFigureDefinition
+ *
+ * @author Stuart Moodie
  *
  */
 public interface IFigureDefinition {

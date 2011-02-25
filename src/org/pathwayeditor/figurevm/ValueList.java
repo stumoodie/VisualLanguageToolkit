@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.ArrayList;
@@ -6,6 +9,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * 
+ * ValueList
+ *
+ * @author Stuart Moodie
+ *
+ */
 public final class ValueList {
 	private final List<Value> valueList;
 	

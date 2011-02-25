@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
 import java.io.File;
@@ -7,6 +10,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * ConvexHullRenderer
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class ConvexHullRenderer {
 	private final List<Point> originalPoints;
 	private final IConvexHull hullPoints;

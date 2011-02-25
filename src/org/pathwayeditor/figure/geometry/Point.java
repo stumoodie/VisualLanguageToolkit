@@ -1,7 +1,15 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
-
-
+/**
+ * 
+ * Point
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class Point {
 	public static final Point ORIGIN = new Point(0, 0);
 	

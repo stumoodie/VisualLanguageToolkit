@@ -46,7 +46,7 @@ import org.pathwayeditor.testfixture.IteratorTestUtility;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class TestModel {

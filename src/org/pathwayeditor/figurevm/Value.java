@@ -1,6 +1,16 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 
+/**
+ * 
+ * Value
+ *
+ * @author Stuart Moodie
+ *
+ */
 public final class Value {
 	public static enum ValueType { REAL, INTEGER, STRING_LITERAL, LITERAL_VAR_NAME, BOOLEAN, ARRAY, NULL, PROCEDURE }
 

@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainText
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubTextPropertyDefinition extends StubPropertyDefinition implements IPlainTextPropertyDefinition {

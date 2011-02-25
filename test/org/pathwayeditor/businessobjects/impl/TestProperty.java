@@ -25,7 +25,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class TestProperty implements IAnnotationProperty {

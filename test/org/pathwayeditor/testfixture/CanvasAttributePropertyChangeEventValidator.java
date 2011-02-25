@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttri
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class CanvasAttributePropertyChangeEventValidator {

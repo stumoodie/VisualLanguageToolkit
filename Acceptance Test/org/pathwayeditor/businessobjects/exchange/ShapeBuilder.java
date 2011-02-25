@@ -27,7 +27,7 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class ShapeBuilder {

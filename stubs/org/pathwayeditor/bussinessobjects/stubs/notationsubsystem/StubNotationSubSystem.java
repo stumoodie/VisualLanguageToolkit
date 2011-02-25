@@ -34,7 +34,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxServic
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubNotationSubSystem implements INotationSubsystem {

@@ -24,7 +24,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubRootObjectType implements IRootObjectType {

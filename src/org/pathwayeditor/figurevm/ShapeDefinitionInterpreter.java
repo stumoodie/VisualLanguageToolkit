@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.HashMap;
@@ -5,6 +8,13 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * ShapeDefinitionInterpreter
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class ShapeDefinitionInterpreter {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	

@@ -1,9 +1,19 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 
+/**
+ * 
+ * IGraphicsEngine
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IGraphicsEngine {
 
 	void drawPoint(double pos, double pos2);

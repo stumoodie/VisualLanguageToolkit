@@ -1,6 +1,15 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
-
+/**
+ * 
+ * Instruction
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class Instruction {
 	public enum InstructionType { VALUE, OPCODE, VARIABLE_NAME, BOUND_VALUE, RAW_ARRAY };
 	

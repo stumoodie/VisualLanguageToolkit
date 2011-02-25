@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
 import java.util.ArrayList;
@@ -5,6 +8,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * ConvexHullCalculator
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class ConvexHullCalculator implements IConvexHullCalculator {
 	private static final double HALF_ELLIPSE_SEGS = 6.0;
 

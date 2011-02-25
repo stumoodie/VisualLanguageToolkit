@@ -23,7 +23,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxServic
  * An object type is equal if it belongs to the same notation and has the same UniqueId().
  * Otherwise it should comply with the standard equals contract.
 
- * @author smoodie
+ * @author Stuart Moodie
  */
 public interface IObjectType extends Comparable<IObjectType> {
 

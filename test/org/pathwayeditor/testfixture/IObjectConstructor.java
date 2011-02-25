@@ -17,7 +17,7 @@ limitations under the License.
 package org.pathwayeditor.testfixture;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IObjectConstructor<T> {

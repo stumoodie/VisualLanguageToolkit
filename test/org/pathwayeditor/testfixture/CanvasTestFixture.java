@@ -45,7 +45,7 @@ import org.pathwayeditor.figure.geometry.Point;
 import uk.ac.ed.inf.graph.util.IndexCounter;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class CanvasTestFixture extends CommonTestFixture {

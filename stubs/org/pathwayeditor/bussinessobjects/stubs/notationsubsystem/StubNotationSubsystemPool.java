@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubNotationSubsystemPool implements INotationSubsystemPool {

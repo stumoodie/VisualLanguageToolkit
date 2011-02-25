@@ -51,7 +51,7 @@ import org.pathwayeditor.testfixture.IObjectConstructor;
 import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 @RunWith(JMock.class)

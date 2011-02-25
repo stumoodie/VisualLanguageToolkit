@@ -1,7 +1,15 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.EnumSet;
 
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class GenericFont implements IFont {
 	private static final double DEFAULT_SIZE = 12;
 	private static final EnumSet<Style> DEFAULT_STYLE = EnumSet.of(Style.NORMAL);

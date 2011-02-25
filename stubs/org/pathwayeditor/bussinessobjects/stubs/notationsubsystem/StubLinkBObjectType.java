@@ -30,7 +30,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubLinkBObjectType implements ILinkObjectType {

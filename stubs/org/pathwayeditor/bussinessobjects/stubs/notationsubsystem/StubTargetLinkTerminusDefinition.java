@@ -26,7 +26,7 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubTargetLinkTerminusDefinition implements ILinkTerminusDefinition {

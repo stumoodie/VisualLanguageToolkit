@@ -81,7 +81,7 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class CanvasMarshaller {

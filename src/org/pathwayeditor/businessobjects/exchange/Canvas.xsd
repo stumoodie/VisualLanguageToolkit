@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2009-2011, Court of the University of Edinburgh -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://www.pathwayeditor.org/Exchange"
     xmlns="http://www.pathwayeditor.org/Exchange" version="1.0.0" attributeFormDefault="unqualified">

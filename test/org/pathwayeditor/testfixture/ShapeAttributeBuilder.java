@@ -41,7 +41,7 @@ import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class ShapeAttributeBuilder {

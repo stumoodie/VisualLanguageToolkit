@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class MockLabelObjectTypeBuilder {

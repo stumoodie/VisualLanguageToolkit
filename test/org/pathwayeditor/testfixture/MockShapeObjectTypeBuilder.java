@@ -37,7 +37,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class MockShapeObjectTypeBuilder {

@@ -26,7 +26,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPro
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class StubNumberPropertyDefinition extends StubPropertyDefinition implements INumberPropertyDefinition {

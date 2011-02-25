@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.figuredefn;
 
 import java.util.ArrayList;
@@ -6,6 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public class GraphicsInstructionList {
 	private final List<GraphicsInstruction> list;
 	

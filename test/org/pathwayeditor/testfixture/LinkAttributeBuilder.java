@@ -45,7 +45,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class LinkAttributeBuilder {

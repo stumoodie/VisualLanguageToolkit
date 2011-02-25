@@ -26,7 +26,7 @@ import uk.ac.ed.inf.graph.compound.IRootChildCompoundGraph;
 
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class XMLUnMarshallingTest {

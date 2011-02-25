@@ -4,7 +4,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IAnnotationPropertyVisitor {

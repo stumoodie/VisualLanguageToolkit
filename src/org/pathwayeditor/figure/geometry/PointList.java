@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.figure.geometry;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class PointList {

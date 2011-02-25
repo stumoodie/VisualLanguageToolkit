@@ -1,9 +1,19 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figurevm;
 
 import java.util.List;
 
 import org.pathwayeditor.figure.geometry.PointList;
 
+/**
+ * 
+ * IOpCodeHandler
+ *
+ * @author Stuart Moodie
+ *
+ */
 public 	interface IOpCodeHandler {
 	// Compass positions plus centre
 	// note that origin is in the bottom lefthand corner in this coordinate system!

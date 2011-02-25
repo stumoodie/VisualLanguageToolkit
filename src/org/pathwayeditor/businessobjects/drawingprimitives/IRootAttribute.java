@@ -10,7 +10,7 @@ import org.pathwayeditor.figure.geometry.Envelope;
 import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IRootAttribute extends ITypedDrawingNodeAttribute, ICanvas {

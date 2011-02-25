@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.figure.geometry;
 
@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class ConvexHullBuilder {

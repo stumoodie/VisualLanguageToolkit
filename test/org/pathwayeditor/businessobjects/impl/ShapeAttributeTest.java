@@ -67,7 +67,7 @@ import org.pathwayeditor.testfixture.NotationSubsystemFixture;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 @RunWith(JMock.class)

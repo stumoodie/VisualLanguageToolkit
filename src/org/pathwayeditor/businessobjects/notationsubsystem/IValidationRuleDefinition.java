@@ -1,6 +1,5 @@
 /*
-Copyright 2009-2010, Court of the University of Edinburgh
-
+Copyright 2009-2011, Court of the University of Edinburgh
 */
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
@@ -15,6 +14,9 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
  * <p>If a rule is OPTIONAL then it will be validated <b>unless</b> enforcement is set to IGNORE. If the rule is invalid
  * then this will be enforced as an error or warning depending on the <code>RuleEnforecement</code> setting. The default enforcement
  * is set in the definition, but the application may choose to change this via <code>IValidationRuleConfig</code>.
+ * 
+ * @author Stuart Moodie
+ * 
  */
 public interface IValidationRuleDefinition extends Comparable <IValidationRuleDefinition>{
 	 /** <em>Mandatory</em> means the rule must be satisfied and it will always generate validation errors on failure.<p>

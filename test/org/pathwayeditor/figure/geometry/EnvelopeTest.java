@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public class EnvelopeTest {

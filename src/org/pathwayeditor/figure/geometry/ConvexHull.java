@@ -1,3 +1,6 @@
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
+ */
 package org.pathwayeditor.figure.geometry;
 
 import java.util.ArrayList;
@@ -6,6 +9,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * ConvexHull
+ *
+ * @author Stuart Moodie
+ *
+ */
 public class ConvexHull implements IConvexHull {
 	private static final int FIRST_IDX_POS = 0;
 	private static final int MIN_NUM_POINTS = 3;

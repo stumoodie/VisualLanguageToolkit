@@ -8,7 +8,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
 /**
- * @author smoodie
+ * @author Stuart Moodie
  *
  */
 public interface IFigureGeometryFactory {
