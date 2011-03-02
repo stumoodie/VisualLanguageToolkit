@@ -10,13 +10,13 @@ package org.pathwayeditor.figure.figuredefn;
  * @author Stuart Moodie
  *
  */
-public interface IFigureChangeEvent {
+public interface IFigureRenderingControllerAttributeChangeEvent {
 
 	/**
 	 * The figure controller from which this event originated.
 	 * @return the figure controller, which cannot be null.
 	 */
-	IFigureController getFigureController();
+	IFigureRenderingController getFigureController();
 	
 	/**
 	 * The attribute change type.

@@ -51,7 +51,7 @@ public class FigureDefinitionCompiler {
 	}
 
 
-	public IFigureDefinition getCompiledFigureDefinition(){
+	public ICompiledFigureDefinition getCompiledFigureDefinition(){
 		return this.walker.getInstructions();
 	}
 

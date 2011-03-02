@@ -22,7 +22,7 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author Stuart Moodie
  *
  */
-public class FigureDrawer {
+public class FigureRenderer {
 	private static final int TEXT_X_IDX = 0;
 	private static final int TEXT_Y_IDX = 1;
 	private static final int TEXT_ALIGN_IDX = 2;
@@ -41,7 +41,7 @@ public class FigureDrawer {
 	private IFont currFont;
 //	private Envelope newBounds;
 	
-	public FigureDrawer(GraphicsInstructionList graphicsInstList){
+	public FigureRenderer(GraphicsInstructionList graphicsInstList){
 		this.instList = graphicsInstList;
 		this.currFont = new GenericFont();
 //		this.refBounds = refBounds;

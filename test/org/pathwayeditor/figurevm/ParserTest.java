@@ -36,7 +36,7 @@ public class ParserTest {
             TreeDrawingVm walker = new TreeDrawingVm(nodes);
             walker.setInstructionFactory(new InstructionFactoryImpl());
             walker.shapeDefn();
-            IFigureDefinition instructions = walker.getInstructions();
+            ICompiledFigureDefinition instructions = walker.getInstructions();
             System.out.println("Insts: " + instructions);
         } catch (RecognitionException e)  {
             e.printStackTrace();

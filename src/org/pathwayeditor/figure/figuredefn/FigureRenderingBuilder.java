@@ -24,10 +24,11 @@ import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
-import org.pathwayeditor.figurevm.IFigureDefinition;
+import org.pathwayeditor.figurevm.ICompiledFigureDefinition;
+import org.pathwayeditor.figurevm.IFigureDefinitionInterpreter;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
 import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
-import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
+import org.pathwayeditor.figurevm.FigureDefinitionInterpreter;
 
 /**
  * FigureBuilder is a class that builds a rendering of a figure from a figure definition. It provides methods that allow the
@@ -41,7 +42,7 @@ import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
  *
  */
 
-public class FigureBuilder {
+public class FigureRenderingBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
 	private static final int RGB_LIST_SIZE = 3;
@@ -50,20 +51,20 @@ public class FigureBuilder {
 	private static final double MIN_DIMENSION_SIZE = 0;
 	private static final String FONT_NAME = "Arial";
 
-	private final IFigureDefinition instList;
+	private final ICompiledFigureDefinition figureDefn;
 	private final IConvexHullCalculator hullCalc;
-	private final ShapeDefinitionInterpreter producer;
+	private final IFigureDefinitionInterpreter producer;
 	private final Stack<GraphicsState> graphicsStack;
 	private GraphicsState currentState;
 	private final List<GraphicsInstruction> graphicsInstructions;
 	private final GraphicsInstructionFactory g;
-	private GraphicsInstructionList figureDefn = null;
+	private GraphicsInstructionList renderingInstructions = null;
 	private IAnchorLocatorFactory anchorCalc = null;
 	
-	public FigureBuilder(IFigureDefinition outlineDefinition, IConvexHullCalculator hullCalc){
-		this.instList = outlineDefinition;
+	public FigureRenderingBuilder(ICompiledFigureDefinition compiledFigureDefinition, IConvexHullCalculator hullCalc){
+		this.figureDefn = compiledFigureDefinition;
 		this.hullCalc = hullCalc;
-		producer = new ShapeDefinitionInterpreter(instList, new OpCodeHandler(), null);
+		producer = new FigureDefinitionInterpreter(figureDefn, new OpCodeHandler(), null);
 		this.graphicsStack = new Stack<GraphicsState>();
 		this.graphicsInstructions = new LinkedList<GraphicsInstruction>();
 		this.g = GraphicsInstructionFactory.getInstance();
@@ -78,15 +79,15 @@ public class FigureBuilder {
 		return this.anchorCalc;
 	}
 	
-	public void generateFigure(){
+	public void generateFigureRendering(){
 		this.graphicsStack.clear();
 		this.hullCalc.reset();
 		this.graphicsInstructions.clear();
-		this.figureDefn = null;
+		this.renderingInstructions = null;
 		writeGraphicsState();
 		producer.execute();
 		this.hullCalc.calculate();
-		this.figureDefn = new GraphicsInstructionList(this.graphicsInstructions);
+		this.renderingInstructions = new GraphicsInstructionList(this.graphicsInstructions);
 	}
 	
 	
@@ -580,8 +581,8 @@ public class FigureBuilder {
 		this.producer.setBindDouble(name, value);
 	}
 
-	public GraphicsInstructionList getFigureDefinition() {
-		return this.figureDefn;
+	public GraphicsInstructionList getRenderingInstructions() {
+		return this.renderingInstructions;
 	}
 
 	public void setLineWidth(double i) {

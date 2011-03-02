@@ -39,7 +39,7 @@ public class Instruction {
 		this.value = opCode;
 	}
 
-	public Instruction(IFigureDefinition rawArrayList){
+	public Instruction(ICompiledFigureDefinition rawArrayList){
 		this.type = InstructionType.RAW_ARRAY;
 		this.value = rawArrayList;
 	}

@@ -15,27 +15,27 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
-import org.pathwayeditor.figurevm.IFigureDefinition;
+import org.pathwayeditor.figurevm.ICompiledFigureDefinition;
 
 /**
  * 
  * @author Stuart Moodie
  *
  */
-public class FigureController implements IFigureController {
+public class FigureRenderingController implements IFigureRenderingController {
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private final Logger logger = Logger.getLogger(this.getClass());
-	private final FigureBuilder builder;
+	private final FigureRenderingBuilder builder;
 	private GraphicsInstructionList figureInstructions;
 	private Envelope requestedEnvelope;
-	private final IFigureDefinition shapeDefinition;
-	private final List<IFigureChangeListener> listeners = new LinkedList<IFigureChangeListener>();
+	private final ICompiledFigureDefinition shapeDefinition;
+	private final List<IFigureRenderingControllerListener> listeners = new LinkedList<IFigureRenderingControllerListener>();
 
-	public FigureController(IFigureDefinition shapeDefinition){
+	public FigureRenderingController(ICompiledFigureDefinition shapeDefinition){
 		try {
 			this.shapeDefinition = shapeDefinition;
 			ConvexHullCalculator hullCalc = new ConvexHullCalculator();
-			this.builder = new FigureBuilder(shapeDefinition, hullCalc);
+			this.builder = new FigureRenderingBuilder(shapeDefinition, hullCalc);
 			this.builder.setLineWidth(DEFAULT_LINE_WIDTH);
 			this.requestedEnvelope = new Envelope(0, 0, 100, 100);
 		} catch (RuntimeException ex) {
@@ -107,7 +107,7 @@ public class FigureController implements IFigureController {
 	 * @param value
 	 */
 	private void notifyEvent(final FigureChangeType type, final Object oldValue, final Object value) {
-		IFigureChangeEvent event = new IFigureChangeEvent(){
+		IFigureRenderingControllerAttributeChangeEvent event = new IFigureRenderingControllerAttributeChangeEvent(){
 
 			@Override
 			public Object getNewValue() {
@@ -125,13 +125,13 @@ public class FigureController implements IFigureController {
 			}
 
 			@Override
-			public IFigureController getFigureController() {
-				return FigureController.this;
+			public IFigureRenderingController getFigureController() {
+				return FigureRenderingController.this;
 			}
 			
 		};
-		for(IFigureChangeListener listener : this.listeners){
-			listener.figureChange(event);
+		for(IFigureRenderingControllerListener listener : this.listeners){
+			listener.attributeChange(event);
 		}
 	}
 
@@ -174,9 +174,9 @@ public class FigureController implements IFigureController {
 		if(logger.isDebugEnabled()){
 			logger.debug("Generating figure: env=" + this.requestedEnvelope);
 		}
-		GraphicsInstructionList oldValue = this.builder.getFigureDefinition();
-		this.builder.generateFigure();
-		this.figureInstructions = this.builder.getFigureDefinition();
+		GraphicsInstructionList oldValue = this.builder.getRenderingInstructions();
+		this.builder.generateFigureRendering();
+		this.figureInstructions = this.builder.getRenderingInstructions();
 		if(this.logger.isInfoEnabled() && !this.requestedEnvelope.contains(this.getEnvelope())){
 			StringBuilder buf = new StringBuilder(200);
 			buf.append("The convex hull (env=");
@@ -188,7 +188,7 @@ public class FigureController implements IFigureController {
 		if(logger.isDebugEnabled()){
 			logger.debug("Calcuated convex hull=" + this.getConvexHull());
 		}
-		this.notifyEvent(FigureChangeType.FIGURE_DEFN, oldValue,this.builder.getFigureDefinition());
+		this.notifyEvent(FigureChangeType.FIGURE_DEFN, oldValue,this.builder.getRenderingInstructions());
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class FigureController implements IFigureController {
 	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#addListener(org.pathwayeditor.figure.figuredefn.IFigureChangeListener)
 	 */
 	@Override
-	public void addListener(IFigureChangeListener listener) {
+	public void addListener(IFigureRenderingControllerListener listener) {
 		this.listeners.add(listener);
 	}
 
@@ -242,15 +242,15 @@ public class FigureController implements IFigureController {
 	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#listenerIterator()
 	 */
 	@Override
-	public List<IFigureChangeListener> listenerIterator() {
-		return new ArrayList<IFigureChangeListener>(this.listeners);
+	public List<IFigureRenderingControllerListener> listenerIterator() {
+		return new ArrayList<IFigureRenderingControllerListener>(this.listeners);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#removeListener(org.pathwayeditor.figure.figuredefn.IFigureChangeListener)
 	 */
 	@Override
-	public void removeListener(IFigureChangeListener listener) {
+	public void removeListener(IFigureRenderingControllerListener listener) {
 		this.listeners.remove(listener);
 	}
 	

@@ -96,7 +96,7 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 	
 	@Override
 	public Instruction createArray(List<Instruction> instArray) {
-		return new Instruction(new FigureDefinition(instArray));
+		return new Instruction(new CompiledFigureDefinition(instArray));
 	}
 
 	@Override
@@ -153,7 +153,7 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 
 	@Override
 	public Instruction createProcedure(List<Instruction> procList) {
-		return new Instruction(new Value(new FigureDefinition(procList)));
+		return new Instruction(new Value(new CompiledFigureDefinition(procList)));
 	}
 
 }

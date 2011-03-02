@@ -56,10 +56,10 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
             TreeDrawingVm walker = new TreeDrawingVm(nodes);
             walker.setInstructionFactory(new InstructionFactoryImpl());
             walker.shapeDefn();
-            IFigureDefinition instructions = walker.getInstructions();
+            ICompiledFigureDefinition instructions = walker.getInstructions();
             System.out.println("Insts: " + instructions);
             ShapeDefinitionInterpreterTest testHarness = new ShapeDefinitionInterpreterTest();
-            ShapeDefinitionInterpreter interpreter = new ShapeDefinitionInterpreter(instructions, testHarness,
+            IFigureDefinitionInterpreter interpreter = new FigureDefinitionInterpreter(instructions, testHarness,
             		new IInterpreterErrorHandler() {
 
 						@Override
@@ -75,7 +75,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
             });
             interpreter.setBindInteger("cardinality", 1);
             interpreter.setBindDouble("cardFontSize", 12.0);
-            System.out.println("Bind vars = " + interpreter.getInstructions().getBindVariableNames());
+            System.out.println("Bind vars = " + interpreter.getCompiledFigureDefinition().getBindVariableNames());
             interpreter.execute();
         } catch (RecognitionException e)  {
             e.printStackTrace();

@@ -14,7 +14,7 @@ import java.util.Set;
  * @author Stuart Moodie
  *
  */
-public interface IFigureDefinition {
+public interface ICompiledFigureDefinition {
 
 	/**
 	 * Provide a new iterator to iterate over all the instructions.
@@ -23,7 +23,7 @@ public interface IFigureDefinition {
 	Iterator<Instruction> iterator();
 
 	/**
-	 * Gets the bind variable names that have been defineds in the figure defintion. 
+	 * Gets the bind variable names that have been specified in the figure definition. 
 	 * @return the set of bind variable names, which cannot be null.
 	 */
 	Set<String> getBindVariableNames();

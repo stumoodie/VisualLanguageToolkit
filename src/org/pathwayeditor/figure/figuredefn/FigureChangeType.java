@@ -5,7 +5,7 @@ package org.pathwayeditor.figure.figuredefn;
 
 /**
  * FigureChangeType is an enumerated type that defines the kind of change
- * events that may be handled by a {@link IFigureChangeEvent}. 
+ * events that may be handled by a {@link IFigureRenderingControllerAttributeChangeEvent}. 
  * 
  * @author Stuart Moodie
  *

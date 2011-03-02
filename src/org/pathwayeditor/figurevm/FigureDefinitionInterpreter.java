@@ -10,59 +10,95 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * ShapeDefinitionInterpreter
+ * FigureDefinitionInterpreter
  *
  * @author Stuart Moodie
  *
  */
-public class ShapeDefinitionInterpreter {
+public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	private final Map<String, Value> variableLookup;
 	private final Map<String, Value> bindingLookup;
 	private final InstructionExecutor executor;
 	
-	public ShapeDefinitionInterpreter(IFigureDefinition instructions, IOpCodeHandler opCodehandler,
+	public FigureDefinitionInterpreter(ICompiledFigureDefinition instructions, IOpCodeHandler opCodehandler,
 										IInterpreterErrorHandler errorHandler) {
 		this.variableLookup  = new HashMap<String, Value>();
 		this.bindingLookup  = new HashMap<String, Value>();
 		this.executor = new InstructionExecutor(instructions, this.variableLookup, this.bindingLookup, opCodehandler, errorHandler);
 	}
 	
-	public IFigureDefinition getInstructions(){
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getInstructions()
+	 */
+	@Override
+	public ICompiledFigureDefinition getCompiledFigureDefinition(){
 		return this.executor.getInstructions();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getErrorHandler()
+	 */
+	@Override
 	public IInterpreterErrorHandler getErrorHandler(){
 		return this.executor.getErrorHandler();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindInteger(java.lang.String, java.lang.Integer)
+	 */
+	@Override
 	public void setBindInteger(String name, Integer value){
 		this.bindingLookup.put(name, new Value(value));
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindBoolean(java.lang.String, java.lang.Boolean)
+	 */
+	@Override
 	public void setBindBoolean(String name, Boolean value){
 		this.bindingLookup.put(name, new Value(value));
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindDouble(java.lang.String, java.lang.Double)
+	 */
+	@Override
 	public void setBindDouble(String name, Double value){
 		this.bindingLookup.put(name, new Value(value));
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindString(java.lang.String, java.lang.String)
+	 */
+	@Override
 	public void setBindString(String name, String value){
 		this.bindingLookup.put(name, Value.createStringLiteral(value));
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getOpCodeHandler()
+	 */
+	@Override
 	public IOpCodeHandler getOpCodeHandler() {
 		return this.executor.getOpCodeHandler();
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#execute()
+	 */
+	@Override
 	public void execute() {
 		logger.debug("Starting interpreter.");
 		this.executor.execute();
 		logger.debug("Interpreter completed.");
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindBooleanValue(java.lang.String)
+	 */
+	@Override
 	public Boolean getBindBooleanValue(String name) {
 		Boolean retVal = null;
 		Value val = this.bindingLookup.get(name);
@@ -72,6 +108,10 @@ public class ShapeDefinitionInterpreter {
 		return retVal;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindIntegerValue(java.lang.String)
+	 */
+	@Override
 	public Integer getBindIntegerValue(String name) {
 		Integer retVal = null;
 		Value val = this.bindingLookup.get(name);
@@ -81,6 +121,10 @@ public class ShapeDefinitionInterpreter {
 		return retVal;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindDoubleValue(java.lang.String)
+	 */
+	@Override
 	public Double getBindDoubleValue(String name) {
 		Double retVal = null;
 		Value val = this.bindingLookup.get(name);
@@ -90,6 +134,10 @@ public class ShapeDefinitionInterpreter {
 		return retVal;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindStringValue(java.lang.String)
+	 */
+	@Override
 	public String getBindStringValue(String name) {
 		String retVal = null;
 		Value val = this.bindingLookup.get(name);

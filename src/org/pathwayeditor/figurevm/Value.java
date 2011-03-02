@@ -52,7 +52,7 @@ public final class Value {
 		this.value = value;
 	}
 	
-	public Value(IFigureDefinition value){
+	public Value(ICompiledFigureDefinition value){
 		this.type = ValueType.PROCEDURE;
 		this.value = value;
 	}
@@ -108,8 +108,8 @@ public final class Value {
 		return (ValueList)this.value;
 	}
 	
-	public IFigureDefinition getPackedArray(){
-		return (IFigureDefinition)this.value;
+	public ICompiledFigureDefinition getPackedArray(){
+		return (ICompiledFigureDefinition)this.value;
 	}
 	
 	public boolean isNull(){

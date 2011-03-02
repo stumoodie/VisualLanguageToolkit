@@ -5,17 +5,17 @@ package org.pathwayeditor.figure.figuredefn;
 
 /**
  * IFigureChangeListener is an interface that defines a listener that is notified of 
- * attribute value changes in the {@link IFigureController}. 
+ * attribute value changes in the {@link IFigureRenderingController}. 
  * 
  * @author Stuart Moodie
  *
  */
-public interface IFigureChangeListener {
+public interface IFigureRenderingControllerListener {
 
 	/**
 	 * Notify the listener that a change event has occurred in the figure controller. 
 	 * @param event the event recording the attribute change made.
 	 */
-	void figureChange(IFigureChangeEvent event);
+	void attributeChange(IFigureRenderingControllerAttributeChangeEvent event);
 	
 }

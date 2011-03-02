@@ -19,10 +19,10 @@ import org.pathwayeditor.figurevm.Value.ValueType;
  * @author Stuart Moodie
  *
  */
-public final class FigureDefinition implements IFigureDefinition {
+public final class CompiledFigureDefinition implements ICompiledFigureDefinition {
 	private final List<Instruction> instlist;
 	
-	public FigureDefinition(List<Instruction> list){
+	public CompiledFigureDefinition(List<Instruction> list){
 		this.instlist = new ArrayList<Instruction>(list);
 	}
 	
@@ -46,13 +46,13 @@ public final class FigureDefinition implements IFigureDefinition {
 				retVal.add(name);
 			}
 			else if(inst.getType().equals(InstructionType.RAW_ARRAY)){
-				IFigureDefinition procList = inst.getTypedValue();
+				ICompiledFigureDefinition procList = inst.getTypedValue();
 				retVal.addAll(procList.getBindVariableNames());
 			}
 			else if(inst.getType().equals(InstructionType.VALUE)){
 				Value val = inst.getTypedValue();
 				if(val.getType().equals(ValueType.PROCEDURE)){
-					IFigureDefinition procList = val.getPackedArray();
+					ICompiledFigureDefinition procList = val.getPackedArray();
 					retVal.addAll(procList.getBindVariableNames());
 				}
 			}
@@ -96,9 +96,9 @@ public final class FigureDefinition implements IFigureDefinition {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof FigureDefinition))
+		if (!(obj instanceof CompiledFigureDefinition))
 			return false;
-		FigureDefinition other = (FigureDefinition) obj;
+		CompiledFigureDefinition other = (CompiledFigureDefinition) obj;
 		if (instlist == null) {
 			if (other.instlist != null)
 				return false;

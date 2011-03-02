@@ -54,16 +54,16 @@ public class InstructionExecutor {
 	private final Map<String, Value> variableLookup;
 	private final Map<String, Value> bindLookup;
 	private final IInterpreterErrorHandler errorHandler;
-	private final IFigureDefinition instructions;
+	private final ICompiledFigureDefinition instructions;
 	private boolean exitCalled = false;
 
-	public InstructionExecutor(IFigureDefinition instructions,
+	public InstructionExecutor(ICompiledFigureDefinition instructions,
 			Map<String, Value> variableLookup, Map<String, Value> bindLookup, 
 			IOpCodeHandler opCodehandler, IInterpreterErrorHandler errorHandler) {
 		this(instructions, new Stack<Value>(), variableLookup, bindLookup, opCodehandler, errorHandler);
 	}
 		
-	public InstructionExecutor(IFigureDefinition instructions, Stack<Value> operandStack,
+	public InstructionExecutor(ICompiledFigureDefinition instructions, Stack<Value> operandStack,
 			Map<String, Value> variableLookup, Map<String, Value> bindLookup, 
 			IOpCodeHandler opCodehandler, IInterpreterErrorHandler errorHandler) {
 		this.opCodeLookup = new HashMap<OpCodes, IOpCodeLookup>();
@@ -76,7 +76,7 @@ public class InstructionExecutor {
 		initOpCodes();
 	}
 	
-	public IFigureDefinition getInstructions(){
+	public ICompiledFigureDefinition getInstructions(){
 		return this.instructions;
 	}
 	
@@ -661,7 +661,7 @@ public class InstructionExecutor {
 	}
 
 	private void processRepeat() {
-		IFigureDefinition block = this.valueStack.pop().getPackedArray();
+		ICompiledFigureDefinition block = this.valueStack.pop().getPackedArray();
 		int repeatCount = this.valueStack.pop().getInteger();
 		InstructionExecutor procExec = new InstructionExecutor(block, this.valueStack, this.variableLookup,
 				this.bindLookup, this.opCodeHandler, this.errorHandler);
@@ -671,7 +671,7 @@ public class InstructionExecutor {
 	}
 
 	private void processForall() {
-		IFigureDefinition block = this.valueStack.pop().getPackedArray();
+		ICompiledFigureDefinition block = this.valueStack.pop().getPackedArray();
 		ValueList valList = this.valueStack.pop().getArray();
 		InstructionExecutor procExec = new InstructionExecutor(block, this.valueStack, this.variableLookup,
 				this.bindLookup, this.opCodeHandler, this.errorHandler);
@@ -684,7 +684,7 @@ public class InstructionExecutor {
 	}
 
 	private void processFor() {
-		IFigureDefinition block = this.valueStack.pop().getPackedArray();
+		ICompiledFigureDefinition block = this.valueStack.pop().getPackedArray();
 		final Value limit = this.valueStack.pop();
 		final Value increment = this.valueStack.pop();
 		final Value initial = this.valueStack.pop();
@@ -967,7 +967,7 @@ public class InstructionExecutor {
 	
 	
 	private void processIf() {
-		IFigureDefinition ifBlock = this.valueStack.pop().getPackedArray();
+		ICompiledFigureDefinition ifBlock = this.valueStack.pop().getPackedArray();
 		Boolean ifTestResult = this.valueStack.pop().getBoolean();
 		if(ifTestResult){
 			execProcedure(ifBlock);
@@ -975,7 +975,7 @@ public class InstructionExecutor {
 	}
 	
 	
-	private void execProcedure(IFigureDefinition instList){
+	private void execProcedure(ICompiledFigureDefinition instList){
 		InstructionExecutor procExec = new InstructionExecutor(instList, this.valueStack, this.variableLookup,
 					this.bindLookup, this.opCodeHandler, this.errorHandler);
 		procExec.execute();
@@ -1186,7 +1186,7 @@ public class InstructionExecutor {
 				// need to pop everything off the array and execute it.
 				// the resulting stack is the array
 				Stack<Value> arrayStack = new Stack<Value>();
-				InstructionExecutor arrayExec = new InstructionExecutor((IFigureDefinition)inst.getValue(), arrayStack,
+				InstructionExecutor arrayExec = new InstructionExecutor((ICompiledFigureDefinition)inst.getValue(), arrayStack,
 						variableLookup, bindLookup, opCodeHandler, errorHandler);
 				arrayExec.execute();
 				ValueList valList = new ValueList(arrayStack);

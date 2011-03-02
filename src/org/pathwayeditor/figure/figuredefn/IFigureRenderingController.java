@@ -26,7 +26,7 @@ import org.pathwayeditor.figure.geometry.IConvexHull;
  * @author Stuart Moodie
  *
  */
-public interface IFigureController {
+public interface IFigureRenderingController {
 
 	/**
 	 * Sets the requested bounding box for the figure definition. Note that this may not correspond
@@ -158,17 +158,17 @@ public interface IFigureController {
 	 * Adds a figure change listener to this controller.
 	 * @param listener the listener, which should not be null.
 	 */
-	void addListener(IFigureChangeListener listener);
+	void addListener(IFigureRenderingControllerListener listener);
 	
 	/**
 	 * Remove the figure change listener from this controller.
 	 * @param listener the listener, which should not be null.
 	 */
-	void removeListener(IFigureChangeListener listener);
+	void removeListener(IFigureRenderingControllerListener listener);
 
 	/**
 	 * Get the listeners associated this this controller.
 	 * @return a list of listeners that is safe to modify and can be empty, but will not be null.
 	 */
-	List<IFigureChangeListener> listenerIterator();
+	List<IFigureRenderingControllerListener> listenerIterator();
 }
