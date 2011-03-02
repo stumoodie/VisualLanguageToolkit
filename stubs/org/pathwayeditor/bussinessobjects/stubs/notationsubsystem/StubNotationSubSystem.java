@@ -129,7 +129,7 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#registerCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	@Override
-	public void registerCanvas(IModel canvasToRegister) {
+	public void registerModel(IModel canvasToRegister) {
 		
 	}
 
@@ -137,7 +137,7 @@ public class StubNotationSubSystem implements INotationSubsystem {
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem#unregisterCanvas(org.pathwayeditor.businessobjects.drawingprimitives.ICanvas)
 	 */
 	@Override
-	public void unregisterCanvas(IModel canvasToRegister) {
+	public void unregisterModel(IModel canvasToRegister) {
 	}
 
 }

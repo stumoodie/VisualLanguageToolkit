@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.BendPointChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.BendPointStructureChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableBendPointChangeItem;
 import org.pathwayeditor.figure.geometry.Point;
 
@@ -72,7 +72,7 @@ public class BendPointContainer implements IBendPointContainer {
 		if(!containsBendPoint(index)) throw new IllegalArgumentException("not bendpoint at this index position");
 
 		Point removedPoint = this.bendPoints.remove(index);
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_REMOVED, removedPoint, index, index);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_REMOVED, removedPoint, index, index);
 	}
 
 	/* (non-Javadoc)
@@ -82,7 +82,7 @@ public class BendPointContainer implements IBendPointContainer {
 	public void createNewBendPoint(Point location) {
 		this.bendPoints.add(location);
 		int index = this.bendPoints.size()-1;
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_ADDED, location, index, index);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, index, index);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class BendPointContainer implements IBendPointContainer {
 		else {
 			this.bendPoints.add(location);
 		}
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointChange.BEND_POINT_ADDED, location, position, position);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, position, position);
 	}
 
 	/* (non-Javadoc)
@@ -120,7 +120,7 @@ public class BendPointContainer implements IBendPointContainer {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener)
 	 */
 	@Override
-	public void addChangeListener(IBendPointChangeListener listener) {
+	public void addChangeListener(IBendPointContainerListener listener) {
 		this.listenableBendPointChangeItem.addChangeListener(listener);
 	}
 
@@ -128,7 +128,7 @@ public class BendPointContainer implements IBendPointContainer {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#removeChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener)
 	 */
 	@Override
-	public void removeChangeListener(IBendPointChangeListener listener) {
+	public void removeChangeListener(IBendPointContainerListener listener) {
 		this.listenableBendPointChangeItem.removeChangeListener(listener);
 	}
 
@@ -136,7 +136,7 @@ public class BendPointContainer implements IBendPointContainer {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListenee#bendPointListenerIterator()
 	 */
 	@Override
-	public List<IBendPointChangeListener> bendPointListeners() {
+	public List<IBendPointContainerListener> bendPointListeners() {
 		return this.listenableBendPointChangeItem.bendPointListeners();
 	}
 

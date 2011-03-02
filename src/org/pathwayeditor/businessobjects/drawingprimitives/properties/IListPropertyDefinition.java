@@ -9,6 +9,8 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 import java.util.List;
 
 /**
+ * IListPropertyDefinition is an interface that defines a list property.
+ * 
  * @author Stuart Moodie
  *
  */

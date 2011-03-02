@@ -6,11 +6,17 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
 /**
+ * Records change to an annotation property's value.
+ * 
  * @author Stuart Moodie
  *
  */
 public interface IAnnotationPropertyChangeEvent  {
 
+	/**
+	 * The annotation property affected by this change event.
+	 * @return the annotation property, which cannot be null.
+	 */
 	IAnnotationProperty getPropertyDefinition();
 	
 	/**

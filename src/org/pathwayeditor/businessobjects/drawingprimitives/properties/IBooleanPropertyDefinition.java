@@ -4,6 +4,8 @@
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 /**
+ * IBooleanPropertyDefinition is an interface that defines a boolean property.
+ * 
  * @author Stuart Moodie
  *
  */

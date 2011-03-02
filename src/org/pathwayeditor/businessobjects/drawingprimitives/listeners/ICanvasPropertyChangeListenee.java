@@ -7,6 +7,9 @@ import java.util.List;
 
 
 /**
+ * ICanvasPropertyChangeListenee is an interface that should be implemented by classes providing notification
+ * of changes to the drawing canvas attributes via a listener. 
+ * 
  * @author Stuart Moodie
  *
  */

@@ -5,6 +5,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.math.BigDecimal;
 
+/**
+ * INumberPropertyDefinition is an interface that defines a number property.
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public interface INumberPropertyDefinition extends IPropertyDefinition {
 
 	@Override

@@ -8,7 +8,13 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 
+import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
+
 /**
+ * ILabelNodeFactory is an interface that defines a factory to create label nodes. This should be implemented
+ * as a facade that wraps an instance of {@link ICompoundNodeFactory}. The interface provides convenience methods
+ * hide some of the complexity of creating a compound node associated with a ILabelAttribute. 
+ * 
  * @author Stuart Moodie
  *
  */

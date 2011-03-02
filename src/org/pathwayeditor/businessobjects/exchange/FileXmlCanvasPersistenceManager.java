@@ -35,7 +35,7 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	 * @see org.pathwayeditor.businessobjects.exchange.XmlPersistenceManager#createNewCanvasStream(org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem)
 	 */
 	@Override
-	public void createNewCanvasStream(final INotationSubsystem notationSubsystem, String canvasName) {
+	public void createNewModelStream(final INotationSubsystem notationSubsystem, String canvasName) {
 //		NonPersistentCanvasFactory fact = NonPersistentCanvasFactory.getInstance();
 //		fact.setCanvasName(canvasName);
 //		fact.setNotationSubsystem(notationSubsystem);
@@ -149,7 +149,7 @@ public class FileXmlCanvasPersistenceManager implements IXmlPersistenceManager {
 	 * @see org.pathwayeditor.businessobjects.exchange.IXmlPersistenceManager#getCurrentCanvas()
 	 */
 	@Override
-	public IModel getCurrentCanvas() {
+	public IModel getCurrentModel() {
 		return this.canvas;
 	}
 

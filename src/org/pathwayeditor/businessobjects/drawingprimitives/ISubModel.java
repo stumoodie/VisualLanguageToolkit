@@ -1,9 +1,6 @@
 /*
 Copyright 2009-2011, Court of the University of Edinburgh
 */
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import java.util.Iterator;
@@ -13,6 +10,11 @@ import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 /**
+ * ISubModel is an interface defining the sub model of a model. A submodel can be though
+ * of a model contained within another model. In this case this interface should be implemented
+ * as a facade to an {@link IChildCompoundGraph}. This facade provides convenience methods
+ * that provide access to the sub-model in terms of links, shapes and labels.
+ * 
  * @author Stuart Moodie
  *
  */
@@ -73,6 +75,10 @@ public interface ISubModel {
 	 */
 	Iterator<ICompoundNode> labelIterator();
 
+	/**
+	 * Get the child compound graph that is wrapped by this instance.
+	 * @return the child compound graph, which cannot be null.
+	 */
 	IChildCompoundGraph getChildCompoundGraph();
 
 }

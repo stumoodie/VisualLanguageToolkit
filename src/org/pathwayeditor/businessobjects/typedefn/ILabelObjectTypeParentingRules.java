@@ -7,6 +7,9 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.typedefn;
 
 /**
+ * ILabelObjectTypeParentingRules is an interface that defines parenting rules
+ * for use by a label object type.
+ * 
  * @author Stuart Moodie
  *
  */

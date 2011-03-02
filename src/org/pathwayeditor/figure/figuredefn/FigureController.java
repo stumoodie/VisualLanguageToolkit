@@ -4,7 +4,7 @@
 
 package org.pathwayeditor.figure.figuredefn;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -51,7 +51,11 @@ public class FigureController implements IFigureController {
 
 	@Override
 	public Envelope getEnvelope() {
-		return this.builder.getConvexHull().getEnvelope();
+		Envelope retVal = null;
+		if(this.builder.getConvexHull() != null){
+			retVal = this.builder.getConvexHull().getEnvelope();
+		}
+		return retVal;
 	}
 
 	@Override
@@ -118,6 +122,11 @@ public class FigureController implements IFigureController {
 			@Override
 			public FigureChangeType getType() {
 				return type;
+			}
+
+			@Override
+			public IFigureController getFigureController() {
+				return FigureController.this;
 			}
 			
 		};
@@ -233,8 +242,8 @@ public class FigureController implements IFigureController {
 	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#listenerIterator()
 	 */
 	@Override
-	public Iterator<IFigureChangeListener> listenerIterator() {
-		return this.listeners.iterator();
+	public List<IFigureChangeListener> listenerIterator() {
+		return new ArrayList<IFigureChangeListener>(this.listeners);
 	}
 
 	/* (non-Javadoc)

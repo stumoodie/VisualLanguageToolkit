@@ -9,6 +9,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttr
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
+/**
+ * 
+ * IShapeAttribute is an interface that defines a shape attribute. The shape attribute provides
+ * the attributes and operations of the shape node in the model. It defines how the shape node
+ * is visualised graphically. 
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IShapeAttribute extends  IAnnotatedObject, ITypedDrawingNodeAttribute, ICanvasAttributeChangeListenee {
 	public static final int MIN_LINE_WIDTH = 1;
 	

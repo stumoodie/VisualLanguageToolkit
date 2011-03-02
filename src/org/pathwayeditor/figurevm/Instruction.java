@@ -5,7 +5,7 @@ package org.pathwayeditor.figurevm;
 
 /**
  * 
- * Instruction
+ * Instruction is a class that defines an instruction used in the interpretation of a figure definition.
  *
  * @author Stuart Moodie
  *

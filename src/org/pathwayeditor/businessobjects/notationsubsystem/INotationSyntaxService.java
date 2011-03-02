@@ -13,7 +13,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
- * Defines the context adapter syntax service. Implementations of this interfaces should define the visual
+ * Defines the notation susbsystem syntax service. Implementations of this interfaces should define the visual
  * look of the glyphs in the notation and its syntactic rules. This is done by providing implementations 
  * of IShapeObjectType and ILinkObjectType and an IRootMapObject for the map.
  * <p>
@@ -23,9 +23,6 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  * The object type also controls which properties of its associated map object are editable. It also
  * defines additional annotation properties, which again may be editable and also displayed as a label 
  * associated with the map object (visualisable).
- * 
- * Typically this interface will be implemented behind an eclipse extension point and should have minimal
- * dependencies on the business object API of EPE.
  * 
  * @author Stuart Moodie
  *
@@ -96,26 +93,64 @@ public interface INotationSyntaxService extends INotationService {
 	boolean containsObjectType(int uniqueId); 
 	
 	/**
-	 * Retrieve the lobject type based on it's unique id.
+	 * Retrieve the object type based on it's unique id.
 	 * @param uniqueId the unique identifier of the object type.
 	 * @return the object type, which cannot be null.
 	 * @throws IllegalArgumentException if the objectType cannot be found.
 	 */
 	IObjectType getObjectType(int uniqueId);
 	
+	/**
+	 * Get the label object type corresponding to the provided id.
+	 * @param uniqueId the unique id of the object type 
+	 * @return the label object type with the <code>uniqueId</code> or null if it cannot be found.
+	 */
 	ILabelObjectType getLabelObjectType(int uniqueId);
-	
+
+	/**
+	 * Get the label object type corresponding to the given property definition.
+	 * @param propDefn the property definition to search with, which should not be null. 
+	 * @return the label object type for the given property definition or null if one cannot be found.
+	 */
 	ILabelObjectType getLabelObjectTypeByProperty(IPropertyDefinition propDefn);
-	
+
+	/**
+	 * Tests if the specified property has an associated label object type, i.e. can the property value
+	 * be visualised with an associated label.  
+	 * @param propDefn the property definition to test.
+	 * @return true is there is an associated label object type, false otherwise.
+	 */
 	boolean isVisualisableProperty(IPropertyDefinition propDefn); 
 	
+	/**
+	 * Get the number of shape object types in this notation syntax service.
+	 * @return the number of shape object types.
+	 */
 	int numShapeObjectTypes();
 	
+	/**
+	 * Get the number of link object types in this notation syntax service.
+	 * @return the number of link object types.
+	 */
 	int numLinkObjectTypes();
 	
+	/**
+	 * Get the number of object types in this notation syntax service.
+	 * @return the number of object types.
+	 */
 	int numObjectTypes();
 	
+	/**
+	 * Find the shape object type by its unique name.
+	 * @param name true if the name can be found, false otherwise.
+	 * @return the shape object type matching the name, or null if it cannot be found. 
+	 */
 	IShapeObjectType findShapeObjectTypeByName(String name);
 	
+	/**
+	 * Find the link object type by its unique name.
+	 * @param name true if the name can be found, false otherwise.
+	 * @return the link object type matching the name, or null if it cannot be found. 
+	 */
 	ILinkObjectType findLinkObjectTypeByName(String name);
 }

@@ -6,7 +6,10 @@ package org.pathwayeditor.businessobjects.typedefn;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 
 /**
- * IObjectType
+ * IObjectType is an interface that defines an object type. The object type is the basic unit of syntax defintion
+ * in a Notation Subsystem. It defines the appearance and initial attribute and property values of
+ * the shapes, links and labels in the notation. It also creates the basic syntax of the notation by
+ * by defining which object types can have parent child relationships.  
  * 
  * An object type is equal if it belongs to the same notation and has the same UniqueId().
  * Otherwise it should comply with the standard equals contract.
@@ -45,9 +48,4 @@ public interface IObjectType extends Comparable<IObjectType> {
 	 * @return the parenting rules, which cannot be null.
 	 */
 	IObjectTypeParentingRules getParentingRules();
-	
-	/**
-	 * @param other the other object to compare.
-	 * @return true if equal based on above criteria, false otherwise.
-	 */
 }

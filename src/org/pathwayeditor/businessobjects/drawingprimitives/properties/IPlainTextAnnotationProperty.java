@@ -4,7 +4,8 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 /**
- * Defines a text property, which can be plain text or html.
+ * IPlainTextAnnotationProperty is an interface the defines an annotation property of <code>String</code> values.
+ * 
  * @author Stuart Moodie
  *
  */

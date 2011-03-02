@@ -7,6 +7,15 @@ import java.io.File;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
+/**
+ * 
+ * INotationImportService is an interface that defines an import service for the notation
+ * subsystem. The import service takes an specific file format and imports it into the given notation
+ * populating a new model in the process.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface INotationImportService extends INotationService {
 	/**
 	 * The display name for this service that may be used by the user interface.
@@ -30,10 +39,10 @@ public interface INotationImportService extends INotationService {
 	/**
 	 * Imports the contents of a file in a particular file format into an empty canvas.
 	 * @param importFile the file to be imported, which cannot be null and must be readable.
-	 * @param canvas the canvas, which cannot be null and should be empty.
+	 * @param model the canvas, which cannot be null and should be empty.
 	 * @throws ImportServiceException if an error occurs importing the file
 	 * @throws IllegalArgumentException if <code>canvas == null || canvas.isEmpty() == false</code>
 	 * @throws IllegalArgumentException if <code>importFile == null || importFile.canRead() == false</code>
 	 */
-	void importToCanvas(File importFile, IModel canvas) throws ImportServiceException;
+	void importToModel(File importFile, IModel model) throws ImportServiceException;
 }

@@ -13,6 +13,9 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ISubCompoundGraph;
 
 /**
+ * IDrawingElementSelection is an interface that defines how a selection of drawing elements is accessed. This interface
+ * is a facade that is convenient to use if one wants to distinguish between different types of node. 
+ * 
  * @author Stuart Moodie
  *
  */
@@ -106,5 +109,9 @@ public interface IDrawingElementSelection {
 	 */
 	boolean hasDanglingEdges();
 	
+	/**
+	 * Gets the sub-compound graph that is the object wrapped by an implementation of this interface. 
+	 * @return the wrapped subgraph which cannot be null.
+	 */
 	ISubCompoundGraph getSubgraph();
 }

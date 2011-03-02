@@ -16,11 +16,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
  * @author Stuart Moodie
  *
  */
-public final class ListenableAnnotationPropertyChangeItem	implements IAnnotationPropertyChangeListenee {
+public final class AnnotationPropertyChangeHelper	implements IAnnotationPropertyChangeListenee {
 	private final List<IAnnotationPropertyChangeListener> listeners;
 	private IAnnotationProperty annot;
 	
-	public ListenableAnnotationPropertyChangeItem(IAnnotationProperty annot){
+	public AnnotationPropertyChangeHelper(IAnnotationProperty annot){
 		this.listeners = new CopyOnWriteArrayList<IAnnotationPropertyChangeListener>();
 		this.annot = annot;
 	}

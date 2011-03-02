@@ -7,6 +7,16 @@ import java.io.File;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
+/**
+ * 
+ * INotationExportService is an interface that defines an export service for the
+ * notation subsystem. A notation subsystem can have multiple export services that handle
+ * different file formats. The export service takes a model and exports it into the given
+ * format. This may be a data format or a graphical image of the model diagram.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface INotationExportService extends INotationService {
     
 	/**
@@ -16,7 +26,7 @@ public interface INotationExportService extends INotationService {
 	String getDisplayName();
 	
 	/**
-	 * Returns the unique code for this export service. M
+	 * Returns the unique code for this export service.
 	 * @return A <code>String</code>, must not be null.
 	 */
 	String getCode();
@@ -33,10 +43,10 @@ public interface INotationExportService extends INotationService {
 	 * Exports a map to file. It is the client's responsibility to ensure the
 	 * <code>exportFile</code> parameter is a valid writable file. Inclusion of a suffix is optional.
 	 * Implementations do not have to enforce that  getRecommendedSuffix() is appended.
-	 * @param map An {@link IModel} object
+	 * @param model An {@link IModel} object
 	 * @param exportFile A {@link File}
-	 * @throws ExportServiceException
+	 * @throws ExportServiceException if the export fails.
 	 */
-	void exportMap(IModel canvas, File exportFile) throws ExportServiceException;
+	void exportMap(IModel model, File exportFile) throws ExportServiceException;
 	
 }

@@ -5,22 +5,22 @@ package org.pathwayeditor.figure.figuredefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 
 /**
  * 
- * IGraphicsEngine
+ * IGraphicsEngine is an interface that defines the primitive operations that must be supported by a
+ * graphics engine that renders a figure definition.
  *
  * @author Stuart Moodie
  *
  */
 public interface IGraphicsEngine {
 
-	void drawPoint(double pos, double pos2);
+	void drawPoint(double x, double y);
 
-	void fillArc(double pos, double pos2, double widthSize, double heightSize, double roundedOffset, double roundedLength);
+	void fillArc(double x, double y, double w, double h, double roundedOffset, double roundedLength);
 
-	void drawArc(double pos, double pos2, double widthSize, double heightSize, double roundedOffset, double roundedLength);
+	void drawArc(double x, double y, double w, double h, double roundedOffset, double roundedLength);
 
 	void fillPolygon(double[] pointArr);
 
@@ -28,32 +28,32 @@ public interface IGraphicsEngine {
 
 	void drawPolyline(double[] pointArr);
 
-	void fillOval(double pos, double pos2, double widthSize, double heightSize);
+	void fillOval(double x, double y, double w, double h);
 
-	void drawOval(double pos, double pos2, double widthSize, double heightSize);
+	void drawOval(double pos, double pos2, double w, double h);
 
-	void fillRectangle(double pos, double pos2, double widthSize, double heightSize);
+	void fillRectangle(double pos, double pos2, double w, double h);
 
-	void drawRoundRectangle(double x, double y, double width, double height, double arcWidthSize, double arcHeightSize);
+	void drawRoundRectangle(double x, double y, double w, double h, double arcWidthSize, double arcHeightSize);
 
-	void fillRoundRectangle(double x, double y, double width, double height, double arcWidthSize, double arcHeightSize);
+	void fillRoundRectangle(double x, double y, double w, double h, double arcWidthSize, double arcHeightSize);
 
-	void drawRectangle(double pos, double pos2, double widthSize, double heightSize);
+	void drawRectangle(double x, double y, double w, double h);
 
-	void drawLine(double beginPos, double beginPos2, double endPos, double endPos2);
+	void drawLine(double x1, double y1, double x2, double y2);
 
-	void fillString(String text, double pos, double pos2, GraphicalTextAlignment alignment);
+	void fillString(String text, double x, double y, GraphicalTextAlignment alignment);
 
-	void drawString(String text, double pos, double pos2, GraphicalTextAlignment alignment);
+	void drawString(String text, double x, double y, GraphicalTextAlignment alignment);
 
 	void setFillColor(RGB color);
 
 	void setLineColor(RGB color);
 
-	void setLineWidth(double lineWidthVal);
+	void setLineWidth(double lineWidth);
 
-	void setFont(IFont modifiedFont);
+	void setFont(IFont newFont);
 
-	void setLineStyle(LineStyle values);
+	void setLineStyle(LineStyle lineStyle);
 
 }

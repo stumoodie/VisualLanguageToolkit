@@ -17,6 +17,12 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 
 
 /**
+ * IModel is an interface which defines a complete model used to represent drawing
+ * of a graphical notation. The model contains the compound graph representation of
+ * the drawing together with the Notation Subsystem defining the graphical notation
+ * used by this drawing, factories to create the attributes used to store the appearance
+ * of the diagram and methods to access these attributes.    
+ * 
  * @author Stuart Moodie
  *
  */
@@ -42,22 +48,49 @@ public interface IModel {
 	 */
 	void setName(String name);
 	
+	/**
+	 * Get a new shape attribute factory.
+	 * @return the shape attribute factory, which cannot be null.
+	 */
 	IShapeAttributeFactory shapeAttributeFactory();
 	
+	/**
+	 * Get a new link attribute factory.
+	 * @return the link attribute factory, which cannot be null.
+	 */
 	ILinkAttributeFactory linkAttributeFactory();
 
+	/**
+	 * Get a new label attribute factory.
+	 * @return the label attribute factory, which cannot be null.
+	 */
 	ILabelAttributeFactory labelAttributeFactory();
 
+	/**
+	 * Get the root attribute for this model.
+	 * @return the root attribute which cannot be null.
+	 */
 	IRootAttribute getRootAttribute();
 
 	/**
-	 * Number of canvas attributes stored by this canvas.
+	 * Number of canvas attributes stored by this canvas. This ignores any attributes
+	 * associated with removed graph elements.
 	 * @return the number of canvas attributes.
 	 */
 	int numCanvasAttributes();
 	
+	/**
+	 * Adds a new attribute to be stored by this model. This is typically done by a factory when creating
+	 * a new attribute and this method is typically no used by client code.
+	 * @param attribute the attribute to add, which should not be null.
+	 */
 	void addCanvasAttribute(ICanvasElementAttribute attribute);
 
+	/**
+	 * Get the attribute serial counter associated with this model, which
+	 * should not be null. 
+	 * @return the sequence counter.
+	 */
 	ICanvasAttributeSequence getCreationSerialCounter();
 
 	/**
@@ -116,6 +149,11 @@ public interface IModel {
 	 */
 	int numLinkEdges();
 
+	/**
+	 * Get the compound graph that defines the compound graph structure of the
+	 * diagram defined by this model. 
+	 * @return the compound graph, which cannot be null.
+	 */
 	ICompoundGraph getGraph();
 	
 	/**
@@ -170,23 +208,75 @@ public interface IModel {
 	 */
 	ILabelAttribute getLabelAttribute(int attributeSerial);
 	
+	/**
+	 * Provides a new iterator for all the canvas attributes in the model - that
+	 * have are not associated with removed graph elements.
+	 * @return the iterator, which cannot be null.
+	 */
 	Iterator<ICanvasElementAttribute> canvasAttributeIterator();
 	
+	/**
+	 * Provides a new iterator for all the shape attributes in the model - that
+	 * have are not associated with removed graph elements.
+	 * @return the iterator, which cannot be null.
+	 */
 	Iterator<IShapeAttribute> shapeAttributeIterator();
 	
+	/**
+	 * Number of shape attributes stored by this canvas. This ignores any attributes
+	 * associated with removed graph elements.
+	 * @return the number of shape attributes.
+	 */
 	int numShapeAttributes();
 	
+	/**
+	 * Provides a new iterator for all the label attributes in the model - that
+	 * have are not associated with removed graph elements.
+	 * @return the iterator, which cannot be null.
+	 */
 	Iterator<ILabelAttribute> labelAttributeIterator();
 	
+	/**
+	 * Number of label attributes stored by this canvas. This ignores any attributes
+	 * associated with removed graph elements.
+	 * @return the number of label attributes.
+	 */
 	int numLabelAttributes();
 	
+	/**
+	 * Provides a new iterator for all the link attributes in the model - that
+	 * have are not associated with removed graph elements.
+	 * @return the iterator, which cannot be null.
+	 */
 	Iterator<ILinkAttribute> linkAttributeIterator();
 	
+	/**
+	 * Number of link attributes stored by this canvas. This ignores any attributes
+	 * associated with removed graph elements.
+	 * @return the number of link attributes.
+	 */
 	int numLinkAttributes();
 
+	/**
+	 * Gets the notation subsystem used by this model.
+	 * @return the notation subsystem, which cannot be null.
+	 */
 	INotationSubsystem getNotationSubsystem();
 	
+	/**
+	 * Gets the label attribute associated with the given annotation property. This
+	 * ignores labels that have been removed.
+	 * @param annotationProperty the annotation property, which should not be null.
+	 * @return the label attribute associated with this annotation property or null
+	 *  if no corresponding label can be found.
+	 */
 	ILabelAttribute getLabelForProperty(IAnnotationProperty annotationProperty);
 	
+	/**
+	 * Tests if the annotation property has a corresponding label. This ignores labels that have been
+	 * removed.
+	 * @param annotationProperty the annotation property to test.
+	 * @return true if there is an associated label, false otherwise.
+	 */
 	boolean hasLabelForProperty(IAnnotationProperty annotationProperty);
 }

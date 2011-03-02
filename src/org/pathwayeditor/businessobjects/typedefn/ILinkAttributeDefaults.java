@@ -1,15 +1,16 @@
 /*
 Copyright 2009-2011, Court of the University of Edinburgh
 */
-/**
- * 
- */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 
 /**
+ * ILinkAttributeDefaults is an interface that defines the initial/default
+ * values for a {@link ILinkAttribute}. 
+ * 
  * @author Stuart Moodie
  *
  */

@@ -5,6 +5,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives.properties;
 
 import java.math.BigDecimal;
 
+/**
+ * INumberAnnotationProperty is an interface the defines an annotation property of numerical values.
+ * 
+ * @author Stuart Moodie
+ *
+ */
 public interface INumberAnnotationProperty extends IAnnotationProperty {
 	
 	/**

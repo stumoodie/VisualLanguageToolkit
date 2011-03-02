@@ -9,6 +9,9 @@ import org.pathwayeditor.businessobjects.impl.Model;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
+ * ModelFactory is a class that implements <code>IModelFactory</code> and is used to create
+ * models using instances of {@link Model}.
+ * 
  * @author Stuart Moodie
  *
  */

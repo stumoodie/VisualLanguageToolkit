@@ -33,7 +33,7 @@ public class ListProperty extends AnnotationProperty implements IListAnnotationP
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.properties.
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.
 	 * IAnnotationProperty#getDefinition()
 	 */
 	@Override
@@ -44,7 +44,7 @@ public class ListProperty extends AnnotationProperty implements IListAnnotationP
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.properties.
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.
 	 * IAnnotationProperty#getValue()
 	 */
 	@Override
@@ -79,14 +79,6 @@ public class ListProperty extends AnnotationProperty implements IListAnnotationP
 	public void setPropertyDefinition(IPropertyDefinition propertyDefinition) {
 		this.propertyDefinition = (IListPropertyDefinition) propertyDefinition;
 	}
-
-//	/* (non-Javadoc)
-//	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#canVisualiseProperty()
-//	 */
-//	@Override
-//	public boolean canVisualiseProperty() {
-//		return this.propertyDefinition.isVisualisable();
-//	}
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty#visit(org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor)

@@ -1,9 +1,12 @@
-/**
- * 
+/*
+ * Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.figure.figuredefn;
 
 /**
+ * FigureChangeType is an enumerated type that defines the kind of change
+ * events that may be handled by a {@link IFigureChangeEvent}. 
+ * 
  * @author Stuart Moodie
  *
  */

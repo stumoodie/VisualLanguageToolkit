@@ -7,6 +7,9 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.typedefn;
 
 /**
+ * IRootObjectParentingRules is an interface that defines the parent/child syntax for 
+ * a root node's object type.
+ * 
  * @author Stuart Moodie
  *
  */

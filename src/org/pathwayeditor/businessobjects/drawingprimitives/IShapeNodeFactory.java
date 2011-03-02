@@ -7,9 +7,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
-import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
+ * IShapeNodeFactory is an interface that defines a factory to create shape nodes. This should be implemented
+ * as a facade that wraps an instance of {@link ICompoundNodeFactory}. The interface provides convenience methods
+ * hide some of the complexity of creating a compound node associated with a IShapeAttribute. 
+ * 
  * @author Stuart Moodie
  *
  */
@@ -43,7 +46,10 @@ public interface IShapeNodeFactory {
 	 */
 	IShapeNode createShapeNode();
 
+	/**
+	 * Get the compound node factory wrapped by this instance.
+	 * @return the compound node factory.
+	 */
 	ICompoundNodeFactory getGraphElementFactory();
 	
-	IElementAttributeFactory getElementAttributeFactory();
 }

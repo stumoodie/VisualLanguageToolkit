@@ -14,8 +14,6 @@ public interface INotationDelegate {
 
 	INotation getNotation();
 	
-//	Iterator<IObjectInfo> objectTypeIterator();
-	
 	int numObjectTypes();
 	
 }

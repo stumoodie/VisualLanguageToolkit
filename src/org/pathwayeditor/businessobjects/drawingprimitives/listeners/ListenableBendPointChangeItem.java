@@ -18,29 +18,29 @@ import org.pathwayeditor.figure.geometry.Point;
  *
  */
 public final class ListenableBendPointChangeItem implements IBendPointChangeListenee {
-	private final List<IBendPointChangeListener> listeners;
+	private final List<IBendPointContainerListener> listeners;
 	private final IBendPointContainer linkAttribute;
 	
 	public ListenableBendPointChangeItem(IBendPointContainer linkAttribute){
-		this.listeners = new CopyOnWriteArrayList<IBendPointChangeListener>();
+		this.listeners = new CopyOnWriteArrayList<IBendPointContainerListener>();
 		this.linkAttribute = linkAttribute;
 	}
 
 	/**
 	 * 
 	 */
-	public final List<IBendPointChangeListener> getListeners() {
+	public final List<IBendPointContainerListener> getListeners() {
 		return this.listeners;
 	}
 
-	public final void firePropertyChange(IBendPointChangeEvent evt){
-		for(IBendPointChangeListener listener : this.getListeners()){
-			listener.propertyChange(evt);
+	public final void firePropertyChange(IBendPointStructureChangeEvent evt){
+		for(IBendPointContainerListener listener : this.getListeners()){
+			listener.structureChange(evt);
 		}
 	}
 	
 	public final void fireLocationChange(IBendPointLocationChangeEvent evt){
-		for(IBendPointChangeListener listener : this.getListeners()){
+		for(IBendPointContainerListener listener : this.getListeners()){
 			listener.locationChange(evt);
 		}
 	}
@@ -59,7 +59,7 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 			}
 
 			@Override
-			public IBendPointContainer getOwningLink() {
+			public IBendPointContainer getBendPointContainer() {
 				return linkAttribute;
 			}
 
@@ -72,11 +72,11 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 		fireLocationChange(event);
 	}
 	
-	public final void notifyPropertyChange(final BendPointChange type, final Point bp, final int oldIdxPos, final int newIdxPos){
-		IBendPointChangeEvent event = new IBendPointChangeEvent(){
+	public final void notifyPropertyChange(final BendPointStructureChange type, final Point bp, final int oldIdxPos, final int newIdxPos){
+		IBendPointStructureChangeEvent event = new IBendPointStructureChangeEvent(){
 
 			@Override
-			public BendPointChange getChangeType() {
+			public BendPointStructureChange getChangeType() {
 				return type;
 			}
 
@@ -105,17 +105,17 @@ public final class ListenableBendPointChangeItem implements IBendPointChangeList
 	}
 	
 	@Override
-	public final List<IBendPointChangeListener> bendPointListeners(){
-		return new ArrayList<IBendPointChangeListener>(this.listeners);
+	public final List<IBendPointContainerListener> bendPointListeners(){
+		return new ArrayList<IBendPointContainerListener>(this.listeners);
 	}
 	
 	@Override
-	public final void addChangeListener(IBendPointChangeListener listener){
+	public final void addChangeListener(IBendPointContainerListener listener){
 		this.listeners.add(listener);
 	}
 
 	@Override
-	public final void removeChangeListener(IBendPointChangeListener listener){
+	public final void removeChangeListener(IBendPointContainerListener listener){
 		this.listeners.remove(listener);
 	}
 

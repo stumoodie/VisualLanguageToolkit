@@ -8,9 +8,14 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 import java.util.Iterator;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 
 /**
+ * IPropertyDefinitionContainer is an interface that defines a container
+ * of property definitions, typically used to define the annotation properties
+ * associated with an {@link IAnnotatedObject}.
+ * 
  * @author Stuart Moodie
  *
  */

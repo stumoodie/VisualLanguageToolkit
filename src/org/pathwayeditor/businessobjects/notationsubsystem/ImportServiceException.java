@@ -7,6 +7,10 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.notationsubsystem;
 
 /**
+ * 
+ * ImportServiceExceptionis a class that implements an exception thrown when there
+ * is a problem with the import service.
+ *
  * @author Stuart Moodie
  *
  */

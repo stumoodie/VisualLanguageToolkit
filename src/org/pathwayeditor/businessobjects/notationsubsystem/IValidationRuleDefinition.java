@@ -5,7 +5,8 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 
 /**
- * <p>Defines a validation rule. A validation rule can have a &quot;Level&quot; of either mandatory or optional. A validation
+ * IValidationRuleDefinition is an interface that defines a validation rule.
+ * A validation rule can have a &quot;Level&quot; of either mandatory or optional. A validation
  * rule has an &quot;Enforcement&quot; which defines the consequence of the rule being invalid.</p>
  * 
  * <p>If a rule is MANDATORY then it must always be validated and if the rule is invalid then this should be enforced as an error.
@@ -30,28 +31,27 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 	}
 
 	/**
-	 * A Numerical value that uniquely identifies a rule definition.
-	 * @return the id, which should be a number > 0.
+	 * Get the rule number that uniquely identifies this rule definition.
+	 * @return the rule number, which should be a number > 0.
 	 */
 	int getRuleNumber();
 	
 	/**
-	 * A user-readable name of the rule.
-	 * @return a <code>String</code>, not null
+	 * A user-readable name for this rule.
+	 * @return the rule name, which is not null.
 	 */
 	String getName();
 	
 	/**
-	 * Returns a short  String describing the intent of the validation rule
-	 * for display in the UI
-	 * @return A <code>String</code>, not null
+	 * Get a brief user readable description giving a short summary of this rule. 
+	 * @return The description, which is not null
 	 */
 	String getDescription();
 	
 	/**
-	 * Returns a full description of the logic and meaning of the validation rule
-	 * for display in user help documentation.
-	 * @return A <code>String</code>, not null
+	 * Get a detailed explanation of the rule. This should be user readable and help the user understand
+	 * the rule and how it is validated.
+	 * @return The detailed description, which should not be null.
 	 */
 	String getDetailedDescription();
 	
@@ -59,7 +59,7 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 	 * Returns a string representing the category of the rule. The category is defined by the rule and does
 	 * not comply with a controlled vocabulary. It is essentially a way of categorising the type of rule, such as
 	 * "Syntactic", "Semantic" etc.   
-	 * @return A <code>String</code>.
+	 * @return the rule category, which cannot be null.
 	 */
 	String getRuleCategory();
 
@@ -73,16 +73,16 @@ public interface IValidationRuleDefinition extends Comparable <IValidationRuleDe
 	boolean isValidEnforcement(RuleEnforcement ruleEnforcement);
 	
 	/**
-	 * Gets the default enforcement level for this rule.
+	 * Gets the default enforcement for this rule.
 	 * @return the default enforcement level, which must comply with the
 	 *  postcondition: <code>isValidEnforcement(getDefaultEnforcementLevel())</code>.
 	 */
-	RuleEnforcement getDefaultEnforcementLevel(); 
+	RuleEnforcement getDefaultEnforcement(); 
 	
 	/**
 	 * Gets the level of this rule. 
 	 * 
-	 * @return A {@link RuleLevel} enum.
+	 * @return the level of this rule, which canot be null.
 	 */
     RuleLevel getRuleLevel();
 

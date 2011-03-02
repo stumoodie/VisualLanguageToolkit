@@ -6,6 +6,8 @@ package org.pathwayeditor.figure.figuredefn;
 import java.util.EnumSet;
 
 /**
+ * GenericFont is a class the provides an implementation of a device independent font. It is immutable so can be
+ * passed by reference without breaking encapsulation. 
  * 
  * @author Stuart Moodie
  *

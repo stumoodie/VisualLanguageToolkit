@@ -7,16 +7,25 @@ import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
+/**
+ * 
+ * INotationValidationService is an interface that defines the notation subsystem's
+ * validation service. This service validates rules for a notation over and above the
+ * syntax rules applied by the syntax service.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface INotationValidationService extends INotationService {
 
 	/**
-	 * The CA does not need to implement as validation service. This method tests is one is implemented.
+	 * The Notation Subsystem does not need to implement as validation service. This method tests is one is implemented.
 	 * @return true if service is implemented, false otherwise.
 	 */
 	boolean isImplemented();
 	
 	/**
-	 * Tells the validator what map is to be validated. It should not be used if no validation service
+	 * Tells the validator what model is to be validated. It should not be used if no validation service
 	 * is implemented. Will overwrite the previous map and reset validation status of the instance
 	 * so that the validation report is empty.
 	 * <p>
@@ -26,21 +35,21 @@ public interface INotationValidationService extends INotationService {
 	 *  <code>getValidationReport().isEmpty()</code>
 	 *  <code>getCanvasBeingValidated().equals(canvasToValidate)</code>
 	 *  
-	 * @param canvasToValidate the canvas to be validate, which cannot be null.
+	 * @param modelToValidate the canvas to be validate, which cannot be null.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 * @throws IllegalArgumentException if <code>mapToValidate == null</code>.
 	 */
-	void setCanvasToValidate(IModel canvasToValidate);
+	void setModelToValidate(IModel modelToValidate);
 	
 	/**
-	 * Provides the map that is being validated. Will return null if no map is currently being validated.
+	 * Provides the model that is being validated. Will return null if no map is currently being validated.
 	 * <p>
 	 * Postconditions:
 	 * <code>(isImplemented() == false) implies (getCanvasBeingValidated() == null)</code>
-	 * @return the canvas being validated or null if none set.
+	 * @return the model being validated or null if none set.
 	 * @throws UnsupportedOperationException if <code>isImplemented() == false</code>.
 	 */
-	IModel getCanvasBeingValidated();
+	IModel getModelBeingValidated();
 	
 	/**
 	 * Tests if the validator is ready to perform a validation. This requires that a validator has been implemented

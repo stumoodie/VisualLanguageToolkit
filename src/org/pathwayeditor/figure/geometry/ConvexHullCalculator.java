@@ -52,7 +52,7 @@ public class ConvexHullCalculator implements IConvexHullCalculator {
 
 	@Override
 	public IConvexHull getConvexHull() {
-		if(this.hull == null) throw new IllegalStateException("No hull has been created");
+//		if(this.hull == null) throw new IllegalStateException("No hull has been created");
 		return this.hull;
 	}
 

@@ -4,35 +4,53 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
 
 /**
- * Define constants corresponding to SWT line style constants.
- * @author Richard Adams
+ * LineStyle is an enumeration defining  
+ *
+ * @author Stuart Moodie
  *
  */
 public enum LineStyle {
-	SOLID(1), DASHED(2), DASH_DOT(3), DASH_DOT_DOT(4), DOT(5);
+	/**
+	 * A solid line
+	 */
+	SOLID(1),
+	/**
+	 * A line of even dashes.
+	 */
+	DASHED(2),
+	/**
+	 * A line with a dash followed by a dot.
+	 */
+	DASH_DOT(3),
+	/**
+	 * A line with a dash and 2 dots following it.
+	 */
+	DASH_DOT_DOT(4),
+	/**
+	 * A line made up of dots
+	 */
+	DOT(5);
 	
 	private int code;
  
-	public int getCode() {
-		return code;
-	}
-	
-	
 	private LineStyle(int code) {
 		this.code = code;
 	}
 	
 
 	/**
-	 * @return an int for persistence - used by the Hibernate Custom  Type for this enum
+	 * Converts the enumerated type to an integer.
+	 * @return a positive integer.
 	 */
 	public int toInt() {
 		return code;
 	}
 
 	/**
-	 * @param value an int from the database 
-	 * @return the enum constant which stored a code matching this int. Used by the Hibernate Custom Type for this enum
+	 * Converts a numerical value into an enumerated type.
+	 * @param value the integer value. 
+	 * @return the enum type corresponding to the code.
+	 * @throws IllegalArgumentException if <code>value</code> does not match an enum type. 
 	 */
 	public LineStyle fromInt(int value) {
 		switch (value) {

@@ -11,6 +11,13 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 
+/**
+ * 
+ * ILinkAttribute is an interface defining the attributes of a link.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObject, ICanvasAttributeChangeListenee {
 	/**
 	 * Gets the Object type related to this Link.
@@ -71,6 +78,11 @@ public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObjec
 	 */
 	void setLineWidth ( double lineWidth) ;
 	
+	/**
+	 * Gets the bendpoint container defining the bend-point positions (if any) used to draw this
+	 * link.
+	 * @return the bend-point container which cannot be null.
+	 */
 	IBendPointContainer getBendPointContainer();
 	
 	@Override

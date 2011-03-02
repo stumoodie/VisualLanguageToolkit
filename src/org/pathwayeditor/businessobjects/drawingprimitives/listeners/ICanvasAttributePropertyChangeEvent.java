@@ -5,9 +5,20 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 
-
+/**
+ * 
+ * ICanvasAttributePropertyChangeEvent is an interface that provides a record of a change to an 
+ * attribute of a canvas attribute. The nature of the change is indicated by <code>CanvasAttributePropertyChange</code>.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface ICanvasAttributePropertyChangeEvent {
 
+	/**
+	 * Gets the canvas attribute being listened to.
+	 * @return the canvas attribute being listened to.
+	 */
 	ICanvasElementAttribute getAttribute();
 	
 	/**

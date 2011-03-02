@@ -3,7 +3,14 @@ Copyright 2009-2011, Court of the University of Edinburgh
 */
 package org.pathwayeditor.businessobjects.typedefn;
 
-
+/**
+ * 
+ * IRootObjectType is an interface defining an object type for root nodes in
+ * a model. See {@link IObjectType} for more information on object types.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IRootObjectType extends INodeObjectType {
 
 	/**
@@ -15,7 +22,7 @@ public interface IRootObjectType extends INodeObjectType {
 
 	/**
 	 * Gets the parenting rules for the object type.
-	 * @see #org.pathwayeditor.businessobjects.typedefn.INodeObjectType.getParentingRules() 
+	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getParentingRules() 
 	 */
 	@Override
 	IRootObjectParentingRules getParentingRules();

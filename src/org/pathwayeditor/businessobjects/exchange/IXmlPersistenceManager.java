@@ -11,6 +11,10 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
+ * IXmlPersistenceManager is an interface that defines how a model is marshalled and
+ * unmarshalled to a stream. It can also create a new model. This was originally designed
+ * to comply with Eclipse's persistence model, but could be redesigned to be more intuitive.  
+ * 
  * @author Stuart Moodie
  *
  */
@@ -20,14 +24,14 @@ public interface IXmlPersistenceManager {
 	 * Gets the current canvas, which may be <code>null</code> if no canvas has been created or read.
 	 * @return The current canvas.
 	 */
-	IModel getCurrentCanvas();
+	IModel getCurrentModel();
 	
 	/**
 	 * Creates a new canvas replacing any canvas that is currently set.
 	 * @param notationSubsystem the notation subsystem to use to create the newc canvas. 
-	 * @param canvasName the name of the canvas
+	 * @param modelName the name of the canvas
 	 */
-	void createNewCanvasStream(INotationSubsystem notationSubsystem, String canvasName);
+	void createNewModelStream(INotationSubsystem notationSubsystem, String modelName);
 
 	/**
 	 * Reads a canvas XMLSchema specification from the input stream and creates a new canvas

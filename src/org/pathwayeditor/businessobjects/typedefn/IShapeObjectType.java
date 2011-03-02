@@ -5,7 +5,15 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 import java.util.EnumSet;
 
-
+/**
+ * 
+ * IShapeObjectType is an interface that defines an object type for a shape node. It defines
+ * the initial values and the permitted parent/child relationships for this shape.
+ * See {@link IObjectType}.
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IShapeObjectType extends INodeObjectType {
 	public static enum EditableShapeAttributes { 
 		LINE_COLOUR, LINE_STYLE, LINE_WIDTH, FILL_COLOUR, SHAPE_SIZE, SHAPE_TYPE
@@ -25,14 +33,14 @@ public interface IShapeObjectType extends INodeObjectType {
 	IShapeParentingRules getParentingRules();
 
 	/**
-	 * Gets the default attrributes for this object type.
+	 * Gets the default attributes for this object type.
 	 * @return the default attributes, which cannot be null.
 	 */
 	IShapeAttributeDefaults getDefaultAttributes();
 	
 	/**
-	 * Is the line colour editable
-	 * @return the set of editble attributes.
+	 * Is the line colour editable?
+	 * @return the set of editable attributes.
 	 */
 	EnumSet<EditableShapeAttributes> getEditableAttributes();
 

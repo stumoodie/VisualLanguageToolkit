@@ -11,11 +11,19 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import uk.ac.ed.inf.graph.compound.ICompoundEdgeFactory;
 
 /**
+ * ILinkEdgeFactory is an interface that defines a factory to create links. This should be implemented
+ * as a facade that wraps an instance of {@link ICompoundEdgeFactory}. The interface provides convenience methods
+ * hide some of the complexity of creating a compound edge associated with a ILinkAttribute. 
+ * 
  * @author Stuart Moodie
  *
  */
 public interface ILinkEdgeFactory {
 
+	/**
+	 * Get the compound edge factory wrapped by this instance.
+	 * @return the compound edge factory.
+	 */
 	ICompoundEdgeFactory getGraphEdgeFactory();
 	
 	/**

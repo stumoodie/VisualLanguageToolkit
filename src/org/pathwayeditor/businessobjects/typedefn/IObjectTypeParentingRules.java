@@ -3,6 +3,14 @@ Copyright 2009-2011, Court of the University of Edinburgh
 */
 package org.pathwayeditor.businessobjects.typedefn;
 
+/**
+ * 
+ * IObjectTypeParentingRules is an interface that defines the parent child
+ * syntax of an {@link IObjectType}. 
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface IObjectTypeParentingRules {
 
 	/**

@@ -12,6 +12,19 @@ import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
 
+/**
+ * 
+ * ILinkTerminus is an interface that defines the attributes and operations
+ * on the terminus of a link. The link terminus stores the position of the
+ * anchor point where the end of the link is connected to the shape as well as
+ * how the end of the link is drawn. The end of the link can be decorated by various
+ * arrowhead symbols of configurable size and has a configurable gap between the 
+ * anchor point of the link and visible end of the link where any end decorator is
+ * drawn.  
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface ILinkTerminus {
 
 	/**
@@ -84,15 +97,29 @@ public interface ILinkTerminus {
 	 * throws IllegalArgumentExtension if <code>location == null</code>.
 	 */
 	void setLocation(Point location);
-		
+
+	/**
+	 * Add a link terminus change listener to this instance.
+	 * @param listener the listener, which cannot be null.
+	 */
 	void addLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
+	/**
+	 * Remove a link terminus change listener from this instance.
+	 * @param listener the listener, which should not be null.
+	 */
 	void removeLinkTerminusChangeListener(ILinkTerminusChangeListener listener);
 	
+	/**
+	 * Get the link terminus change listeners associated with this instance. 
+	 * @return a list of listeners, which will be empty of their are none.
+	 */
 	List<ILinkTerminusChangeListener> getLinkTerminusChangeListeners();
 
 	/**
-	 * @param delta
+	 * Translates the link by the given amount. This moves all the bend points and link
+	 * end points by the displacement given by <code>delta</code>.
+	 * @param delta the displacement, which cannot be null.
 	 */
 	void translate(Point delta);
 }

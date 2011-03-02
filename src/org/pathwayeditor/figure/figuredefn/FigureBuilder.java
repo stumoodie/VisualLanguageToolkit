@@ -18,7 +18,6 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.figuredefn.GraphicsInstruction.GraphicalTextAlignment;
 import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
@@ -31,6 +30,12 @@ import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
 import org.pathwayeditor.figurevm.ShapeDefinitionInterpreter;
 
 /**
+ * FigureBuilder is a class that builds a rendering of a figure from a figure definition. It provides methods that allow the
+ * attributes of the graphics environment to be specified (such as colours and line widths) and methods to assign values to
+ * bind variables defined in the figure definition.
+ * 
+ * The rendering is generated explicitly with a call to <code>generateFigure()</code> and the rendering is encoded in a device 
+ * independent list of graphics instructions.   
  * 
  * @author Stuart Moodie
  *

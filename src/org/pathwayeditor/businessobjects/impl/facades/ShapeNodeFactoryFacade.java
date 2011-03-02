@@ -11,7 +11,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
-import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 /**
  * @author Stuart Moodie
@@ -65,14 +64,6 @@ public class ShapeNodeFactoryFacade implements IShapeNodeFactory {
 	@Override
 	public ICompoundNodeFactory getGraphElementFactory() {
 		return this.shapeCompoundNodeFactory;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShapeNodeFactory#getElementAttributeFactory()
-	 */
-	@Override
-	public IElementAttributeFactory getElementAttributeFactory() {
-		return this.shapeCompoundNodeFactory.getAttributeFactory();
 	}
 
 	@Override

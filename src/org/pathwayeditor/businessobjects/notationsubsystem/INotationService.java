@@ -8,13 +8,14 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 
 /**
  * A service provided by a notation subsystem. 
- * Services provided by a notation subsystem should implement an interface that extends this interface. 
+ * Services provided by a notation subsystem should implement an interface that extends this interface.
+ *  
  * @author Stuart Moodie
  *
  */
 public interface INotationService {
 	/**
-	 * 
+	 * Get the notation identifier for the notation subsystem.
 	 * @return the {@link INotation} to which this {@link ExportServiceException} service belongs.
 	 *  Must not return  null
 	 */

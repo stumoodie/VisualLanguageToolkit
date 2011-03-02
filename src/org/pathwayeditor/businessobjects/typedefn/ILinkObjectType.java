@@ -5,7 +5,16 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 import java.util.EnumSet;
 
-
+/**
+ * 
+ * ILinkObjectType is an interface that defines an object type for a link. In addition to
+ * to providing parent/child syntax it also defines what nodes can be connect by a link the the notation
+ * and so is the final link in the syntax definition as provided by the notation subsystem's syntax service.
+ * See {@link IObjectType} for more information about the purpose of an object type. 
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface ILinkObjectType extends IObjectType {
 	public static enum LinkEditableAttributes{ COLOUR, LINE_STYLE, LINE_WIDTH };
 	

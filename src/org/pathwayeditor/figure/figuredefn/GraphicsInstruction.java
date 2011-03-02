@@ -14,13 +14,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
  *
  */
 public class GraphicsInstruction {
-	public enum GraphicsOpCode {
-		DRAW_RECT, FILL_RECT, DRAW_RRECT, FILL_RRECT, DRAW_OVAL, FILL_OVAL, DRAW_ARC, FILL_ARC,
-		DRAW_POLYGON, FILL_POLYGON, DRAW_POLYLINE, DRAW_LINE, DRAW_POINT, DRAW_TEXT, FILL_TEXT,
-		FILL_COLOUR, LINE_COLOUR, FONT_STYLE, FONT_SIZE, LINE_WIDTH, LINE_STYLE
-	};
-	public enum GraphicalTextAlignment { N, NE, E, SE, S, SW, W, NW, C };
-	
 	private final GraphicsOpCode opCode;
 	private final Object value;
 	

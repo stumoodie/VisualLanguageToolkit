@@ -5,8 +5,9 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 
 /**
- * Use to query the syntax rules for a link. The idea is that an instance of the interface is associated
- *  with a Link and is queried used by the link and its clients to ensure it is syntactically correct.  
+ * ILinkConnectionRules is an interface that is used to query the syntax rules for a link. The idea is that an instance of the interface is associated
+ *  with a Link and is queried used by the link and its clients to ensure it is syntactically correct.
+ *    
  * @author Stuart Moodie
  *
  */

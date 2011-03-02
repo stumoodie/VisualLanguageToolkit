@@ -7,6 +7,10 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
 /**
+ * IShapeAttributeFactory is an interface that defines a factory used to
+ * create shape attributes. The factory must have an object type associated
+ * with it before {@link #canCreateAttribute} can be true.
+ *  
  * @author Stuart Moodie
  *
  */
@@ -26,7 +30,8 @@ public interface IShapeAttributeFactory extends ICanvasAttributeFactory {
 	ICanvasElementAttribute getDestinationAttribute();
 
 	/**
-	 * @param objectType
+	 * Sets the object type to be used when creating the next attribute.
+	 * @param objectType the object type to use.
 	 */
 	void setObjectType(IShapeObjectType objectType);
 	

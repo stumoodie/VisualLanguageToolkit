@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 
- * IInstructionFactory
+ * IInstructionFactory is an interface that defines a factory for the creation of new instruction types.
  *
  * @author Stuart Moodie
  *

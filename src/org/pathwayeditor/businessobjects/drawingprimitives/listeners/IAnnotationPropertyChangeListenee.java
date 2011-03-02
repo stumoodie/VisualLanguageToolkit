@@ -6,6 +6,9 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 import java.util.Iterator;
 
 /**
+ * IAnnotationPropertyChangeListenee is a interface that defines methods required by
+ * any class using an {@link IAnnotationPropertyChangeListener}.
+ * 
  * @author Stuart Moodie
  *
  */

@@ -8,16 +8,29 @@ import java.util.Set;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 
 /**
- * This interfaces provides a client with access to the services provided by a context adapter. It will typically
- * be implemented behind an Eclipse extension point.  
+ * INotationSubsystem is an interface that defines the operations and services available from a
+ * notation subsystem. A notation subsystem  
+ *  
+ * 
  * @author Stuart Moodie
  *
  */
 public interface INotationSubsystem {
 
-	void registerCanvas(IModel canvasToRegister);
+	/**
+	 * Register a model with the notation subsystem, which will then be able to
+	 * verify any changes that may be present.
+	 *  
+	 * @param modelToRegister the model to be registered, which cannot be null.
+	 */
+	void registerModel(IModel modelToRegister);
 	
-	void unregisterCanvas(IModel canvasToRegister);
+	/**
+	 * De-register a model with the notation subsystem so that changes ion the model
+	 * are not acted upon by the notation susbsystem.
+	 * @param modelToRegister the model to de-register, which shuld not be null.
+	 */
+	void unregisterModel(IModel modelToRegister);
 
 	/**
 	 * The context (graphical notation) that is defined by this context adapter and for which the services

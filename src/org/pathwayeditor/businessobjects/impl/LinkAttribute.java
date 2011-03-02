@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
@@ -228,7 +228,7 @@ s	 */
 	public void translate(Point delta) {
 		// suppress listeners as only want the link listeners to fire when the whole link is translated
 		
-		List<IBendPointChangeListener> bpListeners = this.bpContainer.bendPointListeners();
+		List<IBendPointContainerListener> bpListeners = this.bpContainer.bendPointListeners();
 		List<ILinkTerminusChangeListener> srcTermListeners = this.srcTerminus.getLinkTerminusChangeListeners();
 		List<ILinkTerminusChangeListener> tgtTermListeners = this.tgtTerminus.getLinkTerminusChangeListeners();
 		suppressBpListeners(bpListeners);
@@ -255,14 +255,14 @@ s	 */
 		}
 	}
 
-	private void suppressBpListeners(List<IBendPointChangeListener> bpListeners){
-		for(IBendPointChangeListener listener : bpListeners){
+	private void suppressBpListeners(List<IBendPointContainerListener> bpListeners){
+		for(IBendPointContainerListener listener : bpListeners){
 			this.bpContainer.removeChangeListener(listener);
 		}
 	}
 	
-	private void restoreBpListeners(List<IBendPointChangeListener> bpListeners){
-		for(IBendPointChangeListener listener : bpListeners){
+	private void restoreBpListeners(List<IBendPointContainerListener> bpListeners){
+		for(IBendPointContainerListener listener : bpListeners){
 			this.bpContainer.addChangeListener(listener);
 		}
 	}

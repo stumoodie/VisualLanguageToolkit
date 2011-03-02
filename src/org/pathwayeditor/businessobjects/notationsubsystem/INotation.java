@@ -6,9 +6,10 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Version;
 
 /**
- * Identifies a notation. It provides a name and description together with mechanisms for uniquely identifying it.
+ * INotation is an interface that identifies a notation. It provides a name and description together with mechanisms for uniquely identifying it.
  * The notation has two business keys. The first is its name and version. The other is the global id. Both combinations
  * should be globally unique.  
+ * 
  * @author Stuart Moodie
  *
  */

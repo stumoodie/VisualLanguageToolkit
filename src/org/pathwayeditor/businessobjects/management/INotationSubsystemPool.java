@@ -12,6 +12,9 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 
 /**
+ * INotationSubsystemPool is an interface that defines a pool of notation
+ * subsystems that can be looked-up and reused.
+ * 
  * @author Stuart Moodie
  *
  */

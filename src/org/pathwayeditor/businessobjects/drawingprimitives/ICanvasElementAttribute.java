@@ -57,7 +57,7 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	 * Applies a visitor to this instance. See the Visitor Pattern for more information on
 	 * how this works.
 	 *    
-	 * @param vistor the vistor interface, which cannot be null.
+	 * @param visitor the visitor interface, which cannot be null.
 	 */
 	void visit(ICanvasElementAttributeVisitor visitor);
 }

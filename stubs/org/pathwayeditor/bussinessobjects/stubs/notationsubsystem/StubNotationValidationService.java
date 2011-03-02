@@ -33,7 +33,7 @@ public class StubNotationValidationService implements INotationValidationService
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#getMapBeingValidated()
 	 */
 	@Override
-	public IModel getCanvasBeingValidated() {
+	public IModel getModelBeingValidated() {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 
@@ -81,7 +81,7 @@ public class StubNotationValidationService implements INotationValidationService
 	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationValidationService#setMapToValidate(org.pathwayeditor.businessobjects.repository.IMap)
 	 */
 	@Override
-	public void setCanvasToValidate(IModel mapToValidate) {
+	public void setModelToValidate(IModel mapToValidate) {
 		throw new UnsupportedOperationException("Not implemented");
 	}
 

@@ -12,6 +12,19 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatio
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 
+/**
+ * 
+ * ILabelAttribute is an interface defining the attributes and operations of a label node.
+ * A label contains no child nodes, but is generally the child of a shape node and link.
+ * Strictly it is a mechanism for visualising a property associated with these elements.
+ * A label associated with a property of one of these elements must be a child of that element, so
+ * conversely the property associated with a label must belong to its parent element. 
+ * Currently the root attribute does not have properties that are visualisable. This may happen
+ * in the future in which case this node would have labels as children. 
+ *
+ * @author Stuart Moodie
+ *
+ */
 public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttributeChangeListenee {
 	
 	/**
@@ -47,22 +60,61 @@ public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttribute
 	 */
 	void setForegroundColor (RGB color);
 	
+	/**
+	 * Sets if the label should be filled opaquely or be completely transparent.
+	 * @param noFill true means the label will be completely transparent, false opaque.
+	 */
 	void setNoFill(boolean noFill);
 	
+	/**
+	 * Tests the no-fill state of this label.
+	 * @return true if the label is transparent, false if it is opaque.
+	 */
 	boolean hasNoFill();
 	
+	/**
+	 * Sets whether a border is drawn around the label.
+	 * @param noBorder true means there is no border, false means there is.
+	 */
 	void setNoBorder(boolean noBorder);
 	
+	/**
+	 * Test whether a border is to be drawn around the label.
+	 * @return true means no border, false means a border is drawn with the line colour
+	 * given by <code>getForegroundColor()</code>.
+	 */
 	boolean hasNoBorder();
 	
+	/**
+	 * Gets the line width of any border to be drawn.
+	 * @return the line width, which must be a positive number. 
+	 */
 	double getLineWidth();
 	
+	/**
+	 * Sets the line width of the border.
+	 * @param lineWidth the line width, which must be a positive value.
+	 */
 	void setLineWidth(double lineWidth);
 	
+	/**
+	 * Gets the line style of any drawn border.
+	 * @return the line style, which cannot be null.
+	 */
 	LineStyle getLineStyle();
 	
+	/**
+	 * Sets the line style of the border/
+	 * @param lineStyle the line sty;e, which cannot be null.
+	 */
 	void setLineStyle(LineStyle lineStyle);
 	
+	/**
+	 * Gets the minimum size of the label. This is the minimum size of the bounding rectangle.
+	 * This is useful, when no value, such as an empty string is defined for a label and ensures
+	 * that the shape is still visible to be moved and resized etc. 
+	 * @return the minimum size, which cannot be null.
+	 */
 	Dimension getMinimumSize();
 	
 	/**

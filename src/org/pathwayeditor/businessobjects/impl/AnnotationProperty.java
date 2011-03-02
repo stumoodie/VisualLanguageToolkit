@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ListenableAnnotationPropertyChangeItem;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.AnnotationPropertyChangeHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -20,7 +20,7 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 
 //	private ILabelAttribute labelAttribute = null;
 	private final IAnnotatedObject owner;
-	private final ListenableAnnotationPropertyChangeItem listenerHandler = new ListenableAnnotationPropertyChangeItem(this);
+	private final AnnotationPropertyChangeHelper listenerHandler = new AnnotationPropertyChangeHelper(this);
 //	private IPropertyDefinition propDefn;
 
 	protected AnnotationProperty(IAnnotatedObject owner) {
@@ -62,7 +62,7 @@ public abstract class AnnotationProperty implements IAnnotationProperty {
 //		this.labelAttribute = label;
 //	}
 	
-	protected ListenableAnnotationPropertyChangeItem getListenerHandler(){
+	protected AnnotationPropertyChangeHelper getListenerHandler(){
 		return this.listenerHandler;
 	}
 
