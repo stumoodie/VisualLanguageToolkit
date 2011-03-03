@@ -30,8 +30,8 @@ public IInstructionFactory getInstructionFactory(){
     return this.instFact;
 }
 
-public IFigureDefinition getInstructions(){
-    return new FigureDefinition(this.allInstructions);
+public ICompiledFigureDefinition getInstructions(){
+    return new CompiledFigureDefinition(this.allInstructions);
 }
 
 //private void addInstructions(List<Instruction> insts){
