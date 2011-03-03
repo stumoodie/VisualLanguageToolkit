@@ -1,7 +1,7 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 /**
  * FigureChangeType is an enumerated type that defines the kind of change

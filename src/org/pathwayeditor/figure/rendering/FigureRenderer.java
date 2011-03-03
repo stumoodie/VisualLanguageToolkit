@@ -2,7 +2,7 @@
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
 
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -14,8 +14,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.IFont.Style;
 
 /**
  * 

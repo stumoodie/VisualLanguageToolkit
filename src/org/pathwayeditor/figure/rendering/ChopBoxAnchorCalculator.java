@@ -2,7 +2,7 @@
 Copyright 2009-2011, Court of the University of Edinburgh
 */
 
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;

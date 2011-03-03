@@ -2,7 +2,7 @@
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
 
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -197,7 +197,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getAnchorCalculator()
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#getAnchorCalculator()
 	 */
 	@Override
 	public IAnchorLocatorFactory getAnchorLocatorFactory() {
@@ -205,7 +205,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getLineStyle()
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#getLineStyle()
 	 */
 	@Override
 	public LineStyle getLineStyle() {
@@ -213,7 +213,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#getRequestedEnvelope()
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#getRequestedEnvelope()
 	 */
 	@Override
 	public Envelope getRequestedEnvelope() {
@@ -221,7 +221,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#setLineStyle()
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#setLineStyle()
 	 */
 	@Override
 	public void setLineStyle(LineStyle lineStyle) {
@@ -231,7 +231,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#addListener(org.pathwayeditor.figure.figuredefn.IFigureChangeListener)
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#addListener(org.pathwayeditor.figure.rendering.IFigureChangeListener)
 	 */
 	@Override
 	public void addListener(IFigureRenderingControllerListener listener) {
@@ -239,7 +239,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#listenerIterator()
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#listenerIterator()
 	 */
 	@Override
 	public List<IFigureRenderingControllerListener> listenerIterator() {
@@ -247,7 +247,7 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.figuredefn.IFigureController#removeListener(org.pathwayeditor.figure.figuredefn.IFigureChangeListener)
+	 * @see org.pathwayeditor.figure.rendering.IFigureController#removeListener(org.pathwayeditor.figure.rendering.IFigureChangeListener)
 	 */
 	@Override
 	public void removeListener(IFigureRenderingControllerListener listener) {

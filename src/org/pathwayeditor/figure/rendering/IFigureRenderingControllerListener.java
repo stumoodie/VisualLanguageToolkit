@@ -1,7 +1,7 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 /**
  * IFigureChangeListener is an interface that defines a listener that is notified of 

@@ -2,7 +2,7 @@
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
 
-package org.pathwayeditor.figure.figuredefn;
+package org.pathwayeditor.figure.rendering;
 
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
@@ -18,12 +18,12 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
-import org.pathwayeditor.figure.figuredefn.IFont.Style;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
+import org.pathwayeditor.figure.rendering.IFont.Style;
 import org.pathwayeditor.figurevm.ICompiledFigureDefinition;
 import org.pathwayeditor.figurevm.IFigureDefinitionInterpreter;
 import org.pathwayeditor.figurevm.IOpCodeHandler;
@@ -619,7 +619,7 @@ public class FigureRenderingBuilder {
 	private class ChopBoxAnchorCalculatorFactory implements IAnchorLocatorFactory {
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
+		 * @see org.pathwayeditor.figure.rendering.IAnchorLocatorFactory#createAnchorLocator()
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator() {
@@ -627,7 +627,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
+		 * @see org.pathwayeditor.figure.rendering.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
@@ -648,7 +648,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator()
+		 * @see org.pathwayeditor.figure.rendering.IAnchorLocatorFactory#createAnchorLocator()
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator() {
@@ -656,7 +656,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figure.figuredefn.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
+		 * @see org.pathwayeditor.figure.rendering.IAnchorLocatorFactory#createAnchorLocator(org.pathwayeditor.figure.geometry.IConvexHull)
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
