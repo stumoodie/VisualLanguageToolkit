@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.pathwayeditor.figure.definition.Instruction.InstructionType;
-import org.pathwayeditor.figure.definition.Value.ValueType;
 
 /**
  * 
- * FigureDefinition
+ * CompiledFigureDefinition is a class that implements a compiled figure definition. The class is immutable so
+ * can be passed by reference without breaking an objects encapsulation.
  *
  * @author Stuart Moodie
  *
@@ -64,7 +63,7 @@ public final class CompiledFigureDefinition implements ICompiledFigureDefinition
 	 * @see org.pathwayeditor.figure.definition.IFigureDefinition#size()
 	 */
 	@Override
-	public int size(){
+	public int numInstructions(){
 		return this.instlist.size();
 	}
 	

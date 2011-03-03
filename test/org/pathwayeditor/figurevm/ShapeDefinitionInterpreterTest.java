@@ -24,6 +24,7 @@ import org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter;
 import org.pathwayeditor.figure.definition.IInterpreterErrorHandler;
 import org.pathwayeditor.figure.definition.IOpCodeHandler;
 import org.pathwayeditor.figure.definition.InstructionFactoryImpl;
+import org.pathwayeditor.figure.definition.TextAlignment;
 import org.pathwayeditor.figure.definition.TreeDrawingVm;
 import org.pathwayeditor.figure.definition.Value;
 import org.pathwayeditor.figure.geometry.PointList;

@@ -22,7 +22,7 @@ import org.pathwayeditor.figure.definition.FigureDefinitionInterpreter;
 import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
 import org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter;
 import org.pathwayeditor.figure.definition.IOpCodeHandler;
-import org.pathwayeditor.figure.definition.IOpCodeHandler.TextAlignment;
+import org.pathwayeditor.figure.definition.TextAlignment;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;

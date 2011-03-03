@@ -3,7 +3,6 @@
  */
 package org.pathwayeditor.figure.definition;
 
-import org.pathwayeditor.figure.definition.Instruction.OpCodes;
 
 /**
  * 

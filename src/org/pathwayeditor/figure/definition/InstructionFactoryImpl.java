@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.pathwayeditor.figure.definition.Instruction.InstructionType;
-import org.pathwayeditor.figure.definition.Instruction.OpCodes;
-import org.pathwayeditor.figure.definition.Value.ValueType;
 
 /**
  * 

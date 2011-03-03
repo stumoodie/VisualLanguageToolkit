@@ -81,6 +81,10 @@ public class Envelope {
 		return origin;
 	}
 	
+	/**
+	 * Gets the centre point of the envelope.
+	 * @return the centre point.
+	 */
 	public Point getCentre(){
 		return new Point(origin.getX() + dim.getWidth()/2, origin.getY() + dim.getHeight()/2);
 	}
@@ -98,20 +102,34 @@ public class Envelope {
 
 	}
 	
-	public Point transformPointToNewEnvelope(Point point, Envelope newEnvelope){
+	/**
+	 * Takes a point and applies the transformation to it obtained by transforming this envelope into 
+	 * to the reference envelope. Specifically it makes the point (P) relative to the origin of this envelope (O) to give the point defined by the vector OP.
+	 * OP is scaled the scaling factor (s) required to convert this envelope's dimension to that of the reference envelope's dimension: s * OP = OP'. Finally
+	 * the transformed point is calculated by adding the reference envelope's origin (R) to the point' relative position: OR + OP' = OP'. 
+	 * @param point the point to be transformed.
+	 * @param reference the reference envelope.
+	 * @return
+	 */
+	public Point transformPointToNewEnvelope(Point point, Envelope reference){
 		Point adjustedPoint = point.newOrigin(this.getOrigin());
-		double scaleX = newEnvelope.getDimension().getWidth()/this.getDimension().getWidth();
-		double scaleY = newEnvelope.getDimension().getHeight()/this.getDimension().getHeight();
+		double scaleX = reference.getDimension().getWidth()/this.getDimension().getWidth();
+		double scaleY = reference.getDimension().getHeight()/this.getDimension().getHeight();
 		double newX = adjustedPoint.getX() * scaleX; 
 		double newY = adjustedPoint.getY() * scaleY;
-		newX += newEnvelope.getOrigin().getX();
-		newY += newEnvelope.getOrigin().getY();
+		newX += reference.getOrigin().getX();
+		newY += reference.getOrigin().getY();
 		return new Point(newX, newY);
 	}
 	
-	public Point calculateTranslation(Envelope destinationBounds){
-		double x = destinationBounds.getOrigin().getX() - this.getOrigin().getX();
-		double y = destinationBounds.getOrigin().getY() - this.getOrigin().getY();
+	/**
+	 * Calculate the translation required to move this envelope to the origin of the reference envelope.
+	 * @param referenceEnvelope the reference envelope.
+	 * @return the translation expressed as a point.
+	 */
+	public Point calculateTranslation(Envelope referenceEnvelope){
+		double x = referenceEnvelope.getOrigin().getX() - this.getOrigin().getX();
+		double y = referenceEnvelope.getOrigin().getY() - this.getOrigin().getY();
 		return new Point(x, y);
 	}
 	
@@ -157,14 +175,26 @@ public class Envelope {
 		return buf.toString();
 	}
 
+	/**
+	 * Gets the corner of the envelope that is horizontally adjacent to the origin of this envelope.
+	 * @return the horizontally adjacent corner.
+	 */
 	public Point getHorizontalCorner() {
 		return this.origin.translate(this.dim.getWidth(), 0);
 	}
 
+	/**
+	 * Gets the corner of the envelope that is vertically adjacent to the origin of this envelope.
+	 * @return the vertically adjacent corner.
+	 */
 	public Point getVerticalCorner() {
 		return this.origin.translate(0, this.dim.getHeight());
 	}
 
+	/**
+	 * Gets the corner of the envelope that is diagonally opposite the origin of this envelope.
+	 * @return the diagonally opposite corner.
+	 */
 	public Point getDiagonalCorner() {
 		return this.origin.translate(this.dim.getWidth(), this.dim.getHeight());
 	}
@@ -174,6 +204,12 @@ public class Envelope {
 			&& y >= this.origin.getY() && y <= this.origin.getY() + this.dim.getHeight();
 	}
 
+	
+	/**
+	 * Does this envelope contain this point. This includes sitting exactly on the edge of the envelope.
+	 * @param p the point to test.
+	 * @return true if this envelope contains the point, false otherwise. 
+	 */
 	public boolean containsPoint(Point p) {
 		return containsPoint(p.getX(), p.getY());
 	}
@@ -228,6 +264,6 @@ public class Envelope {
 	 * @return the envelope.
 	 */
 	public Envelope deltaResize(double deltaX, double deltaY, double deltaWidth, double deltaHeight) {
-		return new Envelope(this.origin.translate(deltaX, deltaY), this.dim.expand(deltaWidth, deltaHeight));
+		return new Envelope(this.origin.translate(deltaX, deltaY), this.dim.resize(deltaWidth, deltaHeight));
 	}
 }

@@ -10,7 +10,9 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * FigureDefinitionInterpreter
+ * FigureDefinitionInterpreter is a class that implements an interpreter of a compiled
+ * figure definition. The interpreted opCodes can be converted into actions, such as a rendering
+ * of the figure by providing an implementation of {@link IOpCodeHandler}.   
  *
  * @author Stuart Moodie
  *
@@ -22,6 +24,13 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	private final Map<String, Value> bindingLookup;
 	private final InstructionExecutor executor;
 	
+	/**
+	 * Constructor that takes the compiled figure definition and an implementation of the opCode handler to
+	 * convert the opCodes into some form of action. 
+	 * @param instructions the compiled figure definition.
+	 * @param opCodehandler the opcode handler that is used to perform actions based on the interpreted opCodes.
+	 * @param errorHandler an error handler implementation that is used to report error messages. 
+	 */
 	public FigureDefinitionInterpreter(ICompiledFigureDefinition instructions, IOpCodeHandler opCodehandler,
 										IInterpreterErrorHandler errorHandler) {
 		this.variableLookup  = new HashMap<String, Value>();

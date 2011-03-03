@@ -10,7 +10,8 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * ConvexHullCalculator
+ * ConvexHullCalculator is a class that is used to construct a convex hull from a set of points using the QuickHull
+ * algorithm.
  *
  * @author Stuart Moodie
  *

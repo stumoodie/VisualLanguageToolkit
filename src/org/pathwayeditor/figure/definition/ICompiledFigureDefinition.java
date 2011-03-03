@@ -32,7 +32,7 @@ public interface ICompiledFigureDefinition {
 	 * Gets the number of instructions in the figure definition.
 	 * @return the number of instructions.
 	 */
-	int size();
+	int numInstructions();
 
 	/**
 	 * Gets the instruction at a given position in the list of instructions.

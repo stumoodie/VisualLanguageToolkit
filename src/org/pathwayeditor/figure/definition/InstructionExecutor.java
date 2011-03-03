@@ -11,10 +11,6 @@ import java.util.Stack;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.figure.definition.IInterpreterErrorHandler.ErrorCode;
-import org.pathwayeditor.figure.definition.IOpCodeHandler.TextAlignment;
-import org.pathwayeditor.figure.definition.Instruction.InstructionType;
-import org.pathwayeditor.figure.definition.Instruction.OpCodes;
-import org.pathwayeditor.figure.definition.Value.ValueType;
 import org.pathwayeditor.figure.geometry.PointList;
 
 /**

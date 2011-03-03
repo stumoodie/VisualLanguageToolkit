@@ -11,19 +11,29 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * ConvexHull
+ * ConvexHull is a class that provides an implementation of a convex hull.
  *
  * @author Stuart Moodie
  *
  */
 public class ConvexHull implements IConvexHull {
 	private static final int FIRST_IDX_POS = 0;
-	private static final int MIN_NUM_POINTS = 3;
+	
+	/**
+	 * The minimum number of points that can define a convex hull.
+	 */
+	public static final int MIN_NUM_POINTS = 3;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final List<Point> pointList;
 	private final Envelope envelope;
 	
+	/**
+	 * Constructor that takes a set of point and generates the convex hull from it.
+	 * @param localPointList the points list.
+	 * @throws NullPointerException if <code>localPointList</code> is null.
+	 * @throws IllegalArgumentException if the number of points is less that <code>MIN_NUM_POINTS</code>.
+	 */
 	ConvexHull(List<Point> localPointList){
 		if(localPointList.size() < MIN_NUM_POINTS) throw new IllegalArgumentException("Cannot define hull with less than " + MIN_NUM_POINTS + " points.");
 		this.pointList = new ArrayList<Point>(localPointList.size());
@@ -47,6 +57,14 @@ public class ConvexHull implements IConvexHull {
 	}
 	
 		
+	/**
+	 * Constructor that takes a set of point and generates the convex hull from it. This takes a precalculated
+	 * value for the bounding box of the hull for reasons of efficiency (to avoid recalculating it if it is already known). 
+	 * @param the known bounding box of this bounding box.
+	 * @param localPointList the points list, which uses an mutable implmentation of points for reasons of efficiency.
+	 * @throws NullPointerException if <code>localPointList</code> is null.
+	 * @throws IllegalArgumentException if the number of points is less that <code>MIN_NUM_POINTS</code>.
+	 */
 	ConvexHull(Envelope env, List<PointBuilder> localPointList){
 		if(localPointList.size() < MIN_NUM_POINTS) throw new IllegalArgumentException("Cannot define hull with less than " + MIN_NUM_POINTS + " points.");
 		this.pointList = new ArrayList<Point>(localPointList.size());
