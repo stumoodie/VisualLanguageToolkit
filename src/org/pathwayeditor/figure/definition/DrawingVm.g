@@ -23,13 +23,13 @@ tokens {
 
 @header{
 
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 }
 
 @lexer::header{
 
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 }
 

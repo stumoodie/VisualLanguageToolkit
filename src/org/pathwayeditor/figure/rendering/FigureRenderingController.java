@@ -12,10 +12,10 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
-import org.pathwayeditor.figurevm.ICompiledFigureDefinition;
 
 /**
  * 

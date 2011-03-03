@@ -1,7 +1,7 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getInstructions()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getInstructions()
 	 */
 	@Override
 	public ICompiledFigureDefinition getCompiledFigureDefinition(){
@@ -38,7 +38,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getErrorHandler()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getErrorHandler()
 	 */
 	@Override
 	public IInterpreterErrorHandler getErrorHandler(){
@@ -46,7 +46,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindInteger(java.lang.String, java.lang.Integer)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#setBindInteger(java.lang.String, java.lang.Integer)
 	 */
 	@Override
 	public void setBindInteger(String name, Integer value){
@@ -54,7 +54,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindBoolean(java.lang.String, java.lang.Boolean)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#setBindBoolean(java.lang.String, java.lang.Boolean)
 	 */
 	@Override
 	public void setBindBoolean(String name, Boolean value){
@@ -62,7 +62,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindDouble(java.lang.String, java.lang.Double)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#setBindDouble(java.lang.String, java.lang.Double)
 	 */
 	@Override
 	public void setBindDouble(String name, Double value){
@@ -70,7 +70,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#setBindString(java.lang.String, java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#setBindString(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void setBindString(String name, String value){
@@ -78,7 +78,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getOpCodeHandler()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getOpCodeHandler()
 	 */
 	@Override
 	public IOpCodeHandler getOpCodeHandler() {
@@ -86,7 +86,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#execute()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#execute()
 	 */
 	@Override
 	public void execute() {
@@ -96,7 +96,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindBooleanValue(java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getBindBooleanValue(java.lang.String)
 	 */
 	@Override
 	public Boolean getBindBooleanValue(String name) {
@@ -109,7 +109,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindIntegerValue(java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getBindIntegerValue(java.lang.String)
 	 */
 	@Override
 	public Integer getBindIntegerValue(String name) {
@@ -122,7 +122,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindDoubleValue(java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getBindDoubleValue(java.lang.String)
 	 */
 	@Override
 	public Double getBindDoubleValue(String name) {
@@ -135,7 +135,7 @@ public class FigureDefinitionInterpreter implements IFigureDefinitionInterpreter
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinitionInterpreter#getBindStringValue(java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter#getBindStringValue(java.lang.String)
 	 */
 	@Override
 	public String getBindStringValue(String name) {

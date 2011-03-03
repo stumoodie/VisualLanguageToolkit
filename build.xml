@@ -32,10 +32,10 @@
 
     <property name="grammar.name" value="DrawingVm.g"/>
     <property name="walker.name" value="TreeDrawingVm.g"/>
-    <property name="package" value="org/pathwayeditor/figurevm"/>
-    <property name="test.package" value="org/pathwayeditor/figurevm"/>
+    <property name="package" value="org/pathwayeditor/figure/definition"/>
+    <property name="test.package" value="org/pathwayeditor/figure/definition"/>
     <property name="grammar" location="${src.dir}/${package}"/>
-	<property name="main.class" value="org.pathwayeditor.figurevm.ParserTest"/>
+	<property name="main.class" value="org.pathwayeditor.figure.definition.ParserTest"/>
     <property name="test.package.dir" value="${test.dir}/${test.package}" />
 	
     <!-- where to write/find token files -->

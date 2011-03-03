@@ -4,6 +4,7 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.figure.geometry;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +29,8 @@ public class ConvexHullCalculatorSingleRectangleTest {
 		this.testInstance = null;
 	}
 
-	@Test(expected=IllegalStateException.class)
 	public final void testGetConvexHullPoints(){
-		this.testInstance.getConvexHull();
+		assertNull("no hull", this.testInstance.getConvexHull());
 	}
 	
 	@Test

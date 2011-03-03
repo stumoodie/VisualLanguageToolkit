@@ -1,15 +1,15 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.pathwayeditor.figurevm.Instruction.InstructionType;
-import org.pathwayeditor.figurevm.Instruction.OpCodes;
-import org.pathwayeditor.figurevm.Value.ValueType;
+import org.pathwayeditor.figure.definition.Instruction.InstructionType;
+import org.pathwayeditor.figure.definition.Instruction.OpCodes;
+import org.pathwayeditor.figure.definition.Value.ValueType;
 
 /**
  * 

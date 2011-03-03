@@ -1,7 +1,7 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.pathwayeditor.figurevm.Instruction.InstructionType;
-import org.pathwayeditor.figurevm.Value.ValueType;
+import org.pathwayeditor.figure.definition.Instruction.InstructionType;
+import org.pathwayeditor.figure.definition.Value.ValueType;
 
 /**
  * 
@@ -27,7 +27,7 @@ public final class CompiledFigureDefinition implements ICompiledFigureDefinition
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinition#iterator()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinition#iterator()
 	 */
 	@Override
 	public Iterator<Instruction> iterator(){
@@ -35,7 +35,7 @@ public final class CompiledFigureDefinition implements ICompiledFigureDefinition
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinition#getBindVariableNames()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinition#getBindVariableNames()
 	 */
 	@Override
 	public Set<String> getBindVariableNames(){
@@ -61,7 +61,7 @@ public final class CompiledFigureDefinition implements ICompiledFigureDefinition
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinition#size()
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinition#size()
 	 */
 	@Override
 	public int size(){
@@ -69,7 +69,7 @@ public final class CompiledFigureDefinition implements ICompiledFigureDefinition
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IFigureDefinition#get(int)
+	 * @see org.pathwayeditor.figure.definition.IFigureDefinition#get(int)
 	 */
 	@Override
 	public Instruction get(int index){

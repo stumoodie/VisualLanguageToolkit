@@ -16,6 +16,16 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.pathwayeditor.figure.definition.DrawingVmLexer;
+import org.pathwayeditor.figure.definition.DrawingVmParser;
+import org.pathwayeditor.figure.definition.FigureDefinitionInterpreter;
+import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
+import org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter;
+import org.pathwayeditor.figure.definition.IInterpreterErrorHandler;
+import org.pathwayeditor.figure.definition.IOpCodeHandler;
+import org.pathwayeditor.figure.definition.InstructionFactoryImpl;
+import org.pathwayeditor.figure.definition.TreeDrawingVm;
+import org.pathwayeditor.figure.definition.Value;
 import org.pathwayeditor.figure.geometry.PointList;
 
 public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
@@ -214,7 +224,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getCurBounds()
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#getCurBounds()
 	 */
 	@Override
 	public List<Double> getCurBounds() {
@@ -224,7 +234,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#setChopHullAnchor()
 	 */
 	@Override
 	public void setChopHullAnchor() {
@@ -232,7 +242,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
 	 */
 	@Override
 	public void setSemiFixedAnchorCode(PointList points) {
@@ -240,7 +250,7 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds(java.lang.String)
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#getTextBounds(java.lang.String)
 	 */
 	@Override
 	public List<Double> getTextBounds(String text) {

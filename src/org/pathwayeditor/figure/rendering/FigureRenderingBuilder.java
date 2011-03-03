@@ -18,17 +18,17 @@ import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.figure.definition.FigureDefinitionInterpreter;
+import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
+import org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter;
+import org.pathwayeditor.figure.definition.IOpCodeHandler;
+import org.pathwayeditor.figure.definition.IOpCodeHandler.TextAlignment;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.IConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
 import org.pathwayeditor.figure.rendering.IFont.Style;
-import org.pathwayeditor.figurevm.ICompiledFigureDefinition;
-import org.pathwayeditor.figurevm.IFigureDefinitionInterpreter;
-import org.pathwayeditor.figurevm.IOpCodeHandler;
-import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
-import org.pathwayeditor.figurevm.FigureDefinitionInterpreter;
 
 /**
  * FigureBuilder is a class that builds a rendering of a figure from a figure definition. It provides methods that allow the
@@ -486,7 +486,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setChopHullAnchor()
+		 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#setChopHullAnchor()
 		 */
 		@Override
 		public void setChopHullAnchor() {
@@ -494,7 +494,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
+		 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#setSemiFixedAnchorCode(java.util.List)
 		 */
 		@Override
 		public void setSemiFixedAnchorCode(PointList points) {
@@ -502,7 +502,7 @@ public class FigureRenderingBuilder {
 		}
 
 		/* (non-Javadoc)
-		 * @see org.pathwayeditor.figurevm.IOpCodeHandler#getTextBounds()
+		 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#getTextBounds()
 		 */
 		@Override
 		public List<Double> getTextBounds(String text) {

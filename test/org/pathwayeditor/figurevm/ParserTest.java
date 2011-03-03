@@ -10,6 +10,11 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.pathwayeditor.figure.definition.DrawingVmLexer;
+import org.pathwayeditor.figure.definition.DrawingVmParser;
+import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
+import org.pathwayeditor.figure.definition.InstructionFactoryImpl;
+import org.pathwayeditor.figure.definition.TreeDrawingVm;
 
 public class ParserTest {
 

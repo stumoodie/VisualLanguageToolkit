@@ -1,7 +1,7 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,12 +10,12 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.figure.definition.IInterpreterErrorHandler.ErrorCode;
+import org.pathwayeditor.figure.definition.IOpCodeHandler.TextAlignment;
+import org.pathwayeditor.figure.definition.Instruction.InstructionType;
+import org.pathwayeditor.figure.definition.Instruction.OpCodes;
+import org.pathwayeditor.figure.definition.Value.ValueType;
 import org.pathwayeditor.figure.geometry.PointList;
-import org.pathwayeditor.figurevm.IInterpreterErrorHandler.ErrorCode;
-import org.pathwayeditor.figurevm.IOpCodeHandler.TextAlignment;
-import org.pathwayeditor.figurevm.Instruction.InstructionType;
-import org.pathwayeditor.figurevm.Instruction.OpCodes;
-import org.pathwayeditor.figurevm.Value.ValueType;
 
 /**
  * 

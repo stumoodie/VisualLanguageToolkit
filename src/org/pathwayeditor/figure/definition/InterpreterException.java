@@ -1,9 +1,9 @@
 /*
  * Copyright 2009-2011, Court of the University of Edinburgh
  */
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
-import org.pathwayeditor.figurevm.Instruction.OpCodes;
+import org.pathwayeditor.figure.definition.Instruction.OpCodes;
 
 /**
  * 

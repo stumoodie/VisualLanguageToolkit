@@ -10,7 +10,7 @@ options {
 
 @header{
 
-package org.pathwayeditor.figurevm;
+package org.pathwayeditor.figure.definition;
 
 import java.util.LinkedList;
 
