@@ -4,6 +4,9 @@
 package org.pathwayeditor.figure.geometry;
 
 /**
+ * Vector is a class that represents a vector. In addition to accessor methods it provides simple vector
+ * geometric operations such as the cross and scalar products of 2 vectors. The class is immutable.  
+ * 
  * @author Stuart Moodie
  *
  */
@@ -13,78 +16,29 @@ public class Vector {
 	private final double k;
 	
 	
+	/**
+	 * Create a new vector with the specified components.
+	 * @param i the i component.
+	 * @param j the j component.
+	 * @param k the k component.
+	 */
 	public Vector(double i, double j, double k){
 		this.i = i;
 		this.j = j;
 		this.k = k;
 	}
 	
-	public double getIMagnitude(){
-		return i;
-	}
-	
-	public double getJMagnitude(){
-		return j;
-	}
-	
-	public double getKMagnitude(){
-		return k;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.geometry.IVector#crossProduct(org.pathwayeditor.figure.geometry.IVector)
+	/**
+	 * Creates a new vector that is the cross product of this vector and another vector.
+	 * @param other the other vector to use in the calculation.
+	 * @return a new vector that is the cross product result.
 	 */
 	public Vector crossProduct(Vector other) {
 		return new Vector(this.j * other.getKMagnitude() - this.k * other.getJMagnitude(),
 							this.k * other.getIMagnitude() - this.i * other.getKMagnitude(),
 							this.i * other.getJMagnitude() - this.j * other.getIMagnitude());
 	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.geometry.IVector#magnitude()
-	 */
-	public double magnitude() {
-		return Math.sqrt(i*i + j*j + k*k);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.geometry.IVector#scalarProduct(org.pathwayeditor.figure.geometry.IVector)
-	 */
-	public double scalarProduct(Vector other) {
-		return this.i * other.getIMagnitude() + this.j * other.getJMagnitude() + this.k + other.getKMagnitude();
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.geometry.IVector#translate(org.pathwayeditor.figure.geometry.IVector)
-	 */
-	public Vector translate(Vector translation) {
-		return new Vector(this.i + translation.getIMagnitude(),
-				this.j + translation.getJMagnitude(),
-				this.k + translation.getKMagnitude());
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.figure.geometry.IVector#unitVector()
-	 */
-	public Vector unitVector() {
-		double magnitude = this.magnitude();
-		return new Vector(this.i/magnitude, this.j/magnitude, this.k/magnitude);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(this.i);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(this.j);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(this.k);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -103,7 +57,58 @@ public class Vector {
 		return true;
 	}
 	
+	public double getIMagnitude(){
+		return i;
+	}
 	
+	public double getJMagnitude(){
+		return j;
+	}
+
+	public double getKMagnitude(){
+		return k;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(this.i);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.j);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(this.k);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+
+	/**
+	 * Calculates the magnitude of the vector.
+	 * @return the vector magnitude.
+	 */
+	public double magnitude() {
+		return Math.sqrt(i*i + j*j + k*k);
+	}
+
+	/**
+	 * Calculates the scalar product of this vector and another vector. 
+	 * @param other the other vector in the calcualtion.
+	 * @return the scalar product.
+	 */
+	public double scalarProduct(Vector other) {
+		return this.i * other.getIMagnitude() + this.j * other.getJMagnitude() + this.k + other.getKMagnitude();
+	}
+
+	/**
+	 * Creates a new vector scaled so it has a magnitude commensurate with the scale factor. 
+	 * @param scaleFactor the scaleFactor which must be a positive nonzero number. 
+	 * @return a new vector scaled relative to this one.
+	 */
+	public Vector scale(double scaleFactor) {
+		return new Vector(scaleFactor * this.getIMagnitude(), scaleFactor * this.getJMagnitude(), 0.0);
+	}
+
 	@Override
 	public String toString(){
 		StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
@@ -116,13 +121,25 @@ public class Vector {
 		builder.append(")");
 		return builder.toString();
 	}
+	
 
 	/**
-	 * Scales the vector so it has a magnitude commensurate with the scale factor. 
-	 * @param scaleFactor the scaleFactor which must be a positive nonzero number. 
-	 * @return the scaled vector
+	 * Creates a new vector that is the result of the translation of this vector by the specified displacement.
+	 * @param translation the displacement to apply to this vector.
+	 * @return a new vector translated relative to this one.
 	 */
-	public Vector scale(double scaleFactor) {
-		return new Vector(scaleFactor * this.getIMagnitude(), scaleFactor * this.getJMagnitude(), 0.0);
+	public Vector translate(Vector translation) {
+		return new Vector(this.i + translation.getIMagnitude(),
+				this.j + translation.getJMagnitude(),
+				this.k + translation.getKMagnitude());
+	}
+
+	/**
+	 * Creates a new vector that is the unit vector of this one, i.e. it is scaled to have a magnitude of 1. 
+	 * @return a new unit vector of this vector. 
+	 */
+	public Vector unitVector() {
+		double magnitude = this.magnitude();
+		return new Vector(this.i/magnitude, this.j/magnitude, this.k/magnitude);
 	}
 }

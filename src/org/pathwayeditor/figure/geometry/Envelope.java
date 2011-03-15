@@ -109,7 +109,7 @@ public class Envelope {
 	 * the transformed point is calculated by adding the reference envelope's origin (R) to the point' relative position: OR + OP' = OP'. 
 	 * @param point the point to be transformed.
 	 * @param reference the reference envelope.
-	 * @return
+	 * @return a new point transformed as above.
 	 */
 	public Point transformPointToNewEnvelope(Point point, Envelope reference){
 		Point adjustedPoint = point.newOrigin(this.getOrigin());
@@ -226,34 +226,56 @@ public class Envelope {
 			&& (origin.getY() + this.dim.getHeight()) >= (envelope.origin.getY() + envelope.getDimension().getHeight());
 	}
 
+	/**
+	 * Creates a new envelope that has been translated by the specified amount.
+	 * @param translation the translation, which should not be null.
+	 * @return a new enveloped translated relative to this one.  
+	 */
 	public Envelope translate(Point translation) {
 		return new Envelope(this.origin.translate(translation), this.dim);
 	}
 	
+	/**
+	 * Creates a new envelope that has been resized relative to this one. Resizing can involve a change
+	 * to the origin as well as the height and width of the envelope.  
+	 * @param translation the translation, which should not be null.
+	 * @param sizeDelta the amount to change the height and width of the envelope by.
+	 * @return a new enveloped resized relative to this one.  
+	 */
 	public Envelope resize(Point translation, Dimension sizeDelta){
 		return new Envelope(this.origin.translate(translation), this.dim.resize(sizeDelta));
 	}
 
-	public Envelope changeOrigin(Point newLocation) {
-		return new Envelope(newLocation, this.getDimension());
+	/**
+	 * Creates a new envelope with a the new specified origin.
+	 * @param newOrigin the newly specified origin.
+	 * @return a new instance with the new origin and same dimension.
+	 */
+	public Envelope changeOrigin(Point newOrigin) {
+		return new Envelope(newOrigin, this.getDimension());
 	}
 
+	/**
+	 * Creates a new envelope with a the new specified size.
+	 * @param newSize the newly specified size.
+	 * @return a new instance with the same origin and new size.
+	 */
 	public Envelope changeDimension(Dimension newSize) {
 		return new Envelope(this.origin, newSize);
 	}
 	
-	public Transformation calcTransformation(Envelope transformedEnvelope){
-		Scale newScale = this.dim.calcScalingFactors(transformedEnvelope.getDimension());
-		Point newTrans = this.origin.difference(transformedEnvelope.getOrigin());
-		return new Transformation(newTrans, newScale);
-	}
-
-	
-	public Envelope applyTransformation(Transformation transform){
-		Point newOrigin = this.origin.translate(transform.getTranslation());
-		Dimension newDim = this.dim.scale(transform.getScale());
-		return new Envelope(newOrigin, newDim);
-	}
+//	public Transformation calcTransformation(Envelope transformedEnvelope){
+//		Scale newScale = this.dim.calcScalingFactors(transformedEnvelope.getDimension());
+//		Point newTrans = this.origin.difference(transformedEnvelope.getOrigin());
+//		return new Transformation(newTrans, newScale);
+//	}
+//
+//	
+//	public Envelope applyTransformation(Transformation transform){
+//		Point newOrigin = this.origin.translate(transform.getTranslation());
+//		Dimension newDim = this.dim.scale(transform.getScale());
+//		return new Envelope(newOrigin, newDim);
+//	}
 
 	/**
 	 * Resize the envelope based on delta changes.

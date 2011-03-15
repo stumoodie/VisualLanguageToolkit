@@ -10,7 +10,9 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * LineSegment
+ * LineSegment is a class that represents a line segment and provides methods for querying and manipulating
+ * a line segment. The class is immutable so can be passed around by reference without fear of breaking
+ * encapsulation.
  *
  * @author Stuart Moodie
  *
@@ -21,12 +23,23 @@ public class LineSegment {
 	private final Point origin;
 	private final Point terminus;
 
-	
+	/**
+	 * Constructor that takes 2 ends points of the line segment.
+	 * @param origin the origin or beginning of the line segment.
+	 * @param terminus the end or terminus of the line segement.
+	 */
 	public LineSegment(Point origin, Point terminus){
 		this.origin = origin;
 		this.terminus = terminus;
 	}
 	
+	/**
+	 * Constructor that takes 2 end points of the line segment.
+	 * @param startX the x coordinate of the beginning of the line.
+	 * @param startY the y coordinate of the beginning of the line.
+	 * @param endX the x coordinate of the end of the line.
+	 * @param endY the y coordinate of the end of the line.
+	 */
 	public LineSegment(double startX, double startY, double endX, double endY){
 		this.origin = new Point(startX, startY);
 		this.terminus = new Point(endX, endY);
@@ -94,7 +107,12 @@ public class LineSegment {
 		return retVal;
 	}
 
-	
+	/**
+	 * Tests if the line segment intersects with a circle. 
+	 * @param centre the centre of the circle.
+	 * @param radius the radius of the circle. 
+	 * @return true of the circle intersects, false otherwise.
+	 */
 	public boolean intersectsWithCircle(Point centre, double radius){
 		Point theOrigin = getOrigin();
 		Point theTerminus = getTerminus();
@@ -121,53 +139,11 @@ public class LineSegment {
 		return value * value;
 	}
 	
-//	/**
-//	 * Checks if this line segment contains the given point within a tolerance value.
-//	 * 
-//	 * @param aPoint <code>Point</code> to test if contained in this line.
-//	 * @param lineWidth the width of the line to be tested. The thickness of the line is 
-//	 * considered as part of the line for the pusposes of containment.
-//	 * @return <code>boolean</code> <code>true</code> if the given point lies on this 
-//	 * segment, <code>false</code> otherwise.
-//	 */
-//	public final boolean containsPoint(final Point aPoint, final double lineWidth) {
-//		Point theOrigin = getOrigin();
-//		Point theTerminus = getTerminus();
-//		double x1 = theTerminus.getX() - theOrigin.getX();
-//		double y1 = theTerminus.getY()-theOrigin.getY();
-//		double x2 = aPoint.getX() - theOrigin.getX();
-//		double y2 = aPoint.getY() - theOrigin.getY();
-//		// Calc if on the line by getting the cross-product of the vector of the line and the vector
-//		// from the origin to the point.
-//		double v_xy_cross_v_xp = (x1 * y2)	- (y1 * x2);
-//		double v1 = theOrigin.getDistance(theTerminus);
-//		double v2 = theOrigin.getDistance(aPoint);
-//		// sine theta from cross-product
-//		double sinTheta = v_xy_cross_v_xp / (v1 * v2);
-//		// cos theta from scalar product
-//		double cosTheta = (x1 * x2 + y1 * y2) / (v1 * v2);
-//		// if both +ve then in 1st quadrant and so we should check tolerane
-//		// otherwise there cannot be an intersection
-//		boolean retVal = false;
-//		if(sinTheta >= 0.0 && cosTheta >= 0.0){
-////		if(cosTheta >= 0.0){
-//			// now check the length of the opposite side of the RHT and see if it is within the tolerance length
-//			double adj = v2 * cosTheta;
-//			// check adj length is less than length of line - i.e. is the point on the line
-//			if(adj <= v1){
-//				double opp = v2 * sinTheta;
-//				double halfLineHeight = (lineWidth/2);
-//				halfLineHeight += halfLineHeight * LINE_WIDTH_TOL;
-//				retVal = opp < halfLineHeight;
-//			}
-//		}
-//		if(logger.isTraceEnabled()){
-//			logger.trace("containsPoint=" + retVal + ",point=" + aPoint + ",start=" + theOrigin + ",end=" + theTerminus + ",sinTheta=" + sinTheta + ",cosTheta=" + cosTheta
-//						+ "lineWidth=" + lineWidth);
-//		}
-//		return retVal;
-//	}
-
+	/**
+	 * Test is the line segment contains the point, i.e. does the point lie between the 2 points of the line segment.  
+	 * @param aPoint the point to test.
+	 * @return true if the point lies between the 2 points, false otherwise.
+	 */
 	public boolean containsPoint(Point aPoint){
 		Point theOrigin = getOrigin();
 		Point theTerminus = getTerminus();
@@ -234,6 +210,11 @@ public class LineSegment {
 		return intersections;
 	}
 
+	/**
+	 * Creates a new line segment translated by the specified displacement. 
+	 * @param p the point to test.
+	 * @return a new translated line segment.
+	 */
 	public LineSegment translate(Point p){
 		return new LineSegment(this.origin.translate(p), this.terminus.translate(p));
 	}
@@ -281,24 +262,44 @@ public class LineSegment {
 		return equation;
 	}
 
+	/**
+	 * Get the mid-point of the line segment, half way between the start and end of the line.  
+	 * @return the mid point.
+	 */
 	public Point getMidPoint(){
 		return new Point(this.origin.getX() + getXDisplacement()/2, this.origin.getY() + this.getYDisplacement()/2);
 	}
 	
+	/**
+	 * Gets the displacement from the origin to the terminus of this line segment in the x direction.  
+	 * @return the x displacement.
+	 */
 	public double getXDisplacement(){
 		return terminus.getX() - origin.getX();
 	}
 	
+	/**
+	 * Gets the displacement from the origin to the terminus of this line segment in the y direction.  
+	 * @return the y displacement.
+	 */
 	public double getYDisplacement(){
 		return terminus.getY() - origin.getY();
 	}
 	
+	/**
+	 * Gets the length of this line segment.
+	 * @return the length, which must be >= 0.
+	 */
 	public double getLength(){
 		double i = terminus.getX() - origin.getX();
 		double j = terminus.getY() - origin.getY();
 		return Math.sqrt(i * i + j * j);
 	}
 	
+	/**
+	 * Create a new vector corresponding to this line segment.
+	 * @return the new line segment vector.
+	 */
 	public Vector getVector(){
 		return new Vector(terminus.getX() - origin.getX(), terminus.getY() - origin.getY(), 0.0);
 	}
@@ -337,10 +338,18 @@ public class LineSegment {
 		return getLineEquation(origin.getX(), origin.getY(), terminus.getX(), terminus.getY());
 	}
 
+	/**
+	 * Gets the origin (start) of this line segment.
+	 * @return the origin as a point.
+	 */
 	public Point getOrigin() {
 		return origin;
 	}
 
+	/**
+	 * Gets the terminus (end) of this line segment.
+	 * @return the terminus as a point.
+	 */
 	public Point getTerminus() {
 		return terminus;
 	}

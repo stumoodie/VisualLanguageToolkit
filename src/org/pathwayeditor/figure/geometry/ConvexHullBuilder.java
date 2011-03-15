@@ -81,7 +81,7 @@ public class ConvexHullBuilder {
 		double scaleX = newEnvelope.getDimension().getWidth()/currEnv.getDimension().getWidth();
 		double scaleY = newEnvelope.getDimension().getHeight()/currEnv.getDimension().getHeight();
 		for(PointBuilder p : this.pointList){
-			p.negatedTranslation(xOrig, yOrig).scale(scaleX, scaleY)
+			p.translate(-xOrig, -yOrig).scale(scaleX, scaleY)
 				.translate(newEnvelope.getOrigin().getX(), newEnvelope.getOrigin().getY());
 //			double scaledX = newEnvelope.getOrigin().getX() + ((p.getX() - xOrig) * scaleX); 
 //			double scaledY = newEnvelope.getOrigin().getY() + ((p.getY() - yOrig) * scaleY); 

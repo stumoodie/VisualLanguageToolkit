@@ -22,11 +22,8 @@ public class Dimension {
 	 * Constructor taking a width and height.
 	 * @param width the width
 	 * @param height the height
-	 * @throws IllegalArgumentException if either the width or height are negative values.
 	 */
 	public Dimension(double width, double height){
-		if(width < 0 || height < 0) throw new IllegalArgumentException("Cannot make a dimension nagative");
-
 		this.width = width;
 		this.height = height;
 	}

@@ -6,10 +6,12 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
+import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
+
 /**
  * IShapeAttributeFactory is an interface that defines a factory used to
  * create shape attributes. The factory must have an object type associated
- * with it before {@link #canCreateAttribute} can be true.
+ * with it before {@link IElementAttributeFactory#canCreateAttribute} can be true.
  *  
  * @author Stuart Moodie
  *

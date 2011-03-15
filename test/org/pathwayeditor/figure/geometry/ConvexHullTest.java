@@ -118,6 +118,7 @@ public class ConvexHullTest {
 		assertEquals("expected point", EXPECTED_AREA, this.testInstance.getArea(), 0.001);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public final void testIterator() {
 		Iterator<Point> actualIter = this.testInstance.iterator();

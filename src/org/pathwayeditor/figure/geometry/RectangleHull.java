@@ -8,6 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * RectangleHull is a specialised implementation of {@link IConvexHull} that specifically represents a rectangle.
+ * Because the shape of the hull is known we can provide optimizations to some of the operations specified in the interface.
+ * As specified in the interface this class is immutable. 
+ * 
  * @author Stuart Moodie
  *
  */
@@ -43,10 +47,10 @@ public class RectangleHull implements IConvexHull {
 		return this.hull.getCentre();
 	}
 
-	@Override
-	public Dimension getDimension() {
-		return this.hull.getDimension();
-	}
+//	@Override
+//	public Dimension getDimension() {
+//		return this.hull.getDimension();
+//	}
 
 	@Override
 	public Envelope getEnvelope() {
@@ -58,10 +62,10 @@ public class RectangleHull implements IConvexHull {
 		return this.hull.getLines();
 	}
 
-	@Override
-	public Point getOrigin() {
-		return this.hull.getOrigin();
-	}
+//	@Override
+//	public Point getOrigin() {
+//		return this.hull.getOrigin();
+//	}
 
 	@Override
 	public Point getPointLineIntersects(Point reference) {
@@ -80,7 +84,7 @@ public class RectangleHull implements IConvexHull {
 
 	@Override
 	public Iterator<Point> iterator() {
-		return this.hull.iterator();
+		return this.hull.pointIterator();
 	}
 
 	@Override

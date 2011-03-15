@@ -4,6 +4,9 @@
 package org.pathwayeditor.figure.geometry;
 
 /**
+ * Scale is a class that represents scale factors. The class is immutable so can be passed by reference without
+ * fear of breaking encapsulation. 
+ * 
  * @author Stuart Moodie
  *
  */
@@ -11,15 +14,28 @@ public class Scale {
 	private final double xfactor;
 	private final double yFactor;
 	
+	/**
+	 * Constructs a new instance with the given scale factors.
+	 * @param xFactor the x scale factor.
+	 * @param yFactor the y scale factor.
+	 */
 	public Scale(double xFactor, double yFactor){
 		this.xfactor = xFactor;
 		this.yFactor = yFactor;
 	}
 
+	/**
+	 * Get the x scale factor. 
+	 * @return the x scale factor.
+	 */
 	public double getXfactor() {
 		return this.xfactor;
 	}
 
+	/**
+	 * Get the y scale factor. 
+	 * @return the y scale factor.
+	 */
 	public double getYFactor() {
 		return this.yFactor;
 	}

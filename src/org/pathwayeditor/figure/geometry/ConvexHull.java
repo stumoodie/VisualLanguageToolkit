@@ -79,16 +79,16 @@ public class ConvexHull implements IConvexHull {
 //	}
 	
 
-	@Override
-	public Point getOrigin(){
-		return this.envelope.getOrigin();
-	}
+//	@Override
+//	public Point getOrigin(){
+//		return this.envelope.getOrigin();
+//	}
 	
 	
-	@Override
-	public Dimension getDimension(){
-		return this.envelope.getDimension();
-	}
+//	@Override
+//	public Dimension getDimension(){
+//		return this.envelope.getDimension();
+//	}
 	
 	@Override
 	public Envelope getEnvelope(){
@@ -159,10 +159,13 @@ public class ConvexHull implements IConvexHull {
 	public IConvexHull changeEnvelope(Envelope newEnvelope){
 		IConvexHull retVal = this;
  		if(!this.envelope.equals(newEnvelope)){
- 			double xOrig = this.getOrigin().getX();
- 			double yOrig = this.getOrigin().getY();
-			double scaleX = newEnvelope.getDimension().getWidth()/this.getDimension().getWidth();
-			double scaleY = newEnvelope.getDimension().getHeight()/this.getDimension().getHeight();
+ 			Envelope bounds = this.getEnvelope();
+ 			Point origin = bounds.getOrigin();
+ 			double xOrig = origin.getX();
+ 			double yOrig = origin.getY();
+ 			Dimension boundsSize = bounds.getDimension();
+			double scaleX = newEnvelope.getDimension().getWidth()/boundsSize.getWidth();
+			double scaleY = newEnvelope.getDimension().getHeight()/boundsSize.getHeight();
 			List<Point> newList = new ArrayList<Point>(this.pointList.size());
 			for(Point p : this.pointList){
 				double scaledX = newEnvelope.getOrigin().getX() + ((p.getX() - xOrig) * scaleX); 
@@ -319,7 +322,7 @@ public class ConvexHull implements IConvexHull {
 
 	@Override
 	public IConvexHull scale(double xScale, double yScale){
-		Point origin = this.getOrigin();
+		Point origin = this.getEnvelope().getOrigin();
 		List<Point> retVal = new ArrayList<Point>(this.pointList.size()); 
 		for(Point p : this.pointList){
 			Point adjusted = p.translate(origin.negate());
@@ -333,7 +336,7 @@ public class ConvexHull implements IConvexHull {
 	
 	@Override
 	public IConvexHull scale(Dimension newDim){
-		Dimension currDim = this.getDimension();
+		Dimension currDim = this.getEnvelope().getDimension();
 		double scaleX = newDim.getWidth()/currDim.getWidth();
 		double scaleY = newDim.getHeight()/currDim.getHeight();
 		return this.scale(scaleX, scaleY);
@@ -351,7 +354,7 @@ public class ConvexHull implements IConvexHull {
         // this assumes that the point is outside the hull
         // if it is not then we need to set a point on the boundary of the hull
         if(this.containsPoint(reference)){
-        	reference = this.getOrigin().translate(-1.0, -1.0);
+        	reference = this.getEnvelope().getOrigin().translate(-1.0, -1.0);
         }
         double distance = reference.getDistance(c);
         int n = this.pointList.size();
