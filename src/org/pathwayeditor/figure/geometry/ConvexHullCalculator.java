@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class ConvexHullCalculator implements IConvexHullCalculator {
-	private static final double HALF_ELLIPSE_SEGS = 6.0;
+	private static final double HALF_ELLIPSE_SEGS = 12.0;
 
 	private QuickHull quickHull;
 	private IConvexHull hull = null;
