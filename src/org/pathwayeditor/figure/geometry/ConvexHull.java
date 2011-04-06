@@ -24,6 +24,8 @@ public class ConvexHull implements IConvexHull {
 	 */
 	public static final int MIN_NUM_POINTS = 3;
 
+	private static final double MIN_THRESHOLD = 1e-5;
+
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final List<Point> pointList;
 	private final Envelope envelope;
@@ -136,7 +138,7 @@ public class ConvexHull implements IConvexHull {
 				if(logger.isTraceEnabled()){
 					logger.trace("Crossproduct=" + crossProd);
 				}
-				if(crossProd.getKMagnitude() < 0){
+				if(Math.abs(crossProd.getKMagnitude()) > MIN_THRESHOLD && crossProd.getKMagnitude() < 0){
 					if(logger.isTraceEnabled()){
 						logger.trace("Crossproduct is negative so not contained");
 					}
