@@ -5,6 +5,7 @@ package org.pathwayeditor.figure.geometry;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ConvexHullCalculatorSingleEllipseTest {
-	private static final int EXPECTED_NUM_HULL_POINTS = 12;
+	private static final int EXPECTED_NUM_HULL_POINTS = 25;
 	private ConvexHullCalculator testInstance;
 
 	@Before
@@ -44,6 +45,7 @@ public class ConvexHullCalculatorSingleEllipseTest {
 //		this.testInstance.writeHullPoints(hullWriter);
 //		hullWriter.close();
 		assertEquals("same number of points", EXPECTED_NUM_HULL_POINTS, this.testInstance.getConvexHull().numPoints());
+		assertTrue("contains point", this.testInstance.getConvexHull().containsPoint(new Point(10.0, 10.0)));
 	}
 
 }
