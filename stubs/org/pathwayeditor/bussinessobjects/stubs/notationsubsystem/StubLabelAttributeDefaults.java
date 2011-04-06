@@ -6,6 +6,8 @@ Copyright 2009-2011, Court of the University of Edinburgh
  */
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
+import java.text.Format;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -101,6 +103,14 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 	@Override
 	public boolean hasNoFill() {
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getDisplayFormat()
+	 */
+	@Override
+	public Format getDisplayFormat() {
+		return null;
 	}
 
 }
