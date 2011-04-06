@@ -60,6 +60,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.lineWidth = otherAttribute.getLineWidth();
 		this.noBorder = otherAttribute.hasNoBorder();
 		this.noFill = otherAttribute.hasNoFill();
+		this.displayFormat = otherAttribute.getDisplayFormat();
 //		this.visualisableProperty.setLabel(this);
 		this.boundsDelegate.setBounds(otherAttribute.getBounds());
 	}
@@ -72,6 +73,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 		this.lineWidth = labelDefaults.getLineWidth();
 		this.noBorder = labelDefaults.hasNoBorder();
 		this.noFill = labelDefaults.hasNoFill();
+		this.displayFormat = labelDefaults.getDisplayFormat();
 	}
 	
 
