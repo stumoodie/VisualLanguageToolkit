@@ -55,5 +55,7 @@ public interface ILabelNodeFactory {
 	 *  Cannot be null.
 	 * @throws IllegalStateException if <code>canCreateLabelNode() == null</code>.  
 	 */
-	ILabelNode createLabel();
+	ILabelNode createLabelNode();
+
+	ICompoundNodeFactory getGraphElementFactory();
 }
