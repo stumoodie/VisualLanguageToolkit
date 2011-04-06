@@ -70,20 +70,14 @@ public class MockLabelObjectTypeBuilder {
 			allowing(objectType).getParentingRules(); will(returnValue(parentingRules));
 			allowing(objectType).getDefaultAttributes(); will(returnValue(attributeDefaults));
 
-//			allowing(retVal).getFillColour(); will(returnValue(RGB.RED));
-//			allowing(retVal).getLineColour(); will(returnValue(RGB.BLUE));
-//			allowing(retVal).getLineStyle(); will(returnValue(LineStyle.SOLID));
-//			allowing(retVal).getLineWidth(); will(returnValue(2.3));
 			allowing(attributeDefaults).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));
-//			allowing(retVal).hasNoBorder(); will(returnValue(false));
-//			allowing(retVal).hasNoFill(); will(returnValue(false));
-//			allowing(retVal).getLabelLocationPolicy(); will(returnValue(LabelLocationPolicy.CENTRE));
 			allowing(attributeDefaults).getLineColour(); will(returnValue(lineColour));
 			allowing(attributeDefaults).getLineStyle(); will(returnValue(lineStyle));
 			allowing(attributeDefaults).getLineWidth(); will(returnValue(lineWidth));
 			allowing(attributeDefaults).getFillColour(); will(returnValue(fillColour ));
 			allowing(attributeDefaults).hasNoBorder(); will(returnValue(hasNoBorder));
 			allowing(attributeDefaults).hasNoFill(); will(returnValue(hasNoFill ));
+			allowing(attributeDefaults).getDisplayFormat(); will(returnValue(null));
 		}});
 	}
 	
