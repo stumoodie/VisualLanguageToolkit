@@ -3,6 +3,8 @@ Copyright 2009-2011, Court of the University of Edinburgh
 */
 package org.pathwayeditor.businessobjects.typedefn;
 
+import java.text.Format;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
@@ -26,6 +28,8 @@ public interface ILabelAttributeDefaults {
 	 * @return the label location policy, which cannot be null.
 	 */
 	LabelLocationPolicy getLabelLocationPolicy();
+	
+	Format getDisplayFormat();
 	
 	/**
 	 * Get the line colour of the label border.
