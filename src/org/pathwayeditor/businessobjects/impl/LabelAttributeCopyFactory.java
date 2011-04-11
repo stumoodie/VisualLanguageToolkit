@@ -19,13 +19,15 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
  */
 public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	private final IAnnotationProperty labelProperty;
+	private final ILabelAttribute sourceAttribute;
 	private IAnnotatedObject destinationAttribute;
 	private IElementAttribute outAttribute;
 	private IElementAttribute inAttribute;
 	
 
-	public LabelAttributeCopyFactory(IAnnotationProperty labelProperty) {
+	public LabelAttributeCopyFactory(IAnnotationProperty labelProperty, LabelAttribute labelAttribute) {
 		this.labelProperty = labelProperty;
+		this.sourceAttribute = labelAttribute;
 	}
 
 	/* (non-Javadoc)
@@ -59,7 +61,7 @@ public class LabelAttributeCopyFactory implements IElementAttributeFactory {
 	public ILabelAttribute createAttribute() {
 		IAnnotationProperty copiedProp = destinationAttribute.getProperty(labelProperty.getDefinition());
 		IModel model = ((ICanvasElementAttribute)this.destinationAttribute).getModel();
-		return new LabelAttribute(model, model.getCreationSerialCounter().next(), (ILabelAttribute)this.outAttribute, copiedProp);
+		return new LabelAttribute(model, model.getCreationSerialCounter().next(), (ILabelAttribute)this.sourceAttribute, copiedProp);
 	}
 
 	/* (non-Javadoc)
