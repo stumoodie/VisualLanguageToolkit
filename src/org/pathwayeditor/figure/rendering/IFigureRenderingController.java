@@ -44,16 +44,20 @@ import org.pathwayeditor.figure.geometry.IConvexHull;
  */
 public interface IFigureRenderingController {
 
+	void setEnvelope(Envelope newEnvelope);
+	
 	/**
 	 * Sets the requested bounding box for the figure definition. Note that this may not correspond
 	 * to the bounding box of the shape drawn by the figure definition (this is obtained using <code>getEnvelope()</code>.
-	 * @param newEnvelope the new bounding box to use for this figure definition.  
+	 * @param newEnvelope the new bounding box to use for this figure definition.
+	 * @deprecated use setEnvelope() instead  
 	 */
 	void setRequestedEnvelope(Envelope newEnvelope);
 	
 	/**
 	 * Get the bounding box that was last requested. 
 	 * @return the last requested bounding box.
+	 * @deprecated use getEnvelope() instead
 	 */
 	Envelope getRequestedEnvelope();
 	

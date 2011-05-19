@@ -67,11 +67,12 @@ public class FigureRenderingController implements IFigureRenderingController {
 
 	@Override
 	public Envelope getEnvelope() {
-		Envelope retVal = null;
-		if(this.builder.getConvexHull() != null){
-			retVal = this.builder.getConvexHull().getEnvelope();
-		}
-		return retVal;
+		return this.requestedEnvelope;
+//		Envelope retVal = null;
+//		if(this.builder.getConvexHull() != null){
+//			retVal = this.builder.getConvexHull().getEnvelope();
+//		}
+//		return retVal;
 	}
 
 	@Override
@@ -193,16 +194,16 @@ public class FigureRenderingController implements IFigureRenderingController {
 		GraphicsInstructionList oldValue = this.builder.getRenderingInstructions();
 		this.builder.generateFigureRendering();
 		this.figureInstructions = this.builder.getRenderingInstructions();
-		if(this.logger.isInfoEnabled() && !this.requestedEnvelope.contains(this.getEnvelope())){
-			StringBuilder buf = new StringBuilder(200);
-			buf.append("The convex hull (env=");
-			buf.append(this.getEnvelope());
-			buf.append(") spills outside the requested envelope (");
-			buf.append(this.requestedEnvelope);
-			logger.info(buf.toString());
-		}
 		if(logger.isDebugEnabled()){
 			logger.debug("Calcuated convex hull=" + this.getConvexHull());
+		}
+		if(!this.requestedEnvelope.contains(this.builder.getConvexHull().getEnvelope())){
+			StringBuilder buf = new StringBuilder(200);
+			buf.append("The convex hull (env=");
+			buf.append(this.builder.getConvexHull().getEnvelope());
+			buf.append(") spills outside the requested envelope (");
+			buf.append(this.requestedEnvelope);
+			logger.warn(buf.toString());
 		}
 		this.notifyEvent(FigureChangeType.FIGURE_DEFN, oldValue,this.builder.getRenderingInstructions());
 	}
@@ -268,6 +269,14 @@ public class FigureRenderingController implements IFigureRenderingController {
 	@Override
 	public void removeListener(IFigureRenderingControllerListener listener) {
 		this.listeners.remove(listener);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IFigureRenderingController#setEnvelope(org.pathwayeditor.figure.geometry.Envelope)
+	 */
+	@Override
+	public void setEnvelope(Envelope newEnvelope) {
+		this.requestedEnvelope = newEnvelope;
 	}
 	
 	
