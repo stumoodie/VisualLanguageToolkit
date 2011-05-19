@@ -52,6 +52,7 @@ public interface IFigureRenderingController {
 	 * @param newEnvelope the new bounding box to use for this figure definition.
 	 * @deprecated use setEnvelope() instead  
 	 */
+	@Deprecated
 	void setRequestedEnvelope(Envelope newEnvelope);
 	
 	/**
@@ -59,6 +60,7 @@ public interface IFigureRenderingController {
 	 * @return the last requested bounding box.
 	 * @deprecated use getEnvelope() instead
 	 */
+	@Deprecated
 	Envelope getRequestedEnvelope();
 	
 	/**
