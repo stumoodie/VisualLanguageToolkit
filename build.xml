@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 
-<project name="BusinessObjectsBuild" default="buildAll">
+<project name="VisualLanguageToolkitBuild" default="buildAll">
 	<property name="build.dir" value="./antBuild" />
 	<property name="build.dir.src" value="${build.dir}/src"/>
 	<property name="build.dir.tests" value="${build.dir}/test"/>
@@ -12,19 +12,12 @@
 	<property name="integration.test.dir" value="./integrationTest" />
 	<property name="acceptance.test.dir" value="./Acceptance Test" />
 	<property name="jar.dir" value="./jars" />
-	<property name="jar.name.bin" value="BusinessObjects.jar" />
-	<property name="jar.name.src" value="BusinessObjects-src.jar" />
-	<property name="jar.name.doc" value="BusinessObjects-docs.jar" />
+	<property name="jar.name.bin" value="VisualLanguageToolkit.jar" />
+	<property name="jar.name.src" value="VisualLanguageToolkit-src.jar" />
+	<property name="jar.name.doc" value="VisualLanguageToolkit-docs.jar" />
 	<property name="lib.dir" value="./lib" />
-	<property name="application.lib.bo.dir" value="../EPE2/libs/businessObjects" />
-	<property name="application.dir" value="../EPE2/" />
-	<property name="epefeature.dir" value="../EPE_Feature" />
-	<property name="application.db.dir" value="${application.dir}/DB" />
-	<property name="epefeature.db1.dir" value="${epefeature.dir}/Database/DB" />
-	<property name="epefeature.db2.dir" value="${epefeature.dir}/Database/EPE2.app/Contents/MacOS/DB" />
-	<property name="target" value="1.5" />
-	<property name="source" value="1.5" />
-	<property name="bo.db.dir" value="DB" />
+	<property name="target" value="1.6" />
+	<property name="source" value="1.6" />
 
 	<property name="castor.schema.file" value="${src.dir}/org/pathwayeditor/businessobjects/exchange/Canvas.xsd" />
 	<property name="castor.build.file" value="schema/CanvasBinding.xml" />

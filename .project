@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>BusinessObjects</name>
+	<name>VisualLanguageToolkit</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,15 +10,9 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>org.hibernate.eclipse.console.hibernateBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.ajdt.ui.ajnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
 	</natures>
 </projectDescription>
