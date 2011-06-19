@@ -1,17 +1,33 @@
 /*
-Copyright 2009-2011, Court of the University of Edinburgh
+  Licensed to the Court of the University of Edinburgh (UofE) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The UofE licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
 */
 
 package org.pathwayeditor.businessobjects.drawingprimitives.attributes;
 
 /**
- * Colour
+ * Colour is a class that represent colours complete with support for an alpha component that
+ * described the transparency of the colour.
  *
  * @author Stuart Moodie
  *
  */
 public class Colour {
-	public static final int OPAQUE = 100; 
+	public static final int OPAQUE = 255; 
 	public static final int TRANSPARENT = 0;
 	public static final Colour WHITE = new Colour(RGB.WHITE, OPAQUE);
 	public static final Colour BLACK = new Colour(RGB.BLACK, OPAQUE);
