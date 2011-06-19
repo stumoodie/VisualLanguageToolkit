@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.figure.definition.FigureDefinitionInterpreter;
 import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
 import org.pathwayeditor.figure.definition.IFigureDefinitionInterpreter;
@@ -61,7 +61,7 @@ import org.pathwayeditor.figure.rendering.IFont.Style;
 public class FigureRenderingBuilder {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	private static final int RGB_LIST_SIZE = 3;
+	private static final int Colour_LIST_SIZE = 3;
 	private static final char ITALIC_STYLE = 'I';
 	private static final char BOLD_STYLE = 'B';
 	private static final double MIN_DIMENSION_SIZE = 0;
@@ -110,11 +110,11 @@ public class FigureRenderingBuilder {
 	private void writeGraphicsState(){
 		this.graphicsInstructions.add(g.setLineWidth(this.currentState.getLineWidth()));
 		this.graphicsInstructions.add(g.setLineStyle(this.currentState.getLineStyle()));
-		RGB fillColour = currentState.getFillColour();
+		Colour fillColour = currentState.getFillColour();
 		if(fillColour != null){
 			this.graphicsInstructions.add(g.fillColour(fillColour));
 		}
-		RGB lineColour = currentState.getLineColour();
+		Colour lineColour = currentState.getLineColour();
 		if(lineColour != null){
 			this.graphicsInstructions.add(g.lineColour(lineColour));
 		}
@@ -240,11 +240,11 @@ public class FigureRenderingBuilder {
 	}
 
 
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return currentState.getLineColour();
 	}
 
-	public RGB getFillColour() {
+	public Colour getFillColour() {
 		return currentState.getFillColour();
 	}
 
@@ -444,7 +444,7 @@ public class FigureRenderingBuilder {
 
 		@Override
 		public void setFillColour(int red, int green, int blue) {
-			RGB newColour = new RGB(red, green, blue);
+			Colour newColour = new Colour(red, green, blue);
 			graphicsInstructions.add(g.fillColour(newColour));
 			currentState.setFillColour(newColour);
 		}
@@ -476,7 +476,7 @@ public class FigureRenderingBuilder {
 
 		@Override
 		public void setLineColour(int red, int green, int blue) {
-			RGB newCol = new RGB(red, green, blue);
+			Colour newCol = new Colour(red, green, blue);
 			graphicsInstructions.add(g.lineColour(newCol));
 			currentState.setLineColour(newCol);
 		}
@@ -527,11 +527,11 @@ public class FigureRenderingBuilder {
 		
 	}
 
-	public List<Integer> rgbToList(RGB backgroundColor) {
-		List<Integer> retVal = new ArrayList<Integer>(RGB_LIST_SIZE);
-		retVal.add(backgroundColor.getRed());
-		retVal.add(backgroundColor.getGreen());
-		retVal.add(backgroundColor.getBlue());
+	public List<Integer> rgbToList(Colour backgroundColor) {
+		List<Integer> retVal = new ArrayList<Integer>(Colour_LIST_SIZE);
+		retVal.add(backgroundColor.getRgb().getRed());
+		retVal.add(backgroundColor.getRgb().getGreen());
+		retVal.add(backgroundColor.getRgb().getBlue());
 		return retVal;
 	}
 
@@ -609,11 +609,11 @@ public class FigureRenderingBuilder {
 		return this.currentState.getLineWidth();
 	}
 
-	public void setFillColour(RGB newFillColour) {
+	public void setFillColour(Colour newFillColour) {
 		this.currentState.setFillColour(newFillColour);
 	}
 
-	public void setLineColour(RGB newLineColour) {
+	public void setLineColour(Colour newLineColour) {
 		this.currentState.setLineColour(newLineColour);
 	}
 

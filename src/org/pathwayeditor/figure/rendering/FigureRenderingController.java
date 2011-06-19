@@ -27,7 +27,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
@@ -76,12 +76,12 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	@Override
-	public RGB getFillColour() {
+	public Colour getFillColour() {
 		return this.builder.getFillColour();
 	}
 
 	@Override
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return this.builder.getLineColour();
 	}
 
@@ -165,15 +165,15 @@ public class FigureRenderingController implements IFigureRenderingController {
 	}
 
 	@Override
-	public void setFillColour(RGB newFillColour) {
-		RGB oldValue = this.builder.getFillColour();
+	public void setFillColour(Colour newFillColour) {
+		Colour oldValue = this.builder.getFillColour();
 		this.builder.setFillColour(newFillColour);
 		this.notifyEvent(FigureChangeType.FILL_COLOUR, oldValue, newFillColour);
 	}
 
 	@Override
-	public void setLineColour(RGB newLineColour) {
-		RGB oldValue = this.builder.getLineColour();
+	public void setLineColour(Colour newLineColour) {
+		Colour oldValue = this.builder.getLineColour();
 		this.builder.setLineColour(newLineColour);
 		this.notifyEvent(FigureChangeType.LINE_COLOUR, oldValue, newLineColour);
 	}

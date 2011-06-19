@@ -43,6 +43,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
@@ -184,9 +185,9 @@ public class CanvasMarshaller {
 	private void setCanvasGraphicalProperties(){
 		ICanvas dbCanvas = this.graph.getRootAttribute();
 		Background bgrd = new Background();
-		bgrd.setBlue(dbCanvas.getBackgroundColour().getBlue());
-		bgrd.setRed(dbCanvas.getBackgroundColour().getRed());
-		bgrd.setGreen(dbCanvas.getBackgroundColour().getGreen());
+		bgrd.setBlue(dbCanvas.getBackgroundColour().getRgb().getBlue());
+		bgrd.setRed(dbCanvas.getBackgroundColour().getRgb().getRed());
+		bgrd.setGreen(dbCanvas.getBackgroundColour().getRgb().getGreen());
 		xmlCanvas.setBackground(bgrd);
 		Grid grid = new Grid();
 //		grid.setGridOn(dbCanvas.isGridEnabled());
@@ -297,7 +298,8 @@ public class CanvasMarshaller {
 		return xmlAttrib;
 	}
 	
-	private static <C extends ColourType> C setColour(C xmlColour, RGB rgb) {
+	private static <C extends ColourType> C setColour(C xmlColour, Colour col) {
+		RGB rgb = col.getRgb();
 		xmlColour.setBlue(rgb.getBlue());
 		xmlColour.setGreen(rgb.getGreen());
 		xmlColour.setRed(rgb.getRed());

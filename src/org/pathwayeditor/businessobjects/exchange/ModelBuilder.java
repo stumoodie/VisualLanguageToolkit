@@ -42,7 +42,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationPropertyVisitor;
@@ -411,11 +411,11 @@ public class ModelBuilder {
 		return new Point(xmlPoint.getX(), xmlPoint.getY());
 	}
 
-	private static RGB createColour(ColourType xmlColour) {
+	private static Colour createColour(ColourType xmlColour) {
 		int blue = xmlColour.getBlue();
 		int green = xmlColour.getGreen();
 		int red = xmlColour.getRed();
-		return new RGB(red, green, blue);
+		return new Colour(red, green, blue);
 	}
 
 	public IModel getGraph() {

@@ -35,7 +35,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
@@ -167,11 +167,11 @@ public class RootAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#setBackgroundColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.RootAttribute#setBackgroundColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetBackgroundColour() {
-		RGB newCol = RGB.GREEN;
+		Colour newCol = Colour.GREEN;
 		assertFalse("not same as default", RootAttribute.DEFAULT_BACKGROUND_COLOUR.equals(newCol));
 		this.testInstance.setBackgroundColour(newCol);
 		assertEquals("expected bg col", newCol, this.testInstance.getBackgroundColour());

@@ -21,7 +21,7 @@
 package org.pathwayeditor.figure.rendering;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Envelope;
 
 /**
@@ -31,16 +31,16 @@ import org.pathwayeditor.figure.geometry.Envelope;
  */
 public class GraphicsState {
 	private static final double DEFAULT_LINE_WIDTH = 1;
-	private RGB fill; 
-	private RGB line;
+	private Colour fill; 
+	private Colour line;
 	private double lineWidth;
 	private IFont font;
 	private Envelope env;
 	private LineStyle lineStyle;
 	
 	public GraphicsState(){
-		this.fill = RGB.WHITE;
-		this.line = RGB.BLACK;
+		this.fill = Colour.WHITE;
+		this.line = Colour.BLACK;
 		this.lineWidth = DEFAULT_LINE_WIDTH;
 		this.font = new GenericFont();
 		this.env = new Envelope(0, 0, 0, 0);
@@ -68,19 +68,19 @@ public class GraphicsState {
 		this.font = font;
 	}
 	
-	public RGB getFillColour() {
+	public Colour getFillColour() {
 		return this.fill;
 	}
 
-	public void setFillColour(RGB newFillColour){
+	public void setFillColour(Colour newFillColour){
 		this.fill = newFillColour;
 	}
 
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return this.line;
 	}
 	
-	public void setLineColour(RGB newLineColour){
+	public void setLineColour(Colour newLineColour){
 		this.line = newLineColour;
 	}
 

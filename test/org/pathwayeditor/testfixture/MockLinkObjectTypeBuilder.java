@@ -30,7 +30,7 @@ import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -73,7 +73,7 @@ public class MockLinkObjectTypeBuilder {
 	private INotationSyntaxService syntaxService;
 	private ILinkAttributeDefaults attributeDefaults;
 	private String name;
-	private RGB lineColour = RGB.GREEN;
+	private Colour lineColour = Colour.GREEN;
 	private LineStyle lineStyle = LineStyle.DASH_DOT;
 	private double lineWidth = 3.9;
 	private final List<IPropertyDefinition> propertyDefs = new ArrayList<IPropertyDefinition>();

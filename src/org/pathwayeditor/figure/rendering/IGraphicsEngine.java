@@ -20,7 +20,7 @@
 package org.pathwayeditor.figure.rendering;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 
 /**
  * 
@@ -62,9 +62,9 @@ public interface IGraphicsEngine {
 
 	void drawString(String text, double x, double y, GraphicalTextAlignment alignment);
 
-	void setFillColor(RGB color);
+	void setFillColor(Colour color);
 
-	void setLineColor(RGB color);
+	void setLineColor(Colour color);
 
 	void setLineWidth(double lineWidth);
 

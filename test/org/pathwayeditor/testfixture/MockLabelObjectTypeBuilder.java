@@ -23,7 +23,7 @@ package org.pathwayeditor.testfixture;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
@@ -42,10 +42,10 @@ public class MockLabelObjectTypeBuilder {
 	private INotationSyntaxService syntaxService;
 	private ILabelAttributeDefaults attributeDefaults;
 	private String name;
-	private RGB lineColour = RGB.RED;
+	private Colour lineColour = Colour.RED;
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private double lineWidth = 2.3;
-	private RGB fillColour = RGB.BLUE;
+	private Colour fillColour = Colour.BLUE;
 	private boolean hasNoBorder = false;
 	private boolean hasNoFill = false;
 

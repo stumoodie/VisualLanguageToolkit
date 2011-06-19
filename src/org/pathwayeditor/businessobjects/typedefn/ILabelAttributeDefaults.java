@@ -24,7 +24,7 @@ import java.text.Format;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
@@ -51,13 +51,13 @@ public interface ILabelAttributeDefaults {
 	 * Get the line colour of the label border.
 	 * @return the line colour.
 	 */
-	RGB getLineColour();
+	Colour getLineColour();
 
 	/**
 	 * Get the fill (background) colour of the label.
 	 * @return the label's background colour.
 	 */
-	RGB getFillColour();
+	Colour getFillColour();
 	
 	/**
 	 * Should the label be transparent or opaque? 

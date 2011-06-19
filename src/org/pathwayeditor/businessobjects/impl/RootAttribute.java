@@ -27,7 +27,7 @@ import java.util.List;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChangeHelper;
@@ -49,12 +49,12 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	public static final Point INITIAL_POS = new Point(-0.5 * Double.MAX_VALUE, -0.5 *Double.MAX_VALUE);
 	public static final Dimension INITIAL_SIZE = new Dimension(Double.MAX_VALUE, Double.MAX_VALUE);
 	public static final int ROOT_IDX = 0;
-	public static final RGB DEFAULT_BACKGROUND_COLOUR = RGB.WHITE;
+	public static final Colour DEFAULT_BACKGROUND_COLOUR = Colour.WHITE;
 	private final IRootObjectType objectType;
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
 	private final CanvasPropertyChangeHelper canvasPropertyChangeHelper = new CanvasPropertyChangeHelper(this);
 	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(INITIAL_POS, INITIAL_SIZE), canvasAttributeChangeListenerHelper);
-	private RGB backgroundColour = DEFAULT_BACKGROUND_COLOUR;
+	private Colour backgroundColour = DEFAULT_BACKGROUND_COLOUR;
 	private Envelope canvasBounds = new Envelope(INITIAL_POS, INITIAL_SIZE);
 
 	public RootAttribute(IModel model, int creationSerial, IRootObjectType objectType) {
@@ -152,12 +152,12 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#setBackgroundColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#setBackgroundColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setBackgroundColour(RGB newBackgroundColour) {
+	public void setBackgroundColour(Colour newBackgroundColour) {
 		if(!this.backgroundColour.equals(newBackgroundColour)){
-			RGB oldColour = this.backgroundColour;
+			Colour oldColour = this.backgroundColour;
 			this.backgroundColour = newBackgroundColour;
 			this.canvasPropertyChangeHelper.notifyPropertyChange(CanvasPropertyChange.BACKGROUND_COLOUR, oldColour, this.backgroundColour);
 		}
@@ -167,7 +167,7 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute#getBackgroundColour()
 	 */
 	@Override
-	public RGB getBackgroundColour() {
+	public Colour getBackgroundColour() {
 		return this.backgroundColour;
 	}
 

@@ -29,7 +29,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.rendering.IFont.Style;
 
@@ -198,7 +198,7 @@ public class FigureRenderer {
 
 			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
-				RGB colour = inst.getRGB();
+				Colour colour = inst.getColour();
 				processLineColour(colour);
 			}
 			
@@ -207,7 +207,7 @@ public class FigureRenderer {
 
 			@Override
 			public void handleOpCode(GraphicsInstruction inst) {
-				RGB colour = inst.getRGB();
+				Colour colour = inst.getColour();
 				processFillColour(colour);
 			}
 			
@@ -283,14 +283,14 @@ public class FigureRenderer {
 		}
 	}
 
-	private void processFillColour(RGB colour) {
+	private void processFillColour(Colour colour) {
 		this.graphics.setFillColor(colour);
 		if(logger.isDebugEnabled()){
 			logger.debug("Setting fill colour=" + colour);
 		}
 	}
 
-	private void processLineColour(RGB colour) {
+	private void processLineColour(Colour colour) {
 		this.graphics.setLineColor(colour);
 		if(logger.isDebugEnabled()){
 			logger.debug("Setting line colour=" + colour);

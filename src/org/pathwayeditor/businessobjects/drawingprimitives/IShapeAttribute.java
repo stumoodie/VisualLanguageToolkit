@@ -20,7 +20,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -52,17 +52,17 @@ public interface IShapeAttribute extends  IAnnotatedObject, ITypedDrawingNodeAtt
 	String getShapeDefinition();
 	
 	/**
-	 * Returns a {@link RGB} representation for the background color of this Shape
+	 * Returns a {@link Colour} representation for the background color of this Shape
 	 * @return the background color. Cannot be null.
 	 */	
-	RGB getFillColour();
+	Colour getFillColour();
 
 	/**
 	 * Sets the fill color for this Shape.
 	 * @param fillColour the new fill color. Cannot be null
 	 * @throws IllegalArgumentException if fillColour is null.
 	 */
-	void setFillColour(RGB fillColour);
+	void setFillColour(Colour fillColour);
 
 	/**
 	 * Returns the numerical value representing the thickness of the border line of the shape. 
@@ -78,17 +78,17 @@ public interface IShapeAttribute extends  IAnnotatedObject, ITypedDrawingNodeAtt
 	void setLineWidth(double lineWidth);
 
 	/**
-	 * Returns a {@link RGB} representation for the color of this Shape's border line.
+	 * Returns a {@link Colour} representation for the color of this Shape's border line.
 	 * @return the background color. Cannot be null.
 	 */
-	RGB getLineColour();
+	Colour getLineColour();
 	
 	/**
 	 * Sets the line color for this Shape.
 	 * @param lineColour the new line color. Cannot be null
 	 * @throws IllegalArgumentException if lineColour is null.
 	 */
-	void setLineColour(RGB lineColour);
+	void setLineColour(Colour lineColour);
 	
 	/**
 	 * Returns the line style of this shape. 

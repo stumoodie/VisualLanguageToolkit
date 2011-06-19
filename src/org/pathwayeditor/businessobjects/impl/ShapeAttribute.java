@@ -27,7 +27,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
@@ -43,15 +43,15 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAttribute {
 	private static final Point DEFAULT_POSITION = Point.ORIGIN;
 	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
-	private static final RGB DEFAULT_FILL = RGB.WHITE;
-	private static final RGB DEFAULT_LINE = RGB.BLACK;
+	private static final Colour DEFAULT_FILL = Colour.WHITE;
+	private static final Colour DEFAULT_LINE = Colour.BLACK;
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
 	private static final int DEFAULT_LINE_WIDTH = 1;
 	private static final String DEFAULT_FIGURE_DEFN = "curbounds rect";
 
 	private transient IShapeObjectType shapeObjectType;
-	private transient RGB fillColour = DEFAULT_FILL;
-	private transient RGB lineColour = DEFAULT_LINE;
+	private transient Colour fillColour = DEFAULT_FILL;
+	private transient Colour lineColour = DEFAULT_LINE;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
@@ -116,7 +116,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getFillColour()
 	 */
 	@Override
-	public RGB getFillColour() {
+	public Colour getFillColour() {
 		return this.fillColour;
 	}
 
@@ -124,32 +124,32 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#getLineColour()
 	 */
 	@Override
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return this.lineColour;
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setFillColour(RGB fillColour) {
+	public void setFillColour(Colour fillColour) {
 		if ( fillColour == null )
 			throw new IllegalArgumentException ("Fill colour cannot be null") ;
 
-		RGB oldFillColour = this.fillColour;
+		Colour oldFillColour = this.fillColour;
 		this.fillColour = fillColour;
 		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IShape#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setLineColour(RGB lineColour) {
+	public void setLineColour(Colour lineColour) {
 		if ( lineColour == null )
 			throw new IllegalArgumentException ("Line colour cannot be null") ;
 
-		RGB oldLineColour = this.lineColour;
+		Colour oldLineColour = this.lineColour;
 		this.lineColour = lineColour;
 		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
 	}

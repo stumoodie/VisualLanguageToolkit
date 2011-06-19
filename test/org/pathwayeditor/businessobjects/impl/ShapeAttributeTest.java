@@ -45,7 +45,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
@@ -86,8 +86,8 @@ public class ShapeAttributeTest {
 	private IShapeObjectType expectedObjectType;
 	private LineStyle expectedLineStyle;
 	private double expectedLineWidth;
-	private RGB expectedFillColour;
-	private RGB expectedLineColour;
+	private Colour expectedFillColour;
+	private Colour expectedLineColour;
 	private String expectedShapeDefn;
 	private Dimension expectedSize;
 	private Envelope expectedBounds;
@@ -230,11 +230,11 @@ public class ShapeAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetFillColour() {
-		RGB newColour = new RGB(1, 2, 3);
+		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", this.expectedFillColour.equals(newColour));
 		this.testInstance.setFillColour(newColour);
 		assertEquals("expected fill colour", newColour, this.testInstance.getFillColour());
@@ -244,11 +244,11 @@ public class ShapeAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ShapeAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetLineColour() {
-		RGB newColour = new RGB(1, 2, 3);
+		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", this.expectedLineColour.equals(newColour));
 		this.testInstance.setLineColour(newColour);
 		assertEquals("expected line colour", newColour, this.testInstance.getLineColour());

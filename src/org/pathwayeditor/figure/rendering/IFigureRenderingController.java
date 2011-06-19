@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
@@ -80,25 +80,25 @@ public interface IFigureRenderingController {
 	 * Sets the fill colour of the figure.
 	 * @param newFillColour the new fill colour, which should not be null.
 	 */
-	void setFillColour(RGB newFillColour);
+	void setFillColour(Colour newFillColour);
 	
 	/**
 	 * Get the fill colour set for the figure. 
 	 * @return the fill colour.
 	 */
-	RGB getFillColour();
+	Colour getFillColour();
 	
 	/**
 	 * Sets the line colour to be used by the figure,
 	 * @param newLineColour the new line colour, which should not be null.
 	 */
-	void setLineColour(RGB newLineColour);
+	void setLineColour(Colour newLineColour);
 	
 	/**
 	 * Get the line colour set for the figure definition.
 	 * @return the line colour.
 	 */
-	RGB getLineColour();
+	Colour getLineColour();
 	
 	
 	/**

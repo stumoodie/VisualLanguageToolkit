@@ -28,7 +28,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
@@ -44,13 +44,13 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttribute {
 	private static final long serialVersionUID = 8124494867402957446L;
-	private static final RGB DEFAULT_LINE_COLOUR = new RGB(255, 255, 255);
+	private static final Colour DEFAULT_LINE_COLOUR = new Colour(255, 255, 255);
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
 	private static final double DEFAULT_LINE_WIDTH = 1.0;
 	private static final double MIN_LINE_WIDTH = 1.0;
 	
 	private final ILinkObjectType objectType;
-	private RGB lineColour = DEFAULT_LINE_COLOUR;
+	private Colour lineColour = DEFAULT_LINE_COLOUR;
 	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
 	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private final ILinkTerminus srcTerminus;
@@ -137,19 +137,19 @@ s	 */
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getLineColor()
 	 */
 	@Override
-	public RGB getLineColour() {
+	public Colour getLineColour() {
 		return this.lineColour;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setLineColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#setLineColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setLineColour(RGB newColor) {
+	public void setLineColour(Colour newColor) {
 		if ( newColor == null)
 			throw new IllegalArgumentException ("Line colour cannot be null") ;
 
-		RGB oldValue = this.lineColour;
+		Colour oldValue = this.lineColour;
 		this.lineColour = newColor;
 		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.lineColour);
 	}

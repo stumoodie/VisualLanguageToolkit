@@ -24,7 +24,7 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
@@ -58,13 +58,13 @@ public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaul
 	 * Get the initial colour of the lines in the shape.
 	 * @return the shape's initial line colour - not null.
 	 */
-	RGB getLineColour();
+	Colour getLineColour();
 
 	/**
 	 * Get the initial colour of the shape background (fill).
 	 * @return the shape's initial fill colour - not null.
 	 */
-	RGB getFillColour();
+	Colour getFillColour();
 
 	/**
 	 * Get the initial line width of the shape.

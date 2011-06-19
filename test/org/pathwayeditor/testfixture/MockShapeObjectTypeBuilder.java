@@ -29,7 +29,7 @@ import java.util.List;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -66,8 +66,8 @@ public class MockShapeObjectTypeBuilder {
 	private String objectTypeName;
 	private int index;
 	private INotationSyntaxService syntaxService;
-	private RGB fillColour = RGB.BLACK;
-	private RGB lineColour = RGB.BLUE;
+	private Colour fillColour = Colour.BLACK;
+	private Colour lineColour = Colour.BLUE;
 	private LineStyle lineStyle = LineStyle.DASH_DOT_DOT;
 	private double lineWidth = 3.1;
 	private String shapeDefn = "10.0 11.0 13.0 14.6 rect";
@@ -86,11 +86,11 @@ public class MockShapeObjectTypeBuilder {
 		this.shapeTypeParenting = null;
 	}
 	
-	public void setDefaultFillColour(RGB fillColour){
+	public void setDefaultFillColour(Colour fillColour){
 		this.fillColour = fillColour;
 	}
 	
-	public void setDefaultLineColour(RGB lineColour){
+	public void setDefaultLineColour(Colour lineColour){
 		this.lineColour = lineColour;
 	}
 	
@@ -204,8 +204,8 @@ public class MockShapeObjectTypeBuilder {
 //	protected ILabelAttributeDefaults createLabelDefaults(String name) {
 //		final ILabelAttributeDefaults retVal = mockery.mock(ILabelAttributeDefaults.class, createLabelAttDefsName(name));
 //		mockery.checking(new Expectations(){{
-//			allowing(retVal).getFillColour(); will(returnValue(RGB.RED));
-//			allowing(retVal).getLineColour(); will(returnValue(RGB.BLUE));
+//			allowing(retVal).getFillColour(); will(returnValue(Colour.RED));
+//			allowing(retVal).getLineColour(); will(returnValue(Colour.BLUE));
 //			allowing(retVal).getLineStyle(); will(returnValue(LineStyle.SOLID));
 //			allowing(retVal).getLineWidth(); will(returnValue(2.3));
 //			allowing(retVal).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));

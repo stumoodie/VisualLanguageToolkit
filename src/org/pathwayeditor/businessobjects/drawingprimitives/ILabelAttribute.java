@@ -22,7 +22,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.text.Format;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
@@ -54,27 +54,27 @@ public interface ILabelAttribute extends IDrawingNodeAttribute, ICanvasAttribute
 	
 	/**
 	 * Get the background colour of this Label.
-	 * @return the RGB representation of the colour of the Label.
+	 * @return the Colour representation of the colour of the Label.
 	 */	
-	RGB getBackgroundColor ();
+	Colour getBackgroundColor ();
 	
 	/**
 	 * Set the background color of this Label.
 	 * @throws IllegalArgumentException if value is null.
 	 */
-	void setBackgroundColor (RGB color);
+	void setBackgroundColor (Colour color);
 	
 	/**
 	 * Get the foreground colour of this Label.
-	 * @return the RGB representation of the colour of the Label.
+	 * @return the Colour representation of the colour of the Label.
 	 */	
-	RGB getForegroundColor ();
+	Colour getForegroundColor ();
 	
 	/**
 	 * Set the foreground color of this Label.
 	 * @throws IllegalArgumentException if value is null.
 	 */
-	void setForegroundColor (RGB color);
+	void setForegroundColor (Colour color);
 	
 	/**
 	 * Sets if the label should be filled opaquely or be completely transparent.

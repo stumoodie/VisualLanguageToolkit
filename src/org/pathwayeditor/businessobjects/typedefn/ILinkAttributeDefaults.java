@@ -21,7 +21,7 @@ package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 
 /**
  * ILinkAttributeDefaults is an interface that defines the initial/default
@@ -44,8 +44,8 @@ public interface ILinkAttributeDefaults extends IAnnotatedCanvasAttributeDefault
 	double getLineWidth();
 
 	/**
-	 * The red component of the RGB fill colour. The number can be between 0 and 255.
+	 * The red component of the Colour fill colour. The number can be between 0 and 255.
 	 * @return a red colour value.
 	 */
-	RGB getLineColour();
+	Colour getLineColour();
 }

@@ -35,7 +35,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -163,7 +163,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 //						allowing(rootAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(-1));
 //						allowing(rootAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
 //						allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
-//						allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
+//						allowing(rootAttribute).getBackgroundColour(); will(returnValue(Colour.WHITE));
 					}});
 					return mockModel;
 				}
@@ -196,7 +196,7 @@ public class CanvasTestFixture extends CommonTestFixture {
 					allowing(rootAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(-1));
 					allowing(rootAttribute).compareTo(with(any(ILinkAttribute.class))); will(returnValue(-1));
 					allowing(rootAttribute).compareTo(rootAttribute); will(returnValue(0));
-					allowing(rootAttribute).getBackgroundColour(); will(returnValue(RGB.WHITE));
+					allowing(rootAttribute).getBackgroundColour(); will(returnValue(Colour.WHITE));
 
 					allowing(mockModel).getRootAttribute(); will(returnValue(rootAttribute));
 				}});

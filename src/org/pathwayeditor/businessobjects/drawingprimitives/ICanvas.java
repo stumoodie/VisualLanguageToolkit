@@ -20,7 +20,7 @@
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasPropertyChangeListenee;
 import org.pathwayeditor.figure.geometry.Envelope;
 
@@ -48,12 +48,12 @@ public interface ICanvas extends ICanvasPropertyChangeListenee {
 	 * Set the background color of this Canvas.
 	 * @throws IllegalArgumentException if value is null.
 	 */	
-	void setBackgroundColour(RGB backgroundColour);
+	void setBackgroundColour(Colour backgroundColour);
 	
 	/**
 	 * Get the background color of this Canvas.
-	 * @return the RGB representation of the color of the Canvas.
+	 * @return the Colour representation of the color of the Canvas.
 	 */	
-	RGB getBackgroundColour();
+	Colour getBackgroundColour();
 	
 }

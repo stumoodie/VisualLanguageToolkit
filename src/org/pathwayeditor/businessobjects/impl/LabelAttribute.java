@@ -26,7 +26,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
@@ -47,8 +47,8 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	private static final int DEFAULT_WIDTH = 1;
 
 	private IAnnotationProperty visualisableProperty;
-	private RGB background;
-	private RGB foreground;
+	private Colour background;
+	private Colour foreground;
 	private boolean noBorder;
 	private boolean noFill;
 	private double lineWidth;
@@ -100,17 +100,17 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 * getBackgroundColor()
 	 */
 	@Override
-	public RGB getBackgroundColor() {
+	public Colour getBackgroundColor() {
 		return this.background;
 	}
 
 	@Override
-	public void setBackgroundColor(RGB color) {
+	public void setBackgroundColor(Colour color) {
 		if (color == null)
 			throw new IllegalArgumentException("Color cannot be null.");
 
 		if(this.background != color){
-			RGB oldColour = this.background;
+			Colour oldColour = this.background;
 			this.background = color;
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldColour, this.background);
 		}
@@ -182,17 +182,17 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getForegroundColor()
 	 */
 	@Override
-	public RGB getForegroundColor() {
+	public Colour getForegroundColor() {
 		return this.foreground;
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setForegroundColor(RGB color) {
+	public void setForegroundColor(Colour color) {
 		if(this.foreground != color){
-			RGB oldValue = this.foreground;
+			Colour oldValue = this.foreground;
 			this.foreground = color;
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.foreground);
 		}

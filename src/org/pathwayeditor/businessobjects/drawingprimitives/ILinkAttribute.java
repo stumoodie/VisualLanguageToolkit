@@ -20,7 +20,7 @@
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -56,17 +56,17 @@ public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObjec
 	ILinkTerminus getTargetTerminus();
 
 	/**
-	 * Gets the RGB representation of the color of the link. Cannot be null.
-	 * @return the RGB color.
+	 * Gets the Colour representation of the color of the link. Cannot be null.
+	 * @return the Colour color.
 	 */
-	RGB getLineColour () ;
+	Colour getLineColour () ;
 	
 	/**
 	 * Sets a new Color for this link.
 	 * @param newColor the new colour for the line, which cannot be null.
 	 * @throws IllegalArgumentException if newColor is null.
 	 */
-	void setLineColour ( RGB newColor ) ;
+	void setLineColour ( Colour newColor ) ;
 	
 	/**
 	 * Gets the line style of this link.

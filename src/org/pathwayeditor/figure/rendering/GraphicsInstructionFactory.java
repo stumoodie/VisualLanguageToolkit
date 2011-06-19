@@ -24,7 +24,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.rendering.IFont.Style;
 
 /**
@@ -174,11 +174,11 @@ public class GraphicsInstructionFactory {
 		return new GraphicsInstruction(GraphicsOpCode.FILL_TEXT, valList);
 	}
 
-	public GraphicsInstruction lineColour(RGB colour){
+	public GraphicsInstruction lineColour(Colour colour){
 		return new GraphicsInstruction(GraphicsOpCode.LINE_COLOUR, colour);
 	}
 
-	public GraphicsInstruction fillColour(RGB colour){
+	public GraphicsInstruction fillColour(Colour colour){
 		return new GraphicsInstruction(GraphicsOpCode.FILL_COLOUR, colour);
 	}
 

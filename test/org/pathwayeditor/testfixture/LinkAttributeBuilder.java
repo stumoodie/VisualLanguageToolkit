@@ -39,7 +39,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
@@ -138,7 +138,7 @@ public class LinkAttributeBuilder {
 			allowing(linkAttribute).compareTo(with(any(ILabelAttribute.class))); will(returnValue(-1));
 			allowing(linkAttribute).compareTo(with(any(IRootAttribute.class))); will(returnValue(1));
 			allowing(linkAttribute).propertyIterator(); will(returnIterator());
-			allowing(linkAttribute).getLineColour(); will(returnValue(RGB.BLACK));
+			allowing(linkAttribute).getLineColour(); will(returnValue(Colour.BLACK));
 			allowing(linkAttribute).getLineStyle(); will(returnValue(LineStyle.SOLID));
 			allowing(linkAttribute).getLineWidth(); will(returnValue(1.1));
 			allowing(linkAttribute).getSourceTerminus(); will(returnValue(srcTerm));

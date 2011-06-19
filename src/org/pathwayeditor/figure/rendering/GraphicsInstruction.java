@@ -22,7 +22,7 @@ package org.pathwayeditor.figure.rendering;
 import java.util.EnumSet;
 import java.util.List;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 
 /**
  *
@@ -55,8 +55,8 @@ public class GraphicsInstruction {
 		return (double[])this.value;
 	}
 
-	public RGB getRGB() {
-		return (RGB)this.value;
+	public Colour getColour() {
+		return (Colour)this.value;
 	}
 
 	@SuppressWarnings("unchecked")

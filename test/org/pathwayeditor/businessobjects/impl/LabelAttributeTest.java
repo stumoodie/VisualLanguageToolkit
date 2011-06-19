@@ -39,7 +39,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
@@ -66,9 +66,9 @@ import uk.ac.ed.inf.graph.compound.ICompoundNode;
 public class LabelAttributeTest {
 	private static final double DOUBLE_EQUIVALENCE_THRESH = 0.0001;
 	private static final int EXPECTED_IDX = 100;
-	private static final RGB EXPECTED_BG_COLOUR = RGB.BLUE;
+	private static final Colour EXPECTED_BG_COLOUR = Colour.BLUE;
 	private static final Envelope EXPECTED_BOUNDS = new Envelope(0.0, 0.0, 1.0, 1.0);
-	private static final RGB EXPECTED_FG_COLOUR = RGB.RED;
+	private static final Colour EXPECTED_FG_COLOUR = Colour.RED;
 	private static final int EXPECTED_NUM_LISTENERS = 1;
 	private static final LineStyle EXPECTED_LINE_STYLE = LineStyle.SOLID;
 	private static final double EXPECTED_LINE_WIDTH = 2.3;
@@ -144,11 +144,11 @@ public class LabelAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setBackgroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setBackgroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetBackgroundColor() {
-		RGB newColour = new RGB(1, 2, 3);
+		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", EXPECTED_BG_COLOUR.equals(newColour));
 		this.testInstance.setBackgroundColor(newColour);
 		assertEquals("expected fill colour", newColour, this.testInstance.getBackgroundColor());
@@ -224,11 +224,11 @@ public class LabelAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetForegroundColor() {
-		RGB newColour = new RGB(1, 2, 3);
+		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", EXPECTED_FG_COLOUR.equals(newColour));
 		this.testInstance.setForegroundColor(newColour);
 		assertEquals("expected line colour", newColour, this.testInstance.getForegroundColor());

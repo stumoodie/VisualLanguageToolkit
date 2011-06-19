@@ -42,7 +42,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
@@ -66,7 +66,7 @@ import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 public class LinkAttributeTest {
 	private static final int EXPECTED_IDX = 100;
 	private static final double DIFF_THRESHOLD = 0.0001;
-	private static final RGB EXPECTED_LINE_COLOUR = RGB.GREEN;
+	private static final Colour EXPECTED_LINE_COLOUR = Colour.GREEN;
 	private static final LineStyle EXPECTED_LINE_STYLE = LineStyle.DASH_DOT;
 	private static final double EXPECTED_LINE_WIDTH = 3.9;
 	private static final int EXPECTED_NUM_LISTENERS = 1;
@@ -191,11 +191,11 @@ public class LinkAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LinkAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
 	public void testSetLineColour() {
-		RGB expectedLineColour = RGB.WHITE;
+		Colour expectedLineColour = Colour.WHITE;
 		assertFalse("not same colour", expectedLineColour.equals(EXPECTED_LINE_COLOUR));
 		this.testInstance.setLineColour(expectedLineColour);
 		assertEquals("line colour", expectedLineColour, this.testInstance.getLineColour());
