@@ -377,7 +377,10 @@ public class FigureRenderingBuilder {
 		public List<Integer> getCurFillColour() {
 			List<Integer> retVal = null;
 			if(getFillColour() != null){
-				retVal = rgbToList(currentState.getFillColour());
+				retVal = colourToList(currentState.getFillColour());
+			}
+			else{
+				throw new IllegalStateException("Fill colour should not be null!");
 			}
 			return retVal;
 		}
@@ -405,7 +408,10 @@ public class FigureRenderingBuilder {
 		public List<Integer> getCurLineColour() {
 			List<Integer> retVal = null;
 			if(getLineColour() != null){
-				retVal = rgbToList(currentState.getLineColour());
+				retVal = colourToList(currentState.getLineColour());
+			}
+			else{
+				throw new IllegalStateException("Line colour should not be null!");
 			}
 			return retVal;
 		}
@@ -443,7 +449,7 @@ public class FigureRenderingBuilder {
 		}
 
 		@Override
-		public void setFillColour(int red, int green, int blue) {
+		public void setFillColour(int red, int green, int blue, int alpha) {
 			Colour newColour = new Colour(red, green, blue);
 			graphicsInstructions.add(g.fillColour(newColour));
 			currentState.setFillColour(newColour);
@@ -475,21 +481,21 @@ public class FigureRenderingBuilder {
 		}
 
 		@Override
-		public void setLineColour(int red, int green, int blue) {
-			Colour newCol = new Colour(red, green, blue);
+		public void setLineColour(int red, int green, int blue, int alpha) {
+			Colour newCol = new Colour(red, green, blue, alpha);
 			graphicsInstructions.add(g.lineColour(newCol));
 			currentState.setLineColour(newCol);
 		}
 
-		@Override
-		public void setNoFill() {
-			currentState.setFillColour(null);
-		}
+//		@Override
+//		public void setNoFill() {
+//			currentState.setFillColour(null);
+//		}
 
-		@Override
-		public void setNoLine() {
-			currentState.setLineColour(null);
-		}
+//		@Override
+//		public void setNoLine() {
+//			currentState.setLineColour(null);
+//		}
 
 		@Override
 		public double currentLineWidth() {
@@ -527,11 +533,12 @@ public class FigureRenderingBuilder {
 		
 	}
 
-	public List<Integer> rgbToList(Colour backgroundColor) {
+	public List<Integer> colourToList(Colour backgroundColor) {
 		List<Integer> retVal = new ArrayList<Integer>(Colour_LIST_SIZE);
 		retVal.add(backgroundColor.getRgb().getRed());
 		retVal.add(backgroundColor.getRgb().getGreen());
 		retVal.add(backgroundColor.getRgb().getBlue());
+		retVal.add(backgroundColor.getAlpha());
 		return retVal;
 	}
 

@@ -161,14 +161,14 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 		System.out.println("Text(" + x + ", " + y + ", align=" + align + ",text=" + text + ")");
 	}
 
-	@Override
-	public void setNoFill() {
-		System.out.println("SetNoFill()");
-	}
+//	@Override
+//	public void setNoFill() {
+//		System.out.println("SetNoFill()");
+//	}
 
 	@Override
-	public void setFillColour(int red, int green, int blue) {
-		print("setFillColour(" + red + ", " + green + ", " + blue + ")");
+	public void setFillColour(int red, int green, int blue, int alpha) {
+		print("setFillColour(" + red + ", " + green + ", " + blue + ", " + alpha + ")");
 	}
 
 	private void print(String string) {
@@ -188,14 +188,14 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	}
 
 	@Override
-	public void setLineColour(int red, int green, int blue) {
-		print("setLineColour(" + red + ", " + green + ", " + blue + ")");
+	public void setLineColour(int red, int green, int blue, int alpha) {
+		print("setLineColour(" + red + ", " + green + ", " + blue + ", " + alpha + ")");
 	}
 
-	@Override
-	public void setNoLine() {
-		print("setNoLine()");
-	}
+//	@Override
+//	public void setNoLine() {
+//		print("setNoLine()");
+//	}
 
 	@Override
 	public double getCurFontSize() {

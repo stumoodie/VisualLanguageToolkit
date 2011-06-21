@@ -909,56 +909,58 @@ public class InstructionExecutor {
 
 	private void processCurlinecol() {
 		List<Integer> curLineCol = this.opCodeHandler.getCurLineColour();
-		if(curLineCol == null){
-			// put a null value on the stack
-			this.valueStack.push(new Value());
-		}
-		else{
+//		if(curLineCol == null){
+//			// put a null value on the stack
+//			this.valueStack.push(new Value());
+//		}
+//		else{
 			for(Integer component : curLineCol){
 				this.valueStack.push(new Value(component));
 			}
-		}
+//		}
 	}
 
 	private void processSetlinecol() {
-		Value instType = this.valueStack.peek();
-		if(instType.getValue() == null){
-			this.valueStack.pop(); // get null value off the stack
-			this.opCodeHandler.setNoLine();
-		}
-		else{
+//		Value instType = this.valueStack.peek();
+//		if(instType.getValue() == null){
+//			this.valueStack.pop(); // get null value off the stack
+//			this.opCodeHandler.setNoLine();
+//		}
+//		else{
+			int alpha = this.valueStack.pop().getInteger();
 			int blue = this.valueStack.pop().getInteger();
 			int green = this.valueStack.pop().getInteger();
 			int red = this.valueStack.pop().getInteger();
-			this.opCodeHandler.setLineColour(red, green, blue);
-		}
+			this.opCodeHandler.setLineColour(red, green, blue, alpha);
+//		}
 	}
 
 	private void processCurfillcol() {
 		List<Integer> curFill = this.opCodeHandler.getCurFillColour();
-		if(curFill == null){
-			// put a null value on the stack
-			this.valueStack.push(new Value());
-		}
-		else{
+//		if(curFill == null){
+//			// put a null value on the stack
+//			this.valueStack.push(new Value());
+//		}
+//		else{
 			for(Integer component : curFill){
 				this.valueStack.push(new Value(component));
 			}
-		}
+//		}
 	}
 
 	private void processSetfillcol() {
-		Value instType = this.valueStack.peek();
-		if(instType.isNull()){
-			this.valueStack.pop(); // get null value off the stack
-			this.opCodeHandler.setNoFill();
-		}
-		else{
+//		Value instType = this.valueStack.peek();
+//		if(instType.isNull()){
+//			this.valueStack.pop(); // get null value off the stack
+//			this.opCodeHandler.setNoFill();
+//		}
+//		else{
+			int alpha = this.valueStack.pop().getInteger();
 			int blue = this.valueStack.pop().getInteger();
 			int green = this.valueStack.pop().getInteger();
 			int red = this.valueStack.pop().getInteger();
-			this.opCodeHandler.setFillColour(red, green, blue);
-		}
+			this.opCodeHandler.setFillColour(red, green, blue, alpha);
+//		}
 	}
 
 	private void reportError(String msg) {

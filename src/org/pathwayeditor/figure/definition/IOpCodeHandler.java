@@ -53,17 +53,17 @@ public 	interface IOpCodeHandler {
 	
 	void handleText(double x, double y, TextAlignment alignment, String text);
 
-	void setNoFill();
+//	void setNoFill();
 
-	void setFillColour(int red, int green, int blue);
+	void setFillColour(int red, int green, int blue, int alpha);
 
 	List<Integer> getCurFillColour();
 
-	void setNoLine();
+//	void setNoLine();
 
 	List<Integer> getCurLineColour();
 
-	void setLineColour(int red, int green, int blue);
+	void setLineColour(int red, int green, int blue, int alpha);
 
 	void setFontSize(double fontSize);
 

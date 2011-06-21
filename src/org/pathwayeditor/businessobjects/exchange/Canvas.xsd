@@ -2,7 +2,7 @@
 <!-- Copyright 2009-2011, Court of the University of Edinburgh -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://www.pathwayeditor.org/Exchange"
-    xmlns="http://www.pathwayeditor.org/Exchange" version="1.0.0" attributeFormDefault="unqualified">
+    xmlns="http://www.pathwayeditor.org/Exchange" version="1.1.0" attributeFormDefault="unqualified">
     <xs:simpleType name="CanvasSerialType">
         <xs:restriction base="xs:int"/>
     </xs:simpleType>
@@ -149,6 +149,7 @@
         <xs:attribute name="red" type="xs:int" use="required"/>
         <xs:attribute name="green" type="xs:int" use="required"/>
         <xs:attribute name="blue" type="xs:int" use="required"/>
+        <xs:attribute name="alpha" type="xs:int"/>
     </xs:complexType>
     <xs:complexType name="PointType">
         <xs:attribute name="x" type="xs:double" use="required"/>

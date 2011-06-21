@@ -303,6 +303,7 @@ public class CanvasMarshaller {
 		xmlColour.setBlue(rgb.getBlue());
 		xmlColour.setGreen(rgb.getGreen());
 		xmlColour.setRed(rgb.getRed());
+		xmlColour.setAlpha(col.getAlpha());
 		return xmlColour;
 	}
 
