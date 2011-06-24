@@ -69,6 +69,8 @@ public class InstructionFactoryImpl implements IInstructionFactory {
 		{ "def", OpCodes.DEF },
 		{ "curfillcol", OpCodes.CUR_FILL_COL },
 		{ "setfillcol", OpCodes.SET_FILL_COL },
+		{ "curfontcol", OpCodes.CUR_FONT_COL },
+		{ "setfontcol", OpCodes.SET_FONT_COL },
 		{ "curlinecol", OpCodes.CUR_LINE_COL },
 		{ "setlinecol", OpCodes.SET_LINE_COL },
 		{ "curlinewidth", OpCodes.CURR_LINE_WIDTH },

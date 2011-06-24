@@ -153,6 +153,8 @@ OPCODE
 	|	'setfillcol'
 	|	'curlinecol'
 	|	'setlinecol'
+	|	'curfontcol'
+	|	'setfontcol'
 	|	'text' // show text
 	|	'setlinewidth'
 	|	'curlinewidth'

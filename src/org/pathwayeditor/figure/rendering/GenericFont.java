@@ -60,12 +60,12 @@ public class GenericFont implements IFont {
 	}
 
 	@Override
-	public IFont newSize(double fontSize) {
+	public GenericFont newSize(double fontSize) {
 		return new GenericFont(fontSize, this.styles);
 	}
 
 	@Override
-	public IFont newStyle(EnumSet<Style> style) {
+	public GenericFont newStyle(EnumSet<Style> style) {
 		return new GenericFont(this.size, styles);
 	}
 

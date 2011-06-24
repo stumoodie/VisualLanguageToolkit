@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.rendering.IFont.Style;
 
@@ -212,6 +212,15 @@ public class FigureRenderer {
 			}
 			
 		});
+		this.opCodeLookup.put(GraphicsOpCode.FONT_COLOUR, new IGraphicsOpCodeAction(){
+
+			@Override
+			public void handleOpCode(GraphicsInstruction inst) {
+				Colour colour = inst.getColour();
+				processFontColour(colour);
+			}
+			
+		});
 		this.opCodeLookup.put(GraphicsOpCode.FONT_SIZE, new IGraphicsOpCodeAction(){
 
 			@Override
@@ -280,6 +289,13 @@ public class FigureRenderer {
 		this.graphics.setFont(this.currFont);
 		if(logger.isDebugEnabled()){
 			logger.debug("Setting font size=" + fontSize);
+		}
+	}
+
+	private void processFontColour(Colour colour) {
+		this.graphics.setFontColor(colour);
+		if(logger.isDebugEnabled()){
+			logger.debug("Setting font colour=" + colour);
 		}
 	}
 
@@ -460,7 +476,7 @@ public class FigureRenderer {
 			GraphicsInstruction inst = iter.next();
 			IGraphicsOpCodeAction action = this.opCodeLookup.get(inst.getOpCode());
 			if(action == null){
-				throw new IllegalStateException("Unrecognised opCode");
+				throw new IllegalStateException("Unrecognised opCode: " + inst);
 			}
 			else{
 				action.handleOpCode(inst);

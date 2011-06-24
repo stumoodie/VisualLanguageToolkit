@@ -223,6 +223,18 @@ public class InstructionExecutor {
 				processCurfillcol();
 			}
 		});
+		this.opCodeLookup.put(OpCodes.CUR_FONT_COL, new IOpCodeLookup(){
+			@Override
+			public void processOpCode() {
+				processCurfontcol();
+			}
+		});
+		this.opCodeLookup.put(OpCodes.SET_FONT_COL, new IOpCodeLookup(){
+			@Override
+			public void processOpCode() {
+				processSetfontcol();
+			}
+		});
 		this.opCodeLookup.put(OpCodes.SET_FONT_SIZE, new IOpCodeLookup(){
 			@Override
 			public void processOpCode() {
@@ -245,6 +257,18 @@ public class InstructionExecutor {
 			@Override
 			public void processOpCode() {
 				processCurfontstyle();
+			}
+		});
+		this.opCodeLookup.put(OpCodes.SET_FONT_COL, new IOpCodeLookup(){
+			@Override
+			public void processOpCode() {
+				processSetfontcol();
+			}
+		});
+		this.opCodeLookup.put(OpCodes.CUR_FONT_COL, new IOpCodeLookup(){
+			@Override
+			public void processOpCode() {
+				processCurfontcol();
 			}
 		});
 		this.opCodeLookup.put(OpCodes.SET_LINE_COL, new IOpCodeLookup(){
@@ -961,6 +985,21 @@ public class InstructionExecutor {
 			int red = this.valueStack.pop().getInteger();
 			this.opCodeHandler.setFillColour(red, green, blue, alpha);
 //		}
+	}
+
+	private void processCurfontcol() {
+		List<Integer> curFont = this.opCodeHandler.getCurFontColour();
+		for(Integer component : curFont){
+			this.valueStack.push(new Value(component));
+		}
+	}
+
+	private void processSetfontcol() {
+		int alpha = this.valueStack.pop().getInteger();
+		int blue = this.valueStack.pop().getInteger();
+		int green = this.valueStack.pop().getInteger();
+		int red = this.valueStack.pop().getInteger();
+		this.opCodeHandler.setFontColour(red, green, blue, alpha);
 	}
 
 	private void reportError(String msg) {

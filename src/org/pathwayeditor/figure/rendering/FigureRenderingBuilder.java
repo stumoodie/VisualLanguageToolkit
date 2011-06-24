@@ -111,13 +111,11 @@ public class FigureRenderingBuilder {
 		this.graphicsInstructions.add(g.setLineWidth(this.currentState.getLineWidth()));
 		this.graphicsInstructions.add(g.setLineStyle(this.currentState.getLineStyle()));
 		Colour fillColour = currentState.getFillColour();
-		if(fillColour != null){
-			this.graphicsInstructions.add(g.fillColour(fillColour));
-		}
+		this.graphicsInstructions.add(g.fillColour(fillColour));
 		Colour lineColour = currentState.getLineColour();
-		if(lineColour != null){
-			this.graphicsInstructions.add(g.lineColour(lineColour));
-		}
+		this.graphicsInstructions.add(g.lineColour(lineColour));
+		Colour fontColour = currentState.getFontColour();
+		this.graphicsInstructions.add(g.fontColour(fontColour));
 		IFont font = currentState.getFont();
 		this.graphicsInstructions.add(g.fontSize(font.getFontSize()));
 		this.graphicsInstructions.add(g.fontStyle(font.getStyle()));
@@ -245,6 +243,10 @@ public class FigureRenderingBuilder {
 	}
 
 	public Colour getFillColour() {
+		return currentState.getFillColour();
+	}
+
+	public Colour getFontColour() {
 		return currentState.getFillColour();
 	}
 
@@ -417,6 +419,18 @@ public class FigureRenderingBuilder {
 		}
 
 		@Override
+		public List<Integer> getCurFontColour() {
+			List<Integer> retVal = null;
+			if(getFontColour() != null){
+				retVal = colourToList(currentState.getFontColour());
+			}
+			else{
+				throw new IllegalStateException("Line colour should not be null!");
+			}
+			return retVal;
+		}
+
+		@Override
 		public void restoreGraphicsState() {
 			GraphicsState previousState = currentState;
 			currentState = graphicsStack.pop();
@@ -427,6 +441,10 @@ public class FigureRenderingBuilder {
 			if(previousState.getFillColour() != null && currentState.getFillColour() != null
 					&& !previousState.getFillColour().equals(currentState.getFillColour())){
 				graphicsInstructions.add(g.fillColour(currentState.getFillColour()));
+			}
+			if(previousState.getFontColour() != null && currentState.getFontColour() != null
+					&& !previousState.getFontColour().equals(currentState.getFontColour())){
+				graphicsInstructions.add(g.fontColour(currentState.getFontColour()));
 			}
 			if(previousState.getLineWidth() != currentState.getLineWidth()){
 				graphicsInstructions.add(g.setLineWidth(currentState.getLineWidth()));
@@ -457,7 +475,7 @@ public class FigureRenderingBuilder {
 
 		@Override
 		public void setFontSize(double fontSize) {
-			IFont f = currentState.getFont();
+			GenericFont f = currentState.getFont();
 			f = f.newSize(fontSize);
 			graphicsInstructions.add(g.fontSize(f.getFontSize()));
 			currentState.setFont(f);
@@ -474,7 +492,7 @@ public class FigureRenderingBuilder {
 					style.add(Style.BOLD);
 				}
 			}
-			IFont f = currentState.getFont();
+			GenericFont f = currentState.getFont();
 			f = f.newStyle(style);
 			graphicsInstructions.add(g.fontStyle(f.getStyle()));
 			currentState.setFont(f);
@@ -487,15 +505,12 @@ public class FigureRenderingBuilder {
 			currentState.setLineColour(newCol);
 		}
 
-//		@Override
-//		public void setNoFill() {
-//			currentState.setFillColour(null);
-//		}
-
-//		@Override
-//		public void setNoLine() {
-//			currentState.setLineColour(null);
-//		}
+		@Override
+		public void setFontColour(int red, int green, int blue, int alpha) {
+			Colour newCol = new Colour(red, green, blue, alpha);
+			graphicsInstructions.add(g.fontColour(newCol));
+			currentState.setFontColour(newCol);
+		}
 
 		@Override
 		public double currentLineWidth() {
@@ -620,6 +635,10 @@ public class FigureRenderingBuilder {
 		this.currentState.setFillColour(newFillColour);
 	}
 
+	public void setFontColour(Colour newFontColour) {
+		this.currentState.setFontColour(newFontColour);
+	}
+
 	public void setLineColour(Colour newLineColour) {
 		this.currentState.setLineColour(newLineColour);
 	}
@@ -711,5 +730,22 @@ public class FigureRenderingBuilder {
 
 	public String getBindStringValue(String name) {
 		return this.producer.getBindStringValue(name);
+	}
+
+	/**
+	 * Sets the initial state to use this font. 
+	 * @param font the font to set.
+	 */
+	public void setFont(GenericFont font) {
+		this.currentState.setFont(font);
+	}
+	
+	/**
+	 * Get the font currently set by the builder that will be used
+	 * as the initial state of the builder. 
+	 * @return the current font
+	 */
+	public GenericFont getFont(){
+		return this.currentState.getFont();
 	}
 }

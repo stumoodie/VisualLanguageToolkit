@@ -23,8 +23,8 @@ package org.pathwayeditor.figure.rendering;
 import java.util.List;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.IConvexHull;
 
@@ -87,6 +87,22 @@ public interface IFigureRenderingController {
 	 * @return the fill colour.
 	 */
 	Colour getFillColour();
+	
+	/**
+	 * Sets the font colour of the figure.
+	 * @param newFontColour the new font colour, which should not be null.
+	 */
+	void setFontColour(Colour newFontColour);
+	
+	/**
+	 * Get the font colour set for the figure. 
+	 * @return the font colour.
+	 */
+	Colour getFontColour();
+	
+	void setFont(GenericFont font);
+	
+	GenericFont getFont();
 	
 	/**
 	 * Sets the line colour to be used by the figure,

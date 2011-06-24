@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.figure.definition.ICompiledFigureDefinition;
 import org.pathwayeditor.figure.geometry.ConvexHullCalculator;
 import org.pathwayeditor.figure.geometry.Envelope;
@@ -277,6 +277,40 @@ public class FigureRenderingController implements IFigureRenderingController {
 	@Override
 	public void setEnvelope(Envelope newEnvelope) {
 		this.requestedEnvelope = newEnvelope;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IFigureRenderingController#setFontColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setFontColour(Colour newFontColour) {
+		Colour oldValue = this.builder.getFontColour();
+		this.builder.setFontColour(newFontColour);
+		this.notifyEvent(FigureChangeType.FONT_COLOUR, oldValue, newFontColour);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IFigureRenderingController#getFontColour()
+	 */
+	@Override
+	public Colour getFontColour() {
+		return this.builder.getFontColour();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IFigureRenderingController#setFont(org.pathwayeditor.figure.rendering.IFont)
+	 */
+	@Override
+	public void setFont(GenericFont font) {
+		this.builder.setFont(font);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IFigureRenderingController#getFont()
+	 */
+	@Override
+	public GenericFont getFont() {
+		return this.builder.getFont();
 	}
 	
 	

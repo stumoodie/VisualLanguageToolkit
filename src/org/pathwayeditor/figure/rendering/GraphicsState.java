@@ -20,8 +20,8 @@
 
 package org.pathwayeditor.figure.rendering;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.figure.geometry.Envelope;
 
 /**
@@ -33,14 +33,16 @@ public class GraphicsState {
 	private static final double DEFAULT_LINE_WIDTH = 1;
 	private Colour fill; 
 	private Colour line;
+	private Colour fontColour;
 	private double lineWidth;
-	private IFont font;
+	private GenericFont font;
 	private Envelope env;
 	private LineStyle lineStyle;
 	
 	public GraphicsState(){
 		this.fill = Colour.WHITE;
 		this.line = Colour.BLACK;
+		this.fontColour = Colour.BLACK;
 		this.lineWidth = DEFAULT_LINE_WIDTH;
 		this.font = new GenericFont();
 		this.env = new Envelope(0, 0, 0, 0);
@@ -50,6 +52,7 @@ public class GraphicsState {
 	public GraphicsState(GraphicsState other){
 		this.fill = other.fill;
 		this.line = other.line;
+		this.fontColour = other.fontColour;
 		this.lineWidth = other.lineWidth;
 		this.font = new GenericFont(other.font);
 		this.env = other.env;
@@ -64,10 +67,18 @@ public class GraphicsState {
 		this.lineWidth = newLineWidth;
 	}
 
-	public void setFont(IFont font){
+	public void setFont(GenericFont font){
 		this.font = font;
 	}
 	
+	public Colour getFontColour() {
+		return this.fontColour;
+	}
+
+	public void setFontColour(Colour newFontColour){
+		this.fontColour = newFontColour;
+	}
+
 	public Colour getFillColour() {
 		return this.fill;
 	}
@@ -84,7 +95,7 @@ public class GraphicsState {
 		this.line = newLineColour;
 	}
 
-	public IFont getFont() {
+	public GenericFont getFont() {
 		return this.font;
 	}
 	

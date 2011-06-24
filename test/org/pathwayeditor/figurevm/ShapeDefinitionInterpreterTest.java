@@ -178,13 +178,13 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
 	@Override
 	public List<Integer> getCurFillColour() {
 		print("getFillColour()");
-		return Arrays.asList(new Integer[] { 20, 30, 50 });
+		return Arrays.asList(new Integer[] { 20, 30, 50, 255 });
 	}
 
 	@Override
 	public List<Integer> getCurLineColour() {
 		print("getLineColour()");
-		return Arrays.asList(new Integer[] { 20, 30, 50 });
+		return Arrays.asList(new Integer[] { 20, 30, 50, 255 });
 	}
 
 	@Override
@@ -281,6 +281,23 @@ public class ShapeDefinitionInterpreterTest implements IOpCodeHandler {
     	retVal.add(bounds.getHeight());
     	print("textbounds=" + retVal);
 		return retVal;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#getCurFontColour()
+	 */
+	@Override
+	public List<Integer> getCurFontColour() {
+		print("getFontColour()");
+		return Arrays.asList(new Integer[] { 20, 30, 50, 255 });
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.definition.IOpCodeHandler#setFontColour(int, int, int, int)
+	 */
+	@Override
+	public void setFontColour(int red, int green, int blue, int alpha) {
+		print("setFontColour(" + red + ", " + green + ", " + blue + ", " + alpha + ")");
 	}
 
 }

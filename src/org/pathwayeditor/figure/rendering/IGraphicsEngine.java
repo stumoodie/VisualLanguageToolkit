@@ -19,8 +19,8 @@
 
 package org.pathwayeditor.figure.rendering;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 
 /**
  * 
@@ -63,6 +63,8 @@ public interface IGraphicsEngine {
 	void drawString(String text, double x, double y, GraphicalTextAlignment alignment);
 
 	void setFillColor(Colour color);
+
+	void setFontColor(Colour color);
 
 	void setLineColor(Colour color);
 
