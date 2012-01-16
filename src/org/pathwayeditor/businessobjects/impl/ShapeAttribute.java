@@ -26,64 +26,52 @@ import java.util.List;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAttribute {
-	private static final Point DEFAULT_POSITION = Point.ORIGIN;
-	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
-	private static final Colour DEFAULT_FILL = Colour.WHITE;
-	private static final Colour DEFAULT_LINE = Colour.BLACK;
-	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
-	private static final int DEFAULT_LINE_WIDTH = 1;
+//	private static final Point DEFAULT_POSITION = Point.ORIGIN;
+//	private static final Dimension DEFAULT_SIZE = new Dimension(10,10);
+//	private static final Colour DEFAULT_FILL = Colour.WHITE;
+//	private static final Colour DEFAULT_LINE = Colour.BLACK;
+//	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
+//	private static final int DEFAULT_LINE_WIDTH = 1;
 	private static final String DEFAULT_FIGURE_DEFN = "curbounds rect";
 
 	private transient IShapeObjectType shapeObjectType;
-	private transient Colour fillColour = DEFAULT_FILL;
-	private transient Colour lineColour = DEFAULT_LINE;
-	private LineStyle lineStyle = DEFAULT_LINE_STYLE;
-	private double lineWidth = DEFAULT_LINE_WIDTH;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
-	private transient final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_POSITION, DEFAULT_SIZE), canvasAttributeChangeListenerHelper);
+	private final DrawingNodeAttributeHelper drawingNodeHelper;
 	
 
 	public ShapeAttribute(IModel canvas, int creationSerial, IShapeObjectType shapeObjectType){
 		super(canvas, creationSerial, shapeObjectType.getDefaultAttributes());
 		this.shapeObjectType = shapeObjectType;
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, shapeObjectType.getDefaultAttributes());
 		this.populateDefaults(shapeObjectType.getDefaultAttributes());
 	}
 	
 	public ShapeAttribute(IModel canvas, int newCreationSerial, IShapeAttribute other) {
 		super(canvas, newCreationSerial, other);
-		this.boundsDelegate.setBounds(other.getBounds());
-		this.fillColour = other.getFillColour();
-		this.lineColour = other.getLineColour();
-		this.lineStyle = other.getLineStyle();
-		this.lineWidth = other.getLineWidth();
 		this.shapeObjectType = other.getObjectType();
 		this.figureDefn=other.getShapeDefinition();
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
 	}
 	
 	
 	private void populateDefaults(IShapeAttributeDefaults shapeDefaults){
-		this.fillColour = shapeDefaults.getFillColour();
-		this.boundsDelegate.setSize(shapeDefaults.getSize());
-		this.lineColour = shapeDefaults.getLineColour();
-		this.lineStyle = shapeDefaults.getLineStyle();
-		this.lineWidth = shapeDefaults.getLineWidth();
 		this.figureDefn = shapeDefaults.getShapeDefinition();
+		Envelope newEnv = this.drawingNodeHelper.getBounds().changeDimension(shapeDefaults.getSize());
+		this.drawingNodeHelper.setBounds(newEnv);
 	}
 
 	@Override
@@ -93,23 +81,18 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 
 	@Override
 	public LineStyle getLineStyle () {
-		return this.lineStyle ;
+		return this.drawingNodeHelper.getLineStyle() ;
 	}
 	
 
 	@Override
 	public double getLineWidth() {
-		return this.lineWidth;
+		return this.drawingNodeHelper.getLineWidth();
 	}
 
 	@Override
 	public void setLineWidth(double lineWidth) {
-		if ( lineWidth < MIN_LINE_WIDTH )
-			throw new IllegalArgumentException ("Line width cannot be less than " + MIN_LINE_WIDTH) ;
-
-		double oldLineWidth = this.lineWidth;
-		this.lineWidth = lineWidth;
-		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldLineWidth, this.lineWidth);
+		this.drawingNodeHelper.setLineWidth(lineWidth);
 	}
 
 	/* (non-Javadoc)
@@ -117,7 +100,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public Colour getFillColour() {
-		return this.fillColour;
+		return this.drawingNodeHelper.getFillColour();
 	}
 
 	/* (non-Javadoc)
@@ -125,7 +108,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public Colour getLineColour() {
-		return this.lineColour;
+		return this.drawingNodeHelper.getLineColour();
 	}
 	
 	/* (non-Javadoc)
@@ -133,12 +116,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void setFillColour(Colour fillColour) {
-		if ( fillColour == null )
-			throw new IllegalArgumentException ("Fill colour cannot be null") ;
-
-		Colour oldFillColour = this.fillColour;
-		this.fillColour = fillColour;
-		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldFillColour, this.fillColour);
+		this.drawingNodeHelper.setFillColour(fillColour);
 	}
 
 	/* (non-Javadoc)
@@ -146,12 +124,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void setLineColour(Colour lineColour) {
-		if ( lineColour == null )
-			throw new IllegalArgumentException ("Line colour cannot be null") ;
-
-		Colour oldLineColour = this.lineColour;
-		this.lineColour = lineColour;
-		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldLineColour, this.lineColour);
+		this.drawingNodeHelper.setLineColour(lineColour);
 	}
 
 	/* (non-Javadoc)
@@ -159,12 +132,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void setLineStyle(LineStyle lineStyle) {
-		if ( lineStyle == null )
-			throw new IllegalArgumentException ( "Line style cannot be null") ;
-
-		LineStyle oldLineStyle = this.lineStyle;
-		this.lineStyle = lineStyle ;
-		this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldLineStyle, this.lineStyle);
+		this.drawingNodeHelper.setLineStyle(lineStyle);
 	}
 	
 	/* (non-Javadoc)
@@ -172,7 +140,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void addChangeListener(ICanvasAttributeChangeListener listener) {
-		this.canvasAttributeChangeListenerHelper.addChangeListener(listener);
+		this.drawingNodeHelper.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -180,7 +148,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void removeChangeListener(ICanvasAttributeChangeListener listener) {
-		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
+		this.drawingNodeHelper.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -188,7 +156,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public List<ICanvasAttributeChangeListener> getChangeListeners() {
-		return this.canvasAttributeChangeListenerHelper.getChangeListeners();
+		return this.drawingNodeHelper.getChangeListeners();
 	}
 
 	/* (non-Javadoc)
@@ -196,7 +164,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public Envelope getBounds() {
-		return this.boundsDelegate.getBounds();
+		return this.drawingNodeHelper.getBounds();
 	}
 
 	/* (non-Javadoc)
@@ -204,7 +172,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void setBounds(Envelope newBounds) {
-		this.boundsDelegate.setBounds(newBounds);
+		this.drawingNodeHelper.setBounds(newBounds);
 	}
 
 	/* (non-Javadoc)
@@ -220,7 +188,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void resize(Point locationDelta, Dimension sizeDelta) {
-		this.boundsDelegate.resize(locationDelta, sizeDelta);
+		this.drawingNodeHelper.resize(locationDelta, sizeDelta);
 	}
 
 	/* (non-Javadoc)
@@ -228,7 +196,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	 */
 	@Override
 	public void translate(Point delta) {
-		this.boundsDelegate.translate(delta);
+		this.drawingNodeHelper.translate(delta);
 	}
 
 	/* (non-Javadoc)
@@ -258,5 +226,37 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 	@Override
 	public ICompoundNode getCurrentElement(){
 		return (ICompoundNode)super.getCurrentElement();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFont()
+	 */
+	@Override
+	public GenericFont getFont() {
+		return this.drawingNodeHelper.getFont();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFont(org.pathwayeditor.figure.rendering.GenericFont)
+	 */
+	@Override
+	public void setFont(GenericFont font) {
+		this.drawingNodeHelper.setFont(font);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFontColour()
+	 */
+	@Override
+	public Colour getFontColour() {
+		return this.drawingNodeHelper.getFontColour();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFontColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setFontColour(Colour colour) {
+		this.drawingNodeHelper.setFontColour(colour);
 	}
 }

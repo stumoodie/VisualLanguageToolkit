@@ -19,8 +19,6 @@
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListenee;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -51,56 +49,5 @@ public interface IShapeAttribute extends  IAnnotatedObject, ITypedDrawingNodeAtt
 	 */
 	String getShapeDefinition();
 	
-	/**
-	 * Returns a {@link Colour} representation for the background color of this Shape
-	 * @return the background color. Cannot be null.
-	 */	
-	Colour getFillColour();
-
-	/**
-	 * Sets the fill color for this Shape.
-	 * @param fillColour the new fill color. Cannot be null
-	 * @throws IllegalArgumentException if fillColour is null.
-	 */
-	void setFillColour(Colour fillColour);
-
-	/**
-	 * Returns the numerical value representing the thickness of the border line of the shape. 
-	 * @return the line width. Cannot be less than <code>MIN_LINE_WIDTH</code>.
-	 */
-	double getLineWidth();
-	
-	/**
-	 * Sets the line width for this Shape.
-	 * @param lineWidth the new fill color. Must be at least <code>MIN_LINE_WIDTH</code>.
-	 * @throws IllegalArgumentException if lineWidth is less than MIN_LINE_WIDTH.
-	 */
-	void setLineWidth(double lineWidth);
-
-	/**
-	 * Returns a {@link Colour} representation for the color of this Shape's border line.
-	 * @return the background color. Cannot be null.
-	 */
-	Colour getLineColour();
-	
-	/**
-	 * Sets the line color for this Shape.
-	 * @param lineColour the new line color. Cannot be null
-	 * @throws IllegalArgumentException if lineColour is null.
-	 */
-	void setLineColour(Colour lineColour);
-	
-	/**
-	 * Returns the line style of this shape. 
-	 * @return the line style. Cannot be null.
-	 */
-	LineStyle getLineStyle();
-	
-	/**
-	 * Sets the line style for this Shape.
-	 * @param lineStyle the new line style. Cannot be null
-	 * @throws IllegalArgumentException if lineStyle is null.
-	 */
-	void setLineStyle(LineStyle lineStyle);
 	
 }

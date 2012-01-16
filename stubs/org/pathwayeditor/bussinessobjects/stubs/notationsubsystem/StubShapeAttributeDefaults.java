@@ -25,17 +25,19 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 /**
  * @author Stuart Moodie
  *
  */
 public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefaults {
+	private static final GenericFont FONT = new GenericFont();
 	public   Colour    FILL_COLOR = new Colour ( 100 , 100 , 100 ) ;
 	public   Colour    LINE_COLOR = new Colour ( 150 , 150 , 150 ) ;
 	public   LineStyle LINE_STYLE = LineStyle.DASH_DOT ;     
@@ -134,4 +136,18 @@ public abstract class StubShapeAttributeDefaults implements IShapeAttributeDefau
 	public boolean containsPropertyDefinition(IPropertyDefinition propDefn){
 		return propDefn != null && this.getpropdefns().contains(propDefn);
 	}
+
+	@Override
+	public Colour getFontColour() {
+		return LINE_COLOR;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IDrawingNodeAttributeDefaults#getFont()
+	 */
+	@Override
+	public GenericFont getFont() {
+		return FONT;
+	}
+
 }

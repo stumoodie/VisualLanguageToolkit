@@ -22,13 +22,14 @@ package org.pathwayeditor.testfixture;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 /**
  * @author Stuart Moodie
@@ -43,11 +44,11 @@ public class MockLabelObjectTypeBuilder {
 	private ILabelAttributeDefaults attributeDefaults;
 	private String name;
 	private Colour lineColour = Colour.RED;
+	private Colour fontColour = Colour.WHITE;
+	private GenericFont font = new GenericFont();
 	private LineStyle lineStyle = LineStyle.SOLID;
 	private double lineWidth = 2.3;
 	private Colour fillColour = Colour.BLUE;
-	private boolean hasNoBorder = false;
-	private boolean hasNoFill = false;
 
 	public MockLabelObjectTypeBuilder(Mockery mock, INotationSyntaxService syntaxService, int idx, String name){
 		this.mockery = mock;
@@ -76,6 +77,14 @@ public class MockLabelObjectTypeBuilder {
 		return buf.toString();
 	}
 
+	public void setDefaultFontColour(Colour fontColour){
+		this.fontColour = fontColour;
+	}
+	
+	public void setDefaultFont(GenericFont font){
+		this.font = font;
+	}
+	
 	public void build(){
 		this.attributeDefaults = mockery.mock(ILabelAttributeDefaults.class, createAttDefaultsName());
 		this.mockery.checking(new Expectations(){{
@@ -88,11 +97,11 @@ public class MockLabelObjectTypeBuilder {
 
 			allowing(attributeDefaults).getMinimumSize(); will(returnValue(new Dimension(20.0, 23.4)));
 			allowing(attributeDefaults).getLineColour(); will(returnValue(lineColour));
+			allowing(attributeDefaults).getFontColour(); will(returnValue(fontColour));
+			allowing(attributeDefaults).getFont(); will(returnValue(font));
 			allowing(attributeDefaults).getLineStyle(); will(returnValue(lineStyle));
 			allowing(attributeDefaults).getLineWidth(); will(returnValue(lineWidth));
 			allowing(attributeDefaults).getFillColour(); will(returnValue(fillColour ));
-			allowing(attributeDefaults).hasNoBorder(); will(returnValue(hasNoBorder));
-			allowing(attributeDefaults).hasNoFill(); will(returnValue(hasNoFill ));
 			allowing(attributeDefaults).getDisplayFormat(); will(returnValue(null));
 		}});
 	}

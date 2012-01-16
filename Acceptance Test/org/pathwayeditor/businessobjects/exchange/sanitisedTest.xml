@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<epx:canvas xmlns:epx="http://www.pathwayeditor.org/Exchange"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.pathwayeditor.org/Exchange http://www.pathwayeditor.org/Exchange/Canvas.xsd"
-    name="Diagram name" lastCreationSerial="44">
+<epx:canvas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.pathwayeditor.org/Exchange ../../../../../src/org/pathwayeditor/businessobjects/exchange/Canvas.xsd"
+ xmlns:epx="http://www.pathwayeditor.org/Exchange"
+ name="Diagram name"
+ lastCreationSerial="44">
     <Grid snapToGrid="true" gridOn="true">
         <GridSize width="10.0" height="10.0"/>
     </Grid>
@@ -49,11 +50,15 @@
                                 <LabelNode nodeId="15">
                                     <SubModel/>
                                     <LabelAttribute creationSerial="24" lineStyle="SOLID"
-                                        lineWidth="1.0" noFill="true" noBorder="true">
+                                        lineWidth="1.0">
                                         <Location x="57.0" y="57.0"/>
                                         <Size width="57.0" height="57.0"/>
                                         <LineColour red="255" green="255" blue="255"/>
                                         <FillColour red="107" green="107" blue="107"/>
+                                        <FontColour red="0" green="0" blue="0"/>
+                                        <Font size="12">
+                                            <style>NORMAL</style>
+                                        </Font>
                                         <PropertyRef id="2"/>
                                     </LabelAttribute>
                                 </LabelNode>
@@ -64,6 +69,10 @@
                                 <Size width="53.0" height="53.0"/>
                                 <FillColour red="103" green="103" blue="103"/>
                                 <LineColour red="103" green="103" blue="103"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="2"/>
                                 <FigureDefinition>curbounds rect</FigureDefinition>
                             </ShapeAttribute>
@@ -73,11 +82,15 @@
                                 <LabelNode nodeId="16">
                                     <SubModel/>
                                     <LabelAttribute creationSerial="25" lineStyle="SOLID"
-                                        lineWidth="1.0" noFill="true" noBorder="true">
+                                        lineWidth="1.0">
                                         <Location x="58.0" y="58.0"/>
                                         <Size width="58.0" height="58.0"/>
                                         <LineColour red="255" green="255" blue="255"/>
                                         <FillColour red="108" green="108" blue="108"/>
+                                        <FontColour red="0" green="0" blue="0"/>
+                                        <Font size="12">
+                                            <style>NORMAL</style>
+                                        </Font>
                                         <PropertyRef id="3"/>
                                     </LabelAttribute>
                                 </LabelNode>
@@ -88,18 +101,25 @@
                                 <Size width="54.0" height="54.0"/>
                                 <FillColour red="104" green="104" blue="104"/>
                                 <LineColour red="104" green="104" blue="104"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="3"/>
                                 <FigureDefinition>curbounds rect</FigureDefinition>
                             </ShapeAttribute>
                         </ShapeNode>
                         <LabelNode nodeId="9">
                             <SubModel/>
-                            <LabelAttribute creationSerial="18" lineStyle="SOLID" lineWidth="1.0"
-                                noFill="true" noBorder="true">
+                            <LabelAttribute creationSerial="18" lineStyle="SOLID" lineWidth="1.0">
                                 <Location x="51.0" y="51.0"/>
                                 <Size width="51.0" height="51.0"/>
                                 <LineColour red="255" green="255" blue="255"/>
                                 <FillColour red="101" green="101" blue="101"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="1"/>
                             </LabelAttribute>
                         </LabelNode>
@@ -146,6 +166,10 @@
                         <Size width="51.0" height="51.0"/>
                         <FillColour red="101" green="101" blue="101"/>
                         <LineColour red="101" green="101" blue="101"/>
+                        <FontColour red="0" green="0" blue="0"/>
+                        <Font size="12">
+                            <style>NORMAL</style>
+                        </Font>
                         <PropertyRef id="1"/>
                         <FigureDefinition>curbounds rect</FigureDefinition>
                     </ShapeAttribute>
@@ -160,6 +184,10 @@
                                 <Size width="55.0" height="55.0"/>
                                 <FillColour red="105" green="105" blue="105"/>
                                 <LineColour red="105" green="105" blue="105"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="11"/>
                                 <FigureDefinition>curbounds rect</FigureDefinition>
                             </ShapeAttribute>
@@ -176,6 +204,10 @@
                                                 <Size width="58.0" height="58.0"/>
                                                 <FillColour red="108" green="108" blue="108"/>
                                                 <LineColour red="108" green="108" blue="108"/>
+                                                <FontColour red="0" green="0" blue="0"/>
+                                                <Font size="12">
+                                                    <style>NORMAL</style>
+                                                </Font>
                                                 <PropertyRef id="14"/>
                                                 <FigureDefinition>curbounds rect</FigureDefinition>
                                             </ShapeAttribute>
@@ -187,6 +219,10 @@
                                         <Size width="57.0" height="57.0"/>
                                         <FillColour red="107" green="107" blue="107"/>
                                         <LineColour red="107" green="107" blue="107"/>
+                                        <FontColour red="0" green="0" blue="0"/>
+                                        <Font size="12">
+                                            <style>NORMAL</style>
+                                        </Font>
                                         <PropertyRef id="13"/>
                                         <FigureDefinition>curbounds rect</FigureDefinition>
                                     </ShapeAttribute>
@@ -236,18 +272,25 @@
                                 <Size width="56.0" height="56.0"/>
                                 <FillColour red="106" green="106" blue="106"/>
                                 <LineColour red="106" green="106" blue="106"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="12"/>
                                 <FigureDefinition>curbounds rect</FigureDefinition>
                             </ShapeAttribute>
                         </ShapeNode>
                         <LabelNode nodeId="12">
                             <SubModel/>
-                            <LabelAttribute creationSerial="21" lineStyle="SOLID" lineWidth="1.0"
-                                noFill="true" noBorder="true">
+                            <LabelAttribute creationSerial="21" lineStyle="SOLID" lineWidth="1.0">
                                 <Location x="54.0" y="54.0"/>
                                 <Size width="54.0" height="54.0"/>
                                 <LineColour red="255" green="255" blue="255"/>
                                 <FillColour red="104" green="104" blue="104"/>
+                                <FontColour red="0" green="0" blue="0"/>
+                                <Font size="12">
+                                    <style>NORMAL</style>
+                                </Font>
                                 <PropertyRef id="10"/>
                             </LabelAttribute>
                         </LabelNode>
@@ -276,18 +319,25 @@
                         <Size width="52.0" height="52.0"/>
                         <FillColour red="102" green="102" blue="102"/>
                         <LineColour red="102" green="102" blue="102"/>
+                        <FontColour red="0" green="0" blue="0"/>
+                        <Font size="12">
+                            <style>NORMAL</style>
+                        </Font>
                         <PropertyRef id="10"/>
                         <FigureDefinition>curbounds rect</FigureDefinition>
                     </ShapeAttribute>
                 </ShapeNode>
                 <LabelNode nodeId="14">
                     <SubModel/>
-                    <LabelAttribute creationSerial="23" lineStyle="SOLID" lineWidth="1.0"
-                        noFill="true" noBorder="true">
+                    <LabelAttribute creationSerial="23" lineStyle="SOLID" lineWidth="1.0">
                         <Location x="56.0" y="56.0"/>
                         <Size width="56.0" height="56.0"/>
                         <LineColour red="255" green="255" blue="255"/>
                         <FillColour red="106" green="106" blue="106"/>
+                        <FontColour red="0" green="0" blue="0"/>
+                        <Font size="12">
+                            <style>NORMAL</style>
+                        </Font>
                         <PropertyRef id="27"/>
                     </LabelAttribute>
                 </LabelNode>

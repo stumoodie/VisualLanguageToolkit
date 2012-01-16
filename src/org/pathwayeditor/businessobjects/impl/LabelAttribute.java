@@ -25,10 +25,8 @@ import java.util.List;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
@@ -36,32 +34,27 @@ import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
-	private static final int DEFAULT_X = 0;
-	private static final int DEFAULT_Y = 0;
-	private static final int DEFAULT_HEIGHT = 1;
-	private static final int DEFAULT_WIDTH = 1;
+//	private static final int DEFAULT_X = 0;
+//	private static final int DEFAULT_Y = 0;
+//	private static final int DEFAULT_HEIGHT = 1;
+//	private static final int DEFAULT_WIDTH = 1;
 
 	private IAnnotationProperty visualisableProperty;
-	private Colour background;
-	private Colour foreground;
-	private boolean noBorder;
-	private boolean noFill;
-	private double lineWidth;
-	private LineStyle lineStyle = LineStyle.SOLID;
-	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
+//	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
 	private final ILabelObjectType objectType;
 	private Format displayFormat;
+	private final DrawingNodeAttributeHelper drawingNodeHelper; 
 
-	public LabelAttribute(IModel hibCanvas, int creationSerial, IAnnotationProperty property,	ILabelObjectType labelObjectType) {
+	public LabelAttribute(IModel hibCanvas, int creationSerial, IAnnotationProperty property, ILabelObjectType labelObjectType) {
 		super(hibCanvas, creationSerial);
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, labelObjectType.getDefaultAttributes());
 		this.visualisableProperty = property;
-//		this.visualisableProperty.setLabel(this);
 		this.objectType = labelObjectType;
 		populateDefaults();
 	}
@@ -69,26 +62,14 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	public LabelAttribute(IModel hibCanvas, int creationSerial, ILabelAttribute otherAttribute, IAnnotationProperty copiedProperty) {
 		super(hibCanvas, creationSerial);
 		this.objectType = otherAttribute.getObjectType();
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
 		this.visualisableProperty = copiedProperty;
-		this.background = otherAttribute.getBackgroundColor();
-		this.foreground = otherAttribute.getForegroundColor();
-		this.lineStyle = otherAttribute.getLineStyle();
-		this.lineWidth = otherAttribute.getLineWidth();
-		this.noBorder = otherAttribute.hasNoBorder();
-		this.noFill = otherAttribute.hasNoFill();
 		this.displayFormat = otherAttribute.getDisplayFormat();
-//		this.visualisableProperty.setLabel(this);
-		this.boundsDelegate.setBounds(otherAttribute.getBounds());
+//		this.boundsDelegate.setBounds(otherAttribute.getBounds());
 	}
 
 	private void populateDefaults() {
 		ILabelAttributeDefaults labelDefaults = this.objectType.getDefaultAttributes();
-		this.background = labelDefaults.getFillColour();
-		this.foreground = labelDefaults.getLineColour();
-		this.lineStyle = labelDefaults.getLineStyle();
-		this.lineWidth = labelDefaults.getLineWidth();
-		this.noBorder = labelDefaults.hasNoBorder();
-		this.noFill = labelDefaults.hasNoFill();
 		this.displayFormat = labelDefaults.getDisplayFormat();
 	}
 	
@@ -97,53 +78,24 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 * (non-Javadoc)
 	 * 
 	 * @seeorg.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#
-	 * getBackgroundColor()
+	 * getFillColour()
 	 */
 	@Override
-	public Colour getBackgroundColor() {
-		return this.background;
+	public Colour getFillColour() {
+		return this.drawingNodeHelper.getFillColour();
 	}
 
 	@Override
-	public void setBackgroundColor(Colour color) {
-		if (color == null)
-			throw new IllegalArgumentException("Color cannot be null.");
-
-		if(this.background != color){
-			Colour oldColour = this.background;
-			this.background = color;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.FILL_COLOUR, oldColour, this.background);
-		}
+	public void setFillColour(Colour color) {
+		this.drawingNodeHelper.setFillColour(color);
 	}
 	
-//	private void setLocation(Point location) {
-//		if (location == null)
-//			throw new IllegalArgumentException("location cannot be null.");
-//
-//		if(!this.position.equals(location)){
-//			Point oldValue = this.position;
-//			this.position = location;
-//			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, this.position);
-//		}
-//	}
-//
-//	private void setSize(Dimension size) {
-//		if (size == null)
-//			throw new IllegalArgumentException("size cannot be null.");
-//
-//		if(!this.size.equals(size)){
-//			Dimension oldValue = this.size;
-//			this.size = size;
-//			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.SIZE, oldValue, this.size);
-//		}
-//	}
-
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListenee#addChangeListener(org.pathwayeditor.businessobjects.drawingprimitives.listeners.IPropertyChangeListener)
 	 */
 	@Override
 	public void addChangeListener(ICanvasAttributeChangeListener listener) {
-		this.canvasAttributeChangeListenerHelper.addChangeListener(listener);
+		this.drawingNodeHelper.addChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -151,7 +103,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public List<ICanvasAttributeChangeListener> getChangeListeners() {
-		return this.canvasAttributeChangeListenerHelper.getChangeListeners();
+		return this.drawingNodeHelper.getChangeListeners();
 	}
 
 	/* (non-Javadoc)
@@ -159,7 +111,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void removeChangeListener(ICanvasAttributeChangeListener listener) {
-		this.canvasAttributeChangeListenerHelper.removeChangeListener(listener);
+		this.drawingNodeHelper.removeChangeListener(listener);
 	}
 
 	/* (non-Javadoc)
@@ -167,7 +119,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public Envelope getBounds() {
-		return this.boundsDelegate.getBounds();
+		return this.drawingNodeHelper.getBounds();
 	}
 
 	/* (non-Javadoc)
@@ -175,67 +127,31 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void setBounds(Envelope newBounds) {
-		this.boundsDelegate.setBounds(newBounds);
+		this.drawingNodeHelper.setBounds(newBounds);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getForegroundColor()
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLineColour()
 	 */
 	@Override
-	public Colour getForegroundColor() {
-		return this.foreground;
+	public Colour getLineColour() {
+		return this.drawingNodeHelper.getLineColour();
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
 	 */
 	@Override
-	public void setForegroundColor(Colour color) {
-		if(this.foreground != color){
-			Colour oldValue = this.foreground;
-			this.foreground = color;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_COLOUR, oldValue, this.foreground);
-		}
+	public void setLineColour(Colour colour) {
+		this.drawingNodeHelper.setLineColour(colour);
 	}
 
-	@Override
-	public void setNoBorder(boolean noBorderEnabled){
-		if(this.noBorder != noBorderEnabled){
-			boolean oldValue = this.noBorder;
-			this.noBorder = noBorderEnabled;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.NO_BORDER, oldValue, this.noBorder);
-		}
-	}
-	
-	@Override
-	public boolean hasNoBorder(){
-		return this.noBorder;
-	}
-	
-	boolean getNoBorder(){
-		return this.noBorder;
-	}
-
-	@Override
-	public void setNoFill(boolean noFillEnabled){
-		if(this.noFill != noFillEnabled){
-			boolean oldValue = this.noFill;
-			this.noFill = noFillEnabled;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.NO_FILL, oldValue, this.noFill);
-		}
-	}
-	
-	@Override
-	public boolean hasNoFill(){
-		return this.noFill;
-	}
-	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute#getLineStyle()
 	 */
 	@Override
 	public LineStyle getLineStyle() {
-		return this.lineStyle;
+		return this.drawingNodeHelper.getLineStyle();
 	}
 
 	/* (non-Javadoc)
@@ -243,7 +159,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public double getLineWidth() {
-		return this.lineWidth;
+		return this.drawingNodeHelper.getLineWidth();
 	}
 
 	/* (non-Javadoc)
@@ -251,11 +167,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void setLineStyle(LineStyle lineStyle) {
-		if(!this.lineStyle.equals(lineStyle)){
-			LineStyle oldValue = this.lineStyle;
-			this.lineStyle = lineStyle;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_STYLE, oldValue, this.lineStyle);
-		}
+		this.drawingNodeHelper.setLineStyle(lineStyle);
 	}
 
 	/* (non-Javadoc)
@@ -263,11 +175,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void setLineWidth(double lineWidth) {
-		if(this.lineWidth != lineWidth){
-			double oldValue = this.lineWidth;
-			this.lineWidth = lineWidth;
-			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.LINE_WIDTH, oldValue, this.lineWidth);
-		}
+		this.drawingNodeHelper.setLineWidth(lineWidth);
 	}
 
 	/* (non-Javadoc)
@@ -283,7 +191,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void resize(Point locationDelta, Dimension sizeDelta) {
-		this.boundsDelegate.resize(locationDelta, sizeDelta);
+		this.drawingNodeHelper.resize(locationDelta, sizeDelta);
 	}
 
 	/* (non-Javadoc)
@@ -291,7 +199,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	 */
 	@Override
 	public void translate(Point delta) {
-		this.boundsDelegate.translate(delta);
+		this.drawingNodeHelper.translate(delta);
 	}
 
 	/* (non-Javadoc)
@@ -368,5 +276,37 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	@Override
 	public Format getDisplayFormat() {
 		return this.displayFormat;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFont()
+	 */
+	@Override
+	public GenericFont getFont() {
+		return this.drawingNodeHelper.getFont();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFont(org.pathwayeditor.figure.rendering.GenericFont)
+	 */
+	@Override
+	public void setFont(GenericFont font) {
+		this.drawingNodeHelper.setFont(font);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFontColour()
+	 */
+	@Override
+	public Colour getFontColour() {
+		return this.drawingNodeHelper.getFontColour();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFontColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setFontColour(Colour colour) {
+		this.drawingNodeHelper.setFontColour(colour);
 	}
 }

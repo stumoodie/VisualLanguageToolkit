@@ -38,8 +38,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributePropertyChangeEvent;
@@ -136,22 +136,22 @@ public class LabelAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#getBackgroundColor()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#getFillColour()}.
 	 */
 	@Test
-	public void testGetBackgroundColor() {
-		assertEquals("expected bg colour", EXPECTED_BG_COLOUR, this.testInstance.getBackgroundColor());
+	public void testGetFillColour() {
+		assertEquals("expected bg colour", EXPECTED_BG_COLOUR, this.testInstance.getFillColour());
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setBackgroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
-	public void testSetBackgroundColor() {
+	public void testSetFillColour() {
 		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", EXPECTED_BG_COLOUR.equals(newColour));
-		this.testInstance.setBackgroundColor(newColour);
-		assertEquals("expected fill colour", newColour, this.testInstance.getBackgroundColor());
+		this.testInstance.setFillColour(newColour);
+		assertEquals("expected fill colour", newColour, this.testInstance.getFillColour());
 		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.FILL_COLOUR,
 				EXPECTED_BG_COLOUR, newColour);
 		validator.validateEvent(propChangeEvent);
@@ -216,71 +216,25 @@ public class LabelAttributeTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#getForegroundColor()}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#getLineColour()}.
 	 */
 	@Test
-	public void testGetForegroundColor() {
-		assertEquals("expected bg colour", EXPECTED_FG_COLOUR, this.testInstance.getForegroundColor());
+	public void testGetLineColour() {
+		assertEquals("expected bg colour", EXPECTED_FG_COLOUR, this.testInstance.getLineColour());
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setForegroundColor(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)}.
 	 */
 	@Test
-	public void testSetForegroundColor() {
+	public void testSetLineColour() {
 		Colour newColour = new Colour(1, 2, 3);
 		assertFalse("new value different", EXPECTED_FG_COLOUR.equals(newColour));
-		this.testInstance.setForegroundColor(newColour);
-		assertEquals("expected line colour", newColour, this.testInstance.getForegroundColor());
+		this.testInstance.setLineColour(newColour);
+		assertEquals("expected line colour", newColour, this.testInstance.getLineColour());
 		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.LINE_COLOUR,
 				EXPECTED_FG_COLOUR, newColour);
 		validator.validateEvent(propChangeEvent);
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setNoBorder(boolean)}.
-	 */
-	@Test
-	public void testSetNoBorder() {
-		boolean newFlag = true;
-		boolean oldValue = this.testInstance.hasNoBorder();
-		assertFalse("new value different", oldValue == newFlag);
-		this.testInstance.setNoBorder(newFlag);
-		assertEquals("expected value", newFlag, this.testInstance.hasNoBorder());
-		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.NO_BORDER,
-				oldValue, newFlag);
-		validator.validateEvent(propChangeEvent);
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#hasNoBorder()}.
-	 */
-	@Test
-	public void testHasNoBorder() {
-		assertFalse("has border", this.testInstance.hasNoBorder());
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#setNoFill(boolean)}.
-	 */
-	@Test
-	public void testSetNoFill() {
-		boolean newFlag = true;
-		boolean oldValue = this.testInstance.hasNoFill();
-		assertFalse("new value different", oldValue == newFlag);
-		this.testInstance.setNoFill(newFlag);
-		assertEquals("expected value", newFlag, this.testInstance.hasNoFill());
-		CanvasAttributePropertyChangeEventValidator validator = new CanvasAttributePropertyChangeEventValidator(this.testInstance, CanvasAttributePropertyChange.NO_FILL,
-				oldValue, newFlag);
-		validator.validateEvent(propChangeEvent);
-	}
-
-	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.LabelAttribute#hasNoFill()}.
-	 */
-	@Test
-	public void testHasNoFill() {
-		assertFalse("has border", this.testInstance.hasNoFill());
 	}
 
 	/**

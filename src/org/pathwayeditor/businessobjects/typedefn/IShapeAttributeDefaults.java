@@ -23,8 +23,6 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.figure.geometry.Dimension;
 
 /**
@@ -34,7 +32,7 @@ import org.pathwayeditor.figure.geometry.Dimension;
  * @author Stuart Moodie
  *
  */
-public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer  {
+public interface IShapeAttributeDefaults extends  IDrawingNodeAttributeDefaults, IAnnotatedCanvasAttributeDefaults, IPropertyDefinitionContainer  {
 	
 	/**
 	 * Gets the initial shape definition.
@@ -48,27 +46,4 @@ public interface IShapeAttributeDefaults extends IAnnotatedCanvasAttributeDefaul
 	 */
 	Dimension getSize();
 
-	/**
-	 * Get the initial line style of the shape.
-	 * @return the shape initial line style.
-	 */
-	LineStyle getLineStyle();
-
-	/**
-	 * Get the initial colour of the lines in the shape.
-	 * @return the shape's initial line colour - not null.
-	 */
-	Colour getLineColour();
-
-	/**
-	 * Get the initial colour of the shape background (fill).
-	 * @return the shape's initial fill colour - not null.
-	 */
-	Colour getFillColour();
-
-	/**
-	 * Get the initial line width of the shape.
-	 * @return the shape's initial line width, which should be a non-sero number.
-	 */
-	double getLineWidth();
 }

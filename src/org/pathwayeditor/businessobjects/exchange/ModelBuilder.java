@@ -23,6 +23,7 @@ package org.pathwayeditor.businessobjects.exchange;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
@@ -56,6 +57,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.BooleanAnnotationProper
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
 import org.pathwayeditor.businessobjects.exchange.castor.ColourType;
 import org.pathwayeditor.businessobjects.exchange.castor.DimensionType;
+import org.pathwayeditor.businessobjects.exchange.castor.Font;
 import org.pathwayeditor.businessobjects.exchange.castor.IntegerAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.LabelAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.LabelNode;
@@ -77,6 +79,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.ShapeNode;
 import org.pathwayeditor.businessobjects.exchange.castor.SubModel;
 import org.pathwayeditor.businessobjects.exchange.castor.TextAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
+import org.pathwayeditor.businessobjects.exchange.castor.types.FontStyle;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
 import org.pathwayeditor.businessobjects.management.IModelFactory;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
@@ -88,6 +91,8 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.GenericFont;
+import org.pathwayeditor.figure.rendering.IFont;
 
 import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
@@ -200,6 +205,8 @@ public class ModelBuilder {
 		shapeAttrib.setBounds(bounds);
 		shapeAttrib.setFillColour(createColour(xmlShapeAtt.getFillColour()));
 		shapeAttrib.setLineColour(createColour(xmlShapeAtt.getLineColour()));
+		shapeAttrib.setFontColour(createColour(xmlShapeAtt.getFontColour()));
+		shapeAttrib.setFont(createGenericFont(xmlShapeAtt.getFont()));
 		shapeAttrib.setLineWidth(xmlShapeAtt.getLineWidth());
 		shapeAttrib.setLineStyle(createLineStyle(xmlShapeAtt.getLineStyle()));
 		buildAnnotationProperties(shapeAttrib, xmlShapeAtt.getPropertyRef());
@@ -392,14 +399,34 @@ public class ModelBuilder {
 	}
 
 	private void buildLabelAttributes(ILabelAttribute attribute, LabelAttribute xmlLabelAttribute) {
-		attribute.setBackgroundColor(createColour(xmlLabelAttribute.getFillColour()));
-		attribute.setForegroundColor(createColour(xmlLabelAttribute.getLineColour()));
+		attribute.setFillColour(createColour(xmlLabelAttribute.getFillColour()));
+		attribute.setLineColour(createColour(xmlLabelAttribute.getLineColour()));
+		attribute.setFontColour(createColour(xmlLabelAttribute.getFontColour()));
+		attribute.setFont(createGenericFont(xmlLabelAttribute.getFont()));
 		Envelope bounds = new Envelope(createPoint(xmlLabelAttribute.getLocation()), 
 				createDimension(xmlLabelAttribute.getSize()));
 		attribute.setBounds(bounds);
 		attribute.setLineStyle(createLineStyle(xmlLabelAttribute.getLineStyle()));
-		attribute.setNoBorder(xmlLabelAttribute.isNoBorder());
-		attribute.setNoFill(xmlLabelAttribute.isNoFill());
+	}
+
+	/**
+	 * @param font
+	 * @return
+	 */
+	private GenericFont createGenericFont(Font font) {
+		EnumSet<IFont.Style> fontStyles = EnumSet.noneOf(IFont.Style.class); 
+		for(FontStyle style : font.getStyle()){
+			if(style.equals(FontStyle.NORMAL)){
+				fontStyles.add(IFont.Style.NORMAL);
+			}
+			else if(style.equals(FontStyle.ITALIC)){
+				fontStyles.add(IFont.Style.ITALIC);
+			}
+			else if(style.equals(FontStyle.ITALIC)){
+				fontStyles.add(IFont.Style.ITALIC);
+			}
+		}
+		return new GenericFont(font.getSize(), fontStyles);
 	}
 
 	private static Dimension createDimension(DimensionType xmlSize) {

@@ -56,6 +56,8 @@ import org.pathwayeditor.businessobjects.exchange.castor.ColourType;
 import org.pathwayeditor.businessobjects.exchange.castor.DecoratorSize;
 import org.pathwayeditor.businessobjects.exchange.castor.DimensionType;
 import org.pathwayeditor.businessobjects.exchange.castor.FillColour;
+import org.pathwayeditor.businessobjects.exchange.castor.Font;
+import org.pathwayeditor.businessobjects.exchange.castor.FontColour;
 import org.pathwayeditor.businessobjects.exchange.castor.Grid;
 import org.pathwayeditor.businessobjects.exchange.castor.GridSize;
 import org.pathwayeditor.businessobjects.exchange.castor.LabelAttribute;
@@ -80,6 +82,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.SrcTerminus;
 import org.pathwayeditor.businessobjects.exchange.castor.SubModel;
 import org.pathwayeditor.businessobjects.exchange.castor.TgtTerminus;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
+import org.pathwayeditor.businessobjects.exchange.castor.types.FontStyle;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.ObjectTypeClassificationType;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
@@ -88,6 +91,8 @@ import org.pathwayeditor.businessobjects.typedefn.IObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.GenericFont;
+import org.pathwayeditor.figure.rendering.IFont;
 
 import uk.ac.ed.inf.graph.compound.CompoundNodePair;
 import uk.ac.ed.inf.graph.compound.IChildCompoundGraph;
@@ -291,6 +296,8 @@ public class CanvasMarshaller {
 		xmlAttrib.setObjectTypeId(attrib.getObjectType().getUniqueId());
 		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getFillColour()));
 		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
+		xmlAttrib.setFontColour(setColour(new FontColour(), attrib.getFontColour()));
+		xmlAttrib.setFont(createFont(new Font(), attrib.getFont()));
 		xmlAttrib.setLineWidth(attrib.getLineWidth());
 		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
 		xmlAttrib.setFigureDefinition(attrib.getShapeDefinition());
@@ -311,18 +318,34 @@ public class CanvasMarshaller {
 		LabelAttribute xmlAttrib = new LabelAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
 		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
-		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getBackgroundColor()));
-		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getForegroundColor()));
+		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getFillColour()));
+		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
 		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
 		xmlAttrib.setLineWidth(attrib.getLineWidth());
-		xmlAttrib.setNoBorder(attrib.hasNoBorder());
-		xmlAttrib.setNoFill(attrib.hasNoFill());
+		xmlAttrib.setFontColour(setColour(new FontColour(), attrib.getFontColour()));
+		xmlAttrib.setFont(createFont(new Font(), attrib.getFont()));
 		xmlAttrib.setSize(createSize(new Size(), attrib.getBounds().getDimension()));
 		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
 		xmlAttrib.setPropertyRef(this.propMap.get(attrib.getProperty()));
 		return xmlAttrib;
 	}
 	
+	private Font createFont(Font font, GenericFont font2) {
+		font.setSize(font2.getFontSize());
+		for(IFont.Style s : font2.getStyle()){
+			if(s.equals(IFont.Style.NORMAL)){
+				font.addStyle(FontStyle.NORMAL);
+			}
+			else if(s.equals(IFont.Style.ITALIC)){
+				font.addStyle(FontStyle.ITALIC);
+			}
+			if(s.equals(IFont.Style.BOLD)){
+				font.addStyle(FontStyle.BOLD);
+			}
+		}
+		return font;
+	}
+
 	private LinkAttribute createLinkAttribute(ILinkAttribute attrib) {
 		LinkAttribute xmlAttrib = new LinkAttribute();
 		xmlAttrib.setCreationSerial(attrib.getCreationSerial());

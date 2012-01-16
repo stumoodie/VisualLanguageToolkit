@@ -28,6 +28,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasPropertyChangeHelper;
@@ -37,6 +38,7 @@ import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 import uk.ac.ed.inf.graph.compound.IRootCompoundNode;
@@ -213,6 +215,114 @@ public class RootAttribute extends CanvasAttribute implements IRootAttribute {
 	@Override
 	public List<ICanvasPropertyChangeListener> getCanvasPropertyChangeListeners() {
 		return this.canvasPropertyChangeHelper.getCanvasPropertyChangeListeners();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFillColour()
+	 */
+	@Override
+	public Colour getFillColour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFillColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setFillColour(Colour fillColour) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLineWidth()
+	 */
+	@Override
+	public double getLineWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLineWidth(double)
+	 */
+	@Override
+	public void setLineWidth(double lineWidth) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLineColour()
+	 */
+	@Override
+	public Colour getLineColour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLineColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setLineColour(Colour lineColour) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getLineStyle()
+	 */
+	@Override
+	public LineStyle getLineStyle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setLineStyle(org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle)
+	 */
+	@Override
+	public void setLineStyle(LineStyle lineStyle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFont()
+	 */
+	@Override
+	public GenericFont getFont() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFont(org.pathwayeditor.figure.rendering.GenericFont)
+	 */
+	@Override
+	public void setFont(GenericFont font) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#getFontColour()
+	 */
+	@Override
+	public Colour getFontColour() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute#setFontColour(org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour)
+	 */
+	@Override
+	public void setFontColour(Colour colour) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

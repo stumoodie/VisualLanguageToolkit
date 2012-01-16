@@ -28,8 +28,8 @@ import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
@@ -39,6 +39,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
+import org.pathwayeditor.figure.rendering.GenericFont;
 
 /**
  * @author Stuart Moodie
@@ -67,7 +68,9 @@ public class MockShapeObjectTypeBuilder {
 	private int index;
 	private INotationSyntaxService syntaxService;
 	private Colour fillColour = Colour.BLACK;
+	private Colour fontColour = Colour.WHITE;
 	private Colour lineColour = Colour.BLUE;
+	private GenericFont font = new GenericFont();
 	private LineStyle lineStyle = LineStyle.DASH_DOT_DOT;
 	private double lineWidth = 3.1;
 	private String shapeDefn = "10.0 11.0 13.0 14.6 rect";
@@ -88,6 +91,14 @@ public class MockShapeObjectTypeBuilder {
 	
 	public void setDefaultFillColour(Colour fillColour){
 		this.fillColour = fillColour;
+	}
+	
+	public void setDefaultFontColour(Colour fontColour){
+		this.fontColour = fontColour;
+	}
+	
+	public void setDefaultFont(GenericFont font){
+		this.font = font;
 	}
 	
 	public void setDefaultLineColour(Colour lineColour){
@@ -141,6 +152,8 @@ public class MockShapeObjectTypeBuilder {
 			
 			allowing(shapeAttributeDefaults).getFillColour(); will(returnValue(fillColour));
 			allowing(shapeAttributeDefaults).getLineColour(); will(returnValue(lineColour));
+			allowing(shapeAttributeDefaults).getFontColour(); will(returnValue(fontColour));
+			allowing(shapeAttributeDefaults).getFont(); will(returnValue(font));
 			allowing(shapeAttributeDefaults).getLineStyle(); will(returnValue(lineStyle));
 			allowing(shapeAttributeDefaults).getLineWidth(); will(returnValue(lineWidth));
 			allowing(shapeAttributeDefaults).getShapeDefinition(); will(returnValue(shapeDefn));

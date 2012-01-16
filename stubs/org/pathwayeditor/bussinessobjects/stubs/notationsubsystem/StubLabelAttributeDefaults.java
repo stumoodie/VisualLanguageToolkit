@@ -24,13 +24,12 @@ package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.text.Format;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LabelLocationPolicy;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.rendering.GenericFont;
-import org.pathwayeditor.figure.rendering.IFont;
 
 /**
  * @author Stuart Moodie
@@ -42,6 +41,7 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 	public static final Colour FILL_COLOUR = Colour.WHITE;
 	public static final Colour LINE_COLOUR = Colour.BLACK;
 	public static final Dimension SIZE = new Dimension(20, 10);
+	private static final GenericFont FONT = new GenericFont();
 
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getFillColour()
@@ -93,8 +93,9 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getFont()
 	 */
-	public IFont getFont() {
-		return new GenericFont();
+	@Override
+	public GenericFont getFont() {
+		return FONT;
 	}
 
 	/* (non-Javadoc)
@@ -106,27 +107,19 @@ public class StubLabelAttributeDefaults implements ILabelAttributeDefaults {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoBorder()
-	 */
-	@Override
-	public boolean hasNoBorder() {
-		return false;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#hasNoFill()
-	 */
-	@Override
-	public boolean hasNoFill() {
-		return false;
-	}
-
-	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.typedefn.ILabelAttributeDefaults#getDisplayFormat()
 	 */
 	@Override
 	public Format getDisplayFormat() {
 		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.typedefn.IDrawingNodeAttributeDefaults#getFontColour()
+	 */
+	@Override
+	public Colour getFontColour() {
+		return LINE_COLOUR;
 	}
 
 }

@@ -2,7 +2,7 @@
 <!-- Copyright 2009-2011, Court of the University of Edinburgh -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://www.pathwayeditor.org/Exchange"
-    xmlns="http://www.pathwayeditor.org/Exchange" version="1.1.0" attributeFormDefault="unqualified">
+    xmlns="http://www.pathwayeditor.org/Exchange" version="1.2.0" attributeFormDefault="unqualified">
     <xs:simpleType name="CanvasSerialType">
         <xs:restriction base="xs:int"/>
     </xs:simpleType>
@@ -66,6 +66,8 @@
                 <xs:sequence>
                     <xs:element name="FillColour" type="ColourType"/>
                     <xs:element name="LineColour" type="ColourType"/>
+                    <xs:element name="FontColour" type="ColourType"/>
+                    <xs:element name="Font" type="FontType"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="PropertyRef"
                         type="PropertyRefType"/>
                     <xs:element name="FigureDefinition" type="FigureDefinitionType"/>
@@ -114,12 +116,12 @@
                 <xs:sequence>
                     <xs:element name="LineColour" type="ColourType"/>
                     <xs:element name="FillColour" type="ColourType"/>
+                    <xs:element name="FontColour" type="ColourType"/>
+                    <xs:element name="Font" type="FontType"/>
                     <xs:element name="PropertyRef" type="PropertyRefType"/>
                 </xs:sequence>
                 <xs:attribute name="lineStyle" type="LineStyleType" use="required"/>
                 <xs:attribute name="lineWidth" type="xs:double" use="required"/>
-                <xs:attribute name="noFill" type="xs:boolean" use="required"/>
-                <xs:attribute name="noBorder" type="xs:boolean" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -151,6 +153,19 @@
         <xs:attribute name="blue" type="xs:int" use="required"/>
         <xs:attribute name="alpha" type="xs:int"/>
     </xs:complexType>
+    <xs:complexType name="FontType">
+        <xs:sequence>
+            <xs:element maxOccurs="2" name="style" type="FontStyle"/>
+        </xs:sequence>
+        <xs:attribute name="size" type="xs:double" use="required"/>
+    </xs:complexType>
+    <xs:simpleType name="FontStyle">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NORMAL"/>
+            <xs:enumeration value="ITALIC"/>
+            <xs:enumeration value="BOLD"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:complexType name="PointType">
         <xs:attribute name="x" type="xs:double" use="required"/>
         <xs:attribute name="y" type="xs:double" use="required"/>
