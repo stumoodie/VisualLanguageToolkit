@@ -65,7 +65,7 @@ public class GenericFont implements IFont {
 	}
 
 	@Override
-	public GenericFont newStyle(EnumSet<Style> style) {
+	public GenericFont newStyle(EnumSet<Style> styles) {
 		return new GenericFont(this.size, styles);
 	}
 
