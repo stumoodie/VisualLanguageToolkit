@@ -3,3 +3,5 @@
 /antBuild
 /test.ps
 /test.xml
+.DS_Store
+bin
