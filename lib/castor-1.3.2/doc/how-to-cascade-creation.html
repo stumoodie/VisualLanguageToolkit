@@ -1,0 +1,814 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>How to cascade object creation</title><link rel="stylesheet" href="default.css"></head><body bgcolor="#ffffff" link="#6763a9" vlink="#6763a9" topmargin="0" bottommargin="0" leftmargin="0" marginheight="0" marginwidth="0"><a name="top"></a><table border="0" cellpadding="0" cellspacing="0" height="400"><tr><td width="10" valign="top" align="left" bgcolor="#7270c2"><img src="images/dotTrans.gif" width="1" height="1" border="0"></td><td valign="top" align="left" bgcolor="#7270c2" width="150"><img src="images/dotTrans.gif" width="1" height="1" border="0"></td><td width="7" valign="top" align="left"><img src="images/dotTrans.gif" border="0" width="1" height="1"></td><td width="70" valign="top" align="left"><img src="images/dotTrans.gif" width="70" height="6" border="0"></td><td width="100%" valign="top" align="left"><img src="images/top_2.gif" width="100%" height="6" border="0"></td></tr><tr><td width="10" bgcolor="#7270c2" valign="top" align="left"><img src="images/dotTrans.gif" border="0" width="1" height="1"></td><td bgcolor="#7270c2" valign="top" align="left" width="150"><img src="images/dotTrans.gif" border="0" width="1" height="1"></td><td width="7" bgcolor="#ffffff" valign="top" align="left"></td><td width="70" valign="top" align="left"><img src="images/dotTrans.gif" width="1" height="1" border="0"></td><td width="100%" valign="middle" align="left"><a href="license.html"><span class="menuTopOff">License</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.codehaus.org"><span class="menuTopOff">Codehaus</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://openejb.org"><span class="menuTopOff">OpenEJB</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://openjms.sf.net"><span class="menuTopOff">OpenJMS</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://openorb.sf.net"><span class="menuTopOn">OpenORB</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://tyrex.sf.net"><span class="menuTopOff">Tyrex</span></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><img src="images/dotTrans.gif" width="1" height="2" border="0"></td></tr><tr><td width="10" bgcolor="#7270c2" valign="top" align="left"><img src="images/dotTrans.gif" width="10" height="3" border="0"></td><td bgcolor="#7270c2" valign="top" align="right" width="150"><img src="images/line_sm.gif" width="105" height="3" border="0"></td><td width="7" bgcolor="#a9a5de" valign="top" align="left"><img src="images/line_sm.gif" width="7" height="3" border="0"></td><td width="70" valign="top" align="left"><img src="images/line_light.gif" width="70" height="3" border="0"></td><td width="100%" valign="top" align="left"><img src="images/line_light.gif" width="100%" height="3" border="0"></td></tr><tr><td bgcolor="#7270c2" valign="top" align="left"><img src="images/dotTrans.gif" width="10" height="10" border="0"></td><td bgcolor="#7270c2" valign="top" align="left" width="150"><img src="images/dotTrans.gif" width="1" height="2" border="0"><br><table border="0" cellpadding="10" cellspacing="0"><tr><td><script type="text/javascript" src="http://www.ohloh.net/p/3635/widgets/project_users_logo.js"></script></td></tr></table><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Old releases</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="releases-old.html"><span class="subMenuOff">General</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://www.castor.org/1.3/index.html"><span class="subMenuOff">Release 1.3</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://www.castor.org/1.3rc1/index.html"><span class="subMenuOff">Release 1.3rc1</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://www.castor.org/1.2/index.html"><span class="subMenuOff">Release 1.2</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Main</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="index.html"><span class="subMenuOff">Home</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="about.html"><span class="subMenuOff">About</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="features.html"><span class="subMenuOff">Features</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="download.html"><span class="subMenuOff">Download</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="dependencies.html"><span class="subMenuOff">Dependencies</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="reference-guide.html"><span class="subMenuOffHighlighted">Reference guide</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="presentations.html"><span class="subMenuOff">Publications</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="javadoc/overview-summary.html"><span class="subMenuOff">JavaDoc</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="maven-integration.html"><span class="subMenuOff">Maven 2 support</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="maven-archetypes.html"><span class="subMenuOff">Maven 2 archetypes</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="schema.html"><span class="subMenuOff">DTD &amp; Schemas</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="changes.html"><span class="subMenuOff">Recent HTML changes</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="news.html"><span class="subMenuOff">News Archive</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://castor.codehaus.org/rss/castor-announce.xml"><span class="subMenuOff">RSS news feed</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://docs.codehaus.org/display/CASTOR/"><span class="subMenuOffHighlighted">Project Wiki</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Development/Support</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="lists.html"><span class="subMenuOff">Mailing Lists</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="scm.html"><span class="subMenuOff">SVN/JIRA</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="contributing.html"><span class="subMenuOff">Contributing</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="support.html"><span class="subMenuOff">Support</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://bamboo.ci.codehaus.org/browse/CASTOR"><span class="subMenuOff">Continuous builds</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="professional-services.html"><span class="subMenuOffHighlighted">Prof. services</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Related projects</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="spring-orm-integration.html"><span class="subMenuOff">Spring ORM support</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="spring-xml-intro.html"><span class="subMenuOff">Spring XML factories</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ws-integration.html"><span class="subMenuOff">WS frameworks</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">XML</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="xml-link.html"><span class="subMenuOff">XML</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">XML Code Generator</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="srcgen-link.html"><span class="subMenuOff">XML Code Generator</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">JDO</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-introduction.html"><span class="subMenuOff">Introduction</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-starter-tutorial.html"><span class="subMenuOff">First steps</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo.html"><span class="subMenuOff">Using JDO</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-database-conf.html"><span class="subMenuOff">JDO Config</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="types.html"><span class="subMenuOff">Types</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-mapping.html"><span class="subMenuOff">JDO Mapping</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-faq.html"><span class="subMenuOff">JDO FAQ</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-examples.html"><span class="subMenuOff">JDO Examples</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-howto.html"><span class="subMenuOffHighlighted">JDO HOW-TOs</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-tips-tricks.html"><span class="subMenuOffHighlighted">Tips &amp; Tricks</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-other-features.html"><span class="subMenuOff">Other Features</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-self-executable-examples.html"><span class="subMenuOff">JDO sample JAR</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Tools</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="schemaGen-anttask.html"><span class="subMenuOff">Schema generator</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">Advanced JDO</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-caching-detail.html"><span class="subMenuOff">Caching</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="oql.html"><span class="subMenuOff">OQL</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="locking.html"><span class="subMenuOff">Trans. &amp; Locks</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="design-persist.html"><span class="subMenuOff">Design</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="key-generator.html"><span class="subMenuOff">KeyGen</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="long-transact.html"><span class="subMenuOff">Long Trans.</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="nested-attr.html"><span class="subMenuOff">Nested Attrs.</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-pooling.html"><span class="subMenuOff">Pooling Examples</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="postgresql-blobs.html"><span class="subMenuOff">LOBs</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="jdo-best-practice.html"><span class="subMenuOff">Best practice</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">DDL Generator</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ddlgen.html"><span class="subMenuOff">Using DDL Generator</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ddlgen-properties.html"><span class="subMenuOff">Properties</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ddlgen-anttask.html"><span class="subMenuOff">Ant task</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ddlgen-mapping.html"><span class="subMenuOff">Type Mapping</span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">More</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="examples.html"><span class="subMenuOff">The Examples</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="extras.html"><span class="subMenuOff">3rd Party Tools</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="test-framework.html"><span class="subMenuOff">JDO Tests</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="ctf.html"><span class="subMenuOff">XML Tests</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="conf-lib.html"><span class="subMenuOff">Configuration</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href=""><span class="subMenuOff"></span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="http://www.java.net/"><span class="subMenuOff"><img src="images/javanet_button_90.gif" border="0"></span></a></td></tr></table><br><table border="0" cellpadding="0" cellspacing="0"><tr><td valign="top" align="left"><span class="subMenuOn">About</span></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="license.html"><span class="subMenuOff">License</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="user-experience.html"><span class="subMenuOffHighlighted">User stories</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="contributors.html"><span class="subMenuOff">Contributors</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="marketplace.html"><span class="subMenuOff">Marketplace</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="status.html"><span class="subMenuOff">Status, Todo</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="release-notes.html"><span class="subMenuOff">Changelog</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="library.html"><span class="subMenuOff">Library</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="contacts.html"><span class="subMenuOff">Contact</span></a></td></tr><tr><td valign="top" align="left">
+        &nbsp;
+                <a href="origins.html"><span class="subMenuOff">Project Name</span></a></td></tr></table><br></td><td width="7" bgcolor="#a9a5de" valign="top" align="left">&nbsp;</td><td width="70" valign="top" align="left">&nbsp;</td><td rowspan="4" width="100%" valign="top"><table cols="2" rows="2" border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td valign="top" align="left"><br><img border="0" height="34" hspace="0" src="images/castor.gif" vspace="0" width="115"><br><img border="0" height="10" hspace="0" src="images/dotTrans.gif"></td><td width="120" height="5" valign="top" align="right"></td></tr></table><p></p><p></p><br><h2 align="center">How to cascade object creation</h2><HR size="1"><span class="bodyGrey"><b><a href="#Overview">Overview</a></b><br></span><span class="bodyGrey"><b><a href="#Enabling-cascading-creation">Enabling cascading creation</a></b><br></span><span class="bodyGrey"><b><a href="#Scenarios">Scenarios</a></b><br></span><span class="bodyGrey"><a href="#db.create()">&nbsp;&nbsp;&nbsp;&nbsp;db.create()</a><br></span><span class="bodyGrey"><a href="#db.commit()">&nbsp;&nbsp;&nbsp;&nbsp;db.commit()</a><br></span><span class="bodyGrey"><a href="#Cascading-create-and-collections">&nbsp;&nbsp;&nbsp;&nbsp;Cascading create and collections</a><br></span><span class="bodyGrey"><b><a href="#See-also">See also</a></b><br></span><HR size="1"><br><a name="Overview"><h2>Overview</h2></a>
+
+			<p><span class="bodyGrey">Cascading creation allows you to transfer some of the responsibilities of creating objects to Castor JDO.
+			  To be more precise: if you enable cascading creation on a relation between two classes, all objects on 
+              one end of that relation that have not yet been created will be created when the other end gets persisted.
+			  This saves you from manually creating every single object, which is especially useful when dealing with
+			  large object graphs that have 1:M (one to many) relations or many objects in a single relationship.</span></p>			  
+
+		<a name="Enabling-cascading-creation"><h2>Enabling cascading creation</h2></a>
+
+			<p><span class="bodyGrey">
+                To enable cascading creation on a relation, you simply set the cascading 
+                attribute of the &lt;sql&gt; field describing the relation to "create" 
+                (or "all"):
+            </span></p>
+
+            <p><span class="bodyGrey">
+                In other words, the field mapping for the Java property <i>book</i> ...
+            </span></p>
+            
+			<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+&lt;field name="book" type="myapp.Book" &gt;
+  &lt;sql name="book_id" /&gt;
+&lt;/field&gt;
+</pre></span></td></tr></table></td></tr></table><p></p>
+
+            <p><span class="bodyGrey">
+                becomes
+            </span></p>
+
+            <p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+&lt;field name="book" type="myapp.Book" &gt;
+  &lt;sql name="book_id" cascading="create" /&gt;
+&lt;/field&gt;
+</pre></span></td></tr></table></td></tr></table><p></p>
+
+            <p><span class="bodyGrey">
+                In case of bidirectional relations, it does matters on which 
+                end you enable cascading creation. It is also possible to 
+                enable it on both ends.
+            </span></p>
+
+		<a name="Scenarios"><h2>Scenarios</h2></a>
+
+			<a name="db.create()"><h3>db.create()</h3></a>
+
+				<p><span class="bodyGrey">
+                    The most intuitive case is when you explicitly call <tt>db.create()</tt> 
+                    on an object that has cascading creation enabled on one or more of his 
+                    relations. If the objects in those relationships have not yet been 
+                    created, they will be as part of the <tt>create()</tt> execution.
+                </span></p>
+
+				<p><span class="bodyGrey">
+                    Here is a simple example, where the objects Author and Book are in a 
+                    one-to-one relation (i.e. every Book has exactly one Author):
+                </span></p>
+
+				<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Author author = new Author();
+author.setId(1);
+author.setName("John Jackson");
+
+Book book = new Book();
+book.setId(1);
+book.setTitle("My Life");
+book.setAuthor(author);
+
+db.create(book);
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+
+                <p><span class="bodyGrey">
+                    Once the commit operation has successfully completed, both the 
+                    <tt>Author</tt> and the <tt>Book</tt> instance will have been persisted to your 
+                    data store. To highlight this, lets's have a look at the 
+                    corresponding database tables <b>before</b> and <b>after</b>
+                    the execution of above code fragment.
+                </span></p>
+
+				<p><span class="bodyGrey"><b>Before</b></span></p>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Author</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td colspan="2"><span class="bodyGrey" colspan="2">(empty table)</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+                
+                <br>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Book</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">title</th>
+									<th align="left">author_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td colspan="3"><span class="bodyGrey" colspan="3">(empty table)</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+				
+				<p><span class="bodyGrey"><b>After</b></span></p>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Author</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John Jackson"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+                
+                <br>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Book</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">title</th>
+									<th align="left">author_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"My Life"</span></td>
+									<td><span class="bodyGrey">1</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+			
+
+			<a name="db.commit()"><h3>db.commit()</h3></a>
+
+				<p><span class="bodyGrey">
+                    Cascading creation also works implicitly: any objects that are on the 
+                    receiving end of a cascaded relation will be created upon transaction commit, 
+                    provided they do not exist yet and that the object on the primary end of that 
+                    relation does. In other words: if you modify a relation property of a 
+                    loaded object, any new objects that now need to be created will be created.
+                </span></p>
+
+				<p><span class="bodyGrey">
+                    To demonstrate, let's continue the example from the previous section.
+				    We, again, have a <tt>Book</tt> and an <tt>Author</tt>, in a one-to-one relation, both already 
+                    persisted. If we now change the book's author to someone new, any object that 
+                    is not yet in the database will be persisted automatically. Just call db.commit()
+                    after setting the new author, and the new author will be persisted as 
+                    well.
+                </span></p>
+
+				<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Author author = new Author();
+author.setId(2);
+author.setName("Bruce Willis");
+
+Book book = db.load(Book.class, 1);
+book.setAuthor(author);
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+
+                <p><span class="bodyGrey">
+                    In terms of unit test assertions, the current state of the author and 
+                    book instances can be expressed as follows:
+                </span></p>
+                
+                <p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Book book = db.load(Book.class, 1);
+assertNotNull(book);
+assertEquals(1, book.getId());
+
+Author author = book.getAuthor();
+<b>assertNotNull</b>(author);
+assertEquals(<b>2</b>, book.getId());
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+                
+                <p><span class="bodyGrey">
+                    As above, let's have a look at the corresponding database tables
+                    for the entities <tt>Author</tt> and <tt>Book</tt>: 
+                </span></p>
+
+				<p><span class="bodyGrey"><b>Before</b></span></p>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Author</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John Jackson"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+                
+                <br>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Book</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">title</th>
+									<th align="left">author_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"My Life"</span></td>
+									<td><span class="bodyGrey">1</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+				
+				<p><span class="bodyGrey"><b>After</b></span></p>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Author</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John Jackson"</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">2</span></td>
+									<td><span class="bodyGrey">"Bruce Willis"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+                
+                <br>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>Book</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">title</th>
+									<th align="left">author_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"My Life"</span></td>
+									<td><span class="bodyGrey">2</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+                
+                <p><span class="bodyGrey">
+                    Please note that we now have two authors stored, and that the book with
+                    an id value of '1' now has a foreign key relationship to the author with the 
+                    id value '2'.
+                </span></p>
+
+			
+
+			<a name="Cascading-create-and-collections"><h3>Cascading create and collections</h3></a>
+
+				<p><span class="bodyGrey">
+                    The real benefit of using cascading for object creation shows when dealing 
+                    with 1:M relations, usually expressed through Java collections in your 
+                    entity classes.
+                </span></p>
+
+				<p><span class="bodyGrey">
+                    For the remainder of this secction, we will use the Java classes <tt>Department</tt>
+                    and <tt>Employee</tt>, which have a 1:M relationship (in other words, every 
+                    department has one or more employees). On the Java side, this is expressed as the 
+                    <tt>Department</tt> having a collection of <tt>Employee</tt> objects in form of a 
+                    Java collection. In the database, this will obviously be the other way around, 
+                    with the <tt>emp</tt> table referencing the <tt>dept</tt> table. Every example 
+                    in this section will use the same database state as a starting point, as shown 
+                    here:
+                </span></p>
+				
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>dept</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">23</span></td>
+									<td><span class="bodyGrey">"Accounting"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>emp</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+									<th align="left">dept_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">2</span></td>
+									<td><span class="bodyGrey">"Paul"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">3</span></td>
+									<td><span class="bodyGrey">"Ringo"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+				
+				<p><span class="bodyGrey"><b>Example 1: Adding objects</b></span></p>
+
+				<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Employee employee = new Employee();
+employee.setId(4);
+employee.setName("George");
+
+Department department = db.load(Department.class, 23);
+department.getEmployees().add(employee);
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+			
+				<p><span class="bodyGrey"><b>After</b></span></p>
+			
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>dept</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">23</span></td>
+									<td><span class="bodyGrey">"Accounting"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>emp</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+									<th align="left">dept_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">2</span></td>
+									<td><span class="bodyGrey">"Paul"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">3</span></td>
+									<td><span class="bodyGrey">"Ringo"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">4</span></td>
+									<td><span class="bodyGrey">"George"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+				<p><span class="bodyGrey"><b>Example 2: Removing objects</b></span></p>
+				
+				<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Department department = db.load(Department.class, 23);
+department.getEmployees().remove(2);
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+			
+				<p><span class="bodyGrey"><b>After</b></span></p>
+			
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>dept</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">23</span></td>
+									<td><span class="bodyGrey">"Accounting"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>emp</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+									<th align="left">dept_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">2</span></td>
+									<td><span class="bodyGrey">"Paul"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">3</span></td>
+									<td><span class="bodyGrey">"Ringo"</span></td>
+									<td><span class="bodyGrey">NULL</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>				
+				
+				<p><span class="bodyGrey">
+                    Note: this of course only works if you allow the employee's foreign 
+                    key <tt>dept_id</tt> to be <b>NULL</b> or, alternatively, also 
+                    delete the Employee when you remove the relationship (either by 
+                    manually calling db.remove() or <b>TODO</b>)
+                </span></p>
+				
+				<p><span class="bodyGrey"><b>Example 3: Adding &amp; removing objects</b></span></p>
+				
+				<p></p><table width="100%" border="0" cellspacing="1" cellpadding="1" bgcolor="#7270c2"><tr><td><table width="100%" border="0" cellspacing="1" cellpadding="4" bgcolor="#ededed"><tr><td><span class="bodyBlack"><pre>
+db.begin();
+
+Employee e4 = new Employee();
+e4.setId(4);
+e4.setName("George");
+
+Employee e5 = new Employee();
+e5.setId(5);
+e5.setName("Joe");
+
+Employee e6 = new Employee();
+e6.setId(6);
+e6.setName("Jack");
+
+Department dep = db.load(Department.class, 23);
+dep.setEmployees(Arrays.asList(e4, e5, e6));
+
+db.commit();</pre></span></td></tr></table></td></tr></table><p></p>
+			
+				<p><span class="bodyGrey">Database after:</span></p>
+			
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>dept</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">23</span></td>
+									<td><span class="bodyGrey">"Accounting"</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>
+
+				<table border="0" cellspacing="0" cellpadding="2" bgcolor="#7270c2" style="display:inline">
+					<tr bgcolor="#ffffff">
+						<th>emp</th>
+					</tr>
+					<tr>
+						<td><span class="bodyGrey">
+							<table border="0" cellspacing="0" cellpadding="6" bgcolor="#ededed">
+								<tr bgcolor="#7270c2" style="color:#000000">
+									<th align="left">id</th>
+									<th align="left">name</th>
+									<th align="left">dept_id</th>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">1</span></td>
+									<td><span class="bodyGrey">"John"</span></td>
+									<td><span class="bodyGrey">NULL</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">2</span></td>
+									<td><span class="bodyGrey">"Paul"</span></td>
+									<td><span class="bodyGrey">NULL</span></td>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">3</span></td>
+									<td><span class="bodyGrey">"Ringo"</span></td>
+									<td><span class="bodyGrey">NULL</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">4</span></td>
+									<td><span class="bodyGrey">"George"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr bgcolor="#DEDEDE">
+									<td><span class="bodyGrey">5</span></td>
+									<td><span class="bodyGrey">"Joe"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+								<tr>
+									<td><span class="bodyGrey">6</span></td>
+									<td><span class="bodyGrey">"Jack"</span></td>
+									<td><span class="bodyGrey">23</span></td>
+								</tr>
+							</table>
+						</span></td>
+					</tr>
+				</table>				
+				
+				<p><span class="bodyGrey">The note to example 2 also applies here.</span></p>
+				
+			
+				
+		<a name="See-also"><h2>See also</h2></a>
+
+			<table border="0" cellpadding="2" cellspacing="2"><tr><td colspan="2" height="5"></td></tr><span class="bodyGrey">
+				<tr><td align="left" valign="top" width="10">-</td><td align="left" valign="top"><span class="bodyGrey">
+					<a href="how-to-use-cascading-operations.html">How to use cascading operations - overview</a>
+				</span></td></tr>
+			</span></table>
+
+		</td></tr><tr height="5"><td width="10" height="5" bgcolor="#7270c2" valign="top" align="left">&nbsp;</td><td height="5" bgcolor="#7270c2" valign="top" width="150"><img src="images/dotTrans.gif" width="1" height="15" border="0"><br><img src="images/line_sm.gif" width="105" height="3" border="0" align="right"></td><td width="7" height="5" bgcolor="#a9a5de" valign="top" align="left">&nbsp;</td><td width="70" height="5" valign="top" align="left">&nbsp;</td><td width="120" height="5" valign="top" align="left">&nbsp;</td></tr><tr><td width="10" height="5" bgcolor="#7270c2" valign="top" align="left">&nbsp;</td><td bgcolor="#7270c2" valign="top" align="left" width="150"></td><td width="7" bgcolor="#a9a5de" valign="top" align="left"><img src="images/dotTrans.gif" width="1" height="25" border="0"></td><td width="70" valign="top" align="left"><img src="images/dotTrans.gif" width="1" height="25" border="0"></td><td width="120" valign="top" align="left">&nbsp;</td></tr><tr height="5"><td width="10" rowspan="2" height="100%" bgcolor="#7270c2" valign="bottom" align="left"><img src="images/stripes1.gif" width="10" height="125" border="0"></td><td rowspan="2" height="100%" bgcolor="#7270c2" valign="bottom" align="left" width="150"><img src="images/stripe105.gif" width="105" height="125" border="0"></td><td width="7" rowspan="2" height="100%" bgcolor="#a9a5de" valign="top" align="left">&nbsp;</td><td width="70" height="100%" valign="top" align="left">&nbsp;</td><td width="120" height="100%" valign="top" align="left">&nbsp;</td></tr><tr height="5"><td width="70" height="25" valign="top" align="left">&nbsp;</td><td width="400" height="25" valign="bottom" align="left"><br><br><img src="images/line_light.gif" border="0" width="400" height="3"><br><p></p><span class="bodyGrey"><small><notice>
+    Copyright &copy; 1999-2005 <a href="http://www.exolab.org">ExoLab Group</a>, Intalio Inc.,
+    and Contributors.  All rights reserved.
+  </notice><br>&nbsp;<br></small><small><notice>
+    Java, EJB, JDBC, JNDI, JTA, Sun, Sun Microsystems are trademarks or registered
+    trademarks of Sun Microsystems, Inc. in the United States and in other
+    countries. XML, XML Schema, XSLT and related standards are trademarks or registered
+    trademarks of MIT, INRIA, Keio or others, and a product of the World Wide Web
+    Consortium. All other product names mentioned herein are trademarks of their respective
+    owners.
+  </notice><br>&nbsp;<br></small></span><p></p>
+          &nbsp;
+        </td><td width="120" height="25" valign="top" align="left">&nbsp;</td></tr></table><script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script type="text/javascript">
+        var pageTracker = _gat._getTracker("UA-3544187-1");
+        pageTracker._trackPageview();
+    </script></body></html>
