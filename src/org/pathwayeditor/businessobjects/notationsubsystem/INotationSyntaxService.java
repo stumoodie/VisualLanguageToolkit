@@ -169,4 +169,14 @@ public interface INotationSyntaxService extends INotationService {
 	 * @return the link object type matching the name, or null if it cannot be found. 
 	 */
 	ILinkObjectType findLinkObjectTypeByName(String name);
+
+	/**
+	 * Get the linked end object type for a given link OT. This is a special object type that invisibly
+	 * is connected to a link end when links are connected to other links. This node
+	 * is a child of the link that is connected to the end. This object type should define
+	 * a very simple shape, that has zero dimensions.
+	 * @param linkObjectType the link OT for which to find the corresponding end OT 
+	 * @return the object type.
+	 */
+	IShapeObjectType getLinkEndObjectType(ILinkObjectType linkObjectType);
 }

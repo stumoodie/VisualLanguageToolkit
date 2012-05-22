@@ -19,7 +19,6 @@
 
 package org.pathwayeditor.figure.rendering;
 
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
@@ -33,12 +32,16 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public interface IAnchorLocator {
 
-	/**
-	 * Get the convex hull of the shape on which the anchor will be located.
-	 * @return the convex hull of the owning shape, which cannot be null.
-	 */
-	IConvexHull getOwningShapeHull();
-		
+//	/**
+//	 * Get the convex hull of the shape on which the anchor will be located.
+//	 * @return the convex hull of the owning shape, which cannot be null.
+//	 */
+//	IConvexHull getOwningShapeHull();
+
+	void setRequestedPoint(Point requestedPoint);
+	
+	Point getRequestedPoint();
+	
 	/**
 	 * Set the other end point of the link or line segment, which will be used for reference when calculating
 	 * the new anchor location.

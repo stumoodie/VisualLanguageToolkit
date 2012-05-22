@@ -694,7 +694,7 @@ public class FigureRenderingBuilder {
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator() {
-			return new MultiplePositionFixedAnchor(points, getConvexHull());
+			return new MultiplePositionFixedAnchor(points);
 		}
 
 		/* (non-Javadoc)
@@ -702,7 +702,7 @@ public class FigureRenderingBuilder {
 		 */
 		@Override
 		public IAnchorLocator createAnchorLocator(Envelope newBounds) {
-			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
+//			IConvexHull newHull = getConvexHull().changeEnvelope(newBounds);
 			Envelope oldBounds = getConvexHull().getEnvelope(); 
 			Iterator<Point> pointIter = this.points.iterator();
 			List<Point> newPoints = new LinkedList<Point>();
@@ -711,7 +711,7 @@ public class FigureRenderingBuilder {
 				Point newP = oldBounds.transformPointToNewEnvelope(p, newBounds);
 				newPoints.add(newP);
 			}
-			return new MultiplePositionFixedAnchor(new PointList(newPoints), newHull);
+			return new MultiplePositionFixedAnchor(new PointList(newPoints));
 		}
 		
 	}

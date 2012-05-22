@@ -26,14 +26,18 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointLocationChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointStructureChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusValueChangeEvent;
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.LinkTerminusChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.figure.geometry.Point;
@@ -43,7 +47,6 @@ import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 
 public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttribute {
-	private static final long serialVersionUID = 8124494867402957446L;
 	private static final Colour DEFAULT_LINE_COLOUR = new Colour(255, 255, 255);
 	private static final LineStyle DEFAULT_LINE_STYLE = LineStyle.SOLID;
 	private static final double DEFAULT_LINE_WIDTH = 1.0;
@@ -65,8 +68,35 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 		this.tgtTerminus = new LinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		this.bpContainer = new BendPointContainer(this);
 		addDefaults(objectType.getDefaultAttributes());
+		setupTerminusListeners();
 	}
-
+	
+	private void setupTerminusListeners(){
+		final ILinkTerminusChangeListener termListnr = new ILinkTerminusChangeListener() {
+			@Override
+			public void valueChangeEvent(final ILinkTerminusValueChangeEvent e) {
+				if(e.getChangeType() == LinkTerminusChangeType.LOCATION){
+					canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
+				}
+			}
+		};
+		this.srcTerminus.addLinkTerminusChangeListener(termListnr);
+		this.tgtTerminus.addLinkTerminusChangeListener(termListnr);
+		this.bpContainer.addChangeListener(new IBendPointContainerListener() {
+			
+			@Override
+			public void structureChange(IBendPointStructureChangeEvent e) {
+				canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
+			}
+			
+			@Override
+			public void locationChange(IBendPointLocationChangeEvent e) {
+				canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
+			}
+		});
+	}
+	
+	
 	/**
 	 * Constructs new instance that is a copy of another one.
 	 * @param hibCanvas
@@ -82,11 +112,7 @@ s	 */
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.bpContainer = new BendPointContainer(this, otherAttribute.getBendPointContainer());
-//		Iterator<Point> bpIter = otherAttribute.bendPointIterator();
-//		while(bpIter.hasNext()){
-//			Point otherBp = bpIter.next();
-//			this.bendPoints.add(otherBp);
-//		}
+		setupTerminusListeners();
 	}
 
 	/**

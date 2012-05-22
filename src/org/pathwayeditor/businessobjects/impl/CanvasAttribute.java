@@ -49,7 +49,7 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 	}
 	
 	@Override
-	public int getCreationSerial(){
+	public final int getCreationSerial(){
 		return this.creationSerial;
 	}
 
@@ -103,12 +103,12 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttribute#setCurrentElement(uk.ac.ed.inf.graph.compound.ICompoundGraphElement)
 	 */
 	@Override
-	public void setCurrentElement(ICompoundGraphElement newOwner) {
+	public final void setCurrentElement(ICompoundGraphElement newOwner) {
 		this.compoundGraphElement = newOwner;
 	}
 
 	@Override
-	public boolean isRemoved(){
+	public final boolean isRemoved(){
 		boolean retVal = true;
 		if(this.compoundGraphElement != null){
 			retVal = this.compoundGraphElement.isRemoved();

@@ -26,7 +26,7 @@ import org.pathwayeditor.figure.geometry.Point;
 public class ChopBoxAnchorCalculator implements IAnchorLocator {
 	private final IConvexHull shape;
 	private Point otherEndPoint;
-	private Point requestedPosn;
+	private Point requestedPoint;
 	
     public ChopBoxAnchorCalculator(IConvexHull hull) {
     	this.shape = hull;
@@ -37,12 +37,6 @@ public class ChopBoxAnchorCalculator implements IAnchorLocator {
 		return this.otherEndPoint != null;
 	}
 
-
-
-	@Override
-	public IConvexHull getOwningShapeHull() {
-		return this.shape;
-	}
 
 
 	@Override
@@ -58,19 +52,25 @@ public class ChopBoxAnchorCalculator implements IAnchorLocator {
 	}
 
 
-	public void setRequestedPosition(Point requestedPosn) {
-		this.requestedPosn = requestedPosn;
-	}
-
-
 	@Override
 	public Point getOtherEndPoint() {
 		return this.otherEndPoint;
 	}
 
 
-	public Point getRequestedPosition() {
-		return this.requestedPosn;
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IAnchorLocator#setRequestedPoint(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void setRequestedPoint(Point requestedPoint) {
+		this.requestedPoint = requestedPoint;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IAnchorLocator#getRequestedPoint()
+	 */
+	@Override
+	public Point getRequestedPoint() {
+		return this.requestedPoint;
+	}
 }

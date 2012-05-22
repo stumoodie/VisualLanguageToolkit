@@ -132,6 +132,32 @@ public final class CanvasAttributeChangeListenerHelper implements ICanvasAttribu
 		fireNodeTranslationEvent(event);
 	}
 
+	public void notifyDrawnPathChange(){
+		ICanvasAttributePropertyChangeEvent linkEvent = new ICanvasAttributePropertyChangeEvent() {
+			
+			@Override
+			public CanvasAttributePropertyChange getPropertyChange() {
+				return CanvasAttributePropertyChange.DRAWN_PATH;
+			}
+			
+			@Override
+			public Object getOldValue() {
+				return null;
+			}
+			
+			@Override
+			public Object getNewValue() {
+				return null;
+			}
+			
+			@Override
+			public ICanvasElementAttribute getAttribute() {
+				return attribute;
+			}
+		};
+		firePropertyChange(linkEvent);
+	}
+
 	@Override
 	public final List<ICanvasAttributeChangeListener> getChangeListeners(){
 		return new ArrayList<ICanvasAttributeChangeListener>(this.listeners);

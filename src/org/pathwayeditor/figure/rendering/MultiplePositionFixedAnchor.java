@@ -19,7 +19,6 @@
 
 package org.pathwayeditor.figure.rendering;
 
-import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
 import org.pathwayeditor.figure.geometry.PointList;
 
@@ -32,13 +31,13 @@ import org.pathwayeditor.figure.geometry.PointList;
  */
 public class MultiplePositionFixedAnchor implements IAnchorLocator {
 	private final PointList refAnchorPoints;
-	private final IConvexHull shape;
 	private Point otherEndPoint = null;
+	private Point requestedPoint;
 	
 	
-	public MultiplePositionFixedAnchor(PointList refAnchorPoints, IConvexHull hull){
+	public MultiplePositionFixedAnchor(PointList refAnchorPoints){
 		this.refAnchorPoints = refAnchorPoints;
-		this.shape = hull;
+//		this.shape = hull;
 	}
 	
 	@Override
@@ -52,10 +51,10 @@ public class MultiplePositionFixedAnchor implements IAnchorLocator {
 		return this.otherEndPoint != null;
 	}
 
-	@Override
-	public IConvexHull getOwningShapeHull() {
-		return this.shape;
-	}
+//	@Override
+//	public IConvexHull getOwningShapeHull() {
+//		return this.shape;
+//	}
 
 	@Override
 	public void setOtherEndPoint(Point otherEndPoint) {
@@ -65,6 +64,22 @@ public class MultiplePositionFixedAnchor implements IAnchorLocator {
 	@Override
 	public Point getOtherEndPoint() {
 		return this.otherEndPoint;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IAnchorLocator#setRequestedPoint(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void setRequestedPoint(Point requestedPoint) {
+		this.requestedPoint = requestedPoint;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.rendering.IAnchorLocator#getRequestedPoint()
+	 */
+	@Override
+	public Point getRequestedPoint() {
+		return this.requestedPoint;
 	}
 
 }

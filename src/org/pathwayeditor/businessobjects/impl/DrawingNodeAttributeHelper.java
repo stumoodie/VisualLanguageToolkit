@@ -157,6 +157,7 @@ public class DrawingNodeAttributeHelper {
 		if(!this.bounds.equals(oldValue)){
 			this.canvasAttributeChangeListenerHelper.notifyNodeResize(locationDelta, sizeDelta);
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, this.bounds);
+			this.canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
 		}
 	}
 
@@ -166,6 +167,7 @@ public class DrawingNodeAttributeHelper {
 		if(!this.bounds.equals(oldValue)){
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, this.bounds);
 			this.canvasAttributeChangeListenerHelper.notifyNodeTranslation(delta);
+			this.canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
 		}
 	}
 
@@ -178,6 +180,7 @@ public class DrawingNodeAttributeHelper {
 			Envelope oldValue = this.bounds;
 			this.bounds = newBounds;
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, newBounds);
+			this.canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
 		}
 	}
 
@@ -189,6 +192,7 @@ public class DrawingNodeAttributeHelper {
 		this.bounds = this.bounds.changeDimension(size);
 		if(!this.bounds.equals(oldValue)){
 			this.canvasAttributeChangeListenerHelper.notifyPropertyChange(CanvasAttributePropertyChange.BOUNDS, oldValue, this.bounds);
+			this.canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
 		}
 	}
 	

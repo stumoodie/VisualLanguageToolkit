@@ -60,6 +60,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	private final Map<Integer, ILinkObjectType> links;
 	private final Map<IPropertyDefinition, ILabelObjectType> labels;
 	private final ILabelObjectType labelObjectType;
+	private final IShapeObjectType linkEndObjectType;
 	
 	public StubNotationSyntaxService(INotationSubsystem notationSubsystem){
 		this.notationSubsystem = notationSubsystem;
@@ -88,6 +89,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		this.labels.put(new StubListPropertyDefinition(), this.labelObjectType);
 		this.labels.put(new StubHtmlPropertyDefinition(), this.labelObjectType);
 		this.labels.put(new StubTextPropertyDefinition(), this.labelObjectType);
+		this.linkEndObjectType = new StubShapeDObjectType(this);
 	}
 	
 	/* (non-Javadoc)
@@ -276,5 +278,13 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	@Override
 	public boolean isVisualisableProperty(IPropertyDefinition propDefn) {
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLinkEndObjectType()
+	 */
+	@Override
+	public IShapeObjectType getLinkEndObjectType(ILinkObjectType ot) {
+		return this.linkEndObjectType;
 	}
 }
