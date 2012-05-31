@@ -45,7 +45,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 //	private static final int DEFAULT_HEIGHT = 1;
 //	private static final int DEFAULT_WIDTH = 1;
 
-	private IAnnotationProperty visualisableProperty;
+	private final IAnnotationProperty visualisableProperty;
 //	private final BoundsHelper boundsDelegate = new BoundsHelper(new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT), canvasAttributeChangeListenerHelper);
 	private final ILabelObjectType objectType;
 	private Format displayFormat;

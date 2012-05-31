@@ -33,6 +33,7 @@ import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.Marshaller;
 import org.exolab.castor.xml.ValidationException;
 import org.exolab.castor.xml.XMLContext;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
@@ -481,6 +482,11 @@ public class CanvasMarshaller {
 //					ILabelNode node = labelIter.next();
 					LabelNode xmlNode = createLabelNode(attribute.getCurrentElement());
 					xmlSubmodel.addLabelNode(xmlNode);
+				}
+
+				@Override
+				public void visitAnchorNode(IAnchorNodeAttribute anchorNodeAttribute) {
+					throw new UnsupportedOperationException("Don't know how to handle anchorNode!");
 				}
 				
 			});

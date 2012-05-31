@@ -35,10 +35,10 @@ public interface IBendPointContainerListener {
 	 */
 	void structureChange(IBendPointStructureChangeEvent e);
 
-	/**
-	 * A change to the location of a bend-point in the container has been detected.
-	 * @param e the event that has been detected.
-	 */
-	void locationChange(IBendPointLocationChangeEvent e);
+//	/**
+//	 * A change to the location of a bend-point in the container has been detected.
+//	 * @param e the event that has been detected.
+//	 */
+//	void locationChange(IBendPointLocationChangeEvent e);
 
 }

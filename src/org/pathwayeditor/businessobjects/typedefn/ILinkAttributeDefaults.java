@@ -20,8 +20,8 @@
 package org.pathwayeditor.businessobjects.typedefn;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 
 /**
  * ILinkAttributeDefaults is an interface that defines the initial/default

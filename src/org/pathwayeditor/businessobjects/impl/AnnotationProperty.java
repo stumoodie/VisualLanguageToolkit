@@ -22,9 +22,9 @@ package org.pathwayeditor.businessobjects.impl;
 import java.util.Iterator;
 import java.util.List;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.listeners.AnnotationPropertyChangeHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IAnnotationPropertyChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.AnnotationPropertyChangeHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotatedObject;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;

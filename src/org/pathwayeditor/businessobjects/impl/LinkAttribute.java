@@ -32,12 +32,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermTy
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributeChangeListenerHelper;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.CanvasAttributePropertyChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointLocationChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointStructureChangeEvent;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusChangeListener;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ILinkTerminusValueChangeEvent;
-import org.pathwayeditor.businessobjects.drawingprimitives.listeners.LinkTerminusChangeType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.figure.geometry.Point;
@@ -68,34 +64,7 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 		this.tgtTerminus = new LinkTerminus(this, LinkTermType.TARGET, objectType.getTargetTerminusDefinition());
 		this.bpContainer = new BendPointContainer(this);
 		addDefaults(objectType.getDefaultAttributes());
-		setupTerminusListeners();
 	}
-	
-	private void setupTerminusListeners(){
-		final ILinkTerminusChangeListener termListnr = new ILinkTerminusChangeListener() {
-			@Override
-			public void valueChangeEvent(final ILinkTerminusValueChangeEvent e) {
-				if(e.getChangeType() == LinkTerminusChangeType.LOCATION){
-					canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
-				}
-			}
-		};
-		this.srcTerminus.addLinkTerminusChangeListener(termListnr);
-		this.tgtTerminus.addLinkTerminusChangeListener(termListnr);
-		this.bpContainer.addChangeListener(new IBendPointContainerListener() {
-			
-			@Override
-			public void structureChange(IBendPointStructureChangeEvent e) {
-				canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
-			}
-			
-			@Override
-			public void locationChange(IBendPointLocationChangeEvent e) {
-				canvasAttributeChangeListenerHelper.notifyDrawnPathChange();
-			}
-		});
-	}
-	
 	
 	/**
 	 * Constructs new instance that is a copy of another one.
@@ -112,7 +81,6 @@ s	 */
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
 		this.bpContainer = new BendPointContainer(this, otherAttribute.getBendPointContainer());
-		setupTerminusListeners();
 	}
 
 	/**
@@ -308,4 +276,5 @@ s	 */
 			this.bpContainer.addChangeListener(listener);
 		}
 	}
+
 }

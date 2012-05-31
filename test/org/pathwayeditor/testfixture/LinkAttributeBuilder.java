@@ -30,16 +30,17 @@ import org.jmock.Mockery;
 import org.jmock.api.Action;
 import org.jmock.api.Invocation;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkTermType;
-import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
@@ -53,6 +54,8 @@ import org.pathwayeditor.figure.geometry.Point;
  *
  */
 public class LinkAttributeBuilder {
+	private static final Point SRC_END_POINT = new Point(102.0, 87.0);
+	private static final Point TGT_END_POINT = new Point(132.0, 35.2);
 	private final Mockery mockery;
 	private final String name;
 	private IModel canvas;
@@ -61,6 +64,8 @@ public class LinkAttributeBuilder {
 	private ILinkAttribute linkAttribute;
 	private List<IAnnotationProperty> props = new LinkedList<IAnnotationProperty>();
 	private List<Point> bpLocations = new LinkedList<Point>();
+	private List<ICurveSegment> curveLocations = new LinkedList<ICurveSegment>();
+	private static int mockCurveCntr = 0;
 	
 	public LinkAttributeBuilder(Mockery mockery, String name, ILinkObjectType objectType, IModel canvas, int idx){
 		this.mockery = mockery;
@@ -117,7 +122,9 @@ public class LinkAttributeBuilder {
 	}
 
 	public void addBendPoint(Point bpLocn){
-		this.bpLocations .add(bpLocn);
+		this.bpLocations.add(bpLocn);
+		ICurveSegment mockCurve = mockery.mock(ICurveSegment.class, "mockCurve"+ mockCurveCntr ++);
+		this.curveLocations .add(mockCurve); 
 	}
 	
 	public void build(){
@@ -144,21 +151,22 @@ public class LinkAttributeBuilder {
 			allowing(linkAttribute).getSourceTerminus(); will(returnValue(srcTerm));
 			allowing(linkAttribute).getTargetTerminus(); will(returnValue(tgtTerm));
 			
-			allowing(srcTerm).getLinkTermType(); will(returnValue(LinkTermType.SOURCE));
+			allowing(srcTerm).getLinkTermType(); will(returnValue(LinkTermType.TARGET));
 			allowing(srcTerm).getEndDecoratorType(); will(returnValue(LinkEndDecoratorShape.ARROW));
 			allowing(srcTerm).getEndSize(); will(returnValue(new Dimension(12.4, 9.03)));
 			allowing(srcTerm).getGap(); will(returnValue(2.3));
-			allowing(srcTerm).getLocation(); will(returnValue(new Point(102.0, 87.0)));
+			allowing(srcTerm).getLocation(); will(returnValue(TGT_END_POINT));
 
 			allowing(tgtTerm).getLinkTermType(); will(returnValue(LinkTermType.SOURCE));
 			allowing(tgtTerm).getEndDecoratorType(); will(returnValue(LinkEndDecoratorShape.NONE));
 			allowing(tgtTerm).getEndSize(); will(returnValue(new Dimension(19.4, 19.01)));
 			allowing(tgtTerm).getGap(); will(returnValue(1.7));
-			allowing(tgtTerm).getLocation(); will(returnValue(new Point(132.0, 35.2)));
+			allowing(tgtTerm).getLocation(); will(returnValue(SRC_END_POINT));
 		}});
 		final IBendPointContainer bpContainer = mockery.mock(IBendPointContainer.class, this.name + "BpContainer");
 		this.mockery.checking(new Expectations(){{
 			allowing(bpContainer).bendPointIterator(); will(returnIterator(bpLocations));
+			allowing(bpContainer).curveIterator(); will(returnIterator(curveLocations));
 			allowing(bpContainer).getBendPoint(with(any(Integer.class))); will(getBendPoint());
 			allowing(bpContainer).containsBendPoint(with(any(Integer.class))); will(testBendPoint());
 			allowing(linkAttribute).getBendPointContainer(); will(returnValue(bpContainer));

@@ -19,7 +19,10 @@
 
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
+import java.util.List;
+
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
@@ -62,4 +65,9 @@ public interface IBendPointStructureChangeEvent {
 	 * @return the new index position.
 	 */
 	int getNewIndexPos();
+	
+	List<ICurveSegment> getOldCurves();
+	
+	List<ICurveSegment> getNewCurves();
+	
 }

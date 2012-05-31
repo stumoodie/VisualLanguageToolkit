@@ -24,6 +24,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribu
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -37,8 +38,8 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	private final IndexCounter creationSerialCounter;
 	private ICanvasElementAttribute destination;
 	private ILinkObjectType objectType;
-	private IShapeAttribute source;
-	private IShapeAttribute target;
+	private ITypedDrawingNodeAttribute source;
+	private ITypedDrawingNodeAttribute target;
 	private Integer preferredCreationSerial;
 
 	public LinkAttributeFactory(IndexCounter creationSerialCounter) {
@@ -110,7 +111,7 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getOutAttribute()
 	 */
 	@Override
-	public IShapeAttribute getOutAttribute() {
+	public ITypedDrawingNodeAttribute getOutAttribute() {
 		return this.source;
 	}
 
@@ -119,14 +120,14 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public void setInAttribute(IElementAttribute attribute) {
-		this.target = (IShapeAttribute)attribute;
+		this.target = (ITypedDrawingNodeAttribute)attribute;
 	}
 
 	/* (non-Javadoc)
 	 * @see uk.ac.ed.inf.graph.compound.IElementAttributeFactory#getInAttribute()
 	 */
 	@Override
-	public IShapeAttribute getInAttribute() {
+	public ITypedDrawingNodeAttribute getInAttribute() {
 		return this.target;
 	}
 

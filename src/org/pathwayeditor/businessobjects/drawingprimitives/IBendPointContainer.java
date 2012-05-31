@@ -107,4 +107,10 @@ public interface IBendPointContainer extends IBendPointChangeListenee  {
 	 */
 	void translateAll(Point delta);
 
+	/**
+	 * Returns an iterator to the curve iterator.
+	 * @return the iterator - cannot be null.
+	 */
+	Iterator<ICurveSegment> curveIterator();
+
 }

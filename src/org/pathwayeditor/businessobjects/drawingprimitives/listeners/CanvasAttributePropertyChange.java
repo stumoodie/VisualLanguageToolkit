@@ -28,6 +28,5 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
  */
 public enum CanvasAttributePropertyChange {
 	BOUNDS, FILL_COLOUR, LINE_COLOUR, LINE_STYLE, LINE_WIDTH,
-	ANNOTATION_VALUE, NO_FILL, NO_BORDER, NAME, FONT_COLOUR, FONT,
-	DRAWN_PATH
+	ANNOTATION_VALUE, NO_FILL, NO_BORDER, NAME, FONT_COLOUR, FONT
 }

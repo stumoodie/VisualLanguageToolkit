@@ -35,7 +35,7 @@ public interface ILinkConnectionRules {
 	 * @return True if the it is a valid source, false otherwise.
 	 * @throws IllegalArgumentException if source is null.
 	 */
-	boolean isValidSource(IShapeObjectType source);
+	boolean isValidSource(INodeObjectType source);
 	
 	/**
 	 * Test if the combination of source and target can be joined by a link.
@@ -44,7 +44,7 @@ public interface ILinkConnectionRules {
 	 * @return True if both can for a link.
 	 * @throws IllegalArgumentException if source and target are null.
 	 */
-	boolean isValidTarget(IShapeObjectType source, IShapeObjectType target);
+	boolean isValidTarget(INodeObjectType source, INodeObjectType target);
 	
 	/**
 	 * Get the link object type that these rule are applicable for.

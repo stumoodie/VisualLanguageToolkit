@@ -64,5 +64,10 @@ public interface ICanvasElementAttributeVisitor {
 	 * @param attribute the labelAttribute, which should not be null.
 	 */
 	void visitLabel(ILabelAttribute attribute);
+
+	/**
+	 * @param anchorNodeAttribute
+	 */
+	void visitAnchorNode(IAnchorNodeAttribute anchorNodeAttribute);
 	
 }

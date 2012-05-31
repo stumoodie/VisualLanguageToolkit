@@ -26,6 +26,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
@@ -357,6 +358,16 @@ public class Model implements IModel {
 		return new LabelAttributeFactory(this.creationSerialCounter);
 	}
 
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IModel#anchorNodeAttributeFactory()
+	 */
+	@Override
+	public IAnchorNodeAttributeFactory anchorNodeAttributeFactory() {
+		return new AnchorNodeAttributeFactory(this.creationSerialCounter);
+	}
+
+	
 	/* (non-Javadoc)
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvas#getNotationSubsystem()
 	 */

@@ -48,9 +48,9 @@ public interface ILinkAttributeFactory extends ICanvasAttributeFactory {
 	ILinkObjectType getObjectType();
 
 	@Override
-	IShapeAttribute getOutAttribute();
+	ITypedDrawingNodeAttribute getOutAttribute();
 
 	@Override
-	IShapeAttribute getInAttribute();
+	ITypedDrawingNodeAttribute getInAttribute();
 	
 }

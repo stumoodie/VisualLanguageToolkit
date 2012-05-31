@@ -20,11 +20,14 @@
 
 package org.pathwayeditor.businessobjects.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.BendPointStructureChange;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.IBendPointContainerListener;
@@ -37,7 +40,7 @@ import org.pathwayeditor.figure.geometry.Point;
  */
 public class BendPointContainer implements IBendPointContainer {
 	private final ListenableBendPointChangeItem listenableBendPointChangeItem = new ListenableBendPointChangeItem(this);
-	private List<Point> bendPoints;
+	private List<ICurveSegment> bendPoints;
 	private final ILinkAttribute linkAttribute;
 
 	/**
@@ -45,15 +48,16 @@ public class BendPointContainer implements IBendPointContainer {
 	 */
 	public BendPointContainer(ILinkAttribute linkAttribute) {
 		this.linkAttribute = linkAttribute;
-		this.bendPoints = new LinkedList<Point>();
+		this.bendPoints = new LinkedList<ICurveSegment>();
+		this.bendPoints.add(new StraightLineCurveSegment(linkAttribute.getSourceTerminus().getLocation(), linkAttribute.getTargetTerminus().getLocation()));
 	}
 
 	public BendPointContainer(ILinkAttribute otherLinkAtt, IBendPointContainer otherBendPointContainer) {
 		this.linkAttribute = otherLinkAtt;
-		this.bendPoints = new LinkedList<Point>();
-		Iterator<Point> iter = otherBendPointContainer.bendPointIterator();
+		this.bendPoints = new LinkedList<ICurveSegment>();
+		Iterator<ICurveSegment> iter = otherBendPointContainer.curveIterator();
 		while(iter.hasNext()){
-			Point p = iter.next();
+			ICurveSegment p = iter.next();
 			this.bendPoints.add(p);
 		}
 	}
@@ -77,7 +81,8 @@ public class BendPointContainer implements IBendPointContainer {
 	public Point getBendPoint(int index) {
 		if(!containsBendPoint(index)) throw new IllegalArgumentException("not bendpoint at this index position");
 		
-		return this.bendPoints.get(index);
+		ICurveSegment seg = this.bendPoints.get(index); 
+		return seg.getEndPoint();
 	}
 
 	/* (non-Javadoc)
@@ -87,8 +92,11 @@ public class BendPointContainer implements IBendPointContainer {
 	public void removeBendPoint(int index) {
 		if(!containsBendPoint(index)) throw new IllegalArgumentException("not bendpoint at this index position");
 
-		Point removedPoint = this.bendPoints.remove(index);
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_REMOVED, removedPoint, index, index);
+		ICurveSegment leftSeg = this.bendPoints.remove(index);
+		ICurveSegment rightSeg = this.bendPoints.remove(index+1);
+		ICurveSegment newSeg = new StraightLineCurveSegment(leftSeg.getStartPoint(), rightSeg.getEndPoint());
+		this.bendPoints.add(index, newSeg);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_REMOVED, leftSeg.getEndPoint(), Arrays.asList(new ICurveSegment[]{leftSeg, rightSeg}), Arrays.asList(new ICurveSegment[]{newSeg}), index, index);
 	}
 
 	/* (non-Javadoc)
@@ -96,9 +104,11 @@ public class BendPointContainer implements IBendPointContainer {
 	 */
 	@Override
 	public void createNewBendPoint(Point location) {
-		this.bendPoints.add(location);
 		int index = this.bendPoints.size()-1;
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, index, index);
+		createNewBendPoint(index, location);
+//		// remove current bp
+//		ICurveSegment oldSeg = this.bendPoints.remove(index);
+//		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, index, index);
 	}
 
 	@Override
@@ -106,13 +116,17 @@ public class BendPointContainer implements IBendPointContainer {
 		if(position < 0 || position > this.bendPoints.size()) {
 			throw new IndexOutOfBoundsException("list size= " + this.bendPoints.size() + ", no bendpoint can be added at position: " + position);
 		}
-		else if(position < this.bendPoints.size()) {
-			this.bendPoints.add(position, location);
+		ICurveSegment oldSeg = this.bendPoints.remove(position);
+		ICurveSegment leftSeg = new StraightLineCurveSegment(oldSeg.getStartPoint(), location);
+		ICurveSegment rightSeg = new StraightLineCurveSegment(oldSeg.getEndPoint(), location);
+		List<ICurveSegment> newSegs = Arrays.asList(new ICurveSegment[]{leftSeg, rightSeg});
+		if(position < this.bendPoints.size()) {
+			this.bendPoints.addAll(position, newSegs);
 		}
 		else {
-			this.bendPoints.add(location);
+			this.bendPoints.addAll(newSegs);
 		}
-		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, position, position);
+		this.listenableBendPointChangeItem.notifyPropertyChange(BendPointStructureChange.BEND_POINT_ADDED, location, Arrays.asList(new ICurveSegment[]{oldSeg}), newSegs, position, position);
 	}
 
 	/* (non-Javadoc)
@@ -120,7 +134,16 @@ public class BendPointContainer implements IBendPointContainer {
 	 */
 	@Override
 	public Iterator<Point> bendPointIterator() {
-		return this.bendPoints.iterator();
+		int numSegs = this.bendPoints.size();
+		int i = 0;
+		List<Point> retVal = new ArrayList<Point>(numSegs); 
+		for(ICurveSegment seg : this.bendPoints){
+			// if last segment then don't and in end point
+			if(i < numSegs-1){
+				retVal.add(seg.getEndPoint());
+			}
+		}
+		return retVal.iterator();
 	}
 
 	/* (non-Javadoc)
@@ -128,7 +151,7 @@ public class BendPointContainer implements IBendPointContainer {
 	 */
 	@Override
 	public int numBendPoints() {
-		return bendPoints.size();
+		return bendPoints.size()-1;
 	}
 
 
@@ -162,10 +185,13 @@ public class BendPointContainer implements IBendPointContainer {
 	@Override
 	public void translateBendPoint(int idx, Point translation) {
 		if(!translation.equals(Point.ORIGIN)){
-			Point bp = this.bendPoints.get(idx);
+			ICurveSegment leftSeg = this.bendPoints.get(idx);
+			Point bp = leftSeg.getEndPoint();
+			ICurveSegment rightSeg = this.bendPoints.get(idx+1);
 			Point newLocation = bp.translate(translation);
-			this.bendPoints.set(idx, newLocation);
-			this.listenableBendPointChangeItem.notifyPropertyChange(idx, bp, newLocation);
+			leftSeg.setEndPoint(newLocation);
+			rightSeg.setStartPoint(newLocation);
+//			this.listenableBendPointChangeItem.notifyPropertyChange(idx, bp, newLocation);
 		}
 	}
 
@@ -183,22 +209,30 @@ public class BendPointContainer implements IBendPointContainer {
 	@Override
 	public void translateAll(Point translation) {
 		if(!translation.equals(Point.ORIGIN)){
-			List<Point> newBendPoints = new LinkedList<Point>();
-			for(Point bp : this.bendPoints){
-				Point newLocation = bp.translate(translation);
-				newBendPoints.add(newLocation);
+//			List<Point> newBendPoints = new LinkedList<Point>();
+			for(ICurveSegment bp : this.bendPoints){
+				bp.translate(translation);
+//				newBendPoints.add(newLocation);
 			}
-			List<Point> oldPoints = this.bendPoints;
-			this.bendPoints = newBendPoints;
-//			this.listenableBendPointChangeItem.notifyTranslation(translation, oldPoints, newBendPoints);
-			Iterator<Point> oldBpIter = oldPoints.iterator();
-			Iterator<Point> newBpIter = newBendPoints.iterator();
-			for(int i = 0; i < this.bendPoints.size(); i++){
-				Point oldPoint = oldBpIter.next();
-				Point newPoint = newBpIter.next();
-				this.listenableBendPointChangeItem.notifyPropertyChange(i, oldPoint, newPoint);
-			}
+//			List<Point> oldPoints = this.bendPoints;
+//			this.bendPoints = newBendPoints;
+////			this.listenableBendPointChangeItem.notifyTranslation(translation, oldPoints, newBendPoints);
+//			Iterator<Point> oldBpIter = oldPoints.iterator();
+//			Iterator<Point> newBpIter = newBendPoints.iterator();
+//			for(int i = 0; i < this.bendPoints.size(); i++){
+//				Point oldPoint = oldBpIter.next();
+//				Point newPoint = newBpIter.next();
+//				this.listenableBendPointChangeItem.notifyPropertyChange(i, oldPoint, newPoint);
+//			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer#curveIterator()
+	 */
+	@Override
+	public Iterator<ICurveSegment> curveIterator() {
+		return this.bendPoints.iterator();
 	}
 
 }

@@ -19,8 +19,6 @@
 
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
-import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
-import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * 
@@ -30,29 +28,17 @@ import org.pathwayeditor.figure.geometry.Point;
  * @author Stuart Moodie
  *
  */
-public interface IBendPointLocationChangeEvent {
-	
-	/**
-	 * Gets the bend-point container that fired this event.
-	 * @return then bend-point container.
-	 */
-	IBendPointContainer getBendPointContainer();
-	
-	/**
-	 * Gets the index of the bend-point that changed.
-	 * @return the bend-point index.
-	 */
-	int getBendPointIndex();
-
+public interface ICurveSegmentChangeEvent {
+		
 	/**
 	 * Gets the original position of the bend-point.
 	 * @return the original position, which cannot be null.
 	 */
-	Point getOldPosition();
+	Object getOldSegment();
 
 	/**
 	 * Gets the new bend-point position.
 	 * @return the new position, which cannot be null.
 	 */
-	Point getNewPosition();
+	Object getNewSegment();
 }

@@ -83,6 +83,12 @@ public interface IModel {
 	ILabelAttributeFactory labelAttributeFactory();
 
 	/**
+	 * Create a new anchor node attribute factory
+	 * @return the node anchor att fact.
+	 */
+	IAnchorNodeAttributeFactory anchorNodeAttributeFactory();
+
+	/**
 	 * Get the root attribute for this model.
 	 * @return the root attribute which cannot be null.
 	 */

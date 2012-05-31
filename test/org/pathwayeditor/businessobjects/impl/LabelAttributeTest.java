@@ -32,6 +32,7 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -358,6 +359,11 @@ public class LabelAttributeTest {
 			@Override
 			public void visitLabel(ILabelAttribute attribute) {
 				assertEquals("expected att", testInstance, attribute);
+			}
+
+			@Override
+			public void visitAnchorNode(IAnchorNodeAttribute anchorNodeAttribute) {
+				fail("Should not be called");
 			}
 		});
 	}
