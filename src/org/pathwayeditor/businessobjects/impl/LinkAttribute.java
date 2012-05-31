@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegmentContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
@@ -55,7 +56,7 @@ public class LinkAttribute extends AnnotatedCanvasAttribute implements ILinkAttr
 	private final ILinkTerminus srcTerminus;
 	private final ILinkTerminus tgtTerminus;
 	private final CanvasAttributeChangeListenerHelper canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(this);
-	private final IBendPointContainer bpContainer;
+	private final BendPointContainer bpContainer;
 	
 	public LinkAttribute(IModel hibCanvas, int linkIndex, ILinkObjectType objectType) {
 		super(hibCanvas, linkIndex, objectType.getDefaultAttributes());
@@ -80,7 +81,7 @@ s	 */
 		this.lineWidth = otherAttribute.getLineWidth();
 		this.srcTerminus = new LinkTerminus(this, otherAttribute.getSourceTerminus());
 		this.tgtTerminus = new LinkTerminus(this, otherAttribute.getTargetTerminus());
-		this.bpContainer = new BendPointContainer(this, otherAttribute.getBendPointContainer());
+		this.bpContainer = new BendPointContainer(this, otherAttribute.getCurveSegmentContainer());
 	}
 
 	/**
@@ -275,6 +276,14 @@ s	 */
 		for(IBendPointContainerListener listener : bpListeners){
 			this.bpContainer.addChangeListener(listener);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute#getCurveSegmentContainer()
+	 */
+	@Override
+	public ICurveSegmentContainer getCurveSegmentContainer() {
+		return this.bpContainer;
 	}
 
 }

@@ -31,6 +31,7 @@ import org.jmock.api.Action;
 import org.jmock.api.Invocation;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegmentContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkTerminus;
@@ -131,6 +132,7 @@ public class LinkAttributeBuilder {
 		linkAttribute = mockery.mock(ILinkAttribute.class, name);
 		final ILinkTerminus srcTerm = mockery.mock(ILinkTerminus.class, name + "SrcTerm");
 		final ILinkTerminus tgtTerm = mockery.mock(ILinkTerminus.class, name + "TgtTerm");
+		final ICurveSegmentContainer mockCurveSegContainer = mockery.mock(ICurveSegmentContainer.class, name + "mockCurveSegContainer");
 		mockery.checking(new Expectations(){{
 			allowing(linkAttribute).getCreationSerial(); will(returnValue(idx));
 			allowing(linkAttribute).getModel(); will(returnValue(canvas));
@@ -166,10 +168,14 @@ public class LinkAttributeBuilder {
 		final IBendPointContainer bpContainer = mockery.mock(IBendPointContainer.class, this.name + "BpContainer");
 		this.mockery.checking(new Expectations(){{
 			allowing(bpContainer).bendPointIterator(); will(returnIterator(bpLocations));
-			allowing(bpContainer).curveIterator(); will(returnIterator(curveLocations));
 			allowing(bpContainer).getBendPoint(with(any(Integer.class))); will(getBendPoint());
 			allowing(bpContainer).containsBendPoint(with(any(Integer.class))); will(testBendPoint());
+
 			allowing(linkAttribute).getBendPointContainer(); will(returnValue(bpContainer));
+			allowing(linkAttribute).getCurveSegmentContainer(); will(returnValue(mockCurveSegContainer));
+
+			allowing(mockCurveSegContainer).curveIterator(); will(returnIterator(curveLocations));
+		
 		}});
 		Iterator<IPropertyDefinition> defnIter = objectType.getDefaultAttributes().propertyDefinitionIterator();
 		while(defnIter.hasNext()){

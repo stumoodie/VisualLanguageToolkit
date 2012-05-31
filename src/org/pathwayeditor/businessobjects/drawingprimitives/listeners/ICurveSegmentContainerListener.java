@@ -5,13 +5,13 @@ Copyright 2009-2011, Court of the University of Edinburgh
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
 /**
- * ICurveSegmentChangeListener
+ * ICurveSegmentContainerListener
  *
  * @author Stuart Moodie
  *
  */
-public interface ICurveSegmentChangeListener {
+public interface ICurveSegmentContainerListener {
 
-	void locationChange(ICurveSegmentLocationChangeEvent e);
-	
+	void curveSegmentsReplaced(ICurveSegmentContainerEvent e);
+
 }

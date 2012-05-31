@@ -19,26 +19,19 @@ public interface ICurveSegment {
 
 	void visit(ICurveSegmentVisitor visitor);
 	
-	void addCurveSegmentChangeListener(ICurveSegmentChangeListener l);
-
-	void removeCurveSegmentChangeListener(ICurveSegmentChangeListener l);
-
-	List<ICurveSegmentChangeListener> getCurveSegmentChangeListeners();
-
 	Point getStartPoint();
 	
 	Point getEndPoint();
 
 	void setEndPoint(Point newLocation);
 
-	/**
-	 * @param newLocation
-	 */
 	void setStartPoint(Point newLocation);
 
-	/**
-	 * @param translation
-	 */
 	void translate(Point translation);
 	
+	void addCurveSegmentChangeListener(ICurveSegmentChangeListener l);
+
+	void removeCurveSegmentChangeListener(ICurveSegmentChangeListener l);
+
+	List<ICurveSegmentChangeListener> getCurveSegmentChangeListeners();
 }

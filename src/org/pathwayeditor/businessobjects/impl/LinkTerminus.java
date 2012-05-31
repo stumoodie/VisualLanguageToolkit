@@ -45,7 +45,7 @@ public class LinkTerminus implements ILinkTerminus {
 	private double offset = DEFAULT_OFFSET;
 	private LinkEndDecoratorShape endDecoratorType = null;
 	private Dimension endDecSize = new Dimension(DEF_END_DEC_WIDTH, DEF_END_DEC_HEIGHT);
-    private Point location = Point.ORIGIN;
+//    private Point location = Point.ORIGIN;
     private final List<ILinkTerminusChangeListener> listeners = new LinkedList<ILinkTerminusChangeListener>(); 
 
 	public LinkTerminus(ILinkAttribute link, LinkTermType linkTermType, ILinkTerminusDefinition terminusDefn) {
@@ -65,7 +65,7 @@ public class LinkTerminus implements ILinkTerminus {
 		this.endDecoratorType = other.getEndDecoratorType();
 		this.endDecSize = other.getEndSize();
 		this.offset = other.getGap();
-		this.location = other.getLocation();
+//		this.location = other.getLocation();
 	}
 
 	/**
@@ -216,7 +216,14 @@ public class LinkTerminus implements ILinkTerminus {
 	 */
 	@Override
 	public Point getLocation() {
-		return this.location;
+		Point retVal;
+		if(this.linkTermType == LinkTermType.SOURCE){
+			retVal = this.linkAttribute.getCurveSegmentContainer().getFirstCurveSegment().getStartPoint();
+		}
+		else{
+			retVal = this.linkAttribute.getCurveSegmentContainer().getLastCurveSegment().getEndPoint();
+		}
+		return retVal;
 	}
 
 	/* (non-Javadoc)
@@ -224,10 +231,15 @@ public class LinkTerminus implements ILinkTerminus {
 	 */
 	@Override
 	public void setLocation(Point newLocation) {
-		if(!this.location.equals(newLocation)){
-			Point oldLocation = this.location;
-			this.location = newLocation;
-			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.location);
+		if(!this.getLocation().equals(newLocation)){
+			Point oldLocation = this.getLocation();
+			if(this.linkTermType == LinkTermType.SOURCE){
+				this.linkAttribute.getCurveSegmentContainer().getFirstCurveSegment().setStartPoint(newLocation);
+			}
+			else{
+				this.linkAttribute.getCurveSegmentContainer().getLastCurveSegment().setEndPoint(newLocation);
+			}
+			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.getLocation());
 		}
 	}
 
@@ -261,10 +273,16 @@ public class LinkTerminus implements ILinkTerminus {
 	@Override
 	public void translate(Point delta) {
 		if(!delta.equals(Point.ORIGIN)){
-			Point oldLocation = this.location;
-			this.location = this.location.translate(delta);
+			Point oldLocation = this.getLocation();
+			Point newLocation = oldLocation.translate(delta);
+			if(this.linkTermType == LinkTermType.SOURCE){
+				this.linkAttribute.getCurveSegmentContainer().getFirstCurveSegment().setStartPoint(newLocation);
+			}
+			else{
+				this.linkAttribute.getCurveSegmentContainer().getLastCurveSegment().setEndPoint(newLocation);
+			}
 //			notifyTranslation(delta, oldLocation, this.location);
-			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, this.location);
+			notifyPropertyChange(LinkTerminusChangeType.LOCATION, oldLocation, newLocation);
 		}
 	}
 

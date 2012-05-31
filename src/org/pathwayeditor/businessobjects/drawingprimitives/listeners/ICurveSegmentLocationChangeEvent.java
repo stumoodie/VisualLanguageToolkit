@@ -19,6 +19,9 @@
 
 package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
 
+import java.util.List;
+
+import org.pathwayeditor.figure.geometry.Point;
 
 /**
  * 
@@ -28,17 +31,17 @@ package org.pathwayeditor.businessobjects.drawingprimitives.listeners;
  * @author Stuart Moodie
  *
  */
-public interface ICurveSegmentChangeEvent {
-		
+public interface ICurveSegmentLocationChangeEvent {
+	
 	/**
-	 * Gets the original position of the bend-point.
+	 * Gets the original position of the curve segment.
 	 * @return the original position, which cannot be null.
 	 */
-	Object getOldSegment();
+	List<Point> getOldPosition();
 
 	/**
-	 * Gets the new bend-point position.
+	 * Gets the new curve segment position.
 	 * @return the new position, which cannot be null.
 	 */
-	Object getNewSegment();
+	List<Point> getNewPosition();
 }

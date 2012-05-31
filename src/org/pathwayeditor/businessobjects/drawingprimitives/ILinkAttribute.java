@@ -101,6 +101,8 @@ public interface ILinkAttribute extends ICanvasElementAttribute, IAnnotatedObjec
 	 */
 	IBendPointContainer getBendPointContainer();
 	
+	ICurveSegmentContainer getCurveSegmentContainer();
+	
 	@Override
 	ICompoundEdge getCurrentElement();
 }
