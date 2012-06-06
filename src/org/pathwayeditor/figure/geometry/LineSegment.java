@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  *
  */
 public class LineSegment {
-	private static final double DOUBLE_ROUNDING_ERROR_TOL = 0.0001;
+	public static final double DOUBLE_ROUNDING_ERROR_TOL = 0.0001;
 	private final Logger logger = Logger.getLogger(this.getClass());
 	private final Point origin;
 	private final Point terminus;
@@ -86,7 +86,11 @@ public class LineSegment {
 		return new LineSegment(this.terminus, this.origin);
 	}
 	
-	/**
+	public Point intersect(final LineSegment line) {
+		return this.intersect(line, DOUBLE_ROUNDING_ERROR_TOL);
+	}
+
+		/**
 	 * Determines the intersect point between this line and the line passed 
 	 * in as a parameter.  If they intersect, then true is returned and the 
 	 * point reference passed in will be set to the intersect point.  

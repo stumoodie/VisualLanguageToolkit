@@ -479,4 +479,25 @@ public class ConvexHull implements IConvexHull {
 	public IConvexHull translate(Point p) {
 		return this.translate(p.getX(), p.getY());
 	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.geometry.IConvexHull#hullIntersectsLine(org.pathwayeditor.figure.geometry.LineSegment)
+	 */
+	@Override
+	public boolean hullIntersectsLine(LineSegment line) {
+		boolean retVal = false;
+		if(this.containsPoint(line.getOrigin()) || this.containsPoint(line.getTerminus())){
+			retVal = true;
+		}
+		else{
+			Point previous = this.pointList.get(this.pointList.size()-1);
+			for(int i = 0; i < this.pointList.size() && !retVal; i++) {
+				Point curr = this.pointList.get(i);
+				retVal = line.intersect(new LineSegment(previous, curr)) != null;
+				previous = curr;
+			}
+		}
+		return retVal;
+	}
 }

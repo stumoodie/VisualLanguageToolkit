@@ -280,11 +280,11 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLinkEndObjectType()
-	 */
-	@Override
-	public IShapeObjectType getLinkEndObjectType(ILinkObjectType ot) {
-		return this.linkEndObjectType;
-	}
+//	/* (non-Javadoc)
+//	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getLinkEndObjectType()
+//	 */
+//	@Override
+//	public IShapeObjectType getLinkEndObjectType(ILinkObjectType ot) {
+//		return this.linkEndObjectType;
+//	}
 }

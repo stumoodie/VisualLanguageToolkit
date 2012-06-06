@@ -167,4 +167,12 @@ public class RectangleHull implements IConvexHull {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.figure.geometry.IConvexHull#hullIntersectsLine(org.pathwayeditor.figure.geometry.LineSegment)
+	 */
+	@Override
+	public boolean hullIntersectsLine(LineSegment line) {
+		return this.hull.hullIntersectsLine(line);
+	}
+
 }

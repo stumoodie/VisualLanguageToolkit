@@ -149,4 +149,11 @@ public interface IConvexHull {
 	 * @return a new convex hull translated by the given displacement.
 	 */
 	IConvexHull translate(Point p);
+
+	/**
+	 * Tests if line intersects this hull.
+	 * @param line the line, which can be null.
+	 * @return true if line intersects hull, false otherwise.
+	 */
+	boolean hullIntersectsLine(LineSegment line);
 }
