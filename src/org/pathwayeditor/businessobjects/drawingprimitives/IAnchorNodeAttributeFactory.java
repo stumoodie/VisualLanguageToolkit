@@ -4,7 +4,7 @@ Copyright 2009-2011, Court of the University of Edinburgh
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 
 /**
  * IAnchorNodeAttributeFactory
@@ -17,9 +17,9 @@ public interface IAnchorNodeAttributeFactory extends ICanvasAttributeFactory {
 	/**
 	 * @param linkEndObjectType
 	 */
-	void setObjectType(IShapeObjectType linkEndObjectType);
+	void setObjectType(IAnchorNodeObjectType linkEndObjectType);
 	
-	IShapeObjectType getObjectType();
+	IAnchorNodeObjectType getObjectType();
 	
 	void setAssociateCurveSegment(ICurveSegment associatedCurveSegment);
 

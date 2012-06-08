@@ -22,6 +22,7 @@ package org.pathwayeditor.businessobjects.notationsubsystem;
 import java.util.Iterator;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
@@ -45,6 +46,14 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
  */
 public interface INotationSyntaxService extends INotationService {
 
+	Iterator<IAnchorNodeObjectType> anchorNodeTypeIterator();
+	
+	int numAnchorNodeTypes();
+	
+	IAnchorNodeObjectType getAnchorNodeObjectType(int uniqueId);
+	
+	boolean containsAnchorNodeObjectType(int uniqueId);
+	
 	/**
 	 * Returns an iterator of shape object types defined by this syntax service.
 	 * @return An iterator of shape object types cannot be null.

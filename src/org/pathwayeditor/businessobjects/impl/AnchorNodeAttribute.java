@@ -13,7 +13,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.Colour;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICanvasAttributeChangeListener;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeAttributeDefaults;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
@@ -31,25 +32,42 @@ import uk.ac.ed.inf.graph.compound.IElementAttributeFactory;
 public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeAttribute {
 	private static final String DEFAULT_FIGURE_DEFN = "curbounds rect";
 
-	private final IShapeObjectType shapeObjectType;
+	private final IAnchorNodeObjectType anchorNodeObjectType;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private final DrawingNodeAttributeHelper drawingNodeHelper;
 	private final ICurveSegment curveSegment;
 	
-	public AnchorNodeAttribute(IModel canvas, int creationSerial, ICurveSegment associatedCurveSegment, IShapeObjectType objectType) {
+	public AnchorNodeAttribute(IModel canvas, int creationSerial, ICurveSegment associatedCurveSegment, IAnchorNodeObjectType objectType) {
 		super(canvas, creationSerial);
 		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, objectType.getDefaultAttributes());
-		this.shapeObjectType = objectType;
+		this.anchorNodeObjectType = objectType;
 		this.curveSegment = associatedCurveSegment;
+		IAnchorNodeAttributeDefaults anchorDefaults = anchorNodeObjectType.getDefaultAttributes(); 
+		this.drawingNodeHelper.setSize(anchorDefaults.getSize());
+		this.drawingNodeHelper.setFillColour(anchorDefaults.getFillColour());
+		this.drawingNodeHelper.setFont(anchorDefaults.getFont());
+		this.drawingNodeHelper.setFontColour(anchorDefaults.getFontColour());
+		this.drawingNodeHelper.setLineColour(anchorDefaults.getLineColour());
+		this.drawingNodeHelper.setLineStyle(anchorDefaults.getLineStyle());
+		this.drawingNodeHelper.setLineWidth(anchorDefaults.getLineWidth());
+		this.figureDefn = anchorDefaults.getShapeDefinition();
 	}
 
 
 	public AnchorNodeAttribute(IModel model, int newCreationSerial, IAnchorNodeAttribute otherAttribute) {
 		super(model, newCreationSerial);
-		this.shapeObjectType = otherAttribute.getObjectType();
+		this.anchorNodeObjectType = otherAttribute.getObjectType();
 		this.figureDefn = otherAttribute.getShapeDefinition();
 		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
 		this.curveSegment = otherAttribute.getAssociatedCurveSegment();
+		this.drawingNodeHelper.setBounds(otherAttribute.getBounds());
+		this.drawingNodeHelper.setFillColour(otherAttribute.getFillColour());
+		this.drawingNodeHelper.setFont(otherAttribute.getFont());
+		this.drawingNodeHelper.setFontColour(otherAttribute.getFontColour());
+		this.drawingNodeHelper.setLineColour(otherAttribute.getLineColour());
+		this.drawingNodeHelper.setLineStyle(otherAttribute.getLineStyle());
+		this.drawingNodeHelper.setLineWidth(otherAttribute.getLineWidth());
+		this.figureDefn = otherAttribute.getShapeDefinition();
 	}
 
 
@@ -57,8 +75,8 @@ public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeA
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute#getObjectType()
 	 */
 	@Override
-	public IShapeObjectType getObjectType() {
-		return this.shapeObjectType;
+	public IAnchorNodeObjectType getObjectType() {
+		return this.anchorNodeObjectType;
 	}
 
 	/* (non-Javadoc)

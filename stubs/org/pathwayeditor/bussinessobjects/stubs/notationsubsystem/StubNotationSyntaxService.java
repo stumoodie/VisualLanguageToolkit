@@ -23,6 +23,7 @@
 package org.pathwayeditor.bussinessobjects.stubs.notationsubsystem;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
@@ -60,7 +62,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	private final Map<Integer, ILinkObjectType> links;
 	private final Map<IPropertyDefinition, ILabelObjectType> labels;
 	private final ILabelObjectType labelObjectType;
-	private final IShapeObjectType linkEndObjectType;
+	private final Map<Integer, IAnchorNodeObjectType> anchorNodes;
 	
 	public StubNotationSyntaxService(INotationSubsystem notationSubsystem){
 		this.notationSubsystem = notationSubsystem;
@@ -89,7 +91,7 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 		this.labels.put(new StubListPropertyDefinition(), this.labelObjectType);
 		this.labels.put(new StubHtmlPropertyDefinition(), this.labelObjectType);
 		this.labels.put(new StubTextPropertyDefinition(), this.labelObjectType);
-		this.linkEndObjectType = new StubShapeDObjectType(this);
+		this.anchorNodes = Collections.emptyMap();
 	}
 	
 	/* (non-Javadoc)
@@ -278,6 +280,38 @@ public class StubNotationSyntaxService implements INotationSyntaxService {
 	@Override
 	public boolean isVisualisableProperty(IPropertyDefinition propDefn) {
 		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#anchorNodeTypeIterator()
+	 */
+	@Override
+	public Iterator<IAnchorNodeObjectType> anchorNodeTypeIterator() {
+		return this.anchorNodes.values().iterator();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#numAnchorNodeTypes()
+	 */
+	@Override
+	public int numAnchorNodeTypes() {
+		return this.anchorNodes.size();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#getAnchorNodeObjectType(int)
+	 */
+	@Override
+	public IAnchorNodeObjectType getAnchorNodeObjectType(int uniqueId) {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService#containsAnchorNodeObjectType(int)
+	 */
+	@Override
+	public boolean containsAnchorNodeObjectType(int uniqueId) {
+		return false;
 	}
 
 //	/* (non-Javadoc)

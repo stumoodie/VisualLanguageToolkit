@@ -7,7 +7,7 @@ package org.pathwayeditor.businessobjects.impl;
 import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
 import uk.ac.ed.inf.graph.util.IndexCounter;
@@ -19,7 +19,7 @@ import uk.ac.ed.inf.graph.util.IndexCounter;
  *
  */
 public class AnchorNodeAttributeFactory implements IAnchorNodeAttributeFactory {
-	private IShapeObjectType shapeObjectType;
+	private IAnchorNodeObjectType shapeObjectType;
 	private ICanvasElementAttribute destinationAttribute;
 	private final IndexCounter creationSerialCounter;
 	private IElementAttribute outAttribute;
@@ -127,7 +127,7 @@ public class AnchorNodeAttributeFactory implements IAnchorNodeAttributeFactory {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory#setObjectType(org.pathwayeditor.businessobjects.typedefn.IShapeObjectType)
 	 */
 	@Override
-	public void setObjectType(IShapeObjectType linkEndObjectType) {
+	public void setObjectType(IAnchorNodeObjectType linkEndObjectType) {
 		this.shapeObjectType = linkEndObjectType;
 	}
 
@@ -140,7 +140,7 @@ public class AnchorNodeAttributeFactory implements IAnchorNodeAttributeFactory {
 	}
 
 	@Override
-	public IShapeObjectType getObjectType() {
+	public IAnchorNodeObjectType getObjectType() {
 		return this.shapeObjectType;
 	}
 

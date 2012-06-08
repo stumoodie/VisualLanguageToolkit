@@ -4,7 +4,7 @@ Copyright 2009-2011, Court of the University of Edinburgh
 
 package org.pathwayeditor.businessobjects.drawingprimitives;
 
-import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 
 /**
  * IAnchorNodeAttribute
@@ -15,7 +15,7 @@ import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 public interface IAnchorNodeAttribute extends ITypedDrawingNodeAttribute {
 
 	@Override
-	IShapeObjectType getObjectType();
+	IAnchorNodeObjectType getObjectType();
 	
 	ICurveSegment getAssociatedCurveSegment();
 	
