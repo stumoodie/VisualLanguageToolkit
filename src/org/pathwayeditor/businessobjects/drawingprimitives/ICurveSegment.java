@@ -7,6 +7,7 @@ package org.pathwayeditor.businessobjects.drawingprimitives;
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICurveSegmentChangeListener;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.Point;
 
 /**
@@ -34,4 +35,6 @@ public interface ICurveSegment {
 	void removeCurveSegmentChangeListener(ICurveSegmentChangeListener l);
 
 	List<ICurveSegmentChangeListener> getCurveSegmentChangeListeners();
+
+	boolean intersects(IConvexHull hull);
 }

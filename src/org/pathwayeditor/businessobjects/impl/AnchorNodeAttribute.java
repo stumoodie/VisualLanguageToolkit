@@ -18,6 +18,7 @@ import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.geometry.Envelope;
 import org.pathwayeditor.figure.geometry.Point;
+import org.pathwayeditor.figure.geometry.Scale;
 import org.pathwayeditor.figure.rendering.GenericFont;
 
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
@@ -275,5 +276,25 @@ public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeA
 	@Override
 	public String getShapeDefinition() {
 		return this.figureDefn;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute#setAnchorLocation(org.pathwayeditor.figure.geometry.Point)
+	 */
+	@Override
+	public void setAnchorLocation(Point anchorPosn) {
+		Dimension delta = this.drawingNodeHelper.getBounds().getDimension().scale(new Scale(0.5, 0.5)).negate();
+		Envelope newBounds = this.getBounds().changeOrigin(anchorPosn.translate(new Point(delta.getWidth(), delta.getHeight())));
+		this.drawingNodeHelper.setBounds(newBounds);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute#getAnchorLocation()
+	 */
+	@Override
+	public Point getAnchorLocation() {
+		return this.drawingNodeHelper.getBounds().getCentre();
 	}
 }

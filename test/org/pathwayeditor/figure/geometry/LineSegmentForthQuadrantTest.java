@@ -28,19 +28,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LineSegmentTest {
+public class LineSegmentForthQuadrantTest {
 	private LineSegment testInstance;
 	private static final Point ORIGIN = new Point(2.0, 1.0);
-	private static final Point END = new Point(12.0, 11.0);
-	private static final double EXPECTED_LEN = Math.sqrt(200);
-	private static final double EXPECTED_EQUATION[] = { -1.0, 1.0, -1.0 }; 
-	private static final LineSegment intersectingLine = new LineSegment(new Point(2, 11), new Point(12.0, 1.0));
-	private static final Point INTERSECTING_POINT = new Point(7.0, 6.0);
+	private static final Point END = new Point(10.0, -1.0);
+	private static final double EXPECTED_LEN = Math.sqrt(8*8+2*2);
+	private static final double EXPECTED_EQUATION[] = { 0.25, 1.0, 1.5 }; 
+	private static final LineSegment intersectingLine = new LineSegment(new Point(2, -1), new Point(10.0, 1.0));
+	private static final Point INTERSECTING_POINT = new Point(6.0, 0);
 	private static final LineSegment nonIntersectingLine = new LineSegment(new Point(-1.0, 0.0), new Point(9.0, 10.0));;
-	private static final Point CONTAINED_POINT = new Point(3.0, 2.0);  
-	private static final Point NOT_CONTAINED_POINT = new Point(2.5, 2.0);
-	private static final double NEW_SEG_LEN = Math.sqrt(50);
-	private static final LineSegment EXPECTED_NEW_LINE_SEG = new LineSegment(ORIGIN, new Point(7,6));  
+	private static final Point CONTAINED_POINT = new Point(3.0, 0.75);  
+	private static final Point NOT_CONTAINED_POINT = new Point(3.0, 0.1);
+	private static final double NEW_SEG_LEN = Math.sqrt((6*6)+(1.5*1.5));
+	private static final LineSegment EXPECTED_NEW_LINE_SEG = new LineSegment(ORIGIN, new Point(8,-0.5));  
 	
 	@Before
 	public void setUp() throws Exception {
@@ -62,10 +62,10 @@ public class LineSegmentTest {
 	public final void testContainsPoint() {
 		assertTrue("contained point", this.testInstance.containsPoint(CONTAINED_POINT));
 		assertFalse("not contained point", this.testInstance.containsPoint(NOT_CONTAINED_POINT));
-		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, 6.0)));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.01)));
-		assertTrue("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.000001)));
-		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 6.00001)));
+		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, -0.25)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, -4.01)));
+		assertTrue("contained point", this.testInstance.containsPoint(new Point(7.0, -0.250001)));
+		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, -4.10001)));
 		assertTrue("contained point", this.testInstance.containsPoint(ORIGIN));
 		assertTrue("contained point", this.testInstance.containsPoint(END));
 		assertFalse("not contained point", this.testInstance.containsPoint(new Point(7.0, 7.0)));

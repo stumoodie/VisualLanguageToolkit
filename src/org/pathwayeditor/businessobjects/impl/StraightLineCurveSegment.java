@@ -13,6 +13,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegmentVisitor;
 import org.pathwayeditor.businessobjects.drawingprimitives.IStraightLineCurveSegment;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICurveSegmentChangeListener;
 import org.pathwayeditor.businessobjects.drawingprimitives.listeners.ICurveSegmentLocationChangeEvent;
+import org.pathwayeditor.figure.geometry.IConvexHull;
 import org.pathwayeditor.figure.geometry.LineSegment;
 import org.pathwayeditor.figure.geometry.Point;
 
@@ -193,6 +194,15 @@ public class StraightLineCurveSegment implements IStraightLineCurveSegment {
 		builder.append(this.end);
 		builder.append(")");
 		return builder.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment#intersects(org.pathwayeditor.figure.geometry.IConvexHull)
+	 */
+	@Override
+	public boolean intersects(IConvexHull hull) {
+		LineSegment seg = new LineSegment(this.start, this.end);
+		return hull.hullIntersectsLine(seg);
 	}
 
 }
