@@ -69,7 +69,7 @@ public class LineSegment {
 	 * @return the new line segment, which cannot be null
 	 */
 	public LineSegment newLineSegment(double length){
-		if(length <= 0.0) throw new IllegalArgumentException("length must be a positive non-zero value");
+		if(length < 0.0) throw new IllegalArgumentException("length must be a positive value");
 	
 		double theta = this.angle();
 		double y = length * Math.sin(theta);
