@@ -14,6 +14,6 @@ import org.pathwayeditor.figure.geometry.LineSegment;
  */
 public interface IStraightLineCurveSegment extends ICurveSegment {
 
-	LineSegment getLineSegement();
+	LineSegment getLineSegment();
 	
 }

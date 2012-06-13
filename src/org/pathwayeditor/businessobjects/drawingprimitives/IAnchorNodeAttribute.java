@@ -20,6 +20,8 @@ public interface IAnchorNodeAttribute extends ITypedDrawingNodeAttribute {
 	
 	ICurveSegment getAssociatedCurveSegment();
 	
+	void setAssociatedCurveSegment(ICurveSegment  newCurveSegment);
+
 	String getShapeDefinition();
 
 	void setAnchorLocation(Point anchorPosn);

@@ -36,7 +36,7 @@ public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeA
 	private final IAnchorNodeObjectType anchorNodeObjectType;
 	private String figureDefn = DEFAULT_FIGURE_DEFN;
 	private final DrawingNodeAttributeHelper drawingNodeHelper;
-	private final ICurveSegment curveSegment;
+	private ICurveSegment curveSegment;
 	
 	public AnchorNodeAttribute(IModel canvas, int creationSerial, ICurveSegment associatedCurveSegment, IAnchorNodeObjectType objectType) {
 		super(canvas, creationSerial);
@@ -296,5 +296,14 @@ public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeA
 	@Override
 	public Point getAnchorLocation() {
 		return this.drawingNodeHelper.getBounds().getCentre();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute#setAssociatedCurveSegment(org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment)
+	 */
+	@Override
+	public void setAssociatedCurveSegment(ICurveSegment newCurveSegment) {
+		this.curveSegment = newCurveSegment;
 	}
 }

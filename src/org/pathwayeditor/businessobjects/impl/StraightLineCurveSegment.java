@@ -126,7 +126,7 @@ public class StraightLineCurveSegment implements IStraightLineCurveSegment {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IStraightLineCurveSegment#getLineSegement()
 	 */
 	@Override
-	public LineSegment getLineSegement() {
+	public LineSegment getLineSegment() {
 		return new LineSegment(this.start, this.end);
 	}
 
