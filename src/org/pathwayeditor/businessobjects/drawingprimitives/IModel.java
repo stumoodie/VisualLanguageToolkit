@@ -301,4 +301,6 @@ public interface IModel {
 	 * @return true if there is an associated label, false otherwise.
 	 */
 	boolean hasLabelForProperty(IAnnotationProperty annotationProperty);
+
+	Iterator<IDrawingNodeAttribute> drawingNodeAttributeIterator();
 }

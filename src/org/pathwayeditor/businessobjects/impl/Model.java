@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -38,7 +39,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IRootAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
-import org.pathwayeditor.businessobjects.impl.facades.SubModelFacade;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 
@@ -84,6 +84,14 @@ public class Model implements IModel {
 			return true;
 		}
 	};
+
+	private final IFilterCriteria<ICanvasElementAttribute> drawingNodeAttribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof IDrawingNodeAttribute;
+		}
+	};
+
 
 	private final INotationSubsystem notationSubsystem;
 	private String name;
@@ -266,6 +274,11 @@ public class Model implements IModel {
 	@Override
 	public Iterator<IShapeAttribute> shapeAttributeIterator() {
 		return createAttribIter(this.shapeAttribCriteria);
+	}
+
+	@Override
+	public Iterator<IDrawingNodeAttribute> drawingNodeAttributeIterator() {
+		return createAttribIter(this.drawingNodeAttribCriteria);
 	}
 
 	/* (non-Javadoc)
@@ -489,7 +502,14 @@ public class Model implements IModel {
 	public ILabelAttribute getLabelForProperty(final IAnnotationProperty annotationProperty) {
 		ICanvasElementAttribute attrib = (ICanvasElementAttribute)annotationProperty.getOwner();
 		ICompoundGraphElement graphElement = attrib.getCurrentElement();
-		Iterator<ICompoundNode> childIter = new SubModelFacade(graphElement.getChildCompoundGraph()).labelIterator();
+//		Iterator<ICompoundNode> childIter = new SubModelFacade(graphElement.getChildCompoundGraph()).labelIterator();
+		FilteredIterator<ICompoundNode> childIter = new FilteredIterator<ICompoundNode>(graphElement.getChildCompoundGraph().nodeIterator(),
+				new IFilterCriteria<ICompoundNode>(){
+					@Override
+					public boolean matched(ICompoundNode testObj) {
+						return testObj.getAttribute() instanceof ILabelAttribute;
+					}
+		});
 		ILabelAttribute retVal = null;
 		while(childIter.hasNext() && retVal == null){
 			ILabelAttribute nodeAtt = (ILabelAttribute)childIter.next().getAttribute();
