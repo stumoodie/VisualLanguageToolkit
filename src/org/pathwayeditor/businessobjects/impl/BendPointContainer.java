@@ -337,4 +337,22 @@ public class BendPointContainer implements IBendPointContainer, ICurveSegmentCon
 		return this.bendPoints.get(idx);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegmentContainer#getCurveSegmentIndex(org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment)
+	 */
+	@Override
+	public int getCurveSegmentIndex(ICurveSegment associatedCurveSegment) {
+		int retVal = -1;
+		boolean matched = false;
+		Iterator<ICurveSegment> iter =  this.curveIterator();
+		while(iter.hasNext() && !matched){
+			retVal++;
+			ICurveSegment seg = iter.next();
+			if(seg.equals(associatedCurveSegment)){
+				matched = true;
+			}
+		}
+		return retVal;
+	}
+
 }

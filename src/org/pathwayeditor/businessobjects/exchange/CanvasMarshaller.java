@@ -49,6 +49,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LinkEndDecoratorShape;
 import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
+import org.pathwayeditor.businessobjects.exchange.castor.AnchorNode;
+import org.pathwayeditor.businessobjects.exchange.castor.AnchorNodeAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.Background;
 import org.pathwayeditor.businessobjects.exchange.castor.BendPoint;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
@@ -174,8 +176,8 @@ public class CanvasMarshaller {
 	public void write(Writer writer) throws IOException{
 		XMLContext ctx = new XMLContext();
 		Marshaller m = ctx.createMarshaller();
-		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange http://www.pathwayeditor.org/Exchange/Canvas.xsd");
-		m.setNamespaceMapping("epx", "http://www.pathwayeditor.org/Exchange");
+		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange/1.3 http://www.pathwayeditor.org/Exchange/Canvas.xsd");
+		m.setNamespaceMapping("epx", "http://www.pathwayeditor.org/Exchange/1.3");
 		m.setMarshalAsDocument(true);
 		m.setValidation(true);
 		m.setWriter(writer);
@@ -304,6 +306,29 @@ public class CanvasMarshaller {
 		xmlAttrib.setFigureDefinition(attrib.getShapeDefinition());
 		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
 		return xmlAttrib;
+	}
+	
+	private AnchorNodeAttribute createAnchorNodeAttribute(IAnchorNodeAttribute attrib) {
+		AnchorNodeAttribute xmlAttrib = new AnchorNodeAttribute();
+		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
+		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
+		xmlAttrib.setSize(createSize(new Size(), attrib.getBounds().getDimension()));
+		xmlAttrib.setObjectTypeId(attrib.getObjectType().getUniqueId());
+		xmlAttrib.setFillColour(setColour(new FillColour(), attrib.getFillColour()));
+		xmlAttrib.setLineColour(setColour(new LineColour(), attrib.getLineColour()));
+		xmlAttrib.setFontColour(setColour(new FontColour(), attrib.getFontColour()));
+		xmlAttrib.setFont(createFont(new Font(), attrib.getFont()));
+		xmlAttrib.setLineWidth(attrib.getLineWidth());
+		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
+		xmlAttrib.setFigureDefinition(attrib.getShapeDefinition());
+		int assocCurveIdx = getCurveSegmentIdx(attrib);
+		xmlAttrib.setAssociatedCurveSegment(assocCurveIdx);
+		return xmlAttrib;
+	}
+	
+	private int getCurveSegmentIdx(IAnchorNodeAttribute anchorNodeArr){
+		ILinkAttribute linkAtt = (ILinkAttribute)anchorNodeArr.getCurrentElement().getParent().getAttribute();
+		return linkAtt.getCurveSegmentContainer().getCurveSegmentIndex(anchorNodeArr.getAssociatedCurveSegment());
 	}
 	
 	private static <C extends ColourType> C setColour(C xmlColour, Colour col) {
@@ -472,21 +497,26 @@ public class CanvasMarshaller {
 
 				@Override
 				public void visitLink(ILinkAttribute attribute) {
-//					ILinkEdge edge = linkIter.next();
+					ICompoundEdge edge = attribute.getCurrentElement();
 					LinkEdge xmlNode = createLinkEdge(attribute.getCurrentElement());
 					xmlSubmodel.addLinkEdge(xmlNode);
+					addSubmodel(xmlNode.getSubModel(), edge.getChildCompoundGraph());
 				}
 
 				@Override
 				public void visitLabel(ILabelAttribute attribute) {
-//					ILabelNode node = labelIter.next();
+					ICompoundNode node = attribute.getCurrentElement();
 					LabelNode xmlNode = createLabelNode(attribute.getCurrentElement());
 					xmlSubmodel.addLabelNode(xmlNode);
+					addSubmodel(xmlNode.getSubModel(), node.getChildCompoundGraph());
 				}
 
 				@Override
-				public void visitAnchorNode(IAnchorNodeAttribute anchorNodeAttribute) {
-					throw new UnsupportedOperationException("Don't know how to handle anchorNode!");
+				public void visitAnchorNode(IAnchorNodeAttribute attribute) {
+					ICompoundNode shapeNode = attribute.getCurrentElement();
+					AnchorNode xmlNode = createAnchorNode(shapeNode);
+					xmlSubmodel.addAnchorNode(xmlNode);
+					addSubmodel(xmlNode.getSubModel(), shapeNode.getChildCompoundGraph());
 				}
 				
 			});
@@ -517,6 +547,8 @@ public class CanvasMarshaller {
 	
 	private LinkEdge createLinkEdge(ICompoundEdge linkEdge){
 		LinkEdge xmlLinkEdge = new LinkEdge();
+		SubModel childModel = new SubModel();
+		xmlLinkEdge.setSubModel(childModel);
 		xmlLinkEdge.setLinkIdx(linkEdge.getIndex());
 		CompoundNodePair nodePair = linkEdge.getConnectedNodes();
 		xmlLinkEdge.setSrcNodeIdx(nodePair.getOutNode().getIndex());
@@ -546,6 +578,16 @@ public class CanvasMarshaller {
 		return xmlNode;
 	}
 	
+	private AnchorNode createAnchorNode(ICompoundNode shapeNode){
+		AnchorNode xmlNode = new AnchorNode();
+		SubModel childModel = new SubModel();
+		xmlNode.setSubModel(childModel);
+		xmlNode.setNodeId(shapeNode.getIndex());
+		AnchorNodeAttribute attribute = createAnchorNodeAttribute((IAnchorNodeAttribute)shapeNode.getAttribute());
+		xmlNode.setAnchorNodeAttribute(attribute);
+		return xmlNode;
+	}
+
 	private ShapeNode createShapeNode(ICompoundNode shapeNode){
 		ShapeNode xmlNode = new ShapeNode();
 		SubModel childModel = new SubModel();

@@ -30,8 +30,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.IBendPointContainer;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvas;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICurveSegment;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
@@ -52,6 +55,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IIntegerAn
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IListAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberAnnotationProperty;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
+import org.pathwayeditor.businessobjects.exchange.castor.AnchorNode;
+import org.pathwayeditor.businessobjects.exchange.castor.AnchorNodeAttribute;
 import org.pathwayeditor.businessobjects.exchange.castor.BendPoint;
 import org.pathwayeditor.businessobjects.exchange.castor.BooleanAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
@@ -85,6 +90,7 @@ import org.pathwayeditor.businessobjects.management.IModelFactory;
 import org.pathwayeditor.businessobjects.management.INotationSubsystemPool;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
@@ -212,6 +218,21 @@ public class ModelBuilder {
 		buildAnnotationProperties(shapeAttrib, xmlShapeAtt.getPropertyRef());
 	}
 	
+	private void defineAnchorNodeAttributes(IAnchorNodeAttribute anchorNodeAttrib, AnchorNodeAttribute xmlAnchorNodeAtt) {
+		Envelope bounds = new Envelope(createPoint(xmlAnchorNodeAtt.getLocation()), createDimension(xmlAnchorNodeAtt.getSize()));
+		anchorNodeAttrib.setBounds(bounds);
+		anchorNodeAttrib.setFillColour(createColour(xmlAnchorNodeAtt.getFillColour()));
+		anchorNodeAttrib.setLineColour(createColour(xmlAnchorNodeAtt.getLineColour()));
+		anchorNodeAttrib.setFontColour(createColour(xmlAnchorNodeAtt.getFontColour()));
+		anchorNodeAttrib.setFont(createGenericFont(xmlAnchorNodeAtt.getFont()));
+		anchorNodeAttrib.setLineWidth(xmlAnchorNodeAtt.getLineWidth());
+		anchorNodeAttrib.setLineStyle(createLineStyle(xmlAnchorNodeAtt.getLineStyle()));
+		ILinkAttribute parentAtt = (ILinkAttribute)anchorNodeAttrib.getCurrentElement().getParent().getAttribute();
+		int curSegIdx = xmlAnchorNodeAtt.getAssociatedCurveSegment();
+		ICurveSegment assocSeg = parentAtt.getCurveSegmentContainer().getCurveSegment(curSegIdx);
+		anchorNodeAttrib.setAssociatedCurveSegment(assocSeg);
+	}
+	
 	
 	private void buildAnnotationProperties(IAnnotatedObject shapeAttrib, PropertyRef propIds[]){
 		for(PropertyRef propId : propIds){
@@ -324,9 +345,33 @@ public class ModelBuilder {
 			ICompoundNode hibShapeNode = createShapeNode(owningSubModel, xmlNode);
 			buildChildShapeNodes(hibShapeNode.getChildCompoundGraph(), xmlNode.getSubModel());
 		}
-		for(LinkEdge xmlEdge : xmlSubModel.getLinkEdge()){
-			createLinkEdge(owningSubModel, xmlEdge);
+		for(AnchorNode xmlNode : xmlSubModel.getAnchorNode()){
+			ICompoundNode hibShapeNode = createAnchorNode(owningSubModel, xmlNode);
+			buildChildShapeNodes(hibShapeNode.getChildCompoundGraph(), xmlNode.getSubModel());
 		}
+		for(LinkEdge xmlEdge : xmlSubModel.getLinkEdge()){
+			ICompoundEdge edge = createLinkEdge(owningSubModel, xmlEdge);
+			buildChildShapeNodes(edge.getChildCompoundGraph(), xmlEdge.getSubModel());
+		}
+	}
+	
+	private ICompoundNode createAnchorNode(IChildCompoundGraph owningSubModel, AnchorNode xmlNode){
+		int otId = xmlNode.getAnchorNodeAttribute().getObjectTypeId();
+		IAnchorNodeObjectType objectType = this.notationSubsystem.getSyntaxService().getAnchorNodeObjectType(otId);
+		IModel rootAtt = this.graph;
+		IAnchorNodeAttributeFactory attFact = rootAtt.anchorNodeAttributeFactory();
+		attFact.setObjectType(objectType);
+		attFact.setPreferredCreationSerial(xmlNode.getAnchorNodeAttribute().getCreationSerial());
+		ICompoundNodeFactory compoundNodeFact = owningSubModel.nodeFactory();
+		compoundNodeFact.setAttributeFactory(attFact);
+		ICompoundNode node = compoundNodeFact.createNode();
+		IAnchorNodeAttribute attribute = (IAnchorNodeAttribute)node.getAttribute();
+		defineAnchorNodeAttributes(attribute, xmlNode.getAnchorNodeAttribute());
+		if(logger.isDebugEnabled()){
+			logger.debug("Created shape node: " + node);
+		}
+		this.hibNodeMap.put(xmlNode.getNodeId(), node);
+		return node;
 	}
 	
 	private ICompoundNode createShapeNode(IChildCompoundGraph owningSubModel, ShapeNode xmlNode){

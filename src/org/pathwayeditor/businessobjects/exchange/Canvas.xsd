@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2009-2011, Court of the University of Edinburgh -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://www.pathwayeditor.org/Exchange"
-    xmlns="http://www.pathwayeditor.org/Exchange" version="1.2.0" attributeFormDefault="unqualified">
+    targetNamespace="http://www.pathwayeditor.org/Exchange/1.3"
+    xmlns="http://www.pathwayeditor.org/Exchange/1.3" version="1.3"
+    attributeFormDefault="unqualified">
     <xs:simpleType name="CanvasSerialType">
         <xs:restriction base="xs:int"/>
     </xs:simpleType>
@@ -74,6 +75,22 @@
                 </xs:sequence>
                 <xs:attribute name="lineWidth" type="xs:double"/>
                 <xs:attribute name="lineStyle" type="LineStyleType"> </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AnchorNodeAttributeType">
+        <xs:complexContent>
+            <xs:extension base="TypedDrawingNodeAttributeType">
+                <xs:sequence>
+                    <xs:element name="FillColour" type="ColourType"/>
+                    <xs:element name="LineColour" type="ColourType"/>
+                    <xs:element name="FontColour" type="ColourType"/>
+                    <xs:element name="Font" type="FontType"/>
+                    <xs:element name="FigureDefinition" type="FigureDefinitionType"/>
+                </xs:sequence>
+                <xs:attribute name="lineWidth" type="xs:double" use="required"/>
+                <xs:attribute name="lineStyle" type="LineStyleType" use="required"> </xs:attribute>
+                <xs:attribute name="associatedCurveSegment" type="xs:int" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -224,6 +241,15 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:complexType name="AnchorNodeType">
+        <xs:complexContent>
+            <xs:extension base="CompoundNodeType">
+                <xs:sequence>
+                    <xs:element name="AnchorNodeAttribute" type="AnchorNodeAttributeType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
     <xs:complexType name="LabelNodeType">
         <xs:complexContent>
             <xs:extension base="CompoundNodeType">
@@ -237,12 +263,14 @@
         <xs:sequence maxOccurs="1" minOccurs="1">
             <xs:element maxOccurs="unbounded" minOccurs="0" name="ShapeNode" type="ShapeNodeType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="LabelNode" type="LabelNodeType"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="AnchorNode" type="AnchorNodeType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="LinkEdge" type="LinkEdgeType"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="RootNode" type="RootNodeType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="LinkEdgeType">
         <xs:sequence>
+            <xs:element name="SubModel" type="SubModelType"/>
             <xs:element name="LinkAttribute" type="LinkAttributeType"/>
         </xs:sequence>
         <xs:attribute name="linkIdx" type="xs:int" use="required"/>
@@ -303,6 +331,9 @@
                 type="ListAnnotationPropertyType"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:simpleType name="DescriptionType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
     <xs:element name="canvas">
         <xs:complexType>
             <xs:sequence>
@@ -325,7 +356,4 @@
             <xs:attribute name="lastCreationSerial" type="xs:int" use="required"/>
         </xs:complexType>
     </xs:element>
-    <xs:simpleType name="DescriptionType">
-        <xs:restriction base="xs:string"/>
-    </xs:simpleType>
 </xs:schema>

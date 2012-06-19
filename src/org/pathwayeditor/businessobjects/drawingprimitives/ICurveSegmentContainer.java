@@ -66,6 +66,8 @@ public interface ICurveSegmentContainer extends IBendPointChangeListenee  {
 
 	ICurveSegment getFirstCurveSegment(); 
 	
-	ICurveSegment getLastCurveSegment(); 
+	ICurveSegment getLastCurveSegment();
+
+	int getCurveSegmentIndex(ICurveSegment associatedCurveSegment); 
 	
 }

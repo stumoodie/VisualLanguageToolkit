@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <epx:canvas xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.pathwayeditor.org/Exchange ../../../../../src/org/pathwayeditor/businessobjects/exchange/Canvas.xsd"
- xmlns:epx="http://www.pathwayeditor.org/Exchange"
+ xsi:schemaLocation="http://www.pathwayeditor.org/Exchange/1.3 ../../../../../src/org/pathwayeditor/businessobjects/exchange/Canvas.xsd"
+ xmlns:epx="http://www.pathwayeditor.org/Exchange/1.3"
  name="Diagram name"
  lastCreationSerial="44">
     <Grid snapToGrid="true" gridOn="true">
@@ -124,6 +124,7 @@
                             </LabelAttribute>
                         </LabelNode>
                         <LinkEdge linkIdx="7" srcNodeIdx="1" tgtNodeIdx="1">
+                            <SubModel></SubModel>
                             <LinkAttribute creationSerial="16" lineStyle="DASH_DOT" lineWidth="18.0"
                                 objectTypeId="5" lastBendPointIndex="0">
                                 <LineColour red="108" green="108" blue="108"/>
@@ -142,6 +143,7 @@
                             </LinkAttribute>
                         </LinkEdge>
                         <LinkEdge linkIdx="8" srcNodeIdx="1" tgtNodeIdx="1">
+                            <SubModel></SubModel>
                             <LinkAttribute creationSerial="17" lineStyle="DASH_DOT_DOT"
                                 lineWidth="19.0" objectTypeId="5" lastBendPointIndex="0">
                                 <LineColour red="109" green="109" blue="109"/>
@@ -228,6 +230,7 @@
                                     </ShapeAttribute>
                                 </ShapeNode>
                                 <LinkEdge linkIdx="4" srcNodeIdx="6" tgtNodeIdx="6">
+                                    <SubModel></SubModel>
                                     <LinkAttribute creationSerial="13" lineStyle="DOT"
                                         lineWidth="15.0" objectTypeId="7" lastBendPointIndex="0">
                                         <LineColour red="105" green="105" blue="105"/>
@@ -247,6 +250,7 @@
                                     </LinkAttribute>
                                 </LinkEdge>
                                 <LinkEdge linkIdx="5" srcNodeIdx="6" tgtNodeIdx="6">
+                                    <SubModel></SubModel>
                                     <LinkAttribute creationSerial="14" lineStyle="SOLID"
                                         lineWidth="16.0" objectTypeId="7" lastBendPointIndex="0">
                                         <LineColour red="106" green="106" blue="106"/>
@@ -295,6 +299,7 @@
                             </LabelAttribute>
                         </LabelNode>
                         <LinkEdge linkIdx="2" srcNodeIdx="2" tgtNodeIdx="2">
+                            <SubModel></SubModel>
                             <LinkAttribute creationSerial="11" lineStyle="DASH_DOT" lineWidth="13.0"
                                 objectTypeId="6" lastBendPointIndex="0">
                                 <LineColour red="103" green="103" blue="103"/>
@@ -384,6 +389,7 @@
                     </LabelAttribute>
                 </LabelNode>
                 <LinkEdge linkIdx="0" srcNodeIdx="1" tgtNodeIdx="2">
+                    <SubModel></SubModel>
                     <LinkAttribute creationSerial="9" lineStyle="SOLID" lineWidth="11.0"
                         objectTypeId="5" lastBendPointIndex="1">
                         <LineColour red="101" green="101" blue="101"/>
@@ -404,6 +410,7 @@
                     </LinkAttribute>
                 </LinkEdge>
                 <LinkEdge linkIdx="1" srcNodeIdx="2" tgtNodeIdx="1">
+                    <SubModel></SubModel>
                     <LinkAttribute creationSerial="10" lineStyle="DASHED" lineWidth="12.0"
                         objectTypeId="6" lastBendPointIndex="1">
                         <LineColour red="102" green="102" blue="102"/>
@@ -424,6 +431,7 @@
                     </LinkAttribute>
                 </LinkEdge>
                 <LinkEdge linkIdx="3" srcNodeIdx="2" tgtNodeIdx="4">
+                    <SubModel></SubModel>
                     <LinkAttribute creationSerial="12" lineStyle="DASH_DOT_DOT" lineWidth="14.0"
                         objectTypeId="6" lastBendPointIndex="0">
                         <LineColour red="104" green="104" blue="104"/>
@@ -441,6 +449,7 @@
                     </LinkAttribute>
                 </LinkEdge>
                 <LinkEdge linkIdx="6" srcNodeIdx="7" tgtNodeIdx="3">
+                    <SubModel></SubModel>
                     <LinkAttribute creationSerial="15" lineStyle="DASHED" lineWidth="17.0"
                         objectTypeId="8" lastBendPointIndex="0">
                         <LineColour red="107" green="107" blue="107"/>
