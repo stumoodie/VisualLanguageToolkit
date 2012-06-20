@@ -59,7 +59,7 @@ public class AnchorNodeAttribute extends CanvasAttribute implements IAnchorNodeA
 		super(model, newCreationSerial);
 		this.anchorNodeObjectType = otherAttribute.getObjectType();
 		this.figureDefn = otherAttribute.getShapeDefinition();
-		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, otherAttribute);
 		this.curveSegment = otherAttribute.getAssociatedCurveSegment();
 		this.drawingNodeHelper.setBounds(otherAttribute.getBounds());
 		this.drawingNodeHelper.setFillColour(otherAttribute.getFillColour());

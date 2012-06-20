@@ -50,15 +50,15 @@ public class DrawingNodeAttributeHelper {
 		this.bounds = new Envelope(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
 
-	public DrawingNodeAttributeHelper(IDrawingNodeAttribute owner) {
+	public DrawingNodeAttributeHelper(IDrawingNodeAttribute owner, IDrawingNodeAttribute other) {
 		canvasAttributeChangeListenerHelper = new CanvasAttributeChangeListenerHelper(owner);
-		this.background = owner.getFillColour();
-		this.foreground = owner.getLineColour();
-		this.lineStyle = owner.getLineStyle();
-		this.lineWidth = owner.getLineWidth();
-		this.font = owner.getFont();
-		this.fontColour = owner.getFontColour();
-		this.bounds = owner.getBounds();
+		this.background = other.getFillColour();
+		this.foreground = other.getLineColour();
+		this.lineStyle = other.getLineStyle();
+		this.lineWidth = other.getLineWidth();
+		this.font = other.getFont();
+		this.fontColour = other.getFontColour();
+		this.bounds = other.getBounds();
 	}
 
 	public Colour getFillColour() {

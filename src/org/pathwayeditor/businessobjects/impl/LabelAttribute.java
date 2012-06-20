@@ -62,7 +62,7 @@ public class LabelAttribute extends CanvasAttribute implements ILabelAttribute {
 	public LabelAttribute(IModel hibCanvas, int creationSerial, ILabelAttribute otherAttribute, IAnnotationProperty copiedProperty) {
 		super(hibCanvas, creationSerial);
 		this.objectType = otherAttribute.getObjectType();
-		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, otherAttribute);
 		this.visualisableProperty = copiedProperty;
 		this.displayFormat = otherAttribute.getDisplayFormat();
 //		this.boundsDelegate.setBounds(otherAttribute.getBounds());

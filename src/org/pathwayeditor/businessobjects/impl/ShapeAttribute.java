@@ -19,8 +19,6 @@
 
 package org.pathwayeditor.businessobjects.impl;
 
-// Generated 07-May-2008 22:43:44 by Hibernate Tools 3.2.1.GA
-
 import java.util.List;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttributeVisitor;
@@ -64,7 +62,7 @@ public class ShapeAttribute extends AnnotatedCanvasAttribute implements IShapeAt
 		super(canvas, newCreationSerial, other);
 		this.shapeObjectType = other.getObjectType();
 		this.figureDefn=other.getShapeDefinition();
-		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this);
+		this.drawingNodeHelper = new DrawingNodeAttributeHelper(this, other);
 	}
 	
 	
