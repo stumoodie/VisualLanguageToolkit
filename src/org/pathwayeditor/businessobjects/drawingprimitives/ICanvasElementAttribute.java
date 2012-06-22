@@ -75,4 +75,6 @@ public interface ICanvasElementAttribute extends IElementAttribute, ICanvasAttri
 	 * @param visitor the visitor interface, which cannot be null.
 	 */
 	void visit(ICanvasElementAttributeVisitor visitor);
+	
+	IZOrderManager getZorderManager();
 }

@@ -24,6 +24,7 @@ package org.pathwayeditor.businessobjects.impl;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
+import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager;
 
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.IElementAttribute;
@@ -36,6 +37,7 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 	private final IModel canvas;
 	private final int creationSerial;
 	private ICompoundGraphElement compoundGraphElement;
+	private final IZOrderManager zorderManager;
 	
 	/**
 	 * The normal constructor for this class to be used by classes extending this class in application code;
@@ -46,6 +48,7 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 		this.canvas = canvas;
 		this.creationSerial = creationSerial;
 		this.canvas.addCanvasAttribute(this);
+		this.zorderManager = new ZOrderManager(this);
 	}
 	
 	@Override
@@ -119,5 +122,10 @@ public abstract class CanvasAttribute implements ICanvasElementAttribute, IEleme
 	@Override
 	public final IModel getModel(){
 		return this.canvas;
+	}
+
+	@Override
+	public final IZOrderManager getZorderManager(){
+		return this.zorderManager;
 	}
 }
