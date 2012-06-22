@@ -46,6 +46,11 @@ import uk.ac.ed.inf.graph.compound.ICompoundEdge;
 import uk.ac.ed.inf.graph.compound.ICompoundGraph;
 import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
+import uk.ac.ed.inf.graph.compound.IGraphRestoreStateAction;
+import uk.ac.ed.inf.graph.compound.IGraphStructureChangeAction;
+import uk.ac.ed.inf.graph.compound.IGraphStructureChangeAction.GraphStructureChangeType;
+import uk.ac.ed.inf.graph.compound.IGraphStructureChangeListener;
+import uk.ac.ed.inf.graph.compound.ISubCompoundGraph;
 import uk.ac.ed.inf.graph.compound.newimpl.CompoundGraph;
 import uk.ac.ed.inf.graph.util.IFilterCriteria;
 import uk.ac.ed.inf.graph.util.IndexCounter;
@@ -111,6 +116,52 @@ public class Model implements IModel {
 		IRootAttribute rootAttribute = new RootAttribute(this, rootIdx, rootObjectType);
 		this.addCanvasAttribute(rootAttribute);
 		this.compoundGraph = new CompoundGraph(rootAttribute);
+		this.compoundGraph.addGraphStructureChangeListener(new IGraphStructureChangeListener() {
+			
+			@Override
+			public void notifyRestoreCompleted(IGraphRestoreStateAction e) {
+				ISubCompoundGraph restoredSubGraph = e.getRestoredElements();
+				Iterator<ICompoundGraphElement> iter = restoredSubGraph.topElementIterator();
+				while(iter.hasNext()){
+					ICompoundGraphElement element = iter.next();
+					ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
+					parentAtt.getZorderManager().addToFront((ICanvasElementAttribute)element.getAttribute());
+				}
+			}
+			
+			@Override
+			public void graphStructureChange(IGraphStructureChangeAction e) {
+				if(e.getChangeType() == GraphStructureChangeType.SUBGRAPH_REMOVED
+						|| e.getChangeType() == GraphStructureChangeType.SUBGRAPH_MOVED){
+					ISubCompoundGraph removedSubGraph = e.originalSubgraph();
+					Iterator<ICompoundGraphElement> iter = removedSubGraph.topElementIterator();
+					while(iter.hasNext()){
+						ICompoundGraphElement element = iter.next();
+						ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
+						parentAtt.getZorderManager().remove((ICanvasElementAttribute)element.getAttribute());
+					}
+				}
+				if(e.getChangeType() == GraphStructureChangeType.SUBGRAPH_MOVED){
+					ISubCompoundGraph removedSubGraph = e.changedSubgraph();
+					Iterator<ICompoundGraphElement> iter = removedSubGraph.topElementIterator();
+					while(iter.hasNext()){
+						ICompoundGraphElement element = iter.next();
+						ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
+						parentAtt.getZorderManager().addToFront((ICanvasElementAttribute)element.getAttribute());
+					}
+				}
+				else if(e.getChangeType() == GraphStructureChangeType.ELEMENT_ADDED
+						|| e.getChangeType() == GraphStructureChangeType.SUBGRAPH_COPIED){
+					ISubCompoundGraph removedSubGraph = e.changedSubgraph();
+					Iterator<ICompoundGraphElement> iter = removedSubGraph.elementIterator();
+					while(iter.hasNext()){
+						ICompoundGraphElement element = iter.next();
+						ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
+						parentAtt.getZorderManager().addToFront((ICanvasElementAttribute)element.getAttribute());
+					}
+				}
+			}
+		});
 	}
 	
 	/* (non-Javadoc)

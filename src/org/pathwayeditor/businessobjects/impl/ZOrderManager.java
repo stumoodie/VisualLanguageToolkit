@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager;
+import org.pathwayeditor.businessobjects.drawingprimitives.IZOrderState;
 
 /**
  * ZorderManager
@@ -65,7 +66,7 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager#moveBackOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)
 	 */
 	@Override
-	public void moveBackOne(ICanvasElementAttribute att) {
+	public void moveBackwardOne(ICanvasElementAttribute att) {
 		int i = this.zordering.indexOf(att);
 		if(i < 0) throw new NoSuchElementException("Attribute not found: " + att);
 		if(i > 0){
@@ -145,6 +146,37 @@ public class ZOrderManager implements IZOrderManager {
 	@Override
 	public void remove(ICanvasElementAttribute attribute) {
 		this.zordering.remove(attribute);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager#getCurrentState()
+	 */
+	@Override
+	public IZOrderState getCurrentState() {
+		return new ZOrderState(this.zordering);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager#restoreToState(org.pathwayeditor.businessobjects.drawingprimitives.IZOrderState)
+	 */
+	@Override
+	public void restoreToState(IZOrderState state) {
+		ZOrderState stateImpl = (ZOrderState)state;
+		this.zordering.clear();
+		this.zordering.addAll(stateImpl.getZorderedAttribs());
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.pathwayeditor.businessobjects.drawingprimitives.IZOrderManager#zOrderCompare(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute, org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)
+	 */
+	@Override
+	public int zOrderCompare(ICanvasElementAttribute att1, ICanvasElementAttribute att2) {
+		int att1Idx = this.zordering.indexOf(att1);
+		int att2Idx = this.zordering.indexOf(att2);
+		return att1Idx > att2Idx ? -1 : 1;
 	}
 	
 }

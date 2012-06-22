@@ -94,11 +94,11 @@ public class ZorderManagerEmptyTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackwardOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
 	 */
 	@Test(expected=NoSuchElementException.class)
 	public void testMoveBackOne() {
-		this.testInstance.moveBackOne(mockAtt1);
+		this.testInstance.moveBackwardOne(mockAtt1);
 		assertCorrectOrdering(this.testInstance);
 	}
 

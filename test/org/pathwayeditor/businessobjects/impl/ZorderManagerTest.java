@@ -119,15 +119,15 @@ public class ZorderManagerTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackwardOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
 	 */
 	@Test
 	public void testMoveBackOne() {
-		this.testInstance.moveBackOne(mockAtt2);
+		this.testInstance.moveBackwardOne(mockAtt2);
 		assertCorrectOrdering(this.testInstance, this.mockAtt2, this.mockAtt1, this.mockAtt3, this.mockAtt4);
-		this.testInstance.moveBackOne(mockAtt4);
+		this.testInstance.moveBackwardOne(mockAtt4);
 		assertCorrectOrdering(this.testInstance, this.mockAtt2, this.mockAtt1, this.mockAtt4, this.mockAtt3);
-		this.testInstance.moveBackOne(mockAtt2);
+		this.testInstance.moveBackwardOne(mockAtt2);
 		assertCorrectOrdering(this.testInstance, this.mockAtt2, this.mockAtt1, this.mockAtt4, this.mockAtt3);
 	}
 
@@ -156,7 +156,7 @@ public class ZorderManagerTest {
 		this.testInstance.addToFront(mockAtt5);
 		assertEquals("expectedSize", EXPECTED_SIZE+1, this.testInstance.numAttributes());
 		assertCorrectOrdering(this.testInstance, this.mockAtt1, this.mockAtt2, this.mockAtt3, this.mockAtt4, mockAtt5);
-		this.testInstance.moveBackOne(mockAtt5);
+		this.testInstance.moveBackwardOne(mockAtt5);
 		assertCorrectOrdering(this.testInstance, this.mockAtt1, this.mockAtt2, this.mockAtt3, mockAtt5, this.mockAtt4);
 	}
 

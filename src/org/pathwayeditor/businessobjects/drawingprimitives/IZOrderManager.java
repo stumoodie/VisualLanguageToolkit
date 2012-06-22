@@ -22,7 +22,7 @@ public interface IZOrderManager {
 	
 	void moveForwardOne(ICanvasElementAttribute att);
 	
-	void moveBackOne(ICanvasElementAttribute att);
+	void moveBackwardOne(ICanvasElementAttribute att);
 	
 	void addToFront(ICanvasElementAttribute att);
 	
@@ -42,4 +42,10 @@ public interface IZOrderManager {
 	 * @param attribute
 	 */
 	void remove(ICanvasElementAttribute attribute);
+	
+	IZOrderState getCurrentState();
+	
+	void restoreToState(IZOrderState state);
+
+	int zOrderCompare(ICanvasElementAttribute associatedAttribute, ICanvasElementAttribute associatedAttribute2);
 }

@@ -94,11 +94,11 @@ public class ZorderManagerSingleElementTest {
 	}
 
 	/**
-	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
+	 * Test method for {@link org.pathwayeditor.businessobjects.impl.ZOrderManager#moveBackwardOne(org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute)}.
 	 */
 	@Test
 	public void testMoveBackOne() {
-		this.testInstance.moveBackOne(mockAtt1);
+		this.testInstance.moveBackwardOne(mockAtt1);
 		assertCorrectOrdering(this.testInstance, this.mockAtt1);
 	}
 
