@@ -120,10 +120,17 @@ public class Model implements IModel {
 			
 			@Override
 			public void notifyRestoreCompleted(IGraphRestoreStateAction e) {
+				ISubCompoundGraph removedSubGraph = e.getRemovedElements();
+				Iterator<ICompoundGraphElement> removedIter = removedSubGraph.topElementIterator();
+				while(removedIter.hasNext()){
+					ICompoundGraphElement element = removedIter.next();
+					ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
+					parentAtt.getZorderManager().remove((ICanvasElementAttribute)element.getAttribute());
+				}
 				ISubCompoundGraph restoredSubGraph = e.getRestoredElements();
-				Iterator<ICompoundGraphElement> iter = restoredSubGraph.topElementIterator();
-				while(iter.hasNext()){
-					ICompoundGraphElement element = iter.next();
+				Iterator<ICompoundGraphElement> restoredIter = restoredSubGraph.topElementIterator();
+				while(restoredIter.hasNext()){
+					ICompoundGraphElement element = restoredIter.next();
 					ICanvasElementAttribute parentAtt = (ICanvasElementAttribute)element.getParent().getAttribute();
 					parentAtt.getZorderManager().addToFront((ICanvasElementAttribute)element.getAttribute());
 				}
