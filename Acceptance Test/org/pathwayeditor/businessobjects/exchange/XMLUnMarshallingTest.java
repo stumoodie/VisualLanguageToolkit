@@ -78,9 +78,9 @@ public class XMLUnMarshallingTest {
 	@Test
 	public void expectedModelStatistics(){
 		IModel rootAtt = model;
-		assertEquals("expected num canvas attribs", 24, rootAtt.numCanvasAttributes());
+		assertEquals("expected num canvas attribs", 20, rootAtt.numCanvasAttributes());
 		assertEquals("expected num shape attribs", 8, rootAtt.numShapeAttributes());
-		assertEquals("expected num label attribs", 6, rootAtt.numLabelAttributes());
+		assertEquals("expected num label attribs", 8, rootAtt.numLabelAttributes());
 		assertEquals("expected num link attribs", 9, rootAtt.numLinkAttributes());
 		assertEquals("expected num elements", 24, model.numDrawingElements());
 		assertEquals("expected num nodes", 15, model.numDrawingNodes());

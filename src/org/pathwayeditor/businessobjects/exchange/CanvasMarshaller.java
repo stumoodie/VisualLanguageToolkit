@@ -22,7 +22,6 @@ package org.pathwayeditor.businessobjects.exchange;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -51,9 +50,11 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.RGB;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IAnnotationProperty;
 import org.pathwayeditor.businessobjects.exchange.castor.AnchorNode;
 import org.pathwayeditor.businessobjects.exchange.castor.AnchorNodeAttribute;
+import org.pathwayeditor.businessobjects.exchange.castor.AttRef;
 import org.pathwayeditor.businessobjects.exchange.castor.Background;
 import org.pathwayeditor.businessobjects.exchange.castor.BendPoint;
 import org.pathwayeditor.businessobjects.exchange.castor.Canvas;
+import org.pathwayeditor.businessobjects.exchange.castor.CanvasAttributeType;
 import org.pathwayeditor.businessobjects.exchange.castor.CanvasSize;
 import org.pathwayeditor.businessobjects.exchange.castor.ColourType;
 import org.pathwayeditor.businessobjects.exchange.castor.DecoratorSize;
@@ -84,6 +85,7 @@ import org.pathwayeditor.businessobjects.exchange.castor.Size;
 import org.pathwayeditor.businessobjects.exchange.castor.SrcTerminus;
 import org.pathwayeditor.businessobjects.exchange.castor.SubModel;
 import org.pathwayeditor.businessobjects.exchange.castor.TgtTerminus;
+import org.pathwayeditor.businessobjects.exchange.castor.ZOrdering;
 import org.pathwayeditor.businessobjects.exchange.castor.types.EndDecoratorTypeType;
 import org.pathwayeditor.businessobjects.exchange.castor.types.FontStyle;
 import org.pathwayeditor.businessobjects.exchange.castor.types.LineStyleType;
@@ -305,8 +307,22 @@ public class CanvasMarshaller {
 		xmlAttrib.setLineStyle(createLineStyle(attrib.getLineStyle()));
 		xmlAttrib.setFigureDefinition(attrib.getShapeDefinition());
 		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
+		defineZOrdering(xmlAttrib, attrib);
 		return xmlAttrib;
 	}
+	
+	private void defineZOrdering(CanvasAttributeType xmlAttrib, ICanvasElementAttribute attrib){
+		ZOrdering zOrdering = new ZOrdering();
+		Iterator<ICanvasElementAttribute> iter = attrib.getZorderManager().orderedIterator();
+		while(iter.hasNext()){
+			AttRef vAttRef = new AttRef();
+			ICanvasElementAttribute zOrderAtt = iter.next();
+			vAttRef.setCreationSerialRef(zOrderAtt.getCreationSerial());
+			zOrdering.addAttRef(vAttRef);
+		}
+		xmlAttrib.setZOrdering(zOrdering);
+	}
+	
 	
 	private AnchorNodeAttribute createAnchorNodeAttribute(IAnchorNodeAttribute attrib) {
 		AnchorNodeAttribute xmlAttrib = new AnchorNodeAttribute();
@@ -353,6 +369,7 @@ public class CanvasMarshaller {
 		xmlAttrib.setSize(createSize(new Size(), attrib.getBounds().getDimension()));
 		xmlAttrib.setLocation(createLocation(new Location(), attrib.getBounds().getOrigin()));
 		xmlAttrib.setPropertyRef(this.propMap.get(attrib.getProperty()));
+		defineZOrdering(xmlAttrib, attrib);
 		return xmlAttrib;
 	}
 	
@@ -389,6 +406,7 @@ public class CanvasMarshaller {
 		TgtTerminus tgtTerminus = new TgtTerminus();
 		addLinkTermini(attrib.getTargetTerminus(), tgtTerminus);
 		xmlAttrib.setTgtTerminus(tgtTerminus);
+		defineZOrdering(xmlAttrib, attrib);
 		return xmlAttrib;
 	}
 	
@@ -416,11 +434,6 @@ public class CanvasMarshaller {
 	}
 
 	private void addLinkTermini(ILinkTerminus attrib, LinkTerminusType xmlAttrib){
-		xmlAttrib.setCreationSerial(attrib.getOwningLink().getCreationSerial());
-		List<IAnnotationProperty> emptyPropList = Collections.emptyList();
-		xmlAttrib.setPropertyRef(createAnnotations(emptyPropList.iterator()));
-//		xmlAttrib.setCreationSerial(attrib.getCreationSerial());
-//		xmlAttrib.setPropertyRef(createAnnotations(attrib.propertyIterator()));
 		xmlAttrib.setLocation(createLocation(new Location(), attrib.getLocation()));
 		xmlAttrib.setDecoratorSize(createSize(new DecoratorSize(), attrib.getEndSize()));
 		xmlAttrib.setGap(attrib.getGap());
@@ -473,6 +486,7 @@ public class CanvasMarshaller {
 		rootNode.setRootAttribute(rootAttribute);
 		SubModel childModel = new SubModel();
 		rootNode.setSubModel(childModel);
+		defineZOrdering(rootAttribute, (IRootAttribute)dbRootNode.getAttribute());
 		return rootNode;
 	}
 	

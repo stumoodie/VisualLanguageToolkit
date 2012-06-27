@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2009-2011, Court of the University of Edinburgh -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://www.pathwayeditor.org/Exchange/1.3"
-    xmlns="http://www.pathwayeditor.org/Exchange/1.3" version="1.3"
+    targetNamespace="http://www.pathwayeditor.org/Exchange/2.0"
+    xmlns="http://www.pathwayeditor.org/Exchange/2.0" version="2.0"
     attributeFormDefault="unqualified">
     <xs:simpleType name="CanvasSerialType">
         <xs:restriction base="xs:int"/>
@@ -40,7 +40,19 @@
             <xs:enumeration value="TRIANGLE_BAR"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:complexType name="ZOrderingType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="AttRef">
+                <xs:complexType>
+                    <xs:attribute name="creationSerialRef" type="xs:int" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType block="" name="CanvasAttributeType" abstract="true">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="ZOrdering" type="ZOrderingType"/>
+        </xs:sequence>
         <xs:attribute name="creationSerial" type="CanvasSerialType" use="required"/>
     </xs:complexType>
     <xs:simpleType name="FigureDefinitionType">
@@ -114,18 +126,12 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="LinkTerminusType">
-        <xs:complexContent>
-            <xs:extension base="CanvasAttributeType">
-                <xs:sequence>
-                    <xs:element name="Location" type="PointType"/>
-                    <xs:element name="DecoratorSize" type="DimensionType"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="PropertyRef"
-                        type="PropertyRefType"/>
-                </xs:sequence>
-                <xs:attribute name="gap" type="xs:double" use="required"/>
-                <xs:attribute name="endDecoratorType" type="EndDecoratorTypeType" use="required"/>
-            </xs:extension>
-        </xs:complexContent>
+        <xs:sequence>
+            <xs:element name="Location" type="PointType"/>
+            <xs:element name="DecoratorSize" type="DimensionType"/>
+        </xs:sequence>
+        <xs:attribute name="gap" type="xs:double" use="required"/>
+        <xs:attribute name="endDecoratorType" type="EndDecoratorTypeType" use="required"/>
     </xs:complexType>
     <xs:complexType name="LabelAttributeType">
         <xs:complexContent>
