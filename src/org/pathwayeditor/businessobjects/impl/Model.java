@@ -26,6 +26,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttributeFactory;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasAttributeSequence;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
@@ -81,6 +82,12 @@ public class Model implements IModel {
 		@Override
 		public boolean matched(ICanvasElementAttribute testObj) {
 			return testObj instanceof IShapeAttribute;
+		}
+	};
+	private final IFilterCriteria<ICanvasElementAttribute> anchorNodeAttribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
+		@Override
+		public boolean matched(ICanvasElementAttribute testObj) {
+			return testObj instanceof IAnchorNodeAttribute;
 		}
 	};
 	private final IFilterCriteria<ICanvasElementAttribute> attribCriteria = new IFilterCriteria<ICanvasElementAttribute>(){
@@ -383,6 +390,16 @@ public class Model implements IModel {
 	@Override
 	public int numLinkAttributes() {
 		return attributesCounter(this.linkAttributeIterator());
+	}
+
+	@Override
+	public int numAnchorNodeAttributes() {
+		return attributesCounter(this.anchorNodeAttributeIterator());
+	}
+
+	@Override
+	public Iterator<IAnchorNodeAttribute> anchorNodeAttributeIterator() {
+		return createAttribIter(anchorNodeAttribCriteria);
 	}
 
 	/* (non-Javadoc)
