@@ -23,7 +23,6 @@ package org.pathwayeditor.businessobjects.impl;
 import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttributeFactory;
-import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ITypedDrawingNodeAttribute;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 
@@ -104,7 +103,7 @@ public class LinkAttributeFactory implements ILinkAttributeFactory {
 	 */
 	@Override
 	public void setOutAttribute(IElementAttribute attribute) {
-		this.source = (IShapeAttribute)attribute;
+		this.source = (ITypedDrawingNodeAttribute)attribute;
 	}
 
 	/* (non-Javadoc)

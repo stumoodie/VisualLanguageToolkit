@@ -178,8 +178,8 @@ public class CanvasMarshaller {
 	public void write(Writer writer) throws IOException{
 		XMLContext ctx = new XMLContext();
 		Marshaller m = ctx.createMarshaller();
-		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange/1.3 http://www.pathwayeditor.org/Exchange/Canvas.xsd");
-		m.setNamespaceMapping("epx", "http://www.pathwayeditor.org/Exchange/1.3");
+		m.setSchemaLocation("http://www.pathwayeditor.org/Exchange/2.0 http://www.pathwayeditor.org/Exchange/Canvas.xsd");
+		m.setNamespaceMapping("epx", "http://www.pathwayeditor.org/Exchange/2.0");
 		m.setMarshalAsDocument(true);
 		m.setValidation(true);
 		m.setWriter(writer);
@@ -339,6 +339,7 @@ public class CanvasMarshaller {
 		xmlAttrib.setFigureDefinition(attrib.getShapeDefinition());
 		int assocCurveIdx = getCurveSegmentIdx(attrib);
 		xmlAttrib.setAssociatedCurveSegment(assocCurveIdx);
+		defineZOrdering(xmlAttrib, attrib);
 		return xmlAttrib;
 	}
 	

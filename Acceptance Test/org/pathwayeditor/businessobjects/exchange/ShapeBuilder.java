@@ -26,7 +26,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttributeFactor
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextAnnotationProperty;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
-import uk.ac.ed.inf.graph.compound.ICompoundGraphElement;
 import uk.ac.ed.inf.graph.compound.ICompoundNode;
 import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
 
@@ -35,35 +34,31 @@ import uk.ac.ed.inf.graph.compound.ICompoundNodeFactory;
  *
  */
 public class ShapeBuilder {
-	private static final String NAME_PROP_NAME = "shapeTypeAName";
-	private ICompoundGraphElement parent;
+	private ICanvasElementAttribute parent;
 	private IShapeObjectType objectType;
 	private ICompoundNode compoundNode;
-	private String name;
+	private String namePropName;
 
-	public ShapeBuilder(ICompoundGraphElement parent, IShapeObjectType objectType){
+	public ShapeBuilder(ICanvasElementAttribute parent, IShapeObjectType objectType){
 		this.parent = parent;
 		this.objectType = objectType;
 	}
 
-	public ShapeBuilder(){
-		this(null, null);
+	
+	public void setNamePropertyName(String propName){
+		this.namePropName = propName;
 	}
 	
-	public void setName(String name){
-		this.name = name;
-	}
-	
-	public void build(){
-		ICanvasElementAttribute canvasAtt = (ICanvasElementAttribute)this.parent.getAttribute();
-		IShapeAttributeFactory shapeAttFact = canvasAtt.getModel().shapeAttributeFactory();
+	public IShapeAttribute create(String name){
+		IShapeAttributeFactory shapeAttFact = parent.getModel().shapeAttributeFactory();
 		shapeAttFact.setObjectType(objectType);
-		ICompoundNodeFactory nodeFactory = parent.getChildCompoundGraph().nodeFactory();
+		ICompoundNodeFactory nodeFactory = parent.getCurrentElement().getChildCompoundGraph().nodeFactory();
 		nodeFactory.setAttributeFactory(shapeAttFact);
 		this.compoundNode = nodeFactory.createNode();
 		IShapeAttribute shapeAtt = (IShapeAttribute)this.compoundNode.getAttribute();
-		IPlainTextAnnotationProperty prop = (IPlainTextAnnotationProperty)shapeAtt.getProperty(NAME_PROP_NAME);
+		IPlainTextAnnotationProperty prop = (IPlainTextAnnotationProperty)shapeAtt.getProperty(this.namePropName);
 		prop.setValue(name);
+		return shapeAtt;
 	}
 	
 	
@@ -72,7 +67,7 @@ public class ShapeBuilder {
 	}
 
 
-	public void setParent(ICompoundNode parent) {
+	public void setParent(ICanvasElementAttribute parent) {
 		this.parent = parent;
 	}
 
