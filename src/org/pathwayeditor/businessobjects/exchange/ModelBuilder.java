@@ -299,7 +299,7 @@ public class ModelBuilder {
 		buildRootAttribute(hibRootAttribute, xmlRootAttribute);
 		buildChildShapeNodes(this.graph.getGraph().getRoot().getChildCompoundGraph(), xmlRootNode.getSubModel());
 //		buildChildLinkEdges(hibRootNode.getSubModel(), xmlRootNode.getSubModel());
-		buildChildLabelNodes(xmlRootNode.getSubModel());
+//		buildChildLabelNodes(xmlRootNode.getSubModel());
 	}
 	
 	
@@ -315,9 +315,6 @@ public class ModelBuilder {
 				buf.append(propId);
 				logger.warn(buf.toString());
 			}
-		}
-		for(ShapeNode xmlNode : xmlSubModel.getShapeNode()){
-			buildChildLabelNodes(xmlNode.getSubModel());
 		}
 	}
 
@@ -353,6 +350,7 @@ public class ModelBuilder {
 			ICompoundEdge edge = createLinkEdge(owningSubModel, xmlEdge);
 			buildChildShapeNodes(edge.getChildCompoundGraph(), xmlEdge.getSubModel());
 		}
+		buildChildLabelNodes(xmlSubModel);
 	}
 	
 	private ICompoundNode createAnchorNode(IChildCompoundGraph owningSubModel, AnchorNode xmlNode){
@@ -368,7 +366,7 @@ public class ModelBuilder {
 		IAnchorNodeAttribute attribute = (IAnchorNodeAttribute)node.getAttribute();
 		defineAnchorNodeAttributes(attribute, xmlNode.getAnchorNodeAttribute());
 		if(logger.isDebugEnabled()){
-			logger.debug("Created shape node: " + node);
+			logger.debug("Created anchor node: " + node);
 		}
 		this.hibNodeMap.put(xmlNode.getNodeId(), node);
 		return node;

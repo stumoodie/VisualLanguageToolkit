@@ -33,6 +33,8 @@ import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.IAnchorNodeAttribute;
+import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
 import org.pathwayeditor.businessobjects.drawingprimitives.IShapeAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyBuilder;
@@ -48,7 +50,7 @@ import org.pathwayeditor.testfixture.NotationSubsystemFixture;
  * @author Stuart Moodie
  *
  */
-public class XMLMarshallingTest {
+public class XMLMarshallingLinkChildrenTest {
 	private IModel graph;
 	private Mockery mockery;
 
@@ -66,25 +68,27 @@ public class XMLMarshallingTest {
 		this.mockery.checking(new Expectations(){{
 			allowing(shapeTypeAName).createProperty(with(any(IPropertyBuilder.class))); will(NotationSubsystemFixture.buildTextProperty());
 		}});
-		ShapeBuilder shapeBuilder = new ShapeBuilder(this.graph.getRootAttribute(), shapeOt);
-		shapeBuilder.setNamePropertyName(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
-		IShapeAttribute shapeA = shapeBuilder.create("S1");
-		IShapeAttribute shapeB = shapeBuilder.create("S2");
-		shapeBuilder.setParent(shapeA);
-		IShapeAttribute shapeC = shapeBuilder.create("S3");
+		ShapeBuilder builder = new ShapeBuilder(this.graph.getRootAttribute(), shapeOt);
+		builder.setNamePropertyName(NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
+		IShapeAttribute shapeA = builder.create("ShapeA");
+		IShapeAttribute shapeB = builder.create("ShapeB");
+		IShapeAttribute shapeC = builder.create("ShapeC");
 		LinkBuilder linkBuilder = new LinkBuilder(this.graph.getRootAttribute(), syntaxService.getLinkObjectType(NotationSubsystemFixture.LINK_TYPE_D_ID));
-		linkBuilder.create(shapeA, shapeB);
-		linkBuilder.create(shapeB, shapeC);
+		ILinkAttribute link1 = linkBuilder.create(shapeA, shapeB);
+		linkBuilder.create(shapeA, shapeC);
 		LabelBuilder labelBuilder = new LabelBuilder(shapeA, NotationSubsystemFixture.SHAPE_TYPE_A_PROP_NAME);
 		labelBuilder.create();
 		labelBuilder.setOwningAttribute(shapeB);
 		labelBuilder.create();
+		AnchorNodeBuilder anchorNodeBuilder = new AnchorNodeBuilder(link1, syntaxService.getAnchorNodeObjectType(NotationSubsystemFixture.ANCHOR_NODE_TYPE_ID));
+		IAnchorNodeAttribute anchorNodeAtt = anchorNodeBuilder.create();
+		linkBuilder.create(anchorNodeAtt, shapeB);
 	}
 	
 	
 	@After
 	public void tearDown(){
-		
+		this.mockery = null;
 	}
 	
 	

@@ -36,6 +36,7 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyD
 import org.pathwayeditor.businessobjects.notationsubsystem.INotation;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSubsystem;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
@@ -56,6 +57,7 @@ public class NotationSubsystemFixture {
 	public static final int LABEL_TYPE_ID = 6;
 	public static final String SHAPE_TYPE_A_PROP_NAME = "shapeTypeAName";
 	public static final String SHAPE_TYPE_B_PROP_NAME = "shapeTypeBName";
+	public static final int ANCHOR_NODE_TYPE_ID = 7;
 	
 	private final Mockery mockery;
 	private INotationSubsystem notationSubsystem;
@@ -69,6 +71,7 @@ public class NotationSubsystemFixture {
 	private IRootObjectParentingRules rootTypeParenting;
 	private INotation notation;
 	private ILabelObjectType labelObjectType;
+	private IAnchorNodeObjectType anchorNodeType;
 	
 	public static class CreatePropertyAction implements Action {
 //		private IPlainTextPropertyDefinition defn;
@@ -127,18 +130,25 @@ public class NotationSubsystemFixture {
 		showObjectTypeBBuilder.buildParentingRules(shapeTypeA, shapeTypeB);
 		showObjectTypeCBuilder.buildParentingRules();
 		MockLinkObjectTypeBuilder linkTypeDBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_D_ID, "linkTypeD");
-		linkTypeDBuilder.setSources(this.shapeTypeA);
-		linkTypeDBuilder.setTargets(this.shapeTypeA, this.shapeTypeB);
 		linkTypeDBuilder.build();
 		this.linkTypeD = linkTypeDBuilder.getObjectType();
 		MockLinkObjectTypeBuilder linkTypeEBuilder = new MockLinkObjectTypeBuilder(mockery, syntaxService, LINK_TYPE_E_ID, "linkTypeE");
-		linkTypeEBuilder.setSources(this.shapeTypeB);
-		linkTypeEBuilder.setTargets(this.shapeTypeA);
 		linkTypeEBuilder.build();
 		this.linkTypeE = linkTypeEBuilder.getObjectType();
 		MockLabelObjectTypeBuilder labelTypeBuilder = new MockLabelObjectTypeBuilder(mockery, syntaxService, LABEL_TYPE_ID, "labelType");
 		labelTypeBuilder.build();
 		this.labelObjectType = labelTypeBuilder.getObjectType();
+		MockAnchorNodeObjectTypeBuilder anchorNodeTypeBuilder = new MockAnchorNodeObjectTypeBuilder(mockery, syntaxService, ANCHOR_NODE_TYPE_ID, "anchorNodeType");
+		anchorNodeTypeBuilder.build();
+		this.anchorNodeType = anchorNodeTypeBuilder.getObjectType();
+		linkTypeDBuilder.buildParentingRules(this.anchorNodeType);
+		linkTypeDBuilder.setSources(this.shapeTypeA, this.anchorNodeType);
+		linkTypeDBuilder.setTargets(this.shapeTypeA, this.shapeTypeB);
+		linkTypeDBuilder.buildConnectionRules();
+		linkTypeEBuilder.buildParentingRules(this.anchorNodeType);
+		linkTypeEBuilder.setSources(this.shapeTypeB);
+		linkTypeEBuilder.setTargets(this.shapeTypeA);
+		linkTypeEBuilder.buildConnectionRules();
 		this.mockery.checking(new Expectations(){{
 			allowing(notationSubsystem).getNotation(); will(returnValue(notation));
 			allowing(notationSubsystem).getSyntaxService(); will(returnValue(syntaxService));
@@ -150,13 +160,15 @@ public class NotationSubsystemFixture {
 			allowing(syntaxService).getShapeObjectType(SHAPE_TYPE_C_ID); will(returnValue(shapeTypeC));
 			allowing(syntaxService).getLinkObjectType(LINK_TYPE_D_ID); will(returnValue(linkTypeD));
 			allowing(syntaxService).getLinkObjectType(LINK_TYPE_E_ID); will(returnValue(linkTypeE));
+			allowing(syntaxService).getAnchorNodeObjectType(ANCHOR_NODE_TYPE_ID); will(returnValue(anchorNodeType));
 			allowing(syntaxService).getObjectType(ROOT_TYPE_ID); will(returnValue(rootType));
 			allowing(syntaxService).getObjectType(SHAPE_TYPE_A_ID); will(returnValue(shapeTypeA));
 			allowing(syntaxService).getObjectType(SHAPE_TYPE_B_ID); will(returnValue(shapeTypeB));
 			allowing(syntaxService).getObjectType(SHAPE_TYPE_C_ID); will(returnValue(shapeTypeC));
 			allowing(syntaxService).getObjectType(LINK_TYPE_D_ID); will(returnValue(linkTypeD));
 			allowing(syntaxService).getObjectType(LINK_TYPE_E_ID); will(returnValue(linkTypeE));
-			allowing(syntaxService).objectTypeIterator(); will(returnIterator(rootType, shapeTypeA, shapeTypeB, shapeTypeC, linkTypeD, linkTypeE));
+			allowing(syntaxService).getObjectType(ANCHOR_NODE_TYPE_ID); will(returnValue(anchorNodeType));
+			allowing(syntaxService).objectTypeIterator(); will(returnIterator(rootType, shapeTypeA, shapeTypeB, shapeTypeC, linkTypeD, linkTypeE, anchorNodeType));
 			allowing(syntaxService).getNotation(); will(returnValue(notation));
 			allowing(syntaxService).getLabelObjectType(LABEL_TYPE_ID); will(returnValue(labelObjectType));
 			allowing(syntaxService).getLabelObjectTypeByProperty(with(any(IPropertyDefinition.class))); will(returnValue(labelObjectType));

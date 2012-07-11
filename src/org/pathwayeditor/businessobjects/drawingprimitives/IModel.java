@@ -303,4 +303,8 @@ public interface IModel {
 	boolean hasLabelForProperty(IAnnotationProperty annotationProperty);
 
 	Iterator<IDrawingNodeAttribute> drawingNodeAttributeIterator();
+
+	int numAnchorNodeAttributes();
+	
+	Iterator<IAnchorNodeAttribute> anchorNodeAttributeIterator();
 }

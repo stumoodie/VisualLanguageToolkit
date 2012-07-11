@@ -35,11 +35,15 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPro
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
+import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkTerminusDefinition;
+import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 import org.pathwayeditor.figure.geometry.Dimension;
 
@@ -65,8 +69,8 @@ public class MockLinkObjectTypeBuilder {
 	}
 	
 	private final Mockery mockery;
-	private IShapeObjectType[] sources;
-	private IShapeObjectType[] targets;
+	private INodeObjectType[] sources;
+	private INodeObjectType[] targets;
 	private ILinkObjectType objectType;
 	private ILinkConnectionRules connectionRules;
 	private int index;
@@ -78,6 +82,7 @@ public class MockLinkObjectTypeBuilder {
 	private double lineWidth = 3.9;
 	private final List<IPropertyDefinition> propertyDefs = new ArrayList<IPropertyDefinition>();
 	private List<IPropValues<? extends Object>> propCreationDefs = new ArrayList<IPropValues<? extends Object>>();
+	private IObjectTypeParentingRules typeParenting;
 
 	public MockLinkObjectTypeBuilder(Mockery mock, INotationSyntaxService syntaxService, int idx, String name){
 		this.mockery = mock;
@@ -86,6 +91,7 @@ public class MockLinkObjectTypeBuilder {
 		this.connectionRules = mock.mock(ILinkConnectionRules.class, createConnectionRulesName(name));
 		this.index = idx;
 		this.syntaxService = syntaxService;
+		this.typeParenting = null;
 	}
 	
 	
@@ -100,11 +106,11 @@ public class MockLinkObjectTypeBuilder {
 	}
 
 
-	public void setSources(IShapeObjectType ... sources){
+	public void setSources(INodeObjectType ... sources){
 		this.sources = sources;
 	}
 	
-	public void setTargets(IShapeObjectType ... targets){
+	public void setTargets(INodeObjectType ... targets){
 		this.targets = targets;
 	}
 	
@@ -146,11 +152,6 @@ public class MockLinkObjectTypeBuilder {
 			allowing(attributeDefaults).getLineStyle(); will(returnValue(lineStyle));
 			allowing(attributeDefaults).getLineWidth(); will(returnValue(lineWidth));
 
-			allowing(connectionRules).isValidSource(with(isOneOf(sources))); will(returnValue(true));
-			allowing(connectionRules).isValidSource(with(not(isOneOf(sources)))); will(returnValue(false));
-			allowing(connectionRules).isValidTarget(with(isOneOf(sources)), with(isOneOf(targets))); will(returnValue(true));
-			allowing(connectionRules).isValidTarget(with(not(isOneOf(sources))), with(any(IShapeObjectType.class))); will(returnValue(false));
-			allowing(connectionRules).isValidTarget(with(isOneOf(sources)), with(not(isOneOf(targets)))); will(returnValue(false));
 		}});
 		buildProperties();
 		this.mockery.checking(new Expectations(){{
@@ -219,5 +220,32 @@ public class MockLinkObjectTypeBuilder {
 
 	public ILinkObjectType getObjectType(){
 		return this.objectType;
+	}
+	
+	public void buildConnectionRules(){
+		this.mockery.checking(new Expectations(){{
+			allowing(connectionRules).isValidSource(with(isOneOf(sources))); will(returnValue(true));
+			allowing(connectionRules).isValidSource(with(not(isOneOf(sources)))); will(returnValue(false));
+			allowing(connectionRules).isValidTarget(with(isOneOf(sources)), with(isOneOf(targets))); will(returnValue(true));
+			allowing(connectionRules).isValidTarget(with(not(isOneOf(sources))), with(any(IShapeObjectType.class))); will(returnValue(false));
+			allowing(connectionRules).isValidTarget(with(isOneOf(sources)), with(not(isOneOf(targets)))); will(returnValue(false));
+		}});
+	}
+
+	public void buildParentingRules(final IObjectType ... children) {
+		this.typeParenting = this.mockery.mock(IAnchorNodeParentingRules.class, createParentingRulesName());
+		this.mockery.checking(new Expectations(){{
+			allowing(typeParenting).getObjectType(); will(returnValue(objectType));
+			allowing(typeParenting).isValidChild(with(not(isOneOf(children)))); will(returnValue(false));
+			allowing(typeParenting).isValidChild(with(isOneOf(children))); will(returnValue(true));
+
+			allowing(objectType).getParentingRules(); will(returnValue(typeParenting));
+		}});
+	}
+
+	private String createParentingRulesName() {
+		StringBuilder buf = new StringBuilder(this.name);
+		buf.append("ParentingRules");
+		return buf.toString();
 	}
 }

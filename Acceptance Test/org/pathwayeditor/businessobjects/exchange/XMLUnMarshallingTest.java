@@ -28,6 +28,7 @@ import java.io.Reader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.pathwayeditor.businessobjects.drawingprimitives.ICanvasElementAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILabelAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.ILinkAttribute;
 import org.pathwayeditor.businessobjects.drawingprimitives.IModel;
@@ -77,14 +78,14 @@ public class XMLUnMarshallingTest {
 	
 	@Test
 	public void expectedModelStatistics(){
-		IModel rootAtt = model;
-		assertEquals("expected num canvas attribs", 24, rootAtt.numCanvasAttributes());
-		assertEquals("expected num shape attribs", 8, rootAtt.numShapeAttributes());
-		assertEquals("expected num label attribs", 6, rootAtt.numLabelAttributes());
-		assertEquals("expected num link attribs", 9, rootAtt.numLinkAttributes());
-		assertEquals("expected num elements", 24, model.numDrawingElements());
-		assertEquals("expected num nodes", 15, model.numDrawingNodes());
+		assertEquals("expected num canvas attribs", 26, model.numCanvasAttributes());
+		assertEquals("expected num shape attribs", 8, model.numShapeAttributes());
+		assertEquals("expected num label attribs", 8, model.numLabelAttributes());
+		assertEquals("expected num link attribs", 9, model.numLinkAttributes());
+		assertEquals("expected num link attribs", 0, model.numAnchorNodeAttributes());
 		assertEquals("expected num edges", 9, model.numLinkEdges());
+		assertEquals("expected num nodes", 17, model.numDrawingNodes());
+		assertEquals("expected num elements", 26, model.numDrawingElements());
 	}
 	
 	
@@ -108,8 +109,8 @@ public class XMLUnMarshallingTest {
 		assertNotNull("node exists", node);
 		assertEquals("expected parent idx", 0, node.getParent().getIndex());
 		IChildCompoundGraph childGraph = node.getChildCompoundGraph();
-		assertEquals("expected num elements", 5, childGraph.numElements());
-		assertEquals("expected num nodes", 3, childGraph.numNodes());
+		assertEquals("expected num elements", 4, childGraph.numElements());
+		assertEquals("expected num nodes", 2, childGraph.numNodes());
 		assertEquals("expected num edges", 2, childGraph.numEdges());
 	}
 	
@@ -123,8 +124,8 @@ public class XMLUnMarshallingTest {
 		assertNotNull("node exists", node);
 		assertEquals("expected parent idx", 0, node.getParent().getIndex());
 		IChildCompoundGraph childGraph = node.getChildCompoundGraph();
-		assertEquals("expected num elements", 4, childGraph.numElements());
-		assertEquals("expected num nodes", 3, childGraph.numNodes());
+		assertEquals("expected num elements", 3, childGraph.numElements());
+		assertEquals("expected num nodes", 2, childGraph.numNodes());
 		assertEquals("expected num edges", 1, childGraph.numEdges());
 	}
 	
@@ -151,7 +152,7 @@ public class XMLUnMarshallingTest {
 		assertNotNull("att exists", shape);
 		ICompoundNode node = shape.getCurrentElement();
 		assertNotNull("node exists", node);
-		assertEquals("expected parent idx", 14, node.getParent().getIndex());
+		assertEquals("expected parent idx", 12, ((ICanvasElementAttribute)node.getParent().getAttribute()).getCreationSerial());
 		IChildCompoundGraph childGraph = node.getChildCompoundGraph();
 		assertEquals("expected num elements", 0, childGraph.numElements());
 		assertEquals("expected num nodes", 0, childGraph.numNodes());
