@@ -43,12 +43,6 @@ public interface IShapeObjectType extends INodeObjectType {
 	int getUniqueId();
 
 	/**
-	 * Get the parenting rules of the shape
-	 */
-	@Override
-	IShapeParentingRules getParentingRules();
-
-	/**
 	 * Gets the default attributes for this object type.
 	 * @return the default attributes, which cannot be null.
 	 */

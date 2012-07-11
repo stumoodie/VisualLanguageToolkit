@@ -39,7 +39,7 @@ import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxServic
 import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILabelObjectType;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IRootObjectParentingRules;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IRootObjectType;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
 
@@ -68,7 +68,7 @@ public class NotationSubsystemFixture {
 	private IShapeObjectType shapeTypeC;
 	private ILinkObjectType linkTypeD;
 	private ILinkObjectType linkTypeE;
-	private IRootObjectParentingRules rootTypeParenting;
+	private IObjectTypeParentingRules rootTypeParenting;
 	private INotation notation;
 	private ILabelObjectType labelObjectType;
 	private IAnchorNodeObjectType anchorNodeType;
@@ -112,7 +112,7 @@ public class NotationSubsystemFixture {
 		this.notationSubsystem = mockery.mock(INotationSubsystem.class, "notationSubsystem");
 		this.syntaxService = mockery.mock(INotationSyntaxService.class, "syntaxService");
 		this.rootType = mockery.mock(IRootObjectType.class, "rootType");
-		this.rootTypeParenting = mockery.mock(IRootObjectParentingRules.class, "rootTypeParenting");
+		this.rootTypeParenting = mockery.mock(IObjectTypeParentingRules.class, "rootTypeParenting");
 		this.notation = mockery.mock(INotation.class, "notation");
 		
 		MockShapeObjectTypeBuilder showObjectTypeABuilder = new MockShapeObjectTypeBuilder(mockery, syntaxService, SHAPE_TYPE_A_ID, "shapeTypeA");

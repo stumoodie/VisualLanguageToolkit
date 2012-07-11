@@ -35,9 +35,9 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainText
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.INodeObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.rendering.GenericFont;
 
@@ -75,7 +75,7 @@ public class MockShapeObjectTypeBuilder {
 	private double lineWidth = 3.1;
 	private String shapeDefn = "10.0 11.0 13.0 14.6 rect";
 	private Dimension size = new Dimension(11.0, 13.4);
-	private IShapeParentingRules shapeTypeParenting;
+	private IObjectTypeParentingRules shapeTypeParenting;
 	private final List<IPropertyDefinition> propertyDefs = new ArrayList<IPropertyDefinition>();
 	private List<IPropValues<? extends Object>> propCreationDefs = new ArrayList<IPropValues<? extends Object>>();
 	private IShapeObjectType objectType;
@@ -240,7 +240,7 @@ public class MockShapeObjectTypeBuilder {
 //	}
 
 	public void buildParentingRules(final INodeObjectType ... children) {
-		this.shapeTypeParenting = this.mockery.mock(IShapeParentingRules.class, createParentingRulesName());
+		this.shapeTypeParenting = this.mockery.mock(IObjectTypeParentingRules.class, createParentingRulesName());
 		this.mockery.checking(new Expectations(){{
 			allowing(shapeTypeParenting).getObjectType(); will(returnValue(objectType));
 			allowing(shapeTypeParenting).isValidChild(with(not(isOneOf(children)))); will(returnValue(false));

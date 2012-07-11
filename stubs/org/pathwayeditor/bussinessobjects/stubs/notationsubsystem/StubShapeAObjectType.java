@@ -26,9 +26,9 @@ import java.util.EnumSet;
 
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IShapeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IShapeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IShapeParentingRules;
 
 /**
  * @author Stuart Moodie
@@ -71,8 +71,8 @@ public class StubShapeAObjectType implements IShapeObjectType {
 	 * @see org.pathwayeditor.businessobjects.typedefn.IShapeObjectType#getParentingRules()
 	 */
 	@Override
-	public IShapeParentingRules getParentingRules() {
-		return new IShapeParentingRules(){
+	public IObjectTypeParentingRules getParentingRules() {
+		return new IObjectTypeParentingRules(){
 
 			@Override
 			public IShapeObjectType getObjectType() {

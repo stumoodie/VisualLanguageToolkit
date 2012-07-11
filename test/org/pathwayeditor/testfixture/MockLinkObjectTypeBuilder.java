@@ -35,7 +35,6 @@ import org.pathwayeditor.businessobjects.drawingprimitives.properties.INumberPro
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPlainTextPropertyDefinition;
 import org.pathwayeditor.businessobjects.drawingprimitives.properties.IPropertyDefinition;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
-import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.ILinkConnectionRules;
 import org.pathwayeditor.businessobjects.typedefn.ILinkObjectType;
@@ -233,7 +232,7 @@ public class MockLinkObjectTypeBuilder {
 	}
 
 	public void buildParentingRules(final IObjectType ... children) {
-		this.typeParenting = this.mockery.mock(IAnchorNodeParentingRules.class, createParentingRulesName());
+		this.typeParenting = this.mockery.mock(IObjectTypeParentingRules.class, createParentingRulesName());
 		this.mockery.checking(new Expectations(){{
 			allowing(typeParenting).getObjectType(); will(returnValue(objectType));
 			allowing(typeParenting).isValidChild(with(not(isOneOf(children)))); will(returnValue(false));

@@ -30,8 +30,8 @@ import org.pathwayeditor.businessobjects.drawingprimitives.attributes.LineStyle;
 import org.pathwayeditor.businessobjects.notationsubsystem.INotationSyntaxService;
 import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeAttributeDefaults;
 import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeObjectType;
-import org.pathwayeditor.businessobjects.typedefn.IAnchorNodeParentingRules;
 import org.pathwayeditor.businessobjects.typedefn.IObjectType;
+import org.pathwayeditor.businessobjects.typedefn.IObjectTypeParentingRules;
 import org.pathwayeditor.figure.geometry.Dimension;
 import org.pathwayeditor.figure.rendering.GenericFont;
 
@@ -52,7 +52,7 @@ public class MockAnchorNodeObjectTypeBuilder {
 	private double lineWidth = 3.1;
 	private String shapeDefn = "10.0 11.0 13.0 14.6 rect";
 	private Dimension size = new Dimension(11.0, 13.4);
-	private IAnchorNodeParentingRules anchorNodeTypeParenting;
+	private IObjectTypeParentingRules anchorNodeTypeParenting;
 	private IAnchorNodeObjectType objectType;
 	private IAnchorNodeAttributeDefaults anchorNodeAttributeDefaults;
 
@@ -127,7 +127,7 @@ public class MockAnchorNodeObjectTypeBuilder {
 	}
 
 	public void buildParentingRules(final IObjectType ... children) {
-		this.anchorNodeTypeParenting = this.mockery.mock(IAnchorNodeParentingRules.class, createParentingRulesName());
+		this.anchorNodeTypeParenting = this.mockery.mock(IObjectTypeParentingRules.class, createParentingRulesName());
 		this.mockery.checking(new Expectations(){{
 			allowing(anchorNodeTypeParenting).getObjectType(); will(returnValue(objectType));
 			allowing(anchorNodeTypeParenting).isValidChild(with(not(isOneOf(children)))); will(returnValue(false));

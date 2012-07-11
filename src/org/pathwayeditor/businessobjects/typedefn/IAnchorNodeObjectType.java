@@ -14,12 +14,6 @@ package org.pathwayeditor.businessobjects.typedefn;
 public interface IAnchorNodeObjectType extends INodeObjectType {
 
 	/**
-	 * Get the parenting rules of the shape
-	 */
-	@Override
-	IAnchorNodeParentingRules getParentingRules();
-
-	/**
 	 * Gets the default attributes for this object type.
 	 * @return the default attributes, which cannot be null.
 	 */

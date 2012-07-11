@@ -36,11 +36,4 @@ public interface IRootObjectType extends INodeObjectType {
 	@Override
 	int getUniqueId();
 
-	/**
-	 * Gets the parenting rules for the object type.
-	 * @see org.pathwayeditor.businessobjects.typedefn.IObjectType#getParentingRules() 
-	 */
-	@Override
-	IRootObjectParentingRules getParentingRules();
-
 }

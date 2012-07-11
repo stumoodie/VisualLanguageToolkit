@@ -41,6 +41,4 @@ public interface ILabelObjectType extends INodeObjectType {
 	 */
 	boolean isAlwaysDisplayed();
 	
-	@Override
-	ILabelObjectTypeParentingRules getParentingRules();
 }
