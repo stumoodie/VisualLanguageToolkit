@@ -160,32 +160,29 @@ public interface INotationSyntaxService extends INotationService {
 	int numLinkObjectTypes();
 	
 	/**
+	 * Get the number of label object types in this notation syntax service.
+	 * @return the number of label object types.
+	 */
+	int numLabelObjectTypes();
+	
+	/**
 	 * Get the number of object types in this notation syntax service.
 	 * @return the number of object types.
 	 */
 	int numObjectTypes();
 	
-	/**
-	 * Find the shape object type by its unique name.
-	 * @param name true if the name can be found, false otherwise.
-	 * @return the shape object type matching the name, or null if it cannot be found. 
-	 */
-	IShapeObjectType findShapeObjectTypeByName(String name);
-	
-	/**
-	 * Find the link object type by its unique name.
-	 * @param name true if the name can be found, false otherwise.
-	 * @return the link object type matching the name, or null if it cannot be found. 
-	 */
-	ILinkObjectType findLinkObjectTypeByName(String name);
-
 //	/**
-//	 * Get the linked end object type for a given link OT. This is a special object type that invisibly
-//	 * is connected to a link end when links are connected to other links. This node
-//	 * is a child of the link that is connected to the end. This object type should define
-//	 * a very simple shape, that has zero dimensions.
-//	 * @param linkObjectType the link OT for which to find the corresponding end OT 
-//	 * @return the object type.
+//	 * Find the shape object type by its unique name.
+//	 * @param name true if the name can be found, false otherwise.
+//	 * @return the shape object type matching the name, or null if it cannot be found. 
 //	 */
-//	IShapeObjectType getLinkEndObjectType(ILinkObjectType linkObjectType);
+//	IShapeObjectType findShapeObjectTypeByName(String name);
+//	
+//	/**
+//	 * Find the link object type by its unique name.
+//	 * @param name true if the name can be found, false otherwise.
+//	 * @return the link object type matching the name, or null if it cannot be found. 
+//	 */
+//	ILinkObjectType findLinkObjectTypeByName(String name);
+
 }
